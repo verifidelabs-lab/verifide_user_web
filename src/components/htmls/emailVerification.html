@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email OTP Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+        <div>
+            
+        </div>
+        <div class="bg-white w-full max-w-2xl rounded-xl border border-blue-100 p-8 shadow-sm">
+            <!-- Title -->
+            <div class="flex items-center gap-2 mb-6">
+               
+                <h2 class="text-lg font-semibold">Email Items</h2>
+            </div>
+
+            <!-- Email Input Section -->
+            <div class="mb-5">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <div class="flex items-center gap-2">
+                    <input id="emailInput" type="email" placeholder="Enter your email"
+                        class="flex-1 border border-gray-300 rounded-md px-4 py-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none" />
+                    <button id="sendOtpBtn" class="text-xs text-blue-500 font-semibold hover:underline">Send
+                        OTP</button>
+                </div>
+            </div>
+
+            <!-- OTP Section -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Enter OTP</label>
+                <div class="flex items-center gap-2 mb-3">
+                    <input type="text" maxlength="1"
+                        class="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:ring-1 focus:ring-blue-500 outline-none" />
+                    <input type="text" maxlength="1"
+                        class="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:ring-1 focus:ring-blue-500 outline-none" />
+                    <input type="text" maxlength="1"
+                        class="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:ring-1 focus:ring-blue-500 outline-none" />
+                    <input type="text" maxlength="1"
+                        class="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:ring-1 focus:ring-blue-500 outline-none" />
+                    <input type="text" maxlength="1"
+                        class="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:ring-1 focus:ring-blue-500 outline-none" />
+                </div>
+
+                <!-- Resend Timer -->
+                <p class="text-sm text-gray-600 mb-4">
+                    Resend OTP in <span id="timer" class="text-[#000000E6] font-semibold">01:00</span>
+                </p>
+
+                <!-- Verify Button -->
+                <button class="bg-blue-600 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-blue-700">
+                    Verify
+                </button>
+            </div>
+        </div>
+
+        <!-- JavaScript for Timer -->
+        <script>
+            let countdown;
+            const timerElement = document.getElementById('timer');
+            const sendOtpBtn = document.getElementById('sendOtpBtn');
+
+            function startTimer(duration) {
+                let time = duration;
+                clearInterval(countdown);
+                countdown = setInterval(() => {
+                    const minutes = String(Math.floor(time / 60)).padStart(2, '0');
+                    const seconds = String(time % 60).padStart(2, '0');
+                    timerElement.textContent = `${minutes}:${seconds}`;
+                    time--;
+
+                    if (time < 0) {
+                        clearInterval(countdown);
+                        timerElement.textContent = "00:00";
+                        sendOtpBtn.disabled = false;
+                        sendOtpBtn.classList.remove('text-gray-400', 'cursor-not-allowed');
+                        sendOtpBtn.classList.add('text-blue-500', 'hover:underline');
+                        sendOtpBtn.textContent = "Resend OTP";
+                    }
+                }, 1000);
+            }
+
+            sendOtpBtn.addEventListener('click', () => {
+                sendOtpBtn.disabled = true;
+                sendOtpBtn.classList.remove('text-blue-500', 'hover:underline');
+                sendOtpBtn.classList.add('text-gray-400', 'cursor-not-allowed');
+                sendOtpBtn.textContent = "OTP Sent";
+                startTimer(60);
+            });
+
+            // Optionally auto-start on page load:
+            // startTimer(60);
+        </script>
+
+</body>
+
+</html>

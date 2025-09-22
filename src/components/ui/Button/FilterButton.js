@@ -1,0 +1,12 @@
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+
+const FilterButton = () => {
+  return (
+    <button className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg hover:bg-gray-50 w-auto sm:w-auto justify-center">
+      <HiOutlineAdjustmentsHorizontal className="text-[#000000E6]" size={21} />
+      <span>Filter</span>
+    </button>
+  );
+};
+
+export default FilterButton;

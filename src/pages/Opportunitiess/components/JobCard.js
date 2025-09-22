@@ -1,0 +1,236 @@
+import moment from "moment-timezone";
+import { MdLocationOn, MdMessage } from "react-icons/md";
+import Button from "../../../components/ui/Button/Button";
+import { convertTimestampToTime, formatDateByMomentTimeZone } from "../../../components/utils/globalFunction";
+import { SkillsCard2 } from "../../../components/ui/cards/Card";
+import { useState } from "react";
+// import { TbSquaresSelected } from "react-icons/tb";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
+const JobCard = ({
+  job,
+  onAction,
+  handleInterviewSchedule,
+  handleMessage,
+  handleCloseJob,
+  handleRejectFromShortList,
+  isLoading,
+  setIsReviewOpen,
+  setReviewJobId,
+  activeTab,
+  openModalForSelect,
+  setSelectInterviewId
+}) => {
+  const limit = 3
+  const [showAllSkills, setShowAllSkills] = useState(false);
+  const isThisJobLoading = isLoading === job._id;
+  const remainingCount = Math.max(0, job?.user_id?.topSkills?.length - limit);
+  console.log("activeTabactiveTabactiveTab", activeTab)
+
+
+  return (
+    <div className="">
+      <div className="relative z-20 border rounded-lg shadow-md p-4 bg-white flex flex-col justify-between h-auto">
+        <div >
+          <div className="flex items-center justify-between relative">
+            <div className="flex items-center gap-3">
+              {job?.user_id?.profile_picture_url ? (
+                <img src={job?.user_id?.profile_picture_url} alt="profile" className="w-12 h-12 object-cover rounded-full" />
+              ) : (
+                <div
+                  className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold rounded-full overflow-hidden">
+                  {job?.company_id?.logo_url ? (
+                    <img src={job.company_id.logo_url} alt="company logo" className="w-12 h-12 object-center border" onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/36369.jpg";
+                    }}
+                    />
+                  ) : (
+                    <span className="text-xl">
+                      <img src={"/36369.jpg"} alt="company logo" className="w-12 h-12 object-center border" />
+                    </span>
+                  )}
+                </div>
+              )}
+              <div>
+                {job?.user_id ? (
+                  <>
+                    <h2 className="text-lg font-semibold text-[#000000]">
+                      {job?.user_id?.first_name} {job?.user_id?.last_name}
+                    </h2>
+                    <p className="text-xs text-gray-500">{job?.user_id?.headline}</p>
+                    {job?.createdAt && (
+                      <p className="text-xs text-gray-400">
+                        {moment(job.createdAt).format("DD-MM-YYYY")}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-sm font-medium text-[#000000]">
+                      {job?.company_id?.name}
+                    </h2>
+                    <p className="text-xs text-gray-500">
+                      {moment(job?.createdAt).format("DD-MM-YYYY")}
+                    </p>
+                  </>
+                )}
+              </div>
+              {/* {job?.status === 'selected_in_interview' && (
+                <span className="absolute right-0 top-0"><img src="/Img/verify.png" className="w-10 h-10" alt="badge" /></span>
+              )} */}
+            </div>
+
+            {job?.total_applicants ? (
+              <p className="px-3 py-1 text-xs font-medium rounded-full bg-green-50 text-green-700 border border-green-600">
+                {job?.total_applicants || "0"} Applied
+              </p>
+            ) : null}
+
+            {job?.status === "rejected" && (
+              <div className="px-3 py-1 text-xs font-medium rounded-full bg-red-50 text-red-700 border border-red-600">
+                Rejected
+              </div>
+            )}
+            {job?.status === "selected_in_interview" && (
+              <div className="px-3 py-1 text-xs font-medium rounded-full bg-green-50 text-green-700 border border-green-600">
+                Selected
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col space-y-2 mt-3">
+            {job?.user_id ? (
+              <p className="text-sm">
+                <strong>Job Title:</strong> {job?.job_details?.job_title}
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2 text-xs text-gray-700">
+                <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
+                  {job?.job_location}
+                </span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
+                  ✓ {job?.job_type}
+                </span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
+                  {job?.salary_range} {job?.pay_type === "monthly" ? "Monthly" : "LPA"}
+                </span>
+              </div>
+            )}
+
+            <h3 className="text-lg font-semibold text-gray-800 capitalize">
+              {job?.job_title?.name}
+            </h3>
+
+            {!job?.user_id && job?.company_id?.headquarters?.address_line_1 && (
+              <div className="flex text-sm text-gray-600">
+                <MdLocationOn className="text-base mr-1" />
+                {job?.company_id?.headquarters?.address_line_1}
+              </div>
+            )}
+            {job?.user_id?.topSkills?.length > 0 && (
+              <div className="flex flex-col gap-1 mt-2">
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {(showAllSkills ? job.user_id.topSkills : job.user_id.topSkills.slice(0, 2)).map((skill) => (
+                    <span key={skill._id} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full capitalize">
+                      {skill.name}
+                    </span>
+
+                  ))}
+                  {job.user_id.topSkills.length > 5 && (
+                    <button onClick={() => setShowAllSkills(!showAllSkills)}
+                      className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
+                       hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
+                       focus:ring-[#6390F1] focus:ring-opacity-50"
+                    >
+                      +{remainingCount}
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+            {job?.required_skills?.length > 0 && (
+              <div className="flex flex-wrap gap-2 text-xs">
+                <SkillsCard2 skills={job.required_skills || []} limit={2} />
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-start  gap-3 mt-3">
+            {job?.user_id ? (
+              <>
+                {activeTab === "shortlisted" ? (
+                  <Button onClick={() => handleInterviewSchedule(job)} size="sm">
+                    {!job?.isSchedule
+                      ? "Schedule interview"
+                      : `${formatDateByMomentTimeZone(
+                        job?.interviewDetails?.select_date
+                      )} ${convertTimestampToTime(
+                        job?.interviewDetails?.select_time
+                      )}`}
+                  </Button>
+                ) : ""}
+                {activeTab === "schedule-interviews" ? (
+                  <Button size="sm" variant="success" onClick={() => { openModalForSelect(); setSelectInterviewId(job) }}>
+                    Select
+                  </Button>
+                ) : ""}
+
+                {activeTab === "schedule-interviews" || activeTab === "shortlisted" ? (
+                  <Button variant="danger" size="sm" onClick={() => handleRejectFromShortList(job)}
+                  >
+                    Reject
+                  </Button>) : ""}
+                <Button size="sm" variant="outline" onClick={() => { setIsReviewOpen(true); setReviewJobId(job) }}>
+                  Comment
+                </Button>
+                <span className="bg-blue-300 text-blue-700 hover:bg-blue-500 hover:text-white cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
+                  onClick={() => handleMessage(job)}
+                >
+                  <MdMessage />
+                </span>
+
+
+              </>
+            ) : (
+              <>
+                <Button onClick={() => onAction("view", job)}
+                  size="sm"
+                  variant="outline"
+                  className="min-w-20 h-8"
+                  loading={isThisJobLoading}
+                >
+                  Applicant
+                </Button>
+                <Button onClick={() => onAction("edit", job)}
+                  size="sm"
+                  className="min-w-20 h-8"
+                >
+                  Edit
+                </Button>
+                <Button variant="zinc" onClick={() => onAction("view_details", job)}
+                  size="sm"
+                  className="min-w-20 h-8"
+                >
+                  Details
+                </Button>
+                {activeTab === 'open' && (
+
+                  <span
+                    className="hover:bg-gray-300 text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
+                    onClick={() => handleCloseJob(job)}
+                  >
+                    <BsThreeDotsVertical />
+                  </span>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
+};
+
+export default JobCard;

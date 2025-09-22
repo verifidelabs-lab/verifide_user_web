@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notification Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 as">
+
+  <!-- Container -->
+  <div class="min-h-screen flex">
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+      <h1 class="text-xl font-semibold">Notifications</h1>
+      <p class="text-sm text-gray-400 mt-1">Home &gt; Notifications</p>
+
+      <!-- Notifications List -->
+      <div class="mt-6 bg-white rounded-lg shadow-sm divide-y">
+        <h1 class="font-bold pb-2 p-3">All Notification</h1>
+        
+        <!-- Search Bar -->
+        <div class="p-4">
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="Search or start a new chat" 
+              class="w-full py-2 pl-10 pr-4 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
+            >
+            <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Notification Item -->
+        <div class="p-4 hover:bg-gray-50 flex justify-between">
+          <div>
+            <h2 class="font-medium text-gray-800">📛 Verify your identity to unlock advanced features</h2>
+            <p class="text-sm text-gray-500">Hey! Did you finish the Hi-Fi wireframes for flora app design?</p>
+            <a href="#" class="text-blue-500 text-sm mt-1 inline-block">Complete verification</a>
+          </div>
+          <div class="text-xs text-gray-400">Today | 05:30 PM</div>
+        </div>
+
+        <!-- Repeat similar blocks below -->
+        <div class="p-4 hover:bg-gray-50 flex justify-between">
+          <div>
+            <h2 class="font-medium text-gray-800">📧 Verify your email address to build trust with your network</h2>
+            <p class="text-sm text-gray-500">Hey! Did you finish the Hi-Fi wireframes for flora app design?</p>
+            <a href="#" class="text-blue-500 text-sm mt-1 inline-block">Complete verification</a>
+          </div>
+          <div class="text-xs text-gray-400">Today | 05:28 PM</div>
+        </div>
+
+        <!-- Add more notification items here similarly -->
+
+      </div>
+    </main>
+
+  </div>
+</body>
+</html>

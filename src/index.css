@@ -1,0 +1,348 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Outfit:wght@100..900&family=Oxygen+Mono&family=Oxygen:wght@300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Outfit:wght@100..900&family=Oxygen+Mono&family=Oxygen:wght@300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic&display=swap');
+/* @import "tailwindcss"; */
+
+
+
+body {
+  /* font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell,
+    "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Lucida Grande", Helvetica, Arial, sans-serif; */
+        font-family: "DM Sans", sans-serif;
+}
+
+
+.instrument-sans {
+  font-family: "Instrument Sans", sans-serif;
+}
+
+
+
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+/* Remove default icon and placeholder */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Hide default placeholder text */
+
+
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.gradient-background {
+  background: linear-gradient(180deg, #2563EB 0%, #FFFFFF 100%);
+  gap: 40px;
+  opacity: 1;
+  padding: 74px 29px;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(6, 96, 223, 0.568);
+  /* Tailwind zinc-500 with opacity */
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.8);
+}
+
+
+
+
+@keyframes fileDelete {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(12px) scale(0.8);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateX(24px) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-fileDelete {
+  animation: fileDelete 1s ease-in-out infinite;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white; /* Make arrows white */
+  width: 24px;   /* Smaller width */
+  height: 24px;  /* Smaller height */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px; /* Smaller arrow icon */
+}
+
+
+/* Add to your global CSS */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #FFFFFF;
+  border-radius: 6px;
+}
+
+/* Dropdown animation */
+.dropdown-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdown-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.dropdown-exit {
+  opacity: 1;
+}
+
+.dropdown-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 200ms, transform 200ms;
+}
+
+
+.hide-scrollbar {
+  overflow: hidden;
+}
+
+.hide-scrollbar {
+  overflow: auto; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Add this to your global CSS (e.g., styles.css or in Tailwind config if needed) */
+.loader {
+  border-top-color: #0a66c2; /* LinkedIn blue */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Shift the vertical line a bit right and make the curve smoother */
+.reply-line {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem; /* slightly right of avatar */
+  width: 1.5rem;
+  height: 100%;
+  border-left: 2px solid #d1d5db;
+  border-bottom: 2px solid #d1d5db;
+  border-bottom-left-radius: 12px; /* more curve */
+}
+
+
+/* Scrollbar styles */
+.custom-scrollbar2::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar2::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb {
+  background-color: #a0aec0;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar2::-webkit-scrollbar-thumb:hover {
+  background-color: #718096;
+}
+
+.create-post-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-type-selector::-webkit-scrollbar {
+    height: 4px;
+}
+
+.post-type-selector::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.post-type-selector::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
+    border-radius: 4px;
+}
+
+.post-type-selector::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.tag {
+    animation: scaleIn 0.2s ease-in-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.character-count {
+    transition: color 0.2s ease;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.drafts-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.poll-options {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.btn {
+  flex: 1 1 auto;
+  margin: 10px;
+  padding: 30px;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+ }
+
+
+.btn:hover {
+  background-position: right center; /* change the direction of the change here */
+}
+
+.btn-4 {
+  background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+}
+
+
+/* Hide scrollbar for all elements with the no-scrollbar class */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;   
+}
+

@@ -1,0 +1,292 @@
+{
+    "company_type": [
+        {
+            "value": "public",
+            "label": "Public"
+        },
+        {
+            "value": "private",
+            "label": "Private"
+        },
+        {
+            "value": "non-profit",
+            "label": "non-profit"
+        },
+        {
+            "value": "government",
+            "label": "government"
+        },
+        {
+            "value": "partnership",
+            "label": "partnership"
+        },
+        {
+            "value": "sole-proprietorship",
+            "label": "sole-proprietorship"
+        }
+    ],
+    "Company_Sizes": [
+        {
+            "value": "1-10",
+            "label": "1-10"
+        },
+        {
+            "value": "11-50",
+            "label": "11-50"
+        },
+        {
+            "value": "51-200",
+            "label": "51-200"
+        },
+        {
+            "value": "201-500",
+            "label": "201-500"
+        },
+        {
+            "value": "501-1000",
+            "label": "501-1000"
+        },
+        {
+            "value": "1001-5000",
+            "label": "1001-5000"
+        },
+        {
+            "value": "5001-10000",
+            "label": "5001-10000"
+        }
+    ],
+    "questionTypes": [
+        {
+            "value": "single_choice",
+            "label": "single_choice"
+        },
+        {
+            "value": "multi_choice",
+            "label": "multi_choice"
+        },
+        {
+            "value": "theoretical",
+            "label": "theoretical"
+        }
+    ],
+    "optionFormats": [
+        {
+            "label": "Alphabetically",
+            "value": "alphabetically"
+        },
+        {
+            "label": "Numerical",
+            "value": "numerical"
+        },
+        {
+            "label": "Checked",
+            "value": "checked"
+        }
+    ],
+    "verificationType": [
+        {
+            "label": "auto",
+            "value": "auto"
+        },
+        {
+            "label": "manual",
+            "value": "manual"
+        }
+    ],
+    "gender": [
+        {
+            "label": "Select",
+            "value": "Select"
+        },
+        {
+            "label": "Male",
+            "value": "male"
+        },
+        {
+            "label": "Female",
+            "value": "female"
+        },
+        {
+            "label": "Other",
+            "value": "other"
+        }
+    ],
+    "Job_Type_List": [
+        {
+            "value": "full-time",
+            "label": "Full Time"
+        },
+        {
+            "value": "part-time",
+            "label": "Part Time"
+        },
+        {
+            "value": "internship",
+            "label": "Internship"
+        },
+        {
+            "value": "contract",
+            "label": "Contract"
+        },
+        {
+            "value": "freelance",
+            "label": "Freelance"
+        },
+        {
+            "value": "temporary",
+            "label": "Temporary"
+        },
+        {
+            "value": "remote",
+            "label": "Remote"
+        },
+        {
+            "value": "on-site",
+            "label": "On-site"
+        },
+        {
+            "value": "hybrid",
+            "label": "Hybrid"
+        },
+        {
+            "value": "volunteer",
+            "label": "Volunteer"
+        },
+        {
+            "value": "commission-based",
+            "label": "Commission Based"
+        },
+        {
+            "value": "project-based",
+            "label": "Project Based"
+        },
+        {
+            "value": "training",
+            "label": "Training"
+        },
+        {
+            "value": "walk-in",
+            "label": "Walk-in"
+        },
+        {
+            "value": "shift-based",
+            "label": "Shift Based"
+        },
+        {
+            "value": "night-shift",
+            "label": "Night Shift"
+        },
+        {
+            "value": "weekend",
+            "label": "Weekend"
+        },
+        {
+            "value": "work-from-home",
+            "label": "Work From Home"
+        },
+        {
+            "value": "work-from-office",
+            "label": "Work From Office"
+        }
+    ],
+    "Job_Location_List": [
+        {
+            "value": "remote",
+            "label": "Remote"
+        },
+        {
+            "value": "on-site",
+            "label": "On-site"
+        },
+        {
+            "value": "hybrid",
+            "label": "Hybrid"
+        },
+        {
+            "value": "work-from-home",
+            "label": "Work From Home"
+        },
+        {
+            "value": "work-from-office",
+            "label": "Work From Office"
+        },
+        {
+            "value": "relocation-required",
+            "label": "Relocation Required"
+        },
+        {
+            "value": "multiple-locations",
+            "label": "Multiple Locations"
+        },
+        {
+            "value": "client-site",
+            "label": "Client Site"
+        },
+        {
+            "value": "pan-india",
+            "label": "Pan India"
+        },
+        {
+            "value": "international",
+            "label": "International"
+        }
+    ],
+    "Job_Pay_Type_List": [
+        {
+            "value": "paid",
+            "label": "Paid"
+        },
+        {
+            "value": "unpaid",
+            "label": "Unpaid"
+        },
+        {
+            "value": "volunteer",
+            "label": "Volunteer"
+        },
+        {
+            "value": "stipend",
+            "label": "Stipend"
+        },
+        {
+            "value": "fixed",
+            "label": "Fixed"
+        },
+        {
+            "value": "hourly",
+            "label": "Hourly"
+        },
+        {
+            "value": "daily",
+            "label": "Daily"
+        },
+        {
+            "value": "weekly",
+            "label": "Weekly"
+        },
+        {
+            "value": "monthly",
+            "label": "Monthly"
+        },
+        {
+            "value": "yearly",
+            "label": "Yearly"
+        },
+        {
+            "value": "commission-based",
+            "label": "Commission Based"
+        },
+        {
+            "value": "project-based",
+            "label": "Project Based"
+        },
+        {
+            "value": "negotiable",
+            "label": "Negotiable"
+        },
+        {
+            "value": "package-based",
+            "label": "Package Based"
+        }
+    ]
+}
