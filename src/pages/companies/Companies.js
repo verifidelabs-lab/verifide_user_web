@@ -18,7 +18,7 @@ import {
   updateCompanies,
   updatePasswordCompanies,
   verifyCompanies,
-} from "../../redux/slices/companiesSlice";
+} from "../../redux/CompanySlices/companiesSlice";
 import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
 import { industriesDocuments } from "../../redux/Industry Slice/industrySlice";
 import { CiCircleCheck } from "react-icons/ci";

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createExtraReducersForThunk, createApiThunkPrivate } from '../../../src/components/hooks/apiThunk';
+import { createExtraReducersForThunk, createApiThunkPrivate } from '../../components/hooks/apiThunk';
 
 const initialState = {
     getCompaniesListData: {}, getCompaniesDetailsData: {}, getListData: {}, getPostListData: {}, notificationsData: {},

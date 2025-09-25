@@ -20,7 +20,7 @@ import {
   updateInstitute,
   updatePasswordInstitute,
   verifyInstitute,
-} from "../../redux/slices/companiesSlice";
+} from "../../redux/CompanySlices/companiesSlice";
 import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
 import { getAllInstituteType } from "../../redux/slices/instituteSlice";
 import PasswordInput from "../../components/ui/InputAdmin/PasswordInput";

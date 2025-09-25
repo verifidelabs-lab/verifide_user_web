@@ -10,7 +10,7 @@ import cscReducer from './Global Slice/cscSlice'
 import verificationReducer from './Verification/Verification'
 import userReducer from './Users/userSlice'
 import courseReducer from './course/courseSlice'
-import companiesReducer from './slices/companiesSlice'
+import companiesReducer from './CompanySlices/companiesSlice'
 // import instituteReducer from './slices/instituteSlice'
 import industryReducer from './Industry Slice/industrySlice'
 import assessmentReducer from './assessments/assessmentSlice'
@@ -18,8 +18,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   companies: companiesReducer,
   // institute: instituteReducer,
-    industry: industryReducer,
-
+  industry: industryReducer,
   educations: educationReducer,
   work: workReducer,
   global: cscReducer,

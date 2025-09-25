@@ -14,7 +14,7 @@ import 'swiper/css/pagination';
 import { useNavigate } from 'react-router-dom';
 import { FaExpand, FaPause, FaPlay, FaTimes, FaRegComment, FaRegShareSquare } from 'react-icons/fa'; 
 import AlertModal from '../../components/Atoms/Modal/AlertModal';
-import {  deletePost, enableDisablePost, getCommentOnPost, getPostList, getReplyOnPost } from '../../../redux/slices/companiesSlice';
+import {  deletePost, enableDisablePost, getCommentOnPost, getPostList, getReplyOnPost } from '../../../redux/CompanySlices/companiesSlice';
 import { BsFillHeartFill } from 'react-icons/bs';
 import Button from '../../../components/ui/Button/Button';
 import { getCookie } from '../../../components/utils/cookieHandler';
