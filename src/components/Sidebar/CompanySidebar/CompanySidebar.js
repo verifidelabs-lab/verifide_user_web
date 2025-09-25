@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 // Icons
 import { GiHamburgerMenu } from "react-icons/gi";
-import { BiChevronRight, BiSolidDashboard } from "react-icons/bi";
+import { BiChevronRight, BiMessageDetail, BiSolidDashboard } from "react-icons/bi";
 import { MdWork, MdPeople, MdSettings, MdAnalytics, MdEvent } from "react-icons/md";
 import { FaRegBuilding, FaUsersCog } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -63,6 +63,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
   const companySidebarData = [
     { icon: BiSolidDashboard, label: "Dashboard", path: "/company/dashboard" },
     { icon: FaRegBuilding, label: "Company Profile", path: "/company/profile" },
+    { icon: BiMessageDetail, label: "Message", path: "/company/message" },
+
     {
       icon: MdWork,
       label: "Jobs",
@@ -161,16 +163,16 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                   <>
                     <div
                       className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:bg-blue-50 hover:text-blue-600 ${openSubmenu === item.label
-                          ? "bg-blue-50 text-blue-600"
-                          : "text-[#000000E6]"
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-[#000000E6]"
                         }`}
                       onClick={() => toggleSubmenu(item.label)}
                     >
                       <div className="flex items-center gap-3">
                         <item.icon
                           className={`text-base transition-colors duration-300 ${openSubmenu === item.label
-                              ? "text-blue-600"
-                              : "text-[#000000E6]"
+                            ? "text-blue-600"
+                            : "text-[#000000E6]"
                             }`}
                         />
                         <span>{item.label}</span>
@@ -187,8 +189,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                           <div
                             key={childIdx}
                             className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
-                                ? "text-blue-600 font-medium"
-                                : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
+                              ? "text-blue-600 font-medium"
+                              : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
                               }`}
                             onClick={() => onClickMenu(child.path)}
                           >
@@ -201,15 +203,15 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                 ) : (
                   <div
                     className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
-                        ? "text-blue-600"
-                        : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
+                      ? "text-blue-600"
+                      : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
                       }`}
                     onClick={() => onClickMenu(item.path)}
                   >
                     <item.icon
                       className={`text-lg rounded-full transition-colors duration-300 ${location.pathname === item.path
-                          ? "text-blue-500"
-                          : "text-[#000000E6]"
+                        ? "text-blue-500"
+                        : "text-[#000000E6]"
                         } ${hasUnread ? "animate-[pulse_2s_infinite]" : ""}`}
                       style={hasUnread ? { animation: "pulse2 2s infinite" } : {}}
                     />

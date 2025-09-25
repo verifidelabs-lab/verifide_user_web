@@ -1,0 +1,586 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
+import Modal from '../../../components/Atoms/Modal/Modal';
+import ActionButtons from '../../../components/Atoms/table/TableAction';
+import { verificationCenterList, verificationCenterSingleDoc, updateVerificationCenter, assignVerificationCenter, getAllAdminListData, getAllCompaniesAdminListData, getAllInstitutionsAdminListData } from '../../../redux/Admin/courseSlice';
+import Table from '../../../components/Atoms/table/Table';
+import Button from '../../../components/Atoms/Button/Button';
+import { PiSpinner } from 'react-icons/pi';
+import FilterSelect from '../../../components/Atoms/Input/FilterSelect';
+import { getCookie } from '../../../components/utils/cookieHandler';
+const ROLES = {
+  SUPER_ADMIN: 1,
+  ADMIN: 2,
+  COMPANIES: 3,
+  COMPANIES_ADMIN: 7,
+  INSTITUTIONS: 4,
+  INSTITUTIONS_ADMIN: 8
+};
+const PAGE_SIZE = 10;
+const StatusBadge = ({ status }) => {
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case 'approved':
+        return 'bg-green-100 text-green-800 border border-[#089D291A]/10';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800 border border-[#FFECB0]';
+      case 'rejected':
+        return 'bg-red-100 text-red-800 border border-[#FFEBEB]';
+      case 'assigned':
+        return 'bg-[#CFF4FC] text-blue-800 border border-[#BBF3FF]';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  return (
+    <span className={`rounded-full px-2 py-1 ${getStatusColor(status)} capitalize`}>
+      {status}
+    </span>
+  );
+};
+
+const PendingRequests = () => {
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state.course);
+  const { getVerificationCenterList: { data } = {} } = selector || {};
+  const [documentTypeFilter, setDocumentTypeFilter] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+  const [assignedTo, setAssignedTo] = useState('');
+  const [status, setStatus] = useState('approved');
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [admins, setAdmins] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [viewMode, setViewMode] = useState('view')
+  const fetchRequestList = useCallback(async (page = 1) => {
+    const payload = {
+      page,
+      size: PAGE_SIZE,
+      status: "PENDING",
+      document_model: documentTypeFilter
+    };
+
+    try {
+      setLoading(true);
+      await dispatch(verificationCenterList(payload)).unwrap();
+    } catch (error) {
+      console.log("error", error)
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch, documentTypeFilter]);
+
+  useEffect(() => {
+    fetchRequestList(currentPage, searchTerm);
+    fetchAdmins();
+  }, [currentPage, searchTerm, documentTypeFilter, fetchRequestList]);
+
+  const fetchAdmins = async () => {
+    const userRole = Number(getCookie("USER_ROLE"));
+    try {
+      let res;
+      if (userRole === ROLES.SUPER_ADMIN || userRole === ROLES.ADMIN) {
+        res = await dispatch(getAllAdminListData()).unwrap();
+      } else if (userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) {
+        res = await dispatch(getAllCompaniesAdminListData()).unwrap();
+      } else if (userRole === ROLES.INSTITUTIONS || userRole === ROLES.INSTITUTIONS_ADMIN) {
+        res = await dispatch(getAllInstitutionsAdminListData()).unwrap();
+      } else {
+        throw new Error("Unauthorized role");
+      }
+
+      setAdmins(res?.data || []);
+    } catch (error) {
+      toast.error('Failed to fetch admin list');
+    }
+  };
+
+  const handleView = useCallback(async (_id) => {
+    try {
+      setLoading(true);
+      const res = await dispatch(verificationCenterSingleDoc({ _id })).unwrap();
+      setSelectedRequest(res?.data);
+      setViewMode('view');
+      setModalOpen(true);
+    } catch (error) {
+      toast.error('Failed to fetch request details');
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch]);
+
+  const handleEdit = useCallback(async (_id) => {
+    try {
+      setLoading(true);
+      const res = await dispatch(verificationCenterSingleDoc({ _id })).unwrap();
+      setSelectedRequest(res?.data);
+      setStatus(res?.data?.status || 'approved');
+      setRejectionReason(res?.data?.rejection_reason || '');
+      setViewMode('edit');
+      setModalOpen(true);
+    } catch (error) {
+      toast.error('Failed to fetch request details');
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch]);
+
+  const handleUpdateStatus = async () => {
+    if (status === 'rejected' && !rejectionReason) {
+      toast.error('Please provide a rejection reason');
+      return;
+    }
+    try {
+      setIsSubmitting(true);
+      const payload = {
+        request_id: selectedRequest._id,
+        status: status,
+        rejection_reason: status === 'rejected' ? rejectionReason : '',
+      };
+      await dispatch(updateVerificationCenter(payload)).unwrap();
+      toast.success('Request status updated successfully');
+      setModalOpen(false);
+      fetchRequestList(currentPage, searchTerm);
+    } catch (error) {
+      toast.error('Failed to update request status');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleAssignRequest = async () => {
+    if (!assignedTo) {
+      toast.error('Please select an admin to assign');
+      return;
+    }
+    try {
+      setIsSubmitting(true);
+      const payload = {
+        request_id: selectedRequest._id,
+        assigned_to: assignedTo,
+      };
+      await dispatch(assignVerificationCenter(payload)).unwrap();
+      toast.success('Request assigned successfully');
+      setIsAssignModalOpen(false);
+      setAssignedTo('');
+      fetchRequestList(currentPage, searchTerm);
+    } catch (error) {
+      toast.error('Failed to assign request');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleStatusChange = (selectedOption) => {
+    setStatus(selectedOption ? selectedOption.value : null);
+  };
+
+
+  const tableRows = useMemo(() => {
+    return data?.data?.list?.map((item, index) => ([
+      (currentPage - 1) * PAGE_SIZE + index + 1,
+      `${item.user_id.first_name} ${item.user_id.last_name}`,
+      new Date(item.updatedAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }),
+      <StatusBadge status={item.status} />,
+      <StatusBadge status={(item.assign_status).replaceAll('-', ' ')} />,
+      <ActionButtons
+        onView={() => handleView(item._id)}
+        showEditButton={true}
+        onEdit={() => handleEdit(item._id)}
+        showDeleteButton={false}
+        // showAssignButton={item.assign_status !== 'assigned'}
+        showAssignButton={true}
+        onAssign={() => {
+          setSelectedRequest(item);
+          setIsAssignModalOpen(true);
+        }}
+      />
+    ])) || [];
+  }, [data?.data?.list, currentPage, handleView, handleEdit]);
+
+  const renderViewContent = () => {
+    const user = selectedRequest?.user_id;
+    const assignedTo = selectedRequest?.assigned_to;
+    const model = selectedRequest?.document_model;
+    const doc = selectedRequest?.document_id;
+    const formatDate = (timestamp) => timestamp ? new Date(timestamp).toLocaleDateString() : null;
+    const renderSkills = (skills) => (
+      Array.isArray(skills) && skills.length > 0 && (
+        <div>
+          <p><span className="font-semibold">Skills Acquired:</span></p>
+          <ul className="list-disc pl-5">
+            {skills.map((skill) => (
+              <li key={skill?._id}>{skill?.name}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    );
+
+    const renderImage = (url, label) =>
+      url && (
+        <div>
+          <p className="font-semibold">{label}:</p>
+          <img
+            src={url}
+            alt={label}
+            className="w-full max-w-xs rounded shadow border"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+            }}
+          />
+        </div>
+      );
+
+    return (
+      <div className="grid grid-cols-1 gap-6">
+        <div className="space-y-6">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto">
+            <div className="flex flex-col items-center">
+              <img
+                src={user?.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
+                alt="Profile"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+                }}
+                className="w-24 h-24 rounded-full border-4 border-gray-200 mb-4"
+              />
+              <h3 className="font-semibold text-xl text-gray-800">
+                {user?.first_name} {user?.last_name}
+              </h3>
+            </div>
+
+            <div className="mt-6 space-y-3 text-gray-700 text-sm">
+              {user?.email && <p><span className="font-semibold">Email:</span> {user.email}</p>}
+              {user?.phone_number && <p><span className="font-semibold">Phone:</span> {user.phone_number}</p>}
+              {selectedRequest?.verification_category && <p><span className="font-semibold">Verification Category:</span> {selectedRequest.verification_category}</p>}
+              {selectedRequest?.relation_path && <p><span className="font-semibold">Relation Path:</span> {selectedRequest.relation_path}</p>}
+              {selectedRequest?.status && <p><span className="font-semibold">Status:</span> {selectedRequest.status}</p>}
+              {selectedRequest?.assign_status && <p><span className="font-semibold">Assign Status:</span> {selectedRequest.assign_status}</p>}
+              {selectedRequest?.assigned_path && <p><span className="font-semibold">Assigned Path:</span> {selectedRequest.assigned_path}</p>}
+              {selectedRequest?.rejection_reason && <p><span className="font-semibold">Rejection Reason:</span> {selectedRequest.rejection_reason}</p>}
+            </div>
+
+            {assignedTo && (
+              <div className="mt-6 border-t pt-4">
+                <h4 className="font-semibold text-md text-gray-800 mb-2">Assigned To</h4>
+                <div className="flex items-center space-x-4">
+                  <img
+                    src={assignedTo.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
+                    alt="Verifier"
+                    className="w-12 h-12 rounded-full border-2 border-gray-300"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+                    }}
+                  />
+                  <div>
+                    <p className="font-medium">{assignedTo.first_name} {assignedTo.last_name}</p>
+                    <p className="text-sm text-gray-500">@{assignedTo.username}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            {model && (
+              <h3 className="font-semibold text-xl text-gray-800 capitalize">
+                {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
+              </h3>
+            )}
+            <div className="space-y-4 mt-4 text-sm text-gray-700">
+              {model === "UserAdditionalCertifications" && (
+                <>
+                  {doc?.name && <p><span className="font-semibold">Document Name:</span> {doc.name}</p>}
+                  {doc?.issuing_organization && <p><span className="font-semibold">Issuing Organization:</span> {doc.issuing_organization}</p>}
+                  {doc?.credential_id && <p><span className="font-semibold">Credential ID:</span> {doc.credential_id}</p>}
+                  {doc?.issue_date && <p><span className="font-semibold">Issue Date:</span> {formatDate(doc.issue_date)}</p>}
+                  {renderSkills(doc?.skills_acquired)}
+                  {renderImage(doc?.media_url, "Attached File")}
+                </>
+              )}
+              {model === "UserIdentityVerifications" && (
+                <>
+                  {doc?.id_number && <p><span className="font-semibold">ID Number:</span> {doc.id_number}</p>}
+                  {renderImage(doc?.front_side_file, "Front Side")}
+                  {renderImage(doc?.back_side_file, "Back Side")}
+                </>
+              )}
+              {model === "UserProjects" && (
+                <>
+                  {doc?.name && <p><span className="font-semibold">Project Name:</span> {doc.name}</p>}
+                  {doc?.issuing_organization && <p><span className="font-semibold">Organization:</span> {doc.issuing_organization}</p>}
+                  {doc?.credential_id && <p><span className="font-semibold">Credential ID:</span> {doc.credential_id}</p>}
+                  {doc?.issue_date && <p><span className="font-semibold">Issue Date:</span> {formatDate(doc.issue_date)}</p>}
+                  {doc?.company_id?.display_name && <p><span className="font-semibold">Company:</span> {doc.company_id.display_name}</p>}
+                  {doc?.industries_id?.display_name && <p><span className="font-semibold">Industry:</span> {doc.industries_id.display_name}</p>}
+                  {renderImage(doc?.media_url, "Media")}
+                </>
+              )}
+              {model === "UserEducations" && (
+                <>
+                  {doc?.institution_id?.display_name && <p><span className="font-semibold">Institution:</span> {doc.institution_id.display_name}</p>}
+                  {doc?.degree_id?.name && <p><span className="font-semibold">Degree:</span> {doc.degree_id.name}</p>}
+                  {doc?.field_of_studies?.name && <p><span className="font-semibold">Field of Study:</span> {doc.field_of_studies.name}</p>}
+                  {doc?.start_date && <p><span className="font-semibold">Start Date:</span> {formatDate(doc.start_date)}</p>}
+                  {doc?.end_date && <p><span className="font-semibold">End Date:</span> {formatDate(doc.end_date)}</p>}
+                  {doc?.currently_available !== undefined && (
+                    <p><span className="font-semibold">Currently Studying:</span> {doc.currently_available ? "Yes" : "No"}</p>
+                  )}
+                  {doc?.duration && <p><span className="font-semibold">Duration:</span> {doc.duration}</p>}
+                  {renderSkills(doc?.skills_acquired)}
+                  {Array.isArray(doc?.media_urls) && doc.media_urls.map((url, idx) => renderImage(url, `Media ${idx + 1}`))}
+                </>
+              )}
+              {model === "UserWorkExperiences" && (
+                <>
+                  {doc?.company_id?.display_name && <p><span className="font-semibold">Company:</span> {doc.company_id.display_name}</p>}
+                  {doc?.industries_id?.name && <p><span className="font-semibold">Industry:</span> {doc.industries_id.name}</p>}
+                  {doc?.profile_role_id?.name && <p><span className="font-semibold">Role:</span> {doc.profile_role_id.name}</p>}
+                  {renderSkills(doc?.skills_acquired)}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="space-y-6">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>
+            {selectedRequest.attach_file && selectedRequest.attach_file.length > 0 ? (
+              <div className="space-y-4 mt-4">
+                {selectedRequest.attach_file.map((file, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <img
+                      src={file}
+                      alt={`Attachment ${index + 1}`}
+                      className="w-full max-w-xs rounded shadow border"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">No attached files available.</p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderEditContent = () => (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg">User Information</h3>
+          <div className="space-y-2">
+            <p><span className="font-semibold">Name:</span> {selectedRequest.user_id.first_name} {selectedRequest.user_id.last_name}</p>
+            <p><span className="font-semibold">Email:</span> {selectedRequest.user_id.email}</p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg">Document Information</h3>
+          <div className="space-y-2">
+            <p><span className="font-semibold">Type:</span> {selectedRequest.document_model}</p>
+            <p><span className="font-semibold">Current Status:</span> <StatusBadge status={selectedRequest.status} /></p>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <FilterSelect
+          label="Update Status"
+          value={status}
+          selectedOption={status ? { value: status, label: status.charAt(0).toUpperCase() + status.slice(1) } : null}
+          onChange={handleStatusChange}
+          options={[
+            { value: 'approved', label: 'Approved' },
+            { value: 'rejected', label: 'Rejected' }
+          ]}
+        />
+
+        {status === 'rejected' && (
+          <div className="mt-4">
+            <label className="font-semibold">Rejection Reason *</label>
+            <textarea
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+              className="w-full p-2 border rounded-md mt-1"
+              rows={4}
+              maxLength={500}
+              placeholder="Enter rejection reason (required)"
+              required
+            />
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={() => setModalOpen(false)}
+          disabled={isSubmitting}
+          className="flex-1 py-3 transition-all duration-200 hover:bg-gray-100"
+        >
+          Cancel
+        </Button>
+        <Button
+          type="button"
+          onClick={handleUpdateStatus}
+          disabled={isSubmitting}
+          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 transition-all duration-200 shadow-md hover:shadow-lg"
+        >
+          {isSubmitting ? (
+            <>
+              <PiSpinner className="animate-spin mr-2" />
+              Updating...
+            </>
+          ) : (
+            "Update Status"
+          )}
+        </Button>
+      </div>
+    </div>
+  );
+
+  const getDocumentTypeOptions = () => {
+    const userRole = Number(getCookie("USER_ROLE"));
+    const baseOptions = [{ value: '', label: 'All Document Types' }]; 
+    const roleOptions = [];
+    if ([1, 2, 4, 8].includes(userRole)) {
+      roleOptions.push({ value: 'educations', label: 'User Educations' });
+    }
+    if ([1, 2, 3, 7].includes(userRole)) {
+      roleOptions.push({ value: 'work-experience', label: 'User Work Experiences' });
+    }
+    if ([1, 2, 3, 4, 7, 8].includes(userRole)) {
+      roleOptions.push({ value: 'projects', label: 'User Projects' });
+    }
+    if ([1, 2].includes(userRole)) {
+      roleOptions.push({ value: 'additional-certifications', label: 'User Additional Certifications' });
+    } 
+    if ([1, 2].includes(userRole)) {
+      roleOptions.push({ value: 'identity-verifications', label: 'User Identity Verifications' });
+    }
+    return [...baseOptions, ...roleOptions];
+  };
+  const documentTypeOptions = getDocumentTypeOptions()
+
+  return (
+    <>
+      <div className="p-6">
+        <div className='flex justify-between'> 
+          <div className='w-full'>
+        <h2 className="text-2xl font-semibold">Pending Requests</h2>
+          </div>
+          <div className='flex justify-end'> 
+        <FilterSelect
+          label="Document Type"
+          value={documentTypeFilter}
+          selectedOption={documentTypeOptions.find(opt => opt.value === documentTypeFilter) || documentTypeOptions[0]}
+          onChange={(selectedOption) => setDocumentTypeFilter(selectedOption ? selectedOption.value : '')}
+          options={documentTypeOptions}
+            selectClassName="w-[22rem]"
+        />
+          </div>
+        </div>
+        <Table
+          tableHeadings={["S.No", "Name", "Updated At", "Status", "Assign Status", "Actions"]}
+          data={tableRows}
+          loading={loading}
+          keyWord={searchTerm}
+          setKeyword={setSearchTerm}
+          size={PAGE_SIZE}
+          pageNo={currentPage}
+          onPageChange={setCurrentPage}
+          totalData={data?.data?.total}
+          showSearch={false}
+        />
+      </div>
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={viewMode === 'view' ? 'Request Details' : 'Update Request Status'}
+      >
+        {selectedRequest && (
+          viewMode === 'view' ? renderViewContent() : renderEditContent()
+        )}
+      </Modal>
+
+      <Modal
+        isOpen={isAssignModalOpen}
+        onClose={() => {
+          setIsAssignModalOpen(false);
+          setAssignedTo('');
+        }}
+        title="Assign Request to Admin"
+        size="md"
+      >
+        <div className="space-y-6">
+          <FilterSelect
+            label="Select Admin"
+            value={assignedTo ? { value: assignedTo, label: `${admins.list.find(admin => admin._id === assignedTo)?.first_name} ${admins.list.find(admin => admin._id === assignedTo)?.last_name}` } : null}
+            onChange={(selectedOption) => setAssignedTo(selectedOption ? selectedOption.value : null)}
+            options={Array.isArray(admins?.list) ? admins.list.map((admin) => ({
+              value: admin._id,
+              label: `${admin.first_name} ${admin.last_name}`,
+            })) : []}
+            placeholder="Select an admin"
+            required
+          />
+
+          <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                setIsAssignModalOpen(false);
+                setAssignedTo('');
+              }}
+              disabled={isSubmitting}
+              className="flex-1 py-3"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={handleAssignRequest}
+              disabled={isSubmitting || !assignedTo}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3"
+            >
+              {isSubmitting ? (
+                <>
+                  <PiSpinner className="animate-spin mr-2" />
+                  Assigning...
+                </>
+              ) : (
+                "Assign Request"
+              )}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+};
+
+export default PendingRequests;

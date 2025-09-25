@@ -3,14 +3,19 @@ import {
   Edit,
   Globe,
   Phone,
+  Mail,
   Users,
   Calendar,
   MapPin,
   Building,
+  Award,
   Camera,
   Save,
   X,
-
+  Home,
+  User,
+  FileText,
+  Briefcase,
   CheckCircle
 } from 'lucide-react';
 
@@ -767,7 +772,7 @@ const CompanyProfile = () => {
   };
 
   return (
-    <div className=" ">
+    <div className="min-h-screen bg-gray-900">
       <Header />
       <Navigation />
       {renderActiveTab()}
@@ -776,3 +781,6 @@ const CompanyProfile = () => {
 };
 
 export default CompanyProfile;
+
+
+
