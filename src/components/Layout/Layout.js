@@ -22,6 +22,8 @@ import { unreadCount } from '../../redux/Users/userSlice';
 import { toast } from 'sonner';
 import RegisterCompany from '../../pages/RegisterCompany/RegisterCompany';
 import RegisterInstitute from '../../pages/RegisterInstitute/RegisterInstitute';
+import Companies from '../../pages/companies/Companies';
+import Institution from '../../pages/Institution/Institution';
 
 const Sidebar = lazy(() => import('./../Sidebar/Sidebar'));
 const Header = lazy(() => import('../Header/Header'));
@@ -234,6 +236,8 @@ function Layout() {
               <Route path="/forage-certificates" element={<ForageCertificate />} />
               {/* <Route path="/create-company" element={<CreateCompany />} /> */}
               <Route path="/create-company" element={<RegisterCompany />} />
+              <Route path="/companies" element={<Companies />} />
+              <Route path="/institutions" element={<Institution />} />
               <Route path="/create-institute" element={<RegisterInstitute />} />
               <Route path="/resume/:username?" element={<ResumeCertificate />} />
               <Route path="/create-post" element={<CreatePost />} />

@@ -15,6 +15,7 @@ import Userpost from "./pages/Userpost";
 import UserDetails from "./pages/UserDetails";
 import UserCertificate from "./pages/UserCertificate";
 import Userpost2 from "./pages/Userpost2";
+import CompanyLayout from "./components/Layout/CompanyLayout";
 
 const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
@@ -117,6 +118,7 @@ const App = () => {
 
           {/* Private Routes */}
           <Route path="/user/*" element={<PrivateRoute component={Layout} />} />
+          <Route path="/company/*" element={<PrivateRoute component={CompanyLayout} />} />
 
           <Route path="/education-details" element={<PrivateRoute component={EducationDetails} />} />
 

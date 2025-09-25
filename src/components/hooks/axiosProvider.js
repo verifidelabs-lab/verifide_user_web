@@ -2,11 +2,11 @@ import axios from 'axios';
 import { getCookie, removeCookie } from '../utils/cookieHandler';
 
 
-// const isLive = false
-const isLive = true
+const isLive = false
+// const isLive = true
 
-export const apiUrl = isLive ? 'https://dev-verified.jamsara.com/api/v1/' : 'http://192.168.29.106:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://dev-verified.jamsara.com/socket' : 'http://192.168.29.106:5004/socket';
+export const apiUrl = isLive ? 'https://dev-verified.jamsara.com/api/v1/' : ' http://192.168.1.63:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://dev-verified.jamsara.com/socket' : ' http://192.168.1.63:5004socket';
 
 
 const axiosPublic = axios.create({
