@@ -1346,10 +1346,10 @@ const Profile = ({ profileData }) => {
                               <img src={`/Img/Profile/Frame (2).png`} alt='' className="hover:scale-110 transition-transform duration-300" />
                             </div>
                             <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
-                              {`No Certifications added`}
+                              {`No Projects added`}
                             </h3>
                             <p className="text-sm text-gray-500">
-                              {`Add your certifications to build a comprehensive profile`}
+                              {`Add your projects to build a comprehensive profile`}
                             </p>
                           </div>
                         )}

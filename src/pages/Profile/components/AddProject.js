@@ -37,6 +37,10 @@ const AddProject = ({
             toast.error("End date cannot be before Start date!");
             return false;
         }
+        if (end == start) {
+            toast.error("End date cannot be same as  Start date!");
+            return false;
+        }
         return true;
     };
 

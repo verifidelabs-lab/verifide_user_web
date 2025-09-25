@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Modal from '../../../components/ui/Modal/Modal';
-import CustomInput from '../../../components/ui/Input/CustomInput';
-import CustomDateInput from '../../../components/ui/Input/CustomDateInput';
-import FilterSelect from '../../../components/ui/Input/FilterSelect';
-import EnhancedFileInput from '../../../components/ui/Input/CustomFileAndImage';
+import React, { useState } from "react";
+import Modal from "../../../components/ui/Modal/Modal";
+import CustomInput from "../../../components/ui/Input/CustomInput";
+import CustomDateInput from "../../../components/ui/Input/CustomDateInput";
+import FilterSelect from "../../../components/ui/Input/FilterSelect";
+import EnhancedFileInput from "../../../components/ui/Input/CustomFileAndImage";
 
 const AddCertificate = ({
   formData,
@@ -19,17 +19,20 @@ const AddCertificate = ({
   handleFileDelete,
   setAddModalState,
   setInputFields,
-  loading
+  loading,
 }) => {
-  const [uploadType, setUploadType] = useState('link');
+  const [uploadType, setUploadType] = useState("link");
 
   const getSelectedSkills = (ids) => {
-    return masterSkillsList?.filter((skill) => ids?.includes(skill.value)) || masterSkillsList[0].value;
+    return (
+      masterSkillsList?.filter((skill) => ids?.includes(skill.value)) ||
+      masterSkillsList[0].value
+    );
   };
 
   return (
     <Modal
-      isOpen={modalState.type === 'certifications'}
+      isOpen={modalState.type === "certifications"}
       onClose={handleClose}
       title="Additional Certifications"
       handleSubmit={handleSubmit}
@@ -40,7 +43,7 @@ const AddCertificate = ({
         <CustomInput
           label="Certificate Name"
           value={formData?.name}
-          onChange={(e) => handleChange('name', e.target.value)}
+          onChange={(e) => handleChange("name", e.target.value)}
           placeholder="Enter certificate name"
           className="w-full h-10"
           error={error?.name}
@@ -51,7 +54,7 @@ const AddCertificate = ({
         <CustomInput
           label="Issuing Organization"
           value={formData?.issuing_organization}
-          onChange={(e) => handleChange('issuing_organization', e.target.value)}
+          onChange={(e) => handleChange("issuing_organization", e.target.value)}
           placeholder="Enter company/organization name"
           className="w-full h-10"
           error={error?.issuing_organization}
@@ -64,9 +67,10 @@ const AddCertificate = ({
             type="date"
             label="Issue Date"
             value={formData?.issue_date}
-            onChange={(e) => handleChange('issue_date', e.target.value)}
+            onChange={(e) => handleChange("issue_date", e.target.value)}
             placeholder="MM/YYYY"
             className="w-full h-10"
+            allowFutureDate={false}
             error={error?.issue_date}
             required
           />
@@ -75,7 +79,7 @@ const AddCertificate = ({
             label="Credential ID"
             placeholder="Enter credential ID (min length 5)"
             value={formData?.credential_id}
-            onChange={(e) => handleChange('credential_id', e.target.value)}
+            onChange={(e) => handleChange("credential_id", e.target.value)}
             className="w-full h-10"
             error={error?.credential_id}
             min={5}
@@ -98,14 +102,13 @@ const AddCertificate = ({
           isMulti
           error={error?.skills_acquired}
           onCreateOption={(inputValue, field) => {
-            console.log(inputValue, field)
+            console.log(inputValue, field);
             setAddModalState({
               isOpen: true,
-              type: 'masterSkill',
-              field: field
+              type: "masterSkill",
+              field: field,
             });
-            setInputFields(prev => ({ ...prev, name: inputValue }))
-
+            setInputFields((prev) => ({ ...prev, name: inputValue }));
           }}
           isClearable={true}
           required
@@ -119,8 +122,8 @@ const AddCertificate = ({
               type="radio"
               name="uploadType"
               value="link"
-              checked={uploadType === 'link'}
-              onChange={() => setUploadType('link')}
+              checked={uploadType === "link"}
+              onChange={() => setUploadType("link")}
               className="w-4 h-4"
             />
             Certification Link
@@ -131,19 +134,19 @@ const AddCertificate = ({
               type="radio"
               name="uploadType"
               value="media"
-              checked={uploadType === 'media'}
-              onChange={() => setUploadType('media')}
+              checked={uploadType === "media"}
+              onChange={() => setUploadType("media")}
               className="w-4 h-4"
             />
             Certification Media
           </label>
         </div>
 
-        {uploadType === 'link' && (
+        {uploadType === "link" && (
           <CustomInput
             label="Credential URL"
             value={formData?.credential_url}
-            onChange={(e) => handleChange('credential_url', e.target.value)}
+            onChange={(e) => handleChange("credential_url", e.target.value)}
             placeholder="Enter credential URL (e.g. https://example.com)"
             className="w-full h-10"
             error={error?.credential_url}
@@ -151,7 +154,7 @@ const AddCertificate = ({
           />
         )}
 
-        {uploadType === 'media' && (
+        {uploadType === "media" && (
           <EnhancedFileInput
             label="Upload Certificate Media/PDF"
             className="w-full"
