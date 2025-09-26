@@ -105,7 +105,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         size: 100,
         populate: "industry|name",
         select:
-          "name display_name industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+          "name display_name email industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
         searchFields: "name",
         keyWord: "",
         query: JSON.stringify({
@@ -331,13 +331,13 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     companiesData?.data?.list.map((company) => (
                       <button
                         key={company._id}
-                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                        className="block w-full text-left text-gray-700 px-4 py-2 text-sm hover:bg-gray-100 capitalize"
                         onClick={() => {
                           setCookie("ACTIVE_MODE", `COMPANY:${company._id}`);
                         }}
                       >
                         <Link to={`/company/login?email=${encodeURIComponent(company.email)}`}>
-                          {company.name}
+                         Company : {company.name}
                         </Link>
                       </button>
                     ))

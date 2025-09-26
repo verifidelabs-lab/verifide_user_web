@@ -11,10 +11,10 @@ import CustomInput from "../../../components/ui/InputAdmin/CustomInput";
 import PasswordInput from "../../../components/ui/InputAdmin/PasswordInput";
 import Button from "../../../components/ui/Button/Button";
 import useFormHandler from "../../../components/hooks/useFormHandler";
-import { setCookie } from "../../../components/utils/cookieHandler";
+import { getCookie, setCookie } from "../../../components/utils/cookieHandler";
 
 
-const Login = ({ role = "admin" }) => {
+const CompanyLogin = ({ role = "admin" }) => {
   const dispatch = useDispatch()
 
   const location = useLocation();
@@ -69,47 +69,49 @@ const Login = ({ role = "admin" }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    console.log("this is workind", formData)
-    e.preventDefault();
-    if (!formData.username || !formData.password) {
-      setErrors({
-        username: !formData.username ? "User ID is required" : "",
-        password: !formData.password ? "Password is required" : "",
-      });
-      toast.error("Please fill all fields");
-      return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!formData.username || !formData.password) {
+    setErrors({
+      username: !formData.username ? "User ID is required" : "",
+      password: !formData.password ? "Password is required" : "",
+    });
+    toast.error("Please fill all fields");
+    return;
+  }
+  try {
+    // Ensure user is logged in before company login
+    const userToken = getCookie("VERIFIED_TOKEN");
+    if (!userToken) {
+      toast.error("Please login as a user first");
+      return navigate("/login");
     }
-    try {
-      setIsLoading(true);
-      const loginAction = getLoginAction();
-      let payload;
-      if (role === "company" || role === "institute") {
-        payload = {
-          username_email: formData.username,
-          password: formData.password,
-        };
-      } else {
-        payload = {
-          username: formData.username,
-          password: formData.password,
-        };
-      }
-      const res = await dispatch(loginAction(payload)).unwrap();
-      if (res) {
-        setCookie('VERIFIED_ADMIN_TOKEN', JSON.stringify(res?.data?.token));
-        setCookie('USER_ROLE', res?.data?.accessMode);
-        setCookie('SIDE_BAR', res?.data?.accessMode);
-        toast.success(res?.message || 'Login successful');
-        navigate(getDashboardPath(res?.data?.accessMode));
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error || 'Invalid credentials or server error');
-    } finally {
-      setIsLoading(false);
+
+    setIsLoading(true);
+    const loginAction = getLoginAction();
+    const payload = {
+      username_email: formData.username,
+      password: formData.password,
+    };
+
+    const res = await dispatch(loginAction(payload)).unwrap();
+    if (res?.data?.token) {
+      // Save company token separately
+      setCookie('COMPANY_TOKEN', JSON.stringify(res.data.token));
+      setCookie('COMPANY_ROLE', res.data.accessMode); // optional for role-based routing
+      toast.success(res?.message || 'Company login successful');
+
+      // Navigate to company dashboard
+      navigate("/company/dashboard");
     }
-  };
+  } catch (error) {
+    console.log(error);
+    toast.error(error || 'Invalid credentials or server error');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const getForgotPasswordLink = () => {
     switch (role) {
@@ -225,4 +227,4 @@ const Login = ({ role = "admin" }) => {
   );
 };
 
-export default Login;
+export default CompanyLogin;

@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { getCookie, removeCookie } from '../utils/cookieHandler';
+import { CiNoWaitingSign } from 'react-icons/ci';
 
+// const isLive = false;
+const isLive = true
+ 
 
-const isLive = false
-// const isLive = true
-
-export const apiUrl = isLive ? 'https://dev-verified.jamsara.com/api/v1/' : ' http://192.168.94.185:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://dev-verified.jamsara.com/socket' : ' http://192.168.94.185:5004socket';
-
+export const apiUrl = isLive ? 'https://verifide.xyz/api/v1/' : 'http://10.88.102.185:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://verifide.xyz/socket' : 'http://10.88.102.185:5004/socket';
 
 const axiosPublic = axios.create({
     baseURL: apiUrl,
@@ -24,24 +24,35 @@ const axiosImage = axios.create({
     headers: { 'Content-Type': 'multipart/form-data' },
 });
 
+// Auth request interceptor for user OR company token
 const authRequestInterceptor = (config) => {
-    const token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, '');
+    console.log("this is the config furl", config.url)
+    // Determine which token to use
+    // Default to user token
+    let token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, '');
+
+    // If company token exists and path includes /company, use it
+    if (getCookie("COMPANY_TOKEN") && config.url?.startsWith("/companies")) {
+        token = getCookie("COMPANY_TOKEN")?.replace(/^"|"$/g, '');
+    }
+
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     } else {
-        removeCookie();
+        removeCookie("VERIFIED_TOKEN");
+        removeCookie("COMPANY_TOKEN");
         return Promise.reject(new Error("No authentication token found"));
     }
     return config;
 };
 
+// Central error interceptor
 const errorResponseInterceptor = (error) => {
     if (!error.response) {
         return Promise.reject({ message: "Network error. Please try again." });
     }
 
     switch (error.response.status) {
-
         case 403:
             return Promise.reject({
                 message: error.response.data?.message || "Access denied. Insufficient permissions."
@@ -53,12 +64,15 @@ const errorResponseInterceptor = (error) => {
     }
 };
 
+// Apply interceptors
 [axiosPrivate, axiosImage].forEach(instance => {
     instance.interceptors.request.use(authRequestInterceptor);
     instance.interceptors.response.use(
         (response) => {
+            // Session expired handling for user OR company
             if (response?.data?.code === 3) {
-                removeCookie();
+                removeCookie("VERIFIED_TOKEN");
+                removeCookie("COMPANY_TOKEN");
                 return Promise.reject({ message: "Session expired" });
             }
             return response;
@@ -72,6 +86,7 @@ axiosPublic.interceptors.response.use(
     errorResponseInterceptor
 );
 
+// Helper for uploading images directly
 const uploadImageDirect = async (apiPath, formData) => {
     try {
         const response = await axiosImage.post(apiPath, formData);

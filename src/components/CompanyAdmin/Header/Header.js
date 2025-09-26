@@ -4,7 +4,7 @@ import { BiMenu, BiX } from 'react-icons/bi';
 import { FiChevronDown } from 'react-icons/fi';
 import HeaderJson from './Header.json';
 import { RiNotification2Fill } from "react-icons/ri";
-import { clearAllData, getCookie, removeCookie } from '../../utils/cookieHandler';
+import { clearAllData, clearCompanySession, getCookie, removeCookie } from '../../utils/cookieHandler';
 const ROLES = {
   SUPER_ADMIN: 1,
   ADMIN: 2,
@@ -17,12 +17,13 @@ const ROLES = {
 };
 
 const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
+  console.log('this is the company details', companiesProfileData)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate()
   const dropdownRef = useRef();
-  const userRole = Number(getCookie("USER_ROLE"));
+  const userRole = Number(getCookie("COMPANY_ROLE"));
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -34,10 +35,8 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
   }, []);
 
   const handleRemoveCookie = () => {
-    removeCookie('VERIFIED_ADMIN_TOKEN')
-    removeCookie('USER_ROLE')
-    // clearAllData()
-  
+    clearCompanySession()
+    navigate("/user/feed")
   }
 
 
@@ -83,7 +82,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
         : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
           ? instituteProfileData
           : {};
-
+  console.log("htis is the profiledata", profileData)
   return (
     <div className="bg-white z-10 flex-shrink-0 h-16 border-b border-black border-opacity-10 ">
       <div className="flex-1 px-4 flex justify-between items-center h-full">

@@ -17,44 +17,14 @@ import {
 import PeopleToConnect from '../../../components/ui/ConnectSidebar/ConnectSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { suggestedUser } from '../../../redux/Users/userSlice';
+import { companiesProfile } from '../../../redux/CompanySlices/CompanyAuth';
+import { Link } from 'react-router-dom';
 
 const CompanyProfile = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [editMode, setEditMode] = useState({});
-  const [agencyData, setAgencyData] = useState({
-    name: 'Musemind - Global UX Design Agency',
-    tagline: 'An Experience Design Agency Focusing On Building Functional, Simple, Human-Centered Digital Products For Future.',
-    overview: 'Musemind Is Creating Digital Experiences That Connect And Transform',
-    description: 'With A Global Footprint In Dubai, Berlin, Riyadh, Dhaka, London, And New York, Musemind Is More Than A Web And UX Design Agency. We\'re A Collective Of UX Passionate Designers, Animators, Researchers, And Strategists, All Driven By A Shared Purpose: To Build Designs That Don\'t Just Look Good But Truly Resonate With Users And Transform Brands.',
-    workDescription: 'Our Work Speaks For Itself: Trusted By Over 300 Clients From Innovative Startups Raising Millions To Established Fortune 100 Companies Like Microsoft, Salesforce, Indeed, Partner, Moley Pool, And Pool. We\'ve Been Privileged To Design For Businesses Across Diverse Industries Whether It\'s E-commerce, Metaverse, Tourism, AR/VR, Ed-Tech, Healthcare, Beauty, Or Agriculture, Our Cross-Industry Insights Empower Us To Bring Real Solutions That Elevate And Differentiate.',
-    website: 'http://www.musemind.agency/',
-    phone: '+971501968827',
-    industry: 'Design Services',
-    founded: '2020',
-    companySize: '51-200 employees',
-    verifiedSince: 'August 23, 2025',
-    followers: '35K Followers',
-    employees: '9,200 Employees',
-    specialties: [
-      'Networking Strategies',
-      'Effective Communication',
-      'Trust Development',
-      'Conflict Resolution',
-      'Team Collaboration',
-      'Emotional Intelligence',
-      'Interpersonal Skills',
-      'Influence and Persuasion',
-      'Negotiation Tactics',
-      'Cultural Competence',
-      'Building Rapport',
-      'Feedback Mechanisms',
-      'Mentorship Opportunities',
-      'Community Engagement',
-      'Long-term Partnerships',
-      'Networking Events'
-    ],
-    logo: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=400&fit=crop&crop=center'
-  });
+  const [agencyData, setAgencyData] = useState(
+    {});
 
   const [activeTab1, setActiveTab1] = useState('user');
   const dispatch = useDispatch();
@@ -62,8 +32,8 @@ const CompanyProfile = () => {
   const { suggestedUserData: { data: suggestedUsers } = {} } = userSelector || {};
 
   useEffect(() => {
-    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
-  }, [dispatch, activeTab]);
+    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
+  }, [dispatch, activeTab1]);
 
   const [posts, setPosts] = useState([
     {
@@ -197,7 +167,38 @@ const CompanyProfile = () => {
       </div>
     );
   };
+  useEffect(() => {
+    const fetchCompanyProfile = async () => {
+      try {
+        const res = await dispatch(companiesProfile()).unwrap();
+        const data = res?.data;
 
+        if (data) {
+          setAgencyData({
+            name: data.display_name || data.name || '',
+            tagline: '', // no tagline in API, you can set default or empty
+            overview: data.description || '',
+            description: data.description || '',
+            workDescription: '', // no workDescription in API
+            website: data.website_url || '',
+            phone: data.phone_no || '',
+            industry: data.industry?.map(i => i.name).join(', ') || '',
+            founded: data.founded_year ? new Date(data.founded_year * 1000).getFullYear().toString() : '',
+            companySize: data.company_size || '',
+            verifiedSince: data.verified_at ? new Date(data.verified_at).toLocaleDateString() : '',
+            followers: data.follower_count ? `${data.follower_count} Followers` : '0 Followers',
+            employees: data.employee_count ? `${data.employee_count} Employees` : '0 Employees',
+            specialties: data.specialties || [],
+            logo: data.logo_url || ''
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch company profile:", error);
+      }
+    };
+
+    fetchCompanyProfile();
+  }, [dispatch]);
   // Header
   const Header = () => (
     <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
@@ -242,8 +243,10 @@ const CompanyProfile = () => {
           </div>
         </div>
 
-        <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-          Edit Page
+        <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors" >
+          <Link to={"/company/update-profile"} >
+            Edit Page
+          </Link>
         </button>
       </div>
     </div>
@@ -258,8 +261,8 @@ const CompanyProfile = () => {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-500 hover:text-blue-600'
+              ? 'text-blue-600 border-b-2 border-blue-600'
+              : 'text-gray-500 hover:text-blue-600'
               }`}
           >
             {tab}
@@ -383,7 +386,7 @@ const CompanyProfile = () => {
         <div>
           <h3 className="text-sm font-medium text-gray-900 mb-2">Specialties</h3>
           <div className="flex flex-wrap gap-2">
-            {agencyData.specialties.map((s, i) => (
+            {agencyData.specialties?.map((s, i) => (
               <span key={i} className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs border border-gray-200">
                 {s}
               </span>

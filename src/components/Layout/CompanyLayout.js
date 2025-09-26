@@ -18,7 +18,7 @@ import CompanyProfile from '../../pages/CompanyPanel/CompanyProfile/CompanyProfi
 import CompanyDashboard from '../../pages/CompanyPanel/Dashboard/dashboard';
 import CompanySidebar from '../Sidebar/CompanySidebar/CompanySidebar';
 import Message from '../../pages/Message/Message';
-import Login from '../../pages/CompanyPanel/Login/Login';
+// import Login from '../../pages/CompanyPanel/Login/Login';
 import Header from '../CompanyAdmin/Header/Header';
 
 
@@ -65,7 +65,7 @@ const ROLES = {
 
 function CompanyLayout() {
   const [navbarOpen, setNavbarOpen] = useState(true);
-  const userRole = Number(getCookie("USER_ROLE"));
+  const userRole = Number(getCookie("COMPANY_ROLE"));
   const dispatch = useDispatch();
   const isNotificationDisabledRef = useRef(false);
   const socket = socketConnection();
@@ -279,7 +279,7 @@ function CompanyLayout() {
                   <Route path={`dashboard`} element={<CompanyDashboard />} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile />} />
-                  <Route path="login" element={<Login role="company" />} />
+                  {/* <Route path="login" element={<Login role="company" />} /> */}
                  <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />  
  
                   {/* <Route path={`${basePath}/profile`} element={<Profile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />   */}

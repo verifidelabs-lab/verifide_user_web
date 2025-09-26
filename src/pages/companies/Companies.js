@@ -136,7 +136,7 @@ const Companies = () => {
         size: PAGE_SIZE,
         populate: "industry|name",
         select:
-          "name display_name industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+          "name display_name email industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
         searchFields: "name",
         keyWord: searchTerm,
         query: JSON.stringify({
