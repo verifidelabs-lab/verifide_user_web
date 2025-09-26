@@ -5,8 +5,8 @@ import { getCookie, removeCookie } from '../utils/cookieHandler';
 const isLive = false
 // const isLive = true
 
-export const apiUrl = isLive ? 'https://dev-verified.jamsara.com/api/v1/' : ' http://192.168.1.38:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://dev-verified.jamsara.com/socket' : ' http://192.168.1.38:5004socket';
+export const apiUrl = isLive ? 'https://dev-verified.jamsara.com/api/v1/' : ' http://192.168.94.185:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://dev-verified.jamsara.com/socket' : ' http://192.168.94.185:5004socket';
 
 
 const axiosPublic = axios.create({

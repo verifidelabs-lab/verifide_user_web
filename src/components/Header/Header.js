@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {  BiMenu, BiX } from 'react-icons/bi';
+import { BiMenu, BiX } from 'react-icons/bi';
 import { FiChevronDown } from 'react-icons/fi';
 import HeaderJson from './Header.json';
 import { getCookie, removeCookie, setCookie } from '../utils/cookieHandler';
 import { useProfileImage } from '../context/profileImageContext';
 import Button from '../ui/Button/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { switchAccount } from '../../redux/slices/authSlice';
 import { toast } from 'sonner';
 import Modal from '../ui/Modal/Modal';
@@ -14,6 +14,7 @@ import CustomInput from '../ui/Input/CustomInput';
 import FilterSelect2 from '../ui/Input/FilterSelect2';
 import CustomDateInput from '../ui/Input/CustomDateInput';
 import FileUpload from '../ui/Image/ImageUploadWithSelect';
+import { getCompaniesList } from '../../redux/CompanySlices/companiesSlice';
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     setModeDropdown(false);
   }, [location.pathname]);
 
-  const topRef = useRef(null); 
+  const topRef = useRef(null);
   const scrollToTop = () => {
     if (topRef.current) {
       topRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -88,6 +89,45 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+  const entryTypeOptions = [
+    { value: "Master Entries", label: "Master Entries" },
+    { value: "User Entries", label: "User Entries" },
+  ];
+  const [entryType, setEntryType] = useState(entryTypeOptions[0]);
+  const {
+    getCompaniesListData: { data: companiesData } = {},
+    getCompaniesDetailsData: { data: companyDetails } = {},
+  } = useSelector((state) => state.companies);
+  const fetchCompaniesList = useCallback(
+    async (page = 1) => {
+      const apiPayload = {
+        page: 1,
+        size: 100,
+        populate: "industry|name",
+        select:
+          "name display_name industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+        searchFields: "name",
+        keyWord: "",
+        query: JSON.stringify({
+          created_by_users: entryType.value === "User Entries",
+        }),
+      };
+      try {
+        setIsLoading(true);
+        await dispatch(getCompaniesList(apiPayload));
+      } catch (error) {
+        toast.error("Failed to fetch companies list");
+        console.error("Error fetching companies:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [dispatch]
+  );
+  useEffect(() => {
+    fetchCompaniesList();
+
+  }, [dispatch, fetchCompaniesList]);
   return (
     <header className="bg-white z-10 border-b border-black border-opacity-10" ref={topRef}>
       <div className="mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
@@ -106,7 +146,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
           <nav className="hidden lg:flex lg:gap-14 md:gap-3 2xl:ps-0 xl:ps-8 md:ps-10 lg:ps-0 flex-1">
             {HeaderJson?.headerItems?.map((item, index) => {
               const isActive = location.pathname === item?.path;
-              const isHome = item?.path === '/'; 
+              const isHome = item?.path === '/';
 
               return (
                 <Link
@@ -114,12 +154,12 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   to={item?.path}
                   onClick={() => {
                     if (isHome) {
-                      scrollToTop(); 
+                      scrollToTop();
                     }
                   }}
                   className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
-                      ? 'font-semibold text-[#000000E6] border-b-2 border-blue-600'
-                      : 'font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600'
+                    ? 'font-semibold text-[#000000E6] border-b-2 border-blue-600'
+                    : 'font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600'
                     } pb-1`}
                 >
                   {item?.name}
@@ -287,6 +327,21 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Change Password
                   </Link>
+                  {companiesData?.data?.list.length > 0 ? (
+                    companiesData?.data?.list.map((company) => (
+                      <button
+                        key={company._id}
+                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                        onClick={() => {
+                          setCookie("ACTIVE_MODE", `COMPANY:${company._id}`);
+                        }}
+                      >
+                        <Link to={`/company/login?email=${encodeURIComponent(company.email)}`}>
+                          {company.name}
+                        </Link>
+                      </button>
+                    ))
+                  ) : null}
                   <Link
                     to="/user/create-company"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

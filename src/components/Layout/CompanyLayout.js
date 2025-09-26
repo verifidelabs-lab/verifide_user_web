@@ -3,24 +3,27 @@
 import React, { Suspense, useState, lazy, useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Sidebar from './../Sidebar/Sidebar';
-import Header from '../Header/Header';
 import Loader from '../../pages/Loader/Loader';
 import { getCookie } from '../../components/utils/cookieHandler';
 import { useDispatch, useSelector } from 'react-redux';
-import { adminProfile, companiesProfile, instituteProfile } from '../../redux/slices/authSlice';
-import Posts from '../../pages/PostsManagement/Posts';
-import NotificationInterface from '../../pages/Notitifcation/Notification';
-import CreatePost from '../../pages/PostsManagement/CreatePost';
+import { adminProfile, companiesProfile, instituteProfile } from '../../redux/CompanySlices/CompanyAuth';
+// import Posts from '../../pages/PostsManagement/Posts';
+// import NotificationInterface from '../../pages/Notitifcation/Notification';
+// import CreatePost from '../../pages/PostsManagement/CreatePost';
 import bellSound from "./uberx_request_tone.mp3";
 import { useRef } from 'react';
-import { socketConnection } from '../utils/socket';
-import UserPermissions from '../../pages/Admin/Users/UserPermissions';
+import { socketConnection } from '../utils/shocket';
+// import UserPermissions from '../../pages/Admin/Users/UserPermissions';
 import CompanyProfile from '../../pages/CompanyPanel/CompanyProfile/CompanyProfile';
 import CompanyDashboard from '../../pages/CompanyPanel/Dashboard/dashboard';
+import CompanySidebar from '../Sidebar/CompanySidebar/CompanySidebar';
+import Message from '../../pages/Message/Message';
+import Login from '../../pages/CompanyPanel/Login/Login';
+import Header from '../CompanyAdmin/Header/Header';
 
 
 // Lazy load components
-const Dashboard = lazy(() => import('../../pages/Dashboard/Dashboard'));
+// const Dashboard = lazy(() => import('../../pages/Dashboard/Dashboard'));
 // const UserModule = lazy(() => import('../../pages/Admin/Users/UserModule'));
 // const Companies = lazy(() => import('../../pages/Admin/companies/Companies'));
 // const Badge = lazy(() => import('../../pages/Admin/Badge/Badge'));
@@ -35,7 +38,7 @@ const Dashboard = lazy(() => import('../../pages/Dashboard/Dashboard'));
 // const AdminUsers = lazy(() => import('../../pages/Admin/Users/AdminUsers'));
 // const Level = lazy(() => import('../../pages/Admin/Level/Level'));
 const PageNotFound = lazy(() => import('../Not found/PageNotFound'));
-const ApprovedRequests = lazy(() => import('../../pages/RequestManagement/ApprovedRequests/ApprovedRequests'));
+// const ApprovedRequests = lazy(() => import('../../pages/RequestManagement/ApprovedRequests/ApprovedRequests'));
 // const PendingRequests = lazy(() => import('../../pages/RequestManagement/PendingRequests/PendingRequests'));
 // const RejectedRequests = lazy(() => import('../../pages/RequestManagement/RejectedRequests/RejectedRequests'));
 // const Assessments = lazy(() => import('../../pages/AssessmentsManagement/Assessments/Assessments'));
@@ -43,7 +46,7 @@ const ApprovedRequests = lazy(() => import('../../pages/RequestManagement/Approv
 // const CourseCategory = lazy(() => import('../../pages/CourseManagement/CourseCategory/CourseCategory'));
 // const Courses = lazy(() => import('../../pages/CourseManagement/Courses/Courses'));
 // const Profile = lazy(() => import('../../pages/Profile/Profile'));
-const UpdateProfile = lazy(() => import('../../pages/CompanyPanel/UpdateProfile'));
+const UpdateProfile = lazy(() => import('../../pages/CompanyPanel/UpdateProfile/UpdateProfile'));
 // const TNCManagement = lazy(() => import('../../pages/CmsManagement/TNCManagement'));
 // const PrivacyPolicies = lazy(() => import('../../pages/CmsManagement/PrivacyPolicies'));
 // const PromotionBanners = lazy(() => import('../../pages/PromotionsBanners/PromotionBanners'));
@@ -116,13 +119,13 @@ function CompanyLayout() {
 
 
   const getBasePath = () => {
-    switch (userRole) {
+    switch ("company") {
       case ROLES.SUPER_ADMIN:
       case ROLES.ADMIN:
         return "admin";
       case ROLES.COMPANIES:
       case ROLES.COMPANIES_ADMIN:
-        return "companies";
+        return "company";
       case ROLES.INSTITUTIONS:
       case ROLES.INSTITUTIONS_ADMIN:
         return "institute";
@@ -137,7 +140,7 @@ function CompanyLayout() {
   const [companiesProfileData, setCompanyProfileData] = useState({});
   const [instituteProfileData, setinstituteProfileData] = useState({});
   const [, setModuleName] = useState('')
-
+ console.log("this is te profileData",companiesProfileData)
   useEffect(() => {
     const fetchData = async () => {
       if (userRole === ROLES.ADMIN || userRole === ROLES.SUPER_ADMIN) {
@@ -222,18 +225,16 @@ function CompanyLayout() {
 
   return (
     <div className='flex h-screen overflow-hidden'>
-      <div className={`h-full ${navbarOpen ? "w-64 absolute md:relative transition ease-in-out delay-150" : "w-0"}`}>
+      <div className={`h-full ${navbarOpen ? "w-72 absolute md:relative transition ease-in-out delay-150" : "w-0"}`}>
         <CompanySidebar navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
       </div>
 
       <div className={`flex flex-col ${navbarOpen ? "flex-1" : "w-full"} overflow-hidden`}>
-        <Header setNavbarOpen={setNavbarOpen} />
+        <Header   companiesProfileData={companiesProfileData}/>
         <main className='flex-1 overflow-auto'>
           <Suspense fallback={<Loader />}>
             <Routes>
               {/* <Route index element={<Navigate to={`${basePath}/dashboard`} replace />} /> */}
-              <Route path={`${basePath}/dashboard`} element={<Dashboard role={basePath} />} />
-
               {/* Routes for Super Admin and Admin */}
               {/* {(userRole === ROLES.SUPER_ADMIN || userRole === ROLES.ADMIN) && (
                 <>
@@ -272,26 +273,28 @@ function CompanyLayout() {
               )} */}
 
               {/* Routes for Companies and Companies Admin */}
-              {(userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) && (
+              {/* {(userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) && ( */}
+              {(  
                 <>
-                  <Route path="dashboard" element={<CompanyDashboard />} />
+                  <Route path={`dashboard`} element={<CompanyDashboard />} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile />} />
-                  <Route path="/message/:id?/:isConnected?" element={<Message profileData={profileData} socket={socket} />} />
-
-                  <Route path={`${basePath}/profile`} element={<Profile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
+                  <Route path="login" element={<Login role="company" />} />
+                 <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />  
+ 
+                  {/* <Route path={`${basePath}/profile`} element={<Profile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />   */}
                   {/* <Route path={`${basePath}/admin-users`} element={<AdminUsers />} /> */}
-                  <Route path={`${basePath}/approved-requests`} element={<ApprovedRequests />} />
+                  {/* <Route path={`${basePath}/approved-requests`} element={<ApprovedRequests />} /> */}
                   {/* <Route path={`${basePath}/pending-requests`} element={<PendingRequests />} />
                   <Route path={`${basePath}/reject-requests`} element={<RejectedRequests />} /> */}
                   {/* <Route path={`${basePath}/assessments`} element={<Assessments />} />
                   <Route path={`${basePath}/results`} element={<ResultManagement />} />
                   <Route path={`${basePath}/courses`} element={<Courses />} />
                   <Route path={`${basePath}/course-categories`} element={<CourseCategory />} /> */}
-                  <Route path={`${basePath}/update-profile`} element={<UpdateProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
-                  <Route path={`${basePath}/posts-manage`} element={<Posts companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
+                  <Route path={`update-profile`} element={<UpdateProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
+                  {/* <Route path={`${basePath}/posts-manage`} element={<Posts companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   <Route path={`${basePath}/notification`} element={<NotificationInterface />} />
-                  <Route path={`${basePath}/create-post`} element={<CreatePost />} />
+                  <Route path={`${basePath}/create-post`} element={<CreatePost />} /> */}
                 </>
               )}
 

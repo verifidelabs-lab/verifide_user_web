@@ -12,18 +12,19 @@ import {
   resetPasswordCompanies,
   companiesProfile,
   instituteProfile
-} from '../../../redux/slices/authSlice'
-import Modal from '../../../components/Atoms/Modal/Modal'
-import Button from '../../../components/Atoms/Button/Button'
+} from '../../../redux/CompanySlices/CompanyAuth'
 import { toast } from 'sonner'
-import PasswordInput from '../../../components/Atoms/Input/PasswordInput'
 import { arrayTransform, uploadImageDirectly } from '../../../components/utils/globalFunction'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { countries } from '../../../redux/Global Slice/cscSlice'
-import FilterSelect from '../../../components/Atoms/Input/FilterSelect'
-import CustomInput from '../../../components/Atoms/Input/CustomInput'
+
 import { FiEdit2, FiLock, FiMail, FiPhone, FiGlobe, FiUser, FiCamera, FiCheck } from 'react-icons/fi'
+import Button from '../../../components/ui/Button/Button'
+import CustomInput from '../../../components/ui/InputAdmin/CustomInput'
+import FilterSelect from '../../../components/ui/InputAdmin/FilterSelect'
+import Modal from '../../../components/ui/InputAdmin/Modal/Modal'
+import PasswordInput from '../../../components/ui/InputAdmin/PasswordInput'
 import { getCookie } from '../../../components/utils/cookieHandler'
 const ROLES = {
   SUPER_ADMIN: 1,

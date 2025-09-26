@@ -1,0 +1,11 @@
+
+{
+  "headerItems": [
+    { "name": "Home", "path": "/" },
+    { "name": "Courses", "path": "/courses" },
+    { "name": "Assessment", "path": "/assessment" },
+    { "name": "Mentors", "path": "/mentors" },
+    { "name": "Opportunities", "path": "/opportunities" },
+    { "name": "Quest", "path": "/quest" }
+  ]
+}
