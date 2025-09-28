@@ -1,15 +1,16 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { Suspense, useState, lazy, useEffect, useMemo } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Sidebar from './../Sidebar/Sidebar';
 import Loader from '../../pages/Loader/Loader';
 import { getCookie } from '../../components/utils/cookieHandler';
 import { useDispatch, useSelector } from 'react-redux';
 import { adminProfile, companiesProfile, instituteProfile } from '../../redux/CompanySlices/CompanyAuth';
 // import Posts from '../../pages/PostsManagement/Posts';
-// import NotificationInterface from '../../pages/Notitifcation/Notification';
 // import CreatePost from '../../pages/PostsManagement/CreatePost';
+import sideBarJson from "../Sidebar/Sidebar.json";
+
 import bellSound from "./uberx_request_tone.mp3";
 import { useRef } from 'react';
 import { socketConnection } from '../utils/shocket';
@@ -18,8 +19,18 @@ import CompanyProfile from '../../pages/CompanyPanel/CompanyProfile/CompanyProfi
 import CompanyDashboard from '../../pages/CompanyPanel/Dashboard/dashboard';
 import CompanySidebar from '../Sidebar/CompanySidebar/CompanySidebar';
 import Message from '../../pages/Message/Message';
-// import Login from '../../pages/CompanyPanel/Login/Login';
 import Header from '../CompanyAdmin/Header/Header';
+import Courses from '../../pages/CompanyPanel/CourseManagement/Courses/Courses';
+import CourseCategory from '../../pages/CompanyPanel/CourseManagement/CourseCategory/CourseCategory';
+import Opportunities from '../../pages/Opportunitiess/Opportunitiess';
+import PendingRequests from '../../pages/CompanyPanel/RequestManagement/PendingRequests/PendingRequests';
+import NotificationInterface from '../../pages/CompanyPanel/Notitifcation/Notification';
+import PostJob from '../../pages/PostJob/PostJob';
+import Posts from '../../pages/CompanyPanel/PostsManagement/Posts';
+import CreatePost from '../../pages/CompanyPanel/PostsManagement/CreatePost';
+import Quest from '../../pages/Quest/Quest';
+import CreateQuest from '../../pages/Quest/Components/CreateQuest';
+// import Login from '../../pages/CompanyPanel/Login/Login';
 
 
 // Lazy load components
@@ -65,6 +76,7 @@ const ROLES = {
 
 function CompanyLayout() {
   const [navbarOpen, setNavbarOpen] = useState(true);
+  const [setIsOpen] = useState(false);
   const userRole = Number(getCookie("COMPANY_ROLE"));
   const dispatch = useDispatch();
   const isNotificationDisabledRef = useRef(false);
@@ -140,7 +152,7 @@ function CompanyLayout() {
   const [companiesProfileData, setCompanyProfileData] = useState({});
   const [instituteProfileData, setinstituteProfileData] = useState({});
   const [, setModuleName] = useState('')
- console.log("this is te profileData",companiesProfileData)
+  console.log("this is te profileData", companiesProfileData)
   useEffect(() => {
     const fetchData = async () => {
       if (userRole === ROLES.ADMIN || userRole === ROLES.SUPER_ADMIN) {
@@ -222,15 +234,22 @@ function CompanyLayout() {
     return modulePermissions[moduleCode] || null;
   };
 
+  const openLogout = () => {
+    setIsOpen(true);
+  };
+  const location = useLocation()
 
   return (
     <div className='flex h-screen overflow-hidden'>
-      <div className={`h-full ${navbarOpen ? "w-72 absolute md:relative transition ease-in-out delay-150" : "w-0"}`}>
+      {location.pathname !== "/company/opportunities" && <div className={`h-full ${navbarOpen ? "w-72 absolute md:relative transition ease-in-out delay-150" : "w-0"}`}>
         <CompanySidebar navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
-      </div>
+      </div>}
+
 
       <div className={`flex flex-col ${navbarOpen ? "flex-1" : "w-full"} overflow-hidden`}>
-        <Header   companiesProfileData={companiesProfileData}/>
+        <Header companiesProfileData={companiesProfileData} />
+        {/* <Header openLogout={openLogout} sideBarJson={sideBarJson} profileData={companiesProfileData}  playAndShowNotification={playAndShowNotification} /> */}
+
         <main className='flex-1 overflow-auto'>
           <Suspense fallback={<Loader />}>
             <Routes>
@@ -274,27 +293,31 @@ function CompanyLayout() {
 
               {/* Routes for Companies and Companies Admin */}
               {/* {(userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) && ( */}
-              {(  
+              {(
                 <>
-                  <Route path={`dashboard`} element={<CompanyDashboard />} />
+                  <Route path={`/`} element={<CompanyDashboard />} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile />} />
                   {/* <Route path="login" element={<Login role="company" />} /> */}
-                 <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />  
- 
+                  <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />
+                  <Route path="/opportunities" element={< Opportunities />} />
+                  <Route path="/post-job/:id?" element={<PostJob />} />
+
                   {/* <Route path={`${basePath}/profile`} element={<Profile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />   */}
                   {/* <Route path={`${basePath}/admin-users`} element={<AdminUsers />} /> */}
                   {/* <Route path={`${basePath}/approved-requests`} element={<ApprovedRequests />} /> */}
-                  {/* <Route path={`${basePath}/pending-requests`} element={<PendingRequests />} />
-                  <Route path={`${basePath}/reject-requests`} element={<RejectedRequests />} /> */}
-                  {/* <Route path={`${basePath}/assessments`} element={<Assessments />} />
-                  <Route path={`${basePath}/results`} element={<ResultManagement />} />
-                  <Route path={`${basePath}/courses`} element={<Courses />} />
-                  <Route path={`${basePath}/course-categories`} element={<CourseCategory />} /> */}
+                  <Route path={`verification`} element={<PendingRequests />} />
+                  {/* <Route path={`${basePath}/reject-requests`} element={<RejectedRequests />} /> */}
+                  {/* <Route path={`${basePath}/assessments`} element={<Assessments />} /> */}
+                  {/* <Route path={`${basePath}/results`} element={<ResultManagement />} /> */}
+                  <Route path={`courses`} element={<Courses />} />
+                  <Route path={`course-categories`} element={<CourseCategory />} />
                   <Route path={`update-profile`} element={<UpdateProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
-                  {/* <Route path={`${basePath}/posts-manage`} element={<Posts companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
-                  <Route path={`${basePath}/notification`} element={<NotificationInterface />} />
-                  <Route path={`${basePath}/create-post`} element={<CreatePost />} /> */}
+                  <Route path={`posts-manage`} element={<Posts companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
+                  <Route path={`create-post`} element={<CreatePost />} />
+                  <Route path={`notification`} element={<NotificationInterface />} />
+                  <Route path="quest" element={<Quest profileData={companiesProfileData} />} />
+                  <Route path="quest/create-your-quest/:id?" element={<CreateQuest />} />
                 </>
               )}
 

@@ -2,14 +2,16 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
-import Modal from '../../../components/Atoms/Modal/Modal';
-import ActionButtons from '../../../components/Atoms/table/TableAction';
-import { verificationCenterList, verificationCenterSingleDoc, updateVerificationCenter, assignVerificationCenter, getAllAdminListData, getAllCompaniesAdminListData, getAllInstitutionsAdminListData } from '../../../redux/Admin/courseSlice';
-import Table from '../../../components/Atoms/table/Table';
-import Button from '../../../components/Atoms/Button/Button';
+
+import { verificationCenterList, verificationCenterSingleDoc, updateVerificationCenter, assignVerificationCenter, getAllAdminListData, getAllCompaniesAdminListData, getAllInstitutionsAdminListData } from '../../../../redux/CompanySlices/courseSlice';
+import Button from '../../../../components/ui/Button/Button';
+import FilterSelect from '../../../../components/ui/InputAdmin/FilterSelect';
+import Table from '../../../../components/ui/table/Table';
+import Modal from '../../../../components/ui/InputAdmin/Modal/Modal';
+import { getCookie } from '../../../../components/utils/cookieHandler';
 import { PiSpinner } from 'react-icons/pi';
-import FilterSelect from '../../../components/Atoms/Input/FilterSelect';
-import { getCookie } from '../../../components/utils/cookieHandler';
+import ActionButtons from '../../../../components/ui/table/TableAction';
+
 const ROLES = {
   SUPER_ADMIN: 1,
   ADMIN: 2,
@@ -44,8 +46,10 @@ const StatusBadge = ({ status }) => {
 
 const PendingRequests = () => {
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state.course);
+  const selector = useSelector((state) => state.companyCourse);
+  console.log("Tsi sis dfsjdf", selector)
   const { getVerificationCenterList: { data } = {} } = selector || {};
+  console.log("This is verificatoin list", data)
   const [documentTypeFilter, setDocumentTypeFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -462,8 +466,8 @@ const PendingRequests = () => {
   );
 
   const getDocumentTypeOptions = () => {
-    const userRole = Number(getCookie("USER_ROLE"));
-    const baseOptions = [{ value: '', label: 'All Document Types' }]; 
+    const userRole = Number(getCookie("COMPANY_ROLE"));
+    const baseOptions = [{ value: '', label: 'All Document Types' }];
     const roleOptions = [];
     if ([1, 2, 4, 8].includes(userRole)) {
       roleOptions.push({ value: 'educations', label: 'User Educations' });
@@ -476,7 +480,7 @@ const PendingRequests = () => {
     }
     if ([1, 2].includes(userRole)) {
       roleOptions.push({ value: 'additional-certifications', label: 'User Additional Certifications' });
-    } 
+    }
     if ([1, 2].includes(userRole)) {
       roleOptions.push({ value: 'identity-verifications', label: 'User Identity Verifications' });
     }
@@ -484,25 +488,129 @@ const PendingRequests = () => {
   };
   const documentTypeOptions = getDocumentTypeOptions()
 
+
+  const CardList = ({
+    data,
+    loading,
+    currentPage,
+    PAGE_SIZE,
+    handleView,
+    handleEdit,
+    setSelectedRequest,
+    setIsAssignModalOpen,
+  }) => {
+    const cardRows = useMemo(() => {
+      return (
+        data?.data?.list?.map((item, index) => ({
+          id: item._id,
+          sno: (currentPage - 1) * PAGE_SIZE + index + 1,
+          name: `${item.user_id?.first_name} ${item.user_id?.last_name}`,
+          updatedAt: new Date(item.updatedAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }),
+          status: item.status,
+          assignStatus: item.assign_status,
+          avatar: item.user_id.avatar || null, // fallback avatar if you have it
+        })) || []
+      );
+    }, [data?.data?.list, currentPage]);
+
+    if (loading) {
+      return <p className="text-center text-gray-500">Loading...</p>;
+    }
+
+    if (!cardRows.length) {
+      return <p className="text-center text-gray-500">No Data Found</p>;
+    }
+
+    return (
+      <div className="grid gap-4">
+        {cardRows.map((card) => (
+          <div
+            key={card.id}
+            className="bg-white rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
+          >
+            <div className="flex items-start justify-between">
+              {/* Left: Avatar or Icon */}
+              <div className="flex items-start space-x-4 flex-1">
+                <div className="flex-shrink-0">
+                  {card.avatar ? (
+                    <img
+                      src={card.avatar}
+                      alt="User avatar"
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gray-100">
+                      <span className="text-gray-600 font-semibold text-lg">
+                        {card.name.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Middle: Details */}
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm">
+                    {card.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    S.No: {card.sno} • Updated: {card.updatedAt}
+                  </p>
+
+                  {/* Status badges */}
+                  <div className="flex gap-3 mt-2">
+                    <StatusBadge status={card.status} />
+                    <StatusBadge status={card.assignStatus.replaceAll("-", " ")} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Actions */}
+              <div className="flex flex-col gap-2">
+                <ActionButtons
+                  onView={() => handleView(card.id)}
+                  showEditButton={true}
+                  onEdit={() => handleEdit(card.id)}
+                  showDeleteButton={false}
+                  showAssignButton={true}
+
+                  onAssign={() => {
+                    setSelectedRequest(card);
+                    setIsAssignModalOpen(true);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+
+
   return (
     <>
       <div className="p-6">
-        <div className='flex justify-between'> 
+        <div className='flex justify-between mb-4'>
           <div className='w-full'>
-        <h2 className="text-2xl font-semibold">Pending Requests</h2>
+            <h2 className="text-2xl font-semibold">Verifications</h2>
           </div>
-          <div className='flex justify-end'> 
-        <FilterSelect
-          label="Document Type"
-          value={documentTypeFilter}
-          selectedOption={documentTypeOptions.find(opt => opt.value === documentTypeFilter) || documentTypeOptions[0]}
-          onChange={(selectedOption) => setDocumentTypeFilter(selectedOption ? selectedOption.value : '')}
-          options={documentTypeOptions}
-            selectClassName="w-[22rem]"
-        />
+          <div className='flex justify-end'>
+            <FilterSelect
+              label="Document Type"
+              value={documentTypeFilter}
+              selectedOption={documentTypeOptions.find(opt => opt.value === documentTypeFilter) || documentTypeOptions[0]}
+              onChange={(selectedOption) => setDocumentTypeFilter(selectedOption ? selectedOption.value : '')}
+              options={documentTypeOptions}
+              selectClassName="w-[22rem]"
+            />
           </div>
         </div>
-        <Table
+        {/* <Table
           tableHeadings={["S.No", "Name", "Updated At", "Status", "Assign Status", "Actions"]}
           data={tableRows}
           loading={loading}
@@ -513,7 +621,18 @@ const PendingRequests = () => {
           onPageChange={setCurrentPage}
           totalData={data?.data?.total}
           showSearch={false}
+        /> */}
+        <CardList
+          data={data}
+          loading={loading}
+          currentPage={currentPage}
+          PAGE_SIZE={PAGE_SIZE}
+          handleView={handleView}
+          handleEdit={handleEdit}
+          setSelectedRequest={setSelectedRequest}
+          setIsAssignModalOpen={setIsAssignModalOpen}
         />
+
       </div>
 
       <Modal

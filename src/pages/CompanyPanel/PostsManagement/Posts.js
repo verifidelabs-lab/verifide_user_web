@@ -5,19 +5,21 @@ import { FiTrash2, FiEye, FiSearch, FiMoreHorizontal, FiChevronLeft, FiChevronRi
 import { PiHeartStraightFill, PiHeartStraightLight, PiWarning } from "react-icons/pi";
 import { toast } from 'sonner';
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'; 
+import 'react-loading-skeleton/dist/skeleton.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useNavigate } from 'react-router-dom';
-import { FaExpand, FaPause, FaPlay, FaTimes, FaRegComment, FaRegShareSquare } from 'react-icons/fa'; 
-import AlertModal from '../../components/Atoms/Modal/AlertModal';
-import {  deletePost, enableDisablePost, getCommentOnPost, getPostList, getReplyOnPost } from '../../../redux/CompanySlices/companiesSlice';
+import { FaExpand, FaPause, FaPlay, FaTimes, FaRegComment, FaRegShareSquare } from 'react-icons/fa';
+import { deletePost, enableDisablePost, getCommentOnPost, getPostList, getReplyOnPost } from '../../../redux/CompanySlices/companiesSlice';
 import { BsFillHeartFill } from 'react-icons/bs';
 import Button from '../../../components/ui/Button/Button';
 import { getCookie } from '../../../components/utils/cookieHandler';
+import { Pagination } from 'swiper/modules';
+import AlertModal from '../../../components/ui/Modal/AlertModal';
+import PeopleToConnect from '../../../components/ui/ConnectSidebar/ConnectSidebar';
+import { suggestedUser } from '../../../redux/Users/userSlice';
 const ROLES = {
   COMPANIES: 3,
   COMPANIES_ADMIN: 7,
@@ -33,7 +35,7 @@ const POST_TYPES = {
   POLL: 'poll',
   IMAGE_VIDEO: 'image-video'
 };
-const CommentItem = ({ comment,  dispatch }) => {
+const CommentItem = ({ comment, dispatch }) => {
   const [showReplies, setShowReplies] = useState(false);
   const [replies, setReplies] = useState([]);
   const [loadingReplies, setLoadingReplies] = useState(false);
@@ -104,7 +106,7 @@ const CommentItem = ({ comment,  dispatch }) => {
 
       {showReplies && replies.length > 0 && (
         <div className="replies-container ml-12 space-y-3">
-          {replies.map(reply => (
+          {replies?.map(reply => (
             <div key={reply._id} className="flex items-start space-x-3">
               <img
                 src={reply.user?.profile_picture_url || "https://via.placeholder.com/32"}
@@ -201,7 +203,7 @@ const CommentsModal = ({ isOpen, onClose, post, profileData }) => {
         <div className="flex-1 overflow-y-auto p-4">
           {loading ? (
             <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
+              {[...Array(3)]?.map((_, i) => (
                 <div key={i} className="flex items-start space-x-3">
                   <Skeleton circle width={40} height={40} />
                   <div className="flex-1">
@@ -217,7 +219,7 @@ const CommentsModal = ({ isOpen, onClose, post, profileData }) => {
             </div>
           ) : (
             <div className="space-y-4">
-              {comments.map(comment => (
+              {comments?.map(comment => (
                 <CommentItem
                   key={comment._id}
                   comment={comment}
@@ -257,7 +259,7 @@ const SkeletonLoader = () => {
       </div>
       <Skeleton count={2} height={14} className="mb-4" />
       <div className="flex flex-wrap gap-2 mb-4">
-        {[1, 2, 3].map((_, i) => (
+        {[1, 2, 3]?.map((_, i) => (
           <Skeleton key={i} width={70} height={20} borderRadius={999} />
         ))}
       </div>
@@ -369,7 +371,7 @@ const PollComponent = ({ poll }) => {
     <div className="mt-3 border border-gray-200 rounded-lg p-3">
       <p className="font-medium text-sm mb-3">{poll.question || "Poll"}</p>
       <div className="space-y-2">
-        {poll.options.map((option, index) => {
+        {poll.options?.map((option, index) => {
           const voteCount = option.vote_count || 0;
           const percentage = totalVotes > 0 ? Math.round((voteCount / totalVotes) * 100) : 0;
           const isSelected = selectedOption === index;
@@ -427,7 +429,7 @@ const PostHeader = ({ profileData, post, onView, onDelete, isViewMode, formatDat
           />
         ) : (
           <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-[#000000E6] text-lg font-semibold">
-              {profileData?.name?.charAt(0).toUpperCase() || "U"}
+            {profileData?.name?.charAt(0).toUpperCase() || "U"}
           </div>
         )}
 
@@ -484,7 +486,7 @@ const PostContent = ({ post, type }) => {
               pagination={{ clickable: true }}
               className="w-full h-[500px]"
             >
-              {post.image_urls.map((url, index) => (
+              {post.image_urls?.map((url, index) => (
                 <SwiperSlide
                   key={`img-${index}`}
                   className="flex items-center justify-center"
@@ -510,7 +512,7 @@ const PostContent = ({ post, type }) => {
               pagination={{ clickable: true }}
               className="w-full h-[500px]"
             >
-              {post.image_urls.map((url, index) => (
+              {post.image_urls?.map((url, index) => (
                 <SwiperSlide
                   key={`imgvid-${index}`}
                   className="flex items-center justify-center"
@@ -567,7 +569,7 @@ const PostContent = ({ post, type }) => {
       {post.tags && post.tags.length > 0 && (
         <div className="mt-2">
           <div className="flex flex-wrap gap-1">
-            {post.tags.map((tag, index) => (
+            {post.tags?.map((tag, index) => (
               <span key={index} className="text-blue-600 text-xs bg-blue-50 px-2 py-1 rounded-full">
                 #{tag}
               </span>
@@ -579,7 +581,7 @@ const PostContent = ({ post, type }) => {
     </div>
   );
 };
-const PostActions = ({ post, onToggleStatus, profileData }) => { 
+const PostActions = ({ post, onToggleStatus, profileData }) => {
   const [commentsModalOpen, setCommentsModalOpen] = useState(false);
 
   return (
@@ -605,7 +607,7 @@ const PostActions = ({ post, onToggleStatus, profileData }) => {
           <span>Comment</span>
         </button>
         <button
-          className="flex items-center justify-center space-x-2 text-sm text-gray-600 hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50" 
+          className="flex items-center justify-center space-x-2 text-sm text-gray-600 hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
         >
           <FaRegShareSquare className="w-5 h-5" />
           <span>Share</span>
@@ -673,7 +675,12 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
   );
 };
 const Posts = ({ companiesProfileData, instituteProfileData }) => {
-  const userRole = Number(getCookie("USER_ROLE"));
+      const [activeTab, setActiveTab] = useState('user');
+    const userSelector = useSelector((state) => state.user);
+    const { suggestedUserData: { data: suggestedUsers } = {} } =
+        userSelector || {};
+
+  const userRole = Number(getCookie("COMPANY_ROLE"));
   const profileData =
     [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
       ? companiesProfileData
@@ -690,8 +697,11 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
   const [loading2, setLoading2] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(12);
-  const [totalPosts, setTotalPosts] = useState(0); 
+  const [totalPosts, setTotalPosts] = useState(0);
+    useEffect(() => {
+        dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
 
+    }, [dispatch, activeTab]);
   useEffect(() => {
     const timer = setTimeout(() => {
       const mode = getCookie("ACCESS_MODE");
@@ -798,7 +808,7 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
           >
             <FiChevronLeft size={18} />
           </button>
-          {getPageNumbers().map((item, index) => {
+          {getPageNumbers()?.map((item, index) => {
             if (item === 'start-ellipsis' || item === 'end-ellipsis') {
               return (
                 <span key={index} className="px-2 text-gray-500">
@@ -857,15 +867,15 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
     }
   };
   const basePath = getBasePath();
-  const [bannerUrl, setBannerUrl] = useState(profileData?.banner_image_url || '/logo.png');
+  const [bannerUrl, setBannerUrl] = useState(profileData?.banner_image_url || '/0684456b-aa2b-4631-86f7-93ceaf33303c.png');
   useEffect(() => {
     if (profileData?.banner_image_url) {
       const img = new Image();
       img.src = profileData.banner_image_url;
       img.onload = () => setBannerUrl(profileData.banner_image_url);
-      img.onerror = () => setBannerUrl('/logo.png');
+      img.onerror = () => setBannerUrl('/0684456b-aa2b-4631-86f7-93ceaf33303c.png');
     } else {
-      setBannerUrl('/logo.png');
+      setBannerUrl('/0684456b-aa2b-4631-86f7-93ceaf33303c.png');
     }
   }, [profileData?.banner_image_url]);
   if (loading2) {
@@ -880,176 +890,188 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <div className="w-full mx-auto max-w-6xl">
-        <div className="relative rounded-lg overflow-hidden shadow-md">
-          {profileData?.banner_image_url && (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: `url(${bannerUrl})`,
-                opacity: 0.15, 
-                zIndex: 0,
-              }}
-            />
-          )}
-          <div className="absolute inset-0 bg-black/10 z-0" />
-          <div className="relative z-10 bg-opacity-90 rounded-lg p-6">
-            <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8 mb-6">
-              <div className="flex-shrink-0">
-                <img
-                  src={profileData?.logo_url || '/default-company.png'}
-                  alt="Company Logo"
-                  className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-2 border-gray-200"
-                />
-              </div>
+    <div className="bg-[#F6FAFD] p-6 min-h-screen">
+      <div className="flex flex-col md:flex-row w-full mx-auto gap-6">
+        <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6">
+          <div className="relative rounded-lg overflow-hidden shadow-md">
+            {profileData?.banner_image_url && (
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${bannerUrl})`,
+                  opacity: 0.15,
+                  zIndex: 0,
+                }}
+              />
+            )}
+            <div className="absolute inset-0 bg-black/10 z-0" />
+            <div className="relative z-10 bg-opacity-90 rounded-lg p-6">
+              <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8 mb-6">
+                <div className="flex-shrink-0">
+                  <img
+                    src={profileData?.logo_url || '/36369.jpg'}
+                    alt="Company Logo"
+                    className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-2 border-gray-200"
+                  />
+                </div>
 
-              <div className="flex-1">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4 justify-between">
-                  <div className="flex items-center gap-2">
-                    <h1 className="text-xl md:text-2xl font-light">
-                      {profileData?.name}
-                    </h1>
-                    {profileData?.is_verified && (
-                      <span className="text-blue-500 text-xl">✓</span>
+                <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4 justify-between">
+                    <div className="flex items-center gap-2">
+                      <h1 className="text-xl md:text-2xl font-light">
+                        {profileData?.name}
+                      </h1>
+                      {profileData?.is_verified && (
+                        <span className="text-blue-500 text-xl">✓</span>
+                      )}
+                    </div>
+                    <a
+                      href={profileData?.website_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline text-sm font-semibold"
+                    >
+                      Visit Website
+                    </a>
+                    <div className="flex gap-3">
+                      <Button variant='primary' size='sm' icon={<FiPlus />}
+                        onClick={() => navigate(`/company/create-post`)}>
+                        Create Post
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-6 mb-4 text-sm">
+                    <div><span className="font-semibold">{profileData?.follower_count}</span> followers</div>
+                    <div><span className="font-semibold">{profileData?.employee_count}</span> employees</div>
+                    <div><span className="font-semibold">{profileData?.company_size}</span> size</div>
+                  </div>
+
+                  <div className="text-sm grid grid-cols-1 md:grid-cols-2 gap-y-2">
+                    <div className='flex gap-1'>
+                      <div className="font-semibold">Industry:</div>
+                      <div className="capitalize">
+                        {Array.isArray(profileData?.industry) && profileData?.industry?.map(ind => ind.name).join(', ')}
+                      </div>
+                    </div>
+
+                    <div className='flex gap-1'>
+                      <div className="font-semibold">Headquarters:</div>
+                      <div>
+                        {profileData?.headquarters?.city?.name}, {profileData?.headquarters?.state?.name}, {profileData?.headquarters?.country?.name}
+                      </div>
+                    </div>
+                    <div className="text-gray-600 col-span-2">
+                      {profileData?.company_type && `${profileData?.company_type} • `}
+                      {profileData?.founded_year && `Founded ${new Date(profileData?.founded_year * 1000).getFullYear()}`}
+                    </div>
+                    {Array.isArray(profileData?.specialties) && profileData.specialties.length > 0 && (
+                      <div className='flex gap-1 col-span-2'>
+                        <div className="font-semibold">Specialties:</div>
+                        <div>{profileData?.specialties.join(', ')}</div>
+                      </div>
                     )}
                   </div>
-                  <a
-                    href={profileData?.website_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline text-sm font-semibold"
-                  >
-                    Visit Website
-                  </a>
-                  <div className="flex gap-3">
-                    <Button variant='primary' size='sm' icon={<FiPlus />} 
-                      onClick={() => navigate(`/app/${basePath}/create-post`)}>
-                      Create Post
-                    </Button>
-                  </div>
+                  {profileData?.description && (
+                    <div className="mt-3">
+                      <div className="font-semibold mb-1">About:</div>
+                      <div className="text-black text-sm">{profileData?.description}</div>
+                    </div>
+                  )}
                 </div>
-
-                <div className="flex gap-6 mb-4 text-sm">
-                  <div><span className="font-semibold">{profileData?.follower_count}</span> followers</div>
-                  <div><span className="font-semibold">{profileData?.employee_count}</span> employees</div>
-                  <div><span className="font-semibold">{profileData?.company_size}</span> size</div>
-                </div>
-
-                <div className="text-sm grid grid-cols-1 md:grid-cols-2 gap-y-2">
-                  <div className='flex gap-1'>
-                    <div className="font-semibold">Industry:</div>
-                    <div className="capitalize">
-                      {Array.isArray(profileData?.industry) && profileData?.industry.map(ind => ind.name).join(', ')}
-                    </div>
-                  </div>
-
-                  <div className='flex gap-1'>
-                    <div className="font-semibold">Headquarters:</div>
-                    <div>
-                      {profileData?.headquarters?.city?.name}, {profileData?.headquarters?.state?.name}, {profileData?.headquarters?.country?.name}
-                    </div>
-                  </div>
-                  <div className="text-gray-600 col-span-2">
-                    {profileData?.company_type && `${profileData?.company_type} • `}
-                    {profileData?.founded_year && `Founded ${new Date(profileData?.founded_year * 1000).getFullYear()}`}
-                  </div> 
-                  {Array.isArray(profileData?.specialties) && profileData.specialties.length > 0 && (
-                    <div className='flex gap-1 col-span-2'>
-                      <div className="font-semibold">Specialties:</div>
-                      <div>{profileData?.specialties.join(', ')}</div>
-                    </div>
-                  )} 
-                  </div>
-                {profileData?.description && (
-                  <div className="mt-3">
-                    <div className="font-semibold mb-1">About:</div>
-                    <div className="text-black text-sm">{profileData?.description}</div>
-                  </div>
-                )}
               </div>
-            </div>
-            <div className="">
-              <div className="relative flex-1 min-w-[250px]">
-                <FiSearch className="absolute left-3 top-3 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search posts or tags..."
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+              <div className="">
+                <div className="relative flex-1 min-w-[250px]">
+                  <FiSearch className="absolute left-3 top-3 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search posts or tags..."
+                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        {loading ? (
-          <div className="space-y-4">
-            {[...Array(4)].map((_, index) => (
-              <SkeletonLoader key={index} />
-            ))}
-          </div>
-        ) : filteredPosts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-500">No posts found. Create your first post!</p>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 gap-6 mt-4">
-              {filteredPosts.map((post) => (
-                <PostCard
-                  profileData={profileData}
-                  key={post._id}
-                  post={post}
-                  onDelete={() => setIsDeleteModal(post._id)}
-                  onToggleStatus={handleToggleStatus}
-                  onView={openViewModal}
-                  isViewMode={false}
-                />
+          {loading ? (
+            <div className="space-y-4">
+              {[...Array(4)]?.map((_, index) => (
+                <SkeletonLoader key={index} />
               ))}
             </div>
-            <PaginationComponent />
-          </>
-        )}
-
-        {viewModalOpen && currentPost && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
-              <button
-                onClick={() => setViewModalOpen(false)}
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl z-10 bg-white rounded-full p-1"
-              >
-                <FaTimes />
-              </button>
-              <PostCard
-                post={currentPost}
-                profileData={profileData}
-                onDelete={() => setIsDeleteModal(currentPost._id)}
-                onToggleStatus={handleToggleStatus}
-                onView={openViewModal}
-                isViewMode={true}
-              />
+          ) : filteredPosts.length === 0 ? (
+            <div className="bg-white rounded-lg shadow p-8 text-center">
+              <p className="text-gray-500">No posts found. Create your first post!</p>
             </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 gap-6 mt-4">
+                {filteredPosts?.map((post) => (
+                  <PostCard
+                    profileData={profileData}
+                    key={post._id}
+                    post={post}
+                    onDelete={() => setIsDeleteModal(post._id)}
+                    onToggleStatus={handleToggleStatus}
+                    onView={openViewModal}
+                    isViewMode={false}
+                  />
+                ))}
+              </div>
+              <PaginationComponent />
+            </>
+          )}
+
+          {viewModalOpen && currentPost && (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+                <button
+                  onClick={() => setViewModalOpen(false)}
+                  className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl z-10 bg-white rounded-full p-1"
+                >
+                  <FaTimes />
+                </button>
+                <PostCard
+                  post={currentPost}
+                  profileData={profileData}
+                  onDelete={() => setIsDeleteModal(currentPost._id)}
+                  onToggleStatus={handleToggleStatus}
+                  onView={openViewModal}
+                  isViewMode={true}
+                />
+              </div>
+            </div>
+          )}
+
+          <AlertModal
+            isOpen={!!isDeleteModal}
+            title={
+              <div className="flex items-center gap-2">
+                <PiWarning className="text-red-500" />
+                <span>Delete Post</span>
+              </div>
+            }
+            message="Are you sure you want to delete this post? This action cannot be undone."
+            onCancel={() => {
+              setIsDeleteModal(false);
+            }}
+            onConfirm={() => handleDeletePost(isDeleteModal)}
+            confirmText="Delete"
+            cancelText="Cancel"
+            type="danger"
+          />
+        </div>
+        {/* Right Sidebar */}
+        <div className="xl:w-[25%] lg:w-[30%] md:w-[40%] hidden md:block">
+          <div className="sticky top-6 h-fit max-h-[calc(100vh-2rem)] overflow-y-auto hide-scrollbar">
+            <PeopleToConnect
+              data={suggestedUsers?.data?.list || []}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
           </div>
-        )}
-
-        <AlertModal
-          isOpen={!!isDeleteModal}
-          title={
-            <div className="flex items-center gap-2">
-              <PiWarning className="text-red-500" />
-              <span>Delete Post</span>
-            </div>
-          }
-          message="Are you sure you want to delete this post? This action cannot be undone."
-          onCancel={() => {
-            setIsDeleteModal(false);
-          }}
-          onConfirm={() => handleDeletePost(isDeleteModal)}
-          confirmText="Delete"
-          cancelText="Cancel"
-          type="danger"
-        />
+        </div>
       </div>
     </div>
   );

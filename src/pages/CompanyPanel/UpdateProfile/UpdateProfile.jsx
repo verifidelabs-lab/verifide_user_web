@@ -37,9 +37,9 @@ const ROLES = {
 
 const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
   const dispatch = useDispatch()
-  const cscSelector = useSelector(state => state.countryStateCity)
+  const cscSelector = useSelector(state => state.global)
 
-  const userRole = Number(getCookie("USER_ROLE"))
+  const userRole = Number(getCookie("COMPANY_ROLE"))
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [isImageUploading, setIsImageUploading] = useState(false)

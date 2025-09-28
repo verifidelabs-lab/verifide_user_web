@@ -10,6 +10,9 @@ import { FaRegBuilding, FaUsersCog } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { TbReportAnalytics } from "react-icons/tb";
 import ProfileCard from "../../ui/cards/ProfileCard";
+import { PiSealCheckLight } from "react-icons/pi";
+import { BsChevronRight } from "react-icons/bs";
+import { FaSignsPost } from "react-icons/fa6";
 
 
 const pulseAnimation = `
@@ -61,53 +64,55 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
   };
 
   const companySidebarData = [
-    { icon: BiSolidDashboard, label: "Dashboard", path: "/company/dashboard" },
+    { icon: BiSolidDashboard, label: "Dashboard", path: "/company" },
+    { icon: FaSignsPost, label: "Page Posts", path: "/company/posts-manage" },
+    { icon: BiMessageDetail, label: "Inbox", path: "/company/message" },
+    { icon: PiSealCheckLight, label: "Verification", path: "/company/verification" },
     { icon: FaRegBuilding, label: "Company Profile", path: "/company/profile" },
-    { icon: BiMessageDetail, label: "Message", path: "/company/message" },
 
-    {
-      icon: MdWork,
-      label: "Jobs",
-      children: [
-        { label: "Post a Job", path: "/company/jobs/create" },
-        { label: "Manage Jobs", path: "/company/jobs" },
-        { label: "Applications", path: "/company/applications" },
-      ],
-    },
-    {
-      icon: MdPeople,
-      label: "Employees",
-      children: [
-        { label: "Employee List", path: "/company/employees" },
-        { label: "Invite Employees", path: "/company/employees/invite" },
-        { label: "Roles & Permissions", path: "/company/employees/roles" },
-      ],
-    },
-    {
-      icon: TbReportAnalytics,
-      label: "Reports & Analytics",
-      children: [
-        { label: "Job Reports", path: "/company/reports/jobs" },
-        { label: "Hiring Metrics", path: "/company/reports/hiring" },
-      ],
-    },
-    { icon: MdEvent, label: "Events", path: "/company/events" },
-    { icon: IoIosNotificationsOutline, label: "Notifications", path: "/company/notifications" },
-    {
-      icon: MdSettings,
-      label: "Settings",
-      children: [
-        { label: "Company Settings", path: "/company/settings" },
-        { label: "Billing", path: "/company/settings/billing" },
-        { label: "Integrations", path: "/company/settings/integrations" },
-      ],
-    },
+    // {
+    //   icon: MdWork,
+    //   label: "Jobs",
+    //   children: [
+    //     { label: "Post a Job", path: "/company/jobs/create" },
+    //     { label: "Manage Jobs", path: "/company/jobs" },
+    //     { label: "Applications", path: "/company/applications" },
+    //   ],
+    // },
+    // {
+    //   icon: MdPeople,
+    //   label: "Employees",
+    //   children: [
+    //     { label: "Employee List", path: "/company/employees" },
+    //     { label: "Invite Employees", path: "/company/employees/invite" },
+    //     { label: "Roles & Permissions", path: "/company/employees/roles" },
+    //   ],
+    // },
+    // {
+    //   icon: TbReportAnalytics,
+    //   label: "Reports & Analytics",
+    //   children: [
+    //     { label: "Job Reports", path: "/company/reports/jobs" },
+    //     { label: "Hiring Metrics", path: "/company/reports/hiring" },
+    //   ],
+    // },
+    // { icon: MdEvent, label: "Events", path: "/company/events" },
+    // { icon: IoIosNotificationsOutline, label: "Notifications", path: "/company/notifications" },
+    // {
+    //   icon: MdSettings,
+    //   label: "Settings",
+    //   children: [
+    //     { label: "Company Settings", path: "/company/settings" },
+    //     { label: "Billing", path: "/company/settings/billing" },
+    //     { label: "Integrations", path: "/company/settings/integrations" },
+    //   ],
+    // },
   ];
 
-  const { companyInfo } = useSelector(
-    (state) => state.company?.profileData?.data?.data || {}
+  const companiesProfileData  = useSelector(
+    (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
   );
-
+console.log("This is sdfkjsdf",companiesProfileData)
   return (
     <>
       <style>{pulseAnimation}</style>
@@ -144,14 +149,40 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
               src="/logo.png"
               alt="logo"
               className="h-8 transition-transform duration-300 hover:scale-105"
-              onClick={() => navigate(`/company/dashboard`)}
+              onClick={() => navigate(`/company`)}
             />
           </div>
         </div>
 
         {/* Sidebar Menu */}
         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
-          <ProfileCard data={companyInfo} />
+         <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto bg-white shadow-sm overflow-hidden">
+                    <div className='flex justify-center items-center gap-5 p-2'>
+                        <div>
+                            
+                                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
+                                    <img src='/0684456b-aa2b-4631-86f7-93ceaf33303c.png' alt='dummy logo' />
+                                </div>
+                            
+                        </div>
+                        <div>
+                            <h3 className='text-[#000000] text-base font-semibold'>
+                             {companiesProfileData?.display_name}
+
+                            </h3>
+                            <p className='text-xs text-[#000000] font-medium '>{companiesProfileData?.email}</p>
+                            {/* <p className='text-xs font-medium text-[#00000080]/50'>
+                                {`${data?.data?.address?.city?.name ? `${data?.data?.address?.city?.name} ,` : ''}  ${data?.data?.address?.state?.name || ""}`}
+                            </p> */}
+                        </div>
+                        <div>
+                            <BsChevronRight
+                                className='text-[#000000] cursor-pointer'
+                                onClick={() => navigate(`/company/profile`)}
+                            />
+                        </div>
+                    </div>
+                </div>
 
           {companySidebarData.map((item, idx) => {
             const hasUnread =

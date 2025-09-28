@@ -22,6 +22,12 @@ const PostJob = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const companiesProfileData = useSelector(
+        (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
+    );
+    const isCompany = getCookie("ACTIVE_MODE") === "company"
+    console.log("this is te company profile data", companiesProfileData, isCompany)
+
     const workSelector = useSelector(state => state.work);
     const industrySelector = useSelector(state => state.global);
     const countriesSelector = useSelector(state => state.global);
@@ -60,7 +66,7 @@ const PostJob = () => {
     });
 
     const [formData, setFormData] = useState({
-        company_id: "",
+        company_id: companiesProfileData._id,
         industry_id: "",
         job_type: "",
         job_location: "",
@@ -70,7 +76,7 @@ const PostJob = () => {
         job_description: "",
         start_date: "",
         end_date: "",
-        current_openings:"",
+        current_openings: "",
         required_skills: [],
         address: {
             country: {
@@ -101,10 +107,16 @@ const PostJob = () => {
     useEffect(() => {
         const handleStorageChange = () => {
             const newAccessMode = getCookie("ACCESS_MODE");
+            const activeMode = getCookie("ACTIVE_MODE")
             setAccessMode(newAccessMode);
-            if (newAccessMode == 5) {
+            if (newAccessMode === 5  ) {
                 navigate(`/user/opportunitiess`);
-            }
+            }  
+            // if(activeMode === "company"){
+            //     navigate("/company/opportunities")
+            // }
+
+
         };
 
         handleStorageChange();
@@ -132,10 +144,10 @@ const PostJob = () => {
     const city_code = formData?.address?.state?.name
 
     const fetchJobData = useCallback(async () => {
-        if (!id) return;
+
 
         try {
-            const res = await dispatch(jobsSingleDocument({ _id: id, populate: 'company_id:created_by_users|industry_id:created_by_users' })).unwrap()
+            const res = await dispatch(jobsSingleDocument({ _id: id || companiesProfileData._id, populate: 'company_id:created_by_users|industry_id:created_by_users' })).unwrap()
             const jobData = res?.data;
 
             const addressData = jobData.work_location || jobData.address || {
@@ -311,7 +323,10 @@ const PostJob = () => {
     };
 
 
+    useEffect(() => {
+        dispatch(getAllIndustry({ company_id: companiesProfileData?._id, created_by_users: false }));
 
+    }, [companiesProfileData?._id])
     const handleSelectChange = async (field, selectedOption) => {
         setFormData(prev => ({
             ...prev,
@@ -321,7 +336,7 @@ const PostJob = () => {
         console.log("field, selectedOption", field, selectedOption)
         if (field === 'company_id') {
             setIsCreatbleIndustry(selectedOption?.created_by_users)
-            
+
         }
 
         const value = selectedOption?.value;
@@ -544,7 +559,7 @@ const PostJob = () => {
             start_date: convertToTimestamp(formData?.start_date) || "",
             end_date: convertToTimestamp(formData?.end_date) || "",
             isShareAsPost: formData?.isShareAsPost,
-            current_openings:formData?.current_openings
+            current_openings: formData?.current_openings
         };
 
         if (id) {
@@ -554,12 +569,17 @@ const PostJob = () => {
         const action = id ? jobsUpdate : jobsCreate;
 
         try {
+            const activeMode = getCookie("ACTIVE_MODE") === "company"
             const res = await dispatch(action(finalData)).unwrap();
             toast.success(res?.message || res?.success || (id ? "Job updated successfully!" : "Job posted successfully!"));
 
             // Reset form and navigate
             setCurrentStep(1);
-            navigate(`/user/opportunitiess`);
+            if (activeMode) {
+                navigate("/company/opportunities")
+            } else {
+                navigate(`/user/opportunitiess`);
+            }
 
             setFormData({
                 company_id: "",

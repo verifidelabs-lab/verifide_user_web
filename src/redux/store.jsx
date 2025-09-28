@@ -10,13 +10,16 @@ import cscReducer from './Global Slice/cscSlice'
 import verificationReducer from './Verification/Verification'
 import userReducer from './Users/userSlice'
 import courseReducer from './course/courseSlice'
+import companyCourseReducer from './CompanySlices/courseSlice'
 import companiesReducer from './CompanySlices/companiesSlice'
 // import instituteReducer from './slices/instituteSlice'
 import industryReducer from './Industry Slice/industrySlice'
 import assessmentReducer from './assessments/assessmentSlice'
+import companyAuth from './CompanySlices/CompanyAuth'
 const rootReducer = combineReducers({
   auth: authReducer,
   companies: companiesReducer,
+  companyAuth: companyAuth,
   // institute: instituteReducer,
   industry: industryReducer,
   educations: educationReducer,
@@ -25,6 +28,7 @@ const rootReducer = combineReducers({
   verification: verificationReducer,
   user: userReducer,
   course: courseReducer,
+  companyCourse: companyCourseReducer,
   assessments: assessmentReducer,
 });
 

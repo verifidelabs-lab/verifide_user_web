@@ -224,20 +224,6 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     User
                   </button>
-                  <button
-                    className={`block w-full text-left px-4 py-2 text-sm ${accessLabel === "COMPANIES"
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : "text-gray-700 hover:bg-blue-100"
-                      }`}
-                    onClick={() => {
-                      if (accessLabel == "COMPANIES") {
-                        // switchAccountFunction("COMPANIES");
-                      }
-                    }}
-                    disabled={accessLabel === "COMPANIES"}
-                  >
-                    Company
-                  </button>
                 </div>
               )}
             </div>
@@ -332,12 +318,10 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       <button
                         key={company._id}
                         className="block w-full text-left text-gray-700 px-4 py-2 text-sm hover:bg-gray-100 capitalize"
-                        onClick={() => {
-                          setCookie("ACTIVE_MODE", `COMPANY:${company._id}`);
-                        }}
+                        
                       >
                         <Link to={`/company/login?email=${encodeURIComponent(company.email)}`}>
-                         Company : {company.name}
+                          Company : {company.name}
                         </Link>
                       </button>
                     ))

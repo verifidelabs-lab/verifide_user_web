@@ -3,12 +3,13 @@ import React, { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createPost } from '../../redux/slices/companiesSlice';
-import CustomInput from '../../components/Atoms/Input/CustomInput';
-import EnhancedFileInput from '../../components/Atoms/Input/CustomFileAndImage';
-import CustomVideoUpload from '../../components/Atoms/Input/CustomVideoUpload';
-import { uploadImageDirectly, uploadMultiImageDirectly, uploadVideoDirectly } from '../../components/utils/globalFunction';
-import CustomImageVideoUpload from '../../components/Atoms/Input/CustomImageVideoUpload';
+import { createPost } from '../../../redux/CompanySlices/companiesSlice';
+import { uploadImageDirectly, uploadMultiImageDirectly, uploadVideoDirectly } from '../../../components/utils/globalFunction';
+import CustomInput from '../../../components/ui/InputAdmin/CustomInput';
+import CustomImageVideoUpload from '../../../components/ui/Input/CustomImageVideoUpload';
+import CustomVideoUpload from '../../../components/ui/Input/CustomVideoUpload';
+import EnhancedFileInput from '../../../components/ui/Input/CustomFileAndImage';
+
 
 const CreatePost = () => {
   const dispatch = useDispatch();

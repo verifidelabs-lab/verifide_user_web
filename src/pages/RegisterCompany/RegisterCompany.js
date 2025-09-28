@@ -20,6 +20,7 @@ import FilterSelect from '../../components/ui/InputAdmin/FilterSelect';
 import useFormHandler from '../../components/hooks/useFormHandler';
 import Button from '../../components/ui/Button/Button';
 import Input from '../../components/ui/InputAdmin/Input';
+import { createCompanies } from '../../redux/CompanySlices/companiesSlice';
 
 const initialFormData = {
   username: "",
@@ -477,7 +478,7 @@ const RegisterCompany = () => {
         confirmPassword: formData.confirmPassword,
       };
 
-      const res = await dispatch(companyRegister(createPayload)).unwrap();
+      const res = await dispatch(createCompanies(createPayload)).unwrap();
       if (res?.error) {
         toast.error(res?.message || "Failed to create company");
         return;

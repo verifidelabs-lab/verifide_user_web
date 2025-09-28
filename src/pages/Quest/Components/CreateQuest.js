@@ -18,6 +18,7 @@ const CreateQuest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const IsCompany = getCookie("ACTIVE_MODE")
 
   // Initial state for quest data
   const initialQuestData = {
@@ -452,6 +453,10 @@ const CreateQuest = () => {
 
       if (result?.code === 1200) {
         toast.success(isEditMode ? "Quest updated successfully!" : "Quest created successfully!");
+        if (getCookie("COMPANY_TOKEN") && IsCompany === "company") {
+              navigate(`/company/quest`);
+        
+            } 
         navigate(`/user/quest`);
       } else {
         throw new Error(result?.message || "Operation failed");

@@ -2,12 +2,12 @@ import axios from 'axios';
 import { getCookie, removeCookie } from '../utils/cookieHandler';
 import { CiNoWaitingSign } from 'react-icons/ci';
 
-// const isLive = false;
-const isLive = true
+const isLive = false;
+// const isLive = true
  
 
-export const apiUrl = isLive ? 'https://verifide.xyz/api/v1/' : 'http://10.88.102.185:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://verifide.xyz/socket' : 'http://10.88.102.185:5004/socket';
+export const apiUrl = isLive ? 'https://verifide.xyz/api/v1/' : ' http://192.168.94.185:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://verifide.xyz/socket' : 'http://192.168.94.185:5004/socket';
 
 const axiosPublic = axios.create({
     baseURL: apiUrl,
@@ -26,13 +26,15 @@ const axiosImage = axios.create({
 
 // Auth request interceptor for user OR company token
 const authRequestInterceptor = (config) => {
-    console.log("this is the config furl", config.url)
+    console.log("this is the config furl", config)
     // Determine which token to use
     // Default to user token
     let token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, '');
-
+    let isCompany = getCookie("ACTIVE_MODE");
+    
+  console.log()
     // If company token exists and path includes /company, use it
-    if (getCookie("COMPANY_TOKEN") && config.url?.startsWith("/companies")) {
+    if (getCookie("COMPANY_TOKEN") && isCompany === "company" ) { 
         token = getCookie("COMPANY_TOKEN")?.replace(/^"|"$/g, '');
     }
 

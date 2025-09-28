@@ -23,6 +23,14 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
   const location = useLocation();
   const navigate = useNavigate()
   const dropdownRef = useRef();
+  const topRef = useRef(null);
+  const scrollToTop = () => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
   const userRole = Number(getCookie("COMPANY_ROLE"));
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,7 +55,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
         return "admin";
       case 3:
       case 7:
-        return "companies";
+        return "company";
       case 4:
       case 8:
         return "institute";
@@ -84,9 +92,9 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
           : {};
   console.log("htis is the profiledata", profileData)
   return (
-    <div className="bg-white z-10 flex-shrink-0 h-16 border-b border-black border-opacity-10 ">
+    <div className="bg-white z-10 flex-shrink-0 h-16 border-b border-black border-opacity-10 " ref={topRef}>
       <div className="flex-1 px-4 flex justify-between items-center h-full">
-
+        <div className="flex items-center gap-4"></div>
         <div className="flex items-center gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -94,11 +102,34 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
           >
             {isMobileMenuOpen ? <BiX /> : <BiMenu />}
           </button>
+          <nav className="hidden lg:flex lg:gap-14 md:gap-3 2xl:ps-0 xl:ps-8 md:ps-10 lg:ps-0 flex-1 justify-center">
+            {HeaderJson?.headerItems?.map((item, index) => {
+              const isActive = location.pathname === item?.path;
+              const isHome = item?.path === '/';
 
+              return (
+                <Link
+                  key={index}
+                  to={item?.path}
+                  onClick={() => {
+                    if (isHome) {
+                      scrollToTop();
+                    }
+                  }}
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
+                    ? 'font-semibold text-[#000000E6] border-b-2 border-blue-600'
+                    : 'font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600'
+                    } pb-1`}
+                >
+                  {item?.name}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className='hover:text-blue-600 cursor-pointer hover:bg-gray-200 hover:rounded-full hover:p-1 mr-4' onClick={() => navigate(`/app/${basePath}/notification`)}>
+          <div className='hover:text-blue-600 cursor-pointer hover:bg-gray-200 hover:rounded-full hover:p-1 mr-4' onClick={() => navigate(`/${basePath}/notification`)}>
             <RiNotification2Fill size={22} />
           </div>
           <div className="relative" ref={dropdownRef}>
@@ -142,13 +173,27 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                 >
                   Update Profile
                 </Link>
-                {/* )} */}
+                <button
+                  onClick={handleRemoveCookie}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  <Link
+                    to={`/user/feed`}
+                    onClick={handleRemoveCookie}
+
+
+                  >
+                    Switch to User
+                  </Link>
+                </button>
                 <button
                   onClick={handleRemoveCookie}
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Logout
                 </button>
+                {/* )} */}
+
               </div>
             )}
           </div>

@@ -86,21 +86,21 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
     { icon: FaSignsPost, label: "Posts", path: "/user/posts" },
     { icon: IoIosNotificationsOutline, label: "Notification", path: "/user/notification" },
     { icon: TbHttpConnect, label: "Connection", path: "/user/connections" },
-    {
-      icon: SiAwsorganizations,
-      label: "Company Management",
-      children: [
-        { label: "Companies", path: "/user/companies" },
-      ],
-    },
-    {
-      icon: BiSolidInstitution,
-      label: "Instution Management",
-      children: [
-        { label: "Institution", path: "/user/institutions" },
-        { label: "Institution Types", path: "/user/institute-type" },
-      ],
-    },
+    // {
+    //   icon: SiAwsorganizations,
+    //   label: "Company Management",
+    //   children: [
+    //     { label: "Companies", path: "/user/companies" },
+    //   ],
+    // },
+    // {
+    //   icon: BiSolidInstitution,
+    //   label: "Instution Management",
+    //   children: [
+    //     { label: "Institution", path: "/user/institutions" },
+    //     { label: "Institution Types", path: "/user/institute-type" },
+    //   ],
+    // },
     {
       icon: CiSettings,
       label: "Settings",

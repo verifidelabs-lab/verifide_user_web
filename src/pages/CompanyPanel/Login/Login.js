@@ -60,7 +60,7 @@ const CompanyLogin = ({ role = "admin" }) => {
         return "/admin/dashboard";
       case 3:
       case 7:
-        return "/company/dashboard";
+        return "/company";
       case 4:
       case 8:
         return "/institute/dashboard";
@@ -99,10 +99,11 @@ const handleSubmit = async (e) => {
       // Save company token separately
       setCookie('COMPANY_TOKEN', JSON.stringify(res.data.token));
       setCookie('COMPANY_ROLE', res.data.accessMode); // optional for role-based routing
+      setCookie('ACTIVE_MODE', "company"); // optional for role-based routing
       toast.success(res?.message || 'Company login successful');
 
       // Navigate to company dashboard
-      navigate("/company/dashboard");
+      navigate("/company");
     }
   } catch (error) {
     console.log(error);

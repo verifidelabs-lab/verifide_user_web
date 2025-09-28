@@ -30,6 +30,7 @@ import NoDataFound from "../../components/ui/No Data/NoDataFound";
 import InterviewReviewModal from "./components/InterviewReviewModal";
 import AlertModal from "../../components/ui/Modal/AlertModal";
 import moment from "moment-timezone";
+import { getCookie } from "../../components/utils/cookieHandler";
 const Button = ({ children, onClick, className = "", type = "button" }) => (
   <button
     type={type}
@@ -45,6 +46,7 @@ const Opportunities = () => {
   const selector = useSelector((state) => state.global);
   const selector2 = useSelector((state) => state);
   let { jobsListData: { data }, } = selector ? selector : {};
+  console.log("this is the jsss",data)
   const [activeTab, setActiveTab] = useState("open");
   const [selectedJob, setSelectedJob] = useState(null);
   const [viewDetails, setViewDetails] = useState(false);
@@ -112,7 +114,7 @@ const Opportunities = () => {
   const [loadingJobId, setLoadingJobId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [jobId, setJobId] = useState("");
-
+  const isCompany = getCookie("ACTIVE_MODE") !== "company"
   const getStatusColor = (status) => {
     switch (status) {
       case "shortlisted":
@@ -234,9 +236,21 @@ const Opportunities = () => {
     return Object.values(selectedFilters).some(Boolean);
   };
 
-  const handlePostJob = () => {
+const handlePostJob = () => {
+  const isCompany = getCookie("ACTIVE_MODE");
+  const accessMode = Number(getCookie("ACCESS_MODE")); // make sure it's a number
+
+  console.log("this is the ", isCompany);
+
+  if (isCompany === "company") {
+    navigate(`/company/post-job`);
+  } else if (accessMode === 6 || accessMode === 5) {
     navigate(`/user/post-job`);
-  };
+  } else {
+    console.warn("Unknown mode, cannot navigate");
+  }
+};
+
 
   const handleAction = async (type) => {
     if (!selectedId) {
@@ -1039,7 +1053,7 @@ const Opportunities = () => {
 
         {hasActiveFilters() && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
-            {selectedFilters.status && (
+            {isCompany && selectedFilters.status && (
               <FilterSelect2
                 label="Company Name"
                 options={allCompaniesList}
@@ -1049,7 +1063,7 @@ const Opportunities = () => {
 
               />
             )}
-            {selectedFilters.industry && (
+            {isCompany && selectedFilters.industry && (
               <FilterSelect2
                 label="Industry"
                 options={allIndustryList}

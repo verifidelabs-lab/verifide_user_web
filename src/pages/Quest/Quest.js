@@ -71,6 +71,7 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode }) => (
 const ShortsClone = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const IsCompany = getCookie("ACTIVE_MODE")
   const selector = useSelector((state) => state.global);
   const quests = selector?.getQuestListData?.data?.data?.list || [];
   const [feedbackData, setFeedbackData] = useState(null);
@@ -115,7 +116,7 @@ const ShortsClone = () => {
     }
   };
   const fetchFeedBack = async (data) => {
-     if (data?.type === 'sign-up') {
+    if (data?.type === 'sign-up') {
       setIsModalOpen(true)
       setQuestData(data)
     } else {
@@ -137,7 +138,7 @@ const ShortsClone = () => {
   };
 
   const handleSubmitFeedback = async (payload) => {
-     try {
+    try {
       await dispatch(submitFeedback(payload));
       const res = await dispatch(getFeedbackReport({ quest_id: questData?._id }));
       if (res) {
@@ -162,11 +163,24 @@ const ShortsClone = () => {
   ];
 
   const handleCreateQuest = () => {
-    navigate(`/user/quest/create-your-quest`);
+    if (getCookie("COMPANY_TOKEN") && IsCompany === "company") {
+      navigate(`/company/quest/create-your-quest`);
+
+    } else {
+
+      navigate(`/user/quest/create-your-quest`);
+    }
   };
 
   const handleEditQuest = (id) => {
-    navigate(`/user/quest/create-your-quest/${id}`);
+    if (getCookie("COMPANY_TOKEN") && IsCompany === "company") {
+      navigate(`/company/quest/create-your-quest/${id}`);
+
+    } else {
+
+      navigate(`/user/quest/create-your-quest/${id}`);
+    }
+
   };
 
   const handleDelete = async (id) => {
@@ -294,7 +308,7 @@ const ShortsClone = () => {
 
   const responses = getCurrentQuestionResponses();
   const responseCount = responses?.filter(r => r.answer.length > 0).length;
-  const handleCloseFeedback=()=>{
+  const handleCloseFeedback = () => {
     setFeedbackDataModal(false)
     setSurveyData(null)
     setFeedbackData(null)
@@ -758,7 +772,7 @@ const ShortsClone = () => {
 
                   {/* Show responses for current question */}
                   <div className="space-y-4">
-                    {Array.isArray(responses)&&responses.map((response, idx) => (
+                    {Array.isArray(responses) && responses.map((response, idx) => (
                       <div key={idx} className="border-l-4 border-orange-400 pl-4">
                         <div className="flex items-center space-x-3 mb-2">
                           <img

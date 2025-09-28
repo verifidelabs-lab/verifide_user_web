@@ -47,6 +47,7 @@ const StepFirst = ({
                             }}
                             isClearable
                             isCreatedByUser
+                            isDisabled={formData.company_id}
                         />
                     </div>
                     <div className='col-span-2 grid grid-cols-2 gap-3'>

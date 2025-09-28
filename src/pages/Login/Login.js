@@ -108,6 +108,7 @@ const Login = () => {
       if (res) {
         setCookie("VERIFIED_TOKEN", JSON.stringify(res?.data?.token));
         setCookie("ACCESS_MODE", res?.data?.user?.accessMode);
+        setCookie("ACTIVE_MODE", "User");
         toast.success(res?.message || "Login successful");
         navigate("/user/feed");
       }
