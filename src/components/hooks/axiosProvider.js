@@ -6,8 +6,8 @@ const isLive = false;
 // const isLive = true
 
 
-export const apiUrl = isLive ? 'https://verifide.xyz/api/v1/' : 'http://192.168.43.208:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://verifide.xyz/socket' : 'http://192.168.43.208:5004/socket';
+export const apiUrl = isLive ? 'https://verifide.xyz/api/v1/' : 'http://192.168.43.167:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://verifide.xyz/socket' : 'http://192.168.43.167:5004/socket';
 
 const axiosPublic = axios.create({
     baseURL: apiUrl,
