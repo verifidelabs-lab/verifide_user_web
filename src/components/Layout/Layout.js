@@ -238,7 +238,7 @@ function Layout() {
               <Route path="/create-company" element={<RegisterCompany />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/institutions" element={<Institution />} />
-              <Route path="/create-institute" element={<RegisterInstitute />} />
+              {/* <Route path="/create-institute" element={<RegisterInstitute />} /> */}
               <Route path="/resume/:username?" element={<ResumeCertificate />} />
               <Route path="/create-post" element={<CreatePost />} />
 

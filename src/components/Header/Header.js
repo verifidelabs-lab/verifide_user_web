@@ -333,13 +333,13 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Create Company
                   </Link>
-                  <Link
+                  {/* <Link
                     to="/user/create-institute"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     Create Institution
-                  </Link>
+                  </Link> */}
                   <button
                     onClick={() => {
                       removeCookie('VERIFIED_TOKEN');
