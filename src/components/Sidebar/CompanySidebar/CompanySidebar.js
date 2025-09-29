@@ -109,10 +109,10 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
     // },
   ];
 
-  const companiesProfileData  = useSelector(
+  const companiesProfileData = useSelector(
     (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
   );
-console.log("This is sdfkjsdf",companiesProfileData)
+  console.log("This is sdfkjsdf", companiesProfileData)
   return (
     <>
       <style>{pulseAnimation}</style>
@@ -156,33 +156,35 @@ console.log("This is sdfkjsdf",companiesProfileData)
 
         {/* Sidebar Menu */}
         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
-         <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto bg-white shadow-sm overflow-hidden">
-                    <div className='flex justify-center items-center gap-5 p-2'>
-                        <div>
-                            
-                                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
-                                    <img src='/0684456b-aa2b-4631-86f7-93ceaf33303c.png' alt='dummy logo' />
-                                </div>
-                            
-                        </div>
-                        <div>
-                            <h3 className='text-[#000000] text-base font-semibold'>
-                             {companiesProfileData?.display_name}
+          <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto bg-white shadow-sm overflow-hidden">
+            <div className='flex justify-center items-center gap-5 p-2'>
+              <div>
 
-                            </h3>
-                            <p className='text-xs text-[#000000] font-medium '>{companiesProfileData?.email}</p>
-                            {/* <p className='text-xs font-medium text-[#00000080]/50'>
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
+                  <img src={companiesProfileData?.logo_url ||
+                    "https://media.istockphoto.com/id/2186780921/photo/young-woman-programmer-focused-on-her-work-coding-on-dual-monitors-in-a-modern-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=SAF-y0Rjzil_3FQi2KmAyXOAKYHaHRRbNxjQXnMsObk="
+                  } alt='dummy logo' />
+                </div>
+
+              </div>
+              <div>
+                <h3 className='text-[#000000] text-base font-semibold'>
+                  {companiesProfileData?.display_name}
+
+                </h3>
+                <p className='text-xs text-[#000000] font-medium '>{companiesProfileData?.email}</p>
+                {/* <p className='text-xs font-medium text-[#00000080]/50'>
                                 {`${data?.data?.address?.city?.name ? `${data?.data?.address?.city?.name} ,` : ''}  ${data?.data?.address?.state?.name || ""}`}
                             </p> */}
-                        </div>
-                        <div>
-                            <BsChevronRight
-                                className='text-[#000000] cursor-pointer'
-                                onClick={() => navigate(`/company/profile`)}
-                            />
-                        </div>
-                    </div>
-                </div>
+              </div>
+              <div>
+                <BsChevronRight
+                  className='text-[#000000] cursor-pointer'
+                  onClick={() => navigate(`/company/profile`)}
+                />
+              </div>
+            </div>
+          </div>
 
           {companySidebarData.map((item, idx) => {
             const hasUnread =

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TrendingUp, TrendingDown, Mail, MapPin, Shield } from 'lucide-react';
 import PeopleToConnect from '../../../components/ui/ConnectSidebar/ConnectSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { suggestedUser } from '../../../redux/Users/userSlice';
+import { verificationCenterList } from '../../../redux/CompanySlices/courseSlice';
+import { Link } from 'react-router-dom';
 
 const CompanyDashboard = ({
     searchAppearances = 57,
@@ -24,36 +26,9 @@ const CompanyDashboard = ({
             buttonText: 'Verify Now',
             buttonColor: 'bg-blue-600 hover:bg-blue-700',
         },
-        {
-            id: 2,
-            icon: Mail,
-            iconColor: 'bg-blue-50 text-blue-600',
-            title: 'Confirm your email',
-            description: 'Verify your email to unlock all features.',
-            buttonText: 'Verify Email',
-            buttonColor: 'bg-blue-600 hover:bg-blue-700',
-        },
-        {
-            id: 3,
-            icon: MapPin,
-            iconColor: 'bg-red-50 text-red-600',
-            title: 'Update your location',
-            description: 'Add your company location to improve visibility.',
-            buttonText: 'Update Now',
-            buttonColor: 'bg-blue-600 hover:bg-blue-700',
-        },
-        {
-            id: 4,
-            icon: Shield,
-            iconColor: 'bg-yellow-50 text-yellow-600',
-            title: 'Secure your account',
-            description: 'Enable 2FA for better account security.',
-            buttonText: 'Enable 2FA',
-            buttonColor: 'bg-blue-600 hover:bg-blue-700',
-        },
     ];
 
-    const actionsToShow = actions.length > 0 ? actions : defaultActions;
+    // const actionsToShow = actions.length > 0 ? actions  : defaultActions;
 
     const MetricCard = ({ value, label, change, isPositive }) => (
         <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200">
@@ -84,40 +59,35 @@ const CompanyDashboard = ({
     );
 
     const ActionCard = ({ action }) => {
-        const IconComponent = action.icon;
         return (
             <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200">
                 <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
                         <div className="flex-shrink-0">
-                            {action.avatar ? (
-                                <img
-                                    src={action.avatar}
-                                    alt="User avatar"
-                                    className="w-12 h-12 rounded-full object-cover"
-                                />
-                            ) : (
-                                <div
-                                    className={`w-12 h-12 rounded-full flex items-center justify-center ${action.iconColor || 'bg-gray-100'
-                                        }`}
-                                >
-                                    <IconComponent className="h-6 w-6" />
-                                </div>
-                            )}
+
+                            <img
+                                src={'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
+                                }
+                                alt="User avatar"
+                                className="w-12 h-12 rounded-full object-cover"
+                            />
+
                         </div>
                         <div className="flex-1">
                             <h3 className="font-semibold text-gray-900 mb-1 text-sm">
-                                {action.title}
+                                {action?.user_id?.first_name} {action?.user_id?.last_name}
                             </h3>
                             <p className="text-sm text-gray-600 leading-relaxed">
-                                {action.description}
+                                {"Your verification request is pending approval."}
                             </p>
                         </div>
                     </div>
                     <button
-                        className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors ml-4 flex-shrink-0 ${action.buttonColor}`}
+                        className={`bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors ml-4 flex-shrink-0 ${action.buttonColor}`}
                     >
-                        {action.buttonText}
+                        <Link to={"/company/verification"}>
+                            Verify Now
+                        </Link>
                     </button>
                 </div>
             </div>
@@ -126,6 +96,11 @@ const CompanyDashboard = ({
 
     const [activeTab, setActiveTab] = useState('user');
     const dispatch = useDispatch()
+    const selector = useSelector((state) => state.companyCourse);
+
+    const { getVerificationCenterList: { data } = {} } = selector || {};
+    const actionsToShow = data?.data?.list?.length > 0 ? data?.data?.list : defaultActions;
+
     const userSelector = useSelector((state) => state.user);
     const { suggestedUserData: { data: suggestedUsers } = {} } =
         userSelector || {};
@@ -133,6 +108,24 @@ const CompanyDashboard = ({
         dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
 
     }, [dispatch, activeTab]);
+    const fetchRequestList = useCallback(async (page = 1) => {
+        const payload = {
+            page: 1,
+            size: 5,
+            status: "PENDING",
+            document_model: ""
+        };
+
+        try {
+            await dispatch(verificationCenterList(payload)).unwrap();
+        } catch (error) {
+            console.log("error", error)
+        } finally {
+        }
+    }, [dispatch]);
+    useEffect(() => {
+        fetchRequestList(1, "");
+    }, [fetchRequestList]);
     return (
         <div className="bg-[#F6FAFD] p-6 min-h-screen">
             <div className="flex flex-col md:flex-row w-full mx-auto gap-6">

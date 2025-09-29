@@ -466,41 +466,62 @@ const RegisterCompany = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
+    //   return;
+    // }
 
     setIsSubmitting(true);
     try {
-      const createPayload = {
-        name: formData.name,
-        display_name: formData.display_name,
-        description: formData.description,
-        website_url: formData.website_url,
-        logo_url: formData.logo_url,
-        industry: formData.industry || [],
-        country_code: formData.country_code,
-        phone_no: formData.phone_no,
-        company_size: formData.company_size,
-        company_type: formData.company_type,
-        headquarters: formData.headquarters,
-        founded_year: formData.founded_year
-          ? Math.floor(
-              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-            )
-          : null,
-        specialties: (formData.specialties || [])
-          .map((s) => String(s || "").trim())
-          .filter((s) => s !== ""),
-        employee_count: formData.employee_count
-          ? Number(formData.employee_count)
-          : null,
-        linkedin_page_url: formData.linkedin_page_url,
-        email: formData.email,
-        username: formData.username,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
+      const createPayload =
+      {
+        "name": "Dollop Infotech",
+        "display_name": "Dollop Infotech",
+        "description": "Dollop Infotech is a Software Development Company based out in Indore.\nDollop also provides professional training and providing Internship for Young  \ntalents",
+        "website_url": "http://dollopinfotech.com",
+        "logo_url": "http://localhost:3000/app/admin/companies",
+        "industry": [
+          "68da3f6a59f68e115edb6896"
+        ],
+        "country_code": {
+          "name": "🇮🇳 India",
+          "dial_code": "91",
+          "short_name": "IN",
+          "emoji": "🇮🇳"
+        },
+        "phone_no": "9644704844",
+        "company_size": "11-50",
+        "company_type": "private",
+        "headquarters": {
+          "address_line_1": "Indore, 452014, IN",
+          "address_line_2": "Indore, 452014, IN",
+          "country": {
+            "name": "🇮🇳 India",
+            "dial_code": "91",
+            "short_name": "IN",
+            "emoji": "🇮🇳"
+          },
+          "state": {
+            "name": "Madhya Pradesh",
+            "code": "MP"
+          },
+          "city": {
+            "name": "Indore"
+          },
+          "pin_code": "452001"
+        },
+        "founded_year": 1577836800,
+        "specialties": [
+          "Web development",
+          "Mobile Development"
+        ],
+        "employee_count": 120,
+        "linkedin_page_url": "https://www.linkedin.com/company/dollop-infotech/about/",
+        "email": "Dollop@gmail.com",
+        "username": "DollopInfotech",
+        "password": "Dollop@1234",
+        "confirmPassword": "Dollop@1234"
+
       };
 
       const res = await dispatch(createCompanies(createPayload)).unwrap();

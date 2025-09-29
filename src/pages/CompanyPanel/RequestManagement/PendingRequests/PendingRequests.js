@@ -87,7 +87,7 @@ const PendingRequests = () => {
   }, [currentPage, searchTerm, documentTypeFilter, fetchRequestList]);
 
   const fetchAdmins = async () => {
-    const userRole = Number(getCookie("USER_ROLE"));
+    const userRole = Number(getCookie("COMPANY_ROLE"));
     try {
       let res;
       if (userRole === ROLES.SUPER_ADMIN || userRole === ROLES.ADMIN) {
@@ -102,6 +102,7 @@ const PendingRequests = () => {
 
       setAdmins(res?.data || []);
     } catch (error) {
+      console.log("this is error in the tab",error)
       toast.error('Failed to fetch admin list');
     }
   };

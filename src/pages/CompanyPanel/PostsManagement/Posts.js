@@ -146,6 +146,7 @@ const CommentItem = ({ comment, dispatch }) => {
   );
 };
 const CommentsModal = ({ isOpen, onClose, post, profileData }) => {
+  console.log("this is the porst sdkfjsdf", post)
   const dispatch = useDispatch();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -160,7 +161,7 @@ const CommentsModal = ({ isOpen, onClose, post, profileData }) => {
     setLoading(true);
     try {
       const result = await dispatch(getCommentOnPost({ post: post._id })).unwrap();
-      setComments(result.data || []);
+      setComments(result.data.list || []);
     } catch (error) {
       toast.error('Failed to load comments');
     } finally {
@@ -219,7 +220,7 @@ const CommentsModal = ({ isOpen, onClose, post, profileData }) => {
             </div>
           ) : (
             <div className="space-y-4">
-              {comments?.map(comment => (
+              {comments?.length > 0 && comments?.map(comment => (
                 <CommentItem
                   key={comment._id}
                   comment={comment}
@@ -666,19 +667,18 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
 
       <PostActions
         post={post}
-        onLike={() => { }}
-        onComment={() => { }}
-        onShare={onShare}
+
+        profileData={profileData}
         onToggleStatus={onToggleStatus}
       />
     </div>
   );
 };
 const Posts = ({ companiesProfileData, instituteProfileData }) => {
-      const [activeTab, setActiveTab] = useState('user');
-    const userSelector = useSelector((state) => state.user);
-    const { suggestedUserData: { data: suggestedUsers } = {} } =
-        userSelector || {};
+  const [activeTab, setActiveTab] = useState('user');
+  const userSelector = useSelector((state) => state.user);
+  const { suggestedUserData: { data: suggestedUsers } = {} } =
+    userSelector || {};
 
   const userRole = Number(getCookie("COMPANY_ROLE"));
   const profileData =
@@ -690,6 +690,7 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { getPostListData: { data: posts = [] }, loading } = useSelector(state => state.companies);
+  console.log("this is the post list", posts)
   const [searchTerm, setSearchTerm] = useState('');
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
@@ -698,10 +699,10 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(12);
   const [totalPosts, setTotalPosts] = useState(0);
-    useEffect(() => {
-        dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
+  useEffect(() => {
+    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
 
-    }, [dispatch, activeTab]);
+  }, [dispatch, activeTab]);
   useEffect(() => {
     const timer = setTimeout(() => {
       const mode = getCookie("ACCESS_MODE");
@@ -909,7 +910,7 @@ const Posts = ({ companiesProfileData, instituteProfileData }) => {
               <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8 mb-6">
                 <div className="flex-shrink-0">
                   <img
-                    src={profileData?.logo_url || '/36369.jpg'}
+                    src={profileData?.logo_url ? profileData?.logo_url : '/36369.jpg'}
                     alt="Company Logo"
                     className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-2 border-gray-200"
                   />
