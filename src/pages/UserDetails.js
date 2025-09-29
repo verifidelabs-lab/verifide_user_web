@@ -179,7 +179,7 @@ const UserDetails = () => {
                         </>
                     ) :
                         <Button>
-                            <Link to={`https://dev-verified.jamsara.com/`}>Sign in</Link>
+                            <Link to={`https://dev-verifide.verifide.xyz/`}>Sign in</Link>
                         </Button>
                     }
                 </div>
