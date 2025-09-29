@@ -327,7 +327,7 @@ const ShortsClone = () => {
           </p>
         </div>
 
-        {accessMode === "6" && (
+        {accessMode === "6" || IsCompany === "company" && (
           <button
             onClick={handleCreateQuest}
             className="mt-4 md:mt-0 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-all shadow-md hover:shadow-lg"

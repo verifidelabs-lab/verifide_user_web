@@ -1,26 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-
-import { PiPlus, PiX } from 'react-icons/pi';
-import { arrayTransform } from '../../components/utils/globalFunction';
-import { useDispatch, useSelector } from 'react-redux';
-import { cities, countries, state } from '../../redux/Global Slice/cscSlice';
-import { useEffect, useState } from 'react';
-import { companyIndustries, companyRegister, companyRegisterVerifyOtp } from '../../redux/slices/authSlice';
-import OTPVerificationPopup from './components/OTPVerificationPopup';
-import { toast } from 'sonner';
-import { setCookie } from '../../components/utils/cookieHandler';
-import { useNavigate } from 'react-router-dom';
-import { TbArrowBack } from 'react-icons/tb';
-import CreatableSelect from 'react-select/creatable';
-import classNames from 'classnames';
-import CustomInput from '../../components/ui/InputAdmin/CustomInput';
-import PasswordInput from '../../components/ui/InputAdmin/PasswordInput';
-import FilterSelect from '../../components/ui/InputAdmin/FilterSelect';
-import useFormHandler from '../../components/hooks/useFormHandler';
-import Button from '../../components/ui/Button/Button';
-import Input from '../../components/ui/InputAdmin/Input';
-import { createCompanies } from '../../redux/CompanySlices/companiesSlice';
+import { PiPlus, PiX } from "react-icons/pi";
+import { arrayTransform } from "../../components/utils/globalFunction";
+import { useDispatch, useSelector } from "react-redux";
+import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
+import { useEffect, useState } from "react";
+import {
+  companyIndustries,
+  companyRegister,
+  companyRegisterVerifyOtp,
+} from "../../redux/slices/authSlice";
+import OTPVerificationPopup from "./components/OTPVerificationPopup";
+import { toast } from "sonner";
+import { setCookie } from "../../components/utils/cookieHandler";
+import { useNavigate } from "react-router-dom";
+import { TbArrowBack } from "react-icons/tb";
+import CreatableSelect from "react-select/creatable";
+import classNames from "classnames";
+import CustomInput from "../../components/ui/InputAdmin/CustomInput";
+import PasswordInput from "../../components/ui/InputAdmin/PasswordInput";
+import FilterSelect from "../../components/ui/InputAdmin/FilterSelect";
+import useFormHandler from "../../components/hooks/useFormHandler";
+import Button from "../../components/ui/Button/Button";
+import Input from "../../components/ui/InputAdmin/Input";
+import { createCompanies } from "../../redux/CompanySlices/companiesSlice";
 
 const initialFormData = {
   username: "",
@@ -67,45 +70,46 @@ const initialFormData = {
 };
 
 const company_type = [
-  { "value": "public", "label": "Public" },
-  { "value": "private", "label": "Private" },
-  { "value": "non-profit", "label": "Non-profit" },
-  { "value": "government", "label": "Government" },
-  { "value": "partnership", "label": "Partnership" },
-  { "value": "sole-proprietorship", "label": "Sole Proprietorship" }
+  { value: "public", label: "Public" },
+  { value: "private", label: "Private" },
+  { value: "non-profit", label: "Non-profit" },
+  { value: "government", label: "Government" },
+  { value: "partnership", label: "Partnership" },
+  { value: "sole-proprietorship", label: "Sole Proprietorship" },
 ];
 
 const Company_Sizes = [
-  { "value": "1-10", "label": "1-10" },
-  { "value": "11-50", "label": "11-50" },
-  { "value": "51-200", "label": "51-200" },
-  { "value": "201-500", "label": "201-500" },
-  { "value": "501-1000", "label": "501-1000" },
-  { "value": "1001-5000", "label": "1001-5000" },
-  { "value": "5001-10000", "label": "5001-10000" }
+  { value: "1-10", label: "1-10" },
+  { value: "11-50", label: "11-50" },
+  { value: "51-200", label: "51-200" },
+  { value: "201-500", label: "201-500" },
+  { value: "501-1000", label: "501-1000" },
+  { value: "1001-5000", label: "1001-5000" },
+  { value: "5001-10000", label: "5001-10000" },
 ];
 
 const FilterSelectAdd = ({
-  label = 'Filter By',
+  label = "Filter By",
   options = [],
   selectedOption,
   onChange,
   isMulti = false,
-  containerClassName = '',
-  selectClassName = '',
-  labelClassName = '',
-  placeholder = 'Select...',
+  containerClassName = "",
+  selectClassName = "",
+  labelClassName = "",
+  placeholder = "Select...",
   error = false,
   enableCustomInput = false,
   onAddCustomOption,
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const selectClasses = classNames(
-    'h-[50px] opacity-100 rounded-[10px] border w-full',
+    "h-[50px] opacity-100 rounded-[10px] border w-full",
     {
-      'border-gray-300': !error,
-      'border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500': error,
+      "border-gray-300": !error,
+      "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
+        error,
     },
     selectClassName
   );
@@ -113,35 +117,35 @@ const FilterSelectAdd = ({
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      borderRadius: '10px',
-      borderColor: error ? '#f87171' : '#d1d5db',
-      minHeight: '52px',
+      borderRadius: "10px",
+      borderColor: error ? "#f87171" : "#d1d5db",
+      minHeight: "52px",
       opacity: 1,
-      boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none',
-      '&:hover': {
-        borderColor: error ? '#f87171' : '#9ca3af',
+      boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
+      "&:hover": {
+        borderColor: error ? "#f87171" : "#9ca3af",
       },
     }),
     placeholder: (base) => ({
       ...base,
-      color: '#000000',
+      color: "#000000",
       opacity: 0.5,
     }),
     multiValue: (base) => ({
       ...base,
-      backgroundColor: '#e5e7eb',
-      borderRadius: '4px',
+      backgroundColor: "#e5e7eb",
+      borderRadius: "4px",
     }),
     multiValueLabel: (base) => ({
       ...base,
-      color: '#374151',
+      color: "#374151",
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: '#6b7280',
-      ':hover': {
-        backgroundColor: '#f87171',
-        color: 'white',
+      color: "#6b7280",
+      ":hover": {
+        backgroundColor: "#f87171",
+        color: "white",
       },
     }),
   };
@@ -159,7 +163,9 @@ const FilterSelectAdd = ({
 
   return (
     <div className={`w-full ${containerClassName}`}>
-      <label className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}>
+      <label
+        className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}
+      >
         {label}
       </label>
 
@@ -180,7 +186,7 @@ const FilterSelectAdd = ({
         noOptionsMessage={({ inputValue }) =>
           enableCustomInput && inputValue
             ? `No match found. Press Enter to add "${inputValue}"`
-            : 'No options'
+            : "No options"
         }
       />
     </div>
@@ -191,7 +197,7 @@ const RegisterCompany = () => {
   const { formData, handleChange, setFormData, errors, setErrors } =
     useFormHandler(initialFormData);
   const dispatch = useDispatch();
-  const cscSelector = useSelector(state => state.global)
+  const cscSelector = useSelector((state) => state.global);
   const stateList = arrayTransform(cscSelector?.stateData?.data?.data || []);
   const cityList = arrayTransform(cscSelector?.citiesData?.data?.data || []);
   const countriesList = arrayTransform(
@@ -201,24 +207,26 @@ const RegisterCompany = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [verificationError, setVerificationError] = useState('');
-  const [companyRedisToken, setCompanyRedisToken] = useState('');
+  const [verificationError, setVerificationError] = useState("");
+  const [companyRedisToken, setCompanyRedisToken] = useState("");
   const newResData = resData?.map((item) => ({
-    "value": item?._id,
-    "label": item?.name
+    value: item?._id,
+    label: item?.name,
   }));
   const [customDegrees, setCustomDegrees] = useState([]);
   const [showCustomDegreeInput, setShowCustomDegreeInput] = useState(false);
   const [customDegreeInput, setCustomDegreeInput] = useState("");
 
   const getIndustries = () => {
-    dispatch(companyIndustries()).then((res) => {
-      if (res) {
-        setResData(res?.payload?.data?.list);
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    dispatch(companyIndustries())
+      .then((res) => {
+        if (res) {
+          setResData(res?.payload?.data?.list);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -376,8 +384,7 @@ const RegisterCompany = () => {
     }
 
     // Password validation
-    if (!formData.password?.trim())
-      newErrors.password = "Password is required";
+    if (!formData.password?.trim()) newErrors.password = "Password is required";
     else if (formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters";
     }
@@ -424,16 +431,34 @@ const RegisterCompany = () => {
     }
 
     // URL validation
-    const urlRegex = /^https?:\/\/.+/;
-    if (formData.website_url && !urlRegex.test(formData.website_url)) {
+    // const urlRegex = /^https?:\/\/.+/;
+    // if (formData.website_url && !urlRegex.test(formData.website_url)) {
+    //   newErrors.website_url =
+    //     "Please enter a valid URL starting with http:// or https://";
+    // }
+    // if (
+    //   formData.linkedin_page_url &&
+    //   !urlRegex.test(formData.linkedin_page_url)
+    // ) {
+    //   newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
+    // }
+    // General URL (must start with http or https)
+    const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+
+    // LinkedIn specific URL
+    const linkedInRegex = /^https?:\/\/(www\.)?linkedin\.com\/.*$/i;
+
+    if (formData.website_url && !urlRegex.test(formData.website_url.trim())) {
       newErrors.website_url =
         "Please enter a valid URL starting with http:// or https://";
     }
+
     if (
       formData.linkedin_page_url &&
-      !urlRegex.test(formData.linkedin_page_url)
+      !linkedInRegex.test(formData.linkedin_page_url.trim())
     ) {
-      newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
+      newErrors.linkedin_page_url =
+        "Please enter a valid LinkedIn URL (e.g. https://www.linkedin.com/...)";
     }
 
     return newErrors;
@@ -462,8 +487,8 @@ const RegisterCompany = () => {
         headquarters: formData.headquarters,
         founded_year: formData.founded_year
           ? Math.floor(
-            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-          )
+              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+            )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -483,7 +508,7 @@ const RegisterCompany = () => {
         toast.error(res?.message || "Failed to create company");
         return;
       }
-      console.log("formDataformData11111111111111111111", res)
+      console.log("formDataformData11111111111111111111", res);
 
       if (res?.data?.redisToken) {
         setCompanyRedisToken(res.data.redisToken);
@@ -517,23 +542,23 @@ const RegisterCompany = () => {
     }
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleVerifyOtp = async (otp) => {
     setIsVerifying(true);
-    setVerificationError('');
+    setVerificationError("");
     try {
       const payload = {
         token: companyRedisToken,
-        otp: otp
+        otp: otp,
       };
       const res = await dispatch(companyRegisterVerifyOtp(payload)).unwrap();
-      console.log("--------------4444444444444", res)
+      console.log("--------------4444444444444", res);
       if (!res?.payload?.data?.error) {
-        setCookie('VERIFIED_ADMIN_TOKEN', JSON.stringify(res?.data?.token));
-        setCookie('USER_ROLE', res?.data?.accessMode);
-        setCookie('SIDE_BAR', res?.data?.accessMode);
-        toast.success(res?.message || 'Login successful');
+        setCookie("VERIFIED_ADMIN_TOKEN", JSON.stringify(res?.data?.token));
+        setCookie("USER_ROLE", res?.data?.accessMode);
+        setCookie("SIDE_BAR", res?.data?.accessMode);
+        toast.success(res?.message || "Login successful");
         navigate(getDashboardPath(res?.data?.accessMode));
       } else {
         setVerificationError(res?.message || "Verification failed");
@@ -551,33 +576,41 @@ const RegisterCompany = () => {
   };
 
   const handleBack = () => {
-    navigate('/login-selection');
+    navigate("/user/feed");
   };
 
-
   const handleDegreeChange = (selectedOptions) => {
-    const otherOption = selectedOptions?.find(option => option.value === "other");
+    const otherOption = selectedOptions?.find(
+      (option) => option.value === "other"
+    );
     if (otherOption) {
       setShowCustomDegreeInput(true);
-      const filteredOptions = selectedOptions.filter(option => option.value !== "other");
-      setFormData(prev => ({
+      const filteredOptions = selectedOptions.filter(
+        (option) => option.value !== "other"
+      );
+      setFormData((prev) => ({
         ...prev,
-        industry: filteredOptions.map(option => option.value)
+        industry: filteredOptions.map((option) => option.value),
       }));
     } else {
       setShowCustomDegreeInput(false);
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        industry: selectedOptions ? selectedOptions.map(option => option.value) : []
+        industry: selectedOptions
+          ? selectedOptions.map((option) => option.value)
+          : [],
       }));
     }
   };
 
   const handleAddCustomDegree = (degreeName) => {
-    setCustomDegrees(prev => [...prev, { value: degreeName, label: degreeName }]);
-    setFormData(prev => ({
+    setCustomDegrees((prev) => [
       ...prev,
-      industry: [...prev.industry, degreeName]
+      { value: degreeName, label: degreeName },
+    ]);
+    setFormData((prev) => ({
+      ...prev,
+      industry: [...prev.industry, degreeName],
     }));
   };
 
@@ -592,23 +625,29 @@ const RegisterCompany = () => {
   return (
     <>
       <div className="h-screen">
-
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
           <div className="bg-white overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
               <button
-                onClick={handleBack} title='go back'
+                onClick={handleBack}
+                title="go back"
                 className="text-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-gray-700 transition-colors"
               >
                 <TbArrowBack size={20} />
               </button>
-              <h2 className="text-2xl font-bold text-gray-800">Register Your Company</h2>
-              <p className="mt-1 text-sm text-gray-600">Fill in your company details to create an account</p>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Register Your Company
+              </h2>
+              <p className="mt-1 text-sm text-gray-600">
+                Fill in your company details to create an account
+              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Account Information</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Account Information
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <CustomInput
                     label="Username *"
@@ -650,7 +689,9 @@ const RegisterCompany = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Basic Company Information</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Basic Company Information
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <CustomInput
                     label="Company Name *"
@@ -685,7 +726,8 @@ const RegisterCompany = () => {
                     label="Country Code"
                     options={countriesList || []}
                     selectedOption={countriesList?.find(
-                      (opt) => opt.short_name === formData?.country_code?.short_name
+                      (opt) =>
+                        opt.short_name === formData?.country_code?.short_name
                     )}
                     onChange={(country) =>
                       handleCountryChange("country_code", country)
@@ -707,27 +749,30 @@ const RegisterCompany = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Company Details</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Company Details
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
                   <FilterSelectAdd
                     isMulti
                     label="Industry *"
                     options={newResData || []}
                     selectedOption={[
-                      ...(newResData.filter(opt =>
+                      ...(newResData.filter((opt) =>
                         formData?.industry?.includes(opt.value)
                       ) || []),
-                      ...customDegrees.filter(degree =>
+                      ...customDegrees.filter((degree) =>
                         formData?.industry?.includes(degree.value)
-                      )
+                      ),
                     ]}
                     onChange={handleDegreeChange}
                     enableCustomInput={true}
                     onAddCustomOption={handleAddCustomDegree}
                   />
                   {errors.industry && (
-                    <p className="mt-1 text-sm text-red-600">{errors.industry}</p>
+                    <p className="mt-1 text-sm text-red-600">
+                      {errors.industry}
+                    </p>
                   )}
                   {showCustomDegreeInput && (
                     <div className="mt-2 flex gap-2">
@@ -828,7 +873,9 @@ const RegisterCompany = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Headquarters</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Headquarters
+                </h3>
                 <div className="grid grid-cols-1 gap-4">
                   <CustomInput
                     label="Address Line 1"
@@ -871,7 +918,9 @@ const RegisterCompany = () => {
                       (opt) =>
                         opt.state_code === formData?.headquarters?.state?.code
                     )}
-                    onChange={(state) => handleHeadquartersChange("state", state)}
+                    onChange={(state) =>
+                      handleHeadquartersChange("state", state)
+                    }
                     placeholder="Select State"
                     isDisabled={!formData?.headquarters?.country?.short_name}
                   />
@@ -901,7 +950,9 @@ const RegisterCompany = () => {
               </div>
               <div className="border-t border-gray-200 pt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">Specialties</h3>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Specialties
+                  </h3>
                   <Button
                     type="button"
                     variant="outline"
@@ -953,7 +1004,7 @@ const RegisterCompany = () => {
                   className="w-full py-3"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Registering...' : 'Register Company'}
+                  {isSubmitting ? "Registering..." : "Register Company"}
                 </Button>
               </div>
             </form>

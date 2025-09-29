@@ -391,7 +391,7 @@ const Login = () => {
               <div className="text-center">
                 <span className="text-[#646464] text-base font-normal">Don't have an account?</span> <span className="text-[#000000] text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out"><Link to="/create-account">Create account</Link></span>
               </div>
-              <div className="flex justify-center gap-4 items-center text-sm font-medium text-blue-600">
+              {/* <div className="flex justify-center gap-4 items-center text-sm font-medium text-blue-600">
                 <h2
                   className="hover:underline cursor-pointer"
                   onClick={() => window.open('https://dev-verified-admin.jamsara.com/companies/login', '_blank')}
@@ -405,7 +405,7 @@ const Login = () => {
                 >
                   Log in Institute
                 </h3>
-              </div>
+              </div> */}
 
             </Form>
           </> :
