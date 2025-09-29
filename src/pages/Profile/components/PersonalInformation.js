@@ -97,19 +97,19 @@ const PersonalInformation = ({ formData, error, isExtended, setIsExtended, setFo
             />
             <span className="text-blue-500 text-[10px] font-medium top-[75px] absolute flex items-center gap-1">
               <a
-                href={`https://dev-verified.jamsara.com/user-details/${formData?.username}`}
+                href={`https://dev-verifide.verifide.xyz/user-details/${formData?.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
               >
-                {`https://dev-verified.jamsara.com/${formData?.username}`}
+                {`https://dev-verifide.verifide.xyz/${formData?.username}`}
               </a>
 
               <MdOutlineContentCopy
                 className="cursor-pointer text-gray-600 hover:text-gray-800"
                 onClick={async () => {
                   try {
-                    const url = `https://dev-verified.jamsara.com/user-details/${formData?.username}`;
+                    const url = `https://dev-verifide.verifide.xyz/user-details/${formData?.username}`;
                     await navigator.clipboard.writeText(url);
                     toast.success("URL copied to clipboard!");
                   } catch (err) {

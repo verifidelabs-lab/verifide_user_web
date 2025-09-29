@@ -340,7 +340,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
   const handleCopyLink = useCallback((post) => {
     // console.log(post)
     if (post) {
-      navigator.clipboard.writeText(`https://dev-verified.jamsara.com/postView/${post}`);
+      navigator.clipboard.writeText(`https://dev-verifide.verifide.xyz/postView/${post}`);
       // http://localhost:3000/postView/68a2f34d189e623973cda851
       navigate(`/postView/${post}`)
       toast.success('Link copied to clipboard');

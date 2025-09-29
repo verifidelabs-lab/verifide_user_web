@@ -90,7 +90,7 @@ const UserCertificate = () => {
                         </>
                     ) :
                         <Button>
-                            <Link to={`https://dev-verified.jamsara.com/`}>Sign In</Link>
+                            <Link to={`https://dev-verifide.verifide.xyz/`}>Sign In</Link>
                         </Button>
                     }
 
