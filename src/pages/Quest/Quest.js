@@ -163,11 +163,11 @@ const ShortsClone = () => {
   ];
 
   const handleCreateQuest = () => {
-    if (getCookie("COMPANY_TOKEN") && IsCompany === "company") {
+    const companyRole=getCookie("COMPANY_ROLE")
+    console.log("This is te company role ",companyRole)
+    if (companyRole && companyRole === "3" && IsCompany === "company") {
       navigate(`/company/quest/create-your-quest`);
-
     } else {
-
       navigate(`/user/quest/create-your-quest`);
     }
   };

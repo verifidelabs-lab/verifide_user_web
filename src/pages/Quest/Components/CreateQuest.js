@@ -69,7 +69,8 @@ const CreateQuest = () => {
   useEffect(() => {
     const handleStorageChange = () => {
       const newAccessMode = getCookie("ACCESS_MODE");
-      if (newAccessMode == 5) {
+      const isCompany = getCookie("COMPANY_ROLE");
+      if (newAccessMode == 5 && isCompany !== "3") {
         navigate(`/user/quest`);
       }
     };
@@ -453,11 +454,13 @@ const CreateQuest = () => {
 
       if (result?.code === 1200) {
         toast.success(isEditMode ? "Quest updated successfully!" : "Quest created successfully!");
-        if (getCookie("COMPANY_TOKEN") && IsCompany === "company") {
-              navigate(`/company/quest`);
-        
-            } 
-        navigate(`/user/quest`);
+        const isCompanyrole = getCookie("COMPANY_ROLE");
+        if (IsCompany === "company" && isCompanyrole === "3") {
+          navigate(`/company/quest`);
+        } else {
+          navigate(`/user/quest`);
+        }
+
       } else {
         throw new Error(result?.message || "Operation failed");
       }
@@ -543,7 +546,7 @@ const CreateQuest = () => {
               enableEmoji={true}
             />
           </div>
-{activeTab !== 'survey-polls' && (
+          {activeTab !== 'survey-polls' && (
             <div>
               <CustomInput
                 label="Quest Link"
@@ -699,7 +702,7 @@ const CreateQuest = () => {
           )}
 
           {/* Quest Link (for non-survey-polls tabs) */}
-          
+
           {
             activeTab === "survey-polls" && (
               <label className="text-black mt-2">Survey & Polls <span className="text-red-500">*</span></label>

@@ -16,19 +16,462 @@ import {
 } from "lucide-react";
 import { FaRegEdit } from "react-icons/fa";
 import PeopleToConnect from "../../../components/ui/ConnectSidebar/ConnectSidebar";
+import {
+  adminChangePassword,
+  adminProfile,
+  updateProfile,
+  updateProfileInstitutions,
+  resetPasswordInstitutions,
+  updateProfileCompanies,
+  resetPasswordCompanies,
+  companiesProfile,
+  instituteProfile
+} from '../../../redux/CompanySlices/CompanyAuth'
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
-import { companiesProfile } from "../../../redux/CompanySlices/CompanyAuth";
 import { Link } from "react-router-dom";
 import { MoreVertical } from "lucide-react";
 import { Bookmark, Plus } from "lucide-react";
+import useFormHandler from "../../../components/hooks/useFormHandler";
+import { FiEdit2, FiLock, FiMail, FiPhone, FiGlobe, FiUser, FiCamera, FiCheck } from 'react-icons/fi'
+import { arrayTransform, uploadImageDirectly } from "../../../components/utils/globalFunction";
+import { getCookie } from "../../../components/utils/cookieHandler";
+import { toast } from "sonner";
+import Button from "../../../components/ui/Button/Button";
+import CustomInput from "../../../components/ui/InputAdmin/CustomInput";
+import FilterSelect from "../../../components/ui/InputAdmin/FilterSelect";
+import Modal from "../../../components/ui/InputAdmin/Modal/Modal";
 
-const CompanyProfile = () => {
+const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
+  const ROLES = {
+    SUPER_ADMIN: 1,
+    ADMIN: 2,
+    COMPANIES: 3,
+    COMPANIES_ADMIN: 7,
+    INSTITUTIONS: 4,
+    INSTITUTIONS_ADMIN: 8
+  };
+  console.log("tesetesdfesdrsdfsdfsdfsdfsfsdfsfsdfsdf", companiesProfileData)
+  const userRole = Number(getCookie("COMPANY_ROLE"))
+  const [isImageUploading, setIsImageUploading] = useState(false)
+  const cscSelector = useSelector(state => state.global)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const countriesList = arrayTransform(cscSelector?.countriesData?.data?.data || [])
+  const getInitialFormData = () => {
+    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+      return {
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        profile_picture_url: "",
+        country_code: {
+          name: "",
+          dial_code: "",
+          short_name: "",
+          emoji: ""
+        },
+        phone_number: ""
+      }
+    } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
+      return {
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+        name: "",
+        display_name: "",
+        email: "",
+        logo_url: "",
+        website_url: "",
+        description: "",
+        country_code: {
+          name: "",
+          dial_code: "",
+          short_name: "",
+          emoji: ""
+        },
+        phone_no: "",
+        company_size: "",
+        company_type: "",
+        specialties: [],
+        founded_year: ""
+      }
+    } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+      return {
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+        name: "",
+        display_name: "",
+        email: "",
+        logo_url: "",
+        website_url: "",
+        description: "",
+        country_code: {
+          name: "",
+          dial_code: "",
+          short_name: "",
+          emoji: ""
+        },
+        phone_no: "",
+        institution_type_id: "",
+        specialties: [],
+        founded_year: ""
+      }
+    }
+    return {}
+  }
+  const { formData, setFormData, handleChange, resetForm, errors, setErrors } = useFormHandler(getInitialFormData())
+  console.log("this is the form fields", formData)
+  const renderProfileImage = () => {
+    const imageField = [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+      ? 'profile_picture_url'
+      : 'logo_url'
+    const imageUrl = formData[imageField] || adminProfileData?.[imageField] || companiesProfileData?.[imageField] || instituteProfileData?.[imageField] || ''
+
+    return (
+      <div className="relative group">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg bg-white relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
+          {isImageUploading && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <FiCamera className="w-6 h-6 text-white" />
+          </div>
+          <img
+            src={imageUrl || "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"}
+            className="w-full h-full object-cover"
+            alt="Profile"
+            onError={(e) => {
+              e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+            }}
+          />
+        </div>
+        <input
+          type="file"
+          id={`imageUpload-${imageField}`}
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e.target.files[0], imageField)}
+          className="hidden"
+        />
+      </div>
+    )
+  };
+  const fetchData = () => {
+    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+      dispatch(adminProfile())
+    }
+    if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
+      dispatch(companiesProfile())
+    }
+    if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+      dispatch(instituteProfile())
+    }
+  }
+  const validateProfileForm = () => {
+    const newErrors = {}
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^[0-9]{10,15}$/
+
+    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+      if (!formData.first_name?.trim()) {
+        newErrors.first_name = "First name is required"
+      } else if (formData.first_name.trim().length < 2) {
+        newErrors.first_name = "First name must be at least 2 characters"
+      }
+
+      if (!formData.last_name?.trim()) {
+        newErrors.last_name = "Last name is required"
+      } else if (formData.last_name.trim().length < 2) {
+        newErrors.last_name = "Last name must be at least 2 characters"
+      }
+    } else {
+      if (!formData.name?.trim()) {
+        newErrors.name = "Name is required"
+      } else if (formData.name.trim().length < 2) {
+        newErrors.name = "Name must be at least 2 characters"
+      }
+
+      if (!formData.display_name?.trim()) {
+        newErrors.display_name = "Display name is required"
+      }
+    }
+
+    if (!formData.email?.trim()) {
+      newErrors.email = "Email is required"
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address"
+    }
+
+    const phoneField = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "phone_number" : "phone_no"
+    if (!formData[phoneField]?.trim()) {
+      newErrors[phoneField] = "Phone number is required"
+    } else if (!phoneRegex.test(formData[phoneField].replace(/\D/g, ''))) {
+      newErrors[phoneField] = "Please enter a valid phone number (10-15 digits)"
+    }
+
+    if (!formData.country_code?.name) {
+      newErrors.country_code = "Country is required"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+  const handleProfileSubmit = async () => {
+    if (!validateProfileForm()) {
+      toast.error("Please fix the validation errors")
+      return
+    }
+    try {
+      setIsLoading(true)
+      let res
+
+      if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+        const apiPayload = {
+          first_name: formData.first_name.trim(),
+          last_name: formData.last_name.trim(),
+          email: formData.email.trim(),
+          profile_picture_url: formData.profile_picture_url,
+          country_code: formData.country_code,
+          phone_number: formData.phone_number.trim()
+        }
+        res = await dispatch(updateProfile(apiPayload)).unwrap()
+      } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
+        const apiPayload = {
+          name: formData.name.trim(),
+          display_name: formData.display_name.trim(),
+          email: formData.email.trim(),
+          logo_url: formData.logo_url,
+          website_url: formData.website_url.trim(),
+          description: formData.description.trim(),
+          country_code: formData.country_code,
+          phone_no: formData.phone_no.trim(),
+          company_size: formData.company_size,
+          company_type: formData.company_type,
+          specialties: formData.specialties,
+          founded_year: formData.founded_year,
+          headquarters: formData.headquarters,
+          industry: formData.industry
+        }
+        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap()
+      } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+        const apiPayload = {
+          name: formData.name.trim(),
+          display_name: formData.display_name.trim(),
+          email: formData.email.trim(),
+          logo_url: formData.logo_url,
+          website_url: formData.website_url.trim(),
+          description: formData.description.trim(),
+          country_code: formData.country_code,
+          phone_no: formData.phone_no.trim(),
+          institution_type_id: formData.institution_type_id,
+          specialties: formData.specialties,
+          founded_year: formData.founded_year
+        }
+        res = await dispatch(updateProfileInstitutions(apiPayload)).unwrap()
+      }
+
+      toast.success(res?.message || "Profile updated successfully")
+      fetchData()
+      setIsProfileModalOpen(false)
+      setIsLoading(false)
+    } catch (error) {
+      toast.error(error || "Failed to update profile")
+      setIsLoading(false)
+    }
+  }
+  const handleImageUpload = async (file, fieldName = 'profile_picture_url') => {
+    if (!file) return
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("File size must be less than 2MB")
+      return
+    }
+
+    const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png']
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only image files (JPEG, PNG) are allowed")
+      return
+    }
+
+    try {
+      setIsImageUploading(true)
+      const result = await uploadImageDirectly(file, "PROFILES")
+      toast.success(result?.message)
+      setFormData((prev) => ({ ...prev, [fieldName]: result?.data?.imageURL }))
+
+    } catch (error) {
+      toast.error(error || 'Failed to upload image')
+    } finally {
+      setIsImageUploading(false)
+    }
+  }
+  const renderProfileFormFields = () => {
+    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <CustomInput
+              label="First Name"
+              type="text"
+              value={formData.first_name}
+              onChange={(e) => handleChange("first_name", e.target.value)}
+              placeholder="Enter first name"
+              icon={<FiUser className="text-gray-400" />}
+              error={errors?.first_name}
+            />
+          </div>
+          <div>
+            <CustomInput
+              label="Last Name"
+              type="text"
+              value={formData.last_name}
+              onChange={(e) => handleChange("last_name", e.target.value)}
+              placeholder="Enter last name"
+              icon={<FiUser className="text-gray-400" />}
+              error={errors?.last_name}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <CustomInput
+              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Company Name" : "Institute Name"}
+              type="text"
+              value={formData.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter company name" : "Enter institute name"}
+              icon={<FiUser className="text-gray-400" />}
+              error={errors?.name}
+            />
+          </div>
+          <div>
+            <CustomInput
+              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Industry Name" : "Institute Name"}
+              type="text"
+              value={formData.industry}
+              onChange={(e) => handleChange("industry", e.target.value)}
+              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter industry" : "Enter institute industry"}
+              icon={<FiUser className="text-gray-400" />}
+              error={errors?.industry}
+            />
+          </div>
+          <div>
+            <CustomInput
+              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Headquarters Name" : "Institute Name"}
+              type="text"
+              value={formData.headquarters}
+              onChange={(e) => handleChange("headquarters", e.target.value)}
+              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter headquarters" : "Enter institute headquarters"}
+              icon={<FiUser className="text-gray-400" />}
+              error={errors?.headquarters}
+            />
+          </div>
+          <div>
+            <CustomInput
+              label="Display Name"
+              type="text"
+              value={formData.display_name}
+              onChange={(e) => handleChange("display_name", e.target.value)}
+              placeholder="Enter display name"
+              icon={<FiUser className="text-gray-400" />}
+              error={errors?.display_name}
+            />
+          </div>
+        </div>
+      )
+    }
+  };
+  const handleImageClick = (fieldName = 'profile_picture_url') => {
+    const inputId = `imageUpload-${fieldName}`
+    document.getElementById(inputId).click()
+  }
+
+  const handleCountryChange = (data) => {
+    setFormData((prev) => ({
+      ...prev,
+      country_code: {
+        "name": data?.label,
+        "dial_code": data?.dial_code,
+        "short_name": data?.short_name,
+        "emoji": data?.emoji
+      }
+    }))
+  }
+  useEffect(() => {
+    if (adminProfileData) {
+      if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+        setFormData(prev => ({
+          ...prev,
+          first_name: adminProfileData?.first_name || "",
+          last_name: adminProfileData?.last_name || "",
+          email: adminProfileData?.email || "",
+          profile_picture_url: adminProfileData?.profile_picture_url || "",
+          country_code: adminProfileData?.country_code || {
+            name: "",
+            dial_code: "",
+            short_name: "",
+            emoji: ""
+          },
+          phone_number: adminProfileData?.phone_number || ""
+        }))
+      } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
+        setFormData(prev => ({
+          ...prev,
+          name: companiesProfileData?.name || "",
+          display_name: companiesProfileData?.display_name || "",
+          email: companiesProfileData?.email || "",
+          logo_url: companiesProfileData?.logo_url || "",
+          website_url: companiesProfileData?.website_url || "",
+          description: companiesProfileData?.description || "",
+          country_code: companiesProfileData?.country_code || {
+            name: "",
+            dial_code: "",
+            short_name: "",
+            emoji: ""
+          },
+          phone_no: companiesProfileData?.phone_no || "",
+          company_size: companiesProfileData?.company_size || "",
+          company_type: companiesProfileData?.company_type || "",
+          specialties: companiesProfileData?.specialties || [],
+          founded_year: companiesProfileData?.founded_year || ""
+        }))
+      } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+        setFormData(prev => ({
+          ...prev,
+          name: instituteProfileData?.name || "",
+          display_name: instituteProfileData?.display_name || "",
+          email: instituteProfileData?.email || "",
+          logo_url: instituteProfileData?.logo_url || "",
+          website_url: instituteProfileData?.website_url || "",
+          description: instituteProfileData?.description || "",
+          country_code: instituteProfileData?.country_code || {
+            name: "",
+            dial_code: "",
+            short_name: "",
+            emoji: ""
+          },
+          phone_no: instituteProfileData?.phone_no || "",
+          institution_type_id: instituteProfileData?.institution_type_id?._id || "",
+          specialties: instituteProfileData?.specialties || [],
+          founded_year: instituteProfileData?.founded_year || ""
+        }))
+      }
+    }
+  }, [adminProfileData, instituteProfileData, companiesProfileData])
   const [activeTab, setActiveTab] = useState("Home");
-  const [editMode, setEditMode] = useState({});
   const [agencyData, setAgencyData] = useState({});
-
   const [activeTab1, setActiveTab1] = useState("user");
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.user);
   const { suggestedUserData: { data: suggestedUsers } = {} } =
@@ -95,6 +538,9 @@ const CompanyProfile = () => {
     },
   ]);
 
+  const handleProfileUpdate = () => {
+    setIsProfileModalOpen(true)
+  }
   const updateAgencyData = (field, value) => {
     setAgencyData((prev) => ({
       ...prev,
@@ -167,12 +613,7 @@ const CompanyProfile = () => {
     return (
       <div className={`group relative ${className}`}>
         <div className={multiline ? "whitespace-pre-wrap" : ""}>{value}</div>
-        {/* <button
-          onClick={() => setEditing(true)}
-          className="absolute -right-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-blue-400"
-        >
-          <Edit size={16} />
-        </button> */}
+
       </div>
     );
   };
@@ -185,31 +626,7 @@ const CompanyProfile = () => {
         if (data) {
           console.log("This is companyData: " + JSON.stringify(data, null, 2));
 
-          // setAgencyData({
-          //   name: data.display_name || data.name || "",
-          //   tagline: "", // no tagline in API, you can set default or empty
-          //   overview: data.description || "",
-          //   description: data.description || "",
-          //   workDescription: "", // no workDescription in API
-          //   website: data.website_url || "",
-          //   phone: data.phone_no || "",
-          //   industry: data.industry?.map((i) => i.name).join(", ") || "",
-          //   founded: data.founded_year
-          //     ? new Date(data.founded_year * 1000).getFullYear().toString()
-          //     : "",
-          //   companySize: data.company_size || "",
-          //   verifiedSince: data.verified_at
-          //     ? new Date(data.verified_at).toLocaleDateString()
-          //     : "",
-          //   followers: data.follower_count
-          //     ? `${data.follower_count} Followers`
-          //     : "0 Followers",
-          //   employees: data.employee_count
-          //     ? `${data.employee_count} Employees`
-          //     : "0 Employees",
-          //   specialties: data.specialties || [],
-          //   logo: data.logo_url || "",
-          // });
+
           setAgencyData({
             name: data?.display_name || data?.name || "N/A",
             tagline: "", // no tagline in API, keep empty or default
@@ -356,20 +773,17 @@ const CompanyProfile = () => {
                 <FaRegEdit />
                 <Link to={"/company/update-profile"}>Edit</Link>
               </button> */}
-            <button className="flex items-center gap-2 px-4 py-2  text-white rounded ">
-              <Link
-                to="/company/update-profile"
-                className="px-5 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-400 text-white font-medium hover:from-blue-700 hover:to-blue-500 transition-all shadow-md"
-              >
-                Edit Page
-              </Link>
+            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded " onClick={handleProfileUpdate}>
+
+              Edit Page
+
             </button>
             {/* </div> */}
           </div>
 
           {/* Row 2: Company Details */}
           <div className="mt-3">
-            <h1 className="font-bold text-white mb-2">{agencyData.name}</h1>
+            <h1 className="font-bold text-gray-700 mb-2">{agencyData.name}</h1>
             <p className="text-gray-600 text-sm mb-3 leading-relaxed">
               {agencyData.description}
             </p>
@@ -386,57 +800,7 @@ const CompanyProfile = () => {
     </div>
   );
 
-  //   (
-  //   <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-  //     <div className="flex items-center justify-between">
-  //       <div className="flex items-center gap-4">
-  //         <div className="relative group">
-  //           <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-  //             <div className="text-black text-2xl font-bold transform -skew-x-12">M</div>
-  //           </div>
-  //           <button className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-  //             <Camera className="text-white" size={20} />
-  //           </button>
-  //         </div>
 
-  //         <div>
-  //           <h1 className="text-xl font-semibold mb-1">
-  //             <EditableField
-  //               value={agencyData.name}
-  //               onSave={updateAgencyData}
-  //               field="name"
-  //               placeholder="Enter agency name"
-  //               className="text-gray-900"
-  //             />
-  //           </h1>
-  //           <p className="text-gray-500 text-sm max-w-xl leading-relaxed">
-  //             <EditableField
-  //               value={agencyData.tagline}
-  //               onSave={updateAgencyData}
-  //               field="tagline"
-  //               multiline={2}
-  //               placeholder="Enter tagline"
-  //               className="text-gray-500"
-  //             />
-  //           </p>
-  //           <div className="flex items-center gap-4 mt-2 text-sm text-gray-400">
-  //             <span>{agencyData.industry}</span>
-  //             <span>•</span>
-  //             <span>{agencyData.founded}</span>
-  //             <span>•</span>
-  //             <span>{agencyData.followers}</span>
-  //           </div>
-  //         </div>
-  //       </div>
-
-  //       <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors" >
-  //         <Link to={"/company/update-profile"} >
-  //           Edit Page
-  //         </Link>
-  //       </button>
-  //     </div>
-  //   </div>
-  // );
 
   // Navigation
   const Navigation = () => (
@@ -446,11 +810,10 @@ const CompanyProfile = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${
-              activeTab === tab
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-500 hover:text-blue-600"
-            }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-500 hover:text-blue-600"
+              }`}
           >
             {tab}
           </button>
@@ -459,135 +822,7 @@ const CompanyProfile = () => {
     </div>
   );
 
-  // ---- TABS ----
-  // const HomeTab = () => (
-  //   <div className="mt-6 space-y-8">
-  //     <div className="space-y-4">
-  //       <h2 className="text-xl font-medium text-gray-900 flex items-center gap-2">
-  //         Overview <Edit className="text-gray-400" size={16} />
-  //       </h2>
-  //       <div className="text-gray-600 space-y-2">
-  //         <EditableField
-  //           value={agencyData.overview}
-  //           onSave={updateAgencyData}
-  //           field="overview"
-  //           multiline={2}
-  //         />
-  //         {/* <EditableField
-  //           value={agencyData.description}
-  //           onSave={updateAgencyData}
-  //           field="description"
-  //           multiline={4}
-  //         /> */}
-  //         <EditableField
-  //           value={agencyData.workDescription}
-  //           onSave={updateAgencyData}
-  //           field="workDescription"
-  //           multiline={4}
-  //         />
-  //       </div>
-  //     </div>
 
-  //     <div className="grid lg:grid-cols-3 gap-8">
-  //       <div className="lg:col-span-2 grid md:grid-cols-2 gap-6 text-sm">
-  //         <div className="space-y-4">
-  //           <div className="flex items-start gap-3">
-  //             <Globe className="text-gray-400 mt-1" size={16} />
-  //             <div>
-  //               <div className="text-gray-400 text-xs mb-1">Website</div>
-  //               <EditableField
-  //                 value={agencyData.website}
-  //                 onSave={updateAgencyData}
-  //                 field="website"
-  //                 type="url"
-  //                 className="text-blue-600"
-  //               />
-  //             </div>
-  //           </div>
-
-  //           <div className="flex items-start gap-3">
-  //             <Phone className="text-gray-400 mt-1" size={16} />
-  //             <div>
-  //               <div className="text-gray-400 text-xs mb-1">Phone</div>
-  //               <EditableField
-  //                 value={agencyData.phone}
-  //                 onSave={updateAgencyData}
-  //                 field="phone"
-  //                 type="tel"
-  //               />
-  //             </div>
-  //           </div>
-
-  //           <div className="flex items-start gap-3">
-  //             <CheckCircle className="text-green-400 mt-1" size={16} />
-  //             <div>
-  //               <div className="text-gray-400 text-xs mb-1">Verified since</div>
-  //               <EditableField
-  //                 value={agencyData.verifiedSince}
-  //                 onSave={updateAgencyData}
-  //                 field="verifiedSince"
-  //               />
-  //             </div>
-  //           </div>
-  //         </div>
-
-  //         <div className="space-y-4">
-  //           <div className="flex items-start gap-3">
-  //             <Building className="text-gray-400 mt-1" size={16} />
-  //             <div>
-  //               <div className="text-gray-400 text-xs mb-1">Industry</div>
-  //               <EditableField
-  //                 value={agencyData.industry}
-  //                 onSave={updateAgencyData}
-  //                 field="industry"
-  //               />
-  //             </div>
-  //           </div>
-
-  //           <div className="flex items-start gap-3">
-  //             <Users className="text-gray-400 mt-1" size={16} />
-  //             <div>
-  //               <div className="text-gray-400 text-xs mb-1">Company size</div>
-  //               <EditableField
-  //                 value={agencyData.companySize}
-  //                 onSave={updateAgencyData}
-  //                 field="companySize"
-  //               />
-  //             </div>
-  //           </div>
-
-  //           <div className="flex items-start gap-3">
-  //             <Calendar className="text-gray-400 mt-1" size={16} />
-  //             <div>
-  //               <div className="text-gray-400 text-xs mb-1">Founded</div>
-  //               <EditableField
-  //                 value={agencyData.founded}
-  //                 onSave={updateAgencyData}
-  //                 field="founded"
-  //               />
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-
-  //       <div>
-  //         <h3 className="text-sm font-medium text-gray-900 mb-2">
-  //           Specialties
-  //         </h3>
-  //         <div className="flex flex-wrap gap-2">
-  //           {agencyData.specialties?.map((s, i) => (
-  //             <span
-  //               key={i}
-  //               className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs border border-gray-200"
-  //             >
-  //               {s}
-  //             </span>
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
   const HomeTab = () => (
     <div className="mt-6 space-y-8">
       <div className="space-y-4">
@@ -604,13 +839,13 @@ const CompanyProfile = () => {
         <div className="text-gray-600 space-y-2">
           <EditableField
             value={agencyData.overview}
-            onSave={updateAgencyData}
+
             field="overview"
             multiline={2}
           />
           <EditableField
             value={agencyData.workDescription}
-            onSave={updateAgencyData}
+
             field="workDescription"
             multiline={4}
           />
@@ -626,7 +861,7 @@ const CompanyProfile = () => {
                 <div className="text-gray-400 text-xs mb-1">Website</div>
                 <EditableField
                   value={agencyData.website}
-                  onSave={updateAgencyData}
+
                   field="website"
                   type="url"
                   className="text-blue-600"
@@ -640,7 +875,7 @@ const CompanyProfile = () => {
                 <div className="text-gray-400 text-xs mb-1">Phone</div>
                 <EditableField
                   value={agencyData.phone}
-                  onSave={updateAgencyData}
+
                   field="phone"
                   type="tel"
                 />
@@ -653,7 +888,7 @@ const CompanyProfile = () => {
                 <div className="text-gray-400 text-xs mb-1">Verified since</div>
                 <EditableField
                   value={agencyData.verifiedSince}
-                  onSave={updateAgencyData}
+
                   field="verifiedSince"
                 />
               </div>
@@ -667,7 +902,7 @@ const CompanyProfile = () => {
                 <div className="text-gray-400 text-xs mb-1">Industry</div>
                 <EditableField
                   value={agencyData.industry}
-                  onSave={updateAgencyData}
+
                   field="industry"
                   className="capitalize"
                 />
@@ -680,7 +915,7 @@ const CompanyProfile = () => {
                 <div className="text-gray-400 text-xs mb-1">Company size</div>
                 <EditableField
                   value={agencyData.companySize}
-                  onSave={updateAgencyData}
+
                   field="companySize"
                 />
               </div>
@@ -692,7 +927,7 @@ const CompanyProfile = () => {
                 <div className="text-gray-400 text-xs mb-1">Founded</div>
                 <EditableField
                   value={agencyData.founded}
-                  onSave={updateAgencyData}
+
                   field="founded"
                 />
               </div>
@@ -753,9 +988,6 @@ const CompanyProfile = () => {
     </div>
   );
 
-  // PostsTab, JobsTab, PeopleTab code is similar to your original but with white theme and gray tones
-  // For brevity, I can provide all of them if you want, fully styled in the white theme.
-  // -------------------- POSTS TAB --------------------
   const PostsTab = ({ posts }) => {
     return (
       <div className="bg-white-900 text-black min-h-screen">
@@ -787,134 +1019,9 @@ const CompanyProfile = () => {
     );
   };
 
-  // const JobsTab = ({ jobs, setJobs }) => {
-  //   const [newJob, setNewJob] = useState({
-  //     title: "",
-  //     location: "",
-  //     type: "Full-time",
-  //     description: "",
-  //   });
-  //   const [showAddForm, setShowAddForm] = useState(false);
 
-  //   const addJob = () => {
-  //     if (newJob.title && newJob.location && newJob.description) {
-  //       setJobs((prev) => [...prev, { id: Date.now(), ...newJob }]);
-  //       setNewJob({
-  //         title: "",
-  //         location: "",
-  //         type: "Full-time",
-  //         description: "",
-  //       });
-  //       setShowAddForm(false);
-  //     }
-  //   };
 
-  //   return (
-  //     <div className="bg-white-900 text-black min-h-screen">
-  //       <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
-  //         <div className="flex justify-between items-center">
-  //           <h2 className="text-2xl font-bold">Open Positions</h2>
-  //           <button
-  //             // onClick={() => setShowAddForm(!showAddForm)}
-  //             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-  //           >
-  //               <Link to="/company/post-job">Post Job</Link>
 
-  //           </button>
-  //         </div>
-
-  //         {showAddForm && (
-  //           <div className="bg-white-800 rounded-lg p-6 border border-gray-700">
-  //             <h3 className="text-lg font-semibold mb-4">Add New Job</h3>
-  //             <div className="grid md:grid-cols-2 gap-4 mb-4">
-  //               <input
-  //                 type="text"
-  //                 placeholder="Job title"
-  //                 value={newJob.title}
-  //                 onChange={(e) =>
-  //                   setNewJob((prev) => ({ ...prev, title: e.target.value }))
-  //                 }
-  //                 className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //               />
-  //               <input
-  //                 type="text"
-  //                 placeholder="Location"
-  //                 value={newJob.location}
-  //                 onChange={(e) =>
-  //                   setNewJob((prev) => ({ ...prev, location: e.target.value }))
-  //                 }
-  //                 className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //               />
-  //               <select
-  //                 value={newJob.type}
-  //                 onChange={(e) =>
-  //                   setNewJob((prev) => ({ ...prev, type: e.target.value }))
-  //                 }
-  //                 className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //               >
-  //                 <option value="Full-time">Full-time</option>
-  //                 <option value="Part-time">Part-time</option>
-  //                 <option value="Contract">Contract</option>
-  //                 <option value="Remote">Remote</option>
-  //               </select>
-  //             </div>
-  //             <textarea
-  //               placeholder="Job description"
-  //               value={newJob.description}
-  //               onChange={(e) =>
-  //                 setNewJob((prev) => ({
-  //                   ...prev,
-  //                   description: e.target.value,
-  //                 }))
-  //               }
-  //               rows={4}
-  //               className="w-full mb-4 p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //             />
-  //             <div className="flex gap-2">
-  //               <button
-  //                 onClick={addJob}
-  //                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-  //               >
-  //                 Post Job
-  //               </button>
-  //               <button
-  //                 onClick={() => setShowAddForm(false)}
-  //                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-  //               >
-  //                 Cancel
-  //               </button>
-  //             </div>
-  //           </div>
-  //         )}
-
-  //         {jobs.map((job) => (
-  //           <div
-  //             key={job.id}
-  //             className="bg-white-800 rounded-lg p-6 border border-gray-700"
-  //           >
-  //             <div className="flex justify-between items-start mb-4">
-  //               <div>
-  //                 <h3 className="text-xl font-semibold">{job.title}</h3>
-  //                 <div className="flex items-center gap-4 text-gray-400 mt-2">
-  //                   <span className="flex items-center gap-1">
-  //                     <MapPin size={16} /> {job.location}
-  //                   </span>
-  //                   <span className="px-2 py-1 bg-blue-600 text-white rounded rounded text-white">
-  //                     {job.type}
-  //                   </span>
-  //                 </div>
-  //               </div>
-  //               <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-  //                 Apply Now
-  //               </button>
-  //             </div>
-  //             <p className="text-gray-600 text-sm">{job.description}</p>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     </div>
-  //   );
-  // };
   const JobsTab = () => {
     const [jobs, setJobs] = useState([
       {
@@ -1010,11 +1117,10 @@ const CompanyProfile = () => {
                   {/* Status Badge and Bookmark */}
                   <div className="flex items-center gap-3">
                     <span
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium ${
-                        job.status === "Shortlisted"
-                          ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                          : "bg-red-500/20 text-red-400 border border-red-500/30"
-                      }`}
+                      className={`px-4 py-1.5 rounded-full text-sm font-medium ${job.status === "Shortlisted"
+                        ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                        : "bg-red-500/20 text-red-400 border border-red-500/30"
+                        }`}
                     >
                       {job.status}
                     </span>
@@ -1227,6 +1333,105 @@ const CompanyProfile = () => {
           </div>
         </div>
       </div>
+      {/* Profile Update Modal */}
+      <Modal
+        isOpen={isProfileModalOpen}
+        title="Edit Profile"
+        onClose={() => {
+          setIsProfileModalOpen(false);
+          setErrors({});
+        }}
+        size="lg"
+      >
+        <div className="space-y-6">
+          <div className="flex flex-col items-center">
+            {renderProfileImage()}
+            <button
+              onClick={() => handleImageClick([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? 'profile_picture_url' : 'logo_url')}
+              className="mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center"
+            >
+              <FiCamera className="mr-1" /> Change photo
+            </button>
+          </div>
+
+          {renderProfileFormFields()}
+
+          <div>
+            <CustomInput
+              label="Email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+              placeholder="Enter email address"
+              icon={<FiMail className="text-gray-400" />}
+              error={errors?.email}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <FilterSelect
+                options={countriesList}
+                label="Country"
+                selectedOption={countriesList?.find(opt => opt?.label === formData?.country_code?.name)}
+                onChange={(data) => handleCountryChange(data)}
+                error={errors?.country_code}
+                icon={<FiGlobe className="text-gray-400" />}
+              />
+            </div>
+            <div>
+              <CustomInput
+                label={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Phone Number" : "Phone"}
+                type="tel"
+                value={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? formData.phone_number : formData.phone_no}
+                onChange={(e) => handleChange([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "phone_number" : "phone_no", e.target.value)}
+                placeholder={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Enter phone number" : "Enter phone"}
+                icon={<FiPhone className="text-gray-400" />}
+                error={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? errors?.phone_number : errors?.phone_no}
+                prefix={formData.country_code?.dial_code || "+"}
+              />
+            </div>
+          </div>
+
+          {![ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) && (
+            <>
+              <div>
+                <CustomInput
+                  label="Website URL"
+                  type="url"
+                  value={formData.website_url}
+                  onChange={(e) => handleChange("website_url", e.target.value)}
+                  placeholder="Enter website URL"
+                  icon={<FiGlobe className="text-gray-400" />}
+                  error={errors?.website_url}
+                />
+              </div>
+              <div>
+                <CustomInput
+                  label="Description"
+                  type="textarea"
+                  value={formData.description}
+                  onChange={(e) => handleChange("description", e.target.value)}
+                  placeholder="Enter description"
+                  error={errors?.description}
+                  rows={3}
+                />
+              </div>
+            </>
+          )}
+
+          <div>
+            <Button
+              variant="primary"
+              onClick={handleProfileSubmit}
+              loading={isLoading}
+              className="px-4 py-2"
+            >
+              Save Changes
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

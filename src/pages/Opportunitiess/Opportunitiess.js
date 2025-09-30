@@ -46,7 +46,7 @@ const Opportunities = () => {
   const selector = useSelector((state) => state.global);
   const selector2 = useSelector((state) => state);
   let { jobsListData: { data }, } = selector ? selector : {};
-  console.log("this is the jsss",data)
+  console.log("this is the jsss", data)
   const [activeTab, setActiveTab] = useState("open");
   const [selectedJob, setSelectedJob] = useState(null);
   const [viewDetails, setViewDetails] = useState(false);
@@ -171,7 +171,12 @@ const Opportunities = () => {
     setJobId(job?._id);
 
     if (action === "edit") {
-      navigate(`/user/post-job/${job?._id}`);
+      if (isCompany) {
+        navigate(`/company/post-job/${job?._id}`);
+      } else {
+
+        navigate(`/user/post-job/${job?._id}`);
+      }
     } else if (action === "view_details") {
       setIsViewDetails(true);
       setModalState({ data: job });
@@ -236,20 +241,20 @@ const Opportunities = () => {
     return Object.values(selectedFilters).some(Boolean);
   };
 
-const handlePostJob = () => {
-  const isCompany = getCookie("ACTIVE_MODE");
-  const accessMode = Number(getCookie("ACCESS_MODE")); // make sure it's a number
+  const handlePostJob = () => {
+    const isCompany = getCookie("ACTIVE_MODE");
+    const accessMode = Number(getCookie("ACCESS_MODE")); // make sure it's a number
 
-  console.log("this is the ", isCompany);
+    console.log("this is the ", isCompany);
 
-  if (isCompany === "company") {
-    navigate(`/company/post-job`);
-  } else if (accessMode === 6 || accessMode === 5) {
-    navigate(`/user/post-job`);
-  } else {
-    console.warn("Unknown mode, cannot navigate");
-  }
-};
+    if (isCompany === "company") {
+      navigate(`/company/post-job`);
+    } else if (accessMode === 6 || accessMode === 5) {
+      navigate(`/user/post-job`);
+    } else {
+      console.warn("Unknown mode, cannot navigate");
+    }
+  };
 
 
   const handleAction = async (type) => {

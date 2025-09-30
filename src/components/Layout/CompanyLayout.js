@@ -295,9 +295,9 @@ function CompanyLayout() {
               {/* {(userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) && ( */}
               {(
                 <>
-                  <Route path={`/`} element={<CompanyDashboard />} />
+                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData}/>} />
                   {/* <Route path="post" element={<Posts />} /> */}
-                  <Route path="profile" element={<CompanyProfile />} />
+                  <Route path="profile" element={<CompanyProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   {/* <Route path="login" element={<Login role="company" />} /> */}
                   <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />
                   <Route path="/opportunities" element={< Opportunities />} />

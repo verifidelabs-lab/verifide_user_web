@@ -7,6 +7,7 @@ import { verificationCenterList } from '../../../redux/CompanySlices/courseSlice
 import { Link } from 'react-router-dom';
 
 const CompanyDashboard = ({
+    companiesProfileData,
     searchAppearances = 57,
     searchAppearancesChange = 32.6,
     newFollowers = 200,
@@ -16,17 +17,8 @@ const CompanyDashboard = ({
     pageVisitors = 7,
     actions = [],
 }) => {
-    const defaultActions = [
-        {
-            id: 1,
-            avatar:
-                'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face',
-            title: 'New verify request from Asif Ali',
-            description: 'Your verification request is pending approval.',
-            buttonText: 'Verify Now',
-            buttonColor: 'bg-blue-600 hover:bg-blue-700',
-        },
-    ];
+
+
 
     // const actionsToShow = actions.length > 0 ? actions  : defaultActions;
 
@@ -99,8 +91,8 @@ const CompanyDashboard = ({
     const selector = useSelector((state) => state.companyCourse);
 
     const { getVerificationCenterList: { data } = {} } = selector || {};
-    const actionsToShow = data?.data?.list?.length > 0 ? data?.data?.list : defaultActions;
-
+    const actionsToShow = data?.data?.list?.length > 0 && data?.data?.list;
+    console.log("Thisisisisis", actionsToShow)
     const userSelector = useSelector((state) => state.user);
     const { suggestedUserData: { data: suggestedUsers } = {} } =
         userSelector || {};
@@ -142,14 +134,14 @@ const CompanyDashboard = ({
                         {/* Metrics Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-2">
                             <MetricCard
-                                value={searchAppearances}
-                                label="Search appearances"
+                                value={companiesProfileData?.employee_count}
+                                label="Employers"
                                 change={searchAppearancesChange}
                                 isPositive={searchAppearancesChange > 0}
                             />
                             <MetricCard
-                                value={newFollowers}
-                                label="New followers"
+                                value={companiesProfileData?.follower_count}
+                                label="followers"
                                 change={newFollowersChange}
                                 isPositive={newFollowersChange > 0}
                             />
@@ -175,7 +167,7 @@ const CompanyDashboard = ({
                         </p>
 
                         <div className="space-y-4">
-                            {actionsToShow.map((action) => (
+                            {actionsToShow && actionsToShow?.map((action) => (
                                 <ActionCard key={action.id} action={action} />
                             ))}
                         </div>
