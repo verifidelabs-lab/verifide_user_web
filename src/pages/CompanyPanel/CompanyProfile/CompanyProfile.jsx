@@ -14,14 +14,19 @@ import {
   X,
   CheckCircle,
 } from "lucide-react";
+import { getPostList } from "../../../redux/CompanySlices/companiesSlice";
 import { FaRegEdit } from "react-icons/fa";
 import PeopleToConnect from "../../../components/ui/ConnectSidebar/ConnectSidebar";
+
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
 import { companiesProfile } from "../../../redux/CompanySlices/CompanyAuth";
 import { Link } from "react-router-dom";
 import { MoreVertical } from "lucide-react";
 import { Bookmark, Plus } from "lucide-react";
+import { FaRegCommentDots, FaRegShareSquare } from "react-icons/fa";
+import { AiOutlineLike, AiOutlineEye } from "react-icons/ai";
+import { jobsList } from "../../../redux/Global Slice/cscSlice";
 
 const CompanyProfile = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -38,43 +43,69 @@ const CompanyProfile = () => {
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
   }, [dispatch, activeTab1]);
 
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "The Future of UX Design",
-      content:
-        "Exploring emerging trends in user experience design and how they shape digital experiences...",
-      date: "2025-09-20",
-      author: "Musemind Team",
-    },
-    {
-      id: 2,
-      title: "Building Digital Products That Scale",
-      content:
-        "Our comprehensive approach to creating scalable digital solutions for modern businesses...",
-      date: "2025-09-18",
-      author: "Design Team",
-    },
-  ]);
+  // const [posts, setPosts] = useState([
+  //   {
+  //     id: 1,
+  //     title: "The Future of UX Design",
+  //     content:
+  //       "Exploring emerging trends in user experience design and how they shape digital experiences...",
+  //     date: "2025-09-20",
+  //     author: "Musemind Team",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Building Digital Products That Scale",
+  //     content:
+  //       "Our comprehensive approach to creating scalable digital solutions for modern businesses...",
+  //     date: "2025-09-18",
+  //     author: "Design Team",
+  //   },
+  // ]);
 
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      title: "Senior UX Designer",
-      location: "Dubai, UAE",
-      type: "Full-time",
-      description:
-        "We are looking for a Senior UX Designer to join our growing team and help shape the future of digital experiences...",
-    },
-    {
-      id: 2,
-      title: "Frontend Developer",
-      location: "Remote",
-      type: "Full-time",
-      description:
-        "Join our development team to build amazing digital experiences using cutting-edge technologies...",
-    },
-  ]);
+  // const { getPostListData: { data: posts = [] } = {}, loading } = useSelector(
+  //   (state) => state.companies
+  // );
+
+  const { getPostListData: { data: posts = [] } = {}, loading } = useSelector(
+    (state) => state.companies
+  );
+
+  useEffect(() => {
+    dispatch(getPostList({ page: 1, size: 2 ,type:"all"}))
+      .unwrap()
+      .then((res) => {
+        console.log("✅ API posts response:", res); // full response
+      })
+      .catch((err) => console.error("❌ Error fetching posts:", err));
+  }, [dispatch]);
+  console.log("this is the post list data", posts);
+
+  const { jobsListData: { data: jobs = [] } = {} } = useSelector(
+    (state) => state.global
+  );
+  console.log("this is the jsss", jobs);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      // ✅ Only send page & size, no extra filters
+      const apiPayload = {
+        page: 1,
+        size: 4,
+        query: JSON.stringify({ type: "open" }),
+      };
+
+      try {
+        const res = await dispatch(jobsList(apiPayload)).unwrap();
+        console.log("✅ Jobs API response:", res);
+
+        // If API returns jobs in `data.list`, adjust this
+      } catch (err) {
+        console.error("❌ Error fetching jobs:", err);
+      } finally {
+      }
+    };
+
+    fetchJobs();
+  }, [dispatch]);
 
   const [people, setPeople] = useState([
     {
@@ -185,31 +216,6 @@ const CompanyProfile = () => {
         if (data) {
           console.log("This is companyData: " + JSON.stringify(data, null, 2));
 
-          // setAgencyData({
-          //   name: data.display_name || data.name || "",
-          //   tagline: "", // no tagline in API, you can set default or empty
-          //   overview: data.description || "",
-          //   description: data.description || "",
-          //   workDescription: "", // no workDescription in API
-          //   website: data.website_url || "",
-          //   phone: data.phone_no || "",
-          //   industry: data.industry?.map((i) => i.name).join(", ") || "",
-          //   founded: data.founded_year
-          //     ? new Date(data.founded_year * 1000).getFullYear().toString()
-          //     : "",
-          //   companySize: data.company_size || "",
-          //   verifiedSince: data.verified_at
-          //     ? new Date(data.verified_at).toLocaleDateString()
-          //     : "",
-          //   followers: data.follower_count
-          //     ? `${data.follower_count} Followers`
-          //     : "0 Followers",
-          //   employees: data.employee_count
-          //     ? `${data.employee_count} Employees`
-          //     : "0 Employees",
-          //   specialties: data.specialties || [],
-          //   logo: data.logo_url || "",
-          // });
           setAgencyData({
             name: data?.display_name || data?.name || "N/A",
             tagline: "", // no tagline in API, keep empty or default
@@ -220,7 +226,7 @@ const CompanyProfile = () => {
             phone: data?.phone_no || "N/A",
             industry:
               data?.industry?.length > 0
-                ? data.industry.map((i) => i?.name || "N/A").join(", ")
+                ? data.industry.map((i) => i?.name || "N/A").join(" , ")
                 : "N/A",
             founded: data?.founded_year
               ? new Date(data.founded_year * 1000).getFullYear().toString()
@@ -269,7 +275,7 @@ const CompanyProfile = () => {
             <div className="bg-yellow-300 px-4 py-1 rounded-full">
               <span className="text-gray-900 font-semibold text-sm">
                 {/* Next-Gen */}
-                {agencyData.name}{" "}
+                {agencyData?.name}{" "}
               </span>
             </div>
             <span className="text-gray-800 font-medium text-sm">
@@ -290,7 +296,7 @@ const CompanyProfile = () => {
         {/* Decorative text */}
         <div className="absolute bottom-2 right-4 text-xs text-gray-400">
           {/* #YourBrandLogos */}
-          {agencyData.name}
+          {agencyData?.name}
         </div>
 
         {/* Decorative wavy lines */}
@@ -334,11 +340,11 @@ const CompanyProfile = () => {
                 </svg>
               </div>
             </div> */}
-            <div className="relative -mt-16 flex-shrink-0">
+            <div className="relative -mt-12 flex-shrink-0">
               <div className="w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border-4 border-zinc-800 bg-black overflow-hidden">
-                {agencyData.logo ? (
+                {agencyData?.logo ? (
                   <img
-                    src={agencyData.logo}
+                    src={agencyData?.logo}
                     alt="Company Logo"
                     className="w-full h-full object-contain rounded-full"
                     onError={(e) => {
@@ -368,17 +374,17 @@ const CompanyProfile = () => {
           </div>
 
           {/* Row 2: Company Details */}
-          <div className="mt-3">
-            <h1 className="font-bold text-white mb-2">{agencyData.name}</h1>
+          <div className="mt-1">
+            <h1 className="font-bold text-gray-600 mb-2">{agencyData?.name}</h1>
             <p className="text-gray-600 text-sm mb-3 leading-relaxed">
-              {agencyData.description}
+              {agencyData?.description}
             </p>
             <div className="flex items-center gap-3 text-xs text-gray-700">
-              <span>{agencyData.industry}</span>
+              <span>{agencyData?.industry}</span>
               <span>•</span>
-              <span>{agencyData.founded}</span>
+              <span>{agencyData?.founded}</span>
               <span>•</span>
-              <span>{agencyData.followers}</span>
+              <span>{agencyData?.followers}</span>
             </div>
           </div>
         </div>
@@ -402,7 +408,7 @@ const CompanyProfile = () => {
   //         <div>
   //           <h1 className="text-xl font-semibold mb-1">
   //             <EditableField
-  //               value={agencyData.name}
+  //               value={agencyData?.name}
   //               onSave={updateAgencyData}
   //               field="name"
   //               placeholder="Enter agency name"
@@ -411,7 +417,7 @@ const CompanyProfile = () => {
   //           </h1>
   //           <p className="text-gray-500 text-sm max-w-xl leading-relaxed">
   //             <EditableField
-  //               value={agencyData.tagline}
+  //               value={agencyData?.tagline}
   //               onSave={updateAgencyData}
   //               field="tagline"
   //               multiline={2}
@@ -420,11 +426,11 @@ const CompanyProfile = () => {
   //             />
   //           </p>
   //           <div className="flex items-center gap-4 mt-2 text-sm text-gray-400">
-  //             <span>{agencyData.industry}</span>
+  //             <span>{agencyData?.industry}</span>
   //             <span>•</span>
-  //             <span>{agencyData.founded}</span>
+  //             <span>{agencyData?.founded}</span>
   //             <span>•</span>
-  //             <span>{agencyData.followers}</span>
+  //             <span>{agencyData?.followers}</span>
   //           </div>
   //         </div>
   //       </div>
@@ -468,19 +474,19 @@ const CompanyProfile = () => {
   //       </h2>
   //       <div className="text-gray-600 space-y-2">
   //         <EditableField
-  //           value={agencyData.overview}
+  //           value={agencyData?.overview}
   //           onSave={updateAgencyData}
   //           field="overview"
   //           multiline={2}
   //         />
   //         {/* <EditableField
-  //           value={agencyData.description}
+  //           value={agencyData?.description}
   //           onSave={updateAgencyData}
   //           field="description"
   //           multiline={4}
   //         /> */}
   //         <EditableField
-  //           value={agencyData.workDescription}
+  //           value={agencyData?.workDescription}
   //           onSave={updateAgencyData}
   //           field="workDescription"
   //           multiline={4}
@@ -496,7 +502,7 @@ const CompanyProfile = () => {
   //             <div>
   //               <div className="text-gray-400 text-xs mb-1">Website</div>
   //               <EditableField
-  //                 value={agencyData.website}
+  //                 value={agencyData?.website}
   //                 onSave={updateAgencyData}
   //                 field="website"
   //                 type="url"
@@ -510,7 +516,7 @@ const CompanyProfile = () => {
   //             <div>
   //               <div className="text-gray-400 text-xs mb-1">Phone</div>
   //               <EditableField
-  //                 value={agencyData.phone}
+  //                 value={agencyData?.phone}
   //                 onSave={updateAgencyData}
   //                 field="phone"
   //                 type="tel"
@@ -523,7 +529,7 @@ const CompanyProfile = () => {
   //             <div>
   //               <div className="text-gray-400 text-xs mb-1">Verified since</div>
   //               <EditableField
-  //                 value={agencyData.verifiedSince}
+  //                 value={agencyData?.verifiedSince}
   //                 onSave={updateAgencyData}
   //                 field="verifiedSince"
   //               />
@@ -537,7 +543,7 @@ const CompanyProfile = () => {
   //             <div>
   //               <div className="text-gray-400 text-xs mb-1">Industry</div>
   //               <EditableField
-  //                 value={agencyData.industry}
+  //                 value={agencyData?.industry}
   //                 onSave={updateAgencyData}
   //                 field="industry"
   //               />
@@ -549,7 +555,7 @@ const CompanyProfile = () => {
   //             <div>
   //               <div className="text-gray-400 text-xs mb-1">Company size</div>
   //               <EditableField
-  //                 value={agencyData.companySize}
+  //                 value={agencyData?.companySize}
   //                 onSave={updateAgencyData}
   //                 field="companySize"
   //               />
@@ -561,7 +567,7 @@ const CompanyProfile = () => {
   //             <div>
   //               <div className="text-gray-400 text-xs mb-1">Founded</div>
   //               <EditableField
-  //                 value={agencyData.founded}
+  //                 value={agencyData?.founded}
   //                 onSave={updateAgencyData}
   //                 field="founded"
   //               />
@@ -575,7 +581,7 @@ const CompanyProfile = () => {
   //           Specialties
   //         </h3>
   //         <div className="flex flex-wrap gap-2">
-  //           {agencyData.specialties?.map((s, i) => (
+  //           {agencyData?.specialties?.map((s, i) => (
   //             <span
   //               key={i}
   //               className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs border border-gray-200"
@@ -603,13 +609,13 @@ const CompanyProfile = () => {
 
         <div className="text-gray-600 space-y-2">
           <EditableField
-            value={agencyData.overview}
+            value={agencyData?.overview}
             onSave={updateAgencyData}
             field="overview"
             multiline={2}
           />
           <EditableField
-            value={agencyData.workDescription}
+            value={agencyData?.workDescription}
             onSave={updateAgencyData}
             field="workDescription"
             multiline={4}
@@ -625,7 +631,7 @@ const CompanyProfile = () => {
               <div>
                 <div className="text-gray-400 text-xs mb-1">Website</div>
                 <EditableField
-                  value={agencyData.website}
+                  value={agencyData?.website}
                   onSave={updateAgencyData}
                   field="website"
                   type="url"
@@ -639,7 +645,7 @@ const CompanyProfile = () => {
               <div>
                 <div className="text-gray-400 text-xs mb-1">Phone</div>
                 <EditableField
-                  value={agencyData.phone}
+                  value={agencyData?.phone}
                   onSave={updateAgencyData}
                   field="phone"
                   type="tel"
@@ -652,7 +658,7 @@ const CompanyProfile = () => {
               <div>
                 <div className="text-gray-400 text-xs mb-1">Verified since</div>
                 <EditableField
-                  value={agencyData.verifiedSince}
+                  value={agencyData?.verifiedSince}
                   onSave={updateAgencyData}
                   field="verifiedSince"
                 />
@@ -666,7 +672,7 @@ const CompanyProfile = () => {
               <div>
                 <div className="text-gray-400 text-xs mb-1">Industry</div>
                 <EditableField
-                  value={agencyData.industry}
+                  value={agencyData?.industry}
                   onSave={updateAgencyData}
                   field="industry"
                   className="capitalize"
@@ -679,7 +685,7 @@ const CompanyProfile = () => {
               <div>
                 <div className="text-gray-400 text-xs mb-1">Company size</div>
                 <EditableField
-                  value={agencyData.companySize}
+                  value={agencyData?.companySize}
                   onSave={updateAgencyData}
                   field="companySize"
                 />
@@ -691,7 +697,7 @@ const CompanyProfile = () => {
               <div>
                 <div className="text-gray-400 text-xs mb-1">Founded</div>
                 <EditableField
-                  value={agencyData.founded}
+                  value={agencyData?.founded}
                   onSave={updateAgencyData}
                   field="founded"
                 />
@@ -705,7 +711,7 @@ const CompanyProfile = () => {
       <div>
         <h3 className="text-sm font-medium text-gray-900 mb-2">Specialties</h3>
         <div className="flex flex-wrap gap-2">
-          {agencyData.specialties?.map((s, i) => (
+          {agencyData?.specialties?.map((s, i) => (
             <span
               key={i}
               className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs border border-gray-200"
@@ -721,16 +727,46 @@ const CompanyProfile = () => {
   const AboutTab = () => (
     <div className="mt-6 space-y-6 text-gray-700">
       <h2 className="text-2xl font-bold text-gray-900">
-        About {agencyData.name}
+        About {agencyData?.name}
       </h2>
       <div>
         <h3 className="text-lg font-semibold mb-2 text-gray-900"></h3>
         <EditableField
-          value={agencyData.description}
+          value={agencyData?.description}
           onSave={updateAgencyData}
           field="mission"
           multiline={3}
         />
+      </div>
+      <div className="text-sm grid grid-cols-1 md:grid-cols-2 gap-y-2">
+        <div className="flex gap-1">
+          <div className="font-semibold">Industry:</div>
+          <div className="capitalize">{agencyData?.industry}</div>
+        </div>
+
+        <div className="flex gap-1">
+          <div className="font-semibold">Headquarters:</div>
+          <div>
+            {agencyData?.headquarters?.address_line_1},{" "}
+            {agencyData?.headquarters?.state_name},{" "}
+            {agencyData?.headquarters?.city_name}
+            {agencyData?.headquarters?.country_name}
+          </div>
+        </div>
+        <div className="text-gray-600 col-span-2">
+          {agencyData?.company_type && `${agencyData?.company_type} • `}
+          {agencyData?.founded_year &&
+            `Founded ${new Date(
+              agencyData?.founded_year * 1000
+            ).getFullYear()}`}
+        </div>
+        {Array.isArray(agencyData?.specialties) &&
+          agencyData?.specialties.length > 0 && (
+            <div className="flex gap-1 col-span-2">
+              <div className="font-semibold">Specialties:</div>
+              <div>{agencyData?.specialties.join(", ")}</div>
+            </div>
+          )}
       </div>
       {/* <div>
         <h3 className="text-lg font-semibold mb-2 text-gray-900">Our Vision</h3>
@@ -756,213 +792,264 @@ const CompanyProfile = () => {
   // PostsTab, JobsTab, PeopleTab code is similar to your original but with white theme and gray tones
   // For brevity, I can provide all of them if you want, fully styled in the white theme.
   // -------------------- POSTS TAB --------------------
-  const PostsTab = ({ posts }) => {
-    return (
-      <div className="bg-white-900 text-black min-h-screen">
-        <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">Posts</h2>
-            <button
-              // onClick={() => setShowAddForm(!showAddForm)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              <Link to="/company/create-post">Create Post</Link>
-            </button>
-          </div>
-
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-white-800 rounded-lg p-6 border border-gray-700"
-            >
-              <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-              <p className="text-gray-400 text-sm mb-3">
-                By {post.author} • {new Date(post.date).toLocaleDateString()}
-              </p>
-              <p className="text-gray-300">{post.content}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  // const JobsTab = ({ jobs, setJobs }) => {
-  //   const [newJob, setNewJob] = useState({
-  //     title: "",
-  //     location: "",
-  //     type: "Full-time",
-  //     description: "",
-  //   });
-  //   const [showAddForm, setShowAddForm] = useState(false);
-
-  //   const addJob = () => {
-  //     if (newJob.title && newJob.location && newJob.description) {
-  //       setJobs((prev) => [...prev, { id: Date.now(), ...newJob }]);
-  //       setNewJob({
-  //         title: "",
-  //         location: "",
-  //         type: "Full-time",
-  //         description: "",
-  //       });
-  //       setShowAddForm(false);
-  //     }
-  //   };
-
+  // const PostsTab = ({ posts }) => {
   //   return (
-  //     <div className="bg-white-900 text-black min-h-screen">
+  //     <div className="bg-white text-black min-h-screen">
   //       <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
   //         <div className="flex justify-between items-center">
-  //           <h2 className="text-2xl font-bold">Open Positions</h2>
+  //           <h2 className="text-2xl font-bold">Posts</h2>
   //           <button
   //             // onClick={() => setShowAddForm(!showAddForm)}
   //             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
   //           >
-  //               <Link to="/company/post-job">Post Job</Link>
-
+  //             <Link to="/company/create-post">Create Post</Link>
   //           </button>
   //         </div>
 
-  //         {showAddForm && (
-  //           <div className="bg-white-800 rounded-lg p-6 border border-gray-700">
-  //             <h3 className="text-lg font-semibold mb-4">Add New Job</h3>
-  //             <div className="grid md:grid-cols-2 gap-4 mb-4">
-  //               <input
-  //                 type="text"
-  //                 placeholder="Job title"
-  //                 value={newJob.title}
-  //                 onChange={(e) =>
-  //                   setNewJob((prev) => ({ ...prev, title: e.target.value }))
-  //                 }
-  //                 className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //               />
-  //               <input
-  //                 type="text"
-  //                 placeholder="Location"
-  //                 value={newJob.location}
-  //                 onChange={(e) =>
-  //                   setNewJob((prev) => ({ ...prev, location: e.target.value }))
-  //                 }
-  //                 className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //               />
-  //               <select
-  //                 value={newJob.type}
-  //                 onChange={(e) =>
-  //                   setNewJob((prev) => ({ ...prev, type: e.target.value }))
-  //                 }
-  //                 className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //               >
-  //                 <option value="Full-time">Full-time</option>
-  //                 <option value="Part-time">Part-time</option>
-  //                 <option value="Contract">Contract</option>
-  //                 <option value="Remote">Remote</option>
-  //               </select>
-  //             </div>
-  //             <textarea
-  //               placeholder="Job description"
-  //               value={newJob.description}
-  //               onChange={(e) =>
-  //                 setNewJob((prev) => ({
-  //                   ...prev,
-  //                   description: e.target.value,
-  //                 }))
-  //               }
-  //               rows={4}
-  //               className="w-full mb-4 p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-  //             />
-  //             <div className="flex gap-2">
-  //               <button
-  //                 onClick={addJob}
-  //                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-  //               >
-  //                 Post Job
-  //               </button>
-  //               <button
-  //                 onClick={() => setShowAddForm(false)}
-  //                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-  //               >
-  //                 Cancel
-  //               </button>
-  //             </div>
-  //           </div>
-  //         )}
-
-  //         {jobs.map((job) => (
+  //         {posts.map((post) => (
   //           <div
-  //             key={job.id}
+  //             key={post?.id}
   //             className="bg-white-800 rounded-lg p-6 border border-gray-700"
   //           >
-  //             <div className="flex justify-between items-start mb-4">
-  //               <div>
-  //                 <h3 className="text-xl font-semibold">{job.title}</h3>
-  //                 <div className="flex items-center gap-4 text-gray-400 mt-2">
-  //                   <span className="flex items-center gap-1">
-  //                     <MapPin size={16} /> {job.location}
-  //                   </span>
-  //                   <span className="px-2 py-1 bg-blue-600 text-white rounded rounded text-white">
-  //                     {job.type}
-  //                   </span>
-  //                 </div>
-  //               </div>
-  //               <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-  //                 Apply Now
-  //               </button>
-  //             </div>
-  //             <p className="text-gray-600 text-sm">{job.description}</p>
+  //             <h3 className="text-xl font-semibold mb-2">{post?.title}</h3>
+  //             <p className="text-gray-400 text-sm mb-3">
+  //               By {post?.author} • {new Date(post?.date).toLocaleDateString()}
+  //             </p>
+  //             <p className="text-gray-300">{post?.content}</p>
   //           </div>
   //         ))}
   //       </div>
   //     </div>
   //   );
   // };
-  const JobsTab = () => {
-    const [jobs, setJobs] = useState([
-      {
-        id: 1,
-        title: "Sr. UX-UI Designer,",
-        company: "Comfygen Private limited",
-        logo: "https://via.placeholder.com/48/4F46E5/ffffff?text=C",
-        postedDate: "1d Ago",
-        type: "Full Time",
-        applicants: 10,
-        salaryRange: "20-30K",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        location: "152, Vaishali Nagar Jaipur Rajasthan 202012",
-        matching: "90%",
-        skills: [
-          "Communication",
-          "Negotiation",
-          "Relationship Bulding",
-          "Leadership",
-          "+5",
-        ],
-        status: "Shortlisted",
-      },
-      {
-        id: 2,
-        title: "Sr. UX-UI Designer,",
-        company: "Comfygen Private limited",
-        logo: "https://via.placeholder.com/48/1E40AF/ffffff?text=N",
-        postedDate: "1d Ago",
-        type: "Full Time",
-        applicants: 10,
-        salaryRange: "20-30K",
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        location: "152, Vaishali Nagar Jaipur Rajasthan 202012",
-        matching: "90%",
-        skills: [
-          "Communication",
-          "Negotiation",
-          "Relationship Bulding",
-          "Leadership",
-          "+5",
-        ],
-        status: "Rejected",
-      },
-    ]);
 
+  // const PostsTab = ({ posts }) => {
+  //   return (
+  //     <div className="bg-white min-h-screen py-8 px-4">
+  //       <div className="max-w-6xl mx-auto">
+  //         <div className="flex justify-between items-center mb-7">
+  //           <h2 className="text-2xl font-bold text-gray-900">Page posts</h2>
+  //           <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+  //             <Link to="/company/create-post">Create Post</Link>
+  //           </button>
+  //         </div>
+  //         <div className="grid md:grid-cols-2 gap-8">
+  //           {posts?.map((post) => (
+  //             <div
+  //               key={post?.id}
+  //               className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col gap-4"
+  //             >
+  //               {/* Header row: logo, title, meta */}
+  //               <div className="flex items-center gap-3 mb-2">
+  //                 <img
+  //                   src={
+  //                     post?.logoUrl ||
+  //                     "https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png"
+  //                   }
+  //                   alt={post?.author || "Logo"}
+  //                   className="w-12 h-12 rounded-full object-cover border border-gray-200"
+  //                 />
+  //                 <div>
+  //                   <h3 className="text-lg font-bold text-gray-900 leading-tight">
+  //                     {post?.companyName || "Company Name"}
+  //                   </h3>
+  //                   <div className="text-gray-500 text-xs">
+  //                     {post?.followers ? `${post?.followers} followers` : ""}
+  //                     {post?.date ? ` • ${post?.date}` : ""}
+  //                   </div>
+  //                 </div>
+  //                 <div className="ml-auto text-gray-400 hover:text-gray-700 cursor-pointer">
+  //                   <span className="text-sm">•••</span>
+  //                 </div>
+  //               </div>
+
+  //               {/* Post text/content */}
+  //               <div>
+  //                 <p className="text-gray-700 text-base">
+  //                   {post?.content}
+  //                   {/* Optionally add 'See More' link for long content */}
+  //                   {/* <Link className="text-blue-500 ml-2" to={`/post/${post?.id}`}>See More</Link> */}
+  //                 </p>
+  //               </div>
+
+  //               {/* Media/Image: Example */}
+  //               {post?.image_urls && (
+  //                 <div className="w-full rounded-lg overflow-hidden mt-2">
+  //                   <img
+  //                     src={post?.image_urls[0]}
+  //                     alt="Post Banner"
+  //                     className="w-full h-auto object-cover"
+  //                   />
+  //                 </div>
+  //               )}
+
+  //               {/* Stats row */}
+  //               <div className="flex items-center gap-4 mt-3 text-gray-600 text-sm">
+  //                 {/* <div className="flex items-center gap-1">
+  //                   <AiOutlineLike />
+  //                   <span>{post?.likes || "3.5k"}</span>
+  //                 </div>
+  //                 <div className="flex items-center gap-1">
+  //                   <AiOutlineEye />
+  //                   <span>{post?.views || "15k"}</span>
+  //                 </div> */}
+  //                 <div className="flex items-center gap-1">
+  //                   <FaRegCommentDots />
+  //                   <span>{post?.share_count || "10"}</span>
+  //                 </div>
+  //                 <div className="flex items-center gap-1">
+  //                   <FaRegShareSquare />
+  //                   <span>Share</span>
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           ))}
+  //         </div>
+  //         <div className="text-center mt-8">
+  //           <button className="px-5 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+  //             <Link
+  //               to="/company/posts-manage"
+  //               // className="w-10 h-10 bg-white hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm"
+  //             >
+  //               Show All Post
+  //             </Link>
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+  const PostsTab = ({ posts }) => {
+    return (
+      <div className="bg-white min-h-screen py-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-between items-center mb-7">
+            <h2 className="text-2xl font-bold text-gray-900">Page posts</h2>
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              <Link to="/company/create-post">Create Post</Link>
+            </button>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {posts?.map((post) => (
+              <div
+                key={post?._id}
+                className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col gap-4"
+              >
+                {/* Header row: company/user info */}
+                <div className="flex items-center gap-3 mb-2">
+                  {/* <img
+                    src={
+                      post?.logoUrl ||
+                      "https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png"
+                    }
+                    alt={post?.companyName || post?.user_id || "Logo"}
+                    
+                  /> */}
+                  {agencyData?.logo ? (
+                    <img
+                      src={agencyData?.logo}
+                      alt="Company Logo"
+                      className="w-12 h-12 rounded-full object-cover border border-gray-200"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/companylogo.png"; // fallback image
+                      }}
+                    />
+                  ) : null}
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                      {agencyData?.name}
+                    </h3>
+                    <div className="text-gray-500 text-xs">
+                      {agencyData?.followers
+                        ? `${agencyData?.followers} followers`
+                        : ""}
+                      {post?.date
+                        ? ` • ${new Date(post?.date).toLocaleDateString()}`
+                        : ""}
+                    </div>
+                  </div>
+                  <div className="ml-auto text-gray-400 hover:text-gray-700 cursor-pointer">
+                    <span className="text-sm">•••</span>
+                  </div>
+                </div>
+
+                {/* Post content */}
+                <div>
+                  <h3 className="text-gray-700 text-base">{post?.title}</h3>
+                  <p className="text-gray-700 text-base">{post?.content}</p>
+                </div>
+
+                {/* Media: image or video */}
+                {post?.post_type === "image-video" &&
+                  post?.image_urls?.length > 0 && (
+                    <div className="w-full rounded-lg overflow-hidden mt-2">
+                      <img
+                        src={post?.image_urls[0]}
+                        alt="Post Media"
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+                  )}
+                {post?.post_type === "image-video" && post?.video_url && (
+                  <div className="w-full mt-2">
+                    <video controls className="w-full rounded-lg">
+                      <source src={post?.video_url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
+
+                {/* Stats row */}
+                <div className="flex items-center gap-4 mt-3 text-gray-600 text-sm">
+                  <div className="flex items-center gap-1">
+                    <AiOutlineLike />
+                    <span>{post?.like_count || 0}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <AiOutlineEye />
+                    <span>{post?.view_count || 0}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <FaRegCommentDots />
+                    <span>{post?.report_count || 0}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <FaRegShareSquare />
+                    <span>{post?.share_count || 0}</span>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                {post?.tags?.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {post?.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-1 bg-gray-100 rounded-lg text-xs text-gray-600"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <button className="px-5 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+              <Link to="/company/posts-manage">Show All Post</Link>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const JobsTab = ({ jobs }) => {
+    console.log("this is the jobs", jobs);
     return (
       <div className="bg-gray-50 min-h-screen p-6">
         <div className="max-w-6xl mx-auto">
@@ -981,92 +1068,105 @@ const CompanyProfile = () => {
 
           {/* Job Cards */}
           <div className="space-y-4">
-            {jobs.map((job) => (
-              <div
-                key={job.id}
-                className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-colors shadow-sm"
-              >
-                {/* Header with logo, title, and status */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex gap-4">
-                    {/* Company Logo */}
-                    <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
-                      <img
-                        src={job.logo}
-                        alt={job.company}
-                        className="w-full h-full object-cover"
-                      />
+            {jobs?.length > 0 &&
+              jobs?.map((job) => (
+                <div
+                  key={job?._id}
+                  className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-colors shadow-sm"
+                >
+                  {/* Header with logo, title, and status */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex gap-4">
+                      {/* Company Logo */}
+                      <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
+                        {agencyData?.logo ? (
+                          <img
+                            src={agencyData?.logo}
+                            alt="Company Logo"
+                            className="w-12 h-12 rounded-full object-cover border border-gray-200"
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = "/companylogo.png"; // fallback image
+                            }}
+                          />
+                        ) : null}
+                      </div>
+
+                      {/* Job Title and Company */}
+                      <div>
+                        <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                          {job?.job_title?.name}
+                        </h2>
+                        <p className="text-gray-600 text-sm">
+                          {agencyData?.name}
+                        </p>
+                      </div>
                     </div>
 
-                    {/* Job Title and Company */}
-                    <div>
-                      <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                        {job.title}
-                      </h2>
-                      <p className="text-gray-600 text-sm">{job.company}</p>
+                    {/* Status Badge and Bookmark */}
+                    <div className="flex items-center gap-3">
+                      {/* <span
+                        className={`px-4 py-1.5 rounded-full text-sm font-medium ${
+                          job?.status === "Shortlisted"
+                            ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                            : "bg-red-500/20 text-red-400 border border-red-500/30"
+                        }`}
+                      >
+                        {job?.status}
+                      </span> */}
+                      <button className="text-gray-400 hover:text-gray-700 transition-colors">
+                        <Bookmark size={20} />
+                      </button>
                     </div>
                   </div>
 
-                  {/* Status Badge and Bookmark */}
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium ${
-                        job.status === "Shortlisted"
-                          ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                          : "bg-red-500/20 text-red-400 border border-red-500/30"
-                      }`}
-                    >
-                      {job.status}
-                    </span>
-                    <button className="text-gray-400 hover:text-gray-700 transition-colors">
-                      <Bookmark size={20} />
-                    </button>
+                  {/* Job Meta Info */}
+                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+                    <span>{job?.createdAt}</span>
+                    <span>-</span>
+                    <span>{job?.job_type}</span>
+                    <span>-</span>
+                    <span>{job?.total_applicants} Applied</span>
+                    <span>-</span>
+                    <span>{job?.salary_range}</span>
                   </div>
-                </div>
 
-                {/* Job Meta Info */}
-                <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                  <span>{job.postedDate}</span>
-                  <span>-</span>
-                  <span>{job.type}</span>
-                  <span>-</span>
-                  <span>{job.applicants} Applied</span>
-                  <span>-</span>
-                  <span>{job.salaryRange}</span>
-                </div>
+                  {/* Description */}
+                  <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                    {job?.job_description}
+                  </p>
 
-                {/* Description */}
-                <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                  {job.description}
-                </p>
-
-                {/* Location and Matching */}
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                  <MapPin size={16} className="flex-shrink-0" />
-                  <span>{job.location}</span>
-                  <span className="text-blue-600 font-medium ml-2">
-                    {job.matching} Matching
-                  </span>
-                </div>
-
-                {/* Skills Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {job.skills.map((skill, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-lg border border-gray-200"
-                    >
-                      {skill}
+                  {/* Location and Matching */}
+                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                    <MapPin size={16} className="flex-shrink-0" />
+                    <span>
+                      {job?.job_location} ,{job?.work_location?.city?.name}{" "}
+                      {job?.work_location?.state?.name}{" "}
+                      {job?.work_location?.country?.name}
                     </span>
-                  ))}
-                </div>
+                    <span className="text-blue-600 font-medium ml-2">
+                      {job?.matching} Matching
+                    </span>
+                  </div>
 
-                {/* Apply Now Button */}
-                <button className="px-6 py-2.5 bg-transparent border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500/10 transition-colors font-medium">
-                  Apply Now
-                </button>
-              </div>
-            ))}
+                  {/* Skills Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {job?.required_skills?.map((skill, index) => (
+                      <span
+                        key={skill?._id || index}
+                        className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-lg border border-gray-200"
+                      >
+                        {skill?.name}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Apply Now Button */}
+                  {/* <button className="px-6 py-2.5 bg-transparent border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500/10 transition-colors font-medium">
+                    Apply Now
+                  </button> */}
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -1098,7 +1198,7 @@ const CompanyProfile = () => {
     };
 
     return (
-      <div className="bg-white-900 text-black min-h-screen">
+      <div className="bg-white text-black min-h-screen">
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Our Team</h2>
@@ -1197,9 +1297,9 @@ const CompanyProfile = () => {
         return <AboutTab />;
       // case 'Posts': return <PostsTab setPosts={setPosts} />;
       case "Posts":
-        return <PostsTab posts={posts} setPosts={setPosts} />;
+        return <PostsTab posts={posts?.data?.list} />;
       case "Jobs":
-        return <JobsTab jobs={jobs} setJobs={setJobs} />;
+        return <JobsTab jobs={jobs?.data?.list} />;
       case "People":
         return <PeopleTab people={people} setPeople={setPeople} />;
       default:
