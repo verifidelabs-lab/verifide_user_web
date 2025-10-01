@@ -38,7 +38,8 @@ const ROLES = {
 const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
   const dispatch = useDispatch()
   const cscSelector = useSelector(state => state.global)
-
+  const workSelector = useSelector(state => state.work);
+    const allIndustry = arrayTransform(workSelector?.getAllIndustryData?.data?.data || [])
   const userRole = Number(getCookie("COMPANY_ROLE"))
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
@@ -908,6 +909,16 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
                 label="Country"
                 selectedOption={countriesList?.find(opt => opt?.label === formData?.country_code?.name)}
                 onChange={(data) => handleCountryChange(data)}
+                error={errors?.country_code}
+                icon={<FiGlobe className="text-gray-400" />}
+              />
+            </div>
+             <div>
+              <FilterSelect
+                options={allIndustry}
+                label="Industry"
+                selectedOption={allIndustry.find(opt => opt.value === formData.industry_id)}
+                onChange={(data) => handleChange(data)}
                 error={errors?.country_code}
                 icon={<FiGlobe className="text-gray-400" />}
               />

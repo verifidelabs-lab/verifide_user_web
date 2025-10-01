@@ -14,6 +14,7 @@ import {
   X,
   CheckCircle,
 } from "lucide-react";
+import CreatableSelect from "react-select/creatable";
 import { getPostList } from "../../../redux/CompanySlices/companiesSlice";
 import { FaRegEdit } from "react-icons/fa";
 import PeopleToConnect from "../../../components/ui/ConnectSidebar/ConnectSidebar";
@@ -26,7 +27,8 @@ import {
   updateProfileCompanies,
   resetPasswordCompanies,
   companiesProfile,
-  instituteProfile
+  instituteProfile,
+  companyIndustries
 } from '../../../redux/CompanySlices/CompanyAuth'
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
@@ -45,6 +47,8 @@ import Modal from "../../../components/ui/InputAdmin/Modal/Modal";
 import { FaRegCommentDots, FaRegShareSquare } from "react-icons/fa";
 import { AiOutlineLike, AiOutlineEye } from "react-icons/ai";
 import { jobsList } from "../../../redux/Global Slice/cscSlice";
+import { getAllIndustry } from "../../../redux/work/workSlice";
+import classNames from "classnames";
 
 const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
   const ROLES = {
@@ -60,79 +64,68 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
   const [isImageUploading, setIsImageUploading] = useState(false)
   const cscSelector = useSelector(state => state.global)
   const [isLoading, setIsLoading] = useState(false)
+  const IndusteryData = useSelector(state => state.companyAuth);
 
+  const allIndustry = arrayTransform(IndusteryData?.companyIndustryData?.data?.data?.list || [])
   const countriesList = arrayTransform(cscSelector?.countriesData?.data?.data || [])
   const getInitialFormData = () => {
-    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+    if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
       return {
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-        first_name: "",
-        last_name: "",
+        username: "",
         email: "",
-        profile_picture_url: "",
-        country_code: {
-          name: "",
-          dial_code: "",
-          short_name: "",
-          emoji: ""
-        },
-        phone_number: ""
-      }
-    } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-      return {
-        currentPassword: "",
-        newPassword: "",
+        password: "",
         confirmPassword: "",
         name: "",
         display_name: "",
-        email: "",
-        logo_url: "",
-        website_url: "",
         description: "",
+        website_url: "",
+        logo_url: "",
+        industry: [],
         country_code: {
           name: "",
           dial_code: "",
           short_name: "",
-          emoji: ""
+          emoji: "",
         },
         phone_no: "",
         company_size: "",
         company_type: "",
-        specialties: [],
-        founded_year: ""
-      }
-    } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
-      return {
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-        name: "",
-        display_name: "",
-        email: "",
-        logo_url: "",
-        website_url: "",
-        description: "",
-        country_code: {
-          name: "",
-          dial_code: "",
-          short_name: "",
-          emoji: ""
+        headquarters: {
+          address_line_1: "",
+          address_line_2: "",
+          country: {
+            name: "",
+            dial_code: "",
+            short_name: "",
+            emoji: "",
+          },
+          state: {
+            name: "",
+            code: "",
+          },
+          city: {
+            name: "",
+          },
+          pin_code: "",
         },
-        phone_no: "",
-        institution_type_id: "",
-        specialties: [],
-        founded_year: ""
-      }
+        founded_year: "",
+        specialties: [""],
+        employee_count: "",
+        linkedin_page_url: "",
+      };
+
     }
+
     return {}
   }
-  const { formData, setFormData, handleChange, resetForm, errors, setErrors } = useFormHandler(getInitialFormData())
+  const { formData, setFormData, handleChange, resetForm, errors, setErrors, handleNestedChange } = useFormHandler(getInitialFormData())
   console.log("this is the form fields", formData)
+  useEffect(() => {
+    dispatch(companyIndustries())
+  }, [companiesProfileData?._id])
   const renderProfileImage = () => {
     const imageField = [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-      ? 'profile_picture_url'
+      ? 'logo_url'
       : 'logo_url'
     const imageUrl = formData[imageField] || adminProfileData?.[imageField] || companiesProfileData?.[imageField] || instituteProfileData?.[imageField] || ''
 
@@ -178,54 +171,106 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     }
   }
   const validateProfileForm = () => {
-    const newErrors = {}
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^[0-9]{10,15}$/
+    const newErrors = {};
 
-    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
-      if (!formData.first_name?.trim()) {
-        newErrors.first_name = "First name is required"
-      } else if (formData.first_name.trim().length < 2) {
-        newErrors.first_name = "First name must be at least 2 characters"
-      }
+    // Required fields validation
+    if (!formData.username?.trim()) newErrors.username = "Username is required";
+    if (!formData.name?.trim()) newErrors.name = "Company name is required";
+    if (!formData.display_name?.trim())
+      newErrors.display_name = "Display name is required";
+    if (!formData.phone_no?.trim())
+      newErrors.phone_no = "Phone number is required";
+    if (!formData.email?.trim()) newErrors.email = "Email is required";
 
-      if (!formData.last_name?.trim()) {
-        newErrors.last_name = "Last name is required"
-      } else if (formData.last_name.trim().length < 2) {
-        newErrors.last_name = "Last name must be at least 2 characters"
-      }
-    } else {
-      if (!formData.name?.trim()) {
-        newErrors.name = "Name is required"
-      } else if (formData.name.trim().length < 2) {
-        newErrors.name = "Name must be at least 2 characters"
-      }
-
-      if (!formData.display_name?.trim()) {
-        newErrors.display_name = "Display name is required"
-      }
+    // Email format validation
+    if (
+      formData.email?.trim() &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+    ) {
+      newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.email?.trim()) {
-      newErrors.email = "Email is required"
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
+    // Password validation
+    if (!formData.password?.trim()) newErrors.password = "Password is required";
+    else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
     }
 
-    const phoneField = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "phone_number" : "phone_no"
-    if (!formData[phoneField]?.trim()) {
-      newErrors[phoneField] = "Phone number is required"
-    } else if (!phoneRegex.test(formData[phoneField].replace(/\D/g, ''))) {
-      newErrors[phoneField] = "Please enter a valid phone number (10-15 digits)"
+    if (!formData.confirmPassword?.trim()) {
+      newErrors.confirmPassword = "Please confirm your password";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
-    if (!formData.country_code?.name) {
-      newErrors.country_code = "Country is required"
+    // Industry validation
+    if (!Array.isArray(formData.industry) || formData.industry.length === 0) {
+      newErrors.industry = "At least one industry is required";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    // Specialty validation
+    const specialtyErrors = [];
+    formData.specialties.forEach((specialty, index) => {
+      if (specialty && String(specialty).trim() === "") {
+        specialtyErrors[index] = "Specialty cannot be empty";
+      }
+    });
+    if (specialtyErrors.some((error) => error)) {
+      newErrors.specialties = specialtyErrors;
+    }
+
+    // Year validation
+    if (
+      formData.founded_year &&
+      (isNaN(formData.founded_year) ||
+        formData.founded_year < 1800 ||
+        formData.founded_year > new Date().getFullYear())
+    ) {
+      newErrors.founded_year =
+        "Please enter a valid year between 1800 and current year";
+    }
+
+    // Employee count validation
+    if (
+      formData.employee_count &&
+      (isNaN(formData.employee_count) || formData.employee_count < 0)
+    ) {
+      newErrors.employee_count = "Please enter a valid positive number";
+    }
+
+    // URL validation
+    // const urlRegex = /^https?:\/\/.+/;
+    // if (formData.website_url && !urlRegex.test(formData.website_url)) {
+    //   newErrors.website_url =
+    //     "Please enter a valid URL starting with http:// or https://";
+    // }
+    // if (
+    //   formData.linkedin_page_url &&
+    //   !urlRegex.test(formData.linkedin_page_url)
+    // ) {
+    //   newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
+    // }
+    // General URL (must start with http or https)
+    const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+
+    // LinkedIn specific URL
+    const linkedInRegex = /^https?:\/\/(www\.)?linkedin\.com\/.*$/i;
+
+    if (formData.website_url && !urlRegex.test(formData.website_url.trim())) {
+      newErrors.website_url =
+        "Please enter a valid URL starting with http:// or https://";
+    }
+
+    if (
+      formData.linkedin_page_url &&
+      !linkedInRegex.test(formData.linkedin_page_url.trim())
+    ) {
+      newErrors.linkedin_page_url =
+        "Please enter a valid LinkedIn URL (e.g. https://www.linkedin.com/...)";
+    }
+
+    return newErrors;
+  };
+
   const handleProfileSubmit = async () => {
     if (!validateProfileForm()) {
       toast.error("Please fix the validation errors")
@@ -234,50 +279,36 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     try {
       setIsLoading(true)
       let res
-
-      if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
+      if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
         const apiPayload = {
-          first_name: formData.first_name.trim(),
-          last_name: formData.last_name.trim(),
-          email: formData.email.trim(),
-          profile_picture_url: formData.profile_picture_url,
-          country_code: formData.country_code,
-          phone_number: formData.phone_number.trim()
-        }
-        res = await dispatch(updateProfile(apiPayload)).unwrap()
-      } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-        const apiPayload = {
-          name: formData.name.trim(),
-          display_name: formData.display_name.trim(),
-          email: formData.email.trim(),
+          name: formData.name,
+          display_name: formData.display_name,
+          description: formData.description,
+          website_url: formData.website_url,
           logo_url: formData.logo_url,
-          website_url: formData.website_url.trim(),
-          description: formData.description.trim(),
+          industry: formData.industry.map((ind) => ind._id) || [],
           country_code: formData.country_code,
-          phone_no: formData.phone_no.trim(),
+          phone_no: formData.phone_no,
           company_size: formData.company_size,
           company_type: formData.company_type,
-          specialties: formData.specialties,
-          founded_year: formData.founded_year,
           headquarters: formData.headquarters,
-          industry: formData.industry
-        }
-        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap()
-      } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
-        const apiPayload = {
-          name: formData.name.trim(),
-          display_name: formData.display_name.trim(),
-          email: formData.email.trim(),
-          logo_url: formData.logo_url,
-          website_url: formData.website_url.trim(),
-          description: formData.description.trim(),
-          country_code: formData.country_code,
-          phone_no: formData.phone_no.trim(),
-          institution_type_id: formData.institution_type_id,
-          specialties: formData.specialties,
           founded_year: formData.founded_year
-        }
-        res = await dispatch(updateProfileInstitutions(apiPayload)).unwrap()
+            ? Math.floor(
+              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+            )
+            : null,
+          specialties: (formData.specialties || [])
+            .map((s) => String(s || "").trim())
+            .filter((s) => s !== ""),
+          employee_count: formData.employee_count
+            ? Number(formData.employee_count)
+            : null,
+          linkedin_page_url: formData.linkedin_page_url,
+          email: formData.email,
+
+        };
+
+        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap()
       }
 
       toast.success(res?.message || "Profile updated successfully")
@@ -289,7 +320,25 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
       setIsLoading(false)
     }
   }
-  const handleImageUpload = async (file, fieldName = 'profile_picture_url') => {
+
+  const company_type = [
+    { value: "public", label: "Public" },
+    { value: "private", label: "Private" },
+    { value: "non-profit", label: "Non-profit" },
+    { value: "government", label: "Government" },
+    { value: "partnership", label: "Partnership" },
+    { value: "sole-proprietorship", label: "Sole Proprietorship" },
+  ];
+  const Company_Sizes = [
+    { value: "1-10", label: "1-10" },
+    { value: "11-50", label: "11-50" },
+    { value: "51-200", label: "51-200" },
+    { value: "201-500", label: "201-500" },
+    { value: "501-1000", label: "501-1000" },
+    { value: "1001-5000", label: "1001-5000" },
+    { value: "5001-10000", label: "5001-10000" },
+  ];
+  const handleImageUpload = async (file, fieldName = 'logo_url') => {
     if (!file) return
 
     if (file.size > 2 * 1024 * 1024) {
@@ -315,86 +364,172 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
       setIsImageUploading(false)
     }
   }
-  const renderProfileFormFields = () => {
-    if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <CustomInput
-              label="First Name"
-              type="text"
-              value={formData.first_name}
-              onChange={(e) => handleChange("first_name", e.target.value)}
-              placeholder="Enter first name"
-              icon={<FiUser className="text-gray-400" />}
-              error={errors?.first_name}
-            />
-          </div>
-          <div>
-            <CustomInput
-              label="Last Name"
-              type="text"
-              value={formData.last_name}
-              onChange={(e) => handleChange("last_name", e.target.value)}
-              placeholder="Enter last name"
-              icon={<FiUser className="text-gray-400" />}
-              error={errors?.last_name}
-            />
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <CustomInput
-              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Company Name" : "Institute Name"}
-              type="text"
-              value={formData.name}
-              onChange={(e) => handleChange("name", e.target.value)}
-              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter company name" : "Enter institute name"}
-              icon={<FiUser className="text-gray-400" />}
-              error={errors?.name}
-            />
-          </div>
-          <div>
-            <CustomInput
-              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Industry Name" : "Institute Name"}
-              type="text"
-              value={formData.industry}
-              onChange={(e) => handleChange("industry", e.target.value)}
-              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter industry" : "Enter institute industry"}
-              icon={<FiUser className="text-gray-400" />}
-              error={errors?.industry}
-            />
-          </div>
-          <div>
-            <CustomInput
-              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Headquarters Name" : "Institute Name"}
-              type="text"
-              value={formData.headquarters}
-              onChange={(e) => handleChange("headquarters", e.target.value)}
-              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter headquarters" : "Enter institute headquarters"}
-              icon={<FiUser className="text-gray-400" />}
-              error={errors?.headquarters}
-            />
-          </div>
-          <div>
-            <CustomInput
-              label="Display Name"
-              type="text"
-              value={formData.display_name}
-              onChange={(e) => handleChange("display_name", e.target.value)}
-              placeholder="Enter display name"
-              icon={<FiUser className="text-gray-400" />}
-              error={errors?.display_name}
-            />
-          </div>
-        </div>
-      )
-    }
+  const getSelectedIndustry = () => {
+    if (!formData?.industry || !allIndustry) return [];
+    return formData?.industry?.map(industry => {
+      const id = typeof industry === 'object' ? industry._id : industry;
+      return allIndustry.find(opt => opt.value === id);
+    }).filter(Boolean);
   };
-  const handleImageClick = (fieldName = 'profile_picture_url') => {
+  const renderProfileFormFields = () => {
+
+    const selectClasses = classNames(
+      "h-[50px] opacity-100 rounded-[10px] border w-full",
+      {
+        "border-gray-300": !errors.industry,
+        "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
+          errors.industry,
+      },
+
+    );
+
+    const customStyles = {
+      control: (base, state) => ({
+        ...base,
+        borderRadius: "10px",
+        borderColor: errors.industry ? "#f87171" : "#d1d5db",
+        minHeight: "52px",
+        opacity: 1,
+        boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
+        "&:hover": {
+          borderColor: errors.industry ? "#f87171" : "#9ca3af",
+        },
+      }),
+      placeholder: (base) => ({
+        ...base,
+        color: "#000000",
+        opacity: 0.5,
+      }),
+      multiValue: (base) => ({
+        ...base,
+        backgroundColor: "#e5e7eb",
+        borderRadius: "4px",
+      }),
+      multiValueLabel: (base) => ({
+        ...base,
+        color: "#374151",
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+        color: "#6b7280",
+        ":hover": {
+          backgroundColor: "#f87171",
+          color: "white",
+        },
+      }),
+    };
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Company / Institute Name */}
+        <div>
+          <CustomInput
+            label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+              ? "Company Name"
+              : "Institute Name"
+            }
+            type="text"
+            value={formData.name}
+            onChange={(e) => handleChange("name", e.target.value)}
+            placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+              ? "Enter company name"
+              : "Enter institute name"
+            }
+            icon={<FiUser className="text-gray-400" />}
+            error={errors?.name}
+          />
+        </div>
+
+        {/* Display Name */}
+        <div>
+          <CustomInput
+            label="Display Name"
+            type="text"
+            value={formData.display_name}
+            onChange={(e) => handleChange("display_name", e.target.value)}
+            placeholder="Enter display name"
+            icon={<FiUser className="text-gray-400" />}
+            error={errors?.display_name}
+          />
+        </div>
+
+        {/* Industry Multi-Select */}
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Industry <span className="text-red-500">*</span>
+          </label>
+          <CreatableSelect
+            isMulti
+            options={allIndustry}
+            value={formData.industry?.map((ind) => ({
+              value: ind._id,
+              label: ind.name,
+            }))}
+            onChange={(selectedOptions) =>
+              handleChange("industry", {
+                target: {
+                  value: selectedOptions?.map((opt) => ({
+                    _id: opt.value,
+                    name: opt.label,
+                  })) || [],
+                },
+              })
+            }
+            placeholder="Select industries..."
+            styles={customStyles}
+            className={selectClasses}
+            classNamePrefix="react-select"
+          />
+          {errors.industry && <p className="mt-1 text-sm text-red-600">{errors.industry}</p>}
+        </div>
+
+        {/* Company Type */}
+        <div>
+          <FilterSelect
+            label="Company Type"
+            options={company_type || []}
+            selectedOption={company_type?.find((opt) => opt.value === formData?.company_type)}
+            onChange={(selected) =>
+              handleChange("company_type", {
+                target: { value: selected?.value || "" },
+              })
+            }
+          />
+        </div>
+
+        {/* Employee Count */}
+        <div>
+          <CustomInput
+            label="Employee Count"
+            value={formData?.employee_count}
+            name="employee_count"
+            onChange={(e) => handleChange("employee_count", e)}
+            placeholder="e.g., 150"
+            type="number"
+            min="0"
+            error={errors.employee_count}
+          />
+        </div>
+
+        {/* Founded Year */}
+        <div>
+          <CustomInput
+            label="Founded Year"
+            value={formData?.founded_year}
+            name="founded_year"
+            onChange={(e) => handleChange("founded_year", e)}
+            placeholder="e.g., 2020"
+            type="number"
+            min="1800"
+            max={new Date().getFullYear()}
+            error={errors.founded_year}
+          />
+        </div>
+      </div>
+
+    )
+
+  };
+  const handleImageClick = (fieldName = 'logo_url') => {
     const inputId = `imageUpload-${fieldName}`
     document.getElementById(inputId).click()
   }
@@ -410,24 +545,10 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
       }
     }))
   }
+
   useEffect(() => {
     if (adminProfileData) {
-      if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
-        setFormData(prev => ({
-          ...prev,
-          first_name: adminProfileData?.first_name || "",
-          last_name: adminProfileData?.last_name || "",
-          email: adminProfileData?.email || "",
-          profile_picture_url: adminProfileData?.profile_picture_url || "",
-          country_code: adminProfileData?.country_code || {
-            name: "",
-            dial_code: "",
-            short_name: "",
-            emoji: ""
-          },
-          phone_number: adminProfileData?.phone_number || ""
-        }))
-      } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
+      if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
         setFormData(prev => ({
           ...prev,
           name: companiesProfileData?.name || "",
@@ -446,27 +567,14 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           company_size: companiesProfileData?.company_size || "",
           company_type: companiesProfileData?.company_type || "",
           specialties: companiesProfileData?.specialties || [],
-          founded_year: companiesProfileData?.founded_year || ""
-        }))
-      } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
-        setFormData(prev => ({
-          ...prev,
-          name: instituteProfileData?.name || "",
-          display_name: instituteProfileData?.display_name || "",
-          email: instituteProfileData?.email || "",
-          logo_url: instituteProfileData?.logo_url || "",
-          website_url: instituteProfileData?.website_url || "",
-          description: instituteProfileData?.description || "",
-          country_code: instituteProfileData?.country_code || {
-            name: "",
-            dial_code: "",
-            short_name: "",
-            emoji: ""
-          },
-          phone_no: instituteProfileData?.phone_no || "",
-          institution_type_id: instituteProfileData?.institution_type_id?._id || "",
-          specialties: instituteProfileData?.specialties || [],
-          founded_year: instituteProfileData?.founded_year || ""
+          founded_year: companiesProfileData?.founded_year
+            ? new Date(companiesProfileData.founded_year * 1000).getFullYear()
+            : ""
+          ,
+          employee_count: companiesProfileData?.employee_count || "",
+          headquarters: companiesProfileData?.headquarters || "",
+          industry: companiesProfileData?.industry || []
+
         }))
       }
     }
@@ -485,7 +593,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
   }, [dispatch, activeTab1]);
 
-  
+
   const { getPostListData: { data: posts = [] } = {}, loading } = useSelector(
     (state) => state.companies
   );
@@ -1025,14 +1133,14 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     </div>
   );
 
-  
 
 
 
- 
 
-   
- 
+
+
+
+
   const PostsTab = ({ posts }) => {
     return (
       <div className="bg-white min-h-screen py-8 px-4">
@@ -1455,7 +1563,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           <div className="flex flex-col items-center">
             {renderProfileImage()}
             <button
-              onClick={() => handleImageClick([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? 'profile_picture_url' : 'logo_url')}
+              onClick={() => handleImageClick([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? 'logo_url' : 'logo_url')}
               className="mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center"
             >
               <FiCamera className="mr-1" /> Change photo
@@ -1477,7 +1585,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+            {/* <div>
               <FilterSelect
                 options={countriesList}
                 label="Country"
@@ -1486,7 +1594,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 error={errors?.country_code}
                 icon={<FiGlobe className="text-gray-400" />}
               />
-            </div>
+            </div> */}
             <div>
               <CustomInput
                 label={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Phone Number" : "Phone"}

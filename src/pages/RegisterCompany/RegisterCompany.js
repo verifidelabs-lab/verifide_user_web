@@ -473,7 +473,7 @@ const RegisterCompany = () => {
 
     setIsSubmitting(true);
     try {
-       const createPayload = {
+      const createPayload = {
         name: formData.name,
         display_name: formData.display_name,
         description: formData.description,
@@ -487,8 +487,8 @@ const RegisterCompany = () => {
         headquarters: formData.headquarters,
         founded_year: formData.founded_year
           ? Math.floor(
-              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-            )
+            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+          )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())

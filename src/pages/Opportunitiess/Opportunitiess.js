@@ -171,7 +171,7 @@ const Opportunities = () => {
     setJobId(job?._id);
 
     if (action === "edit") {
-      if (isCompany) {
+      if (!isCompany) {
         navigate(`/company/post-job/${job?._id}`);
       } else {
 

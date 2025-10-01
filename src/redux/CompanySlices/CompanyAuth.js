@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createExtraReducersForThunk, createApiThunkPublic, createApiThunkPrivate } from '../../../src/components/hooks/apiThunk';
 
 const initialState = {
-    adminLoginData: {}, adminProfileData: {}, profileRoleListData: {}, getAllProfileRoleListData: {}, companiesProfileData: {}, instituteProfileData: {},sidebarPermissionsData:{},
+  adminLoginData: {}, companyIndustryData: {}, adminProfileData: {}, profileRoleListData: {}, getAllProfileRoleListData: {}, companiesProfileData: {}, instituteProfileData: {}, sidebarPermissionsData: {},
 }
 
 export const adminLogin = createApiThunkPublic('adminLogin', '/admin/authorization/login', 'POST')
@@ -67,21 +67,22 @@ export const institutionsSidebarPermissions = createApiThunkPrivate(
 );
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    extraReducers: builder => {
-        createExtraReducersForThunk(builder, adminLogin, 'adminLoginData')
-        createExtraReducersForThunk(builder, adminProfile, 'adminProfileData')
-        createExtraReducersForThunk(builder, profileRoleList, 'profileRoleListData')
-        createExtraReducersForThunk(builder, getAllProfileRoleList, 'getAllProfileRoleListData')
-        createExtraReducersForThunk(builder, companiesProfile, 'companiesProfileData')
-        createExtraReducersForThunk(builder, instituteProfile, 'instituteProfileData')
-        createExtraReducersForThunk(builder, adminSidebarPermissions, 'sidebarPermissionsData')
-        createExtraReducersForThunk(builder, companiesSidebarPermissions, 'sidebarPermissionsData')
-        createExtraReducersForThunk(builder, institutionsSidebarPermissions, 'sidebarPermissionsData')
-        createExtraReducersForThunk(builder, companyRegister, 'companyRegisterData')
+  name: 'auth',
+  initialState,
+  extraReducers: builder => {
+    createExtraReducersForThunk(builder, adminLogin, 'adminLoginData')
+    createExtraReducersForThunk(builder, adminProfile, 'adminProfileData')
+    createExtraReducersForThunk(builder, profileRoleList, 'profileRoleListData')
+    createExtraReducersForThunk(builder, getAllProfileRoleList, 'getAllProfileRoleListData')
+    createExtraReducersForThunk(builder, companiesProfile, 'companiesProfileData')
+    createExtraReducersForThunk(builder, instituteProfile, 'instituteProfileData')
+    createExtraReducersForThunk(builder, adminSidebarPermissions, 'sidebarPermissionsData')
+    createExtraReducersForThunk(builder, companiesSidebarPermissions, 'sidebarPermissionsData')
+    createExtraReducersForThunk(builder, institutionsSidebarPermissions, 'sidebarPermissionsData')
+    createExtraReducersForThunk(builder, companyRegister, 'companyRegisterData')
+    createExtraReducersForThunk(builder, companyIndustries, 'companyIndustryData')
 
-    }
+  }
 })
 
 export default authSlice.reducer
