@@ -3,12 +3,10 @@ import {
   Edit,
   Globe,
   Phone,
-  Mail,
   Users,
   Calendar,
   MapPin,
   Building,
-  Award,
   Camera,
   Save,
   X,
@@ -16,7 +14,6 @@ import {
 } from "lucide-react";
 import CreatableSelect from "react-select/creatable";
 import { getPostList } from "../../../redux/CompanySlices/companiesSlice";
-import { FaRegEdit } from "react-icons/fa";
 import PeopleToConnect from "../../../components/ui/ConnectSidebar/ConnectSidebar";
 import {
   adminProfile,
