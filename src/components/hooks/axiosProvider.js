@@ -6,8 +6,8 @@ import { CiNoWaitingSign } from 'react-icons/ci';
 const isLive = true
 
 
-export const apiUrl = isLive ? 'https://verifide.xyz/api/v1/' : 'http://192.168.88.185:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://verifide.xyz/socket' : 'http://192.168.88.185:5004/socket';
+export const apiUrl = isLive ? 'https://dev-verifide.verifide.xyz/api/v1/' : 'http://192.168.88.185:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://dev-verifide.verifide.xyz/socket' : 'http://192.168.88.185:5004/socket';
 
 const axiosPublic = axios.create({
     baseURL: apiUrl,
