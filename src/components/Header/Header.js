@@ -32,6 +32,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const imageToDisplay =
     profileImage || profileData?.personalInfo?.profile_picture_url;
   const [isLoading, setIsLoading] = useState(false);
+  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -337,7 +338,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Change Password
                   </Link>
-                  {companiesData?.data?.list.length > 0
+                  {/* {companiesData?.data?.list.length > 0
                     ? companiesData?.data?.list.map((company) => (
                         <button
                           key={company._id}
@@ -352,15 +353,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                           </Link>
                         </button>
                       ))
-                    : null}
-                  {/* <Link
-                    to="/user/create-company"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    Create Company
-                  </Link> */}
-                  {companiesData?.data?.list.length < 5 && (
+                    : null} */}
+                  {/* {companiesData?.data?.list.length < 5 && (
                     <Link
                       to="/user/create-company"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -368,7 +362,62 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     >
                       Create Company
                     </Link>
-                  )}
+                  )} */}
+                  {/* Companies inside Profile Dropdown */}
+                  <div className="border-t border-gray-200">
+                    <button
+                      onClick={() => setIsCompanyDropdownOpen((prev) => !prev)}
+                      className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Companies
+                      <FiChevronDown
+                        className={`ml-2 text-gray-500 transition-transform ${
+                          isCompanyDropdownOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Expand inline */}
+                    {isCompanyDropdownOpen && (
+                      <div className="pl-4">
+                        {companiesData?.data?.list?.length > 0 ? (
+                          companiesData.data.list.map((company) => (
+                            <Link
+                              key={company._id}
+                              to={`/company/login?email=${encodeURIComponent(
+                                company.email
+                              )}`}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 capitalize"
+                              onClick={() => {
+                                setIsCompanyDropdownOpen(false);
+                                setIsDropdownOpen(false);
+                              }}
+                            >
+                              {company.name}
+                            </Link>
+                          ))
+                        ) : (
+                          <p className="px-4 py-2 text-sm text-gray-500">
+                            No companies found
+                          </p>
+                        )}
+
+                        {companiesData?.data?.list?.length < 5 && (
+                          <Link
+                            to="/user/create-company"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={() => {
+                              setIsCompanyDropdownOpen(false);
+                              setIsDropdownOpen(false);
+                            }}
+                          >
+                            ➕ Create Company
+                          </Link>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
                   {/* <Link
                     to="/user/create-institute"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

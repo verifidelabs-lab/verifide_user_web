@@ -1,18 +1,20 @@
-import React from 'react';
-import { BiCalendar } from 'react-icons/bi';
+import React from "react";
+import { BiCalendar } from "react-icons/bi";
 
 const CustomDateInput = ({
   value,
   onChange,
-  label = 'Start Date',
-  type = 'date',
+  label = "Start Date",
+  type = "date",
   placeholder,
   required = false,
   error,
   disabled,
-  allowFutureDate = true,  // ✅ allow disabling future dates
-  allowPastDate = true,    // ✅ allow disabling past dates
-  dobRange = false         // ✅ new prop for Date of Birth restriction
+  allowFutureDate = true, // ✅ allow disabling future dates
+  allowPastDate = true, // ✅ allow disabling past dates
+  dobRange = false, // ✅ new prop for Date of Birth restriction
+  minDateOverride, // ✅ new optional prop
+  maxDateOverride, // ✅ new optional prop
 }) => {
   const inputRef = React.useRef(null);
 
@@ -28,7 +30,7 @@ const CustomDateInput = ({
   };
 
   // Today's date
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   // If dobRange is true → only allow age between 18 and 100
   let minDate, maxDate;
@@ -46,14 +48,16 @@ const CustomDateInput = ({
       todayObj.getDate()
     );
 
-    maxDate = maxAllowed.toISOString().split('T')[0]; // latest allowed DOB
-    minDate = minAllowed.toISOString().split('T')[0]; // oldest allowed DOB
+    maxDate = maxAllowed.toISOString().split("T")[0]; // latest allowed DOB
+    minDate = minAllowed.toISOString().split("T")[0]; // oldest allowed DOB
   } else {
     // normal min/max behavior
     minDate = !allowPastDate ? today : undefined;
     maxDate = !allowFutureDate ? today : undefined;
   }
-
+  // ✅ Apply overrides if provided
+  if (minDateOverride) minDate = minDateOverride;
+  if (maxDateOverride) maxDate = maxDateOverride;
   return (
     <div className="w-full max-w-lg">
       <label className="block text-base text-[#282828] font-medium mb-2">
@@ -66,7 +70,9 @@ const CustomDateInput = ({
           type={type}
           value={value}
           onChange={onChange}
-          placeholder={placeholder || (type === 'date' ? 'DD/MM/YYYY' : 'Select date')}
+          placeholder={
+            placeholder || (type === "date" ? "DD/MM/YYYY" : "Select date")
+          }
           required={required}
           disabled={disabled}
           min={minDate}
