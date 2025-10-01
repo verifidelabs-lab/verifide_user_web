@@ -30,6 +30,7 @@ import Posts from '../../pages/CompanyPanel/PostsManagement/Posts';
 import CreatePost from '../../pages/CompanyPanel/PostsManagement/CreatePost';
 import Quest from '../../pages/Quest/Quest';
 import CreateQuest from '../../pages/Quest/Components/CreateQuest';
+import AdminRoles from '../../pages/CompanyPanel/AdminRoles/AdminRoles';
 // import Login from '../../pages/CompanyPanel/Login/Login';
 
 
@@ -296,6 +297,7 @@ function CompanyLayout() {
               {(
                 <>
                   <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData}/>} />
+                  <Route path={`/admin-role`} element={<AdminRoles companiesProfileData={companiesProfileData}/>} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   {/* <Route path="login" element={<Login role="company" />} /> */}
