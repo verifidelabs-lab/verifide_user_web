@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { PiPlus, PiX } from "react-icons/pi";
-import { arrayTransform } from "../../components/utils/globalFunction";
+import { arrayTransform, uploadImageDirectly } from "../../components/utils/globalFunction";
 import { useDispatch, useSelector } from "react-redux";
 import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   companyIndustries,
   companyRegisterVerifyOtp,
@@ -26,6 +26,7 @@ import {
   createCompanies,
   getCompaniesList,
 } from "../../redux/CompanySlices/companiesSlice";
+import EnhancedFileInput from "../../components/ui/Input/CustomFileAndImage";
 
 const initialFormData = {
   username: "",
@@ -200,6 +201,72 @@ const RegisterCompany = () => {
     useFormHandler(initialFormData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [logoUrl, setLogoUrl] = useState(formData.logo_url || "");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFileUpload = useCallback(
+    async (file, fileType) => {
+      if (!file) {
+        toast.error("Please select a file");
+        return;
+      }
+
+      const maxSize = fileType === "image" ? 5 * 1024 * 1024 : 20 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast.error(
+          `File size must be less than ${fileType === "image" ? "5MB" : "20MB"}`
+        );
+        return;
+      }
+
+      setIsLoading(true);
+
+      try {
+        if (fileType === "image") {
+          const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+          if (!allowedImageTypes.includes(file.type)) {
+            toast.error("Only JPEG, JPG, or PNG files are allowed");
+            return;
+          }
+
+          const result = await uploadImageDirectly(file, "COMPANY_LOGO");
+          if (result?.data?.imageURL) {
+            setLogoUrl(result.data.imageURL);
+            setFormData((prev) => ({
+              ...prev,
+              logo_url: result.data.imageURL,
+            }));
+
+            if (errors.logo_url) {
+              setErrors((prev) => ({ ...prev, logo_url: "" }));
+            }
+
+            toast.success(result?.message || "Logo uploaded successfully");
+          } else {
+            throw new Error("Logo upload failed");
+          }
+        }
+      } catch (error) {
+        console.error("File upload error:", error);
+        toast.error(error?.message || "Failed to upload logo");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [errors.logo_url, setFormData, setErrors]
+  );
+
+  const handleImageUpload = useCallback(
+    (file) => {
+      handleFileUpload(file, "image");
+    },
+    [handleFileUpload]
+  );
+
+  const removeImage = () => {
+    setLogoUrl("");
+    setFormData((prev) => ({ ...prev, logo_url: "" }));
+  };
 
   useEffect(() => {
     const checkCompanyLimit = async () => {
@@ -887,14 +954,41 @@ const RegisterCompany = () => {
                     error={errors.linkedin_page_url}
                   />
 
-                  <CustomInput
+                  {/* <CustomInput
                     label="Logo URL"
                     value={formData?.logo_url}
                     name="logo_url"
                     onChange={(e) => handleChange("logo_url", e)}
                     placeholder="https://example.com/logo.png"
+                  /> */}
+                </div>
+                <div className="mt-4">
+                  <EnhancedFileInput
+                    accept=".jpg,.jpeg,.png"
+                    supportedFormats="Image"
+                    label="Company Logo"
+                    onChange={handleImageUpload}
+                    onDelete={removeImage}
+                    error={errors.logo_url}
+                    isLoading={isLoading}
+                    value={logoUrl}
                   />
                 </div>
+
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div className="space-y-4">
+                    <EnhancedFileInput
+                      accept=".jpg,.jpeg,.png"
+                      supportedFormats="Image"
+                      label="Images"
+                      onChange={handleImageUpload}
+                      onDelete={removeImage}
+                      error={errors.images || errors.media}
+                      isLoading={isLoading}
+                      value={questData.images[0]}
+                    />
+                  </div>
+                </div> */}
               </div>
 
               <div className="border-t border-gray-200 pt-6">
