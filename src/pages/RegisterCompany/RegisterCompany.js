@@ -7,7 +7,6 @@ import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
 import { useEffect, useState } from "react";
 import {
   companyIndustries,
-  companyRegister,
   companyRegisterVerifyOtp,
 } from "../../redux/slices/authSlice";
 import OTPVerificationPopup from "./components/OTPVerificationPopup";
@@ -23,7 +22,10 @@ import FilterSelect from "../../components/ui/InputAdmin/FilterSelect";
 import useFormHandler from "../../components/hooks/useFormHandler";
 import Button from "../../components/ui/Button/Button";
 import Input from "../../components/ui/InputAdmin/Input";
-import { createCompanies } from "../../redux/CompanySlices/companiesSlice";
+import {
+  createCompanies,
+  getCompaniesList,
+} from "../../redux/CompanySlices/companiesSlice";
 
 const initialFormData = {
   username: "",
@@ -197,6 +199,36 @@ const RegisterCompany = () => {
   const { formData, handleChange, setFormData, errors, setErrors } =
     useFormHandler(initialFormData);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkCompanyLimit = async () => {
+      const apiPayload = {
+        page: 1,
+        size: 100,
+        populate: "industry|name",
+        select:
+          "name display_name email industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+        searchFields: "name",
+        keyWord: "",
+        query: JSON.stringify({}),
+      };
+
+      try {
+        const result = await dispatch(getCompaniesList(apiPayload)).unwrap();
+        const companies = result?.data?.list || [];
+        if (companies.length >= 5) {
+          toast.error("You have exceeded your company creation limit.");
+          navigate("/user/feed");
+        }
+      } catch (error) {
+        // Optionally handle fetch error
+      }
+    };
+
+    checkCompanyLimit();
+  }, [dispatch, navigate]);
+
   const cscSelector = useSelector((state) => state.global);
   const stateList = arrayTransform(cscSelector?.stateData?.data?.data || []);
   const cityList = arrayTransform(cscSelector?.citiesData?.data?.data || []);
@@ -465,12 +497,6 @@ const RegisterCompany = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    // if (Object.keys(validationErrors).length > 0) {
-    //   setErrors(validationErrors);
-    //   return;
-    // }
-
     setIsSubmitting(true);
     try {
       const createPayload = {
@@ -517,6 +543,7 @@ const RegisterCompany = () => {
       } else {
         toast.success(res?.message || "Company created successfully");
         setFormData(initialFormData);
+        navigate("/user/feed"); // Redirects to desired route
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -541,8 +568,6 @@ const RegisterCompany = () => {
         return "/app/admin/dashboard";
     }
   };
-
-  const navigate = useNavigate();
 
   const handleVerifyOtp = async (otp) => {
     setIsVerifying(true);

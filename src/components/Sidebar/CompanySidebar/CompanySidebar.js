@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BiChevronRight, BiMessageDetail, BiSolidDashboard } from "react-icons/bi";
 import { MdWork, MdPeople, MdSettings, MdAnalytics, MdEvent } from "react-icons/md";
-import { FaRegBuilding, FaUsersCog } from "react-icons/fa";
+import { FaRegBuilding, FaUsers, FaUsersCog } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { TbReportAnalytics } from "react-icons/tb";
 import ProfileCard from "../../ui/cards/ProfileCard";
@@ -69,6 +69,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
     { icon: BiMessageDetail, label: "Inbox", path: "/company/message" },
     { icon: PiSealCheckLight, label: "Verification", path: "/company/verification" },
     { icon: FaRegBuilding, label: "Company Profile", path: "/company/profile" },
+    { icon: FaUsers, label: "Admin Roles", path: "/company/admin-role" },
 
     // {
     //   icon: MdWork,

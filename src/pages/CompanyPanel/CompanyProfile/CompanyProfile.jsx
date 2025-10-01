@@ -19,13 +19,10 @@ import { getPostList } from "../../../redux/CompanySlices/companiesSlice";
 import { FaRegEdit } from "react-icons/fa";
 import PeopleToConnect from "../../../components/ui/ConnectSidebar/ConnectSidebar";
 import {
-  adminChangePassword,
   adminProfile,
   updateProfile,
   updateProfileInstitutions,
-  resetPasswordInstitutions,
   updateProfileCompanies,
-  resetPasswordCompanies,
   companiesProfile,
   instituteProfile,
   companyIndustries
@@ -33,7 +30,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
 import { Link } from "react-router-dom";
-import { MoreVertical } from "lucide-react";
 import { Bookmark, Plus } from "lucide-react";
 import useFormHandler from "../../../components/hooks/useFormHandler";
 import { FiEdit2, FiLock, FiMail, FiPhone, FiGlobe, FiUser, FiCamera, FiCheck } from 'react-icons/fi'
@@ -857,16 +853,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           {/* Row 1: Logo + Buttons */}
           <div className="flex items-start justify-between gap-2">
             {/* Logo - overlapping the banner */}
-            {/* <div className="relative -mt-16 flex-shrink-0">
-              <div className="w-24 h-24 bg-black rounded-xl flex items-center justify-center shadow-2xl border-4 border-zinc-800">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                  <path
-                    d="M12 40V8L24 24L36 8V40L24 24L12 40Z"
-                    fill="#FFD700"
-                  />
-                </svg>
-              </div>
-            </div> */}
             <div className="relative -mt-12 flex-shrink-0">
               <div className="w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border-4 border-zinc-800 bg-black overflow-hidden">
                 {agencyData?.logo ? (
@@ -883,18 +869,11 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               </div>
             </div>
 
-            {/* Buttons */}
-            {/* <div className="flex items-start gap-2 pt-2"> */}
-            {/* <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-                <FaRegEdit />
-                <Link to={"/company/update-profile"}>Edit</Link>
-              </button> */}
             <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded " onClick={handleProfileUpdate}>
 
               Edit Page
 
             </button>
-            {/* </div> */}
           </div>
 
           {/* Row 2: Company Details */}
@@ -1112,24 +1091,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             </div>
           )}
       </div>
-      {/* <div>
-        <h3 className="text-lg font-semibold mb-2 text-gray-900">Our Vision</h3>
-        <EditableField
-          value="To be the leading global UX design agency that creates meaningful digital products for the future."
-          onSave={updateAgencyData}
-          field="vision"
-          multiline={3}
-        />
-      </div>
-      <div>
-        <h3 className="text-lg font-semibold mb-2 text-gray-900">
-          Global Presence
-        </h3>
-        <p>
-          With offices in Dubai, Berlin, Riyadh, Dhaka, London, and New York, we
-          bring diverse perspectives to every project.
-        </p>
-      </div> */}
     </div>
   );
 
@@ -1160,14 +1121,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               >
                 {/* Header row: company/user info */}
                 <div className="flex items-center gap-3 mb-2">
-                  {/* <img
-                    src={
-                      post?.logoUrl ||
-                      "https://upload.wikimedia.org/wikipedia/commons/8/89/HD_transparent_picture.png"
-                    }
-                    alt={post?.companyName || post?.user_id || "Logo"}
-                    
-                  /> */}
                   {agencyData?.logo ? (
                     <img
                       src={agencyData?.logo}
@@ -1327,15 +1280,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
 
                     {/* Status Badge and Bookmark */}
                     <div className="flex items-center gap-3">
-                      {/* <span
-                        className={`px-4 py-1.5 rounded-full text-sm font-medium ${
-                          job?.status === "Shortlisted"
-                            ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                            : "bg-red-500/20 text-red-400 border border-red-500/30"
-                        }`}
-                      >
-                        {job?.status}
-                      </span> */}
                       <button className="text-gray-400 hover:text-gray-700 transition-colors">
                         <Bookmark size={20} />
                       </button>
@@ -1383,10 +1327,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                     ))}
                   </div>
 
-                  {/* Apply Now Button */}
-                  {/* <button className="px-6 py-2.5 bg-transparent border border-blue-500 text-blue-400 rounded-lg hover:bg-blue-500/10 transition-colors font-medium">
-                    Apply Now
-                  </button> */}
                 </div>
               ))}
           </div>
