@@ -141,7 +141,7 @@ const StepFirst = ({
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-          <CustomInput
+          {/* <CustomInput
             label="Salary Range"
             placeholder="e.g. ₹30,000 - ₹50,000"
             value={formData.salary_range}
@@ -149,7 +149,22 @@ const StepFirst = ({
             required
             error={errors?.salary_range}
             className="h-10 w-full"
-          />
+          /> */}
+          {!(
+            formData.job_type === "internship" || formData.pay_type === "unpaid"
+          ) && (
+            <CustomInput
+              label="Salary Range"
+              placeholder="e.g. ₹30,000 - ₹50,000"
+              value={formData.salary_range}
+              onChange={(e) =>
+                handleInputChange("salary_range", e.target.value)
+              }
+              required
+              error={errors?.salary_range}
+              className="h-10 w-full"
+            />
+          )}
 
           <CustomDateInput
             label="Start Date"
