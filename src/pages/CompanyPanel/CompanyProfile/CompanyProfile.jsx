@@ -29,8 +29,20 @@ import { suggestedUser } from "../../../redux/Users/userSlice";
 import { Link } from "react-router-dom";
 import { Bookmark, Plus } from "lucide-react";
 import useFormHandler from "../../../components/hooks/useFormHandler";
-import { FiEdit2, FiLock, FiMail, FiPhone, FiGlobe, FiUser, FiCamera, FiCheck } from 'react-icons/fi'
-import { arrayTransform, uploadImageDirectly } from "../../../components/utils/globalFunction";
+import {
+  FiEdit2,
+  FiLock,
+  FiMail,
+  FiPhone,
+  FiGlobe,
+  FiUser,
+  FiCamera,
+  FiCheck,
+} from "react-icons/fi";
+import {
+  arrayTransform,
+  uploadImageDirectly,
+} from "../../../components/utils/globalFunction";
 import { getCookie } from "../../../components/utils/cookieHandler";
 import { toast } from "sonner";
 import Button from "../../../components/ui/Button/Button";
@@ -43,14 +55,18 @@ import { jobsList } from "../../../redux/Global Slice/cscSlice";
 import { getAllIndustry } from "../../../redux/work/workSlice";
 import classNames from "classnames";
 
-const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
+const CompanyProfile = ({
+  adminProfileData,
+  companiesProfileData,
+  instituteProfileData,
+}) => {
   const ROLES = {
     SUPER_ADMIN: 1,
     ADMIN: 2,
     COMPANIES: 3,
     COMPANIES_ADMIN: 7,
     INSTITUTIONS: 4,
-    INSTITUTIONS_ADMIN: 8
+    INSTITUTIONS_ADMIN: 8,
   };
   console.log("tesetesdfesdrsdfsdfsdfsdfsfsdfsfsdfsdf", companiesProfileData)
   const userRole = Number(getCookie("COMPANY_ROLE"))
@@ -134,11 +150,15 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             <FiCamera className="w-6 h-6 text-white" />
           </div>
           <img
-            src={imageUrl || "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"}
+            src={
+              imageUrl ||
+              "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"
+            }
             className="w-full h-full object-cover"
             alt="Profile"
             onError={(e) => {
-              e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+              e.target.src =
+                "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
             }}
           />
         </div>
@@ -150,19 +170,19 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           className="hidden"
         />
       </div>
-    )
+    );
   };
   const fetchData = () => {
     if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
-      dispatch(adminProfile())
+      dispatch(adminProfile());
     }
     if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-      dispatch(companiesProfile())
+      dispatch(companiesProfile());
     }
     if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
-      dispatch(instituteProfile())
+      dispatch(instituteProfile());
     }
-  }
+  };
   const validateProfileForm = () => {
     const newErrors = {};
 
@@ -266,8 +286,8 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
 
   const handleProfileSubmit = async () => {
     if (!validateProfileForm()) {
-      toast.error("Please fix the validation errors")
-      return
+      toast.error("Please fix the validation errors");
+      return;
     }
     try {
       setIsLoading(true)
@@ -304,13 +324,13 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
         res = await dispatch(updateProfileCompanies(apiPayload)).unwrap()
       }
 
-      toast.success(res?.message || "Profile updated successfully")
-      fetchData()
-      setIsProfileModalOpen(false)
-      setIsLoading(false)
+      toast.success(res?.message || "Profile updated successfully");
+      fetchData();
+      setIsProfileModalOpen(false);
+      setIsLoading(false);
     } catch (error) {
-      toast.error(error || "Failed to update profile")
-      setIsLoading(false)
+      toast.error(error || "Failed to update profile");
+      setIsLoading(false);
     }
   }
 
@@ -335,26 +355,25 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     if (!file) return
 
     if (file.size > 2 * 1024 * 1024) {
-      toast.error("File size must be less than 2MB")
-      return
+      toast.error("File size must be less than 2MB");
+      return;
     }
 
-    const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png']
+    const allowedTypes = ["image/jpg", "image/jpeg", "image/png"];
     if (!allowedTypes.includes(file.type)) {
-      toast.error("Only image files (JPEG, PNG) are allowed")
-      return
+      toast.error("Only image files (JPEG, PNG) are allowed");
+      return;
     }
 
     try {
-      setIsImageUploading(true)
-      const result = await uploadImageDirectly(file, "PROFILES")
-      toast.success(result?.message)
-      setFormData((prev) => ({ ...prev, [fieldName]: result?.data?.imageURL }))
-
+      setIsImageUploading(true);
+      const result = await uploadImageDirectly(file, "PROFILES");
+      toast.success(result?.message);
+      setFormData((prev) => ({ ...prev, [fieldName]: result?.data?.imageURL }));
     } catch (error) {
-      toast.error(error || 'Failed to upload image')
+      toast.error(error || "Failed to upload image");
     } finally {
-      setIsImageUploading(false)
+      setIsImageUploading(false);
     }
   }
   const getSelectedIndustry = () => {
@@ -554,7 +573,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             name: "",
             dial_code: "",
             short_name: "",
-            emoji: ""
+            emoji: "",
           },
           phone_no: companiesProfileData?.phone_no || "",
           company_size: companiesProfileData?.company_size || "",
@@ -571,11 +590,11 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
         }))
       }
     }
-  }, [adminProfileData, instituteProfileData, companiesProfileData])
+  }, [adminProfileData, instituteProfileData, companiesProfileData]);
   const [activeTab, setActiveTab] = useState("Home");
   const [agencyData, setAgencyData] = useState({});
   const [activeTab1, setActiveTab1] = useState("user");
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.user);
@@ -585,7 +604,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
   useEffect(() => {
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
   }, [dispatch, activeTab1]);
-
 
   const { getPostListData: { data: posts = [] } = {}, loading } = useSelector(
     (state) => state.companies
@@ -648,8 +666,8 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
   ]);
 
   const handleProfileUpdate = () => {
-    setIsProfileModalOpen(true)
-  }
+    setIsProfileModalOpen(true);
+  };
   const updateAgencyData = (field, value) => {
     setAgencyData((prev) => ({
       ...prev,
@@ -722,7 +740,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     return (
       <div className={`group relative ${className}`}>
         <div className={multiline ? "whitespace-pre-wrap" : ""}>{value}</div>
-
       </div>
     );
   };
@@ -734,7 +751,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
 
         if (data) {
           console.log("This is companyData: " + JSON.stringify(data, null, 2));
-
 
           setAgencyData({
             name: data?.display_name || data?.name || "N/A",
@@ -845,7 +861,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
         </svg>
       </div>
 
-      <div className="bg-white rounded-b-2xl shadow-2xl">
+      <div className="bg-white rounded-b-2xl ">
         <div className="p-6">
           {/* Row 1: Logo + Buttons */}
           <div className="flex items-start justify-between gap-2">
@@ -866,10 +882,11 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               </div>
             </div>
 
-            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded " onClick={handleProfileUpdate}>
-
+            <button
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded "
+              onClick={handleProfileUpdate}
+            >
               Edit Page
-
             </button>
           </div>
 
@@ -892,8 +909,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     </div>
   );
 
-
-
   // Navigation
   const Navigation = () => (
     <div className="mt-6">
@@ -902,10 +917,11 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
-              ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-500 hover:text-blue-600"
-              }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors ${
+              activeTab === tab
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-gray-500 hover:text-blue-600"
+            }`}
           >
             {tab}
           </button>
@@ -919,24 +935,22 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
       <div className="space-y-4">
         <h2 className="text-xl font-medium text-gray-900 flex items-center gap-2">
           Overview
-          <Link
-            to="/company/update-profile"
+          <button
+            onClick={handleProfileUpdate}
             className="flex items-center text-gray-400 hover:text-gray-600"
           >
             <Edit size={16} />
-          </Link>
+          </button>
         </h2>
 
         <div className="text-gray-600 space-y-2">
           <EditableField
             value={agencyData.overview}
-
             field="overview"
             multiline={2}
           />
           <EditableField
             value={agencyData.workDescription}
-
             field="workDescription"
             multiline={4}
           />
@@ -952,7 +966,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Website</div>
                 <EditableField
                   value={agencyData.website}
-
                   field="website"
                   type="url"
                   className="text-blue-600"
@@ -966,7 +979,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Phone</div>
                 <EditableField
                   value={agencyData.phone}
-
                   field="phone"
                   type="tel"
                 />
@@ -979,7 +991,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Verified since</div>
                 <EditableField
                   value={agencyData.verifiedSince}
-
                   field="verifiedSince"
                 />
               </div>
@@ -993,7 +1004,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Industry</div>
                 <EditableField
                   value={agencyData.industry}
-
                   field="industry"
                   className="capitalize"
                 />
@@ -1006,7 +1016,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Company size</div>
                 <EditableField
                   value={agencyData.companySize}
-
                   field="companySize"
                 />
               </div>
@@ -1016,11 +1025,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               <Calendar className="text-gray-400 mt-1" size={16} />
               <div>
                 <div className="text-gray-400 text-xs mb-1">Founded</div>
-                <EditableField
-                  value={agencyData.founded}
-
-                  field="founded"
-                />
+                <EditableField value={agencyData.founded} field="founded" />
               </div>
             </div>
           </div>
@@ -1323,7 +1328,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                       </span>
                     ))}
                   </div>
-
                 </div>
               ))}
           </div>
@@ -1526,7 +1530,9 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               <FilterSelect
                 options={countriesList}
                 label="Country"
-                selectedOption={countriesList?.find(opt => opt?.label === formData?.country_code?.name)}
+                selectedOption={countriesList?.find(
+                  (opt) => opt?.label === formData?.country_code?.name
+                )}
                 onChange={(data) => handleCountryChange(data)}
                 error={errors?.country_code}
                 icon={<FiGlobe className="text-gray-400" />}
@@ -1534,13 +1540,36 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             </div> */}
             <div>
               <CustomInput
-                label={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Phone Number" : "Phone"}
+                label={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? "Phone Number"
+                    : "Phone"
+                }
                 type="tel"
-                value={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? formData.phone_number : formData.phone_no}
-                onChange={(e) => handleChange([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "phone_number" : "phone_no", e.target.value)}
-                placeholder={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Enter phone number" : "Enter phone"}
+                value={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? formData.phone_number
+                    : formData.phone_no
+                }
+                onChange={(e) =>
+                  handleChange(
+                    [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                      ? "phone_number"
+                      : "phone_no",
+                    e.target.value
+                  )
+                }
+                placeholder={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? "Enter phone number"
+                    : "Enter phone"
+                }
                 icon={<FiPhone className="text-gray-400" />}
-                error={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? errors?.phone_number : errors?.phone_no}
+                error={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? errors?.phone_number
+                    : errors?.phone_no
+                }
                 prefix={formData.country_code?.dial_code || "+"}
               />
             </div>

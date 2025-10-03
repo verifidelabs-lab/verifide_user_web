@@ -167,12 +167,12 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                   Profile
                 </Link>
                 {/* {(userRole === 1 || userRole === 2) && ( */}
-                <Link
+                {/* <Link
                   to={`/company/update-profile`}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Update Profile
-                </Link>
+                </Link> */}
                 <button
                   onClick={handleRemoveCookie}
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
