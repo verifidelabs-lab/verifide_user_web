@@ -20,15 +20,27 @@ import {
   updateProfileInstitutions,
   updateProfileCompanies,
   companiesProfile,
-  instituteProfile
-} from '../../../redux/CompanySlices/CompanyAuth'
+  instituteProfile,
+} from "../../../redux/CompanySlices/CompanyAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
 import { Link } from "react-router-dom";
 import { Bookmark, Plus } from "lucide-react";
 import useFormHandler from "../../../components/hooks/useFormHandler";
-import { FiEdit2, FiLock, FiMail, FiPhone, FiGlobe, FiUser, FiCamera, FiCheck } from 'react-icons/fi'
-import { arrayTransform, uploadImageDirectly } from "../../../components/utils/globalFunction";
+import {
+  FiEdit2,
+  FiLock,
+  FiMail,
+  FiPhone,
+  FiGlobe,
+  FiUser,
+  FiCamera,
+  FiCheck,
+} from "react-icons/fi";
+import {
+  arrayTransform,
+  uploadImageDirectly,
+} from "../../../components/utils/globalFunction";
 import { getCookie } from "../../../components/utils/cookieHandler";
 import { toast } from "sonner";
 import Button from "../../../components/ui/Button/Button";
@@ -39,22 +51,28 @@ import { FaRegCommentDots, FaRegShareSquare } from "react-icons/fa";
 import { AiOutlineLike, AiOutlineEye } from "react-icons/ai";
 import { jobsList } from "../../../redux/Global Slice/cscSlice";
 
-const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
+const CompanyProfile = ({
+  adminProfileData,
+  companiesProfileData,
+  instituteProfileData,
+}) => {
   const ROLES = {
     SUPER_ADMIN: 1,
     ADMIN: 2,
     COMPANIES: 3,
     COMPANIES_ADMIN: 7,
     INSTITUTIONS: 4,
-    INSTITUTIONS_ADMIN: 8
+    INSTITUTIONS_ADMIN: 8,
   };
-  console.log("tesetesdfesdrsdfsdfsdfsdfsfsdfsfsdfsdf", companiesProfileData)
-  const userRole = Number(getCookie("COMPANY_ROLE"))
-  const [isImageUploading, setIsImageUploading] = useState(false)
-  const cscSelector = useSelector(state => state.global)
-  const [isLoading, setIsLoading] = useState(false)
+  console.log("tesetesdfesdrsdfsdfsdfsdfsfsdfsfsdfsdf", companiesProfileData);
+  const userRole = Number(getCookie("COMPANY_ROLE"));
+  const [isImageUploading, setIsImageUploading] = useState(false);
+  const cscSelector = useSelector((state) => state.global);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const countriesList = arrayTransform(cscSelector?.countriesData?.data?.data || [])
+  const countriesList = arrayTransform(
+    cscSelector?.countriesData?.data?.data || []
+  );
   const getInitialFormData = () => {
     if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
       return {
@@ -69,10 +87,10 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           name: "",
           dial_code: "",
           short_name: "",
-          emoji: ""
+          emoji: "",
         },
-        phone_number: ""
-      }
+        phone_number: "",
+      };
     } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
       return {
         currentPassword: "",
@@ -88,15 +106,17 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           name: "",
           dial_code: "",
           short_name: "",
-          emoji: ""
+          emoji: "",
         },
         phone_no: "",
         company_size: "",
         company_type: "",
         specialties: [],
-        founded_year: ""
-      }
-    } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+        founded_year: "",
+      };
+    } else if (
+      [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+    ) {
       return {
         currentPassword: "",
         newPassword: "",
@@ -111,23 +131,36 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           name: "",
           dial_code: "",
           short_name: "",
-          emoji: ""
+          emoji: "",
         },
         phone_no: "",
         institution_type_id: "",
         specialties: [],
-        founded_year: ""
-      }
+        founded_year: "",
+      };
     }
-    return {}
-  }
-  const { formData, setFormData, handleChange, resetForm, errors, setErrors } = useFormHandler(getInitialFormData())
-  console.log("this is the form fields", formData)
+    return {};
+  };
+  const { formData, setFormData, handleChange, resetForm, errors, setErrors } =
+    useFormHandler(getInitialFormData());
+  console.log("this is the form fields", formData);
   const renderProfileImage = () => {
-    const imageField = [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-      ? 'profile_picture_url'
-      : 'logo_url'
-    const imageUrl = formData[imageField] || adminProfileData?.[imageField] || companiesProfileData?.[imageField] || instituteProfileData?.[imageField] || ''
+    const imageField = [
+      ROLES.SUPER_ADMIN,
+      ROLES.ADMIN,
+      ROLES.COMPANIES,
+      ROLES.COMPANIES_ADMIN,
+      ROLES.INSTITUTIONS,
+      ROLES.INSTITUTIONS_ADMIN,
+    ].includes(userRole)
+      ? "profile_picture_url"
+      : "logo_url";
+    const imageUrl =
+      formData[imageField] ||
+      adminProfileData?.[imageField] ||
+      companiesProfileData?.[imageField] ||
+      instituteProfileData?.[imageField] ||
+      "";
 
     return (
       <div className="relative group">
@@ -141,11 +174,15 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             <FiCamera className="w-6 h-6 text-white" />
           </div>
           <img
-            src={imageUrl || "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"}
+            src={
+              imageUrl ||
+              "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"
+            }
             className="w-full h-full object-cover"
             alt="Profile"
             onError={(e) => {
-              e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+              e.target.src =
+                "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
             }}
           />
         </div>
@@ -157,76 +194,79 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           className="hidden"
         />
       </div>
-    )
+    );
   };
   const fetchData = () => {
     if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
-      dispatch(adminProfile())
+      dispatch(adminProfile());
     }
     if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-      dispatch(companiesProfile())
+      dispatch(companiesProfile());
     }
     if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
-      dispatch(instituteProfile())
+      dispatch(instituteProfile());
     }
-  }
+  };
   const validateProfileForm = () => {
-    const newErrors = {}
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^[0-9]{10,15}$/
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10,15}$/;
 
     if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
       if (!formData.first_name?.trim()) {
-        newErrors.first_name = "First name is required"
+        newErrors.first_name = "First name is required";
       } else if (formData.first_name.trim().length < 2) {
-        newErrors.first_name = "First name must be at least 2 characters"
+        newErrors.first_name = "First name must be at least 2 characters";
       }
 
       if (!formData.last_name?.trim()) {
-        newErrors.last_name = "Last name is required"
+        newErrors.last_name = "Last name is required";
       } else if (formData.last_name.trim().length < 2) {
-        newErrors.last_name = "Last name must be at least 2 characters"
+        newErrors.last_name = "Last name must be at least 2 characters";
       }
     } else {
       if (!formData.name?.trim()) {
-        newErrors.name = "Name is required"
+        newErrors.name = "Name is required";
       } else if (formData.name.trim().length < 2) {
-        newErrors.name = "Name must be at least 2 characters"
+        newErrors.name = "Name must be at least 2 characters";
       }
 
       if (!formData.display_name?.trim()) {
-        newErrors.display_name = "Display name is required"
+        newErrors.display_name = "Display name is required";
       }
     }
 
     if (!formData.email?.trim()) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
+      newErrors.email = "Please enter a valid email address";
     }
 
-    const phoneField = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "phone_number" : "phone_no"
+    const phoneField = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+      ? "phone_number"
+      : "phone_no";
     if (!formData[phoneField]?.trim()) {
-      newErrors[phoneField] = "Phone number is required"
-    } else if (!phoneRegex.test(formData[phoneField].replace(/\D/g, ''))) {
-      newErrors[phoneField] = "Please enter a valid phone number (10-15 digits)"
+      newErrors[phoneField] = "Phone number is required";
+    } else if (!phoneRegex.test(formData[phoneField].replace(/\D/g, ""))) {
+      newErrors[phoneField] =
+        "Please enter a valid phone number (10-15 digits)";
     }
 
     if (!formData.country_code?.name) {
-      newErrors.country_code = "Country is required"
+      newErrors.country_code = "Country is required";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
   const handleProfileSubmit = async () => {
     if (!validateProfileForm()) {
-      toast.error("Please fix the validation errors")
-      return
+      toast.error("Please fix the validation errors");
+      return;
     }
     try {
-      setIsLoading(true)
-      let res
+      setIsLoading(true);
+      let res;
 
       if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
         const apiPayload = {
@@ -235,9 +275,9 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           email: formData.email.trim(),
           profile_picture_url: formData.profile_picture_url,
           country_code: formData.country_code,
-          phone_number: formData.phone_number.trim()
-        }
-        res = await dispatch(updateProfile(apiPayload)).unwrap()
+          phone_number: formData.phone_number.trim(),
+        };
+        res = await dispatch(updateProfile(apiPayload)).unwrap();
       } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
         const apiPayload = {
           name: formData.name.trim(),
@@ -253,10 +293,12 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           specialties: formData.specialties,
           founded_year: formData.founded_year,
           headquarters: formData.headquarters,
-          industry: formData.industry
-        }
-        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap()
-      } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+          industry: formData.industry,
+        };
+        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap();
+      } else if (
+        [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+      ) {
         const apiPayload = {
           name: formData.name.trim(),
           display_name: formData.display_name.trim(),
@@ -268,46 +310,45 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           phone_no: formData.phone_no.trim(),
           institution_type_id: formData.institution_type_id,
           specialties: formData.specialties,
-          founded_year: formData.founded_year
-        }
-        res = await dispatch(updateProfileInstitutions(apiPayload)).unwrap()
+          founded_year: formData.founded_year,
+        };
+        res = await dispatch(updateProfileInstitutions(apiPayload)).unwrap();
       }
 
-      toast.success(res?.message || "Profile updated successfully")
-      fetchData()
-      setIsProfileModalOpen(false)
-      setIsLoading(false)
+      toast.success(res?.message || "Profile updated successfully");
+      fetchData();
+      setIsProfileModalOpen(false);
+      setIsLoading(false);
     } catch (error) {
-      toast.error(error || "Failed to update profile")
-      setIsLoading(false)
+      toast.error(error || "Failed to update profile");
+      setIsLoading(false);
     }
-  }
-  const handleImageUpload = async (file, fieldName = 'profile_picture_url') => {
-    if (!file) return
+  };
+  const handleImageUpload = async (file, fieldName = "profile_picture_url") => {
+    if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
-      toast.error("File size must be less than 2MB")
-      return
+      toast.error("File size must be less than 2MB");
+      return;
     }
 
-    const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png']
+    const allowedTypes = ["image/jpg", "image/jpeg", "image/png"];
     if (!allowedTypes.includes(file.type)) {
-      toast.error("Only image files (JPEG, PNG) are allowed")
-      return
+      toast.error("Only image files (JPEG, PNG) are allowed");
+      return;
     }
 
     try {
-      setIsImageUploading(true)
-      const result = await uploadImageDirectly(file, "PROFILES")
-      toast.success(result?.message)
-      setFormData((prev) => ({ ...prev, [fieldName]: result?.data?.imageURL }))
-
+      setIsImageUploading(true);
+      const result = await uploadImageDirectly(file, "PROFILES");
+      toast.success(result?.message);
+      setFormData((prev) => ({ ...prev, [fieldName]: result?.data?.imageURL }));
     } catch (error) {
-      toast.error(error || 'Failed to upload image')
+      toast.error(error || "Failed to upload image");
     } finally {
-      setIsImageUploading(false)
+      setIsImageUploading(false);
     }
-  }
+  };
   const renderProfileFormFields = () => {
     if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
       return (
@@ -335,39 +376,93 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             />
           </div>
         </div>
-      )
+      );
     } else {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <CustomInput
-              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Company Name" : "Institute Name"}
+              label={
+                [
+                  ROLES.COMPANIES,
+                  ROLES.COMPANIES_ADMIN,
+                  ROLES.INSTITUTIONS,
+                  ROLES.INSTITUTIONS_ADMIN,
+                ].includes(userRole)
+                  ? "Company Name"
+                  : "Institute Name"
+              }
               type="text"
               value={formData.name}
               onChange={(e) => handleChange("name", e.target.value)}
-              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter company name" : "Enter institute name"}
+              placeholder={
+                [
+                  ROLES.COMPANIES,
+                  ROLES.COMPANIES_ADMIN,
+                  ROLES.INSTITUTIONS,
+                  ROLES.INSTITUTIONS_ADMIN,
+                ].includes(userRole)
+                  ? "Enter company name"
+                  : "Enter institute name"
+              }
               icon={<FiUser className="text-gray-400" />}
               error={errors?.name}
             />
           </div>
           <div>
             <CustomInput
-              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Industry Name" : "Institute Name"}
+              label={
+                [
+                  ROLES.COMPANIES,
+                  ROLES.COMPANIES_ADMIN,
+                  ROLES.INSTITUTIONS,
+                  ROLES.INSTITUTIONS_ADMIN,
+                ].includes(userRole)
+                  ? "Industry Name"
+                  : "Institute Name"
+              }
               type="text"
               value={formData.industry}
               onChange={(e) => handleChange("industry", e.target.value)}
-              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter industry" : "Enter institute industry"}
+              placeholder={
+                [
+                  ROLES.COMPANIES,
+                  ROLES.COMPANIES_ADMIN,
+                  ROLES.INSTITUTIONS,
+                  ROLES.INSTITUTIONS_ADMIN,
+                ].includes(userRole)
+                  ? "Enter industry"
+                  : "Enter institute industry"
+              }
               icon={<FiUser className="text-gray-400" />}
               error={errors?.industry}
             />
           </div>
           <div>
             <CustomInput
-              label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Headquarters Name" : "Institute Name"}
+              label={
+                [
+                  ROLES.COMPANIES,
+                  ROLES.COMPANIES_ADMIN,
+                  ROLES.INSTITUTIONS,
+                  ROLES.INSTITUTIONS_ADMIN,
+                ].includes(userRole)
+                  ? "Headquarters Name"
+                  : "Institute Name"
+              }
               type="text"
               value={formData.headquarters}
               onChange={(e) => handleChange("headquarters", e.target.value)}
-              placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? "Enter headquarters" : "Enter institute headquarters"}
+              placeholder={
+                [
+                  ROLES.COMPANIES,
+                  ROLES.COMPANIES_ADMIN,
+                  ROLES.INSTITUTIONS,
+                  ROLES.INSTITUTIONS_ADMIN,
+                ].includes(userRole)
+                  ? "Enter headquarters"
+                  : "Enter institute headquarters"
+              }
               icon={<FiUser className="text-gray-400" />}
               error={errors?.headquarters}
             />
@@ -384,29 +479,29 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             />
           </div>
         </div>
-      )
+      );
     }
   };
-  const handleImageClick = (fieldName = 'profile_picture_url') => {
-    const inputId = `imageUpload-${fieldName}`
-    document.getElementById(inputId).click()
-  }
+  const handleImageClick = (fieldName = "profile_picture_url") => {
+    const inputId = `imageUpload-${fieldName}`;
+    document.getElementById(inputId).click();
+  };
 
   const handleCountryChange = (data) => {
     setFormData((prev) => ({
       ...prev,
       country_code: {
-        "name": data?.label,
-        "dial_code": data?.dial_code,
-        "short_name": data?.short_name,
-        "emoji": data?.emoji
-      }
-    }))
-  }
+        name: data?.label,
+        dial_code: data?.dial_code,
+        short_name: data?.short_name,
+        emoji: data?.emoji,
+      },
+    }));
+  };
   useEffect(() => {
     if (adminProfileData) {
       if ([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           first_name: adminProfileData?.first_name || "",
           last_name: adminProfileData?.last_name || "",
@@ -416,12 +511,12 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             name: "",
             dial_code: "",
             short_name: "",
-            emoji: ""
+            emoji: "",
           },
-          phone_number: adminProfileData?.phone_number || ""
-        }))
+          phone_number: adminProfileData?.phone_number || "",
+        }));
       } else if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           name: companiesProfileData?.name || "",
           display_name: companiesProfileData?.display_name || "",
@@ -433,16 +528,18 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             name: "",
             dial_code: "",
             short_name: "",
-            emoji: ""
+            emoji: "",
           },
           phone_no: companiesProfileData?.phone_no || "",
           company_size: companiesProfileData?.company_size || "",
           company_type: companiesProfileData?.company_type || "",
           specialties: companiesProfileData?.specialties || [],
-          founded_year: companiesProfileData?.founded_year || ""
-        }))
-      } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
-        setFormData(prev => ({
+          founded_year: companiesProfileData?.founded_year || "",
+        }));
+      } else if (
+        [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+      ) {
+        setFormData((prev) => ({
           ...prev,
           name: instituteProfileData?.name || "",
           display_name: instituteProfileData?.display_name || "",
@@ -454,20 +551,21 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             name: "",
             dial_code: "",
             short_name: "",
-            emoji: ""
+            emoji: "",
           },
           phone_no: instituteProfileData?.phone_no || "",
-          institution_type_id: instituteProfileData?.institution_type_id?._id || "",
+          institution_type_id:
+            instituteProfileData?.institution_type_id?._id || "",
           specialties: instituteProfileData?.specialties || [],
-          founded_year: instituteProfileData?.founded_year || ""
-        }))
+          founded_year: instituteProfileData?.founded_year || "",
+        }));
       }
     }
-  }, [adminProfileData, instituteProfileData, companiesProfileData])
+  }, [adminProfileData, instituteProfileData, companiesProfileData]);
   const [activeTab, setActiveTab] = useState("Home");
   const [agencyData, setAgencyData] = useState({});
   const [activeTab1, setActiveTab1] = useState("user");
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const userSelector = useSelector((state) => state.user);
@@ -478,7 +576,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
   }, [dispatch, activeTab1]);
 
-  
   const { getPostListData: { data: posts = [] } = {}, loading } = useSelector(
     (state) => state.companies
   );
@@ -540,8 +637,8 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
   ]);
 
   const handleProfileUpdate = () => {
-    setIsProfileModalOpen(true)
-  }
+    setIsProfileModalOpen(true);
+  };
   const updateAgencyData = (field, value) => {
     setAgencyData((prev) => ({
       ...prev,
@@ -614,7 +711,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     return (
       <div className={`group relative ${className}`}>
         <div className={multiline ? "whitespace-pre-wrap" : ""}>{value}</div>
-
       </div>
     );
   };
@@ -626,7 +722,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
 
         if (data) {
           console.log("This is companyData: " + JSON.stringify(data, null, 2));
-
 
           setAgencyData({
             name: data?.display_name || data?.name || "N/A",
@@ -737,7 +832,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
         </svg>
       </div>
 
-      <div className="bg-white rounded-b-2xl shadow-2xl">
+      <div className="bg-white rounded-b-2xl ">
         <div className="p-6">
           {/* Row 1: Logo + Buttons */}
           <div className="flex items-start justify-between gap-2">
@@ -758,10 +853,11 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               </div>
             </div>
 
-            <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded " onClick={handleProfileUpdate}>
-
+            <button
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded "
+              onClick={handleProfileUpdate}
+            >
               Edit Page
-
             </button>
           </div>
 
@@ -784,8 +880,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     </div>
   );
 
-
-
   // Navigation
   const Navigation = () => (
     <div className="mt-6">
@@ -794,10 +888,11 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
-              ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-500 hover:text-blue-600"
-              }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors ${
+              activeTab === tab
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-gray-500 hover:text-blue-600"
+            }`}
           >
             {tab}
           </button>
@@ -811,24 +906,22 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
       <div className="space-y-4">
         <h2 className="text-xl font-medium text-gray-900 flex items-center gap-2">
           Overview
-          <Link
-            to="/company/update-profile"
+          <button
+            onClick={handleProfileUpdate}
             className="flex items-center text-gray-400 hover:text-gray-600"
           >
             <Edit size={16} />
-          </Link>
+          </button>
         </h2>
 
         <div className="text-gray-600 space-y-2">
           <EditableField
             value={agencyData.overview}
-
             field="overview"
             multiline={2}
           />
           <EditableField
             value={agencyData.workDescription}
-
             field="workDescription"
             multiline={4}
           />
@@ -844,7 +937,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Website</div>
                 <EditableField
                   value={agencyData.website}
-
                   field="website"
                   type="url"
                   className="text-blue-600"
@@ -858,7 +950,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Phone</div>
                 <EditableField
                   value={agencyData.phone}
-
                   field="phone"
                   type="tel"
                 />
@@ -871,7 +962,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Verified since</div>
                 <EditableField
                   value={agencyData.verifiedSince}
-
                   field="verifiedSince"
                 />
               </div>
@@ -885,7 +975,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Industry</div>
                 <EditableField
                   value={agencyData.industry}
-
                   field="industry"
                   className="capitalize"
                 />
@@ -898,7 +987,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                 <div className="text-gray-400 text-xs mb-1">Company size</div>
                 <EditableField
                   value={agencyData.companySize}
-
                   field="companySize"
                 />
               </div>
@@ -908,11 +996,7 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               <Calendar className="text-gray-400 mt-1" size={16} />
               <div>
                 <div className="text-gray-400 text-xs mb-1">Founded</div>
-                <EditableField
-                  value={agencyData.founded}
-
-                  field="founded"
-                />
+                <EditableField value={agencyData.founded} field="founded" />
               </div>
             </div>
           </div>
@@ -983,14 +1067,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
     </div>
   );
 
-  
-
-
-
- 
-
-   
- 
   const PostsTab = ({ posts }) => {
     return (
       <div className="bg-white min-h-screen py-8 px-4">
@@ -1215,7 +1291,6 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
                       </span>
                     ))}
                   </div>
-
                 </div>
               ))}
           </div>
@@ -1392,7 +1467,20 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
           <div className="flex flex-col items-center">
             {renderProfileImage()}
             <button
-              onClick={() => handleImageClick([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? 'profile_picture_url' : 'logo_url')}
+              onClick={() =>
+                handleImageClick(
+                  [
+                    ROLES.SUPER_ADMIN,
+                    ROLES.ADMIN,
+                    ROLES.COMPANIES,
+                    ROLES.COMPANIES_ADMIN,
+                    ROLES.INSTITUTIONS,
+                    ROLES.INSTITUTIONS_ADMIN,
+                  ].includes(userRole)
+                    ? "profile_picture_url"
+                    : "logo_url"
+                )
+              }
               className="mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center"
             >
               <FiCamera className="mr-1" /> Change photo
@@ -1418,7 +1506,9 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
               <FilterSelect
                 options={countriesList}
                 label="Country"
-                selectedOption={countriesList?.find(opt => opt?.label === formData?.country_code?.name)}
+                selectedOption={countriesList?.find(
+                  (opt) => opt?.label === formData?.country_code?.name
+                )}
                 onChange={(data) => handleCountryChange(data)}
                 error={errors?.country_code}
                 icon={<FiGlobe className="text-gray-400" />}
@@ -1426,13 +1516,36 @@ const CompanyProfile = ({ adminProfileData, companiesProfileData, instituteProfi
             </div>
             <div>
               <CustomInput
-                label={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Phone Number" : "Phone"}
+                label={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? "Phone Number"
+                    : "Phone"
+                }
                 type="tel"
-                value={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? formData.phone_number : formData.phone_no}
-                onChange={(e) => handleChange([ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "phone_number" : "phone_no", e.target.value)}
-                placeholder={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? "Enter phone number" : "Enter phone"}
+                value={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? formData.phone_number
+                    : formData.phone_no
+                }
+                onChange={(e) =>
+                  handleChange(
+                    [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                      ? "phone_number"
+                      : "phone_no",
+                    e.target.value
+                  )
+                }
+                placeholder={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? "Enter phone number"
+                    : "Enter phone"
+                }
                 icon={<FiPhone className="text-gray-400" />}
-                error={[ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole) ? errors?.phone_number : errors?.phone_no}
+                error={
+                  [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+                    ? errors?.phone_number
+                    : errors?.phone_no
+                }
                 prefix={formData.country_code?.dial_code || "+"}
               />
             </div>
