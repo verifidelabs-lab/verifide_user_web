@@ -21,6 +21,7 @@ const StepFirst = ({
   citiesList,
   setInputField,
   isCreatableIndustry,
+  getSelectedOption
 }) => {
   console.log(formData?.start_date);
   return (
@@ -56,12 +57,36 @@ const StepFirst = ({
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-3">
             <FilterSelect
+              label="Industry Name"
+              name="industry_id"
+              placeholder="Select Industry"
+              options={allIndustry}
+              selectedOption={getSelectedOption(allIndustry, formData?.industry_id)}
+              onChange={(selected) => handleSelectChange("industry_id", selected)}
+              error={errors.industry_id}
+              className="w-full h-10"
+              required
+              onCreateOption={(inputValue, field) => {
+                setAddModalState({
+                  isOpen: true,
+                  type: 'industries',
+                  field: field
+                });
+                setInputField(prev => ({ ...prev, name: inputValue }))
+
+              }}
+              isClearable={true}
+              isDisabled={!formData?.company_id}
+              disabledTooltip='Please select first Company'
+              isCreatedByUser={true}
+            />
+            {/* <FilterSelect
               options={allIndustry || []}
               label="Industry Name"
               className="w-full"
               placeholder="Select Industry"
               onChange={(selected) =>
-                handleSelectChange("industry_id", selected)
+                handleSelectChange("", selected)
               }
               selectedOption={allIndustry.find(
                 (opt) => opt.value === formData.industry_id
@@ -76,7 +101,7 @@ const StepFirst = ({
               isCreatedByUser={isCreatableIndustry}
               isDisabled={!formData.company_id}
               disabledTooltip={`first select Company name`}
-            />
+            /> */}
 
             <CustomInput
               type="number"
@@ -141,15 +166,22 @@ const StepFirst = ({
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-          <CustomInput
-            label="Salary Range"
-            placeholder="e.g. ₹30,000 - ₹50,000"
-            value={formData.salary_range}
-            onChange={(e) => handleInputChange("salary_range", e.target.value)}
-            required
-            error={errors?.salary_range}
-            className="h-10 w-full"
-          />
+
+          {!(
+            formData.job_type === "internship" || formData.pay_type === "unpaid"
+          ) && (
+              <CustomInput
+                label="Salary Range"
+                placeholder="e.g. ₹30,000 - ₹50,000"
+                value={formData.salary_range}
+                onChange={(e) =>
+                  handleInputChange("salary_range", e.target.value)
+                }
+                required
+                error={errors?.salary_range}
+                className="h-10 w-full"
+              />
+            )}
 
           <CustomDateInput
             label="Start Date"

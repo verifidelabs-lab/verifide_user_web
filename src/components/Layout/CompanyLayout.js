@@ -31,6 +31,8 @@ import CreatePost from '../../pages/CompanyPanel/PostsManagement/CreatePost';
 import Quest from '../../pages/Quest/Quest';
 import CreateQuest from '../../pages/Quest/Components/CreateQuest';
 import AdminRoles from '../../pages/CompanyPanel/AdminRoles/AdminRoles';
+import Users from '../../pages/users/Users';
+import UsersProfile from '../../pages/ProfileView/UsersProfile';
 // import Login from '../../pages/CompanyPanel/Login/Login';
 
 
@@ -296,15 +298,17 @@ function CompanyLayout() {
               {/* {(userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) && ( */}
               {(
                 <>
-                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData}/>} />
-                  <Route path={`/admin-role`} element={<AdminRoles companiesProfileData={companiesProfileData}/>} />
+                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} />} />
+                  <Route path={`/admin-role`} element={<AdminRoles companiesProfileData={companiesProfileData} />} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   {/* <Route path="login" element={<Login role="company" />} /> */}
                   <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />
                   <Route path="/opportunities" element={< Opportunities />} />
-                  <Route path="/post-job/:id?" element={<PostJob />} />
+                  <Route path="/suggested-users" element={<Users />} />
 
+                  <Route path="/post-job/:id?" element={<PostJob companiesProfileData={companiesProfileData} />} />
+                  <Route path="/profile/:first_name/*" element={<UsersProfile currentUserId={companiesProfileData._id || null} />} />
                   {/* <Route path={`${basePath}/profile`} element={<Profile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />   */}
                   {/* <Route path={`${basePath}/admin-users`} element={<AdminUsers />} /> */}
                   {/* <Route path={`${basePath}/approved-requests`} element={<ApprovedRequests />} /> */}

@@ -549,7 +549,6 @@ const Profile = ({ profileData }) => {
       issue_date: data.issue_date ? new Date(data.issue_date).toISOString().split('T')[0] : '',
       start_date: data.start_date ? new Date(data.start_date).toISOString().split('T')[0] : '',
       end_date: data.end_date ? new Date(data.end_date).toISOString().split('T')[0] : '',
-
     };
 
 

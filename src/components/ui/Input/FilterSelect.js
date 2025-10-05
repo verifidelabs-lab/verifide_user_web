@@ -25,92 +25,51 @@ const FilterSelect = ({
   disabledTooltip = '',
 }) => {
   const [isInternalLoading, setInternalLoading] = useState(false);
-
   const selectClasses = classNames(
-    'opacity-100 rounded-[10px] w-full max-h-[100px] overflow-hidden overflow-y-auto',
+    'h-[50px] opacity-100 rounded-[10px] border w-full',
     {
       'border-gray-300': !error,
       'border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500': error,
-      'cursor-not-allowed opacity-60': isDisabled,
     },
     selectClassName
   );
 
   const customStyles = {
-    multiValue: (base) => ({
+    control: (base, state) => ({
       ...base,
-      backgroundColor: '#F9F9F9',
-      borderRadius: '30px',
-      padding: '2px 6px',
-      border: '1px solid #E5E5E5',
-      display: 'flex',
-      alignItems: 'center',
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: '#1F2937',
-      fontWeight: 500,
-      fontSize: '10px',
-      padding: '0 8px',
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: '#EF4444',
-      backgroundColor: '#FEE2E2',
-      borderRadius: '50%',
-      width: '18px',
-      height: '18px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      fontSize: '12px',
-      cursor: 'pointer',
-      '&:hover': {
-        backgroundColor: '#FCA5A5',
-        color: '#FFF',
-      },
-    }),
-    control: (base) => ({
-      ...base,
-      backgroundColor: '#FFFFFF',
       borderRadius: '10px',
-      borderColor: error ? '#f87171' : '#0000001A',
-      minHeight: '40px',
-      boxShadow: 'none',
-      paddingLeft: '10px',
+      borderColor: error ? '#f87171' : '#d1d5db', // red-300 or gray-300
+      minHeight: '52px',
+      opacity: 1,
+      boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none', // blue ring on focus
       '&:hover': {
-        borderColor: error ? '#f87171' : '#d4d4d8',
+        borderColor: error ? '#f87171' : '#9ca3af',
       },
-    }),
-    valueContainer: (base) => ({
-      ...base,
-      padding: '0 8px',
-      color: '#000000',
     }),
     placeholder: (base) => ({
       ...base,
       color: '#000000',
-      opacity: 0.7,
-      fontWeight: 400,
+      opacity: 0.5,
     }),
-    singleValue: (base) => ({
+    multiValue: (base) => ({
       ...base,
-      color: '#000000',
-      fontWeight: 400,
+      backgroundColor: '#e5e7eb',
+      borderRadius: '4px',
     }),
-    dropdownIndicator: (base) => ({
+    multiValueLabel: (base) => ({
       ...base,
-      color: '#000000',
-      paddingRight: '10px',
+      color: '#374151',
     }),
-    indicatorSeparator: () => ({
-      display: 'none',
-    }),
-    loadingIndicator: (base) => ({
+    multiValueRemove: (base) => ({
       ...base,
-      color: '#000000',
+      color: '#6b7280',
+      ':hover': {
+        backgroundColor: '#f87171',
+        color: 'white',
+      },
     }),
   };
+
 
   const handleChange = async (selectedOption, actionMeta) => {
     setInternalLoading(true);

@@ -54,6 +54,7 @@ import { AiOutlineLike, AiOutlineEye } from "react-icons/ai";
 import { jobsList } from "../../../redux/Global Slice/cscSlice";
 import { getAllIndustry } from "../../../redux/work/workSlice";
 import classNames from "classnames";
+import JobPost from "../../Home/components/JobPost";
 
 const CompanyProfile = ({
   adminProfileData,
@@ -68,12 +69,26 @@ const CompanyProfile = ({
     INSTITUTIONS: 4,
     INSTITUTIONS_ADMIN: 8,
   };
-  console.log("tesetesdfesdrsdfsdfsdfsdfsfsdfsfsdfsdf", companiesProfileData)
   const userRole = Number(getCookie("COMPANY_ROLE"))
+  const dispatch = useDispatch();
   const [isImageUploading, setIsImageUploading] = useState(false)
-  const cscSelector = useSelector(state => state.global)
+  const [activeTab, setActiveTab] = useState("Home");
+  const [agencyData, setAgencyData] = useState({});
+  const [activeTab1, setActiveTab1] = useState("user");
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+  const cscSelector = useSelector(state => state.global)
   const IndusteryData = useSelector(state => state.companyAuth);
+  const userSelector = useSelector((state) => state.user);
+  const { suggestedUserData: { data: suggestedUsers } = {} } =
+    userSelector || {};
+  const { getPostListData: { data: posts = [] } = {} } = useSelector(
+    (state) => state.companies
+  );
+  const { jobsListData: { data: jobs = [] } = {} } = useSelector(
+    (state) => state.global
+  );
+
 
   const allIndustry = arrayTransform(IndusteryData?.companyIndustryData?.data?.data?.list || [])
   const countriesList = arrayTransform(cscSelector?.countriesData?.data?.data || [])
@@ -88,7 +103,7 @@ const CompanyProfile = ({
         display_name: "",
         description: "",
         website_url: "",
-        logo_url: "",
+        logo_url: "", banner_image_url: "",
         industry: [],
         country_code: {
           name: "",
@@ -128,10 +143,7 @@ const CompanyProfile = ({
     return {}
   }
   const { formData, setFormData, handleChange, resetForm, errors, setErrors, handleNestedChange } = useFormHandler(getInitialFormData())
-  console.log("this is the form fields", formData)
-  useEffect(() => {
-    dispatch(companyIndustries())
-  }, [companiesProfileData?._id])
+
   const renderProfileImage = () => {
     const imageField = [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
       ? 'logo_url'
@@ -299,6 +311,7 @@ const CompanyProfile = ({
           description: formData.description,
           website_url: formData.website_url,
           logo_url: formData.logo_url,
+          banner_image_url: formData.banner_image_url,
           industry: formData.industry.map((ind) => ind._id) || [],
           country_code: formData.country_code,
           phone_no: formData.phone_no,
@@ -558,93 +571,10 @@ const CompanyProfile = ({
     }))
   }
 
-  useEffect(() => {
-    if (adminProfileData) {
-      if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-        setFormData(prev => ({
-          ...prev,
-          name: companiesProfileData?.name || "",
-          display_name: companiesProfileData?.display_name || "",
-          email: companiesProfileData?.email || "",
-          logo_url: companiesProfileData?.logo_url || "",
-          website_url: companiesProfileData?.website_url || "",
-          description: companiesProfileData?.description || "",
-          country_code: companiesProfileData?.country_code || {
-            name: "",
-            dial_code: "",
-            short_name: "",
-            emoji: "",
-          },
-          phone_no: companiesProfileData?.phone_no || "",
-          company_size: companiesProfileData?.company_size || "",
-          company_type: companiesProfileData?.company_type || "",
-          specialties: companiesProfileData?.specialties || [],
-          founded_year: companiesProfileData?.founded_year
-            ? new Date(companiesProfileData.founded_year * 1000).getFullYear()
-            : ""
-          ,
-          employee_count: companiesProfileData?.employee_count || "",
-          headquarters: companiesProfileData?.headquarters || "",
-          industry: companiesProfileData?.industry || []
 
-        }))
-      }
-    }
-  }, [adminProfileData, instituteProfileData, companiesProfileData]);
-  const [activeTab, setActiveTab] = useState("Home");
-  const [agencyData, setAgencyData] = useState({});
-  const [activeTab1, setActiveTab1] = useState("user");
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  const userSelector = useSelector((state) => state.user);
-  const { suggestedUserData: { data: suggestedUsers } = {} } =
-    userSelector || {};
 
-  useEffect(() => {
-    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
-  }, [dispatch, activeTab1]);
 
-  const { getPostListData: { data: posts = [] } = {}, loading } = useSelector(
-    (state) => state.companies
-  );
-
-  useEffect(() => {
-    dispatch(getPostList({ page: 1, size: 2 }))
-      .unwrap()
-      .then((res) => {
-        console.log("✅ API posts response:", res); // full response
-      })
-      .catch((err) => console.error("❌ Error fetching posts:", err));
-  }, [dispatch]);
-  console.log("this is the post list data", posts);
-
-  const { jobsListData: { data: jobs = [] } = {} } = useSelector(
-    (state) => state.global
-  );
-  console.log("this is the jsss", jobs);
-  useEffect(() => {
-    const fetchJobs = async () => {
-      // ✅ Only send page & size, no extra filters
-      const apiPayload = {
-        page: 1,
-        size: 4,
-        query: JSON.stringify({ type: "open" }),
-      };
-
-      try {
-        const res = await dispatch(jobsList(apiPayload)).unwrap();
-        console.log("✅ Jobs API response:", res);
-
-        // If API returns jobs in `data.list`, adjust this
-      } catch (err) {
-        console.error("❌ Error fetching jobs:", err);
-      } finally {
-      }
-    };
-
-    fetchJobs();
-  }, [dispatch]);
 
   const [people, setPeople] = useState([
     {
@@ -665,77 +595,14 @@ const CompanyProfile = ({
     },
   ]);
 
-  const handleProfileUpdate = () => {
-    setIsProfileModalOpen(true);
-  };
-  const updateAgencyData = (field, value) => {
-    setAgencyData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+
 
   const EditableField = ({
     value,
-    onSave,
-    field,
     multiline = false,
-    placeholder = "Enter text...",
-    type = "text",
     className = "",
   }) => {
-    const [tempValue, setTempValue] = useState(value);
-    const [editing, setEditing] = useState(false);
 
-    const handleSave = () => {
-      onSave(field, tempValue);
-      setEditing(false);
-    };
-
-    const handleCancel = () => {
-      setTempValue(value);
-      setEditing(false);
-    };
-
-    if (editing) {
-      return (
-        <div className="space-y-3">
-          {multiline ? (
-            <textarea
-              value={tempValue}
-              onChange={(e) => setTempValue(e.target.value)}
-              className="w-full p-3 bg-white border border-gray-300 text-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              rows={multiline === true ? 4 : multiline}
-              placeholder={placeholder}
-            />
-          ) : (
-            <input
-              type={type}
-              value={tempValue}
-              onChange={(e) => setTempValue(e.target.value)}
-              className="w-full p-3 bg-white border border-gray-300 text-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder={placeholder}
-            />
-          )}
-          <div className="flex gap-2">
-            <button
-              onClick={handleSave}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 transition-colors"
-            >
-              <Save size={16} />
-              Save
-            </button>
-            <button
-              onClick={handleCancel}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 flex items-center gap-2 transition-colors"
-            >
-              <X size={16} />
-              Cancel
-            </button>
-          </div>
-        </div>
-      );
-    }
 
     return (
       <div className={`group relative ${className}`}>
@@ -743,173 +610,10 @@ const CompanyProfile = ({
       </div>
     );
   };
-  useEffect(() => {
-    const fetchCompanyProfile = async () => {
-      try {
-        const res = await dispatch(companiesProfile()).unwrap();
-        const data = res?.data;
 
-        if (data) {
-          console.log("This is companyData: " + JSON.stringify(data, null, 2));
 
-          setAgencyData({
-            name: data?.display_name || data?.name || "N/A",
-            tagline: "", // no tagline in API, keep empty or default
-            overview: data?.description || "N/A",
-            description: data?.description || "N/A",
-            workDescription: "", // no workDescription in API
-            website: data?.website_url || "N/A",
-            phone: data?.phone_no || "N/A",
-            industry:
-              data?.industry?.length > 0
-                ? data.industry.map((i) => i?.name || "N/A").join(" , ")
-                : "N/A",
-            founded: data?.founded_year
-              ? new Date(data.founded_year * 1000).getFullYear().toString()
-              : "N/A",
-            companySize: data?.company_size || "N/A",
-            companyType: data?.company_type || "N/A",
-            headquarters: {
-              address_line_1: data?.headquarters?.address_line_1 || "N/A",
-              address_line_2: data?.headquarters?.address_line_2 || "N/A",
-              country_name: data?.headquarters?.country?.name || "N/A",
-              state_name: data?.headquarters?.state?.name || "N/A",
-              city_name: data?.headquarters?.city?.name || "N/A",
-              pin_code: data?.headquarters?.pin_code || "N/A",
-            },
-            verifiedSince: data?.verified_at
-              ? new Date(data.verified_at).toLocaleDateString()
-              : "N/A",
-            followers:
-              data?.follower_count !== undefined
-                ? `${data.follower_count} Followers`
-                : "N/A",
-            employees:
-              data?.employee_count !== undefined
-                ? `${data.employee_count} Employees`
-                : "N/A",
-            specialties:
-              data?.specialties?.length > 0 ? data.specialties : ["N/A"],
-            logo: data?.logo_url || "",
-            banner_image_url: data?.banner_image_url || "",
-          });
-        }
-      } catch (error) {
-        console.error("Failed to fetch company profile:", error);
-      }
-    };
 
-    fetchCompanyProfile();
-  }, [dispatch]);
-  // Header
-  const Header = () => (
-    <div className="max-w-6xl mx-auto">
-      {/* Top Banner with gradient and partner logos */}
-      <div className="relative bg-gradient-to-r from-yellow-100 via-orange-50 to-pink-100 rounded-t-2xl px-6 py-8 overflow-hidden">
-        <div className="flex items-center justify-center mb-4">
-          <div className="inline-flex items-center gap-2">
-            <div className="bg-yellow-300 px-4 py-1 rounded-full">
-              <span className="text-gray-900 font-semibold text-sm">
-                {/* Next-Gen */}
-                {agencyData?.name}{" "}
-              </span>
-            </div>
-            <span className="text-gray-800 font-medium text-sm">
-              Experience Makers.
-            </span>
-          </div>
-        </div>
 
-        {/* Partner Logos */}
-        <div className="flex items-center justify-center gap-8 mb-2">
-          <span className="text-gray-500 text-xs font-semibold">VISA</span>
-          <span className="text-gray-500 text-xs">fintech</span>
-          <span className="text-gray-500 text-xs">tamara</span>
-          <span className="text-gray-500 text-xs">panther</span>
-          <span className="text-gray-500 text-xs">Qumra</span>
-        </div>
-
-        {/* Decorative text */}
-        <div className="absolute bottom-2 right-4 text-xs text-gray-400">
-          {/* #YourBrandLogos */}
-          {agencyData?.name}
-        </div>
-
-        {/* Decorative wavy lines */}
-        <svg
-          className="absolute bottom-4 right-12 w-40 h-12 pointer-events-none opacity-70"
-          viewBox="0 0 160 48"
-        >
-          <path
-            d="M0,24 Q20,12 40,24 T80,24"
-            stroke="#FF6B6B"
-            strokeWidth="2.5"
-            fill="none"
-          />
-          <path
-            d="M0,32 Q20,20 40,32 T80,32"
-            stroke="#FFA500"
-            strokeWidth="2.5"
-            fill="none"
-          />
-          <path
-            d="M20,16 Q40,4 60,16 T100,16"
-            stroke="#4ADE80"
-            strokeWidth="2.5"
-            fill="none"
-          />
-        </svg>
-      </div>
-
-      <div className="bg-white rounded-b-2xl ">
-        <div className="p-6">
-          {/* Row 1: Logo + Buttons */}
-          <div className="flex items-start justify-between gap-2">
-            {/* Logo - overlapping the banner */}
-            <div className="relative -mt-12 flex-shrink-0">
-              <div className="w-24 h-24 rounded-full flex items-center justify-center shadow-2xl border-4 border-zinc-800 bg-black overflow-hidden">
-                {agencyData?.logo ? (
-                  <img
-                    src={agencyData?.logo}
-                    alt="Company Logo"
-                    className="w-full h-full object-contain rounded-full"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = "/companylogo.png"; // fallback image
-                    }}
-                  />
-                ) : null}
-              </div>
-            </div>
-
-            <button
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 px-4 py-2  text-white rounded "
-              onClick={handleProfileUpdate}
-            >
-              Edit Page
-            </button>
-          </div>
-
-          {/* Row 2: Company Details */}
-          <div className="mt-3">
-            <h1 className="font-bold text-gray-700 mb-2">{agencyData.name}</h1>
-            <p className="text-gray-600 text-sm mb-3 leading-relaxed">
-              {agencyData?.description}
-            </p>
-            <div className="flex items-center gap-3 text-xs text-gray-700">
-              <span>{agencyData?.industry}</span>
-              <span>•</span>
-              <span>{agencyData?.founded}</span>
-              <span>•</span>
-              <span>{agencyData?.followers}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  // Navigation
   const Navigation = () => (
     <div className="mt-6">
       <nav className="flex border-b border-gray-200">
@@ -917,11 +621,10 @@ const CompanyProfile = ({
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${
-              activeTab === tab
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-500 hover:text-blue-600"
-            }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-500 hover:text-blue-600"
+              }`}
           >
             {tab}
           </button>
@@ -1096,14 +799,6 @@ const CompanyProfile = ({
     </div>
   );
 
-
-
-
-
-
-
-
-
   const PostsTab = ({ posts }) => {
     return (
       <div className="bg-white min-h-screen py-8 px-4">
@@ -1153,11 +848,11 @@ const CompanyProfile = ({
                 </div>
 
                 {/* Post content */}
-                <div>
+                {post?.title && post?.content && <div>
                   <h3 className="text-gray-700 text-base">{post?.title}</h3>
                   <p className="text-gray-700 text-base">{post?.content}</p>
                 </div>
-
+                }
                 {/* Media: image or video */}
                 {post?.post_type === "image-video" &&
                   post?.image_urls?.length > 0 && (
@@ -1177,6 +872,8 @@ const CompanyProfile = ({
                     </video>
                   </div>
                 )}
+                {post?.post_type === 'jobs' && post.job_id && <JobPost job={post.job_id} />}
+
 
                 {/* Stats row */}
                 <div className="flex items-center gap-4 mt-3 text-gray-600 text-sm">
@@ -1452,6 +1149,150 @@ const CompanyProfile = ({
     );
   };
 
+
+  const EditableBanner = ({
+    agencyData,
+    userRole,
+    handleImageUpload,
+    isBannerUploading = false,
+    handleProfileUpdate,
+  }) => {
+    const [previewBanner, setPreviewBanner] = useState(agencyData?.banner_image_url || formData[
+      "banner_image_url"
+    ] || "");
+
+    const handleBannerChange = async (file) => {
+      if (!file) return;
+
+      // instant preview
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewBanner(previewUrl);
+
+      // actual upload logic
+      const uploaded = await handleImageUpload(file, "banner_image_url");
+
+      // auto-update backend profile once upload success
+      if (uploaded?.data?.imageURL) {
+        await handleProfileUpdate({
+          banner_image_url: uploaded.data.imageURL,
+        });
+        toast.success("Banner updated successfully");
+      }
+    };
+
+    const handleBannerClick = () => {
+      document.getElementById("bannerUploadInput").click();
+    };
+
+    return (
+      <div className="max-w-6xl mx-auto">
+        {/* 🔹 Editable Banner */}
+        <div className="relative rounded-t-2xl overflow-hidden h-46 sm:h-54 md:h-52 bg-gray-200 group cursor-pointer transition-all">
+          {previewBanner ? (
+            <img
+              src={formData["banner_image_url"]}
+              alt="Company Banner"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex items-center justify-center w-full h-full text-gray-400 text-sm">
+              Click to upload banner
+            </div>
+          )}
+
+          {/* Overlay for edit button */}
+          <div
+            onClick={handleBannerClick}
+            className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300"
+          >
+            <div className="flex items-center gap-2 text-white text-sm bg-black/40 px-3 py-2 rounded-lg">
+              <FiCamera className="w-4 h-4" /> Change Banner
+            </div>
+          </div>
+
+          {/* Loading spinner */}
+          {isBannerUploading && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+
+          {/* Hidden file input */}
+          <input
+            type="file"
+            id="bannerUploadInput"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleBannerChange(e.target.files[0])}
+          />
+        </div>
+
+        {/* 🔹 White card content below banner */}
+        <div className="bg-white rounded-b-2xl shadow-md">
+          <div className="p-6">
+            {/* Row 1: Logo + Edit Button */}
+            <div className="flex items-start justify-between gap-2">
+              <div className="relative -mt-16 flex-shrink-0">
+                <div className="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl border-4 border-zinc-800 bg-black overflow-hidden">
+                  {agencyData?.logo ? (
+                    <img
+                      src={agencyData?.logo}
+                      alt="Company Logo"
+                      className="w-full h-full object-contain rounded-full"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/companylogo.png"; // fallback image
+                      }}
+                    />
+                  ) : null}
+                </div>
+              </div>
+
+
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 text-sm"
+                onClick={handleProfileUpdate}
+              >
+                Edit Page
+              </button>
+            </div>
+
+            {/* Row 2: Company Details */}
+            <div className="mt-3">
+              <h1 className="font-bold text-gray-700 mb-2">{agencyData.name}</h1>
+              <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+                {agencyData?.description}
+              </p>
+              <div className="flex items-center gap-3 text-xs text-gray-700">
+                <span>{agencyData?.industry}</span>
+                <span>•</span>
+                <span>{agencyData?.founded}</span>
+                <span>•</span>
+                <span>{agencyData?.followers}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const Header = () => (
+
+    <EditableBanner
+      agencyData={agencyData}
+      userRole={userRole}
+      handleImageUpload={handleImageUpload}
+      handleProfileUpdate={async (updateFields) => {
+        // call backend with only the changed fields
+        const payload = { ...formData, ...updateFields };
+        setFormData(payload);
+        await handleProfileSubmit(payload);
+      }}
+      isBannerUploading={isImageUploading}
+    />
+  );
+
   const renderActiveTab = () => {
     switch (activeTab) {
       case "Home":
@@ -1470,6 +1311,142 @@ const CompanyProfile = ({
     }
   };
 
+  const handleProfileUpdate = () => {
+    setIsProfileModalOpen(true);
+  };
+  const updateAgencyData = (field, value) => {
+    setAgencyData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  useEffect(() => {
+    const fetchJobs = async () => {
+      // ✅ Only send page & size, no extra filters
+      const apiPayload = {
+        page: 1,
+        size: 4,
+        query: JSON.stringify({ type: "open" }),
+      };
+
+      try {
+        const res = await dispatch(jobsList(apiPayload)).unwrap();
+        console.log("✅ Jobs API response:", res);
+
+        // If API returns jobs in `data.list`, adjust this
+      } catch (err) {
+        console.error("❌ Error fetching jobs:", err);
+      } finally {
+      }
+    };
+
+    fetchJobs();
+  }, [dispatch]);
+  useEffect(() => {
+    const fetchCompanyProfile = async () => {
+      try {
+        const res = await dispatch(companiesProfile()).unwrap();
+        const data = res?.data;
+
+        if (data) {
+          console.log("This is companyData: " + JSON.stringify(data, null, 2));
+
+          setAgencyData({
+            name: data?.display_name || data?.name || "N/A",
+            tagline: "", // no tagline in API, keep empty or default
+            overview: data?.description || "N/A",
+            description: data?.description || "N/A",
+            workDescription: "", // no workDescription in API
+            website: data?.website_url || "N/A",
+            phone: data?.phone_no || "N/A",
+            industry:
+              data?.industry?.length > 0
+                ? data.industry.map((i) => i?.name || "N/A").join(" , ")
+                : "N/A",
+            founded: data?.founded_year
+              ? new Date(data.founded_year * 1000).getFullYear().toString()
+              : "N/A",
+            companySize: data?.company_size || "N/A",
+            companyType: data?.company_type || "N/A",
+            headquarters: {
+              address_line_1: data?.headquarters?.address_line_1 || "N/A",
+              address_line_2: data?.headquarters?.address_line_2 || "N/A",
+              country_name: data?.headquarters?.country?.name || "N/A",
+              state_name: data?.headquarters?.state?.name || "N/A",
+              city_name: data?.headquarters?.city?.name || "N/A",
+              pin_code: data?.headquarters?.pin_code || "N/A",
+            },
+            verifiedSince: data?.verified_at
+              ? new Date(data.verified_at).toLocaleDateString()
+              : "N/A",
+            followers:
+              data?.follower_count !== undefined
+                ? `${data.follower_count} Followers`
+                : "N/A",
+            employees:
+              data?.employee_count !== undefined
+                ? `${data.employee_count} Employees`
+                : "N/A",
+            specialties:
+              data?.specialties?.length > 0 ? data.specialties : ["N/A"],
+            logo: data?.logo_url || "",
+            banner_image_url: data?.banner_image_url || "",
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch company profile:", error);
+      }
+    };
+
+    fetchCompanyProfile();
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(getPostList({ page: 1, size: 2 }))
+      .unwrap()
+      .then((res) => {
+        console.log("✅ API posts response:", res); // full response
+      })
+      .catch((err) => console.error("❌ Error fetching posts:", err));
+  }, [dispatch]);
+  useEffect(() => {
+    if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
+      setFormData(prev => ({
+        ...prev,
+        name: companiesProfileData?.name || "",
+        display_name: companiesProfileData?.display_name || "",
+        email: companiesProfileData?.email || "",
+        logo_url: companiesProfileData?.logo_url || "",
+        banner_image_url: companiesProfileData?.banner_image_url || "",
+        website_url: companiesProfileData?.website_url || "",
+        description: companiesProfileData?.description || "",
+        country_code: companiesProfileData?.country_code || {
+          name: "",
+          dial_code: "",
+          short_name: "",
+          emoji: "",
+        },
+        phone_no: companiesProfileData?.phone_no || "",
+        company_size: companiesProfileData?.company_size || "",
+        company_type: companiesProfileData?.company_type || "",
+        specialties: companiesProfileData?.specialties || [],
+        founded_year: companiesProfileData?.founded_year
+          ? new Date(companiesProfileData.founded_year * 1000).getFullYear()
+          : ""
+        ,
+        employee_count: companiesProfileData?.employee_count || "",
+        headquarters: companiesProfileData?.headquarters || "",
+        industry: companiesProfileData?.industry || []
+
+      }))
+    }
+
+  }, [companiesProfileData]);
+  useEffect(() => {
+    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
+  }, [dispatch, activeTab1]);
+  useEffect(() => {
+    dispatch(companyIndustries())
+  }, [companiesProfileData?._id])
   return (
     <div className="bg-gray-50   p-6">
       <div className="flex flex-col md:flex-row gap-6   ">

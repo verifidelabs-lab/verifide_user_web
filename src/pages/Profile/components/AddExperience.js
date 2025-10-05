@@ -88,7 +88,7 @@ const AddExperience = ({ formData, allCompanies, handleSubmit, getSelectedOption
               isClearable={true}
               isDisabled={!formData?.company_id}
               disabledTooltip='Please select first Company'
-              isCreatedByUser={isCreatedByUserForIndustry ? true : false}
+              isCreatedByUser={true}
             />
 
             <FilterSelect

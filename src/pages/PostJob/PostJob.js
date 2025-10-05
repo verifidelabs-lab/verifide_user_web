@@ -7,6 +7,8 @@ import {
   getAllProfileRole,
   getAllWorkSkillList,
   updateCompanyData,
+  updateIndustryData,
+  updateProfileRoleData
 } from "../../redux/work/workSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,7 +25,7 @@ import {
   state,
   updateMasterIndustryData,
   updateMasterSkillData,
-  updateProfileRoleData,
+
 } from "../../redux/Global Slice/cscSlice";
 import { toast } from "sonner";
 import Button from "../../components/ui/Button/Button";
@@ -36,11 +38,14 @@ import {
   getAllSkillList,
   updateDegreeData,
   updateFieldsOfStudyData,
+  updateSkillsData,
 } from "../../redux/education/educationSlice";
 import { addOneData } from "../../redux/Users/userSlice";
 import { useLocationFormHandlers } from "../../components/hooks/useLocationFormHandlers";
 import StepFirst from "./Components/StepFirst";
 import StepSecond from "./Components/StepSecond";
+import { companiesProfile } from "../../redux/CompanySlices/CompanyAuth";
+import CustomFileInput from "../../components/ui/Input/CustomFileInput";
 // import moment from 'moment-timezone';
 
 const PostJob = () => {
@@ -51,12 +56,7 @@ const PostJob = () => {
   const companiesProfileData = useSelector(
     (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
   );
-  const isCompany = getCookie("ACTIVE_MODE") === "company";
-  console.log(
-    "this is te company profile data",
-    companiesProfileData,
-    isCompany
-  );
+  console.log("this is te company prifie data", companiesProfileData)
 
   const workSelector = useSelector((state) => state.work);
   const industrySelector = useSelector((state) => state.global);
@@ -73,6 +73,7 @@ const PostJob = () => {
   const allProfileRoles = arrayTransform(
     workSelector?.getAllProfileRoleData?.data?.data || []
   );
+  console.log("this is the prifiles roles", allProfileRoles)
   const countryList = arrayTransform(
     countriesSelector?.countriesData?.data?.data || []
   );
@@ -85,6 +86,8 @@ const PostJob = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [submitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [accessMode, setAccessMode] = useState(getCookie("ACCESS_MODE"));
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [screeningQuestions, setScreeningQuestions] = useState([
@@ -110,7 +113,7 @@ const PostJob = () => {
   });
 
   const [formData, setFormData] = useState({
-    company_id: companiesProfileData._id,
+    company_id: companiesProfileData._id || "",
     industry_id: "",
     job_type: "",
     job_location: "",
@@ -142,10 +145,15 @@ const PostJob = () => {
     isDisable: false,
     isShareAsPost: false,
   });
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      company_id: companiesProfileData?._id,
+    });
+  }, [companiesProfileData?._id])
+  const [isCreatableIndustry, setIsCreatbleIndustry] = useState(true);
 
-  const [isCreatableIndustry, setIsCreatbleIndustry] = useState(false);
-
-  const { handleLocationSelectChange, fetchDependentData } =
+  const { handleLocationSelectChange } =
     useLocationFormHandlers(setFormData, formData, setErrors);
 
   // Handle access mode changes
@@ -166,11 +174,21 @@ const PostJob = () => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, [navigate]);
-
+  const getSelectedOption = useCallback((options, value) => {
+    if (!value) return null;
+    const id = value._id ? value._id : value;
+    return options.find(option => option.value === id) || null;
+  }, []);
   // Fetch initial data
   useEffect(() => {
     dispatch(getAllCompanies());
     dispatch(countries());
+    dispatch(
+      getAllIndustry({
+        company_id: companiesProfileData?._id,
+        created_by_users: true,
+      })
+    );
   }, [dispatch]);
 
   // Populate selected skills from skill IDs
@@ -201,11 +219,11 @@ const PostJob = () => {
 
       const addressData = jobData.work_location ||
         jobData.address || {
-          country: { name: "", dial_code: "", short_name: "", emoji: "🇮" },
-          state: { name: "", code: "" },
-          city: { name: "" },
-          pin_code: "",
-        };
+        country: { name: "", dial_code: "", short_name: "", emoji: "🇮" },
+        state: { name: "", code: "" },
+        city: { name: "" },
+        pin_code: "",
+      };
 
       setFormData({
         ...jobData,
@@ -224,17 +242,17 @@ const PostJob = () => {
         dispatch(
           getAllIndustry({
             company_id: res?.data?.company_id?._id,
-            created_by_users: res?.data?.company_id?.created_by_users,
+            created_by_users: true,
           })
         );
-        setIsCreatbleIndustry(res?.data?.company_id?.created_by_users);
+        setIsCreatbleIndustry(true);
       }
 
       if (res?.data?.industry_id) {
         dispatch(
           getAllProfileRole({
             industry_id: res?.data?.industry_id?._id,
-            created_by_users: res?.data?.industry_id?.created_by_users,
+            created_by_users: true,
           })
         );
       }
@@ -254,7 +272,7 @@ const PostJob = () => {
       toast.error(error?.message || "Failed to fetch job data");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, dispatch]);
+  }, [id, companiesProfileData, dispatch]);
 
   useEffect(() => {
     if (country_id) {
@@ -371,39 +389,13 @@ const PostJob = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // const handleInputChange = (field, value) => {
-  //     setFormData(prev => {
-  //         const updatedFormData = {
-  //             ...prev,
-  //             [field]: value,
-  //         };
-  //         let newErrors = { ...errors };
-  //         if (updatedFormData.start_date && updatedFormData.end_date) {
-  //             const start = new Date(updatedFormData.start_date);
-  //             const end = new Date(updatedFormData.end_date);
-  //             if (end < start) {
-  //                 newErrors.end_date = "End date cannot be before Start date";
-  //             } else {
-  //                 delete newErrors.start_date;
-  //                 delete newErrors.end_date;
-  //             }
-  //         }
-  //         setErrors(newErrors);
-  //         return updatedFormData;
-  //     });
-  //     if (errors[field]) {
-  //         setErrors(prev => {
-  //             const newErrors = { ...prev };
-  //             delete newErrors[field];
-  //             return newErrors;
-  //         });
-  //     }
-  // };
+
   const handleInputChange = (field, value) => {
+
     setFormData((prev) => {
       const updatedFormData = {
         ...prev,
-        [field]: value,
+        [field]: value || "",
       };
 
       let newErrors = { ...errors };
@@ -446,27 +438,85 @@ const PostJob = () => {
       });
     }
   };
+  const handleAddItem = async () => {
+    try {
+      let type = '';
+      let updateAction = null;
+      let selectField = addModalState.field; // Get the field this item should be selected in
 
-  useEffect(() => {
-    dispatch(
-      getAllIndustry({
-        company_id: companiesProfileData?._id,
-        created_by_users: false,
-      })
-    );
-  }, [companiesProfileData?._id]);
+      switch (addModalState.type) {
+
+        case 'industries':
+          type = 'industries'
+          updateAction = updateIndustryData;
+          break;
+        case 'profile-roles':
+          type = "profile-roles"
+          updateAction = updateProfileRoleData;
+          break;
+        case 'skill':
+          type = 'skills';
+          updateAction = updateMasterSkillData;
+          break;
+        default:
+          return;
+      }
+      setLoading(true)
+
+      const res = await dispatch(addOneData({ type, ...inputFields })).unwrap();
+      setLoading(false)
+
+      console.log("this is the response", res)
+      dispatch(updateAction({
+        _id: res.data._id,
+        name: res.data.name,
+        created_by_users: res?.data?.created_by_users
+      }));
+
+      if (selectField) {
+        // For single select fields
+        if (selectField !== 'required_skills') {
+          setFormData(prev => ({
+            ...prev,
+            [selectField]: res.data._id
+          }));
+
+          // Also trigger any dependent data fetching
+          const iscreated_by_users = res.data.created_by_users;
+          // fetchDependentData(selectField, res.data._id, iscreated_by_users);
+        }
+        // For multi-select skills field
+        else {
+          setFormData(prev => ({
+            ...prev,
+            required_skills: [...(prev.required_skills || []), res.data._id]
+          }));
+        }
+      }
+
+      setAddModalState({ isOpen: false, type: '', field: '' });
+      setInputFields({ name: "", logo_url: "" });
+
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setLoading(false)
+
+    }
+  };
+
   const handleSelectChange = async (field, selectedOption) => {
+    const value = selectedOption?.value || ""; // ✅ use empty string if null
     setFormData((prev) => ({
       ...prev,
-      [field]: selectedOption.value,
+      [field]: value
     }));
 
     console.log("field, selectedOption", field, selectedOption);
     if (field === "company_id") {
-      setIsCreatbleIndustry(selectedOption?.created_by_users);
+      setIsCreatbleIndustry(true);
     }
 
-    const value = selectedOption?.value;
 
     switch (field) {
       case "institution_id":
@@ -497,7 +547,7 @@ const PostJob = () => {
         await dispatch(
           getAllIndustry({
             company_id: value,
-            created_by_users: selectedOption?.created_by_users,
+            created_by_users: true,
           })
         );
         break;
@@ -505,7 +555,7 @@ const PostJob = () => {
         await dispatch(
           getAllProfileRole({
             industry_id: value,
-            created_by_users: selectedOption?.created_by_users,
+            created_by_users: true,
           })
         );
         break;
@@ -564,12 +614,35 @@ const PostJob = () => {
 
   const handleScreeningQuestionChange = (index, field, value) => {
     const updatedQuestions = [...screeningQuestions];
-    updatedQuestions[index][field] = value;
+
+    // Update question type logic
+    if (field === "question_type") {
+      updatedQuestions[index][field] = value;
+
+      // Reset options & correct_options if switching to theoretical
+      if (value === "theoretical") {
+        updatedQuestions[index].options = [];
+        updatedQuestions[index].correct_options = [];
+      } else {
+        // Ensure these keys exist for single/multi choice
+        if (!updatedQuestions[index].options) updatedQuestions[index].options = [];
+        if (!updatedQuestions[index].correct_options) updatedQuestions[index].correct_options = [];
+      }
+    } else if (field === "options") {
+      // Update options and remove any correct_options not in options
+      updatedQuestions[index].options = value;
+      updatedQuestions[index].correct_options = updatedQuestions[index].correct_options.filter(opt =>
+        value.includes(opt)
+      );
+    } else {
+      updatedQuestions[index][field] = value;
+    }
+
     setScreeningQuestions(updatedQuestions);
 
-    // Clear specific errors when field is updated
+    // Clear errors if any
     if (field === "question" && errors[`screening_question_${index}`]) {
-      setErrors((prev) => {
+      setErrors(prev => {
         const newErrors = { ...prev };
         delete newErrors[`screening_question_${index}`];
         return newErrors;
@@ -584,8 +657,8 @@ const PostJob = () => {
         question: "",
         question_type: "single_choice",
         options: [],
-        option_format: "alphabetically",
         correct_options: [],
+        option_format: "alphabetically",
         verification_type: "auto",
         time_limit: 2,
       },
@@ -597,17 +670,14 @@ const PostJob = () => {
     updatedQuestions.splice(index, 1);
     setScreeningQuestions(updatedQuestions);
 
-    // Clear errors for the removed question
     const newErrors = { ...errors };
-    Object.keys(newErrors).forEach((key) => {
+    Object.keys(newErrors).forEach(key => {
       if (
         key.startsWith(`screening_question_${index}`) ||
         key.startsWith(`screening_options_${index}`) ||
         key.startsWith(`screening_correct_${index}`) ||
         key.startsWith(`screening_option_${index}_`)
-      ) {
-        delete newErrors[key];
-      }
+      ) delete newErrors[key];
     });
     setErrors(newErrors);
   };
@@ -620,23 +690,21 @@ const PostJob = () => {
 
   const removeOption = (questionIndex, optionIndex) => {
     const updatedQuestions = [...screeningQuestions];
-    updatedQuestions[questionIndex].options.splice(optionIndex, 1);
+    const removedOption = updatedQuestions[questionIndex].options.splice(optionIndex, 1)[0];
 
-    // Also remove from correct_options if it was selected
-    const optionValue = updatedQuestions[questionIndex].options[optionIndex];
-    const correctIndex =
-      updatedQuestions[questionIndex].correct_options.indexOf(optionValue);
-    if (correctIndex !== -1) {
-      updatedQuestions[questionIndex].correct_options.splice(correctIndex, 1);
-    }
+    // Remove from correct_options if it exists
+    updatedQuestions[questionIndex].correct_options = updatedQuestions[questionIndex].correct_options.filter(
+      opt => opt !== removedOption
+    );
 
     setScreeningQuestions(updatedQuestions);
 
-    // Clear error for this specific option
-    if (errors[`screening_option_${questionIndex}_${optionIndex}`]) {
-      setErrors((prev) => {
+    // Clear error for this option
+    const optionErrorKey = `screening_option_${questionIndex}_${optionIndex}`;
+    if (errors[optionErrorKey]) {
+      setErrors(prev => {
         const newErrors = { ...prev };
-        delete newErrors[`screening_option_${questionIndex}_${optionIndex}`];
+        delete newErrors[optionErrorKey];
         return newErrors;
       });
     }
@@ -648,26 +716,27 @@ const PostJob = () => {
 
     if (question.question_type === "single_choice") {
       question.correct_options = [optionValue];
-    } else {
-      const index = question.correct_options.indexOf(optionValue);
-      if (index === -1) {
-        question.correct_options.push(optionValue);
+    } else if (question.question_type === "multi_choice") {
+      if (question.correct_options.includes(optionValue)) {
+        question.correct_options = question.correct_options.filter(opt => opt !== optionValue);
       } else {
-        question.correct_options.splice(index, 1);
+        question.correct_options.push(optionValue);
       }
     }
 
     setScreeningQuestions(updatedQuestions);
 
-    // Clear correct option error if it exists
-    if (errors[`screening_correct_${questionIndex}`]) {
-      setErrors((prev) => {
+    // Clear error if exists
+    const correctErrorKey = `screening_correct_${questionIndex}`;
+    if (errors[correctErrorKey]) {
+      setErrors(prev => {
         const newErrors = { ...prev };
-        delete newErrors[`screening_correct_${questionIndex}`];
+        delete newErrors[correctErrorKey];
         return newErrors;
       });
     }
   };
+
 
   const nextStep = () => {
     if (validateStep(currentStep)) {
@@ -745,8 +814,8 @@ const PostJob = () => {
       const res = await dispatch(action(finalData)).unwrap();
       toast.success(
         res?.message ||
-          res?.success ||
-          (id ? "Job updated successfully!" : "Job posted successfully!")
+        res?.success ||
+        (id ? "Job updated successfully!" : "Job posted successfully!")
       );
 
       // Reset form and navigate
@@ -796,85 +865,16 @@ const PostJob = () => {
       console.error("Error submitting job:", error);
       toast.error(
         error?.message ||
-          (id
-            ? "Failed to update job. Please try again."
-            : "Failed to post job. Please try again.")
+        (id
+          ? "Failed to update job. Please try again."
+          : "Failed to post job. Please try again.")
       );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleAddItem = async () => {
-    try {
-      let type = "";
-      let updateAction = null;
-      let selectField = addModalState.field;
 
-      switch (addModalState.type) {
-        case "degree":
-          type = "degrees";
-          updateAction = updateDegreeData;
-          break;
-        case "field":
-          type = "fields-of-studies";
-          updateAction = updateFieldsOfStudyData;
-          break;
-        case "skill":
-          type = "skills";
-          updateAction = updateMasterSkillData;
-          break;
-        case "companies":
-          type = "companies";
-          updateAction = updateCompanyData;
-          break;
-        case "industries":
-          type = "industries";
-          updateAction = updateMasterIndustryData;
-          break;
-        case "profile-roles":
-          type = "profile-roles";
-          updateAction = updateProfileRoleData;
-          break;
-        default:
-          return;
-      }
-
-      const res = await dispatch(addOneData({ type, ...inputFields })).unwrap();
-      //  console.log("res?.data:----", res?.data)
-
-      // Update the respective data list
-      dispatch(
-        updateAction({
-          _id: res.data._id,
-          name: res.data.name,
-          created_by_users: res?.data?.created_by_users,
-        })
-      );
-
-      if (selectField) {
-        if (selectField !== "skills_acquired") {
-          setFormData((prev) => ({
-            ...prev,
-            [selectField]: res.data._id,
-          }));
-
-          const iscreated_by_users = res.data.created_by_users;
-          fetchDependentData(selectField, res.data._id, iscreated_by_users);
-        } else {
-          setFormData((prev) => ({
-            ...prev,
-            skills_acquired: [...(prev.skills_acquired || []), res.data._id],
-          }));
-        }
-      }
-
-      setAddModalState({ isOpen: false, type: "", field: "" });
-      setInputFields({ name: "", logo_url: "" });
-    } catch (error) {
-      toast.error(error);
-    }
-  };
 
   const renderStep1 = () => (
     <div className="space-y-3">
@@ -894,6 +894,7 @@ const PostJob = () => {
         citiesList={citiesList}
         setInputField={setInputFields}
         isCreatableIndustry={isCreatableIndustry}
+        getSelectedOption={getSelectedOption}
       />
     </div>
   );
@@ -910,7 +911,10 @@ const PostJob = () => {
       selectedSkills={selectedSkills}
       removeSkill={removeSkill}
       handleSkillSelect={handleSkillSelect}
+      setInputField={setInputFields}
       isCreatableIndustry={isCreatableIndustry}
+      getSelectedOption={getSelectedOption}
+
     />
   );
 
@@ -939,11 +943,10 @@ const PostJob = () => {
           return (
             <div
               key={qIndex}
-              className={`mb-6 p-4 border rounded-lg ${
-                questionError || optionsError || correctError
-                  ? "border-red-300 bg-red-50"
-                  : "border-gray-200"
-              }`}
+              className={`mb-6 p-4 border rounded-lg ${questionError || optionsError || correctError
+                ? "border-red-300 bg-red-50"
+                : "border-gray-200"
+                }`}
             >
               <div className="flex justify-between items-center mb-3">
                 <h3 className="font-medium">
@@ -1202,22 +1205,30 @@ const PostJob = () => {
         isOpen={addModalState.isOpen}
         title={`Add ${addModalState.type}`}
         onClose={() => {
-          setAddModalState({ isOpen: false, type: "", field: "" });
+          setAddModalState({ isOpen: false, type: '', field: '' });
           setInputFields({ name: "", logo_url: "" });
         }}
         handleSubmit={handleAddItem}
+        loading={loading}
       >
-        <div className="space-y-3">
+        <div className='space-y-3'>
           <CustomInput
             className="w-full h-10"
             label="Enter Name"
             required
             placeholder="Enter name"
             value={inputFields?.name}
-            onChange={(e) =>
-              setInputFields((prev) => ({ ...prev, name: e.target.value }))
-            }
+            onChange={(e) => setInputFields(prev => ({ ...prev, name: e.target.value }))}
           />
+          {/* {(addModalState.type === 'Add company' || addModalState.type === "Add companies") && (
+            <CustomFileInput
+              value={inputFields?.logo_url}
+              required
+              label='Logo'
+              onChange={(file) => handleFileUpload2(file)}
+            />
+
+          )} */}
         </div>
       </Modal>
     </div>

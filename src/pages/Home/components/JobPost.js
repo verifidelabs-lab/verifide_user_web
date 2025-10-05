@@ -2,6 +2,7 @@ import { SkillsCard2 } from "../../../components/ui/cards/Card";
 import { BiLocationPlus } from "react-icons/bi";
 
 const JobPost = ({ job }) => {
+  console.log("This is the job", job)
   if (!job) return null;
 
   return (

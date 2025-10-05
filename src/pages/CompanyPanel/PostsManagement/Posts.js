@@ -20,6 +20,11 @@ import { Pagination } from 'swiper/modules';
 import AlertModal from '../../../components/ui/Modal/AlertModal';
 import PeopleToConnect from '../../../components/ui/ConnectSidebar/ConnectSidebar';
 import { suggestedUser } from '../../../redux/Users/userSlice';
+import JobPost from '../../Home/components/JobPost';
+import LinkedInCertificate from '../../Certificates/Certificates';
+import Poll from '../../Home/components/Poll';
+import MediaCarousel from '../../Home/components/MediaCarousel';
+import { convertTimestampToDate } from '../../../components/utils/globalFunction';
 const ROLES = {
   COMPANIES: 3,
   COMPANIES_ADMIN: 7,
@@ -33,6 +38,7 @@ const POST_TYPES = {
   VIDEO: 'video',
   LINK: 'link',
   POLL: 'poll',
+  JOB: 'jobs',
   IMAGE_VIDEO: 'image-video'
 };
 const CommentItem = ({ comment, dispatch }) => {
@@ -408,6 +414,7 @@ const getPostType = (post) => {
   if (post.poll && post.poll.options && post.poll.options.length > 0) return POST_TYPES.POLL;
   if (post.video_url) return POST_TYPES.VIDEO;
   if (post.link) return POST_TYPES.LINK;
+  if (post.job_id) return POST_TYPES.JOB;
   if (post.image_urls && post.image_urls.length > 0) return POST_TYPES.IMAGE;
   if (post.post_type === 'image-video') return POST_TYPES.IMAGE_VIDEO;
   return POST_TYPES.TEXT;
@@ -477,7 +484,11 @@ const PostHeader = ({ profileData, post, onView, onDelete, isViewMode, formatDat
   );
 };
 const PostContent = ({ post, type }) => {
+  console.log("this is working", post, type)
   const renderMedia = () => {
+    if (type === POST_TYPES.JOB && post?.post_type === 'jobs' && post.job_id) {
+      return <JobPost job={post.job_id} />
+    }
     if (type === POST_TYPES.IMAGE && post.image_urls?.length) {
       return (
         <div className="w-full flex justify-center bg-neutral-100 mt-3 rounded-lg overflow-hidden">
@@ -553,6 +564,30 @@ const PostContent = ({ post, type }) => {
     if (type === POST_TYPES.POLL && post.poll) {
       return <PollComponent poll={post.poll} />;
     }
+    <div className="space-y-3">
+
+
+      {post?.post_type === 'certificates' && post?.certificate_id &&
+        <LinkedInCertificate
+          certificateName={post?.certificate_id?.name} issueBy={post?.certificate_id?.issuing_organization} description={post?.certificate_id?.description}
+          date={convertTimestampToDate(post?.certificate_id?.issue_date)} record={post?.certificate_id} type="certifications" username={post?.userData?.name}
+        />
+      }
+
+      {post?.post_type === 'poll' && post.poll && (
+        <Poll
+          poll={post.poll}
+          postId={post._id}
+          isSelfPost={post.isSelfPost}
+          updatedAt={post?.updatedAt}
+          isVoted={post?.isVoted}
+          voting_index={post?.voting_index}
+        />
+      )}
+      <MediaCarousel
+        post={{ image_urls: post.image_urls, video_url: post.video_url, }}
+      />
+    </div>
     return null;
   };
 

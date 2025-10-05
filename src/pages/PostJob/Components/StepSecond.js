@@ -3,12 +3,46 @@ import FilterSelect from '../../../components/ui/Input/FilterSelect';
 import { BiX } from 'react-icons/bi';
 
 const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, errors, setAddModalState, handleInputChange, selectedSkills, removeSkill, handleSkillSelect, isCreatableIndustry,
+    getSelectedOption,
     setInputField
 }) => {
+    const getSelectedSkills = () => {
+        if (!formData?.required_skills || !allSkills) return [];
+        return formData.required_skills.map(skill => {
+            const id = typeof skill === 'object' ? skill._id : skill;
+            return allSkills.find(opt => opt.value === id);
+        }).filter(Boolean);
+    };
     return (
         <div>
             <div className="space-y-6">
                 <FilterSelect
+                    label="Job Title"
+                    name="job_title"
+                    placeholder="Select Position"
+                    options={allProfileRoles}
+                    selectedOption={getSelectedOption(allProfileRoles, formData?.job_title)}
+                    onChange={(selected) => handleSelectChange("job_title", selected)}
+                    error={errors.job_title}
+                    className="w-full h-10"
+                    required
+                    // disabled={!formData.industry_id || isLoading}
+                    onCreateOption={(inputValue, field) => {
+                        setAddModalState({
+                            isOpen: true,
+                            type: 'profile-roles',
+                            field: field
+                        });
+                        setInputField(prev => ({ ...prev, name: inputValue }))
+
+                    }}
+                    isClearable={true}
+                    isDisabled={!formData?.industry_id}
+                    disabledTooltip='Please select first Industry'
+                    isCreatedByUser={isCreatableIndustry ? true : false}
+
+                />
+                {/* <FilterSelect
                     label="Job Title"
                     className="w-full h-10"
                     placeholder="e.g. Frontend Developer (React.js)"
@@ -28,7 +62,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                     }}
                     isClearable={true}
                     isCreatedByUser={isCreatableIndustry ? true : false}
-                />
+                /> */}
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -58,6 +92,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                         onChange={handleSkillSelect}
                         required
                         error={errors?.required_skills}
+                        selectedOption={getSelectedSkills()}
                         onCreateOption={(inputValue, field) => {
                             setAddModalState({
                                 isOpen: true,

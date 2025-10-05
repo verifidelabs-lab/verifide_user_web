@@ -3,10 +3,10 @@
 import { PiPlus, PiX } from "react-icons/pi";
 import { arrayTransform, uploadImageDirectly } from "../../components/utils/globalFunction";
 import { useDispatch, useSelector } from "react-redux";
-import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
+import { cities, countries, masterIndustry, state, updateMasterIndustryData } from "../../redux/Global Slice/cscSlice";
 import { useCallback, useEffect, useState } from "react";
 import {
-  companyIndustries,
+
   companyRegisterVerifyOtp,
 } from "../../redux/slices/authSlice";
 import OTPVerificationPopup from "./components/OTPVerificationPopup";
@@ -18,15 +18,16 @@ import CreatableSelect from "react-select/creatable";
 import classNames from "classnames";
 import CustomInput from "../../components/ui/InputAdmin/CustomInput";
 import PasswordInput from "../../components/ui/InputAdmin/PasswordInput";
-import FilterSelect from "../../components/ui/InputAdmin/FilterSelect";
+import FilterSelect from "../../components/ui/Input/FilterSelect";
 import useFormHandler from "../../components/hooks/useFormHandler";
 import Button from "../../components/ui/Button/Button";
 import Input from "../../components/ui/InputAdmin/Input";
-import {
-  createCompanies,
-  getCompaniesList,
-} from "../../redux/CompanySlices/companiesSlice";
+
 import EnhancedFileInput from "../../components/ui/Input/CustomFileAndImage";
+import { addOneData } from "../../redux/Users/userSlice";
+import Modal from "../../components/ui/Modal/Modal";
+import { companyIndustries } from "../../redux/CompanySlices/CompanyAuth";
+import { createCompany, getCompaniesList } from "../../redux/slices/companiesSlice";
 
 const initialFormData = {
   username: "",
@@ -90,6 +91,7 @@ const Company_Sizes = [
   { value: "1001-5000", label: "1001-5000" },
   { value: "5001-10000", label: "5001-10000" },
 ];
+
 
 const FilterSelectAdd = ({
   label = "Filter By",
@@ -197,13 +199,21 @@ const FilterSelectAdd = ({
 };
 
 const RegisterCompany = () => {
-  const { formData, handleChange, setFormData, errors, setErrors } =
+  const { formData, handleChange, setFormData, errors, handleSelectChange, setErrors } =
     useFormHandler(initialFormData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoUrl, setLogoUrl] = useState(formData.logo_url || "");
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [inputFields, setInputFields] = useState({
+    name: "",
+    logo_url: "",
+  });
+  const [addModalState, setAddModalState] = useState({
+    isOpen: false,
+    type: "",
+    field: "",
+  });
   const handleFileUpload = useCallback(
     async (file, fileType) => {
       if (!file) {
@@ -219,7 +229,7 @@ const RegisterCompany = () => {
         return;
       }
 
-      setIsLoading(true);
+      setLoading(true);
 
       try {
         if (fileType === "image") {
@@ -250,7 +260,7 @@ const RegisterCompany = () => {
         console.error("File upload error:", error);
         toast.error(error?.message || "Failed to upload logo");
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     },
     [errors.logo_url, setFormData, setErrors]
@@ -302,30 +312,23 @@ const RegisterCompany = () => {
   const countriesList = arrayTransform(
     cscSelector?.countriesData?.data?.data || []
   );
-  const [resData, setResData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationError, setVerificationError] = useState("");
   const [companyRedisToken, setCompanyRedisToken] = useState("");
-  const newResData = resData?.map((item) => ({
-    value: item?._id,
-    label: item?.name,
-  }));
+
   const [customDegrees, setCustomDegrees] = useState([]);
   const [showCustomDegreeInput, setShowCustomDegreeInput] = useState(false);
   const [customDegreeInput, setCustomDegreeInput] = useState("");
 
+  const selector = useSelector((state) => state.global);
+
+  const allIndustry = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterIndustryData?.data?.data?.list)]
   const getIndustries = () => {
-    dispatch(companyIndustries())
-      .then((res) => {
-        if (res) {
-          setResData(res?.payload?.data?.list);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(masterIndustry())
+
+
   };
 
   useEffect(() => {
@@ -559,11 +562,12 @@ const RegisterCompany = () => {
       newErrors.linkedin_page_url =
         "Please enter a valid LinkedIn URL (e.g. https://www.linkedin.com/...)";
     }
-
+    setErrors({ ...newErrors })
     return newErrors;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setIsSubmitting(true);
     try {
       const createPayload = {
@@ -596,7 +600,7 @@ const RegisterCompany = () => {
         confirmPassword: formData.confirmPassword,
       };
 
-      const res = await dispatch(createCompanies(createPayload)).unwrap();
+      const res = await dispatch(createCompany(createPayload)).unwrap();
       if (res?.error) {
         toast.error(res?.message || "Failed to create company");
         return;
@@ -605,8 +609,9 @@ const RegisterCompany = () => {
 
       if (res?.data?.redisToken) {
         setCompanyRedisToken(res.data.redisToken);
-        setShowOtpPopup(true);
+
         toast.success("Registration successful! Please verify your OTP.");
+        dispatch(getCompaniesList())
       } else {
         toast.success(res?.message || "Company created successfully");
         setFormData(initialFormData);
@@ -620,100 +625,78 @@ const RegisterCompany = () => {
     }
   };
 
-  const getDashboardPath = (mode) => {
-    switch (mode) {
-      case 1:
-      case 2:
-        return "/app/admin/dashboard";
-      case 3:
-      case 7:
-        return "/app/companies/dashboard";
-      case 4:
-      case 8:
-        return "/app/institute/dashboard";
-      default:
-        return "/app/admin/dashboard";
-    }
-  };
 
-  const handleVerifyOtp = async (otp) => {
-    setIsVerifying(true);
-    setVerificationError("");
-    try {
-      const payload = {
-        token: companyRedisToken,
-        otp: otp,
-      };
-      const res = await dispatch(companyRegisterVerifyOtp(payload)).unwrap();
-      console.log("--------------4444444444444", res);
-      if (!res?.payload?.data?.error) {
-        setCookie("VERIFIED_ADMIN_TOKEN", JSON.stringify(res?.data?.token));
-        setCookie("USER_ROLE", res?.data?.accessMode);
-        setCookie("SIDE_BAR", res?.data?.accessMode);
-        toast.success(res?.message || "Login successful");
-        navigate(getDashboardPath(res?.data?.accessMode));
-      } else {
-        setVerificationError(res?.message || "Verification failed");
-        return;
-      }
-      toast.success(res?.message || "Verification successful!");
-      setShowOtpPopup(false);
-      setFormData(initialFormData);
-    } catch (error) {
-      console.error("Verification error:", error);
-      setVerificationError(error || "An error occurred during verification");
-    } finally {
-      setIsVerifying(false);
-    }
-  };
+
+
 
   const handleBack = () => {
     navigate("/user/feed");
   };
 
-  const handleDegreeChange = (selectedOptions) => {
-    const otherOption = selectedOptions?.find(
-      (option) => option.value === "other"
-    );
-    if (otherOption) {
-      setShowCustomDegreeInput(true);
-      const filteredOptions = selectedOptions.filter(
-        (option) => option.value !== "other"
-      );
-      setFormData((prev) => ({
-        ...prev,
-        industry: filteredOptions.map((option) => option.value),
+
+
+
+
+
+  const getSelectedOption = (options, value) => {
+    if (!value) return null;
+
+    if (Array.isArray(value)) {
+      // value is array of IDs (strings)
+      return options.filter(opt => value.includes(opt.value));
+    }
+
+    // single value (string)
+    return options.find(opt => opt.value === value) || null;
+  };
+
+
+
+  const handleAddItem = async () => {
+    try {
+      let type = '';
+      let updateAction = null;
+      let selectField = addModalState.field; // Get the field this item should be selected in
+
+      switch (addModalState.type) {
+
+        case 'industries':
+          type = 'industries'
+          updateAction = updateMasterIndustryData;
+          break;
+
+        default:
+          return;
+      }
+      setLoading(true)
+
+      const res = await dispatch(addOneData({ type, ...inputFields })).unwrap();
+      setLoading(false)
+
+      console.log("this is the response", res)
+      dispatch(updateAction({
+        _id: res.data._id,
+        name: res.data.name,
+        created_by_users: res?.data?.created_by_users
       }));
-    } else {
-      setShowCustomDegreeInput(false);
-      setFormData((prev) => ({
+
+      setFormData(prev => ({
         ...prev,
-        industry: selectedOptions
-          ? selectedOptions.map((option) => option.value)
-          : [],
+        [selectField]: res.data._id
       }));
+
+
+      setAddModalState({ isOpen: false, type: '', field: '' });
+      setInputFields({ name: "", logo_url: "" });
+
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setLoading(false)
+
     }
   };
-
-  const handleAddCustomDegree = (degreeName) => {
-    setCustomDegrees((prev) => [
-      ...prev,
-      { value: degreeName, label: degreeName },
-    ]);
-    setFormData((prev) => ({
-      ...prev,
-      industry: [...prev.industry, degreeName],
-    }));
-  };
-
-  const addCustomDegree = () => {
-    if (customDegreeInput.trim()) {
-      handleAddCustomDegree(customDegreeInput.trim());
-      setCustomDegreeInput("");
-      setShowCustomDegreeInput(false);
-    }
-  };
-
+  console.log("this is formdata", formData)
   return (
     <>
       <div className="h-screen">
@@ -845,44 +828,37 @@ const RegisterCompany = () => {
                   Company Details
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FilterSelectAdd
+                  <FilterSelect
+                    label="Industry Name"
+                    name="industry"
+                    placeholder="Select Industry"
+                    options={allIndustry}
+                    selectedOption={getSelectedOption(allIndustry, formData?.industry)}
+                    onChange={(selected) => {
+                      // store only IDs
+                      const ids = Array.isArray(selected) ? selected.map(s => s.value) : selected?.value;
+                      handleSelectChange("industry", ids, Array.isArray(selected));
+                    }}
+                    error={errors.industry}
+
+                    required
+                    onCreateOption={(inputValue, field) => {
+                      setAddModalState({
+                        isOpen: true,
+                        type: 'industries',
+                        field: field
+                      });
+                      setInputFields(prev => ({ ...prev, name: inputValue }))
+
+                    }}
+                    isClearable={true}
+                    // isDisabled={!formData?.company_id}
+                    disabledTooltip='Please select first Company'
+                    isCreatedByUser={true}
                     isMulti
-                    label="Industry *"
-                    options={newResData || []}
-                    selectedOption={[
-                      ...(newResData.filter((opt) =>
-                        formData?.industry?.includes(opt.value)
-                      ) || []),
-                      ...customDegrees.filter((degree) =>
-                        formData?.industry?.includes(degree.value)
-                      ),
-                    ]}
-                    onChange={handleDegreeChange}
-                    enableCustomInput={true}
-                    onAddCustomOption={handleAddCustomDegree}
                   />
-                  {errors.industry && (
-                    <p className="mt-1 text-sm text-red-600">
-                      {errors.industry}
-                    </p>
-                  )}
-                  {showCustomDegreeInput && (
-                    <div className="mt-2 flex gap-2">
-                      <CustomInput
-                        value={customDegreeInput}
-                        onChange={(e) => setCustomDegreeInput(e.target.value)}
-                        placeholder="Enter degree name"
-                        className="flex-1"
-                      />
-                      <Button
-                        type="button"
-                        onClick={addCustomDegree}
-                        className="mt-1"
-                      >
-                        Add
-                      </Button>
-                    </div>
-                  )}
+
+
                   <FilterSelect
                     label="Company Type"
                     options={company_type || []}
@@ -894,6 +870,7 @@ const RegisterCompany = () => {
                         target: { value: selected?.value || "" },
                       })
                     }
+                    c
                   />
                 </div>
 
@@ -954,13 +931,7 @@ const RegisterCompany = () => {
                     error={errors.linkedin_page_url}
                   />
 
-                  {/* <CustomInput
-                    label="Logo URL"
-                    value={formData?.logo_url}
-                    name="logo_url"
-                    onChange={(e) => handleChange("logo_url", e)}
-                    placeholder="https://example.com/logo.png"
-                  /> */}
+
                 </div>
                 <div className="mt-4">
                   <EnhancedFileInput
@@ -970,25 +941,12 @@ const RegisterCompany = () => {
                     onChange={handleImageUpload}
                     onDelete={removeImage}
                     error={errors.logo_url}
-                    isLoading={isLoading}
+                    loading={loading}
                     value={logoUrl}
                   />
                 </div>
 
-                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div className="space-y-4">
-                    <EnhancedFileInput
-                      accept=".jpg,.jpeg,.png"
-                      supportedFormats="Image"
-                      label="Images"
-                      onChange={handleImageUpload}
-                      onDelete={removeImage}
-                      error={errors.images || errors.media}
-                      isLoading={isLoading}
-                      value={questData.images[0]}
-                    />
-                  </div>
-                </div> */}
+
               </div>
 
               <div className="border-t border-gray-200 pt-6">
@@ -1129,14 +1087,30 @@ const RegisterCompany = () => {
             </form>
           </div>
         </div>
+        <Modal
+          isOpen={addModalState.isOpen}
+          title={`Add ${addModalState.type}`}
+          onClose={() => {
+            setAddModalState({ isOpen: false, type: '', field: '' });
+            setInputFields({ name: "", logo_url: "" });
+          }}
+          handleSubmit={handleAddItem}
+          loading={loading}
+        >
+          <div className='space-y-3'>
+            <CustomInput
+              className="w-full h-10"
+              label="Enter Name"
+              required
+              placeholder="Enter name"
+              value={inputFields?.name}
+              onChange={(e) => setInputFields(prev => ({ ...prev, name: e.target.value }))}
+            />
+
+          </div>
+        </Modal>
       </div>
-      <OTPVerificationPopup
-        isOpen={showOtpPopup}
-        onClose={() => setShowOtpPopup(false)}
-        onVerify={handleVerifyOtp}
-        isLoading={isVerifying}
-        error={verificationError}
-      />
+
     </>
   );
 };
