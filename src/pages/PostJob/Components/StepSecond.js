@@ -87,13 +87,16 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                     <FilterSelect
                         label="Skills Required "
                         options={allSkills || []}
+                        name="required_skills"
+
                         className="w-full h-10"
                         placeholder="Select skills"
                         onChange={handleSkillSelect}
                         required
                         error={errors?.required_skills}
-                        selectedOption={getSelectedSkills()}
+                        selectedOption={selectedSkills}
                         onCreateOption={(inputValue, field) => {
+                            console.log("this is the inputalue and field", field, inputValue)
                             setAddModalState({
                                 isOpen: true,
                                 type: 'skill',
@@ -102,7 +105,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                             setInputField((prev) => ({ ...prev, name: inputValue }))
                         }}
                         isClearable={true}
-                        isCreatedByUser={isCreatableIndustry ? true : false}
+                        isCreatedByUser={true}
 
                     />
                     <div className="flex flex-wrap gap-2 mt-3">

@@ -47,6 +47,8 @@ const StepFirst = ({
               required
               error={errors?.company_id}
               onCreateOption={(inputValue, field) => {
+                console.log("this is the inputalue and field", field, inputValue)
+
                 setAddModalState({ isOpen: true, type: "companies", field });
                 setInputField((prev) => ({ ...prev, name: inputValue }));
               }}
@@ -78,7 +80,7 @@ const StepFirst = ({
               isClearable={true}
               isDisabled={!formData?.company_id}
               disabledTooltip='Please select first Company'
-              isCreatedByUser={true}
+              isCreatedByUser={isCreatableIndustry}
             />
             {/* <FilterSelect
               options={allIndustry || []}

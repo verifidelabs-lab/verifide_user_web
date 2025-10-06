@@ -1155,7 +1155,7 @@ const CompanyProfile = ({
     userRole,
     handleImageUpload,
     isBannerUploading = false,
-    handleProfileUpdate,
+    handleProfileUpdatee,
   }) => {
     const [previewBanner, setPreviewBanner] = useState(agencyData?.banner_image_url || formData[
       "banner_image_url"
@@ -1173,7 +1173,7 @@ const CompanyProfile = ({
 
       // auto-update backend profile once upload success
       if (uploaded?.data?.imageURL) {
-        await handleProfileUpdate({
+        await handleProfileUpdatee({
           banner_image_url: uploaded.data.imageURL,
         });
         toast.success("Banner updated successfully");
@@ -1283,7 +1283,7 @@ const CompanyProfile = ({
       agencyData={agencyData}
       userRole={userRole}
       handleImageUpload={handleImageUpload}
-      handleProfileUpdate={async (updateFields) => {
+      handleProfileUpdatee={async (updateFields) => {
         // call backend with only the changed fields
         const payload = { ...formData, ...updateFields };
         setFormData(payload);

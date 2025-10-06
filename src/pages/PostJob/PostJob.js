@@ -57,7 +57,7 @@ const PostJob = () => {
     (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
   );
   console.log("this is te company prifie data", companiesProfileData)
-
+  console.log("This is the company")
   const workSelector = useSelector((state) => state.work);
   const industrySelector = useSelector((state) => state.global);
   const countriesSelector = useSelector((state) => state.global);
@@ -111,7 +111,6 @@ const PostJob = () => {
     type: "",
     field: "",
   });
-
   const [formData, setFormData] = useState({
     company_id: companiesProfileData._id || "",
     industry_id: "",
@@ -183,14 +182,18 @@ const PostJob = () => {
   useEffect(() => {
     dispatch(getAllCompanies());
     dispatch(countries());
+
+  }, [dispatch]);
+
+  useEffect(() => {
+
     dispatch(
       getAllIndustry({
         company_id: companiesProfileData?._id,
-        created_by_users: true,
+        created_by_users: companiesProfileData?.created_by_users,
       })
     );
-  }, [dispatch]);
-
+  }, [dispatch, companiesProfileData?._id]);
   // Populate selected skills from skill IDs
   const populateSelectedSkills = useCallback(
     (skillIds) => {
@@ -245,14 +248,14 @@ const PostJob = () => {
             created_by_users: true,
           })
         );
-        setIsCreatbleIndustry(true);
+        // setIsCreatbleIndustry(res?.data?.company_id?.created_by_users);
       }
 
       if (res?.data?.industry_id) {
         dispatch(
           getAllProfileRole({
             industry_id: res?.data?.industry_id?._id,
-            created_by_users: true,
+            created_by_users: res?.data?.industry_id?.created_by_users,
           })
         );
       }
@@ -442,16 +445,14 @@ const PostJob = () => {
     try {
       let type = '';
       let updateAction = null;
-      let selectField = addModalState.field; // Get the field this item should be selected in
-
+      let selectField = addModalState.field;
       switch (addModalState.type) {
-
         case 'industries':
-          type = 'industries'
+          type = 'industries';
           updateAction = updateIndustryData;
           break;
         case 'profile-roles':
-          type = "profile-roles"
+          type = 'profile-roles';
           updateAction = updateProfileRoleData;
           break;
         case 'skill':
@@ -461,49 +462,54 @@ const PostJob = () => {
         default:
           return;
       }
-      setLoading(true)
 
+      setLoading(true);
       const res = await dispatch(addOneData({ type, ...inputFields })).unwrap();
-      setLoading(false)
+      setLoading(false);
 
-      console.log("this is the response", res)
-      dispatch(updateAction({
+      const newItem = {
         _id: res.data._id,
         name: res.data.name,
-        created_by_users: res?.data?.created_by_users
-      }));
+        created_by_users: res.data.created_by_users,
+      };
 
-      if (selectField) {
-        // For single select fields
-        if (selectField !== 'required_skills') {
-          setFormData(prev => ({
-            ...prev,
-            [selectField]: res.data._id
-          }));
+      // ✅ 1. Update Redux (adds item to dropdown)
+      dispatch(updateAction(newItem));
+      console.log("This is the add formdata int the market place ", selectField, type, updateAction)
 
-          // Also trigger any dependent data fetching
-          const iscreated_by_users = res.data.created_by_users;
-          // fetchDependentData(selectField, res.data._id, iscreated_by_users);
-        }
-        // For multi-select skills field
-        else {
-          setFormData(prev => ({
-            ...prev,
-            required_skills: [...(prev.required_skills || []), res.data._id]
-          }));
-        }
+      // ✅ 2. Update local form + selection instantly (even if Redux was empty)
+      if (selectField === 'required_skills') {
+        const newSkillOption = {
+          value: newItem._id,
+          label: newItem.name,
+          created_by_users: newItem.created_by_users,
+        };
+
+        setFormData((prev) => ({
+          ...prev,
+          required_skills: [...(prev.required_skills || []), newItem._id],
+        }));
+
+        setSelectedSkills((prev) => [...(prev || []), newSkillOption]);
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          [selectField]: newItem._id,
+        }));
       }
 
+      // ✅ 3. Close modal and reset
       setAddModalState({ isOpen: false, type: '', field: '' });
       setInputFields({ name: "", logo_url: "" });
 
     } catch (error) {
-      toast.error(error);
+      toast.error(error?.message || "Something went wrong");
     } finally {
-      setLoading(false)
-
+      setLoading(false);
     }
   };
+
+
 
   const handleSelectChange = async (field, selectedOption) => {
     const value = selectedOption?.value || ""; // ✅ use empty string if null
@@ -547,7 +553,7 @@ const PostJob = () => {
         await dispatch(
           getAllIndustry({
             company_id: value,
-            created_by_users: true,
+            created_by_users: selectedOption?.created_by_users,
           })
         );
         break;
@@ -555,7 +561,7 @@ const PostJob = () => {
         await dispatch(
           getAllProfileRole({
             industry_id: value,
-            created_by_users: true,
+            created_by_users: selectedOption?.created_by_users,
           })
         );
         break;
@@ -769,7 +775,9 @@ const PostJob = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("this is te error", validateStep(3))
     if (!validateStep(3)) {
+
       const firstErrorKey = Object.keys(errors)[0];
       if (firstErrorKey) {
         const element = document.querySelector(
@@ -1220,15 +1228,6 @@ const PostJob = () => {
             value={inputFields?.name}
             onChange={(e) => setInputFields(prev => ({ ...prev, name: e.target.value }))}
           />
-          {/* {(addModalState.type === 'Add company' || addModalState.type === "Add companies") && (
-            <CustomFileInput
-              value={inputFields?.logo_url}
-              required
-              label='Logo'
-              onChange={(file) => handleFileUpload2(file)}
-            />
-
-          )} */}
         </div>
       </Modal>
     </div>
