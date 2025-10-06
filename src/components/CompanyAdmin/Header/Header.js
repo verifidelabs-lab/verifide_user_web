@@ -1,10 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { BiMenu, BiX } from 'react-icons/bi';
-import { FiChevronDown } from 'react-icons/fi';
-import HeaderJson from './Header.json';
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { BiMenu, BiX } from "react-icons/bi";
+import { FiChevronDown } from "react-icons/fi";
+import HeaderJson from "./Header.json";
 import { RiNotification2Fill } from "react-icons/ri";
-import { clearAllData, clearCompanySession, getCookie, removeCookie } from '../../utils/cookieHandler';
+import {
+  clearAllData,
+  clearCompanySession,
+  getCookie,
+  removeCookie,
+} from "../../utils/cookieHandler";
 const ROLES = {
   SUPER_ADMIN: 1,
   ADMIN: 2,
@@ -16,19 +21,23 @@ const ROLES = {
   INSTITUTIONS_ADMIN: 8,
 };
 
-const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
-  console.log('this is the company details', companiesProfileData)
+const Header = ({
+  adminProfileData,
+  companiesProfileData,
+  instituteProfileData,
+}) => {
+  console.log("this is the company details", companiesProfileData);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dropdownRef = useRef();
   const topRef = useRef(null);
   const scrollToTop = () => {
     if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth' });
+      topRef.current.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
   const userRole = Number(getCookie("COMPANY_ROLE"));
@@ -38,15 +47,14 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
         setIsDropdownOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleRemoveCookie = () => {
-    clearCompanySession()
-    navigate("/user/feed")
-  }
-
+    clearCompanySession();
+    navigate("/user/feed");
+  };
 
   const getBasePath = () => {
     switch (userRole) {
@@ -82,17 +90,19 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
     }
   };
 
-  const profileData =
-    [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
-      ? adminProfileData
-      : [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
-        ? companiesProfileData
-        : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-          ? instituteProfileData
-          : {};
-  console.log("htis is the profiledata", profileData)
+  const profileData = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
+    ? adminProfileData
+    : [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
+    ? companiesProfileData
+    : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+    ? instituteProfileData
+    : {};
+  console.log("htis is the profiledata", profileData);
   return (
-    <div className="bg-white z-10 flex-shrink-0 h-16 border-b border-black border-opacity-10 " ref={topRef}>
+    <div
+      className="bg-white z-10 flex-shrink-0 h-16 border-b border-black border-opacity-10 "
+      ref={topRef}
+    >
       <div className="flex-1 px-4 flex justify-between items-center h-full">
         <div className="flex items-center gap-4"></div>
         <div className="flex items-center gap-4">
@@ -105,7 +115,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
           <nav className="hidden lg:flex lg:gap-14 md:gap-3 2xl:ps-0 xl:ps-8 md:ps-10 lg:ps-0 flex-1 justify-center">
             {HeaderJson?.headerItems?.map((item, index) => {
               const isActive = location.pathname === item?.path;
-              const isHome = item?.path === '/';
+              const isHome = item?.path === "/";
 
               return (
                 <Link
@@ -116,10 +126,11 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                       scrollToTop();
                     }
                   }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
-                    ? 'font-semibold text-[#000000E6] border-b-2 border-blue-600'
-                    : 'font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600'
-                    } pb-1`}
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
+                    isActive
+                      ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                      : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -129,7 +140,10 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
         </div>
 
         <div className="flex items-center gap-4">
-          <div className='hover:text-blue-600 cursor-pointer hover:bg-gray-200 hover:rounded-full hover:p-1 mr-4' onClick={() => navigate(`/${basePath}/notification`)}>
+          <div
+            className="hover:text-blue-600 cursor-pointer hover:bg-gray-200 hover:rounded-full hover:p-1 mr-4"
+            onClick={() => navigate(`/${basePath}/notification`)}
+          >
             <RiNotification2Fill size={22} />
           </div>
           <div className="relative" ref={dropdownRef}>
@@ -138,7 +152,8 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <img
-                src={profileData?.logo_url ||
+                src={
+                  profileData?.logo_url ||
                   "https://media.istockphoto.com/id/2186780921/photo/young-woman-programmer-focused-on-her-work-coding-on-dual-monitors-in-a-modern-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=SAF-y0Rjzil_3FQi2KmAyXOAKYHaHRRbNxjQXnMsObk="
                 }
                 alt="User"
@@ -150,10 +165,14 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                 }}
               />
               <div className="text-left">
-                <p className="text-sm font-medium text-gray-900 leading-none">{profileData?.first_name || profileData?.last_name
-                  ? `${profileData?.first_name || ""} ${profileData?.last_name || ""}`.trim()
-                  : getDefaultName(profileData?.role_ids?.[0])}</p>
-                <p className="text-xs text-gray-500">{profileData?.username ?? "N/A"}</p>
+                <p className="text-sm font-medium text-gray-900 leading-none">
+                  {profileData?.display_name
+                    ? `${profileData?.display_name || ""} `.trim()
+                    : getDefaultName(profileData?.role_ids?.[0])}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {profileData?.username ?? "N/A"}
+                </p>
               </div>
               <FiChevronDown className="text-gray-500" />
             </button>
@@ -177,12 +196,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                   onClick={handleRemoveCookie}
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
-                  <Link
-                    to={`/user/feed`}
-                    onClick={handleRemoveCookie}
-
-
-                  >
+                  <Link to={`/user/feed`} onClick={handleRemoveCookie}>
                     Switch to User
                   </Link>
                 </button>
@@ -193,7 +207,6 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                   Logout
                 </button>
                 {/* )} */}
-
               </div>
             )}
           </div>
@@ -208,10 +221,11 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
               <Link
                 key={index}
                 to={item?.path}
-                className={`block px-3 py-2 text-[16px] transition duration-200 ${isActive
-                  ? 'font-semibold text-[#000000] border-b-2 border-blue-600'
-                  : 'font-medium text-[#000000]'
-                  } hover:border-b-2 hover:border-blue-600 hover:text-blue-600`}
+                className={`block px-3 py-2 text-[16px] transition duration-200 ${
+                  isActive
+                    ? "font-semibold text-[#000000] border-b-2 border-blue-600"
+                    : "font-medium text-[#000000]"
+                } hover:border-b-2 hover:border-blue-600 hover:text-blue-600`}
               >
                 {item?.name}
               </Link>
