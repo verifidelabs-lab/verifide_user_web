@@ -158,7 +158,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
         {/* Sidebar Menu */}
         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
           <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto bg-white shadow-sm overflow-hidden">
-            <div className='flex justify-center items-center gap-5 p-2'>
+            <div className='flex justify-center items-center gap-2 p-2'>
               <div>
 
                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">

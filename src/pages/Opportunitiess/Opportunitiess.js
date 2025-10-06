@@ -1194,7 +1194,7 @@ const Opportunities = () => {
               onChange={(e) => handleChange("select_date", e.target.value)}
               className={` h-10`}
               error={errors?.select_date}
-            />
+              allowPastDate = {false} />
             <CustomDateInput
               label="Select Time"
               required
