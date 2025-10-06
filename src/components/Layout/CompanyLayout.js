@@ -152,7 +152,10 @@ function CompanyLayout() {
   const basePath = getBasePath();
 
   const [adminProfileData, setAdminProfileData] = useState({});
-  const [companiesProfileData, setCompanyProfileData] = useState({});
+  // const [companiesProfileData, setCompanyProfileData] = useState({});
+    const companiesProfileData = useSelector(
+      (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
+    );
   const [instituteProfileData, setinstituteProfileData] = useState({});
   const [, setModuleName] = useState('')
   console.log("this is te profileData", companiesProfileData)
@@ -165,11 +168,7 @@ function CompanyLayout() {
           }
         })
       } else if (userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) {
-        await dispatch(companiesProfile()).then((res) => {
-          if (res?.payload?.data) {
-            setCompanyProfileData(res?.payload?.data)
-          }
-        })
+        await dispatch(companiesProfile())
       } else if (userRole === ROLES.INSTITUTIONS || userRole === ROLES.INSTITUTIONS_ADMIN) {
         await dispatch(instituteProfile()).then((res) => {
           if (res?.payload?.data) {

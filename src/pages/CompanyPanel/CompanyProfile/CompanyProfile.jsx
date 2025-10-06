@@ -22,7 +22,8 @@ import {
   updateProfileCompanies,
   companiesProfile,
   instituteProfile,
-  companyIndustries
+  companyIndustries,
+  setCompaniesProfileData
 } from '../../../redux/CompanySlices/CompanyAuth'
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
@@ -295,57 +296,73 @@ const CompanyProfile = ({
 
     return newErrors;
   };
+  const handleProfileSubmit = async (overrideData = null) => {
+    // ✅ Merge formData + overrideData (banner updates)
+    const dataToUse = { ...formData, ...(overrideData || {}) };
 
-  const handleProfileSubmit = async () => {
-    if (!validateProfileForm()) {
+    // ✅ Only validate on full form submit (not banner/logo)
+    if (!overrideData && !validateProfileForm()) {
       toast.error("Please fix the validation errors");
       return;
     }
+
     try {
-      setIsLoading(true)
-      let res
+      setIsLoading(true);
+      let res;
+
       if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
         const apiPayload = {
-          name: formData.name,
-          display_name: formData.display_name,
-          description: formData.description,
-          website_url: formData.website_url,
-          logo_url: formData.logo_url,
-          banner_image_url: formData.banner_image_url,
-          industry: formData.industry.map((ind) => ind._id) || [],
-          country_code: formData.country_code,
-          phone_no: formData.phone_no,
-          company_size: formData.company_size,
-          company_type: formData.company_type,
-          headquarters: formData.headquarters,
-          founded_year: formData.founded_year
-            ? Math.floor(
-              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-            )
+          name: dataToUse.name,
+          display_name: dataToUse.display_name,
+          description: dataToUse.description,
+          website_url: dataToUse.website_url,
+          logo_url: dataToUse.logo_url,
+          banner_image_url: dataToUse.banner_image_url,
+          industry: dataToUse.industry?.map((ind) => ind._id) || [],
+          country_code: dataToUse.country_code,
+          phone_no: dataToUse.phone_no,
+          company_size: dataToUse.company_size,
+          company_type: dataToUse.company_type,
+          headquarters: dataToUse.headquarters,
+          founded_year: dataToUse.founded_year
+            ? Math.floor(new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000)
             : null,
-          specialties: (formData.specialties || [])
+          specialties: (dataToUse.specialties || [])
             .map((s) => String(s || "").trim())
             .filter((s) => s !== ""),
-          employee_count: formData.employee_count
-            ? Number(formData.employee_count)
+          employee_count: dataToUse.employee_count
+            ? Number(dataToUse.employee_count)
             : null,
-          linkedin_page_url: formData.linkedin_page_url,
-          email: formData.email,
-
+          linkedin_page_url: dataToUse.linkedin_page_url,
+          email: dataToUse.email,
         };
 
-        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap()
+        // ✅ Now the payload includes the new banner value
+        res = await dispatch(updateProfileCompanies(apiPayload)).unwrap();
+
+        // ✅ update Redux immediately
+        dispatch(setCompaniesProfileData(apiPayload));
       }
 
       toast.success(res?.message || "Profile updated successfully");
-      fetchData();
-      setIsProfileModalOpen(false);
-      setIsLoading(false);
+
+      // ✅ Refresh UI after full profile update only
+      if (!overrideData) {
+        fetchData();
+        setIsProfileModalOpen(false);
+      } else {
+        // For banner updates, also update local formData
+        setFormData(dataToUse);
+      }
+
     } catch (error) {
-      toast.error(error || "Failed to update profile");
+      toast.error(error?.message || "Failed to update profile");
+    } finally {
       setIsLoading(false);
     }
-  }
+  };
+
+
 
   const company_type = [
     { value: "public", label: "Public" },
@@ -365,7 +382,7 @@ const CompanyProfile = ({
     { value: "5001-10000", label: "5001-10000" },
   ];
   const handleImageUpload = async (file, fieldName = 'logo_url') => {
-    if (!file) return
+    if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
       toast.error("File size must be less than 2MB");
@@ -382,13 +399,23 @@ const CompanyProfile = ({
       setIsImageUploading(true);
       const result = await uploadImageDirectly(file, "PROFILES");
       toast.success(result?.message);
-      setFormData((prev) => ({ ...prev, [fieldName]: result?.data?.imageURL }));
+
+      // Update local form data instantly
+      setFormData((prev) => ({
+        ...prev,
+        [fieldName]: result?.data?.imageURL,
+      }));
+
+      // ✅ Return result so caller can use it
+      return result;
     } catch (error) {
       toast.error(error || "Failed to upload image");
+      throw error; // propagate to caller
     } finally {
       setIsImageUploading(false);
     }
-  }
+  };
+
   const getSelectedIndustry = () => {
     if (!formData?.industry || !allIndustry) return [];
     return formData?.industry?.map(industry => {
@@ -1170,7 +1197,7 @@ const CompanyProfile = ({
 
       // actual upload logic
       const uploaded = await handleImageUpload(file, "banner_image_url");
-
+      console.log("Thisis the updloaded", uploaded)
       // auto-update backend profile once upload success
       if (uploaded?.data?.imageURL) {
         await handleProfileUpdatee({
@@ -1278,20 +1305,17 @@ const CompanyProfile = ({
   };
 
   const Header = () => (
-
     <EditableBanner
       agencyData={agencyData}
       userRole={userRole}
       handleImageUpload={handleImageUpload}
       handleProfileUpdatee={async (updateFields) => {
-        // call backend with only the changed fields
-        const payload = { ...formData, ...updateFields };
-        setFormData(payload);
-        await handleProfileSubmit(payload);
+        await handleProfileSubmit(updateFields); // ✅ works with overrideData now
       }}
       isBannerUploading={isImageUploading}
     />
   );
+
 
   const renderActiveTab = () => {
     switch (activeTab) {

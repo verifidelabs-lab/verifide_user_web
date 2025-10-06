@@ -16,7 +16,7 @@ const getStatus = (startDate, endDate) => {
   }
 };
 const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVote, accessMode,
-  isLoading2
+  isLoading2, IsCompany  
 }) => {
   const status = getStatus(quest.startDate, quest.endDate);
   const [votedOption, setVotedOption] = useState(null);
@@ -200,7 +200,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
           )}
 
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-            {accessMode === "6" && (
+            {accessMode === "6"|| IsCompany === "company"   && (
               <button
                 className="text-xs text-gray-500 hover:text-blue-600 transition-colors flex items-center"
                 onClick={() => onViewEngagement(quest)}
@@ -212,7 +212,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
             <div className="flex items-center gap-2">
               {(quest.type === "sign-up" || quest.type === "feedbacks") && (
                 <>
-                  {accessMode === "6" ||
+                  {accessMode === "6" || IsCompany === "company" ||
                   status === "Ended" ||
                   quest?.isFullyFeedback
                     ? null
@@ -233,13 +233,13 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
               )}
 
               {quest.type === "survey-polls" &&
-                accessMode !== "6" &&
+                accessMode !== "6" &&  IsCompany !== "company"  &&
                 status === "Ongoing" &&
                 !quest?.isVoted && (
                   <SurveyButton onClick={() => setShowForm(true)} />
                 )}
 
-              {accessMode === "6" && (
+              {accessMode === "6" || IsCompany === "company"  && (
                 <>
                   {(status === "Upcoming" || status === "Ended") && (
                     <button

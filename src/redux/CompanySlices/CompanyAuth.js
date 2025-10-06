@@ -69,6 +69,15 @@ export const institutionsSidebarPermissions = createApiThunkPrivate(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    // ✅ manually update companies profile data in store
+    setCompaniesProfileData: (state, action) => {
+      state.companiesProfileData = {
+        ...state.companiesProfileData,
+        ...action.payload,
+      };
+    },
+  },
   extraReducers: builder => {
     createExtraReducersForThunk(builder, adminLogin, 'adminLoginData')
     createExtraReducersForThunk(builder, adminProfile, 'adminProfileData')
@@ -84,5 +93,5 @@ const authSlice = createSlice({
 
   }
 })
-
+export const { setCompaniesProfileData } = authSlice.actions;
 export default authSlice.reducer

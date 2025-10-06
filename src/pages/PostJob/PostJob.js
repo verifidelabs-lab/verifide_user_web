@@ -773,6 +773,29 @@ const PostJob = () => {
     }
     return value || fallback;
   };
+  const formatScreeningQuestionsForSubmit = (questions) => {
+    return questions.map(q => {
+      const base = {
+        question: q.question,
+        question_type: q.question_type,
+        verification_type: q.verification_type,
+        time_limit: q.time_limit,
+        option_format: q.option_format || "alphabetically", // ✅ always present
+      };
+
+      if (['single_choice', 'multi_choice'].includes(q.question_type)) {
+        return {
+          ...base,
+          options: q.options,
+          correct_options: q.correct_options,
+
+        };
+      }
+
+      // For theoretical, only send base keys
+      return base;
+    });
+  };
 
   const handleSubmit = async () => {
     console.log("this is te error", validateStep(3))
@@ -804,7 +827,7 @@ const PostJob = () => {
       required_skills: formData?.required_skills || [],
       work_location: formData?.address || "",
       isDisable: false,
-      screening_questions: screeningQuestions,
+      screening_questions: formatScreeningQuestionsForSubmit(screeningQuestions),
       start_date: convertToTimestamp(formData?.start_date) || "",
       end_date: convertToTimestamp(formData?.end_date) || "",
       isShareAsPost: formData?.isShareAsPost,

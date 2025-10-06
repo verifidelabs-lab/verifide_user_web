@@ -41,7 +41,7 @@ import { FiMoreVertical } from "react-icons/fi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Modal2 from "../../components/ui/Modal/Modal2";
 
-const EmptyState = ({ activeTab, onCreateQuest, accessMode }) => (
+const EmptyState = ({ activeTab, onCreateQuest, accessMode ,IsCompany}) => (
   <div className="flex flex-col items-center justify-center mt-12 py-16 bg-white rounded-2xl shadow-sm border border-gray-200">
     <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-6 rounded-full mb-6">
       <BiTrophy className="h-10 w-10 text-blue-600" />
@@ -54,7 +54,7 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode }) => (
         ? "Start by creating your first Quest to engage your community."
         : `You don't have any ${activeTab.toLowerCase()} quests right now.`}
     </p>
-    {accessMode === "6" && (
+    {accessMode === "6" || IsCompany === "company" && (
       <button
         onClick={onCreateQuest}
         className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-6
@@ -376,6 +376,8 @@ const ShortsClone = () => {
               onDelete={handleDelete}
               onVote={handleVote}
               accessMode={accessMode}
+            IsCompany={IsCompany}
+
               data-aos="fade-up"
               data-aos-delay={index * 80}
               isLoading2={isLoading2}
@@ -388,6 +390,7 @@ const ShortsClone = () => {
             activeTab={activeTab}
             onCreateQuest={handleCreateQuest}
             accessMode={accessMode}
+            IsCompany={IsCompany}
             data-aos="zoom-in"
           />
         )
