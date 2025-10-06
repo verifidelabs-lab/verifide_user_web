@@ -18,6 +18,7 @@ import UserDetails from "./pages/UserDetails";
 import UserCertificate from "./pages/UserCertificate";
 
 import { getCookie } from "./components/utils/cookieHandler";
+import CompanyDetails from "./pages/CompanyDetails";
 
 const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
@@ -96,6 +97,7 @@ const App = () => {
           <Route path="/post-view/:id" element={<PrivateRoute component={Userpost} />} />
           <Route path="/post-view2" element={<PrivateRoute component={Userpost2} />} />
           <Route path="/user-details/:username/:id?" element={<PrivateRoute component={UserDetails} />} />
+          <Route path="/company-details/:username/:id?" element={<PrivateRoute component={CompanyDetails} />} />
           <Route path="/certtificate-view/:id" element={<PrivateRoute component={UserCertificate} />} />
           <Route path="/post-view/:id" element={<PrivateRoute component={PostDetailsPage} />} />
 

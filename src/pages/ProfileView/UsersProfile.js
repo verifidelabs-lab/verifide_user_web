@@ -77,7 +77,7 @@ const ProfileCard = ({ formData, handleResumeDownload }) => {
         )}
         <div className="flex flex-wrap gap-2 mt-3">
           {profile?.frame_status !== "none" && (
-            <button className="border border-gray-300 text-sm px-3 py-1 rounded-md hover:bg-gray-100 font-medium">
+            <button className="border border-gray-300 text-sm px-3 py-1 text-blue-600 rounded-md hover:bg-gray-100 font-medium">
               {frameStatusChange(profile?.frame_status)}
             </button>
           )}

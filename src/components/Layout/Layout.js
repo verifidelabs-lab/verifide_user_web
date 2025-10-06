@@ -227,8 +227,11 @@ function Layout() {
               <Route path="/assessment/:token?" element={<Index />} />
               <Route path="/posts" element={<Posts profileData={profileData} />} />
               <Route path="/connections" element={<Connections profileData={profileData} />} />
+              {/* For User details Page  */}
               <Route path="/profile/:first_name/*" element={<UsersProfile currentUserId={profileData?.getProfileData
                 ?.data?.data?._id || null} />} />
+              {/* For Company details Page  */}
+
               <Route path="/view-details/:name/:id" element={<CompanyInstituteView />} />
               <Route path="/quest" element={<Quest profileData={profileData} />} />
               <Route path="/quest/create-your-quest/:id?" element={<CreateQuest />} />

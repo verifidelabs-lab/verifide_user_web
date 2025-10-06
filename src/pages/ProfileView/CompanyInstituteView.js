@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { followUnfollowUsers, viewCompanyInstituteProfile } from "../../redux/Users/userSlice";
+import {
+  followUnfollowUsers,
+  viewCompanyInstituteProfile,
+} from "../../redux/Users/userSlice";
 import {
   BiPhoneIncoming,
   BiBuilding,
@@ -12,30 +15,36 @@ import {
   BiCalendar,
 } from "react-icons/bi";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import { MdEmail, MdGroups } from "react-icons/md";
+import { MdEmail, MdGroups, MdOutlineContentCopy } from "react-icons/md";
 import { FaLinkedin } from "react-icons/fa";
 import Button from "../../components/ui/Button/Button";
 import { BsPersonFillAdd } from "react-icons/bs";
 
 function capitalizeWords(str = "") {
-  return str
-    .toLowerCase()
-    .replace(/\b\w/g, char => char.toUpperCase());
+  return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 const CompanyInstituteView = () => {
   const { name, id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [imageErrors, setImageErrors] = useState({
     banner: false,
-    logo: false
+    logo: false,
   });
   const [followActionLoading, setFollowActionLoading] = useState(false);
+  const handleResumeDownload = async (data) => {
+    const url = `https://dev-verifide.verifide.xyz/company-details/${info?.display_name}/${data?._id}`;
 
-
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("URL copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
   const fetchOrgData = async () => {
     try {
       setLoading(true);
@@ -55,10 +64,15 @@ const CompanyInstituteView = () => {
   }, []);
 
   const handleImageError = (type) => {
-    setImageErrors(prev => ({ ...prev, [type]: true }));
+    setImageErrors((prev) => ({ ...prev, [type]: true }));
   };
 
-  const handleFollowUnfollow = async (target_id, target_model, currentStatus, name) => {
+  const handleFollowUnfollow = async (
+    target_id,
+    target_model,
+    currentStatus,
+    name
+  ) => {
     try {
       setFollowActionLoading(true);
 
@@ -71,7 +85,9 @@ const CompanyInstituteView = () => {
 
       if (!response.error) {
         const actionText = currentStatus ? "Unfollowed" : "Followed";
-        toast.success(`${capitalizeWords(name || target_model)} successfully ${actionText}.`);
+        toast.success(
+          `${capitalizeWords(name || target_model)} successfully ${actionText}.`
+        );
 
         setData((prev) => ({ ...prev, isFollowed: !currentStatus }));
       } else {
@@ -85,7 +101,6 @@ const CompanyInstituteView = () => {
       setFollowActionLoading(false);
     }
   };
-
 
   // Loading skeleton
   if (loading) {
@@ -112,7 +127,7 @@ const CompanyInstituteView = () => {
 
         {/* Stats Skeleton */}
         <div className="grid sm:grid-cols-3 gap-6 mt-8">
-          {[1, 2, 3].map(item => (
+          {[1, 2, 3].map((item) => (
             <div key={item} className="bg-white p-4 rounded-xl shadow border">
               <div className="h-5 bg-gray-200 rounded w-1/2 mb-2"></div>
               <div className="h-8 bg-gray-200 rounded w-1/3"></div>
@@ -127,28 +142,42 @@ const CompanyInstituteView = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center">
         <IoAlertCircleOutline className="w-16 h-16 text-gray-400 mb-4" />
-        <h2 className="text-2xl font-semibold text-gray-700 mb-2">Organization Not Found</h2>
+        <h2 className="text-2xl font-semibold text-gray-700 mb-2">
+          Organization Not Found
+        </h2>
         <p className="text-gray-500 max-w-md">
-          We couldn't find the organization you're looking for. It may have been removed or you may have followed an invalid link.
+          We couldn't find the organization you're looking for. It may have been
+          removed or you may have followed an invalid link.
         </p>
       </div>
     );
   }
 
   const info = data?.info || {};
+  const companydata = data || {};
   const isInstitute = data?.type === "institutions";
-
 
   return (
     <div className="p-8">
-
       <div>
         <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
-          <span className="text-gray-600 cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
+          <span
+            className="text-gray-600 cursor-pointer"
+            onClick={() => navigate(`/user/feed`)}
+          >
+            Home
+          </span>
           <span className="text-gray-400">›</span>
-          <span className="text-gray-600 cursor-pointer" onClick={() => navigate(`/user/suggested-users?tab=${data?.type}`)}>Suggested Profiles</span>
+          <span
+            className="text-gray-600 cursor-pointer"
+            onClick={() => navigate(`/user/suggested-users?tab=${data?.type}`)}
+          >
+            Suggested Profiles
+          </span>
           <span className="text-gray-400">›</span>
-          <span className="font-medium text-blue-600 cursor-pointer">{capitalizeWords(info?.name || data?.type)}</span>
+          <span className="font-medium text-blue-600 cursor-pointer">
+            {capitalizeWords(info?.name || data?.type)}
+          </span>
         </nav>
       </div>
       {/* Banner */}
@@ -178,7 +207,7 @@ const CompanyInstituteView = () => {
                 src={info.logo_url}
                 alt={info.name || "logo"}
                 className="w-full h-full object-cover"
-                onError={() => handleImageError('logo')}
+                onError={() => handleImageError("logo")}
               />
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 text-gray-400">
@@ -199,7 +228,19 @@ const CompanyInstituteView = () => {
                   </span>
                 )}
               </div>
-              <Button type="button" onClick={() => handleFollowUnfollow(data?._id, data?.type, data?.isFollowed, data?.info?.display_name || data?.info?.name)} loading={followActionLoading} icon={<BsPersonFillAdd />}>
+              <Button
+                type="button"
+                onClick={() =>
+                  handleFollowUnfollow(
+                    data?._id,
+                    data?.type,
+                    data?.isFollowed,
+                    data?.info?.display_name || data?.info?.name
+                  )
+                }
+                loading={followActionLoading}
+                icon={<BsPersonFillAdd />}
+              >
                 {!data.isFollowed ? "Follow" : "Unfollow"}
               </Button>
             </div>
@@ -207,8 +248,6 @@ const CompanyInstituteView = () => {
             {info?.name && info.name !== info?.display_name && (
               <p className="text-gray-500 mt-1">{info?.name}</p>
             )}
-
-
 
             {/* Quick Stats */}
             <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-600">
@@ -233,6 +272,12 @@ const CompanyInstituteView = () => {
                 </span>
               )}
             </div>
+            <button
+              className="border border-gray-300 text-sm px-3 py-1 rounded-md hover:bg-gray-100 font-medium flex items-center gap-1"
+              onClick={() => handleResumeDownload(companydata)}
+            >
+              Profile URL <MdOutlineContentCopy />
+            </button>
           </div>
         </div>
 
@@ -240,7 +285,9 @@ const CompanyInstituteView = () => {
           {/* Description */}
           {info?.description && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 capitalize mb-2">About</h2>
+              <h2 className="text-lg font-semibold text-gray-800 capitalize mb-2">
+                About
+              </h2>
               <p className="text-gray-700 leading-relaxed">
                 {info.description}
               </p>
@@ -262,7 +309,7 @@ const CompanyInstituteView = () => {
                     rel="noreferrer"
                     className="text-blue-600 hover:underline truncate block"
                   >
-                    {info.website_url.replace(/^https?:\/\//, '')}
+                    {info.website_url.replace(/^https?:\/\//, "")}
                   </a>
                 </div>
               </div>
@@ -275,7 +322,10 @@ const CompanyInstituteView = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Phone</p>
-                  <a href={`tel:${info.phone_no}`} className="text-gray-800 hover:text-blue-600">
+                  <a
+                    href={`tel:${info.phone_no}`}
+                    className="text-gray-800 hover:text-blue-600"
+                  >
                     {info.phone_no}
                   </a>
                 </div>
@@ -289,7 +339,10 @@ const CompanyInstituteView = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
-                  <a href={`mailto:${info.email}`} className="text-gray-800 hover:text-blue-600">
+                  <a
+                    href={`mailto:${info.email}`}
+                    className="text-gray-800 hover:text-blue-600"
+                  >
                     {info.email}
                   </a>
                 </div>
@@ -371,7 +424,8 @@ const CompanyInstituteView = () => {
               {isInstitute ? "Specialties" : "Industries"}
             </h2>
             <div className="flex flex-wrap gap-2">
-              {(isInstitute ? info?.specialties : info?.industries)?.length > 0 ? (
+              {(isInstitute ? info?.specialties : info?.industries)?.length >
+              0 ? (
                 (isInstitute ? info.specialties : info.industries).map(
                   (item, idx) => (
                     <span
@@ -383,7 +437,9 @@ const CompanyInstituteView = () => {
                   )
                 )
               ) : (
-                <p className="text-gray-500">No {isInstitute ? "specialties" : "industries"} listed</p>
+                <p className="text-gray-500">
+                  No {isInstitute ? "specialties" : "industries"} listed
+                </p>
               )}
             </div>
           </div>
