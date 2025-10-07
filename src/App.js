@@ -99,7 +99,7 @@ const App = () => {
           <Route path="/user-details/:username/:id?" element={<PrivateRoute component={UserDetails} />} />
           <Route path="/company-details/:username/:id?" element={<PrivateRoute component={CompanyDetails} />} />
           <Route path="/certtificate-view/:id" element={<PrivateRoute component={UserCertificate} />} />
-          <Route path="/post-view/:id" element={<PrivateRoute component={PostDetailsPage} />} />
+          {/* <Route path="/post-view/:id" element={<PrivateRoute component={PostDetailsPage} />} /> */}
 
           {/* Private Company Routes */}
           <Route path="/company/*" element={<CompanyPrivateRoute component={CompanyLayout} />} />

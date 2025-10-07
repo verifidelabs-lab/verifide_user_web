@@ -3,15 +3,31 @@ import { ImSpinner2 } from "react-icons/im";
 
 const PersonCard = ({ person, handleConnect, handleConnectUser, isLoading, isConnected }) => {
   console.log("this is person", person)
+  const getLogo = (url) => {
+    return url && url.trim() !== ""
+      ? url
+      : "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
+  };
   return (
+
     <div className="flex items-center justify-between p-2 transition-colors hover:bg-gray-50">
       <div className="flex items-center space-x-3">
         <img
-          src={person?.logo_url || '/0684456b-aa2b-4631-86f7-93ceaf33303c.png'}
-          alt={person.name}
+          src={
+            person?.logo_url && person.logo_url.trim() !== ""
+              ? person.logo_url
+              : "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
+          }
+          alt={person?.name || "Company"}
           className="object-contain shadow lg:w-11 lg:h-11 md:w-10 md:h-10 border rounded-full cursor-pointer"
           onClick={() => handleConnect(person)}
+          onError={(e) => {
+            e.target.onerror = null; // Prevent infinite loop if fallback also fails
+            e.target.src = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
+          }}
         />
+
+
         <div className="break-all text-wrap">
           <h3
             className="font-medium lg:text-[16px] md:text-[14px] text-[12px] text-[#212121] capitalize cursor-pointer w-48"

@@ -6,7 +6,7 @@ import { useNavigate, } from 'react-router-dom';
 import { toast } from 'sonner';
 
 
-const PeopleToConnect = ({ data, activeTab, setActiveTab }) => {
+const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [connectedIds, setConnectedIds] = useState([]);
@@ -69,6 +69,8 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab }) => {
 
           if (res) {
             dispatch(suggestedUser({ page: 1, size: 10, type: data?.user_path.toLowerCase() }));
+
+
             toast.success(res?.message || "Action completed successfully");
           }
           break;
@@ -86,6 +88,9 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab }) => {
           }
           break;
         }
+      }
+      if (typeof fetchPosts === "function") {
+        await fetchPosts(1, "initial");
       }
     } catch (error) {
       toast.error(error);

@@ -491,7 +491,7 @@ const Userpost = () => {
             </>
           ) : (
             <Button>
-              <Link to={`https://dev-verified.jamsara.com`}
+              <Link to={`https://dev-verifide.verifide.xyz/login`}
                 onClick={() => window.localStorage.setItem("postId", id)}>Sign In</Link>
             </Button>
           )}

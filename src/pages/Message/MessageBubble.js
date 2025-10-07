@@ -340,9 +340,9 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
   const handleCopyLink = useCallback((post) => {
     // console.log(post)
     if (post) {
-      navigator.clipboard.writeText(`https://dev-verifide.verifide.xyz/post-view/${post}`);
+      navigator.clipboard.writeText(`https://dev-verifide.verifide.xyz/postView/${post}`);
       // http://localhost:3000/postView/68a2f34d189e623973cda851
-      navigate(`/post-view/${post}`)
+      navigate(`/postView/${post}`)
       toast.success('Link copied to clipboard');
     } else {
       toast.error('Invalid post data');

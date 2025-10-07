@@ -863,6 +863,7 @@ const Home = () => {
               data={suggestedUsers?.data?.list || []}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
+              fetchPosts={fetchPosts}
             />
           </div>
         </div>
