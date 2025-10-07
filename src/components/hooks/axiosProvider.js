@@ -2,8 +2,8 @@ import axios from 'axios';
 import { getCookie, removeCookie } from '../utils/cookieHandler';
 import { CiNoWaitingSign } from 'react-icons/ci';
 
-// const isLive = false;
-const isLive = true
+const isLive = false;
+// const isLive = true
 
 
 export const apiUrl = isLive ? 'https://dev-verifide.verifide.xyz/api/v1/' : '192.168.43.208:5004/api/v1/';
