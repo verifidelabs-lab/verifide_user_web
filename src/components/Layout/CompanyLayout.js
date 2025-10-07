@@ -25,7 +25,7 @@ import CourseCategory from '../../pages/CompanyPanel/CourseManagement/CourseCate
 import Opportunities from '../../pages/Opportunitiess/Opportunitiess';
 import PendingRequests from '../../pages/CompanyPanel/RequestManagement/PendingRequests/PendingRequests';
 import NotificationInterface from '../../pages/CompanyPanel/Notitifcation/Notification';
-import PostJob from '../../pages/PostJob/PostJob';
+import PostJob from '../../pages/CompanyPanel/PostJob/PostJob';
 import Posts from '../../pages/CompanyPanel/PostsManagement/Posts';
 import CreatePost from '../../pages/CompanyPanel/PostsManagement/CreatePost';
 import Quest from '../../pages/Quest/Quest';

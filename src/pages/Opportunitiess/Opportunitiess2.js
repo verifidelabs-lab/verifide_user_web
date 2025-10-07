@@ -6,12 +6,14 @@ import { masterIndustry, masterSkills, profileRoles, userJobs } from "../../redu
 import { useNavigate } from "react-router-dom";
 import StudentJobCard from "./components/StudentJobCard";
 import SkeletonJobCard from "../../components/Loader/SkeletonJobCard";
-import { arrayTransform, convertTimestampToDate } from "../../components/utils/globalFunction"; 
+import { arrayTransform, convertTimestampToDate } from "../../components/utils/globalFunction";
 import { getAllCompanies } from "../../redux/work/workSlice";
 import Pagination from "../../components/Pagination/Pagination";
 import NoDataFound from "../../components/ui/No Data/NoDataFound";
 import FilterSelect2 from "../../components/ui/Input/FilterSelect2";
 import { CiLocationOn } from "react-icons/ci";
+import Button from "../../components/ui/Button/Button";
+import { getCookie } from "../../components/utils/cookieHandler";
 
 
 
@@ -58,7 +60,7 @@ const Opportunitiess2 = () => {
   ];
   const allIndustryList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterIndustryData?.data?.data?.list)]
   const allProfileRoleList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.profileRolesData?.data?.data?.list)]
-  const allSkillsList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterSkillsData?.data?.data?.list)] 
+  const allSkillsList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterSkillsData?.data?.data?.list)]
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -201,7 +203,17 @@ const Opportunitiess2 = () => {
     }
   };
 
-
+  const handlePostJob = () => {
+    const isCompany = getCookie("ACTIVE_MODE");
+    const accessMode = Number(getCookie("ACCESS_MODE")); // make sure it's a number
+    if (isCompany === "company") {
+      navigate(`/company/post-job`);
+    } else if (accessMode === 6 || accessMode === 5) {
+      navigate(`/user/post-job`);
+    } else {
+      console.warn("Unknown mode, cannot navigate");
+    }
+  };
 
   return (
     <div className="bg-[#F6FAFD] min-h-screen flex justify-start place-items-start">
@@ -340,6 +352,13 @@ const Opportunitiess2 = () => {
               )}
             </div>
 
+            {/* <Button
+              type="button"
+              className="w-full sm:w-auto whitespace-nowrap"
+              onClick={handlePostJob}
+            >
+              Post a Job
+            </Button> */}
           </div>
         </div>
 

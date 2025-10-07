@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../../redux/CompanySlices/companiesSlice';
 import { uploadImageDirectly, uploadMultiImageDirectly, uploadVideoDirectly } from '../../../components/utils/globalFunction';
 import CustomInput from '../../../components/ui/InputAdmin/CustomInput';
-import CustomImageVideoUpload from '../../../components/ui/Input/CustomImageVideoUpload';
-import CustomVideoUpload from '../../../components/ui/Input/CustomVideoUpload';
-import EnhancedFileInput from '../../../components/ui/Input/CustomFileAndImage';
-
+ 
+import CustomImageVideoUpload from '../../../components/ui/InputAdmin/CustomImageVideoUpload';
+import EnhancedFileInput from '../../../components/ui/InputAdmin/CustomFileAndImage';
+import CustomVideoUpload from '../../../components/ui/InputAdmin/CustomVideoUpload';
 
 const CreatePost = () => {
   const dispatch = useDispatch();

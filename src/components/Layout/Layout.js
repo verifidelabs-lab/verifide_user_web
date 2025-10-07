@@ -195,7 +195,7 @@ function Layout() {
   return (
     <div className='flex  overflow-hidden  '>
       {
-        (location.pathname !== '/app/opportunities' && location.pathname !== '/user/terms-and-conditions') && (location.pathname !== '/user/course/recommended' && location.pathname !== "/user/opportunitiess") && (
+        (location.pathname !== '/app/opportunities' && location.pathname !== '/user/terms-and-conditions') && (location.pathname !== '/user/course/recommended'  ) && (
           <div className={`h-full ${navbarOpen ? "w-72 absolute md:relative transition ease-in-out delay-150" : "w-0 "}`}>
             <Sidebar openLogout={openLogout} setNavbarOpen={setNavbarOpen} navbarOpen={navbarOpen} profileData={profileData?.getProfileData?.data?.data}
               unreadCounts={unreadCounts} />

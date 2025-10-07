@@ -91,11 +91,11 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
             setComments(res.payload.data.list || []);
           }
         });
-        dispatch(getPostOnHome({ size: size, page: page, type: type })).then((res) => {
-          if (res?.payload?.data) {
-            setPosts(res.payload.data?.list || []);
-          }
-        });
+        // dispatch(getPostOnHome({ size: size, page: page, type: type })).then((res) => {
+        //   if (res?.payload?.data) {
+        //     setPosts(res.payload.data?.list || []);
+        //   }
+        // });
       }
       setLoading(false);
     });

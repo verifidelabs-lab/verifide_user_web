@@ -15,7 +15,7 @@ import FilterSelect2 from "../ui/Input/FilterSelect2";
 import CustomDateInput from "../ui/Input/CustomDateInput";
 import FileUpload from "../ui/Image/ImageUploadWithSelect";
 import { getCompaniesList } from "../../redux/slices/companiesSlice";
- 
+
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -174,8 +174,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     }
                   }}
                   className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
-                      ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                      : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                    ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                     } pb-1`}
                 >
                   {item?.name}
@@ -211,36 +211,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
               </Button>
               {modeDropdown && (
                 <div className="absolute md:right-0 right-[88px] md:mt-2 mt-16 w-32 bg-white border rounded shadow-lg z-50">
-                  <button
-                    className={`block w-full text-left px-4 py-2 text-sm ${accessLabel === "Recruiter"
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : "text-gray-700 hover:bg-blue-100"
-                      }`}
-                    onClick={() => {
-                      if (accessLabel !== "Recruiter") {
-                        switchAccountFunction("RECRUITERS");
-                      }
-                    }}
-                    disabled={accessLabel === "Recruiter"}
-                  >
-                    Recruiter
-                  </button>
 
-                  <button
-                    className={`block w-full text-left px-4 py-2 text-sm ${
-                      accessLabel === "User"
-                        ? "bg-blue-100 text-blue-700 font-medium"
-                        : "text-gray-700 hover:bg-blue-100"
-                    }`}
-                    onClick={() => {
-                      if (accessLabel !== "User") {
-                        switchAccountFunction("STUDENT");
-                      }
-                    }}
-                    disabled={accessLabel === "User"}
-                  >
-                    User
-                  </button>
                 </div>
               )}
             </div> */}
@@ -291,7 +262,35 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Profile
                   </Link>
+                  {/* <button
+                    className={`block w-full text-left px-4 py-2 text-sm ${accessLabel === "Recruiter"
+                      ? "bg-blue-100 text-blue-700 font-medium"
+                      : "text-gray-700 hover:bg-blue-100"
+                      }`}
+                    onClick={() => {
+                      if (accessLabel !== "Recruiter") {
+                        switchAccountFunction("RECRUITERS");
+                      }
+                    }}
+                    disabled={accessLabel === "Recruiter"}
+                  >
+                    Broadcast 
+                  </button>
 
+                  <button
+                    className={`block w-full text-left px-4 py-2 text-sm ${accessLabel === "User"
+                      ? "bg-blue-100 text-blue-700 font-medium"
+                      : "text-gray-700 hover:bg-blue-100"
+                      }`}
+                    onClick={() => {
+                      if (accessLabel !== "User") {
+                        switchAccountFunction("STUDENT");
+                      }
+                    }}
+                    disabled={accessLabel === "User"}
+                  >
+                    User
+                  </button> */}
                   {/* Mobile-only mode switcher inside profile dropdown */}
                   {/* <div className="block md:hidden border-t border-gray-200">
                     <div className="px-4 py-2">
@@ -449,8 +448,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 key={index}
                 to={item?.path}
                 className={`block px-3 py-2 text-base transition duration-200 ${isActive
-                    ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                  : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                   }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

@@ -91,7 +91,7 @@ const Home = () => {
     deletes: {},
   });
   const [activeTab, setActiveTab] = useState('user');
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(postData?.getPostOnHomeData?.data?.data?.list || []);
   const [loadingId, setLoadingId] = useState(false)
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,24 +105,25 @@ const Home = () => {
   const scrollContainerRef = useRef(null);
   const locomotiveScrollRef = useRef(null);
 
-  useEffect(() => {
-    const reduxPosts = postData?.getPostOnHomeData?.data?.data?.list || [];
-    if (reduxPosts.length > 0 && posts.length === 0) {
-      // Initialize posts from Redux store and set up local likes state
-      setPosts(reduxPosts);
+  // useEffect(() => {
+  //   const reduxPosts = postData?.getPostOnHomeData?.data?.data?.list || [];
+  //   if (reduxPosts.length > 0 && posts.length === 0) {
+  //     // Initialize posts from Redux store and set up local likes state
+  //     setPosts(reduxPosts);
 
-      // Initialize local likes based on the actual isLiked property from API
-      const initialLikes = {};
-      reduxPosts.forEach(post => {
-        // Use the isLiked property from the API response, not a derived state
-        initialLikes[post._id] = post.isLiked === true;
-      });
-      setLocalLikes(initialLikes);
-    }
-  }, [postData?.getPostOnHomeData?.data?.data?.list, posts.length]);
+  //     // Initialize local likes based on the actual isLiked property from API
+  //     const initialLikes = {};
+  //     reduxPosts.forEach(post => {
+  //       // Use the isLiked property from the API response, not a derived state
+  //       initialLikes[post._id] = post.isLiked === true;
+  //     });
+  //     setLocalLikes(initialLikes);
+  //   }
+  // }, [postData?.getPostOnHomeData?.data?.data?.list, posts.length],tabActive);
 
   const fetchPosts = useCallback(
     async (page = 1, direction = "initial") => {
+      console.log("This is the fetch post ", page, direction)
       if (isLoadingRef.current) return;
       isLoadingRef.current = true;
       setIsLoading(true);
@@ -364,7 +365,7 @@ const Home = () => {
       const res = await dispatch(getCommentOnPost({ post: postId, page: 1, size: 10 })).unwrap();
 
 
-       console.log(1111111111, res?.data, postId);
+      console.log(1111111111, res?.data, postId);
       setCommentsData((prev) => ({
         ...prev,
         [postId]: res?.data || { list: [], total: 0 }
@@ -372,8 +373,8 @@ const Home = () => {
 
       toast.success(res1?.message)
     } catch (error) {
-      const res = 
-       await dispatch(getCommentOnPost({ post: postId, page: 1, size: 10 })).unwrap();
+      const res =
+        await dispatch(getCommentOnPost({ post: postId, page: 1, size: 10 })).unwrap();
       setCommentsData((prev) => ({
         ...prev,
         [postId]: res?.data || { list: [], total: 0 }
