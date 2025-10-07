@@ -36,7 +36,7 @@ const CompanyInstituteView = () => {
   });
   const [followActionLoading, setFollowActionLoading] = useState(false);
   const handleResumeDownload = async (data) => {
-    const url = `https://dev-verifide.verifide.xyz/company-details/${info?.display_name}/${data?._id}`;
+    const url = `https://dev-verifide.verifide.xyz/user/view-details/companies/${data?._id}`;
 
     try {
       await navigator.clipboard.writeText(url);

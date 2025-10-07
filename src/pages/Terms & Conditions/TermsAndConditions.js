@@ -186,7 +186,7 @@ const TermsAndConditions = () => {
                                             />
                                         </div>
                                     </div>
-                                    {index < termsData.tableOfContents.length - 1 && (
+                                    {index < termsData?.tableOfContents?.length - 1 && (
                                         <hr className="mt-8 border-gray-200" />
                                     )}
                                 </div>

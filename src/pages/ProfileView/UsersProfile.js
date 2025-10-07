@@ -150,8 +150,8 @@ const UsersProfile = ({ currentUserId }) => {
   }
 
   const handleResumeDownload = async (data) => {
-    const url = `https://dev-verifide.verifide.xyz/user-details/${data?.username}/${data?._id}`;
-
+    const url = `https://dev-verifide.verifide.xyz/user/profile/${data?.first_name}/${data?._id}`;
+// http://localhost:3000/user/profile/ANI/68e399fef02690e96fc3fac8%20%20%20%20%20https://dev-verifide.verifide.xyz/user-details/aniverma/68e399fef02690e96fc3fac8
     try {
       await navigator.clipboard.writeText(url);
       toast.success("URL copied to clipboard!")
