@@ -74,7 +74,7 @@ const TermsAndConditions = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     // Use API data if available, otherwise use static data
-    const termsData = apiTermsData.length > 0 && apiTermsData || staticTermsData;
+    const termsData = apiTermsData?.length > 0 && apiTermsData || staticTermsData;
 
     useEffect(() => {
         dispatch(termsAndConditions());
@@ -186,7 +186,7 @@ const TermsAndConditions = () => {
                                             />
                                         </div>
                                     </div>
-                                    {index < termsData.tableOfContents.length - 1 && (
+                                    {index < termsData?.tableOfContents?.length - 1 && (
                                         <hr className="mt-8 border-gray-200" />
                                     )}
                                 </div>

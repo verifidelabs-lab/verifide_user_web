@@ -1,5 +1,11 @@
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { Toaster } from "sonner";
 
 import Login from "./pages/Login/Login";
@@ -25,21 +31,42 @@ const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 // PrivateRoute for user panel
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = getCookie("VERIFIED_TOKEN");
-  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" replace />;
+  const location = useLocation(); // current URL
+  return isAuthenticated ? (
+    <Component {...rest} />
+  ) : (
+    <Navigate
+      to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
+      replace
+    />
+  );
 };
 
 // CompanyPrivateRoute for company panel
 const CompanyPrivateRoute = ({ component: Component, ...rest }) => {
   const isUserAuthenticated = getCookie("VERIFIED_TOKEN");
   const isCompanyAuthenticated = getCookie("COMPANY_TOKEN");
+  const location = useLocation();
+
   if (!isUserAuthenticated) return <Navigate to="/login" replace />;
-  return isCompanyAuthenticated ? <Component {...rest} /> : <Navigate to="/company/login" replace />;
+
+  if (!isCompanyAuthenticated) {
+    return (
+      <Navigate
+        to={`/company/login?redirect=${encodeURIComponent(location.pathname)}`}
+        replace
+      />
+    );
+  }
+
+  return <Component {...rest} />;
 };
 
 // PublicRoute for pages like login/signup
 const PublicRoute = ({ children, allowCompanyLogin = false }) => {
   const isAuthenticated = getCookie("VERIFIED_TOKEN");
-  if (isAuthenticated && !allowCompanyLogin) return <Navigate to="/user/feed" replace />;
+  if (isAuthenticated && !allowCompanyLogin)
+    return <Navigate to="/user/feed" replace />;
   return children;
 };
 
@@ -52,7 +79,11 @@ const App = () => {
           <Route
             path="/"
             element={
-              getCookie("VERIFIED_TOKEN") ? <Navigate to="/user/feed" replace /> : <Navigate to="/login" replace />
+              getCookie("VERIFIED_TOKEN") ? (
+                <Navigate to="/user/feed" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
 
@@ -92,17 +123,44 @@ const App = () => {
 
           {/* Private User Routes */}
           <Route path="/user/*" element={<PrivateRoute component={Layout} />} />
-          <Route path="/education-details" element={<PrivateRoute component={EducationDetails} />} />
-          <Route path="/work-experience" element={<PrivateRoute component={WorkExperience} />} />
-          <Route path="/post-view/:id" element={<PrivateRoute component={Userpost} />} />
-          <Route path="/post-view2" element={<PrivateRoute component={Userpost2} />} />
-          <Route path="/user-details/:username/:id?" element={<PrivateRoute component={UserDetails} />} />
-          <Route path="/company-details/:username/:id?" element={<PrivateRoute component={CompanyDetails} />} />
-          <Route path="/certtificate-view/:id" element={<PrivateRoute component={UserCertificate} />} />
-          <Route path="/post-view/:id" element={<PrivateRoute component={PostDetailsPage} />} />
+          <Route
+            path="/education-details"
+            element={<PrivateRoute component={EducationDetails} />}
+          />
+          <Route
+            path="/work-experience"
+            element={<PrivateRoute component={WorkExperience} />}
+          />
+          <Route
+            path="/post-view/:id"
+            element={<PrivateRoute component={Userpost} />}
+          />
+          <Route
+            path="/post-view2"
+            element={<PrivateRoute component={Userpost2} />}
+          />
+          <Route
+            path="/user-details/:username/:id?"
+            element={<PrivateRoute component={UserDetails} />}
+          />
+          <Route
+            path="/company-details/:username/:id?"
+            element={<PrivateRoute component={CompanyDetails} />}
+          />
+          <Route
+            path="/certtificate-view/:id"
+            element={<PrivateRoute component={UserCertificate} />}
+          />
+          <Route
+            path="/post-view/:id"
+            element={<PrivateRoute component={PostDetailsPage} />}
+          />
 
           {/* Private Company Routes */}
-          <Route path="/company/*" element={<CompanyPrivateRoute component={CompanyLayout} />} />
+          <Route
+            path="/company/*"
+            element={<CompanyPrivateRoute component={CompanyLayout} />}
+          />
 
           {/* 404 */}
           <Route path="*" element={<PageNotFound />} />
