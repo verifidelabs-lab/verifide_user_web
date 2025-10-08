@@ -15,7 +15,7 @@ const CustomDateInput = React.forwardRef(({
   dobRange = false, // ✅ new prop for Date of Birth restriction
   minDateOverride, // ✅ new optional prop
   maxDateOverride, // ✅ new optional prop
-}) => {
+},ref) => {
   const inputRef = React.useRef(null);
 
   const handleIconClick = () => {
@@ -64,7 +64,7 @@ const CustomDateInput = React.forwardRef(({
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
-      <div className="relative">
+      <div className="relative" ref={ref}>
         <input
           ref={inputRef}
           type={type}

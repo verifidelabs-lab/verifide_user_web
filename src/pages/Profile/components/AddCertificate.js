@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "../../../components/ui/Modal/Modal";
 import CustomInput from "../../../components/ui/Input/CustomInput";
 import CustomDateInput from "../../../components/ui/Input/CustomDateInput";
@@ -29,6 +29,29 @@ const AddCertificate = ({
       masterSkillsList[0].value
     );
   };
+  const inputRefs = {
+    name: useRef(null),
+    issuing_organization: useRef(null),
+    field_of_studies: useRef(null),
+    issue_date: useRef(null),
+    credential_id: useRef(null),
+    skills_acquired: useRef(null),
+    media_url: useRef(null),
+     };
+
+  // scroll to first error field
+  useEffect(() => {
+    if (error && Object.keys(error).length > 0) {
+      const firstErrorKey = Object.keys(error)[0];
+      if (inputRefs[firstErrorKey]?.current) {
+        inputRefs[firstErrorKey].current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        inputRefs[firstErrorKey].current.focus?.();
+      }
+    }
+  }, [error]);
 
   return (
     <Modal
@@ -42,6 +65,8 @@ const AddCertificate = ({
         {/* Certificate Name */}
         <CustomInput
           label="Certificate Name"
+          name="name"
+          ref={inputRefs.name}
           value={formData?.name}
           onChange={(e) => handleChange("name", e.target.value)}
           placeholder="Enter certificate name"
@@ -54,6 +79,8 @@ const AddCertificate = ({
         <CustomInput
           label="Issuing Organization"
           value={formData?.issuing_organization}
+          name="issuing_organization"
+          ref={inputRefs.institution_id}
           onChange={(e) => handleChange("issuing_organization", e.target.value)}
           placeholder="Enter company/organization name"
           className="w-full h-10"
@@ -66,6 +93,8 @@ const AddCertificate = ({
           <CustomDateInput
             type="date"
             label="Issue Date"
+            name="issue_date"
+            ref={inputRefs.issue_date}
             value={formData?.issue_date}
             onChange={(e) => handleChange("issue_date", e.target.value)}
             placeholder="MM/YYYY"
@@ -78,6 +107,8 @@ const AddCertificate = ({
           <CustomInput
             label="Credential ID"
             placeholder="Enter credential ID (min length 5)"
+            name="credential_id"
+            ref={inputRefs.credential_id}
             value={formData?.credential_id}
             onChange={(e) => handleChange("credential_id", e.target.value)}
             className="w-full h-10"
@@ -149,6 +180,8 @@ const AddCertificate = ({
             onChange={(e) => handleChange("credential_url", e.target.value)}
             placeholder="Enter credential URL (e.g. https://example.com)"
             className="w-full h-10"
+            ref={inputRefs.credential_url}
+
             error={error?.credential_url}
             required
           />
@@ -157,6 +190,8 @@ const AddCertificate = ({
         {uploadType === "media" && (
           <EnhancedFileInput
             label="Upload Certificate Media/PDF"
+            name="media_url"
+            ref={inputRefs.media_url}
             className="w-full"
             onChange={handleFileUpload}
             onDelete={handleFileDelete}
