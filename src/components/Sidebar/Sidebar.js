@@ -118,7 +118,7 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
   const { personalInfo } = useSelector(
     (state) => state.auth.getProfileData?.data?.data || {}
   );
- console.log("Thi isthe get prifileing",personalInfo)
+
   return (
     <>
       <style>{pulseAnimation}</style>
