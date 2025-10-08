@@ -127,6 +127,16 @@ const CareerGoal = () => {
   };
 
   const handleSubmit = async (isAutoSubmit = false) => {
+    // Validation: ensure all questions have at least one answer
+    for (let i = 0; i < answers.length; i++) {
+      const ans = answers[i];
+      if (ans.selected_options.length === 0 || (ans.question_type === 'theoretical' && !ans.selected_options[0]?.trim())) {
+        toast.error(`Please answer question ${i + 1} before submitting.`);
+        setCurrentQuestion(i);
+        return; // stop submission
+      }
+    }
+
     const payload = {
       job_id: jobData._id,
       answers: answers.map(answer => ({
@@ -138,19 +148,18 @@ const CareerGoal = () => {
       // auto_submitted: isAutoSubmit
     };
 
-
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await dispatch(applyJobApplication(payload)).unwrap();
       toast.success(res?.message || 'Your answers have been submitted successfully!');
       navigate(`/user/opportunitiess`);
     } catch (error) {
       toast.error(error);
     } finally {
-      setLoading(false)
-
+      setLoading(false);
     }
   };
+
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -208,7 +217,7 @@ const CareerGoal = () => {
         <div className="bg-white rounded-2xl shadow-lg mb-6 p-6">
           <div className="flex items-start gap-4">
             <img
-              src={jobData.company_id.logo_url}
+              src={jobData?.company_id?.logo_url}
               alt="Company Logo"
               className="w-16 h-16 rounded-lg object-cover border"
             />

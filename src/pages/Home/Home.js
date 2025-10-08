@@ -21,7 +21,7 @@ import Poll from './components/Poll';
 import MediaCarousel from './components/MediaCarousel';
 import JobPost from './components/JobPost';
 import { convertTimestampToDate, convertTimestampToDate2 } from '../../components/utils/globalFunction';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import LinkedInCertificate from '../Certificates/Certificates';
 import SuggestedUsersSwiper from './components/SuggestedUserSwiper';
@@ -64,6 +64,9 @@ const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { postId } = useParams();
+
+  console.log("Post ID:", postId); // 👉 "68e4ecced9a37663be3f8576"
   const dropdownRef = useRef(null);
   const userSelector = useSelector((state) => state.user);
   const { suggestedUserData: { data: suggestedUsers } = {} } = userSelector || {};
@@ -130,7 +133,7 @@ const Home = () => {
       setEndOfContent(false);
 
       try {
-        const getPostId = window.localStorage.getItem("postId") || "";
+        const getPostId = postId || "";
 
         const res = await dispatch(
           getPostOnHome({ page, size: 10, type: tabActive, post_id: getPostId })
@@ -502,7 +505,7 @@ const Home = () => {
   };
   const handleCopyLink = useCallback((post) => {
     if (post && post?._id) {
-      const baseUrl = `https://dev-verifide.verifide.xyz/post-view/${post?._id}`;
+      const baseUrl = `https://dev-verifide.verifide.xyz/user/feed/${post?._id}`;
 
       navigator.clipboard.writeText(baseUrl);
       toast.success('Link copied to clipboard');

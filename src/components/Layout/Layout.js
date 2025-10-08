@@ -208,7 +208,7 @@ function Layout() {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />
-              <Route path="feed" element={<Home />} />
+              <Route path="feed/:postId?" element={<Home />} />
               <Route path="/profile" element={<Profile profileData={profileData} />} />
               <Route path="/career-goal/:id" element={<CareerGoal />} />
               <Route path="/verification" element={<Verification headline={profileData?.getProfileData?.data?.data?.personalInfo?.headline} />} />
