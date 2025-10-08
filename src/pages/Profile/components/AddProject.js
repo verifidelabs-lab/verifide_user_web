@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../../../components/ui/Modal/Modal'
 import CustomInput from '../../../components/ui/Input/CustomInput'
 import CustomDateInput from '../../../components/ui/Input/CustomDateInput'
@@ -26,6 +26,31 @@ const AddProject = ({
     const [linkType, setLinkType] = useState(formData?.media_url ? 'media' : 'link');
 
     // console.log("formDataformData",formData)
+    // refs for all inputs
+    const inputRefs = {
+        name: useRef(null),
+        description: useRef(null),
+        start_date: useRef(null),
+        end_date: useRef(null),
+        file_url: useRef(null),
+        media_url: useRef(null),
+        company_id: useRef(null),
+        institution_id: useRef(null)
+    };
+
+    // scroll to first error field
+    useEffect(() => {
+        if (error && Object.keys(error).length > 0) {
+            const firstErrorKey = Object.keys(error)[0];
+            if (inputRefs[firstErrorKey]?.current) {
+                inputRefs[firstErrorKey].current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+                inputRefs[firstErrorKey].current.focus?.();
+            }
+        }
+    }, [error]);
 
     const validateDates = (startDate, endDate) => {
         if (!startDate || !endDate) return true;
@@ -66,6 +91,7 @@ const AddProject = ({
             >
                 <div className='p-3 space-y-5'>
                     <CustomInput
+                        ref={inputRefs.name}
                         label="Project Name"
                         value={formData?.name || ''}
                         onChange={(e) => handleChange("name", e.target.value)}
@@ -124,6 +150,7 @@ const AddProject = ({
 
                     {projectType === 'company' && (
                         <FilterSelect
+                            ref={inputRefs.company_id}
                             options={companyList || []}
                             selectedOption={companyList?.find(opt => opt.value === formData?.company_id)}
                             onChange={(selected) => handleSelectChange("company_id", selected)}
@@ -144,6 +171,8 @@ const AddProject = ({
 
                     {projectType === 'college' && (
                         <FilterSelect
+                            ref={inputRefs.institution_id}
+
                             options={collegeList || []}
                             selectedOption={collegeList?.find(opt => opt.value === formData?.institution_id)}
                             onChange={(selected) => handleSelectChange("institution_id", selected)}
@@ -164,6 +193,7 @@ const AddProject = ({
 
                     <div className="space-y-2">
                         <CustomInput
+                            ref={inputRefs.description}
                             type="textarea"
                             label="Project Description"
                             value={formData?.description || ''}
@@ -181,6 +211,7 @@ const AddProject = ({
 
                     <div className='grid md:grid-cols-2 grid-cols-1 gap-4'>
                         <CustomDateInput
+                            ref={inputRefs.start_date}
                             label="Start Date"
                             name="start_date"
                             type="date"
@@ -194,6 +225,7 @@ const AddProject = ({
                         />
 
                         <CustomDateInput
+                            ref={inputRefs.end_date}
                             label="End Date"
                             name="end_date"
                             type="date"
@@ -222,6 +254,7 @@ const AddProject = ({
                             <div className="flex gap-5 items-center">
                                 <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
                                     <input
+
                                         type="radio"
                                         name="linkType"
                                         value="link"
@@ -247,6 +280,7 @@ const AddProject = ({
 
                         {linkType === 'link' ? (
                             <CustomInput
+                                ref={inputRefs.file_url}
                                 type="url"
                                 label="Project URL"
                                 value={formData?.file_url || ''}
@@ -258,6 +292,7 @@ const AddProject = ({
                             />
                         ) : (
                             <EnhancedFileInput
+                                ref={inputRefs.media_url}
                                 label='Upload Project Media/PDF'
                                 className="w-full h-10"
                                 onChange={handleFileUpload}

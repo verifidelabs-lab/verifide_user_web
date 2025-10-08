@@ -1,7 +1,7 @@
 import React from "react";
 import { BiCalendar } from "react-icons/bi";
 
-const CustomDateInput = ({
+const CustomDateInput = React.forwardRef(({
   value,
   onChange,
   label = "Start Date",
@@ -89,6 +89,6 @@ const CustomDateInput = ({
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
-};
+});
 
 export default CustomDateInput;

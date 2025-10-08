@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
 
-const FilterSelect = ({
+const FilterSelect = React.forwardRef(({
   label = 'Filter By',
   name,
   options = [],
@@ -129,6 +129,6 @@ const FilterSelect = ({
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
-};
+});
 
 export default React.memo(FilterSelect);

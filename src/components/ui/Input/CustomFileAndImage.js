@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { BiPaperclip, BiTrash, BiDownload, BiFile, BiImage } from "react-icons/bi";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-const EnhancedFileInput = ({
+const EnhancedFileInput = React.forwardRef(({
   label = "Attach File",
   required = false,
   placeholder = "Choose File",
@@ -122,7 +122,7 @@ const EnhancedFileInput = ({
       </label>
 
       <div className="space-y-2">
-       
+
         {!value ?
           <div
             className={`relative border-2 border-dashed rounded-lg transition-colors
@@ -213,6 +213,6 @@ const EnhancedFileInput = ({
       )}
     </div>
   );
-};
+});
 
 export default EnhancedFileInput;

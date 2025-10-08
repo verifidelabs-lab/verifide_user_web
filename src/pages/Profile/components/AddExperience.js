@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from '../../../components/ui/Modal/Modal'
 import CustomInput from '../../../components/ui/Input/CustomInput'
 import CustomDateInput from '../../../components/ui/Input/CustomDateInput'
@@ -36,12 +36,31 @@ const AddExperience = ({ formData, allCompanies, handleSubmit, getSelectedOption
   };
 
 
+  const inputRefs = {
 
+    company_id: useRef(null),
+
+  };
+
+  // scroll to first error field
+  useEffect(() => {
+    if (error && Object.keys(error).length > 0) {
+      const firstErrorKey = Object.keys(error)[0];
+      if (inputRefs[firstErrorKey]?.current) {
+        inputRefs[firstErrorKey].current.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+        inputRefs[firstErrorKey].current.focus?.();
+      }
+    }
+  }, [error]);
   return (
     <div>
       <Modal isOpen={modalState.type === "experience"} onClose={handleClose} title={modalState.type} handleSubmit={handleSubmit} loading={loading}>
         <div className='p-3 space-y-3'>
           <FilterSelect
+            ref={inputRefs.company_id}
             label="Company "
             name="company_id"
             placeholder="Select Company"
@@ -67,6 +86,9 @@ const AddExperience = ({ formData, allCompanies, handleSubmit, getSelectedOption
           <div className='grid md:grid-cols-2 grid-cols-1 gap-2'>
 
             <FilterSelect
+
+              ref={inputRefs.industries_id}
+
               label="Industry "
               name="industries_id"
               placeholder="Select Industry"
@@ -93,6 +115,9 @@ const AddExperience = ({ formData, allCompanies, handleSubmit, getSelectedOption
 
             <FilterSelect
               label="Position "
+
+
+
               name="profile_role_id"
               placeholder="Select Position"
               options={allProfile}
