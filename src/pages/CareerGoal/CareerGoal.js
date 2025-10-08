@@ -1,28 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { applyJobApplication, jobScreeningQuestion } from '../../redux/Users/userSlice';
-import { BiCheckCircle, BiChevronRightCircle, BiMapPin } from 'react-icons/bi';
-import { LuBuilding2 } from 'react-icons/lu';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  applyJobApplication,
+  jobScreeningQuestion,
+} from "../../redux/Users/userSlice";
+import { BiCheckCircle, BiChevronRightCircle, BiMapPin } from "react-icons/bi";
+import { LuBuilding2 } from "react-icons/lu";
 // import { FaUserSecret } from 'react-icons/fa';
-import { CiLock } from 'react-icons/ci';
-import { toast } from 'sonner';
+import { CiLock } from "react-icons/ci";
+import { toast } from "sonner";
 
 const CareerGoal = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const selector = useSelector(state => state.user);
+  const selector = useSelector((state) => state.user);
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const screeningQuestions = selector?.jobScreeningQuestionData?.data?.data?.screening_questions || [];
+  const screeningQuestions =
+    selector?.jobScreeningQuestionData?.data?.data?.screening_questions || [];
   const jobData = selector?.jobScreeningQuestionData?.data?.data;
-  const [loading, setLoading] = useState(false)
+  console.log("🧩 Job Data fetched from backend:", jobData);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
       dispatch(jobScreeningQuestion({ job_id: id }));
     }
   }, [dispatch, id]);
+useEffect(() => {
+  console.log("this is the jobdata", jobData?.isApplied);
+  if (jobData?.isApplied === true) {
+     toast.warning("You have already applied for this job.");
+    navigate("/user/opportunitiess");
+  }
+}, [jobData?.isApplied, navigate]);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -34,12 +47,14 @@ const CareerGoal = () => {
   // Fixed useEffect with proper dependency
   useEffect(() => {
     if (screeningQuestions.length > 0) {
-      setAnswers(screeningQuestions.map(q => ({
-        question: q.question,
-        question_type: q.question_type,
-        options: q.options || [],
-        selected_options: [],
-      })));
+      setAnswers(
+        screeningQuestions.map((q) => ({
+          question: q.question,
+          question_type: q.question_type,
+          options: q.options || [],
+          selected_options: [],
+        }))
+      );
 
       const initialTime = (screeningQuestions[0]?.time_limit || 0) * 60;
       setTimeLeft(initialTime);
@@ -51,7 +66,7 @@ const CareerGoal = () => {
     if (!timerActive || timeLeft <= 0) return;
 
     const timerId = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timerId);
           handleTimeExpired();
@@ -69,8 +84,9 @@ const CareerGoal = () => {
     if (currentQuestion < screeningQuestions.length - 1) {
       // Auto-move to next question
       setTimeout(() => {
-        setCurrentQuestion(prev => prev + 1);
-        const nextQuestionTime = (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
+        setCurrentQuestion((prev) => prev + 1);
+        const nextQuestionTime =
+          (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
         setTimeLeft(nextQuestionTime);
         setTimerActive(true);
       }, 1000);
@@ -97,9 +113,14 @@ const CareerGoal = () => {
       const currentSelections = newAnswers[currentQuestion].selected_options;
 
       if (currentSelections.includes(option)) {
-        newAnswers[currentQuestion].selected_options = currentSelections.filter(item => item !== option);
+        newAnswers[currentQuestion].selected_options = currentSelections.filter(
+          (item) => item !== option
+        );
       } else {
-        newAnswers[currentQuestion].selected_options = [...currentSelections, option];
+        newAnswers[currentQuestion].selected_options = [
+          ...currentSelections,
+          option,
+        ];
       }
 
       setAnswers(newAnswers);
@@ -120,7 +141,8 @@ const CareerGoal = () => {
     if (currentQuestion < screeningQuestions.length - 1) {
       setTimerActive(false);
       setCurrentQuestion(currentQuestion + 1);
-      const nextQuestionTime = (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
+      const nextQuestionTime =
+        (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
       setTimeLeft(nextQuestionTime);
       setTimerActive(true);
     }
@@ -130,7 +152,11 @@ const CareerGoal = () => {
     // Validation: ensure all questions have at least one answer
     for (let i = 0; i < answers.length; i++) {
       const ans = answers[i];
-      if (ans.selected_options.length === 0 || (ans.question_type === 'theoretical' && !ans.selected_options[0]?.trim())) {
+      if (
+        ans.selected_options.length === 0 ||
+        (ans.question_type === "theoretical" &&
+          !ans.selected_options[0]?.trim())
+      ) {
         toast.error(`Please answer question ${i + 1} before submitting.`);
         setCurrentQuestion(i);
         return; // stop submission
@@ -139,7 +165,7 @@ const CareerGoal = () => {
 
     const payload = {
       job_id: jobData._id,
-      answers: answers.map(answer => ({
+      answers: answers.map((answer) => ({
         question: answer.question,
         question_type: answer.question_type,
         options: answer.options,
@@ -151,7 +177,9 @@ const CareerGoal = () => {
     try {
       setLoading(true);
       const res = await dispatch(applyJobApplication(payload)).unwrap();
-      toast.success(res?.message || 'Your answers have been submitted successfully!');
+      toast.success(
+        res?.message || "Your answers have been submitted successfully!"
+      );
       navigate(`/user/opportunitiess`);
     } catch (error) {
       toast.error(error);
@@ -160,15 +188,16 @@ const CareerGoal = () => {
     }
   };
 
-
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const formatSalary = (range) => {
-    return `₹${range.split('-').join(' - ')}`;
+    return `₹${range.split("-").join(" - ")}`;
   };
 
   if (screeningQuestions.length === 0) {
@@ -176,7 +205,9 @@ const CareerGoal = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="animate-spin w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading screening questions...</p>
+          <p className="text-lg text-gray-600">
+            Loading screening questions...
+          </p>
         </div>
       </div>
     );
@@ -190,16 +221,17 @@ const CareerGoal = () => {
             <BiCheckCircle className="w-12 h-12 text-green-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            {autoSubmitted ? 'Time Completed!' : 'Thank You!'}
+            {autoSubmitted ? "Time Completed!" : "Thank You!"}
           </h1>
           <p className="text-gray-600 mb-6">
             {autoSubmitted
-              ? 'Your screening answers have been automatically submitted due to time completion.'
-              : 'Your screening answers have been successfully submitted.'
-            }
+              ? "Your screening answers have been automatically submitted due to time completion."
+              : "Your screening answers have been successfully submitted."}
           </p>
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-            onClick={() => navigate(`/user/opportunitiess/`)}>
+          <button
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            onClick={() => navigate(`/user/opportunitiess/`)}
+          >
             Back to Your Opportunities
           </button>
         </div>
@@ -223,7 +255,9 @@ const CareerGoal = () => {
             />
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <h1 className="text-xl font-bold text-gray-900">{jobData.job_title.name}</h1>
+                <h1 className="text-xl font-bold text-gray-900">
+                  {jobData.job_title.name}
+                </h1>
                 <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
                   {jobData.job_type}
                 </span>
@@ -238,12 +272,14 @@ const CareerGoal = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <BiMapPin className="w-4 h-4" />
-                  <span>{jobData.work_location.city.name}, {jobData.work_location.state.name}</span>
+                  <span>
+                    {jobData.work_location.city.name},{" "}
+                    {jobData.work_location.state.name}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <span>{formatSalary(jobData.salary_range)}</span>
                 </div>
-
               </div>
             </div>
           </div>
@@ -263,10 +299,17 @@ const CareerGoal = () => {
             </div>
 
             {/* Timer */}
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${timeLeft <= 30 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
-              }`}>
+            <div
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                timeLeft <= 30
+                  ? "bg-red-100 text-red-700"
+                  : "bg-blue-100 text-blue-700"
+              }`}
+            >
               <CiLock className="w-4 h-4" />
-              <span className="font-mono font-semibold">{formatTime(timeLeft)}</span>
+              <span className="font-mono font-semibold">
+                {formatTime(timeLeft)}
+              </span>
             </div>
           </div>
 
@@ -275,23 +318,27 @@ const CareerGoal = () => {
               {currentQ.question}
             </h3>
 
-            {currentQ.question_type === 'single_choice' && (
+            {currentQ.question_type === "single_choice" && (
               <div className="space-y-3">
                 {currentQ.options.map((option, index) => (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50 ${currentAnswer.selected_options?.includes(option)
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200'
-                      }`}
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50 ${
+                      currentAnswer.selected_options?.includes(option)
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200"
+                    }`}
                     onClick={() => handleSingleChoiceSelect(option)}
                   >
                     <div className="flex items-center">
                       <input
                         type="radio"
                         className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500"
-                        checked={currentAnswer.selected_options?.includes(option) || false}
-                        onChange={() => { }}
+                        checked={
+                          currentAnswer.selected_options?.includes(option) ||
+                          false
+                        }
+                        onChange={() => {}}
                       />
                       <label className="ml-3 text-gray-700 cursor-pointer">
                         {option}
@@ -302,23 +349,27 @@ const CareerGoal = () => {
               </div>
             )}
 
-            {currentQ.question_type === 'multi_choice' && (
+            {currentQ.question_type === "multi_choice" && (
               <div className="space-y-3">
                 {currentQ.options.map((option, index) => (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50 ${currentAnswer.selected_options?.includes(option)
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200'
-                      }`}
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50 ${
+                      currentAnswer.selected_options?.includes(option)
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200"
+                    }`}
                     onClick={() => handleMultiChoiceSelect(option)}
                   >
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        checked={currentAnswer.selected_options?.includes(option) || false}
-                        onChange={() => { }}
+                        checked={
+                          currentAnswer.selected_options?.includes(option) ||
+                          false
+                        }
+                        onChange={() => {}}
                       />
                       <label className="ml-3 text-gray-700 cursor-pointer">
                         {option}
@@ -329,16 +380,17 @@ const CareerGoal = () => {
               </div>
             )}
 
-            {currentQ.question_type === 'theoretical' && (
+            {currentQ.question_type === "theoretical" && (
               <div>
                 <textarea
                   className="w-full h-40 p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
                   placeholder="Type your detailed answer here..."
-                  value={currentAnswer.selected_options?.[0] || ''}
+                  value={currentAnswer.selected_options?.[0] || ""}
                   onChange={handleTextAnswerChange}
                 />
                 <div className="mt-2 text-sm text-gray-500">
-                  Character count: {(currentAnswer.selected_options?.[0] || '').length}
+                  Character count:{" "}
+                  {(currentAnswer.selected_options?.[0] || "").length}
                 </div>
               </div>
             )}

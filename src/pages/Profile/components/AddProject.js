@@ -211,6 +211,7 @@ const AddProject = ({
                             className="w-full h-10"
                             min={formData?.start_date}
                             disabled={formData?.currently_available}
+                            allowFutureDate={false}
                         />
                     </div>
 
