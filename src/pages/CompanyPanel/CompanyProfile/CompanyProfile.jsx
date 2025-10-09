@@ -23,8 +23,8 @@ import {
   companiesProfile,
   instituteProfile,
   companyIndustries,
-  setCompaniesProfileData
-} from '../../../redux/CompanySlices/CompanyAuth'
+  setCompaniesProfileData,
+} from "../../../redux/CompanySlices/CompanyAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
 import { Link } from "react-router-dom";
@@ -70,16 +70,16 @@ const CompanyProfile = ({
     INSTITUTIONS: 4,
     INSTITUTIONS_ADMIN: 8,
   };
-  const userRole = Number(getCookie("COMPANY_ROLE"))
+  const userRole = Number(getCookie("COMPANY_ROLE"));
   const dispatch = useDispatch();
-  const [isImageUploading, setIsImageUploading] = useState(false)
+  const [isImageUploading, setIsImageUploading] = useState(false);
   const [activeTab, setActiveTab] = useState("Home");
   const [agencyData, setAgencyData] = useState({});
   const [activeTab1, setActiveTab1] = useState("user");
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
-  const cscSelector = useSelector(state => state.global)
-  const IndusteryData = useSelector(state => state.companyAuth);
+  const [isLoading, setIsLoading] = useState(false);
+  const cscSelector = useSelector((state) => state.global);
+  const IndusteryData = useSelector((state) => state.companyAuth);
   const userSelector = useSelector((state) => state.user);
   const { suggestedUserData: { data: suggestedUsers } = {} } =
     userSelector || {};
@@ -90,9 +90,12 @@ const CompanyProfile = ({
     (state) => state.global
   );
 
-
-  const allIndustry = arrayTransform(IndusteryData?.companyIndustryData?.data?.data?.list || [])
-  const countriesList = arrayTransform(cscSelector?.countriesData?.data?.data || [])
+  const allIndustry = arrayTransform(
+    IndusteryData?.companyIndustryData?.data?.data?.list || []
+  );
+  const countriesList = arrayTransform(
+    cscSelector?.countriesData?.data?.data || []
+  );
   const getInitialFormData = () => {
     if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
       return {
@@ -104,7 +107,8 @@ const CompanyProfile = ({
         display_name: "",
         description: "",
         website_url: "",
-        logo_url: "", banner_image_url: "",
+        logo_url: "",
+        banner_image_url: "",
         industry: [],
         country_code: {
           name: "",
@@ -138,18 +142,37 @@ const CompanyProfile = ({
         employee_count: "",
         linkedin_page_url: "",
       };
-
     }
 
-    return {}
-  }
-  const { formData, setFormData, handleChange, resetForm, errors, setErrors, handleNestedChange } = useFormHandler(getInitialFormData())
+    return {};
+  };
+  const {
+    formData,
+    setFormData,
+    handleChange,
+    resetForm,
+    errors,
+    setErrors,
+    handleNestedChange,
+  } = useFormHandler(getInitialFormData());
 
   const renderProfileImage = () => {
-    const imageField = [ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-      ? 'logo_url'
-      : 'logo_url'
-    const imageUrl = formData[imageField] || adminProfileData?.[imageField] || companiesProfileData?.[imageField] || instituteProfileData?.[imageField] || ''
+    const imageField = [
+      ROLES.SUPER_ADMIN,
+      ROLES.ADMIN,
+      ROLES.COMPANIES,
+      ROLES.COMPANIES_ADMIN,
+      ROLES.INSTITUTIONS,
+      ROLES.INSTITUTIONS_ADMIN,
+    ].includes(userRole)
+      ? "logo_url"
+      : "logo_url";
+    const imageUrl =
+      formData[imageField] ||
+      adminProfileData?.[imageField] ||
+      companiesProfileData?.[imageField] ||
+      instituteProfileData?.[imageField] ||
+      "";
 
     return (
       <div className="relative group">
@@ -325,7 +348,9 @@ const CompanyProfile = ({
           company_type: dataToUse.company_type,
           headquarters: dataToUse.headquarters,
           founded_year: dataToUse.founded_year
-            ? Math.floor(new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000)
+            ? Math.floor(
+                new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
+              )
             : null,
           specialties: (dataToUse.specialties || [])
             .map((s) => String(s || "").trim())
@@ -354,15 +379,12 @@ const CompanyProfile = ({
         // For banner updates, also update local formData
         setFormData(dataToUse);
       }
-
     } catch (error) {
       toast.error(error?.message || "Failed to update profile");
     } finally {
       setIsLoading(false);
     }
   };
-
-
 
   const company_type = [
     { value: "public", label: "Public" },
@@ -381,7 +403,7 @@ const CompanyProfile = ({
     { value: "1001-5000", label: "1001-5000" },
     { value: "5001-10000", label: "5001-10000" },
   ];
-  const handleImageUpload = async (file, fieldName = 'logo_url') => {
+  const handleImageUpload = async (file, fieldName = "logo_url") => {
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
@@ -418,21 +440,21 @@ const CompanyProfile = ({
 
   const getSelectedIndustry = () => {
     if (!formData?.industry || !allIndustry) return [];
-    return formData?.industry?.map(industry => {
-      const id = typeof industry === 'object' ? industry._id : industry;
-      return allIndustry.find(opt => opt.value === id);
-    }).filter(Boolean);
+    return formData?.industry
+      ?.map((industry) => {
+        const id = typeof industry === "object" ? industry._id : industry;
+        return allIndustry.find((opt) => opt.value === id);
+      })
+      .filter(Boolean);
   };
   const renderProfileFormFields = () => {
-
     const selectClasses = classNames(
       "h-[50px] opacity-100 rounded-[10px] border w-full",
       {
         "border-gray-300": !errors.industry,
         "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
           errors.industry,
-      },
-
+      }
     );
 
     const customStyles = {
@@ -475,16 +497,28 @@ const CompanyProfile = ({
         {/* Company / Institute Name */}
         <div>
           <CustomInput
-            label={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-              ? "Company Name"
-              : "Institute Name"
+            label={
+              [
+                ROLES.COMPANIES,
+                ROLES.COMPANIES_ADMIN,
+                ROLES.INSTITUTIONS,
+                ROLES.INSTITUTIONS_ADMIN,
+              ].includes(userRole)
+                ? "Company Name"
+                : "Institute Name"
             }
             type="text"
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
-            placeholder={[ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-              ? "Enter company name"
-              : "Enter institute name"
+            placeholder={
+              [
+                ROLES.COMPANIES,
+                ROLES.COMPANIES_ADMIN,
+                ROLES.INSTITUTIONS,
+                ROLES.INSTITUTIONS_ADMIN,
+              ].includes(userRole)
+                ? "Enter company name"
+                : "Enter institute name"
             }
             icon={<FiUser className="text-gray-400" />}
             error={errors?.name}
@@ -519,10 +553,11 @@ const CompanyProfile = ({
             onChange={(selectedOptions) =>
               handleChange("industry", {
                 target: {
-                  value: selectedOptions?.map((opt) => ({
-                    _id: opt.value,
-                    name: opt.label,
-                  })) || [],
+                  value:
+                    selectedOptions?.map((opt) => ({
+                      _id: opt.value,
+                      name: opt.label,
+                    })) || [],
                 },
               })
             }
@@ -531,7 +566,9 @@ const CompanyProfile = ({
             className={selectClasses}
             classNamePrefix="react-select"
           />
-          {errors.industry && <p className="mt-1 text-sm text-red-600">{errors.industry}</p>}
+          {errors.industry && (
+            <p className="mt-1 text-sm text-red-600">{errors.industry}</p>
+          )}
         </div>
 
         {/* Company Type */}
@@ -539,7 +576,9 @@ const CompanyProfile = ({
           <FilterSelect
             label="Company Type"
             options={company_type || []}
-            selectedOption={company_type?.find((opt) => opt.value === formData?.company_type)}
+            selectedOption={company_type?.find(
+              (opt) => opt.value === formData?.company_type
+            )}
             onChange={(selected) =>
               handleChange("company_type", {
                 target: { value: selected?.value || "" },
@@ -577,31 +616,51 @@ const CompanyProfile = ({
           />
         </div>
       </div>
-
-    )
-
+    );
   };
-  const handleImageClick = (fieldName = 'logo_url') => {
-    const inputId = `imageUpload-${fieldName}`
-    document.getElementById(inputId).click()
-  }
+  const handleImageClick = (fieldName = "logo_url") => {
+    const inputId = `imageUpload-${fieldName}`;
+    document.getElementById(inputId).click();
+  };
 
   const handleCountryChange = (data) => {
     setFormData((prev) => ({
       ...prev,
       country_code: {
-        "name": data?.label,
-        "dial_code": data?.dial_code,
-        "short_name": data?.short_name,
-        "emoji": data?.emoji
-      }
-    }))
+        name: data?.label,
+        dial_code: data?.dial_code,
+        short_name: data?.short_name,
+        emoji: data?.emoji,
+      },
+    }));
+  };
+
+  function timeAgo(timestamp) {
+    if (!timestamp) return "";
+
+    const now = Date.now();
+    const diff = now - timestamp;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days >= 7) {
+      return new Date(timestamp).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    } else if (days >= 1) {
+      return `${days} day${days > 1 ? "s" : ""} ago`;
+    } else if (hours >= 1) {
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    } else if (minutes >= 1) {
+      return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    } else {
+      return "Just now";
+    }
   }
-
-
-
-
-
 
   const [people, setPeople] = useState([
     {
@@ -622,24 +681,13 @@ const CompanyProfile = ({
     },
   ]);
 
-
-
-  const EditableField = ({
-    value,
-    multiline = false,
-    className = "",
-  }) => {
-
-
+  const EditableField = ({ value, multiline = false, className = "" }) => {
     return (
       <div className={`group relative ${className}`}>
         <div className={multiline ? "whitespace-pre-wrap" : ""}>{value}</div>
       </div>
     );
   };
-
-
-
 
   const Navigation = () => (
     <div className="mt-6">
@@ -648,10 +696,11 @@ const CompanyProfile = ({
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
-              ? "text-blue-600 border-b-2 border-blue-600"
-              : "text-gray-500 hover:text-blue-600"
-              }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors ${
+              activeTab === tab
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-gray-500 hover:text-blue-600"
+            }`}
           >
             {tab}
           </button>
@@ -875,11 +924,12 @@ const CompanyProfile = ({
                 </div>
 
                 {/* Post content */}
-                {post?.title && post?.content && <div>
-                  <h3 className="text-gray-700 text-base">{post?.title}</h3>
-                  <p className="text-gray-700 text-base">{post?.content}</p>
-                </div>
-                }
+                {post?.title && post?.content && (
+                  <div>
+                    <h3 className="text-gray-700 text-base">{post?.title}</h3>
+                    <p className="text-gray-700 text-base">{post?.content}</p>
+                  </div>
+                )}
                 {/* Media: image or video */}
                 {post?.post_type === "image-video" &&
                   post?.image_urls?.length > 0 && (
@@ -899,8 +949,9 @@ const CompanyProfile = ({
                     </video>
                   </div>
                 )}
-                {post?.post_type === 'jobs' && post.job_id && <JobPost job={post.job_id} />}
-
+                {post?.post_type === "jobs" && post.job_id && (
+                  <JobPost job={post.job_id} />
+                )}
 
                 {/* Stats row */}
                 <div className="flex items-center gap-4 mt-3 text-gray-600 text-sm">
@@ -1014,7 +1065,9 @@ const CompanyProfile = ({
 
                   {/* Job Meta Info */}
                   <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                    <span>{job?.createdAt}</span>
+                    {/* <span>{job?.createdAt}</span> */}
+                    <span>{timeAgo(job?.createdAt)}</span>
+
                     <span>-</span>
                     <span>{job?.job_type}</span>
                     <span>-</span>
@@ -1176,7 +1229,6 @@ const CompanyProfile = ({
     );
   };
 
-
   const EditableBanner = ({
     agencyData,
     userRole,
@@ -1184,9 +1236,9 @@ const CompanyProfile = ({
     isBannerUploading = false,
     handleProfileUpdatee,
   }) => {
-    const [previewBanner, setPreviewBanner] = useState(agencyData?.banner_image_url || formData[
-      "banner_image_url"
-    ] || "");
+    const [previewBanner, setPreviewBanner] = useState(
+      agencyData?.banner_image_url || formData["banner_image_url"] || ""
+    );
 
     const handleBannerChange = async (file) => {
       if (!file) return;
@@ -1197,7 +1249,7 @@ const CompanyProfile = ({
 
       // actual upload logic
       const uploaded = await handleImageUpload(file, "banner_image_url");
-      console.log("Thisis the updloaded", uploaded)
+      console.log("Thisis the updloaded", uploaded);
       // auto-update backend profile once upload success
       if (uploaded?.data?.imageURL) {
         await handleProfileUpdatee({
@@ -1275,7 +1327,6 @@ const CompanyProfile = ({
                 </div>
               </div>
 
-
               <button
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 text-sm"
                 onClick={handleProfileUpdate}
@@ -1286,7 +1337,9 @@ const CompanyProfile = ({
 
             {/* Row 2: Company Details */}
             <div className="mt-3">
-              <h1 className="font-bold text-gray-700 mb-2">{agencyData.name}</h1>
+              <h1 className="font-bold text-gray-700 mb-2">
+                {agencyData.name}
+              </h1>
               <p className="text-gray-600 text-sm mb-3 leading-relaxed">
                 {agencyData?.description}
               </p>
@@ -1315,7 +1368,6 @@ const CompanyProfile = ({
       isBannerUploading={isImageUploading}
     />
   );
-
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -1434,7 +1486,7 @@ const CompanyProfile = ({
   }, [dispatch]);
   useEffect(() => {
     if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         name: companiesProfileData?.name || "",
         display_name: companiesProfileData?.display_name || "",
@@ -1455,22 +1507,19 @@ const CompanyProfile = ({
         specialties: companiesProfileData?.specialties || [],
         founded_year: companiesProfileData?.founded_year
           ? new Date(companiesProfileData.founded_year * 1000).getFullYear()
-          : ""
-        ,
+          : "",
         employee_count: companiesProfileData?.employee_count || "",
         headquarters: companiesProfileData?.headquarters || "",
-        industry: companiesProfileData?.industry || []
-
-      }))
+        industry: companiesProfileData?.industry || [],
+      }));
     }
-
   }, [companiesProfileData]);
   useEffect(() => {
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
   }, [dispatch, activeTab1]);
   useEffect(() => {
-    dispatch(companyIndustries())
-  }, [companiesProfileData?._id])
+    dispatch(companyIndustries());
+  }, [companiesProfileData?._id]);
   return (
     <div className="bg-gray-50   p-6">
       <div className="flex flex-col md:flex-row gap-6   ">
@@ -1505,7 +1554,20 @@ const CompanyProfile = ({
           <div className="flex flex-col items-center">
             {renderProfileImage()}
             <button
-              onClick={() => handleImageClick([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole) ? 'logo_url' : 'logo_url')}
+              onClick={() =>
+                handleImageClick(
+                  [
+                    ROLES.SUPER_ADMIN,
+                    ROLES.ADMIN,
+                    ROLES.COMPANIES,
+                    ROLES.COMPANIES_ADMIN,
+                    ROLES.INSTITUTIONS,
+                    ROLES.INSTITUTIONS_ADMIN,
+                  ].includes(userRole)
+                    ? "logo_url"
+                    : "logo_url"
+                )
+              }
               className="mt-3 text-sm text-blue-600 hover:text-blue-800 flex items-center"
             >
               <FiCamera className="mr-1" /> Change photo

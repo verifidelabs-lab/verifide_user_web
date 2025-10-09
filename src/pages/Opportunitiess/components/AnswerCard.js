@@ -18,8 +18,15 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
                             {correctOptions?.[0] || "Not specified"}
                         </p>
                     </div>
+ <div>
+                        <p className="text-xs font-medium text-gray-500"> Selected Answer:</p>
+                        <p className="text-sm   py-1.5 rounded">
+                            {selectedOptions?.[0] || "Not specified"}
+                        </p>
+                    </div>
 
                 </div>
+                
             );
         }
 
