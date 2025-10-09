@@ -246,6 +246,12 @@ export const convertTimestampToDate2 = (timestamp) => {
     return `${day}-${month}-${year}`;
 };
 
+export const convertTimestampToYear = (timestamp) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp * 1000); // <-- multiply by 1000
+    const year = date.getFullYear();
+    return `${year}`;
+};
 
 export const convertTimestampToTime = (timestamp) => {
     if (!timestamp) return '';

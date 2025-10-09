@@ -2,9 +2,11 @@ import { SkillsCard2 } from "../../../components/ui/cards/Card";
 import { BiLocationPlus } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button/Button";
+import { getCookie } from "../../../components/utils/cookieHandler";
 
 const JobPost = ({ job }) => {
   const navigate = useNavigate();
+  const isCompany = getCookie("ACTIVE_MODE")
 
   if (!job) return null;
 
@@ -64,14 +66,15 @@ const JobPost = ({ job }) => {
         </div>
 
         {/* Apply Button */}
-        <Button
+        {isCompany !== "company" && <Button
           size='sm'
           disabled={applyStatus.disabled}
           onClick={() => !applyStatus.disabled && handleApply()}
           className={`flex-1 ${applyStatus.disabled ? 'opacity-60 cursor-not-allowed px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200' : 'px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200'}`}
         >
           {applyStatus.reason}
-        </Button>
+        </Button>}
+
 
       </div>
 

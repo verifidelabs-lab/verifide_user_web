@@ -844,7 +844,7 @@ const CompanyProfile = ({
                 className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col gap-4"
               >
                 {/* Header row: company/user info */}
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-center gap-3">
                   {agencyData?.logo ? (
                     <img
                       src={agencyData?.logo}

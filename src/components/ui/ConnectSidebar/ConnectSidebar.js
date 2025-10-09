@@ -4,11 +4,13 @@ import { useDispatch } from 'react-redux';
 import { createUserConnection, followUnfollowUsers, suggestedUser, } from '../../../redux/Users/userSlice';
 import { useNavigate, } from 'react-router-dom';
 import { toast } from 'sonner';
+import { getCookie } from '../../utils/cookieHandler';
 
 
 const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  let isCompany = getCookie("ACTIVE_MODE");
   const [connectedIds, setConnectedIds] = useState([]);
   const [loading, setLoading] = useState(false)
 
@@ -138,11 +140,18 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
         )) : <></>}
       </div>
       <div className="px-6 py-4 border-t border-gray-200">
-        <button className="w-full font-medium text-blue-600 transition-colors hover:text-blue-700"
-          onClick={() => navigate(`/user/suggested-users?tab=${activeTab}`)}>
+        <button
+          className="w-full font-medium text-blue-600 transition-colors hover:text-blue-700"
+          onClick={() =>
+            isCompany === "company"
+              ? navigate(`/company/suggested-users?tab=${activeTab}`)
+              : navigate(`/user/suggested-users?tab=${activeTab}`)
+          }
+        >
           Explore
         </button>
       </div>
+
     </div>
   );
 };

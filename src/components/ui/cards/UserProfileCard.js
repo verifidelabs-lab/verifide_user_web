@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { convertTimestampToDate } from "../../utils/globalFunction";
+import { convertTimestampToDate, convertTimestampToDate2, convertTimestampToYear } from "../../utils/globalFunction";
 
 const UserProfileCard = ({
   email,
@@ -77,7 +77,7 @@ const UserProfileCard = ({
           stats: {
             first: { value: user?.employee_count || 0, label: "Employees" },
             second: { value: user?.follower_count || 0, label: "Followers" },
-            third: { value: convertTimestampToDate(user?.founded_year) || "N/A", label: "Founded" },
+            third: { value: convertTimestampToYear(user?.founded_year) || "N/A", label: "Founded" },
           },
           buttons: [isFollowingCompany ? "Following" : "Follow", "Visit"],
           isConnected: isFollowingCompany,
@@ -93,7 +93,7 @@ const UserProfileCard = ({
           stats: {
             first: { value: user?.employee_count || 0, label: "Staff" },
             second: { value: user?.follower_count || 0, label: "Followers" },
-            third: { value: convertTimestampToDate(user?.founded_year) || "N/A", label: "Founded" },
+            third: { value: (user?.founded_year) || "N/A", label: "Founded" },
           },
           buttons: [isFollowingInstitution ? "Following" : "Follow", "Visit"],
           isConnected: isFollowingInstitution,

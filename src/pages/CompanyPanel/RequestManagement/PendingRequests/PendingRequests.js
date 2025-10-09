@@ -11,6 +11,7 @@ import Modal from '../../../../components/ui/InputAdmin/Modal/Modal';
 import { getCookie } from '../../../../components/utils/cookieHandler';
 import { PiSpinner } from 'react-icons/pi';
 import ActionButtons from '../../../../components/ui/table/TableAction';
+import NoDataFound from '../../../../components/ui/No Data/NoDataFound';
 
 const ROLES = {
   SUPER_ADMIN: 1,
@@ -102,7 +103,7 @@ const PendingRequests = () => {
 
       setAdmins(res?.data || []);
     } catch (error) {
-      console.log("this is error in the tab",error)
+      console.log("this is error in the tab", error)
       toast.error('Failed to fetch admin list');
     }
   };
@@ -504,7 +505,7 @@ const PendingRequests = () => {
       return (
         data?.data?.list?.map((item, index) => ({
           id: item._id,
-          sno: (currentPage - 1) * PAGE_SIZE + index + 1,
+          // sno: (currentPage - 1) * PAGE_SIZE + index + 1,
           name: `${item.user_id?.first_name} ${item.user_id?.last_name}`,
           updatedAt: new Date(item.updatedAt).toLocaleDateString("en-US", {
             year: "numeric",
@@ -558,7 +559,7 @@ const PendingRequests = () => {
                     {card.name}
                   </h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    S.No: {card.sno} • Updated: {card.updatedAt}
+                    Updated: {card.updatedAt}
                   </p>
 
                   {/* Status badges */}
@@ -578,10 +579,10 @@ const PendingRequests = () => {
                   showDeleteButton={false}
                   showAssignButton={true}
 
-                  onAssign={() => {
-                    setSelectedRequest(card);
-                    setIsAssignModalOpen(true);
-                  }}
+                  // onAssign={() => {
+                  //   setSelectedRequest(card);
+                  //   setIsAssignModalOpen(true);
+                  // }}
                 />
               </div>
             </div>
@@ -604,36 +605,37 @@ const PendingRequests = () => {
             <FilterSelect
               label="Document Type"
               value={documentTypeFilter}
-              selectedOption={documentTypeOptions.find(opt => opt.value === documentTypeFilter) || documentTypeOptions[0]}
-              onChange={(selectedOption) => setDocumentTypeFilter(selectedOption ? selectedOption.value : '')}
+              selectedOption={
+                documentTypeOptions.find(opt => opt.value === documentTypeFilter) || documentTypeOptions[0]
+              }
+              onChange={(selectedOption) =>
+                setDocumentTypeFilter(selectedOption ? selectedOption.value : '')
+              }
               options={documentTypeOptions}
               selectClassName="w-[22rem]"
             />
           </div>
         </div>
-        {/* <Table
-          tableHeadings={["S.No", "Name", "Updated At", "Status", "Assign Status", "Actions"]}
-          data={tableRows}
-          loading={loading}
-          keyWord={searchTerm}
-          setKeyword={setSearchTerm}
-          size={PAGE_SIZE}
-          pageNo={currentPage}
-          onPageChange={setCurrentPage}
-          totalData={data?.data?.total}
-          showSearch={false}
-        /> */}
-        <CardList
-          data={data}
-          loading={loading}
-          currentPage={currentPage}
-          PAGE_SIZE={PAGE_SIZE}
-          handleView={handleView}
-          handleEdit={handleEdit}
-          setSelectedRequest={setSelectedRequest}
-          setIsAssignModalOpen={setIsAssignModalOpen}
-        />
 
+        {/* Check for no data */}
+        {loading ? (
+          <div className="flex justify-center py-10">
+            <span className="text-gray-500">Loading...</span>
+          </div>
+        ) : data?.data?.list && data?.data?.list?.length <= 0 ? (
+          <NoDataFound />
+        ) : (
+          <CardList
+            data={data}
+            loading={loading}
+            currentPage={currentPage}
+            PAGE_SIZE={PAGE_SIZE}
+            handleView={handleView}
+            handleEdit={handleEdit}
+            setSelectedRequest={setSelectedRequest}
+            setIsAssignModalOpen={setIsAssignModalOpen}
+          />
+        )}
       </div>
 
       <Modal

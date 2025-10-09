@@ -26,7 +26,7 @@ import UserCertificate from "./pages/UserCertificate";
 import { getCookie } from "./components/utils/cookieHandler";
 import CompanyDetails from "./pages/CompanyDetails";
 
-const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
+// const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
 // PrivateRoute for user panel
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -151,10 +151,10 @@ const App = () => {
             path="/certtificate-view/:id"
             element={<PrivateRoute component={UserCertificate} />}
           />
-          <Route
+          {/* <Route
             path="/post-view/:id"
             element={<PrivateRoute component={PostDetailsPage} />}
-          />
+          /> */}
 
           {/* Private Company Routes */}
           <Route

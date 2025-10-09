@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { suggestedUser } from '../../../redux/Users/userSlice';
 import { verificationCenterList } from '../../../redux/CompanySlices/courseSlice';
 import { Link } from 'react-router-dom';
+import NoDataFound from '../../../components/ui/No Data/NoDataFound';
 
 const CompanyDashboard = ({
     companiesProfileData,
@@ -156,7 +157,6 @@ const CompanyDashboard = ({
                     </div>
 
 
-
                     {/* Actions Section */}
                     <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
                         <h2 className="text-xl font-bold text-gray-900 mb-2">
@@ -167,11 +167,16 @@ const CompanyDashboard = ({
                         </p>
 
                         <div className="space-y-4">
-                            {actionsToShow && actionsToShow?.map((action) => (
-                                <ActionCard key={action.id} action={action} />
-                            ))}
+                            {actionsToShow && actionsToShow.length > 0 ? (
+                                actionsToShow.map((action) => (
+                                    <ActionCard key={action.id} action={action} />
+                                ))
+                            ) : (
+                                <NoDataFound />
+                            )}
                         </div>
                     </div>
+
                 </div>
 
                 {/* Right Sidebar */}

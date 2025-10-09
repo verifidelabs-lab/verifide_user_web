@@ -9,7 +9,14 @@ let socket = null;
 
 
 const initializeSocket = () => {
-    const token = getCookie('VERIFIED_TOKEN')?.replace(/^"|"$/g, '');
+    let token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, '');
+    let isCompany = getCookie("ACTIVE_MODE");
+
+    console.log()
+    // If company token exists and path includes /company, use it
+    if (getCookie("COMPANY_TOKEN") && isCompany === "company") {
+        token = getCookie("COMPANY_TOKEN")?.replace(/^"|"$/g, '');
+    }
 
     // console.log(token)
 
