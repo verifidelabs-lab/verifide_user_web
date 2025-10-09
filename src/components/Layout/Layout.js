@@ -221,7 +221,7 @@ function Layout() {
               {/* <Route path="/feed" element={<Home />} /> */}
               <Route path="/course/recommended" element={<Recommended />} />
               <Route path="/course/course-details/:id" element={<CourseDetailPage />} />
-              <Route path="/opportunitiess" element={accessMode === '6' ? < Opportunitiess /> : <Opportunitiess2 />} /> :
+              <Route path="/opportunitiess/:id?" element={accessMode === '6' ? < Opportunitiess /> : <Opportunitiess2 />} /> :
               <Route path="/suggested-users" element={<Users />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/assessment/:token?" element={<Index />} />

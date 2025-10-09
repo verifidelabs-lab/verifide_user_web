@@ -1,14 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { PiPlus, PiX } from "react-icons/pi";
-import { arrayTransform, uploadImageDirectly } from "../../components/utils/globalFunction";
-import { useDispatch, useSelector } from "react-redux";
-import { cities, countries, masterIndustry, state, updateMasterIndustryData } from "../../redux/Global Slice/cscSlice";
-import { useCallback, useEffect, useState } from "react";
 import {
-
-  companyRegisterVerifyOtp,
-} from "../../redux/slices/authSlice";
+  arrayTransform,
+  uploadImageDirectly,
+} from "../../components/utils/globalFunction";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  cities,
+  countries,
+  masterIndustry,
+  state,
+  updateMasterIndustryData,
+} from "../../redux/Global Slice/cscSlice";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { companyRegisterVerifyOtp } from "../../redux/slices/authSlice";
 import OTPVerificationPopup from "./components/OTPVerificationPopup";
 import { toast } from "sonner";
 import { setCookie } from "../../components/utils/cookieHandler";
@@ -27,7 +33,10 @@ import EnhancedFileInput from "../../components/ui/Input/CustomFileAndImage";
 import { addOneData } from "../../redux/Users/userSlice";
 import Modal from "../../components/ui/Modal/Modal";
 import { companyIndustries } from "../../redux/CompanySlices/CompanyAuth";
-import { createCompany, getCompaniesList } from "../../redux/slices/companiesSlice";
+import {
+  createCompany,
+  getCompaniesList,
+} from "../../redux/slices/companiesSlice";
 
 const initialFormData = {
   username: "",
@@ -91,7 +100,6 @@ const Company_Sizes = [
   { value: "1001-5000", label: "1001-5000" },
   { value: "5001-10000", label: "5001-10000" },
 ];
-
 
 const FilterSelectAdd = ({
   label = "Filter By",
@@ -199,8 +207,14 @@ const FilterSelectAdd = ({
 };
 
 const RegisterCompany = () => {
-  const { formData, handleChange, setFormData, errors, handleSelectChange, setErrors } =
-    useFormHandler(initialFormData);
+  const {
+    formData,
+    handleChange,
+    setFormData,
+    errors,
+    handleSelectChange,
+    setErrors,
+  } = useFormHandler(initialFormData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoUrl, setLogoUrl] = useState(formData.logo_url || "");
@@ -324,11 +338,12 @@ const RegisterCompany = () => {
 
   const selector = useSelector((state) => state.global);
 
-  const allIndustry = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterIndustryData?.data?.data?.list)]
+  const allIndustry = [
+    { value: "", label: "Select" },
+    ...arrayTransform(selector?.masterIndustryData?.data?.data?.list),
+  ];
   const getIndustries = () => {
-    dispatch(masterIndustry())
-
-
+    dispatch(masterIndustry());
   };
 
   useEffect(() => {
@@ -475,6 +490,8 @@ const RegisterCompany = () => {
       newErrors.display_name = "Display name is required";
     if (!formData.phone_no?.trim())
       newErrors.phone_no = "Phone number is required";
+       if (!formData.country?.trim())
+      newErrors.country = "country is required";
     if (!formData.email?.trim()) newErrors.email = "Email is required";
 
     // Email format validation
@@ -532,18 +549,6 @@ const RegisterCompany = () => {
       newErrors.employee_count = "Please enter a valid positive number";
     }
 
-    // URL validation
-    // const urlRegex = /^https?:\/\/.+/;
-    // if (formData.website_url && !urlRegex.test(formData.website_url)) {
-    //   newErrors.website_url =
-    //     "Please enter a valid URL starting with http:// or https://";
-    // }
-    // if (
-    //   formData.linkedin_page_url &&
-    //   !urlRegex.test(formData.linkedin_page_url)
-    // ) {
-    //   newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
-    // }
     // General URL (must start with http or https)
     const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
 
@@ -562,12 +567,14 @@ const RegisterCompany = () => {
       newErrors.linkedin_page_url =
         "Please enter a valid LinkedIn URL (e.g. https://www.linkedin.com/...)";
     }
-    setErrors({ ...newErrors })
+    setErrors({ ...newErrors });
     return newErrors;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if (validateForm()) {
+      return;
+    }
     setIsSubmitting(true);
     try {
       const createPayload = {
@@ -584,8 +591,8 @@ const RegisterCompany = () => {
         headquarters: formData.headquarters,
         founded_year: formData.founded_year
           ? Math.floor(
-            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-          )
+              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+            )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -611,7 +618,7 @@ const RegisterCompany = () => {
         setCompanyRedisToken(res.data.redisToken);
 
         toast.success("Registration successful! Please verify your OTP.");
-        dispatch(getCompaniesList())
+        dispatch(getCompaniesList());
       } else {
         toast.success(res?.message || "Company created successfully");
         setFormData(initialFormData);
@@ -625,80 +632,92 @@ const RegisterCompany = () => {
     }
   };
 
+  const inputRefs = {
+    username: useRef(null),
+    email: useRef(null),
+    password: useRef(null),
+    confirmPassword: useRef(null),
+    name: useRef(null),
+    display_name: useRef(null),
+    phone_no: useRef(null),
+    industry: useRef(null),
+   };
 
-
-
+  // scroll to first error field
+  useEffect(() => {
+    if (errors && Object.keys(errors).length > 0) {
+      const firstErrorKey = Object.keys(errors)[0];
+      if (inputRefs[firstErrorKey]?.current) {
+        inputRefs[firstErrorKey].current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        inputRefs[firstErrorKey].current.focus?.();
+      }
+    }
+  }, [errors]);
 
   const handleBack = () => {
     navigate("/user/feed");
   };
-
-
-
-
-
 
   const getSelectedOption = (options, value) => {
     if (!value) return null;
 
     if (Array.isArray(value)) {
       // value is array of IDs (strings)
-      return options.filter(opt => value.includes(opt.value));
+      return options.filter((opt) => value.includes(opt.value));
     }
 
     // single value (string)
-    return options.find(opt => opt.value === value) || null;
+    return options.find((opt) => opt.value === value) || null;
   };
-
-
 
   const handleAddItem = async () => {
     try {
-      let type = '';
+      let type = "";
       let updateAction = null;
       let selectField = addModalState.field; // Get the field this item should be selected in
 
       switch (addModalState.type) {
-
-        case 'industries':
-          type = 'industries'
+        case "industries":
+          type = "industries";
           updateAction = updateMasterIndustryData;
           break;
 
         default:
           return;
       }
-      setLoading(true)
+      setLoading(true);
 
       const res = await dispatch(addOneData({ type, ...inputFields })).unwrap();
-      setLoading(false)
+      setLoading(false);
 
-      console.log("this is the response", res)
-      dispatch(updateAction({
-        _id: res.data._id,
-        name: res.data.name,
-        created_by_users: res?.data?.created_by_users
-      }));
+      console.log("this is the response", res);
+      dispatch(
+        updateAction({
+          _id: res.data._id,
+          name: res.data.name,
+          created_by_users: res?.data?.created_by_users,
+        })
+      );
 
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [selectField]: res.data._id
+        [selectField]: res.data._id,
       }));
 
-
-      setAddModalState({ isOpen: false, type: '', field: '' });
+      setAddModalState({ isOpen: false, type: "", field: "" });
       setInputFields({ name: "", logo_url: "" });
-
     } catch (error) {
       toast.error(error);
     } finally {
-      setLoading(false)
-
+      setLoading(false);
     }
   };
-  console.log("this is formdata", formData)
+  console.log("this is formdata", formData);
+
   return (
-    <>
       <div className="h-screen">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
           <div className="bg-white overflow-hidden">
@@ -729,6 +748,7 @@ const RegisterCompany = () => {
                     type="text"
                     value={formData?.username}
                     name="username"
+                    ref={inputRefs.username}
                     onChange={(e) => handleChange("username", e)}
                     placeholder="Enter username"
                     error={errors.username}
@@ -737,6 +757,7 @@ const RegisterCompany = () => {
                     label="Email *"
                     value={formData?.email}
                     name="email"
+                    ref={inputRefs.email}
                     onChange={(e) => handleChange("email", e)}
                     placeholder="Enter email"
                     error={errors.email}
@@ -749,6 +770,7 @@ const RegisterCompany = () => {
                     value={formData?.password}
                     onChange={(e) => handleChange("password", e)}
                     name="password"
+                    ref={inputRefs.password}
                     placeholder="Enter password"
                     error={errors?.password}
                   />
@@ -757,6 +779,7 @@ const RegisterCompany = () => {
                     value={formData?.confirmPassword}
                     onChange={(e) => handleChange("confirmPassword", e)}
                     name="confirmPassword"
+                    ref={inputRefs.confirmPassword}
                     placeholder="Confirm password"
                     error={errors?.confirmPassword}
                   />
@@ -772,6 +795,7 @@ const RegisterCompany = () => {
                     label="Company Name *"
                     value={formData?.name}
                     name="name"
+                    ref={inputRefs.name}
                     onChange={(e) => handleChange("name", e)}
                     placeholder="Enter company name"
                     error={errors.name}
@@ -781,6 +805,7 @@ const RegisterCompany = () => {
                     label="Display Name *"
                     value={formData?.display_name}
                     name="display_name"
+                    ref={inputRefs.display_name}
                     onChange={(e) => handleChange("display_name", e)}
                     placeholder="Enter display name"
                     error={errors.display_name}
@@ -792,13 +817,15 @@ const RegisterCompany = () => {
                     label="Phone Number *"
                     value={formData?.phone_no}
                     name="phone_no"
+                    ref={inputRefs.phone_no}
                     onChange={(e) => handleChange("phone_no", e)}
                     placeholder="Enter phone number"
                     error={errors?.phone_no}
                   />
 
                   <FilterSelect
-                    label="Country Code"
+                    label="Country Code *"
+                    name="country"
                     options={countriesList || []}
                     selectedOption={countriesList?.find(
                       (opt) =>
@@ -807,6 +834,8 @@ const RegisterCompany = () => {
                     onChange={(country) =>
                       handleCountryChange("country_code", country)
                     }
+                    error={errors?.country}
+
                   />
                 </div>
 
@@ -833,31 +862,38 @@ const RegisterCompany = () => {
                     name="industry"
                     placeholder="Select Industry"
                     options={allIndustry}
-                    selectedOption={getSelectedOption(allIndustry, formData?.industry)}
+                    selectedOption={getSelectedOption(
+                      allIndustry,
+                      formData?.industry
+                    )}
                     onChange={(selected) => {
                       // store only IDs
-                      const ids = Array.isArray(selected) ? selected.map(s => s.value) : selected?.value;
-                      handleSelectChange("industry", ids, Array.isArray(selected));
+                      const ids = Array.isArray(selected)
+                        ? selected.map((s) => s.value)
+                        : selected?.value;
+                      handleSelectChange(
+                        "industry",
+                        ids,
+                        Array.isArray(selected)
+                      );
                     }}
                     error={errors.industry}
-
+                    ref={inputRefs.industry}
                     required
                     onCreateOption={(inputValue, field) => {
                       setAddModalState({
                         isOpen: true,
-                        type: 'industries',
-                        field: field
+                        type: "industries",
+                        field: field,
                       });
-                      setInputFields(prev => ({ ...prev, name: inputValue }))
-
+                      setInputFields((prev) => ({ ...prev, name: inputValue }));
                     }}
                     isClearable={true}
                     // isDisabled={!formData?.company_id}
-                    disabledTooltip='Please select first Company'
+                    disabledTooltip="Please select first Company"
                     isCreatedByUser={true}
                     isMulti
                   />
-
 
                   <FilterSelect
                     label="Company Type"
@@ -870,7 +906,6 @@ const RegisterCompany = () => {
                         target: { value: selected?.value || "" },
                       })
                     }
-                    c
                   />
                 </div>
 
@@ -930,14 +965,13 @@ const RegisterCompany = () => {
                     placeholder="https://linkedin.com/company/example"
                     error={errors.linkedin_page_url}
                   />
-
-
                 </div>
                 <div className="mt-4">
                   <EnhancedFileInput
                     accept=".jpg,.jpeg,.png"
                     supportedFormats="Image"
                     label="Company Logo"
+                    name="logo_url"
                     onChange={handleImageUpload}
                     onDelete={removeImage}
                     error={errors.logo_url}
@@ -945,8 +979,6 @@ const RegisterCompany = () => {
                     value={logoUrl}
                   />
                 </div>
-
-
               </div>
 
               <div className="border-t border-gray-200 pt-6">
@@ -1091,27 +1123,26 @@ const RegisterCompany = () => {
           isOpen={addModalState.isOpen}
           title={`Add ${addModalState.type}`}
           onClose={() => {
-            setAddModalState({ isOpen: false, type: '', field: '' });
+            setAddModalState({ isOpen: false, type: "", field: "" });
             setInputFields({ name: "", logo_url: "" });
           }}
           handleSubmit={handleAddItem}
           loading={loading}
         >
-          <div className='space-y-3'>
+          <div className="space-y-3">
             <CustomInput
               className="w-full h-10"
               label="Enter Name"
               required
               placeholder="Enter name"
               value={inputFields?.name}
-              onChange={(e) => setInputFields(prev => ({ ...prev, name: e.target.value }))}
+              onChange={(e) =>
+                setInputFields((prev) => ({ ...prev, name: e.target.value }))
+              }
             />
-
           </div>
         </Modal>
       </div>
-
-    </>
   );
 };
 

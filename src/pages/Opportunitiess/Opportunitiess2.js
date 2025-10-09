@@ -2,11 +2,19 @@ import React, { useState, useRef, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { TbAdjustmentsHorizontal } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { masterIndustry, masterSkills, profileRoles, userJobs } from "../../redux/Global Slice/cscSlice";
-import { useNavigate } from "react-router-dom";
+import {
+  masterIndustry,
+  masterSkills,
+  profileRoles,
+  userJobs,
+} from "../../redux/Global Slice/cscSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import StudentJobCard from "./components/StudentJobCard";
 import SkeletonJobCard from "../../components/Loader/SkeletonJobCard";
-import { arrayTransform, convertTimestampToDate } from "../../components/utils/globalFunction";
+import {
+  arrayTransform,
+  convertTimestampToDate,
+} from "../../components/utils/globalFunction";
 import { getAllCompanies } from "../../redux/work/workSlice";
 import Pagination from "../../components/Pagination/Pagination";
 import NoDataFound from "../../components/ui/No Data/NoDataFound";
@@ -15,17 +23,22 @@ import { CiLocationOn } from "react-icons/ci";
 import Button from "../../components/ui/Button/Button";
 import { getCookie } from "../../components/utils/cookieHandler";
 
-
-
 const Opportunitiess2 = () => {
+  const param = useParams();
+
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.global);
-  let { userJobsData: { data } } = selector ? selector : {};
+  let {
+    userJobsData: { data },
+  } = selector ? selector : {};
   const selector2 = useSelector((state) => state);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Received ID from URL:", param?.id);
+  }, [param?.id]);
 
   const [activeTab, setActiveTab] = useState("all");
-  const [selectedJob, setSelectedJob] = useState(null)
+  const [selectedJob, setSelectedJob] = useState(null);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
     status: false,
@@ -34,33 +47,47 @@ const Opportunitiess2 = () => {
     skill: false,
     timePeriod: false,
   });
-
-
-
-  const [pageNo, setPageNo] = useState(1)
-  const size = 8
+  useEffect(() => {
+    const foundJob = data?.data?.list?.find(
+      (value) =>
+        value?.interviewDetails?._id === param?.id ||
+        value?.jobApplication?._id === param?.id
+    );
+    if (foundJob) {
+      setSelectedJob(foundJob); // directly set the found item
+    }
+  }, [param?.id, data]);
+  const [pageNo, setPageNo] = useState(1);
+  const size = 8;
   const [searchFelids, setSearchFelids] = useState({
     company_id: "",
-    industry_id: '',
-    job_title: '',
+    industry_id: "",
+    job_title: "",
     required_skills: [],
-    formDate: '',
+    formDate: "",
     toDate: "",
-    timePeriod: ""
-  })
+    timePeriod: "",
+  });
 
-
-
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   const allCompaniesList = [
     { value: "", label: "Select" },
-    ...arrayTransform(selector2?.work?.getAllCompaniesData?.data?.data || [])
+    ...arrayTransform(selector2?.work?.getAllCompaniesData?.data?.data || []),
   ];
-  const allIndustryList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterIndustryData?.data?.data?.list)]
-  const allProfileRoleList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.profileRolesData?.data?.data?.list)]
-  const allSkillsList = [{ value: "", label: "Select" }, ...arrayTransform(selector?.masterSkillsData?.data?.data?.list)]
+  const allIndustryList = [
+    { value: "", label: "Select" },
+    ...arrayTransform(selector?.masterIndustryData?.data?.data?.list),
+  ];
+  const allProfileRoleList = [
+    { value: "", label: "Select" },
+    ...arrayTransform(selector?.profileRolesData?.data?.data?.list),
+  ];
+  const allSkillsList = [
+    { value: "", label: "Select" },
+    ...arrayTransform(selector?.masterSkillsData?.data?.data?.list),
+  ];
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -71,19 +98,20 @@ const Opportunitiess2 = () => {
           type: activeTab,
         };
 
-        if (searchFelids?.company_id) filters.company_id = searchFelids.company_id;
-        if (searchFelids?.industry_id) filters.industry_id = searchFelids.industry_id;
+        if (searchFelids?.company_id)
+          filters.company_id = searchFelids.company_id;
+        if (searchFelids?.industry_id)
+          filters.industry_id = searchFelids.industry_id;
         if (searchFelids?.job_title) filters.job_title = searchFelids.job_title;
-        if (searchFelids?.required_skills?.length > 0) filters.required_skills = searchFelids.required_skills;
-
-
+        if (searchFelids?.required_skills?.length > 0)
+          filters.required_skills = searchFelids.required_skills;
 
         const apiPayload = {
           page: pageNo,
           size: size,
           query: JSON.stringify(filters),
           fromDate: searchFelids?.formDate || "",
-          toDate: searchFelids?.toDate || ""
+          toDate: searchFelids?.toDate || "",
         };
 
         await dispatch(userJobs(apiPayload));
@@ -97,15 +125,13 @@ const Opportunitiess2 = () => {
   }, [dispatch, activeTab, searchFelids, pageNo, size]);
 
   useEffect(() => {
-    dispatch(masterIndustry())
-    dispatch(masterSkills())
-    dispatch(getAllCompanies())
-    dispatch(profileRoles())
-
-  }, [dispatch])
+    dispatch(masterIndustry());
+    dispatch(masterSkills());
+    dispatch(getAllCompanies());
+    dispatch(profileRoles());
+  }, [dispatch]);
 
   const filterDropdownRef = useRef(null);
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -138,23 +164,19 @@ const Opportunitiess2 = () => {
     return Object.values(selectedFilters).some(Boolean);
   };
 
-
-
   const handleAction = (data) => {
     setSelectedJob(data);
     // console.log("data:---->>>", data)
-
-  }
+  };
   function applyForJob(data) {
-    navigate(`/user/career-goal/${data?._id}`)
+    navigate(`/user/career-goal/${data?._id}`);
   }
-
 
   const handleSelectChange = (fields, value) => {
     if (fields === "required_skills") {
       setSearchFelids((prev) => ({
         ...prev,
-        [fields]: value.map(v => v.value),
+        [fields]: value.map((v) => v.value),
       }));
     } else if (fields === "timePeriod") {
       const today = new Date();
@@ -218,8 +240,11 @@ const Opportunitiess2 = () => {
   return (
     <div className="bg-[#F6FAFD] min-h-screen flex justify-start place-items-start">
       <div
-        className={`w-full p-4 sm:p-6 ${!selectedJob ? "xl:w-[100%] lg:w-[100%] md:w-[100%]" : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
-          } `}
+        className={`w-full p-4 sm:p-6 ${
+          !selectedJob
+            ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
+            : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
+        } `}
       >
         <div className="flex flex-wrap lg:items-center justify-between mb-6  lg:space-y-0">
           <div className="flex flex-col lg:flex-row xl:flex-row flex-wrap gap-3 sm:flex-row items-end sm:justify-between  space-y-4 sm:space-y-0">
@@ -228,12 +253,13 @@ const Opportunitiess2 = () => {
                 onClick={() => {
                   setActiveTab("all");
                   setSelectedJob(false);
-                  setPageNo(1)
+                  setPageNo(1);
                 }}
-                className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none ${activeTab === "all"
-                  ? "bg-blue-50 text-blue-600 shadow-sm"
-                  : "text-gray-600 hover:text-[#000000E6]"
-                  }`}
+                className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none ${
+                  activeTab === "all"
+                    ? "bg-blue-50 text-blue-600 shadow-sm"
+                    : "text-gray-600 hover:text-[#000000E6]"
+                }`}
               >
                 All
               </button>
@@ -241,13 +267,13 @@ const Opportunitiess2 = () => {
                 onClick={() => {
                   setActiveTab("applied");
                   setSelectedJob(false);
-                  setPageNo(1)
-
+                  setPageNo(1);
                 }}
-                className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none ${activeTab === "applied"
-                  ? "bg-blue-50 text-blue-600 shadow-sm"
-                  : "text-gray-600 hover:text-[#000000E6]"
-                  }`}
+                className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none ${
+                  activeTab === "applied"
+                    ? "bg-blue-50 text-blue-600 shadow-sm"
+                    : "text-gray-600 hover:text-[#000000E6]"
+                }`}
               >
                 Applied
               </button>
@@ -255,13 +281,13 @@ const Opportunitiess2 = () => {
                 onClick={() => {
                   setActiveTab("closed");
                   setSelectedJob(false);
-                  setPageNo(1)
-
+                  setPageNo(1);
                 }}
-                className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none ${activeTab === "closed"
-                  ? "bg-blue-50 text-blue-600 shadow-sm"
-                  : "text-gray-600 hover:text-[#000000E6]"
-                  }`}
+                className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none ${
+                  activeTab === "closed"
+                    ? "bg-blue-50 text-blue-600 shadow-sm"
+                    : "text-gray-600 hover:text-[#000000E6]"
+                }`}
               >
                 Closed
               </button>
@@ -269,8 +295,6 @@ const Opportunitiess2 = () => {
           </div>
 
           <div className="flex flex-wrap items-center  sm:items-center space-y-3 sm:space-y-0 gap-2 sm:space-x-4">
-
-
             <div className="relative" ref={filterDropdownRef}>
               <button
                 onClick={() => setShowFilterDropdown(!showFilterDropdown)}
@@ -362,50 +386,60 @@ const Opportunitiess2 = () => {
           </div>
         </div>
 
-
         {hasActiveFilters() && (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
             {selectedFilters.status && (
               <FilterSelect2
                 label="Company Name"
                 options={allCompaniesList}
-                selectedOption={allCompaniesList?.find(opt => opt.value === searchFelids?.company_id)}
-                onChange={(selected) => handleSelectChange("company_id", selected)}
+                selectedOption={allCompaniesList?.find(
+                  (opt) => opt.value === searchFelids?.company_id
+                )}
+                onChange={(selected) =>
+                  handleSelectChange("company_id", selected)
+                }
                 isClearable={false}
-
               />
             )}
             {selectedFilters.industry && (
               <FilterSelect2
                 label="Industry"
                 options={allIndustryList}
-                selectedOption={allIndustryList?.find(opt => opt.value === searchFelids?.industry_id)}
-                onChange={(selected) => handleSelectChange("industry_id", selected)}
+                selectedOption={allIndustryList?.find(
+                  (opt) => opt.value === searchFelids?.industry_id
+                )}
+                onChange={(selected) =>
+                  handleSelectChange("industry_id", selected)
+                }
                 isClearable={false}
-
               />
             )}
             {selectedFilters.role && (
               <FilterSelect2
                 label="Role"
                 options={allProfileRoleList}
-                selectedOption={allProfileRoleList?.find(opt => opt.value === searchFelids?.job_title)}
-                onChange={(selected) => handleSelectChange("job_title", selected)}
+                selectedOption={allProfileRoleList?.find(
+                  (opt) => opt.value === searchFelids?.job_title
+                )}
+                onChange={(selected) =>
+                  handleSelectChange("job_title", selected)
+                }
                 isClearable={false}
-
               />
             )}
             {selectedFilters.skill && (
               <FilterSelect2
                 label="Skills"
                 options={allSkillsList}
-                selectedOption={allSkillsList?.find(opt => opt.value === searchFelids?.required_skills)}
-                onChange={(selected) => handleSelectChange("required_skills", selected)}
+                selectedOption={allSkillsList?.find(
+                  (opt) => opt.value === searchFelids?.required_skills
+                )}
+                onChange={(selected) =>
+                  handleSelectChange("required_skills", selected)
+                }
                 isMulti
                 isClearable={false}
-
               />
-
             )}
             {selectedFilters.timePeriod && (
               <FilterSelect2
@@ -419,18 +453,18 @@ const Opportunitiess2 = () => {
                 ]}
                 onChange={(value) => handleSelectChange("timePeriod", value)}
                 isClearable={false}
-
               />
             )}
-
           </div>
         )}
 
-
         <div className="h-full">
           <div
-            className={`grid ${!selectedJob ? "xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-1 grid-cols-1" : "xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
-              }  items-center gap-2`}
+            className={`grid ${
+              !selectedJob
+                ? "xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-1 grid-cols-1"
+                : "xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
+            }  items-center gap-2`}
           >
             {isLoading ? (
               Array.from({ length: 3 }).map((_, idx) => (
@@ -438,42 +472,42 @@ const Opportunitiess2 = () => {
                   <SkeletonJobCard />
                 </div>
               ))
+            ) : data?.data?.list && data?.data?.list.length > 0 ? (
+              data.data.list.map((ele) => (
+                <StudentJobCard
+                  key={ele._id}
+                  job={ele}
+                  handleAction={handleAction}
+                  isSelected={selectedJob?._id === ele._id}
+                  applyForJob={applyForJob}
+                />
+              ))
             ) : (
-              data?.data?.list && data?.data?.list.length > 0 ? (
-                data.data.list.map((ele) => (
-                  <StudentJobCard
-                    key={ele._id}
-                    job={ele}
-                    handleAction={handleAction}
-                    isSelected={selectedJob?._id === ele._id}
-                    applyForJob={applyForJob}
-                  />
-                ))
-              ) : <div className="w-full  mx-auto flex justify-center items-center"><NoDataFound /></div>
+              <div className="w-full  mx-auto flex justify-center items-center">
+                <NoDataFound />
+              </div>
             )}
-
           </div>
         </div>
-        {
-          data?.data?.total > size && (
-            <Pagination
-              totalPages={Math.ceil(data?.data?.total / size)}
-              currentPage={pageNo}
-              onPageChange={(newPage) => setPageNo(newPage)}
-            />
-          )
-        }
+        {data?.data?.total > size && (
+          <Pagination
+            totalPages={Math.ceil(data?.data?.total / size)}
+            currentPage={pageNo}
+            onPageChange={(newPage) => setPageNo(newPage)}
+          />
+        )}
       </div>
 
       {selectedJob && (
-        <div className={`w-full md:block hidden xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] max-w-[200px] bg-[#FFFFFF] rounded-2xl border-l border-gray-200 p-6 overflow-y-auto mt-10`}>
-
+        <div
+          className={`w-full md:block hidden xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] max-w-[200px] bg-[#FFFFFF] rounded-2xl border-l border-gray-200 p-6 overflow-y-auto mt-10`}
+        >
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center space-x-3">
               {!selectedJob.company_id?.logo_url || imageError ? (
                 <div className="w-12 h-12 bg-gray-900  flex items-center justify-center text-white font-bold text-lg">
                   <img
-                    src={'/36369.jpg'}
+                    src={"/36369.jpg"}
                     alt={"company name"}
                     onError={() => setImageError(true)}
                     className="md:w-12 md:h-12 w-10 h-10 object-cover "
@@ -488,28 +522,35 @@ const Opportunitiess2 = () => {
                 />
               )}
               <div>
-                <h3 className="font-semibold text-[#000000E6]">{selectedJob.company_id?.name}</h3>
-                <p className="text-gray-600 text-sm">{selectedJob.industry_id?.name}</p>
+                <h3 className="font-semibold text-[#000000E6]">
+                  {selectedJob.company_id?.name}
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  {selectedJob.industry_id?.name}
+                </p>
               </div>
             </div>
-            <button onClick={() => setSelectedJob(false)} className="text-gray-500 hover:text-gray-700">
+            <button
+              onClick={() => setSelectedJob(false)}
+              className="text-gray-500 hover:text-gray-700"
+            >
               <IoClose size={24} />
             </button>
           </div>
 
           <h2 className="text-xl font-bold text-[#000000E6] mb-2">
-            {selectedJob.job_title?.name || 'Job Title'}
+            {selectedJob.job_title?.name || "Job Title"}
           </h2>
 
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-0.5 rounded">
-              {selectedJob.job_type?.replace('-', ' ') || 'Full-time'}
+              {selectedJob.job_type?.replace("-", " ") || "Full-time"}
             </span>
             <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded">
-              {selectedJob.job_location === 'on-site' ? 'On-site' : 'Remote'}
+              {selectedJob.job_location === "on-site" ? "On-site" : "Remote"}
             </span>
             <span className="bg-purple-100 text-purple-800 text-xs px-2.5 py-0.5 rounded">
-              {selectedJob.pay_type === 'volunteer' ? 'Volunteer' : 'Paid'}
+              {selectedJob.pay_type === "volunteer" ? "Volunteer" : "Paid"}
             </span>
           </div>
 
@@ -525,20 +566,28 @@ const Opportunitiess2 = () => {
           {selectedJob.work_location && (
             <div className="mb-4">
               <strong className="text-gray-700">Location:</strong>
-              <p className="text-[#000000] text-sm font-normal mb-2 truncate flex justify-start items-center gap-2 "><CiLocationOn />{selectedJob?.work_location?.state?.name},{selectedJob?.work_location?.city?.name}</p>
+              <p className="text-[#000000] text-sm font-normal mb-2 truncate flex justify-start items-center gap-2 ">
+                <CiLocationOn />
+                {selectedJob?.work_location?.state?.name},
+                {selectedJob?.work_location?.city?.name}
+              </p>
             </div>
           )}
 
           <div className="mb-4">
-            <strong className="text-gray-700 block mb-2">Job Description:</strong>
+            <strong className="text-gray-700 block mb-2">
+              Job Description:
+            </strong>
             <p className="text-gray-600 text-sm">
-              {selectedJob.job_description || 'No description provided.'}
+              {selectedJob.job_description || "No description provided."}
             </p>
           </div>
 
           {selectedJob.required_skills?.length > 0 && (
             <div className="mb-4">
-              <strong className="text-gray-700 block mb-2">Required Skills:</strong>
+              <strong className="text-gray-700 block mb-2">
+                Required Skills:
+              </strong>
               <div className="flex flex-wrap gap-2">
                 {selectedJob.required_skills.map((skill, index) => (
                   <span
@@ -555,31 +604,46 @@ const Opportunitiess2 = () => {
           {selectedJob.isApplied && (
             <div className="mb-4">
               <strong className="text-gray-700">Application Status:</strong>
-              <span className={`ml-2 ${selectedJob.jobApplication?.status === 'applied' ? 'text-blue-600' :
-                selectedJob.jobApplication?.passed ? 'text-green-600' : 'text-yellow-600'
-                }`}>
-                {selectedJob.jobApplication?.status === 'applied' ? 'Applied' :
-                  selectedJob.jobApplication?.passed ? 'Accepted' : 'Under Review'}
+              <span
+                className={`ml-2 ${
+                  selectedJob.jobApplication?.status === "applied"
+                    ? "text-blue-600"
+                    : selectedJob.jobApplication?.passed
+                    ? "text-green-600"
+                    : "text-yellow-600"
+                }`}
+              >
+                {selectedJob.jobApplication?.status === "applied"
+                  ? "Applied"
+                  : selectedJob.jobApplication?.passed
+                  ? "Accepted"
+                  : "Under Review"}
               </span>
             </div>
           )}
 
           {selectedJob?.isSchedule && selectedJob?.interviewDetails && (
             <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-800 capitalize mb-3">📅 Interview Details</h3>
+              <h3 className="text-lg font-semibold text-gray-800 capitalize mb-3">
+                📅 Interview Details
+              </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
                 <div>
                   <span className="font-medium">Interview Date:</span>
                   <div className="text-gray-600">
-                    {convertTimestampToDate(selectedJob.interviewDetails.select_date)}
+                    {convertTimestampToDate(
+                      selectedJob.interviewDetails.select_date
+                    )}
                   </div>
                 </div>
 
                 <div>
                   <span className="font-medium">Interview Time:</span>
                   <div className="text-gray-600">
-                    {convertTimestampToDate(selectedJob.interviewDetails.select_time)}
+                    {convertTimestampToDate(
+                      selectedJob.interviewDetails.select_time
+                    )}
                   </div>
                 </div>
 
@@ -600,17 +664,16 @@ const Opportunitiess2 = () => {
             </div>
           )}
 
-
           <div className="text-sm text-gray-500 mt-4">
-            Posted on: {new Date(selectedJob.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
+            Posted on:{" "}
+            {new Date(selectedJob.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
             })}
           </div>
         </div>
       )}
-
     </div>
   );
 };
