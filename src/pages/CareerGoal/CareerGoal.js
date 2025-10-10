@@ -29,13 +29,13 @@ const CareerGoal = () => {
       dispatch(jobScreeningQuestion({ job_id: id }));
     }
   }, [dispatch, id]);
-useEffect(() => {
-  console.log("this is the jobdata", jobData?.isApplied);
-  if (jobData?.isApplied === true) {
-     toast.warning("You have already applied for this job.");
-    navigate("/user/opportunitiess");
-  }
-}, [jobData?.isApplied, navigate]);
+  useEffect(() => {
+    console.log("this is the jobdata", jobData?.isApplied);
+    if (jobData?.isApplied === true) {
+      toast.warning("You have already applied for this job.");
+      navigate("/user/opportunitiess");
+    }
+  }, [jobData?.isApplied, navigate]);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -252,6 +252,10 @@ useEffect(() => {
               src={jobData?.company_id?.logo_url}
               alt="Company Logo"
               className="w-16 h-16 rounded-lg object-cover border"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "/companylogo.png"; // fallback image
+              }}
             />
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
