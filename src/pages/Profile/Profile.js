@@ -665,7 +665,7 @@ const Profile = ({ profileData }) => {
       handleClose();
     } catch (error) {
       console.error('Education submission error:', error);
-      toast.error(error?.message || 'Failed to save education details');
+      toast.error(error );
     } finally {
       setLoading(false);
     }
