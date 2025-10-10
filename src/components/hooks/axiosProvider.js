@@ -2,12 +2,12 @@ import axios from 'axios';
 import { getCookie, removeCookie } from '../utils/cookieHandler';
 import { CiNoWaitingSign } from 'react-icons/ci';
 
-const isLive = false;
-// const isLive = true
+// const isLive = false;
+const isLive = true
 
 
-export const apiUrl = isLive ? 'https://dev-verifide.verifide.xyz/api/v1/' : 'http://192.168.1.63:5004/api/v1/';
-export const socketApiUrl = isLive ? 'https://dev-verifide.verifide.xyz/socket' : 'http://192.168.1.63:5004/socket';
+export const apiUrl = isLive ? 'https://dev-verifide.verifide.xyz/api/v1/' : 'http://192.168.43.208:5004/api/v1/';
+export const socketApiUrl = isLive ? 'https://dev-verifide.verifide.xyz/socket' : 'http://192.168.43.208:5004/socket';
 
 const axiosPublic = axios.create({
     baseURL: apiUrl,
