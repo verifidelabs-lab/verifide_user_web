@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { FiMessageCircle } from "react-icons/fi";
+import { FiMessageCircle, FiPlus } from "react-icons/fi";
 import {
   PiDotsThreeOutlineVerticalFill,
   PiHeartStraightFill,
@@ -50,6 +50,8 @@ import "locomotive-scroll/dist/locomotive-scroll.min.css";
 import ActionButtonComment from "../../../components/ui/Button/ActionButtonComment";
 import MessageText2 from "../../../pages/Home/components/MessageText2";
 import { getCookie } from "../../../components/utils/cookieHandler";
+import NoDataFound from "../../../components/ui/No Data/NoDataFound";
+import Button from "../../../components/ui/Button/Button";
 
 const useIO = ({ onIntersect, rootMargin = "120px", threshold = 0.1 }) => {
   const observerRef = useRef(null);
@@ -701,8 +703,13 @@ const Posts = () => {
             }
 
           </div>
-
-          {Array.isArray(posts) &&
+          <div className="flex gap-3 justify-end">
+            <Button variant='primary' size='sm' icon={<FiPlus />}
+              onClick={() => navigate(`/company/create-post`)}>
+              Create Post
+            </Button>
+          </div>
+          {Array.isArray(posts) && posts.length <= 0 ? <NoDataFound /> :
             posts.map((post, index) => {
               const isExpanded = !!expandedPosts[post._id];
               const showComments = !!activeCommentSections[post._id];

@@ -25,11 +25,11 @@ const CompanyDashboard = ({
 
     const MetricCard = ({ value, label, change, isPositive }) => (
         <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200">
-            <div className="mb-4">
+            <div className="">
                 <div className="text-3xl font-bold text-gray-900 mb-1">{value}</div>
                 <div className="text-sm text-blue-600 font-medium">{label}</div>
             </div>
-            {change !== null && (
+            {/* {change !== null && (
                 <div className="flex items-center text-sm">
                     {isPositive ? (
                         <TrendingUp className="h-4 w-4 text-green-500 mr-1" />
@@ -47,7 +47,7 @@ const CompanyDashboard = ({
             )}
             {change === null && (
                 <div className="text-sm text-gray-500">Last 7 days</div>
-            )}
+            )} */}
         </div>
     );
 
@@ -133,7 +133,7 @@ const CompanyDashboard = ({
                             Grow your Page 3x faster by leveraging insights and analytics
                         </p>
                         {/* Metrics Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
                             <MetricCard
                                 value={companiesProfileData?.employee_count}
                                 label="Employers"
@@ -146,13 +146,13 @@ const CompanyDashboard = ({
                                 change={newFollowersChange}
                                 isPositive={newFollowersChange > 0}
                             />
-                            <MetricCard
+                            {/* <MetricCard
                                 value={postImpressions}
                                 label="Post impressions"
                                 change={postImpressionsChange}
                                 isPositive={postImpressionsChange > 0}
                             />
-                            <MetricCard value={pageVisitors} label="Page visitors" change={null} />
+                            <MetricCard value={pageVisitors} label="Page visitors" change={null} /> */}
                         </div>
                     </div>
 

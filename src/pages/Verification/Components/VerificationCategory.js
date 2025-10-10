@@ -269,19 +269,20 @@ const VerificationCategory = ({ profileData }) => {
       const payload =
         institutionForm.institute_id === ""
           ? {
-              type: DOCUMENT_MODELS[type],
-              document_id: data?._id,
-              attach_file: [formData.image_url],
-              verification_type: "third-person",
-              third_person_name: institutionForm.name,
-            }
+            type: DOCUMENT_MODELS[type],
+            document_id: data?._id,
+            attach_file: [formData.image_url],
+            verification_type: "third-person",
+            third_person_name: institutionForm.name,
+            third_person_email: institutionForm.email
+          }
           : {
-              assigned_to: institutionForm.institute_id,
-              verification_type: "assigned",
-              type: DOCUMENT_MODELS[type],
-              document_id: data?._id,
-              attach_file: [formData.image_url],
-            };
+            assigned_to: institutionForm.institute_id,
+            verification_type: "assigned",
+            type: DOCUMENT_MODELS[type],
+            document_id: data?._id,
+            attach_file: [formData.image_url],
+          };
 
       setLoading(true);
 
@@ -333,15 +334,14 @@ const VerificationCategory = ({ profileData }) => {
 
     return (
       <span
-        className={`text-sm px-2 py-1 rounded-full border capitalize ${
-          statusClasses[status] || statusClasses.pending
-        }`}
+        className={`text-sm px-2 py-1 rounded-full border capitalize ${statusClasses[status] || statusClasses.pending
+          }`}
       >
         {status === "pending"
           ? "UnVerified"
           : status === "approved"
-          ? "Verified"
-          : status}
+            ? "Verified"
+            : status}
       </span>
     );
   };
@@ -573,11 +573,10 @@ const VerificationCategory = ({ profileData }) => {
                 </div>
 
                 <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    expandedHistoryId === item._id
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${expandedHistoryId === item._id
                       ? "max-h-[2000px]"
                       : "max-h-0"
-                  }`}
+                    }`}
                 >
                   <div className="space-y-4 my-4 p-2 rounded-lg ">
                     {item?.verificationHistory?.map((history) => (
@@ -588,13 +587,12 @@ const VerificationCategory = ({ profileData }) => {
                         {/* Header with Status and Date */}
                         <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                           <span
-                            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                              history.status === "approved"
+                            className={`px-3 py-1 rounded-full text-xs font-semibold ${history.status === "approved"
                                 ? "bg-green-100 text-green-700"
                                 : history.status === "pending"
-                                ? "bg-yellow-100 text-yellow-700"
-                                : "bg-red-100 text-red-700"
-                            }`}
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : "bg-red-100 text-red-700"
+                              }`}
                           >
                             {history.status.charAt(0).toUpperCase() +
                               history.status.slice(1)}
@@ -707,9 +705,8 @@ const VerificationCategory = ({ profileData }) => {
                 </div>
 
                 <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
-                  }`}
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
+                    }`}
                 >
                   <div className="space-y-2 my-4 p-4">
                     {(item?.company_id || item?.institution_id) && (
@@ -735,21 +732,19 @@ const VerificationCategory = ({ profileData }) => {
                             </div>
                           </div>
                           <IoChevronDownOutline
-                            className={`transition-transform duration-300 ${
-                              activeOption === "institution" &&
-                              selectedItemId2 === item._id
+                            className={`transition-transform duration-300 ${activeOption === "institution" &&
+                                selectedItemId2 === item._id
                                 ? "transform rotate-180"
                                 : ""
-                            }`}
+                              }`}
                           />
                         </div>
                         <div
-                          className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                            activeOption === "institution" &&
-                            selectedItemId2 === item._id
+                          className={`transition-all duration-300 ease-in-out overflow-hidden ${activeOption === "institution" &&
+                              selectedItemId2 === item._id
                               ? "max-h-screen overflow-y-auto"
                               : "max-h-0"
-                          }`}
+                            }`}
                         >
                           {renderInstitutionForm(item)}
                         </div>
@@ -776,21 +771,19 @@ const VerificationCategory = ({ profileData }) => {
                           </div>
                         </div>
                         <IoChevronDownOutline
-                          className={`transition-transform duration-300 ${
-                            activeOption === "document" &&
-                            selectedItemId2 === item._id
+                          className={`transition-transform duration-300 ${activeOption === "document" &&
+                              selectedItemId2 === item._id
                               ? "transform rotate-180"
                               : ""
-                          }`}
+                            }`}
                         />
                       </div>
                       <div
-                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                          activeOption === "document" &&
-                          selectedItemId2 === item._id
+                        className={`transition-all duration-300 ease-in-out overflow-hidden ${activeOption === "document" &&
+                            selectedItemId2 === item._id
                             ? "max-h-[500px]"
                             : "max-h-0"
-                        }`}
+                          }`}
                       >
                         {renderDocumentForm(item)}
                       </div>

@@ -249,6 +249,10 @@ const PendingRequests = () => {
           />
         </div>
       );
+    const isImage = (url) => {
+      const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg"];
+      return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
+    };
 
     return (
       <div className="grid grid-cols-1 gap-6">
@@ -364,20 +368,26 @@ const PendingRequests = () => {
         </div>
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>
-            {selectedRequest.attach_file && selectedRequest.attach_file.length > 0 ? (
+            <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
+            {selectedRequest.attach_file && selectedRequest.attach_file.length >= 0 ? (
               <div className="space-y-4 mt-4">
-                {selectedRequest.attach_file.map((file, index) => (
+                {selectedRequest.attach_file.map((imageUrl, index) => (
                   <div key={index} className="flex items-center space-x-3">
-                    <img
-                      src={file}
-                      alt={`Attachment ${index + 1}`}
-                      className="w-full max-w-xs rounded shadow border"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
-                      }}
-                    />
+
+                    {isImage(imageUrl) ? (
+                      <img
+                        src={imageUrl}
+                        alt="preview"
+                        className="w-full md:max-w-full md:min-h-80 min-h-80 max-h-80 object-contain"
+                      />
+                    ) : (
+                      <iframe
+                        src={`https://docs.google.com/gview?url=${encodeURIComponent(imageUrl)}&embedded=true`}
+                        title="file-preview"
+                        className="w-full h-80 border rounded"
+                      />
+                    )}
+
                   </div>
                 ))}
               </div>
@@ -514,7 +524,7 @@ const PendingRequests = () => {
           }),
           status: item.status,
           assignStatus: item.assign_status,
-          avatar: item.user_id.avatar || null, // fallback avatar if you have it
+          avatar: item?.user_id?.avatar || item?.user_id?.profile_picture_url || null, // fallback avatar if you have it
         })) || []
       );
     }, [data?.data?.list, currentPage]);
@@ -577,12 +587,12 @@ const PendingRequests = () => {
                   showEditButton={true}
                   onEdit={() => handleEdit(card.id)}
                   showDeleteButton={false}
-                  showAssignButton={true}
+                // showAssignButton={true}
 
-                  // onAssign={() => {
-                  //   setSelectedRequest(card);
-                  //   setIsAssignModalOpen(true);
-                  // }}
+                // onAssign={() => {
+                //   setSelectedRequest(card);
+                //   setIsAssignModalOpen(true);
+                // }}
                 />
               </div>
             </div>

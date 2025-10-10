@@ -33,6 +33,8 @@ import CreateQuest from '../../pages/Quest/Components/CreateQuest';
 import AdminRoles from '../../pages/CompanyPanel/AdminRoles/AdminRoles';
 import Users from '../../pages/users/Users';
 import UsersProfile from '../../pages/ProfileView/UsersProfile';
+import Connections from '../../pages/Connections/Connections';
+import CompanyInstituteView from '../../pages/ProfileView/CompanyInstituteView';
 // import Login from '../../pages/CompanyPanel/Login/Login';
 
 
@@ -153,9 +155,9 @@ function CompanyLayout() {
 
   const [adminProfileData, setAdminProfileData] = useState({});
   // const [companiesProfileData, setCompanyProfileData] = useState({});
-    const companiesProfileData = useSelector(
-      (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
-    );
+  const companiesProfileData = useSelector(
+    (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
+  );
   const [instituteProfileData, setinstituteProfileData] = useState({});
   const [, setModuleName] = useState('')
   console.log("this is te profileData", companiesProfileData)
@@ -307,7 +309,6 @@ function CompanyLayout() {
                   <Route path="/suggested-users" element={<Users />} />
 
                   <Route path="/post-job/:id?" element={<PostJob companiesProfileData={companiesProfileData} />} />
-                  <Route path="/profile/:first_name/*" element={<UsersProfile currentUserId={companiesProfileData._id || null} />} />
                   {/* <Route path={`${basePath}/profile`} element={<Profile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />   */}
                   {/* <Route path={`${basePath}/admin-users`} element={<AdminUsers />} /> */}
                   {/* <Route path={`${basePath}/approved-requests`} element={<ApprovedRequests />} /> */}
@@ -323,6 +324,10 @@ function CompanyLayout() {
                   <Route path={`notification`} element={<NotificationInterface />} />
                   <Route path="quest" element={<Quest profileData={companiesProfileData} />} />
                   <Route path="quest/create-your-quest/:id?" element={<CreateQuest />} />
+                  <Route path="/connections" element={<Connections profileData={companiesProfileData} />} />
+                  <Route path="/view-details/:name/:id" element={<CompanyInstituteView />} />
+                  <Route path="/profile/:first_name/*" element={<UsersProfile currentUserId={companiesProfileData._id || null} />} />
+
                 </>
               )}
 

@@ -376,33 +376,45 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
                     {/* Expand inline */}
                     {isCompanyDropdownOpen && (
-                      <div className="pl-4">
+                      <div className="pl-4 space-y-1">
                         {companiesData?.data?.list?.length > 0 ? (
                           companiesData.data.list.map((company) => (
                             <Link
                               key={company._id}
-                              to={`/company/login?email=${encodeURIComponent(
-                                company.email
-                              )}`}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 capitalize"
+                              to={`/company/login?email=${encodeURIComponent(company.email)}`}
+                              className="flex items-center gap-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
                               onClick={() => {
                                 setIsCompanyDropdownOpen(false);
                                 setIsDropdownOpen(false);
                               }}
                             >
-                              {company.name}
+                              {/* ✅ Company logo with fallback */}
+                              {company.logo_url ? (
+                                <img
+                                  src={company.logo_url}
+                                  alt={`${company.name} logo`}
+                                  className="w-6 h-6 rounded-full object-cover border border-gray-200"
+                                  onError={(e) => {
+                                    e.currentTarget.src = "/default-company.png"; // your fallback image
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-semibold">
+                                  {company.name?.charAt(0)?.toUpperCase() || "C"}
+                                </div>
+                              )}
+
+                              <span className="truncate">{company.name}</span>
                             </Link>
                           ))
                         ) : (
-                          <p className="px-4 py-2 text-sm text-gray-500">
-                            No companies found
-                          </p>
+                          <p className=" py-2 text-sm text-gray-500">No companies found</p>
                         )}
 
                         {companiesData?.data?.list?.length < 5 && (
                           <Link
                             to="/user/create-company"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            className="block   py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                             onClick={() => {
                               setIsCompanyDropdownOpen(false);
                               setIsDropdownOpen(false);
@@ -413,6 +425,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                         )}
                       </div>
                     )}
+
                   </div>
 
                   {/* <Link

@@ -11,11 +11,12 @@ export default function MediaCarousel({ post }) {
     const isExternalVideo =
         post?.video_url &&
         !post.video_url.endsWith(".mp4") &&
-        !post.video_url.endsWith(".webm"); 
+        !post.video_url.endsWith(".webm");
 
     const hasVideo = !!post?.video_url;
     const hasThumbnail = !!post?.thumbnail;
-    const hasMultipleImages = post?.image_urls?.length > 1; 
+    const hasMultipleImages = post?.image_urls?.length > 1;
+    console.log("this is the post of the image", post, hasMultipleImages)
 
     const getYouTubeVideoId = (url) => {
         const match = url.match(

@@ -101,7 +101,7 @@ const Company_Sizes = [
   { value: "5001-10000", label: "5001-10000" },
 ];
 
- 
+
 
 const RegisterCompany = () => {
   const {
@@ -224,14 +224,10 @@ const RegisterCompany = () => {
     cscSelector?.countriesData?.data?.data || []
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showOtpPopup, setShowOtpPopup] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [verificationError, setVerificationError] = useState("");
-  const [companyRedisToken, setCompanyRedisToken] = useState("");
 
-  const [customDegrees, setCustomDegrees] = useState([]);
-  const [showCustomDegreeInput, setShowCustomDegreeInput] = useState(false);
-  const [customDegreeInput, setCustomDegreeInput] = useState("");
+
+
+
 
   const selector = useSelector((state) => state.global);
 
@@ -387,9 +383,9 @@ const RegisterCompany = () => {
       newErrors.display_name = "Display name is required";
     if (!formData.phone_no?.trim())
       newErrors.phone_no = "Phone number is required";
-       if (!formData.country?.trim())
+    if (!formData.country?.trim())
       newErrors.country = "country is required";
-     if (!formData.country?.trim())
+    if (!formData.country?.trim())
       newErrors.country = "country is required";
     if (!formData.email?.trim()) newErrors.email = "Email is required";
 
@@ -490,8 +486,8 @@ const RegisterCompany = () => {
         headquarters: formData.headquarters,
         founded_year: formData.founded_year
           ? Math.floor(
-              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-            )
+            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+          )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -514,11 +510,22 @@ const RegisterCompany = () => {
       console.log("formDataformData11111111111111111111", res);
 
       if (res?.data?.redisToken) {
-        setCompanyRedisToken(res.data.redisToken);
 
-        toast.success("Registration successful! Please verify your OTP.");
-        dispatch(getCompaniesList());
       } else {
+        const apiPayload = {
+          page: 1,
+          size: 100,
+          populate: "industry|name",
+          select:
+            "name display_name email industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+          searchFields: "name",
+          keyWord: "",
+          query: JSON.stringify({
+            created_by_users: false,
+          }),
+        };
+
+        dispatch(getCompaniesList(apiPayload));
         toast.success(res?.message || "Company created successfully");
         setFormData(initialFormData);
         navigate("/user/feed"); // Redirects to desired route
@@ -540,7 +547,7 @@ const RegisterCompany = () => {
     display_name: useRef(null),
     phone_no: useRef(null),
     industry: useRef(null),
-   };
+  };
 
   // scroll to first error field
   useEffect(() => {
@@ -617,431 +624,431 @@ const RegisterCompany = () => {
   console.log("this is formdata", formData);
 
   return (
-      <div className="h-screen">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="bg-white overflow-hidden">
-            <div className="px-6 py-5 border-b border-gray-200">
-              <button
-                onClick={handleBack}
-                title="go back"
-                className="text-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-gray-700 transition-colors"
-              >
-                <TbArrowBack size={20} />
-              </button>
-              <h2 className="text-2xl font-bold text-gray-800">
-                Register Your Company
-              </h2>
-              <p className="mt-1 text-sm text-gray-600">
-                Fill in your company details to create an account
-              </p>
+    <div className="h-screen">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+        <div className="bg-white overflow-hidden">
+          <div className="px-6 py-5 border-b border-gray-200">
+            <button
+              onClick={handleBack}
+              title="go back"
+              className="text-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-gray-700 transition-colors"
+            >
+              <TbArrowBack size={20} />
+            </button>
+            <h2 className="text-2xl font-bold text-gray-800">
+              Register Your Company
+            </h2>
+            <p className="mt-1 text-sm text-gray-600">
+              Fill in your company details to create an account
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Account Information
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CustomInput
+                  label="Username *"
+                  type="text"
+                  value={formData?.username}
+                  name="username"
+                  ref={inputRefs.username}
+                  onChange={(e) => handleChange("username", e)}
+                  placeholder="Enter username"
+                  error={errors.username}
+                />
+                <CustomInput
+                  label="Email *"
+                  value={formData?.email}
+                  name="email"
+                  ref={inputRefs.email}
+                  onChange={(e) => handleChange("email", e)}
+                  placeholder="Enter email"
+                  error={errors.email}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <PasswordInput
+                  label="Password *"
+                  value={formData?.password}
+                  onChange={(e) => handleChange("password", e)}
+                  name="password"
+                  ref={inputRefs.password}
+                  placeholder="Enter password"
+                  error={errors?.password}
+                />
+                <PasswordInput
+                  label="Confirm Password *"
+                  value={formData?.confirmPassword}
+                  onChange={(e) => handleChange("confirmPassword", e)}
+                  name="confirmPassword"
+                  ref={inputRefs.confirmPassword}
+                  placeholder="Confirm password"
+                  error={errors?.confirmPassword}
+                />
+              </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
-              <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Account Information
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Basic Company Information
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CustomInput
+                  label="Company Name *"
+                  value={formData?.name}
+                  name="name"
+                  ref={inputRefs.name}
+                  onChange={(e) => handleChange("name", e)}
+                  placeholder="Enter company name"
+                  error={errors.name}
+                />
+
+                <CustomInput
+                  label="Display Name *"
+                  value={formData?.display_name}
+                  name="display_name"
+                  ref={inputRefs.display_name}
+                  onChange={(e) => handleChange("display_name", e)}
+                  placeholder="Enter display name"
+                  error={errors.display_name}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <CustomInput
+                  label="Phone Number *"
+                  value={formData?.phone_no}
+                  name="phone_no"
+                  ref={inputRefs.phone_no}
+                  onChange={(e) => handleChange("phone_no", e)}
+                  placeholder="Enter phone number"
+                  error={errors?.phone_no}
+                />
+
+                <FilterSelect
+                  label="Country Code *"
+                  name="country_code"
+                  options={countriesList || []}
+                  selectedOption={countriesList?.find(
+                    (opt) =>
+                      opt.short_name === formData?.country_code?.short_name
+                  )}
+                  onChange={(country) =>
+                    handleCountryChange("country_code", country)
+                  }
+                  error={errors?.country_code}
+
+                />
+              </div>
+
+              <div className="mt-4">
+                <CustomInput
+                  type="textarea"
+                  label="Description"
+                  value={formData?.description}
+                  name="description"
+                  onChange={(e) => handleChange("description", e)}
+                  placeholder="Enter company description"
+                  rows={3}
+                />
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Company Details
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FilterSelect
+                  label="Industry Name"
+                  name="industry"
+                  placeholder="Select Industry"
+                  options={allIndustry}
+                  selectedOption={getSelectedOption(
+                    allIndustry,
+                    formData?.industry
+                  )}
+                  onChange={(selected) => {
+                    // store only IDs
+                    const ids = Array.isArray(selected)
+                      ? selected.map((s) => s.value)
+                      : selected?.value;
+                    handleSelectChange(
+                      "industry",
+                      ids,
+                      Array.isArray(selected)
+                    );
+                  }}
+                  error={errors.industry}
+                  ref={inputRefs.industry}
+                  required
+                  onCreateOption={(inputValue, field) => {
+                    setAddModalState({
+                      isOpen: true,
+                      type: "industries",
+                      field: field,
+                    });
+                    setInputFields((prev) => ({ ...prev, name: inputValue }));
+                  }}
+                  isClearable={true}
+                  // isDisabled={!formData?.company_id}
+                  disabledTooltip="Please select first Company"
+                  isCreatedByUser={true}
+                  isMulti
+                />
+
+                <FilterSelect
+                  label="Company Type"
+                  options={company_type || []}
+                  selectedOption={company_type?.find(
+                    (opt) => opt.value === formData?.company_type
+                  )}
+                  onChange={(selected) =>
+                    handleChange("company_type", {
+                      target: { value: selected?.value || "" },
+                    })
+                  }
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <FilterSelect
+                  options={Company_Sizes || []}
+                  label="Company Size"
+                  selectedOption={Company_Sizes?.find(
+                    (opt) => opt.value === formData?.company_size
+                  )}
+                  name="company_size"
+                  onChange={handleCompanySizeChange}
+                  placeholder="Select company size"
+                />
+
+                <CustomInput
+                  label="Employee Count"
+                  value={formData?.employee_count}
+                  name="employee_count"
+                  onChange={(e) => handleChange("employee_count", e)}
+                  placeholder="e.g., 150"
+                  type="number"
+                  min="0"
+                  error={errors.employee_count}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <CustomInput
+                  label="Founded Year"
+                  value={formData?.founded_year}
+                  name="founded_year"
+                  onChange={(e) => handleChange("founded_year", e)}
+                  placeholder="e.g., 2020"
+                  type="number"
+                  min="1800"
+                  max={new Date().getFullYear()}
+                  error={errors.founded_year}
+                />
+
+                <CustomInput
+                  label="Website URL"
+                  value={formData?.website_url}
+                  name="website_url"
+                  onChange={(e) => handleChange("website_url", e)}
+                  placeholder="https://example.com"
+                  error={errors.website_url}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <CustomInput
+                  label="LinkedIn Page URL"
+                  value={formData?.linkedin_page_url}
+                  name="linkedin_page_url"
+                  onChange={(e) => handleChange("linkedin_page_url", e)}
+                  placeholder="https://linkedin.com/company/example"
+                  error={errors.linkedin_page_url}
+                />
+              </div>
+              <div className="mt-4">
+                <EnhancedFileInput
+                  accept=".jpg,.jpeg,.png"
+                  supportedFormats="Image"
+                  label="Company Logo"
+                  name="logo_url"
+                  onChange={handleImageUpload}
+                  onDelete={removeImage}
+                  error={errors.logo_url}
+                  loading={loading}
+                  value={logoUrl}
+                />
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Headquarters
+              </h3>
+              <div className="grid grid-cols-1 gap-4">
+                <CustomInput
+                  label="Address Line 1"
+                  value={formData?.headquarters?.address_line_1}
+                  onChange={(e) =>
+                    handleHeadquartersChange("address_line_1", e.target.value)
+                  }
+                  placeholder="Enter address line 1"
+                />
+
+                <CustomInput
+                  label="Address Line 2"
+                  value={formData?.headquarters?.address_line_2}
+                  onChange={(e) =>
+                    handleHeadquartersChange("address_line_2", e.target.value)
+                  }
+                  placeholder="Enter address line 2"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <FilterSelect
+                  label="Country"
+                  options={countriesList}
+                  selectedOption={countriesList?.find(
+                    (opt) =>
+                      opt.short_name ===
+                      formData?.headquarters?.country?.short_name
+                  )}
+                  onChange={(country) =>
+                    handleHeadquartersChange("country", country)
+                  }
+                  placeholder="Select Country"
+                />
+
+                <FilterSelect
+                  label="State"
+                  options={stateList}
+                  selectedOption={stateList?.find(
+                    (opt) =>
+                      opt.state_code === formData?.headquarters?.state?.code
+                  )}
+                  onChange={(state) =>
+                    handleHeadquartersChange("state", state)
+                  }
+                  placeholder="Select State"
+                  isDisabled={!formData?.headquarters?.country?.short_name}
+                />
+
+                <FilterSelect
+                  label="City"
+                  options={cityList}
+                  selectedOption={cityList?.find(
+                    (opt) => opt.name === formData?.headquarters?.city?.name
+                  )}
+                  onChange={(city) => handleHeadquartersChange("city", city)}
+                  placeholder="Select City"
+                  isDisabled={!formData?.headquarters?.state?.code}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <CustomInput
+                  label="Pin Code"
+                  value={formData?.headquarters?.pin_code}
+                  onChange={(e) =>
+                    handleHeadquartersChange("pin_code", e.target.value)
+                  }
+                  placeholder="Enter pin code"
+                />
+              </div>
+            </div>
+            <div className="border-t border-gray-200 pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  Specialties
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <CustomInput
-                    label="Username *"
-                    type="text"
-                    value={formData?.username}
-                    name="username"
-                    ref={inputRefs.username}
-                    onChange={(e) => handleChange("username", e)}
-                    placeholder="Enter username"
-                    error={errors.username}
-                  />
-                  <CustomInput
-                    label="Email *"
-                    value={formData?.email}
-                    name="email"
-                    ref={inputRefs.email}
-                    onChange={(e) => handleChange("email", e)}
-                    placeholder="Enter email"
-                    error={errors.email}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <PasswordInput
-                    label="Password *"
-                    value={formData?.password}
-                    onChange={(e) => handleChange("password", e)}
-                    name="password"
-                    ref={inputRefs.password}
-                    placeholder="Enter password"
-                    error={errors?.password}
-                  />
-                  <PasswordInput
-                    label="Confirm Password *"
-                    value={formData?.confirmPassword}
-                    onChange={(e) => handleChange("confirmPassword", e)}
-                    name="confirmPassword"
-                    ref={inputRefs.confirmPassword}
-                    placeholder="Confirm password"
-                    error={errors?.confirmPassword}
-                  />
-                </div>
-              </div>
-
-              <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Basic Company Information
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <CustomInput
-                    label="Company Name *"
-                    value={formData?.name}
-                    name="name"
-                    ref={inputRefs.name}
-                    onChange={(e) => handleChange("name", e)}
-                    placeholder="Enter company name"
-                    error={errors.name}
-                  />
-
-                  <CustomInput
-                    label="Display Name *"
-                    value={formData?.display_name}
-                    name="display_name"
-                    ref={inputRefs.display_name}
-                    onChange={(e) => handleChange("display_name", e)}
-                    placeholder="Enter display name"
-                    error={errors.display_name}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <CustomInput
-                    label="Phone Number *"
-                    value={formData?.phone_no}
-                    name="phone_no"
-                    ref={inputRefs.phone_no}
-                    onChange={(e) => handleChange("phone_no", e)}
-                    placeholder="Enter phone number"
-                    error={errors?.phone_no}
-                  />
-
-                  <FilterSelect
-                    label="Country Code *"
-                    name="country_code"
-                    options={countriesList || []}
-                    selectedOption={countriesList?.find(
-                      (opt) =>
-                        opt.short_name === formData?.country_code?.short_name
-                    )}
-                    onChange={(country) =>
-                      handleCountryChange("country_code", country)
-                    }
-                    error={errors?.country_code}
-
-                  />
-                </div>
-
-                <div className="mt-4">
-                  <CustomInput
-                    type="textarea"
-                    label="Description"
-                    value={formData?.description}
-                    name="description"
-                    onChange={(e) => handleChange("description", e)}
-                    placeholder="Enter company description"
-                    rows={3}
-                  />
-                </div>
-              </div>
-
-              <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Company Details
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FilterSelect
-                    label="Industry Name"
-                    name="industry"
-                    placeholder="Select Industry"
-                    options={allIndustry}
-                    selectedOption={getSelectedOption(
-                      allIndustry,
-                      formData?.industry
-                    )}
-                    onChange={(selected) => {
-                      // store only IDs
-                      const ids = Array.isArray(selected)
-                        ? selected.map((s) => s.value)
-                        : selected?.value;
-                      handleSelectChange(
-                        "industry",
-                        ids,
-                        Array.isArray(selected)
-                      );
-                    }}
-                    error={errors.industry}
-                    ref={inputRefs.industry}
-                    required
-                    onCreateOption={(inputValue, field) => {
-                      setAddModalState({
-                        isOpen: true,
-                        type: "industries",
-                        field: field,
-                      });
-                      setInputFields((prev) => ({ ...prev, name: inputValue }));
-                    }}
-                    isClearable={true}
-                    // isDisabled={!formData?.company_id}
-                    disabledTooltip="Please select first Company"
-                    isCreatedByUser={true}
-                    isMulti
-                  />
-
-                  <FilterSelect
-                    label="Company Type"
-                    options={company_type || []}
-                    selectedOption={company_type?.find(
-                      (opt) => opt.value === formData?.company_type
-                    )}
-                    onChange={(selected) =>
-                      handleChange("company_type", {
-                        target: { value: selected?.value || "" },
-                      })
-                    }
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <FilterSelect
-                    options={Company_Sizes || []}
-                    label="Company Size"
-                    selectedOption={Company_Sizes?.find(
-                      (opt) => opt.value === formData?.company_size
-                    )}
-                    name="company_size"
-                    onChange={handleCompanySizeChange}
-                    placeholder="Select company size"
-                  />
-
-                  <CustomInput
-                    label="Employee Count"
-                    value={formData?.employee_count}
-                    name="employee_count"
-                    onChange={(e) => handleChange("employee_count", e)}
-                    placeholder="e.g., 150"
-                    type="number"
-                    min="0"
-                    error={errors.employee_count}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <CustomInput
-                    label="Founded Year"
-                    value={formData?.founded_year}
-                    name="founded_year"
-                    onChange={(e) => handleChange("founded_year", e)}
-                    placeholder="e.g., 2020"
-                    type="number"
-                    min="1800"
-                    max={new Date().getFullYear()}
-                    error={errors.founded_year}
-                  />
-
-                  <CustomInput
-                    label="Website URL"
-                    value={formData?.website_url}
-                    name="website_url"
-                    onChange={(e) => handleChange("website_url", e)}
-                    placeholder="https://example.com"
-                    error={errors.website_url}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <CustomInput
-                    label="LinkedIn Page URL"
-                    value={formData?.linkedin_page_url}
-                    name="linkedin_page_url"
-                    onChange={(e) => handleChange("linkedin_page_url", e)}
-                    placeholder="https://linkedin.com/company/example"
-                    error={errors.linkedin_page_url}
-                  />
-                </div>
-                <div className="mt-4">
-                  <EnhancedFileInput
-                    accept=".jpg,.jpeg,.png"
-                    supportedFormats="Image"
-                    label="Company Logo"
-                    name="logo_url"
-                    onChange={handleImageUpload}
-                    onDelete={removeImage}
-                    error={errors.logo_url}
-                    loading={loading}
-                    value={logoUrl}
-                  />
-                </div>
-              </div>
-
-              <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Headquarters
-                </h3>
-                <div className="grid grid-cols-1 gap-4">
-                  <CustomInput
-                    label="Address Line 1"
-                    value={formData?.headquarters?.address_line_1}
-                    onChange={(e) =>
-                      handleHeadquartersChange("address_line_1", e.target.value)
-                    }
-                    placeholder="Enter address line 1"
-                  />
-
-                  <CustomInput
-                    label="Address Line 2"
-                    value={formData?.headquarters?.address_line_2}
-                    onChange={(e) =>
-                      handleHeadquartersChange("address_line_2", e.target.value)
-                    }
-                    placeholder="Enter address line 2"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                  <FilterSelect
-                    label="Country"
-                    options={countriesList}
-                    selectedOption={countriesList?.find(
-                      (opt) =>
-                        opt.short_name ===
-                        formData?.headquarters?.country?.short_name
-                    )}
-                    onChange={(country) =>
-                      handleHeadquartersChange("country", country)
-                    }
-                    placeholder="Select Country"
-                  />
-
-                  <FilterSelect
-                    label="State"
-                    options={stateList}
-                    selectedOption={stateList?.find(
-                      (opt) =>
-                        opt.state_code === formData?.headquarters?.state?.code
-                    )}
-                    onChange={(state) =>
-                      handleHeadquartersChange("state", state)
-                    }
-                    placeholder="Select State"
-                    isDisabled={!formData?.headquarters?.country?.short_name}
-                  />
-
-                  <FilterSelect
-                    label="City"
-                    options={cityList}
-                    selectedOption={cityList?.find(
-                      (opt) => opt.name === formData?.headquarters?.city?.name
-                    )}
-                    onChange={(city) => handleHeadquartersChange("city", city)}
-                    placeholder="Select City"
-                    isDisabled={!formData?.headquarters?.state?.code}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <CustomInput
-                    label="Pin Code"
-                    value={formData?.headquarters?.pin_code}
-                    onChange={(e) =>
-                      handleHeadquartersChange("pin_code", e.target.value)
-                    }
-                    placeholder="Enter pin code"
-                  />
-                </div>
-              </div>
-              <div className="border-t border-gray-200 pt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Specialties
-                  </h3>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    icon={<PiPlus />}
-                    onClick={addSpecialty}
-                    disabled={formData?.specialties?.some(
-                      (s) => String(s || "").trim() === ""
-                    )}
-                  >
-                    Add Specialty
-                  </Button>
-                </div>
-
-                <div className="space-y-2">
-                  {formData?.specialties?.map((specialty, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <div className="flex-1">
-                        <Input
-                          value={specialty}
-                          onChange={(e) =>
-                            handleSpecialtyChange(index, e.target.value)
-                          }
-                          placeholder="Enter specialty"
-                        />
-                        {errors.specialties && errors.specialties[index] && (
-                          <p className="mt-1 text-sm text-red-600">
-                            {errors.specialties[index]}
-                          </p>
-                        )}
-                      </div>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        icon={<PiX />}
-                        onClick={() => removeSpecialty(index)}
-                        className="text-red-500 hover:text-red-700 mt-1"
-                        disabled={formData.specialties.length <= 1}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-gray-200 pt-6">
                 <Button
-                  type="submit"
-                  className="w-full py-3"
-                  disabled={isSubmitting}
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  icon={<PiPlus />}
+                  onClick={addSpecialty}
+                  disabled={formData?.specialties?.some(
+                    (s) => String(s || "").trim() === ""
+                  )}
                 >
-                  {isSubmitting ? "Registering..." : "Register Company"}
+                  Add Specialty
                 </Button>
               </div>
-            </form>
-          </div>
+
+              <div className="space-y-2">
+                {formData?.specialties?.map((specialty, index) => (
+                  <div key={index} className="flex items-start gap-2">
+                    <div className="flex-1">
+                      <Input
+                        value={specialty}
+                        onChange={(e) =>
+                          handleSpecialtyChange(index, e.target.value)
+                        }
+                        placeholder="Enter specialty"
+                      />
+                      {errors.specialties && errors.specialties[index] && (
+                        <p className="mt-1 text-sm text-red-600">
+                          {errors.specialties[index]}
+                        </p>
+                      )}
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      icon={<PiX />}
+                      onClick={() => removeSpecialty(index)}
+                      className="text-red-500 hover:text-red-700 mt-1"
+                      disabled={formData.specialties.length <= 1}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 pt-6">
+              <Button
+                type="submit"
+                className="w-full py-3"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Registering..." : "Register Company"}
+              </Button>
+            </div>
+          </form>
         </div>
-        <Modal
-          isOpen={addModalState.isOpen}
-          title={`Add ${addModalState.type}`}
-          onClose={() => {
-            setAddModalState({ isOpen: false, type: "", field: "" });
-            setInputFields({ name: "", logo_url: "" });
-          }}
-          handleSubmit={handleAddItem}
-          loading={loading}
-        >
-          <div className="space-y-3">
-            <CustomInput
-              className="w-full h-10"
-              label="Enter Name"
-              required
-              placeholder="Enter name"
-              value={inputFields?.name}
-              onChange={(e) =>
-                setInputFields((prev) => ({ ...prev, name: e.target.value }))
-              }
-            />
-          </div>
-        </Modal>
       </div>
+      <Modal
+        isOpen={addModalState.isOpen}
+        title={`Add ${addModalState.type}`}
+        onClose={() => {
+          setAddModalState({ isOpen: false, type: "", field: "" });
+          setInputFields({ name: "", logo_url: "" });
+        }}
+        handleSubmit={handleAddItem}
+        loading={loading}
+      >
+        <div className="space-y-3">
+          <CustomInput
+            className="w-full h-10"
+            label="Enter Name"
+            required
+            placeholder="Enter name"
+            value={inputFields?.name}
+            onChange={(e) =>
+              setInputFields((prev) => ({ ...prev, name: e.target.value }))
+            }
+          />
+        </div>
+      </Modal>
+    </div>
   );
 };
 

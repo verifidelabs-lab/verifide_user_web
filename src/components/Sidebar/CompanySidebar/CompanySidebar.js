@@ -18,7 +18,7 @@ import {
 } from "react-icons/md";
 import { FaRegBuilding, FaUsers, FaUsersCog } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { TbReportAnalytics } from "react-icons/tb";
+import { TbHttpConnect, TbReportAnalytics } from "react-icons/tb";
 import ProfileCard from "../../ui/cards/ProfileCard";
 import { PiSealCheckLight } from "react-icons/pi";
 import { BsChevronRight } from "react-icons/bs";
@@ -82,6 +82,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
       path: "/company/verification",
     },
     { icon: FaRegBuilding, label: "Company Profile", path: "/company/profile" },
+    { icon: TbHttpConnect, label: "Connection", path: "/company/connections" },
+
     { icon: FaUsers, label: "Admin Roles", path: "/company/admin-role" },
 
     // {
@@ -140,9 +142,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
 
       {/* Hamburger button */}
       <button
-        className={`${
-          navbarOpen ? "hidden" : "flex"
-        } fixed top-4 left-4 p-2 z-40 bg-white hover:bg-gray-100 transition-all duration-300 hover:scale-110`}
+        className={`${navbarOpen ? "hidden" : "flex"
+          } fixed top-4 left-4 p-2 z-40 bg-white hover:bg-gray-100 transition-all duration-300 hover:scale-110`}
         onClick={() => setNavbarOpen(true)}
       >
         <GiHamburgerMenu className="text-xl text-black" />
@@ -150,13 +151,12 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-screen w-72 flex-col bg-white shadow-xl z-50 transform transition-all duration-300 ease-in-out ${
-          navbarOpen
-            ? isClosing
-              ? "-translate-x-full"
-              : "translate-x-0"
-            : "-translate-x-full"
-        }`}
+        className={`fixed left-0 top-0 h-screen w-72 flex-col bg-white shadow-xl z-50 transform transition-all duration-300 ease-in-out ${navbarOpen
+          ? isClosing
+            ? "-translate-x-full"
+            : "translate-x-0"
+          : "-translate-x-full"
+          }`}
       >
         {/* Logo */}
         <div className="flex items-center justify-between p-4 border-b border-gray-100 relative">
@@ -178,7 +178,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
                   <img
                     src={
-                      companiesProfileData?.logo_url 
+                      companiesProfileData?.logo_url
                       // "https://media.istockphoto.com/id/2186780921/photo/young-woman-programmer-focused-on-her-work-coding-on-dual-monitors-in-a-modern-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=SAF-y0Rjzil_3FQi2KmAyXOAKYHaHRRbNxjQXnMsObk="
                     }
                     alt="dummy logo"
@@ -218,27 +218,24 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                 {item.children ? (
                   <>
                     <div
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:bg-blue-50 hover:text-blue-600 ${
-                        openSubmenu === item.label
-                          ? "bg-blue-50 text-blue-600"
-                          : "text-[#000000E6]"
-                      }`}
+                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:bg-blue-50 hover:text-blue-600 ${openSubmenu === item.label
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-[#000000E6]"
+                        }`}
                       onClick={() => toggleSubmenu(item.label)}
                     >
                       <div className="flex items-center gap-3">
                         <item.icon
-                          className={`text-base transition-colors duration-300 ${
-                            openSubmenu === item.label
-                              ? "text-blue-600"
-                              : "text-[#000000E6]"
-                          }`}
+                          className={`text-base transition-colors duration-300 ${openSubmenu === item.label
+                            ? "text-blue-600"
+                            : "text-[#000000E6]"
+                            }`}
                         />
                         <span>{item.label}</span>
                       </div>
                       <BiChevronRight
-                        className={`text-lg transition-transform duration-300 ${
-                          openSubmenu === item.label ? "rotate-90" : ""
-                        }`}
+                        className={`text-lg transition-transform duration-300 ${openSubmenu === item.label ? "rotate-90" : ""
+                          }`}
                       />
                     </div>
 
@@ -247,11 +244,10 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                         {item.children.map((child, childIdx) => (
                           <div
                             key={childIdx}
-                            className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${
-                              location.pathname === child.path
-                                ? "text-blue-600 font-medium"
-                                : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
-                            }`}
+                            className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
+                              ? "text-blue-600 font-medium"
+                              : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
+                              }`}
                             onClick={() => onClickMenu(child.path)}
                           >
                             {child.label}
@@ -262,19 +258,17 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                   </>
                 ) : (
                   <div
-                    className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${
-                      location.pathname === item.path
-                        ? "text-blue-600"
-                        : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
+                      ? "text-blue-600"
+                      : "text-[#000000E6] hover:bg-gray-100 hover:text-blue-600"
+                      }`}
                     onClick={() => onClickMenu(item.path)}
                   >
                     <item.icon
-                      className={`text-lg rounded-full transition-colors duration-300 ${
-                        location.pathname === item.path
-                          ? "text-blue-500"
-                          : "text-[#000000E6]"
-                      } ${hasUnread ? "animate-[pulse_2s_infinite]" : ""}`}
+                      className={`text-lg rounded-full transition-colors duration-300 ${location.pathname === item.path
+                        ? "text-blue-500"
+                        : "text-[#000000E6]"
+                        } ${hasUnread ? "animate-[pulse_2s_infinite]" : ""}`}
                       style={
                         hasUnread ? { animation: "pulse2 2s infinite" } : {}
                       }

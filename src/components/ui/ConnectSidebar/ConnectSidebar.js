@@ -15,17 +15,30 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
   const [loading, setLoading] = useState(false)
 
   const [loadingIds, setLoadingIds] = useState([]);
-
   const handleConnect = async (data) => {
 
     if (!data?.user_path) {
-      navigate(`/user/profile/${data?.first_name}/${data?._id}`);
-
+      navigate(
+        isCompany === "company"
+          ? `/company/profile/${data?.first_name}/${data?._id}`
+          : `/user/profile/${data?.first_name}/${data?._id}`
+      );
     } else {
-      let name = data?.user_path === 'Companies' ? 'companies' : 'institutions'
-      navigate(`/user/view-details/${name}/${data?._id}`)
+      const name =
+        data?.user_path === "Companies"
+          ? "companies"
+          : data?.user_path === "Institutions"
+            ? "institutions"
+            : "users";
+
+      navigate(
+        isCompany === "company"
+          ? `/company/view-details/${name}/${data?._id}`
+          : `/user/view-details/${name}/${data?._id}`
+      );
     }
   };
+
 
   // const handleConnectUser = async (data) => {
   //   const userId = data._id;

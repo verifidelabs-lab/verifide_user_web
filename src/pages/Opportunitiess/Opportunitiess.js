@@ -586,7 +586,7 @@ const Opportunities = () => {
                 key={applicant.id}
                 className="flex items-center justify-between py-2 px-2 hover:bg-gray-50 rounded-md"
               >
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3" onClick={() => navigate(`/company/profile/${applicant?.first_name}/${applicant?._id}`)}>
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
@@ -1194,7 +1194,7 @@ const Opportunities = () => {
               onChange={(e) => handleChange("select_date", e.target.value)}
               className={` h-10`}
               error={errors?.select_date}
-              allowPastDate = {false} />
+              allowPastDate={false} />
             <CustomDateInput
               label="Select Time"
               required
