@@ -274,6 +274,7 @@ const VerificationCategory = ({ profileData }) => {
               attach_file: [formData.image_url],
               verification_type: "third-person",
               third_person_name: institutionForm.name,
+              third_person_email: institutionForm.email,
             }
           : {
               assigned_to: institutionForm.institute_id,
