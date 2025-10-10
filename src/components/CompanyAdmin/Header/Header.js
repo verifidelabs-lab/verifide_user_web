@@ -152,16 +152,12 @@ const Header = ({
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <img
-                src={
-                  profileData?.logo_url ||
-                  "https://media.istockphoto.com/id/2186780921/photo/young-woman-programmer-focused-on-her-work-coding-on-dual-monitors-in-a-modern-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=SAF-y0Rjzil_3FQi2KmAyXOAKYHaHRRbNxjQXnMsObk="
-                }
+                src={profileData?.logo_url}
                 alt="User"
                 className="w-8 h-8 rounded-full"
                 onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://media.istockphoto.com/id/2186780921/photo/young-woman-programmer-focused-on-her-work-coding-on-dual-monitors-in-a-modern-office.webp?a=1&b=1&s=612x612&w=0&k=20&c=SAF-y0Rjzil_3FQi2KmAyXOAKYHaHRRbNxjQXnMsObk=";
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "/companylogo.png"; // fallback image
                 }}
               />
               <div className="text-left">
