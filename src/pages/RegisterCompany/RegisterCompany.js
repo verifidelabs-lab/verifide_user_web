@@ -101,110 +101,7 @@ const Company_Sizes = [
   { value: "5001-10000", label: "5001-10000" },
 ];
 
-const FilterSelectAdd = ({
-  label = "Filter By",
-  options = [],
-  selectedOption,
-  onChange,
-  isMulti = false,
-  containerClassName = "",
-  selectClassName = "",
-  labelClassName = "",
-  placeholder = "Select...",
-  error = false,
-  enableCustomInput = false,
-  onAddCustomOption,
-}) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const selectClasses = classNames(
-    "h-[50px] opacity-100 rounded-[10px] border w-full",
-    {
-      "border-gray-300": !error,
-      "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
-        error,
-    },
-    selectClassName
-  );
-
-  const customStyles = {
-    control: (base, state) => ({
-      ...base,
-      borderRadius: "10px",
-      borderColor: error ? "#f87171" : "#d1d5db",
-      minHeight: "52px",
-      opacity: 1,
-      boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
-      "&:hover": {
-        borderColor: error ? "#f87171" : "#9ca3af",
-      },
-    }),
-    placeholder: (base) => ({
-      ...base,
-      color: "#000000",
-      opacity: 0.5,
-    }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: "#e5e7eb",
-      borderRadius: "4px",
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: "#374151",
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: "#6b7280",
-      ":hover": {
-        backgroundColor: "#f87171",
-        color: "white",
-      },
-    }),
-  };
-  const handleCreate = (inputValue) => {
-    const newOption = { label: inputValue, value: inputValue };
-    if (onAddCustomOption) {
-      onAddCustomOption(inputValue);
-    }
-    if (isMulti) {
-      onChange([...(selectedOption || []), newOption]);
-    } else {
-      onChange(newOption);
-    }
-  };
-
-  return (
-    <div className={`w-full ${containerClassName}`}>
-      <label
-        className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}
-      >
-        {label}
-      </label>
-
-      <CreatableSelect
-        isMulti={isMulti}
-        options={options}
-        value={selectedOption}
-        onChange={onChange}
-        onCreateOption={handleCreate}
-        inputValue={inputValue}
-        onInputChange={(value, actionMeta) => {
-          setInputValue(value);
-        }}
-        placeholder={placeholder}
-        styles={customStyles}
-        className={selectClasses}
-        classNamePrefix="react-select"
-        noOptionsMessage={({ inputValue }) =>
-          enableCustomInput && inputValue
-            ? `No match found. Press Enter to add "${inputValue}"`
-            : "No options"
-        }
-      />
-    </div>
-  );
-};
+ 
 
 const RegisterCompany = () => {
   const {
@@ -492,6 +389,8 @@ const RegisterCompany = () => {
       newErrors.phone_no = "Phone number is required";
        if (!formData.country?.trim())
       newErrors.country = "country is required";
+     if (!formData.country?.trim())
+      newErrors.country = "country is required";
     if (!formData.email?.trim()) newErrors.email = "Email is required";
 
     // Email format validation
@@ -572,7 +471,7 @@ const RegisterCompany = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (!validateForm()) {
       return;
     }
     setIsSubmitting(true);
@@ -825,7 +724,7 @@ const RegisterCompany = () => {
 
                   <FilterSelect
                     label="Country Code *"
-                    name="country"
+                    name="country_code"
                     options={countriesList || []}
                     selectedOption={countriesList?.find(
                       (opt) =>
@@ -834,7 +733,7 @@ const RegisterCompany = () => {
                     onChange={(country) =>
                       handleCountryChange("country_code", country)
                     }
-                    error={errors?.country}
+                    error={errors?.country_code}
 
                   />
                 </div>

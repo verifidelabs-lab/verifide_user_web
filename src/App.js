@@ -30,17 +30,29 @@ import CompanyDetails from "./pages/CompanyDetails";
 
 // PrivateRoute for user panel
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = getCookie("VERIFIED_TOKEN");
-  const location = useLocation(); // current URL
-  return isAuthenticated ? (
-    <Component {...rest} />
-  ) : (
-    <Navigate
-      to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
-      replace
-    />
-  );
+  const userToken = getCookie("VERIFIED_TOKEN");
+  const companyToken = getCookie("COMPANY_TOKEN");
+  const location = useLocation();
+
+  // 🚫 If company is logged in, block access to user routes
+  if (companyToken) {
+    return <Navigate to="/company" replace />;
+  }
+
+  // 🚫 If no user token, go to login
+  if (!userToken) {
+    return (
+      <Navigate
+        to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
+        replace
+      />
+    );
+  }
+
+  // ✅ If user logged in
+  return <Component {...rest} />;
 };
+
 
 // CompanyPrivateRoute for company panel
 const CompanyPrivateRoute = ({ component: Component, ...rest }) => {
