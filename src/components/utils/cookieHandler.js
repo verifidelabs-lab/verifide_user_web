@@ -51,6 +51,7 @@ export const clearCompanySession = () => {
     removeCookie("COMPANY_ROLE");
     removeCookie("COMPANY_TOKEN");
     removeCookie("ACTIVE_MODE")
+    removeCookie("ASSIGNED_USER")
 };
 
 /**

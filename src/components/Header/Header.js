@@ -67,7 +67,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
       const res = await dispatch(
         switchAccountCompany({
           accessMode: accessLabel,
-          username_email: prefillEmail,
+          companyId: prefillEmail,
         })
       ).unwrap();
       if (res) {
@@ -75,6 +75,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         setCookie("COMPANY_TOKEN", JSON.stringify(res.data.token));
         setCookie("COMPANY_ROLE", res.data.accessMode); // optional for role-based routing
         setCookie("ACTIVE_MODE", "company"); // optional for role-based routing
+        setCookie("ASSIGNED_USER", res.data.isAssignedUser); // optional for role-based routing
         toast.success(res?.message || "Company login successful");
 
         // Navigate to company dashboard
@@ -176,11 +177,10 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       scrollToTop();
                     }
                   }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
-                    isActive
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
                       ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
                       : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                  } pb-1`}
+                    } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -252,9 +252,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   </p>
                 </div>
                 <FiChevronDown
-                  className={`text-gray-500 transition-transform ${
-                    isDropdownOpen ? "rotate-180" : ""
-                  }`}
+                  className={`text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
@@ -374,9 +373,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     >
                       Companies
                       <FiChevronDown
-                        className={`ml-2 text-gray-500 transition-transform ${
-                          isCompanyDropdownOpen ? "rotate-180" : ""
-                        }`}
+                        className={`ml-2 text-gray-500 transition-transform ${isCompanyDropdownOpen ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
 
@@ -392,7 +390,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                               // )}`}
                               className="flex items-center gap-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
                               onClick={() => {
-                                switchAccountFunction(company.email);
+                                switchAccountFunction(company._id);
                               }}
                             >
                               {/* ✅ Company logo with fallback */}
@@ -473,11 +471,10 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
               <Link
                 key={index}
                 to={item?.path}
-                className={`block px-3 py-2 text-base transition duration-200 ${
-                  isActive
+                className={`block px-3 py-2 text-base transition duration-200 ${isActive
                     ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
                     : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                }`}
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item?.name}

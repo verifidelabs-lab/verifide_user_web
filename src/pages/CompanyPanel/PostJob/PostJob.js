@@ -140,7 +140,7 @@ const PostJob = () => {
       },
       pin_code: "",
     },
-    screening_questions: [],
+    screening_questions: screeningQuestions || [],
     isDisable: false,
     isShareAsPost: false,
   });
@@ -361,8 +361,10 @@ const PostJob = () => {
         screeningQuestions.forEach((q, qIndex) => {
           if (!q.question || q.question.trim() === "") {
             newErrors[`screening_question_${qIndex}`] = "Question is required";
+          } else if (q.question.trim().length < 10) {
+            newErrors[`screening_question_${qIndex}`] =
+              "Question must be at least 10 characters long";
           }
-
           // For theoretical questions, no additional validation needed beyond the question text
           if (q.question_type === "theoretical") {
             return;
@@ -387,7 +389,7 @@ const PostJob = () => {
         });
       }
     }
-
+    console.log("this s the new error s", newErrors)
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -798,7 +800,7 @@ const PostJob = () => {
   };
 
   const handleSubmit = async () => {
-    console.log("this is te error", validateStep(3))
+    console.log("this is te error", errors)
     if (!validateStep(3)) {
 
       const firstErrorKey = Object.keys(errors)[0];
@@ -993,6 +995,7 @@ const PostJob = () => {
 
               <div className="mb-3">
                 <CustomInput
+                  key={qIndex}
                   value={question.question}
                   onChange={(e) =>
                     handleScreeningQuestionChange(

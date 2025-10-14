@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createExtraReducersForThunk, createApiThunkPrivate } from '../../components/hooks/apiThunk';
 
 const initialState = {
-    getCompaniesListData: {}, getCompaniesDetailsData: {}, getListData: {}, getPostListData: {}, notificationsData: {},
+    getCompaniesListData: {}, getCompaniesDetailsData: {}, getListData: {}, getPostListData: {}, notificationsData: {}, getAssignedUsersData: {}, // ✅ new
 }
 
 export const getCompaniesList = createApiThunkPrivate('getCompaniesList', '/admin/companies/list', 'GET')
@@ -44,6 +44,26 @@ export const institutionsPermissions = createApiThunkPrivate('institutionsPermis
 
 
 
+// POST → Assign a user to company
+export const assignUserToCompany = createApiThunkPrivate(
+    'assignUserToCompany',
+    '/companies/sub-admin/assign-user',
+    'POST'
+);
+
+// GET → Get all assigned users
+export const getAssignedUsers = createApiThunkPrivate(
+    'getAssignedUsers',
+    '/companies/sub-admin/assigned-users',
+    'GET'
+);
+
+// DELETE → Remove assigned user
+export const removeAssignedUser = createApiThunkPrivate(
+    'removeAssignedUser',
+    '/companies/sub-admin/remove-assigned-user',
+    'DELETE'
+);
 
 
 const companiesSlice = createSlice({
@@ -56,7 +76,7 @@ const companiesSlice = createSlice({
         createExtraReducersForThunk(builder, getInstituteDetails, 'getInstituteDetailsData')
         createExtraReducersForThunk(builder, getPostList, 'getPostListData')
         createExtraReducersForThunk(builder, notificationsList, 'notificationsData')
-
+        createExtraReducersForThunk(builder, getAssignedUsers, 'getAssignedUsersData');
 
 
     }
