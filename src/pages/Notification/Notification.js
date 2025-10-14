@@ -55,17 +55,86 @@ const formatDate = (dateString) => {
     minute: "2-digit",
   });
 };
+const parseNotificationTitle = (title) => {
+  const typeMatch = title.match(/\[\[type:(.*?)\]\]/);
+  const eventMatch = title.match(/\[\[event:(.*?)\]\]/);
+  const companyMatch = title.match(/\[\[company:(.*?)\]\]/);
+
+  return {
+    cleanTitle: title.replace(/\[\[.*?\]\]/g, "").trim(),
+    type: typeMatch ? typeMatch[1] : null,
+    event: eventMatch ? eventMatch[1] : null,
+    company: companyMatch ? companyMatch[1] : null,
+  };
+};
 
 // Individual Notification Item Component
+// const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
+//   const { Icon, color } = getIconForType(notification.type);
+//   const { cleanTitle, type, event, company } = parseNotificationTitle(
+//     notification.title
+//   );
+
+//   const handleActionClick = () => {
+//     const redirectPath = notification?.redirectPath;
+
+//     if (redirectPath)
+//       // 🟢 Log the redirect path
+//       console.log("Redirect Path:", redirectPath);
+//     if (!notification.isRead) {
+//       onMarkAsRead(notification._id, notification?.redirectPath);
+//     } else if (notification?.redirectPath) {
+//       navigate(notification?.redirectPath);
+//     }
+//   };
+
+//   return (
+//     <div
+//       className={`flex items-start justify-between p-4 border-b border-gray-100 ${
+//         !notification.isRead ? "bg-blue-50" : "bg-white"
+//       }`}
+//     >
+//       <div className="flex items-start space-x-3">
+//         <div className={`p-2 rounded-full ${color}`}>
+//           <Icon className="w-4 h-4 text-white" />
+//         </div>
+//         <div className="flex-1">
+//           <h3 className="text-sm font-medium text-[#000000E6] mb-1">
+//             {cleanTitle}
+//           </h3>
+//           <p className="text-xs text-gray-500 mb-2">{notification.message}</p>
+//           {/* 🟢 Added this block for type | event | company */}
+//           {(type || event || company) && (
+//             <div className="text-xs text-gray-500 mb-1">
+//               {[type, event, company].filter(Boolean).join(" | ")}
+//             </div>
+//           )}
+//           <div className="flex items-center text-xs text-gray-400">
+//             <CiLock className="w-3 h-3 mr-1" />
+//             {formatDate(notification.createdAt)}
+//           </div>
+//         </div>
+//       </div>
+//       <button
+//         onClick={handleActionClick}
+//         className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${
+//           notification.isRead ? "opacity-50 cursor-default" : ""
+//         }`}
+//       >
+//         {notification.meta?.buttonText || "View"}
+//       </button>
+//     </div>
+//   );
+// };
 const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
   const { Icon, color } = getIconForType(notification.type);
+  const { cleanTitle, type, event, company } = parseNotificationTitle(
+    notification.title
+  );
 
   const handleActionClick = () => {
     const redirectPath = notification?.redirectPath;
-
-    if (redirectPath)
-      // 🟢 Log the redirect path
-      console.log("Redirect Path:", redirectPath);
+    if (redirectPath) console.log("Redirect Path:", redirectPath);
     if (!notification.isRead) {
       onMarkAsRead(notification._id, notification?.redirectPath);
     } else if (notification?.redirectPath) {
@@ -80,20 +149,45 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
       }`}
     >
       <div className="flex items-start space-x-3">
+        {/* Icon */}
         <div className={`p-2 rounded-full ${color}`}>
           <Icon className="w-4 h-4 text-white" />
         </div>
+
+        {/* Notification Content */}
         <div className="flex-1">
-          <h3 className="text-sm font-medium text-[#000000E6] mb-1">
-            {notification.title}
+          {/* Title */}
+          <h3 className="text-sm font-semibold text-[#000000E6] mb-1">
+            {cleanTitle}
           </h3>
-          <p className="text-xs text-gray-500 mb-2">{notification.message}</p>
-          <div className="flex items-center text-xs text-gray-400">
-            <CiLock className="w-3 h-3 mr-1" />
+
+          {/* Message */}
+          <p className="text-xs text-gray-600 mb-2">{notification.message}</p>
+
+          {/* Highlighted Details */}
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-[#2563EB] mb-1">
+            {type && (
+              <span className="px-2 py-0.5 bg-blue-100 rounded">{type}</span>
+            )}
+            {event && (
+              <span className="px-2 py-0.5 bg-green-100 rounded">{event}</span>
+            )}
+            {company && (
+              <span className="px-2 py-0.5 bg-yellow-100 rounded">
+                {company}
+              </span>
+            )}
+          </div>
+
+          {/* Date and Time */}
+          <div className="flex items-center    text-sm font-semibold text-[#000000E6] mb-1">
+             <CiLock className="w-3 h-3 mr-1" />
             {formatDate(notification.createdAt)}
           </div>
         </div>
       </div>
+
+      {/* Action Button */}
       <button
         onClick={handleActionClick}
         className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${

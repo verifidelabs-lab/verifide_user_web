@@ -38,7 +38,7 @@ const JobCard = ({
   const dateInRange = isDateInRange();
 
   return (
-    <div className="">
+    <div className="mb-20">
       <div className="relative z-20 border rounded-lg shadow-md p-4 bg-white flex flex-col justify-between h-auto">
         <div>
           <div className="flex items-center justify-between relative">
@@ -186,7 +186,7 @@ const JobCard = ({
             </p>
             <div className="mb-4">
               {job?.job_description ? (
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="leading-relaxed text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
                   {showAllSkills // you already have this state, better to use a new one to avoid clash
                     ? job?.job_description
                     : job?.job_description?.slice(0, 120)}

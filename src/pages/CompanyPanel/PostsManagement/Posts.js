@@ -882,7 +882,7 @@ const Posts = () => {
                       </p>
                     ) : null}
                     {post?.content ? (
-                      <p className="mb-3 leading-relaxed text-[#000000] md:text-base font-normal text-sm">
+                      <p className="mb-3 leading-relaxed text-[#000000] md:text-base font-normal text-sm text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
                         {isExpanded
                           ? post?.content
                           : post?.content?.slice(0, 200)}
