@@ -4,7 +4,7 @@ import { createExtraReducersForThunk, createApiThunkPrivate } from '../../compon
 const initialState = {
     countriesData: {}, stateData: {}, citiesData: {}, getQuestionBankData: {}, masterSkillsData: {},
     jobsListData: {}, masterIndustryData: {}, profileRolesData: {}, userJobsData: {}, masterLevelData: {},
-    getAllCourseCategoryData: {}, getQuestListData: {}
+    getAllCourseCategoryData: {}, getQuestListData: {}, searchUsersData: {},
 }
 
 export const countries = createApiThunkPrivate('countries', '/global-module/countries', 'POST')
@@ -15,6 +15,7 @@ export const jobsList = createApiThunkPrivate('jobsList', '/global-module/jobs/l
 export const jobsCreate = createApiThunkPrivate('jobsCreate', '/global-module/jobs/create', 'POST')
 export const jobsUpdate = createApiThunkPrivate('jobsCreate', '/global-module/jobs/update', 'POST')
 export const masterLevel = createApiThunkPrivate('masterLevel', 'user/profiles/master-levels', 'GET')
+export const searchUsers = createApiThunkPrivate('searchUsers', '/global-module/user-search', 'GET')
 
 
 export const masterIndustry = createApiThunkPrivate('masterIndustry', 'user/profiles/master-industries', 'GET')
@@ -33,7 +34,7 @@ export const singleDocuments = createApiThunkPrivate('singleDocuments', '/global
 export const updateQuest = createApiThunkPrivate('updateQuest', '/global-module/quests/update', 'POST')
 export const softDelete = createApiThunkPrivate('softDelete', '/global-module/quests/soft-delete', 'DELETE')
 
-export const addReviews = createApiThunkPrivate('addReviews', '/global-module/jobs/add-reviews', 'POST') 
+export const addReviews = createApiThunkPrivate('addReviews', '/global-module/jobs/add-reviews', 'POST')
 export const userRegisterOnQuest = createApiThunkPrivate('userRegisterOnQuest', '/global-module/quests/add-engagements', 'POST')
 export const voteOnPoll = createApiThunkPrivate('voteOnPoll', '/global-module/quests/vote-on-poll', 'POST')
 
@@ -111,6 +112,7 @@ const cscSlice = createSlice({
     },
     extraReducers: builder => {
         createExtraReducersForThunk(builder, countries, 'countriesData')
+        createExtraReducersForThunk(builder, searchUsers, 'searchUsersData')
         createExtraReducersForThunk(builder, state, 'stateData')
         createExtraReducersForThunk(builder, cities, 'citiesData')
         createExtraReducersForThunk(builder, masterSkills, 'masterSkillsData')

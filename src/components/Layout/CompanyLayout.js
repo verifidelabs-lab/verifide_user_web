@@ -300,7 +300,7 @@ function CompanyLayout() {
               {(
                 <>
                   <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} />} />
-                  <Route path={`/admin-role`} element={<AdminRoles companiesProfileData={companiesProfileData} />} />
+                  <Route path={`/admin-role`} element={<AdminRoles  />} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   {/* <Route path="login" element={<Login role="company" />} /> */}
