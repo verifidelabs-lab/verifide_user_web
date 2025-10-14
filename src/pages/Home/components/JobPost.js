@@ -3,10 +3,17 @@ import { BiLocationPlus } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button/Button";
 import { getCookie } from "../../../components/utils/cookieHandler";
+import { useState } from "react";
 
 const JobPost = ({ job }) => {
   const navigate = useNavigate();
-  const isCompany = getCookie("ACTIVE_MODE")
+  const isCompany = getCookie("ACTIVE_MODE");
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleSeeMore = () => {
+    setIsExpanded(!isExpanded);
+  };
+  const content = job?.job_description || "No description available.";
 
   if (!job) return null;
 
@@ -17,24 +24,21 @@ const JobPost = ({ job }) => {
     const currentDate = new Date().getTime();
     return currentDate >= job?.start_date && currentDate <= job?.end_date;
   };
-  console.log("This is theskdjsldf", isDateInRange())
-
-
-
+  console.log("This is theskdjsldf", isDateInRange());
 
   const shouldDisableApply = () => {
-    if (job?.isApplied) return { disabled: true, reason: 'Already Applied' };
+    if (job?.isApplied) return { disabled: true, reason: "Already Applied" };
     // if (isDisable) return { disabled: true, reason: 'Position Disabled' };
-    if (!isDateInRange()) return { disabled: true, reason: 'Applications Closed' };
+    if (!isDateInRange())
+      return { disabled: true, reason: "Applications Closed" };
     // if (current_openings === 0) return { disabled: true, reason: 'No Openings' };
-    return { disabled: false, reason: 'Apply Now' };
+    return { disabled: false, reason: "Apply Now" };
   };
 
   // const getRecommendationBadge = () => {
   //   if (!isRecommend) return null;
   //   return { text: 'Recommended', color: 'bg-amber-50 text-amber-600 border-amber-200' };
   // };
-
 
   const applyStatus = shouldDisableApply();
 
@@ -66,57 +70,72 @@ const JobPost = ({ job }) => {
         </div>
 
         {/* Apply Button */}
-        {isCompany !== "company" && <Button
-          size='sm'
-          disabled={applyStatus.disabled}
-          onClick={() => !applyStatus.disabled && handleApply()}
-          className={`flex-1 ${applyStatus.disabled ? 'opacity-60 cursor-not-allowed px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200' : 'px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200'}`}
-        >
-          {applyStatus.reason}
-        </Button>}
-
-
+        {isCompany !== "company" && (
+          <Button
+            size="sm"
+            disabled={applyStatus.disabled}
+            onClick={() => !applyStatus.disabled && handleApply()}
+            className={`flex-1 ${
+              applyStatus.disabled
+                ? "opacity-60 cursor-not-allowed px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200"
+                : "px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200"
+            }`}
+          >
+            {applyStatus.reason}
+          </Button>
+        )}
       </div>
 
       {/* Salary Section */}
-      {
-        job.salary_range && (
-          <div className="mt-4">
-            <p className="text-sm text-gray-500">Salary Range</p>
-            <p className="text-lg text-green-600 font-bold">
-              {job.salary_range}
-            </p>
-          </div>
-        )
-      }
+      {job.salary_range && (
+        <div className="mt-4">
+          <p className="text-sm text-gray-500">Salary Range</p>
+          <p className="text-lg text-green-600 font-bold">{job.salary_range}</p>
+        </div>
+      )}
 
       {/* Location */}
       <div className="mt-4 flex items-center text-sm text-gray-700">
         <BiLocationPlus className="mr-2 text-lg text-gray-500" />
         <p>
-          {job.work_location?.city?.name || "—"}, {job.work_location?.state?.name || ""}
+          {job.work_location?.city?.name || "—"},{" "}
+          {job.work_location?.state?.name || ""}
         </p>
       </div>
 
       {/* Description */}
-      <div className="mt-4">
-        <p className="text-sm text-gray-600 leading-relaxed line-clamp-4">
+      {/* <div className="mt-4">
+        <p className="text-sm text-gray-600 leading-relaxed  text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
           {job.job_description || "No description available."}
+        </p>
+      </div> */}
+      <div className="mt-4">
+        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
+          {isExpanded ? content : content.slice(0, 200)}
+          {content.length > 200 && (
+            <>
+              {!isExpanded && "..."}
+              <button
+                onClick={handleSeeMore}
+                className="ml-2 md:text-sm text-xs text-blue-600 hover:underline"
+              >
+                {isExpanded ? "See less" : "See more"}
+              </button>
+            </>
+          )}
         </p>
       </div>
 
       {/* Required Skills */}
-      {
-        job.required_skills?.length > 0 && (
-          <div className="mt-5">
-            <p className="text-sm font-semibold text-gray-700">Required Skills</p>
-            <div className="flex flex-wrap gap-2 mt-2">
-              <SkillsCard2 skills={job.required_skills} />
-            </div>
+      {job.required_skills?.length > 0 && (
+        <div className="mt-5">
+          <p className="text-sm font-semibold text-gray-700">Required Skills</p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            <SkillsCard2 skills={job.required_skills} />
           </div>
-        )
-      }
-    </div >
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -579,7 +579,7 @@ const Opportunitiess2 = () => {
             <strong className="text-gray-700 block mb-2">
               Job Description:
             </strong>
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
               {selectedJob.job_description || "No description provided."}
             </p>
           </div>

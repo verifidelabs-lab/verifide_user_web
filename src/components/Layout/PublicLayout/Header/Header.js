@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BiMenu, BiX } from "react-icons/bi";
 import HeaderJson from "./Header.json";
 
@@ -13,6 +13,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
+  const [isUserData, setIsUserData] = useState(null);
+  const navigate = useNavigate();
+
   const dropdownRef = useRef();
   const modeDropdownRef = useRef();
   const [modeDropdown, setModeDropdown] = useState(false);
@@ -33,7 +36,12 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   };
 
   const redirectURL = encodeURIComponent(getRedirectPath());
-  // Close dropdowns when clicking outside
+  useEffect(() => {
+    if (isUserData) {
+      // Redirect to the user's own profile page (example)
+      navigate(redirectURL);
+    }
+  }, [isUserData, navigate]); // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Close profile dropdown
@@ -128,7 +136,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         <div className="flex gap-3 items-center relative">
           <div className="flex items-center gap-4">
             <Button>
-              <Link to={`http://localhost:3000/login?redirect=${redirectURL}`}>
+              <Link
+                to={`https://dev-verifide.verifide.xyz/login?redirect=${redirectURL}`}
+              >
                 Sign In
               </Link>
             </Button>
