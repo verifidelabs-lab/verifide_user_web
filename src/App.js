@@ -25,8 +25,10 @@ import UserCertificate from "./pages/UserCertificate";
 
 import { getCookie } from "./components/utils/cookieHandler";
 import CompanyDetails from "./pages/CompanyDetails";
+import PublicLayout from "./components/Layout/PublicLayout/PublicLayout";
+import CompanyInstituteView from "./pages/ProfileView/CompanyInstituteView";
 
-// const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
+const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
 // PrivateRoute for user panel
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -52,7 +54,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   // ✅ If user logged in
   return <Component {...rest} />;
 };
-
 
 // CompanyPrivateRoute for company panel
 const CompanyPrivateRoute = ({ component: Component, ...rest }) => {
@@ -132,6 +133,33 @@ const App = () => {
               </PublicRoute>
             }
           />
+          <Route path="/certtificate-view/:id" element={<UserCertificate />} />
+
+          <Route
+            path="/user-details/:username/:id?"
+            element={
+              <PublicLayout>
+                <UserDetails />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/company-details/:id"
+            element={
+              <PublicLayout>
+                <CompanyInstituteView />
+              </PublicLayout>
+            }
+          />
+
+          <Route
+            path="/post-view/:id"
+            element={
+              <PublicLayout>
+                <Userpost />
+              </PublicLayout>
+            }
+          />
 
           {/* Private User Routes */}
           <Route path="/user/*" element={<PrivateRoute component={Layout} />} />
@@ -151,10 +179,11 @@ const App = () => {
             path="/post-view2"
             element={<PrivateRoute component={Userpost2} />}
           />
-          <Route
+          <Route path="/post-view/:id" element={<PostDetailsPage />} />
+          {/* <Route
             path="/user-details/:username/:id?"
             element={<PrivateRoute component={UserDetails} />}
-          />
+          /> */}
           <Route
             path="/company-details/:username/:id?"
             element={<PrivateRoute component={CompanyDetails} />}
@@ -163,10 +192,10 @@ const App = () => {
             path="/certtificate-view/:id"
             element={<PrivateRoute component={UserCertificate} />}
           />
-          {/* <Route
+          <Route
             path="/post-view/:id"
             element={<PrivateRoute component={PostDetailsPage} />}
-          /> */}
+          />
 
           {/* Private Company Routes */}
           <Route

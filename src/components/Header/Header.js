@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiMenu, BiX } from "react-icons/bi";
 import { FiChevronDown } from "react-icons/fi";
 import HeaderJson from "./Header.json";
@@ -7,7 +7,10 @@ import { getCookie, removeCookie, setCookie } from "../utils/cookieHandler";
 import { useProfileImage } from "../context/profileImageContext";
 import Button from "../ui/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { switchAccount } from "../../redux/slices/authSlice";
+import {
+  switchAccount,
+  switchAccountCompany,
+} from "../../redux/slices/authSlice";
 import { toast } from "sonner";
 import Modal from "../ui/Modal/Modal";
 import CustomInput from "../ui/Input/CustomInput";
@@ -15,7 +18,6 @@ import FilterSelect2 from "../ui/Input/FilterSelect2";
 import CustomDateInput from "../ui/Input/CustomDateInput";
 import FileUpload from "../ui/Image/ImageUploadWithSelect";
 import { getCompaniesList } from "../../redux/slices/companiesSlice";
-
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -27,8 +29,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const [modeDropdown, setModeDropdown] = useState(false);
   const showName = getCookie("ACCESS_MODE");
   const [accessLabel, setAccessLabel] = useState(
-    showName === "6" ? "Recruiter" : "User"
+    showName === "6" ? "Recruiter" : "STUDENT"
   );
+  const navigate = useNavigate();
   const { profileImage } = useProfileImage();
   const imageToDisplay =
     profileImage || profileData?.personalInfo?.profile_picture_url;
@@ -58,28 +61,28 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const switchAccountFunction = async (selectedMode) => {
+  const switchAccountFunction = async (prefillEmail) => {
     setIsLoading(true);
-    setUserType(selectedMode);
     try {
       const res = await dispatch(
-        switchAccount({ accessMode: selectedMode })
+        switchAccountCompany({
+          accessMode: accessLabel,
+          username_email: prefillEmail,
+        })
       ).unwrap();
       if (res) {
-        setCookie("VERIFIED_TOKEN", res?.data?.token);
-        setCookie("ACCESS_MODE", res?.data?.user?.accessMode);
-        setAccessLabel(selectedMode === "6" ? "Recruiter" : "User");
-        // Close dropdowns after selection
-        setModeDropdown(false);
-        setIsDropdownOpen(false);
-        // Reload after a short delay to ensure state updates
-        setTimeout(() => {
-          window.location.reload();
-        }, 100);
+        // Save company token separately
+        setCookie("COMPANY_TOKEN", JSON.stringify(res.data.token));
+        setCookie("COMPANY_ROLE", res.data.accessMode); // optional for role-based routing
+        setCookie("ACTIVE_MODE", "company"); // optional for role-based routing
+        toast.success(res?.message || "Company login successful");
+
+        // Navigate to company dashboard
+        navigate("/company");
       }
-      toast.success(res?.message);
     } catch (error) {
-      toast.error(error);
+      console.log(error);
+      toast.error(error || "Invalid credentials or server error");
     } finally {
       setIsLoading(false);
     }
@@ -173,10 +176,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       scrollToTop();
                     }
                   }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
-                    ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                    } pb-1`}
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
+                    isActive
+                      ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                      : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -248,8 +252,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   </p>
                 </div>
                 <FiChevronDown
-                  className={`text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""
-                    }`}
+                  className={`text-gray-500 transition-transform ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
@@ -369,8 +374,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     >
                       Companies
                       <FiChevronDown
-                        className={`ml-2 text-gray-500 transition-transform ${isCompanyDropdownOpen ? "rotate-180" : ""
-                          }`}
+                        className={`ml-2 text-gray-500 transition-transform ${
+                          isCompanyDropdownOpen ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
@@ -381,11 +387,12 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                           companiesData.data.list.map((company) => (
                             <Link
                               key={company._id}
-                              to={`/company/login?email=${encodeURIComponent(company.email)}`}
+                              // to={`/company/login?email=${encodeURIComponent(
+                              //   company.email
+                              // )}`}
                               className="flex items-center gap-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
                               onClick={() => {
-                                setIsCompanyDropdownOpen(false);
-                                setIsDropdownOpen(false);
+                                switchAccountFunction(company.email);
                               }}
                             >
                               {/* ✅ Company logo with fallback */}
@@ -394,13 +401,18 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                   src={company.logo_url}
                                   alt={`${company.name} logo`}
                                   className="w-6 h-6 rounded-full object-cover border border-gray-200"
+                                  // onError={(e) => {
+                                  //   e.currentTarget.src = "/default-company.png"; // your fallback image
+                                  // }}
                                   onError={(e) => {
-                                    e.currentTarget.src = "/default-company.png"; // your fallback image
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = "/companylogo.png"; // fallback image
                                   }}
                                 />
                               ) : (
                                 <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-semibold">
-                                  {company.name?.charAt(0)?.toUpperCase() || "C"}
+                                  {company.name?.charAt(0)?.toUpperCase() ||
+                                    "C"}
                                 </div>
                               )}
 
@@ -408,7 +420,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                             </Link>
                           ))
                         ) : (
-                          <p className=" py-2 text-sm text-gray-500">No companies found</p>
+                          <p className=" py-2 text-sm text-gray-500">
+                            No companies found
+                          </p>
                         )}
 
                         {companiesData?.data?.list?.length < 5 && (
@@ -425,7 +439,6 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                         )}
                       </div>
                     )}
-
                   </div>
 
                   {/* <Link
@@ -460,10 +473,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
               <Link
                 key={index}
                 to={item?.path}
-                className={`block px-3 py-2 text-base transition duration-200 ${isActive
-                  ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                  : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                  }`}
+                className={`block px-3 py-2 text-base transition duration-200 ${
+                  isActive
+                    ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item?.name}

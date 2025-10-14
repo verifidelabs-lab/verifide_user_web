@@ -572,7 +572,8 @@ const Home = () => {
   };
   const handleCopyLink = useCallback((post) => {
     if (post && post?._id) {
-      const baseUrl = `https://dev-verifide.verifide.xyz/user/feed/${post?._id}`;
+      const baseUrl = `https://dev-verifide.verifide.xyz/post-view/${post?._id}`;
+      // const baseUrl = `https://dev-verifide.verifide.xyz/user/feed/${post?._id}`;
 
       navigator.clipboard.writeText(baseUrl);
       toast.success("Link copied to clipboard");
