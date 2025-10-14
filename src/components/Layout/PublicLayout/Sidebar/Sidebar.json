@@ -1,0 +1,47 @@
+[
+  {
+    "icon": "RiVerifiedBadgeLine",
+    "label": "Highlights",
+    "path": "/app/dashboard"
+  },
+  {
+    "path": "users",
+    "icon": "users",
+    "label": "User Management"
+  },
+  {
+    "path": "job-roles",
+    "icon": "jobRoles",
+    "label": "Job Roles & Skills"
+  },
+  {
+    "path": "assessments",
+    "icon": "Assessments",
+    "label": "Assessments"
+  },
+  {
+    "path": "registration",
+    "icon": "Registration",
+    "label": "Registration"
+  },
+  {
+    "path": "organizations",
+    "icon": "Organizations",
+    "label": "Organizations"
+  },
+  {
+    "path": "cms",
+    "icon": "CMS",
+    "label": "CMS"
+  },
+  {
+    "path": "system-settings",
+    "icon": "systemSettings",
+    "label": "System Settings"
+  },
+  {
+    "path": "log",
+    "icon": "logs",
+    "label": "Logs & Reports"
+  }
+]

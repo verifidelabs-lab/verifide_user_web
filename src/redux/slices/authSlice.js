@@ -45,6 +45,7 @@ export const updateProfileImage = createApiThunkPrivate('updateProfileImage', '/
 export const updateFrameStatus = createApiThunkPrivate('updateFrameStatus', '/user/profiles/update-frame-status', 'POST')
 
 export const switchAccount = createApiThunkPrivate('switchAccount', '/user/auth/switch-account', 'POST')
+export const switchAccountCompany = createApiThunkPrivate('switchAccountCompany', '/user/auth/switch-to-company', 'POST')
 
 export const fetchLoginCredentials = createApiThunkPublic('loginCredentials', '/user/auth/login-credentials', 'POST')
 export const registerWithGoogle = createApiThunkPublic('registerWithGoogle', '/user/auth/register-with-google', 'POST')

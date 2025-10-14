@@ -344,7 +344,7 @@ const Login = () => {
                   </p>
 
                   <div className="flex justify-center items-center gap-3">
-                    <button
+                    {/* <button
                       disabled
                       className="bg-white border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300
                      hover:shadow-lg hover:border-[#0077B5]/30 hover:scale-105 cursor-pointer"
@@ -353,7 +353,7 @@ const Login = () => {
                       data-aos-delay="150"
                     >
                       <FaLinkedinIn className="text-[#0077B5] w-6 h-6 transition-transform duration-300 hover:scale-110" />
-                    </button>
+                    </button> */}
                     <button
                       className="bg-white border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 
                     hover:shadow-lg hover:scale-105 hover:border-[#0077B5]/30"

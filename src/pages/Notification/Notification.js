@@ -1,54 +1,58 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { BiBell, BiFilterAlt, BiSearch } from 'react-icons/bi';
-import { BsMailbox } from 'react-icons/bs';
-import { CiLock } from 'react-icons/ci';
-import { useDispatch, useSelector } from 'react-redux';
-import { notificationsList, notificationsMarkAllRead, notificationsMarkAsRead } from '../../redux/Users/userSlice';
-import { useNavigate } from 'react-router-dom';
-import CustomToggle from '../../components/ui/Toggle/CustomToggle';
+import React, { useEffect, useState } from "react";
+import { BiBell, BiFilterAlt, BiSearch } from "react-icons/bi";
+import { BsMailbox } from "react-icons/bs";
+import { CiLock } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  notificationsList,
+  notificationsMarkAllRead,
+  notificationsMarkAsRead,
+} from "../../redux/Users/userSlice";
+import { useNavigate } from "react-router-dom";
+import CustomToggle from "../../components/ui/Toggle/CustomToggle";
 
 // Notification type mappings
 const NOTIFICATION_TYPES = {
-  'Profile Completion': 'profile-completion',
-  'Skill Updates': 'skill-updates',
-  'Identity Verification': 'identity-verification',
-  'Education Verification': 'education-verification',
-  'Employment Verification': 'employment-verification',
-  'Project Verification': 'project-verification',
-  'Certificate Verification': 'certificate-verification',
-  'Course Progress': 'course-progress',
-  'Assessments Progress': 'assessments-progress',
+  "Profile Completion": "profile-completion",
+  "Skill Updates": "skill-updates",
+  "Identity Verification": "identity-verification",
+  "Education Verification": "education-verification",
+  "Employment Verification": "employment-verification",
+  "Project Verification": "project-verification",
+  "Certificate Verification": "certificate-verification",
+  "Course Progress": "course-progress",
+  "Assessments Progress": "assessments-progress",
 };
 
 // Icon mapping based on notification type
 const getIconForType = (type) => {
   switch (type) {
-    case 'profile-completion':
-    case 'identity-verification':
-    case 'education-verification':
-    case 'employment-verification':
-    case 'project-verification':
-    case 'certificate-verification':
-      return { Icon: CiLock, color: 'bg-blue-500' };
-    case 'skill-updates':
-    case 'course-progress':
-    case 'assessments-progress':
-      return { Icon: BiBell, color: 'bg-orange-500' };
+    case "profile-completion":
+    case "identity-verification":
+    case "education-verification":
+    case "employment-verification":
+    case "project-verification":
+    case "certificate-verification":
+      return { Icon: CiLock, color: "bg-blue-500" };
+    case "skill-updates":
+    case "course-progress":
+    case "assessments-progress":
+      return { Icon: BiBell, color: "bg-orange-500" };
     default:
-      return { Icon: BsMailbox, color: 'bg-purple-500' };
+      return { Icon: BsMailbox, color: "bg-purple-500" };
   }
 };
 
 // Format date
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
@@ -57,15 +61,24 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
   const { Icon, color } = getIconForType(notification.type);
 
   const handleActionClick = () => {
+    const redirectPath = notification?.redirectPath;
+
+    if (redirectPath)
+      // 🟢 Log the redirect path
+      console.log("Redirect Path:", redirectPath);
     if (!notification.isRead) {
       onMarkAsRead(notification._id, notification?.redirectPath);
     } else if (notification?.redirectPath) {
-      navigate(notification?.redirectPath)
+      navigate(notification?.redirectPath);
     }
   };
 
   return (
-    <div className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? 'bg-blue-50' : 'bg-white'}`}>
+    <div
+      className={`flex items-start justify-between p-4 border-b border-gray-100 ${
+        !notification.isRead ? "bg-blue-50" : "bg-white"
+      }`}
+    >
       <div className="flex items-start space-x-3">
         <div className={`p-2 rounded-full ${color}`}>
           <Icon className="w-4 h-4 text-white" />
@@ -74,9 +87,7 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
           <h3 className="text-sm font-medium text-[#000000E6] mb-1">
             {notification.title}
           </h3>
-          <p className="text-xs text-gray-500 mb-2">
-            {notification.message}
-          </p>
+          <p className="text-xs text-gray-500 mb-2">{notification.message}</p>
           <div className="flex items-center text-xs text-gray-400">
             <CiLock className="w-3 h-3 mr-1" />
             {formatDate(notification.createdAt)}
@@ -85,10 +96,11 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
       </div>
       <button
         onClick={handleActionClick}
-        className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${notification.isRead ? 'opacity-50 cursor-default' : ''
-          }`}
+        className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${
+          notification.isRead ? "opacity-50 cursor-default" : ""
+        }`}
       >
-        {notification.meta?.buttonText || 'View'}
+        {notification.meta?.buttonText || "View"}
       </button>
     </div>
   );
@@ -101,11 +113,11 @@ const NotificationHeader = ({
   unreadCount,
   filterValue,
   isToggle,
-  setIsToggle
+  setIsToggle,
 }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -182,7 +194,12 @@ const NotificationHeader = ({
       <div className="hidden md:flex flex-col">
         <div className="flex flex-row items-center justify-between mb-4">
           <nav className="flex items-center space-x-2 text-sm">
-            <span className="text-blue-600 hover:text-blue-800 cursor-pointer" onClick={() => navigate('/user/feed')}>Home</span>
+            <span
+              className="text-blue-600 hover:text-blue-800 cursor-pointer"
+              onClick={() => navigate("/user/feed")}
+            >
+              Home
+            </span>
             <span className="text-gray-400">›</span>
             <span className="text-gray-600">Notifications</span>
           </nav>
@@ -219,9 +236,13 @@ const NotificationHeader = ({
                       className="w-full p-2 border border-gray-300 rounded-md text-sm"
                     >
                       <option value="">All Notifications</option>
-                      {Object.entries(NOTIFICATION_TYPES).map(([label, value]) => (
-                        <option key={value} value={value}>{label}</option>
-                      ))}
+                      {Object.entries(NOTIFICATION_TYPES).map(
+                        ([label, value]) => (
+                          <option key={value} value={value}>
+                            {label}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                 </div>
@@ -236,13 +257,26 @@ const NotificationHeader = ({
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-[#000000E6]">All Notifications</h1>
-          <span className="text-sm text-gray-500 flex"><CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread</span>
+          <h1 className="text-xl font-semibold text-[#000000E6]">
+            All Notifications
+          </h1>
+          <span className="text-sm text-gray-500 flex">
+            <CustomToggle
+              handleClick={() => setIsToggle((prev) => !prev)}
+              isToggle={isToggle}
+            />
+            Unread
+          </span>
         </div>
-      </div> 
+      </div>
       <div className="md:hidden flex flex-col gap-3">
         <nav className="flex items-center space-x-2 text-sm mb-2">
-          <span className="text-blue-600 hover:text-blue-800 cursor-pointer" onClick={() => navigate('/user/feed')}>Home</span>
+          <span
+            className="text-blue-600 hover:text-blue-800 cursor-pointer"
+            onClick={() => navigate("/user/feed")}
+          >
+            Home
+          </span>
           <span className="text-gray-400">›</span>
           <span className="text-gray-600">Notifications</span>
         </nav>
@@ -278,9 +312,13 @@ const NotificationHeader = ({
                     className="w-full p-2 border border-gray-300 rounded-md text-sm"
                   >
                     <option value="">All Notifications</option>
-                    {Object.entries(NOTIFICATION_TYPES).map(([label, value]) => (
-                      <option key={value} value={value}>{label}</option>
-                    ))}
+                    {Object.entries(NOTIFICATION_TYPES).map(
+                      ([label, value]) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      )
+                    )}
                   </select>
                 </div>
               </div>
@@ -288,10 +326,16 @@ const NotificationHeader = ({
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-2">
-          <h1 className="text-lg font-semibold text-[#000000E6]">All Notifications</h1>
+          <h1 className="text-lg font-semibold text-[#000000E6]">
+            All Notifications
+          </h1>
           <div className="flex justify-between w-full sm:w-auto items-center gap-2">
             <span className="text-sm text-gray-500 flex items-center">
-              <CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread
+              <CustomToggle
+                handleClick={() => setIsToggle((prev) => !prev)}
+                isToggle={isToggle}
+              />
+              Unread
             </span>
             <button
               onClick={onMarkAllRead}
@@ -309,54 +353,54 @@ const NotificationHeader = ({
 const NotificationInterface = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const selector = useSelector(state => state.user);
+  const selector = useSelector((state) => state.user);
   const notifyData = selector?.notificationsData?.data?.data;
 
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [size] = useState(10);
-  const [filter, setFilter] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [isToggle, setIsToggle] = useState(false);
 
   const notifications = notifyData?.list || [];
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   const fetchNotifications = async () => {
     setLoading(true);
     try {
       const query = {
         ...(filter && { type: filter }),
-        ...(searchQuery && { title: { $regex: searchQuery, $options: 'i' } }),
+        ...(searchQuery && { title: { $regex: searchQuery, $options: "i" } }),
       };
 
       if (isToggle) {
-        query.isRead = !isToggle
+        query.isRead = !isToggle;
       }
 
       const params = {
         page,
         size,
-        query: JSON.stringify(query)
+        query: JSON.stringify(query),
       };
 
       await dispatch(notificationsList(params));
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error("Error fetching notifications:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const markAsRead = async (notificationId, redirectPath = '') => {
+  const markAsRead = async (notificationId, redirectPath = "") => {
     try {
       await dispatch(notificationsMarkAsRead({ _id: notificationId }));
       if (redirectPath) {
-        navigate(redirectPath)
+        navigate(redirectPath);
       }
       fetchNotifications(); // Refresh the list
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      console.error("Error marking notification as read:", error);
     }
   };
 
@@ -365,7 +409,7 @@ const NotificationInterface = () => {
       await dispatch(notificationsMarkAllRead());
       fetchNotifications(); // Refresh the list
     } catch (error) {
-      console.error('Error marking all notifications as read:', error);
+      console.error("Error marking all notifications as read:", error);
     }
   };
 
@@ -418,7 +462,7 @@ const NotificationInterface = () => {
         {!loading && notifyData?.total > size && (
           <div className="flex justify-between items-center p-4 bg-white border-t border-gray-100">
             <button
-              onClick={() => setPage(p => Math.max(1, p - 1))}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
               className="px-4 py-2 border border-gray-300 rounded-md text-sm disabled:opacity-50"
             >
@@ -428,7 +472,7 @@ const NotificationInterface = () => {
               Page {page} of {Math.ceil(notifyData.total / size)}
             </span>
             <button
-              onClick={() => setPage(p => p + 1)}
+              onClick={() => setPage((p) => p + 1)}
               disabled={page >= Math.ceil(notifyData.total / size)}
               className="px-4 py-2 border border-gray-300 rounded-md text-sm disabled:opacity-50"
             >

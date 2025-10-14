@@ -51,7 +51,8 @@ const Opportunitiess2 = () => {
     const foundJob = data?.data?.list?.find(
       (value) =>
         value?.interviewDetails?._id === param?.id ||
-        value?.jobApplication?._id === param?.id
+        value?.jobApplication?._id === param?.id ||
+        value?._id === param?.id
     );
     if (foundJob) {
       setSelectedJob(foundJob); // directly set the found item

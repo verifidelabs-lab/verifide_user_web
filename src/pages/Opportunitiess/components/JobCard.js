@@ -1,11 +1,15 @@
 import moment from "moment-timezone";
 import { MdLocationOn, MdMessage } from "react-icons/md";
 import Button from "../../../components/ui/Button/Button";
-import { convertTimestampToTime, formatDateByMomentTimeZone } from "../../../components/utils/globalFunction";
+import {
+  convertTimestampToTime,
+  formatDateByMomentTimeZone,
+} from "../../../components/utils/globalFunction";
 import { SkillsCard2 } from "../../../components/ui/cards/Card";
 import { useState } from "react";
 // import { TbSquaresSelected } from "react-icons/tb";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { CiCalendar, CiLocationOn } from "react-icons/ci";
 
 const JobCard = ({
   job,
@@ -19,35 +23,51 @@ const JobCard = ({
   setReviewJobId,
   activeTab,
   openModalForSelect,
-  setSelectInterviewId
+  setSelectInterviewId,
 }) => {
-  const limit = 3
+  const limit = 3;
   const [showAllSkills, setShowAllSkills] = useState(false);
   const isThisJobLoading = isLoading === job._id;
   const remainingCount = Math.max(0, job?.user_id?.topSkills?.length - limit);
-  console.log("activeTabactiveTabactiveTab", activeTab)
-
+  
+  console.log("activeTabactiveTabactiveTab", activeTab);
+  const isDateInRange = () => {
+    const currentDate = new Date().getTime();
+    return currentDate >= job?.start_date && currentDate <= job?.end_date;
+  };
+  const dateInRange = isDateInRange();
 
   return (
     <div className="">
       <div className="relative z-20 border rounded-lg shadow-md p-4 bg-white flex flex-col justify-between h-auto">
-        <div >
+        <div>
           <div className="flex items-center justify-between relative">
             <div className="flex items-center gap-3">
               {job?.user_id?.profile_picture_url ? (
-                <img src={job?.user_id?.profile_picture_url} alt="profile" className="w-12 h-12 object-cover rounded-full" />
+                <img
+                  src={job?.user_id?.profile_picture_url}
+                  alt="profile"
+                  className="w-12 h-12 object-cover rounded-full"
+                />
               ) : (
-                <div
-                  className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold rounded-full overflow-hidden">
+                <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold rounded-full overflow-hidden">
                   {job?.company_id?.logo_url ? (
-                    <img src={job.company_id.logo_url} alt="company logo" className="w-12 h-12 object-center border" onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "/36369.jpg";
-                    }}
+                    <img
+                      src={job.company_id.logo_url}
+                      alt="company logo"
+                      className="w-12 h-12 object-center border"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/36369.jpg";
+                      }}
                     />
                   ) : (
                     <span className="text-xl">
-                      <img src={"/36369.jpg"} alt="company logo" className="w-12 h-12 object-center border" />
+                      <img
+                        src={"/36369.jpg"}
+                        alt="company logo"
+                        className="w-12 h-12 object-center border"
+                      />
                     </span>
                   )}
                 </div>
@@ -58,7 +78,9 @@ const JobCard = ({
                     <h2 className="text-lg font-semibold text-[#000000]">
                       {job?.user_id?.first_name} {job?.user_id?.last_name}
                     </h2>
-                    <p className="text-xs text-gray-500">{job?.user_id?.headline}</p>
+                    <p className="text-xs text-gray-500">
+                      {job?.user_id?.headline}
+                    </p>
                     {job?.createdAt && (
                       <p className="text-xs text-gray-400">
                         {moment(job.createdAt).format("DD-MM-YYYY")}
@@ -113,14 +135,79 @@ const JobCard = ({
                   ✓ {job?.job_type}
                 </span>
                 <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
-                  {job?.salary_range} {job?.pay_type === "monthly" ? "Monthly" : "LPA"}
+                  {job?.salary_range}{" "}
+                  {job?.pay_type === "unpaid" ? "unpaid":job?.pay_type === "monthly" ? "Monthly" : "LPA"}
                 </span>
               </div>
             )}
-
+            <div
+              className={`flex flex-col gap-1 text-sm p-3 rounded-md ${
+                dateInRange
+                  ? "bg-green-50 border border-green-200"
+                  : "bg-red-50 border border-red-200"
+              }`}
+            >
+              <div className="flex items-center">
+                <CiCalendar
+                  className={`mr-2 w-4 h-4 ${
+                    dateInRange ? "text-green-600" : "text-red-600"
+                  }`}
+                />
+                <span
+                  className={`font-medium ${
+                    dateInRange ? "text-green-700" : "text-red-700"
+                  }`}
+                >
+                  Application Period:
+                </span>
+              </div>
+              <div
+                className={`flex justify-between text-xs ${
+                  dateInRange ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                <span>From: {moment(job?.start_date).format("DD MMM YYYY")}</span>
+                <span>To: {moment(job?.end_date).format("DD MMM YYYY")}</span>
+              </div>
+              {!dateInRange && (
+                <div className="text-xs text-red-600 font-medium mt-1">
+                  ⚠️ Applications are currently closed for this position
+                </div>
+              )}
+            </div>
             <h3 className="text-lg font-semibold text-gray-800 capitalize">
               {job?.job_title?.name}
             </h3>
+            <p className="text-gray-600 text-sm font-normal mb-3 flex items-center gap-1">
+              <CiLocationOn className="w-4 h-4" />
+              {job?.work_location?.state?.name && job?.work_location?.city?.name
+                ? `${job?.work_location.city.name}, ${job?.work_location.state.name}`
+                : "Location not specified"}
+            </p>
+            <div className="mb-4">
+              {job?.job_description ? (
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {showAllSkills // you already have this state, better to use a new one to avoid clash
+                    ? job?.job_description
+                    : job?.job_description?.slice(0, 120)}
+                  {job?.job_description?.length > 120 && (
+                    <>
+                      {!showAllSkills && "..."}
+                      <button
+                        onClick={() => setShowAllSkills(!showAllSkills)}
+                        className="ml-2 text-blue-600 text-xs md:text-sm hover:underline focus:outline-none"
+                      >
+                        {showAllSkills ? "See less" : "See more"}
+                      </button>
+                    </>
+                  )}
+                </p>
+              ) : (
+                <p className="text-gray-500 text-sm">
+                  No description provided.
+                </p>
+              )}
+            </div>
 
             {!job?.user_id && job?.company_id?.headquarters?.address_line_1 && (
               <div className="flex text-sm text-gray-600">
@@ -131,14 +218,20 @@ const JobCard = ({
             {job?.user_id?.topSkills?.length > 0 && (
               <div className="flex flex-col gap-1 mt-2">
                 <div className="flex flex-wrap gap-2 text-xs">
-                  {(showAllSkills ? job.user_id.topSkills : job.user_id.topSkills.slice(0, 2)).map((skill) => (
-                    <span key={skill._id} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full capitalize">
+                  {(showAllSkills
+                    ? job.user_id.topSkills
+                    : job.user_id.topSkills.slice(0, 2)
+                  ).map((skill) => (
+                    <span
+                      key={skill._id}
+                      className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full capitalize"
+                    >
                       {skill.name}
                     </span>
-
                   ))}
                   {job.user_id.topSkills.length > 5 && (
-                    <button onClick={() => setShowAllSkills(!showAllSkills)}
+                    <button
+                      onClick={() => setShowAllSkills(!showAllSkills)}
                       className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
                        hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
                        focus:ring-[#6390F1] focus:ring-opacity-50"
@@ -160,41 +253,69 @@ const JobCard = ({
             {job?.user_id ? (
               <>
                 {activeTab === "shortlisted" ? (
-                  <Button onClick={() => handleInterviewSchedule(job)} size="sm">
+                  <Button
+                    onClick={() => handleInterviewSchedule(job)}
+                    size="sm"
+                  >
                     {!job?.isSchedule
                       ? "Schedule interview"
                       : `${formatDateByMomentTimeZone(
-                        job?.interviewDetails?.select_date
-                      )} ${convertTimestampToTime(
-                        job?.interviewDetails?.select_time
-                      )}`}
+                          job?.interviewDetails?.select_date
+                        )} ${convertTimestampToTime(
+                          job?.interviewDetails?.select_time
+                        )}`}
                   </Button>
-                ) : ""}
+                ) : (
+                  ""
+                )}
                 {activeTab === "schedule-interviews" ? (
-                  <Button size="sm" variant="success" onClick={() => { openModalForSelect(); setSelectInterviewId(job) }}>
+                  <Button
+                    size="sm"
+                    variant="success"
+                    onClick={() => {
+                      openModalForSelect();
+                      setSelectInterviewId(job);
+                    }}
+                  >
                     Select
                   </Button>
-                ) : ""}
+                ) : (
+                  ""
+                )}
 
-                {activeTab === "schedule-interviews" || activeTab === "shortlisted" ? (
-                  <Button variant="danger" size="sm" onClick={() => handleRejectFromShortList(job)}
+                {activeTab === "schedule-interviews" ||
+                activeTab === "shortlisted" ? (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleRejectFromShortList(job)}
                   >
                     Reject
-                  </Button>) : ""}
-                <Button size="sm" variant="outline" onClick={() => { setIsReviewOpen(true); setReviewJobId(job) }}>
+                  </Button>
+                ) : (
+                  ""
+                )}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    setIsReviewOpen(true);
+                    setReviewJobId(job);
+                  }}
+                >
                   Comment
                 </Button>
-                <span className="bg-blue-300 text-blue-700 hover:bg-blue-500 hover:text-white cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
+                <span
+                  className="bg-blue-300 text-blue-700 hover:bg-blue-500 hover:text-white cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
                   onClick={() => handleMessage(job)}
                 >
                   <MdMessage />
                 </span>
-
-
               </>
             ) : (
               <>
-                <Button onClick={() => onAction("view", job)}
+                <Button
+                  onClick={() => onAction("view", job)}
                   size="sm"
                   variant="outline"
                   className="min-w-20 h-8"
@@ -202,20 +323,22 @@ const JobCard = ({
                 >
                   Applicant
                 </Button>
-                <Button onClick={() => onAction("edit", job)}
+                <Button
+                  onClick={() => onAction("edit", job)}
                   size="sm"
                   className="min-w-20 h-8"
                 >
                   Edit
                 </Button>
-                <Button variant="zinc" onClick={() => onAction("view_details", job)}
+                <Button
+                  variant="zinc"
+                  onClick={() => onAction("view_details", job)}
                   size="sm"
                   className="min-w-20 h-8"
                 >
                   Details
                 </Button>
-                {activeTab === 'open' && (
-
+                {activeTab === "open" && (
                   <span
                     className="hover:bg-gray-300 text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
                     onClick={() => handleCloseJob(job)}
@@ -228,7 +351,6 @@ const JobCard = ({
           </div>
         </div>
       </div>
-
     </div>
   );
 };

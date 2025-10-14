@@ -586,7 +586,7 @@ const Opportunities = () => {
                 key={applicant.id}
                 className="flex items-center justify-between py-2 px-2 hover:bg-gray-50 rounded-md"
               >
-                <div className="flex items-center space-x-3" onClick={() => navigate(`/company/profile/${applicant?.first_name}/${applicant?._id}`)}>
+                <div className="flex items-center space-x-3" >
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
