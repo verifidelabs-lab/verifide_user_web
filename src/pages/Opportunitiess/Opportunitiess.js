@@ -66,6 +66,12 @@ const Opportunities = () => {
   let {
     jobsListData: { data },
   } = selector ? selector : {};
+  const getMatchColor = (percentage) => {
+    if (percentage >= 80) return "text-green-600";
+    if (percentage >= 50) return "text-yellow-500";
+    return "text-red-600";
+  };
+
   console.log("this is the jsss", data);
   const [activeTab, setActiveTab] = useState("open");
   const [selectedJob, setSelectedJob] = useState(null);
@@ -323,7 +329,15 @@ const Opportunities = () => {
       setIsLoading(false);
       toast.success(res?.message);
       setIsDetails(true);
-      setIsDetailsData(res?.data);
+      // setIsDetailsData(res?.data);
+      const skillsPercentage = data?.skillsMatchPercentage ?? 0;
+      const answersPercentage = data?.answersMatchPercentage ?? 0;
+
+      setIsDetailsData({
+        ...(res?.data || {}),
+        skillsMatchPercentage: skillsPercentage,
+        answersMatchPercentage: answersPercentage,
+      });
     } catch (error) {
       toast.error(error);
       setIsLoading(false);
@@ -562,6 +576,43 @@ const Opportunities = () => {
               </p>
             </div>
           </div>
+          {/* <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="bg-gray-100 p-3 rounded-lg">
+              <p className="text-sm text-gray-600">Skill Match Percentage</p>
+              <p className="text-lg font-semibold text-gray-800">
+                {isDetailsData?.skillsMatchPercentage?.toFixed(2) ?? "0.00"}%
+              </p>
+            </div>
+            <div className="bg-gray-100 p-3 rounded-lg">
+              <p className="text-sm text-gray-600">Answer Match Percentage</p>
+              <p className="text-lg font-semibold text-gray-800">
+                {isDetailsData?.answersMatchPercentage?.toFixed(2) ?? "0.00"}%
+              </p>
+            </div>
+          </div> */}
+          <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="bg-gray-100 p-3 rounded-lg">
+              <p className="text-sm text-gray-600">Skill Match %</p>
+              <p
+                className={`text-lg font-semibold ${getMatchColor(
+                  isDetailsData?.skillsMatchPercentage ?? 0
+                )}`}
+              >
+                {(isDetailsData?.skillsMatchPercentage ?? 0).toFixed(2)}%
+              </p>
+            </div>
+
+            <div className="bg-gray-100 p-3 rounded-lg">
+              <p className="text-sm text-gray-600">Answer Match%</p>
+              <p
+                className={`text-lg font-semibold ${getMatchColor(
+                  isDetailsData?.answersMatchPercentage ?? 0
+                )}`}
+              >
+                {(isDetailsData?.answersMatchPercentage ?? 0).toFixed(2)}%
+              </p>
+            </div>
+          </div>
 
           {Array.isArray(isDetailsData?.answers) &&
           isDetailsData.answers.length > 0 ? (
@@ -669,14 +720,32 @@ const Opportunities = () => {
                     <div className="text-xs flex gap-2">
                       <span
                         className={
-                          applicant?.performanceScore >= 80
-                            ? "text-green-600 font-semibold"
-                            : applicant?.performanceScore >= 50
-                            ? "text-yellow-500 font-semibold"
-                            : "text-red-600 font-semibold"
+                          applicant?.skillsMatchPercentage &&
+                          applicant?.answersMatchPercentage
+                            ? (() => {
+                                const overallPercentage =
+                                  (applicant.skillsMatchPercentage +
+                                    applicant.answersMatchPercentage) /
+                                  2;
+
+                                if (overallPercentage >= 80) {
+                                  return "text-green-600 font-semibold";
+                                } else if (overallPercentage >= 50) {
+                                  return "text-yellow-500 font-semibold";
+                                } else {
+                                  return "text-red-600 font-semibold";
+                                }
+                              })()
+                            : "text-gray-600 font-semibold" // In case either of the values is not available
                         }
                       >
-                        {applicant?.performanceScore ?? 0}%
+                        Matching{"  "}
+                        {(
+                          (applicant?.skillsMatchPercentage +
+                            applicant?.answersMatchPercentage) /
+                          2
+                        ).toFixed(2)}
+                        %
                       </span>
                     </div>
                   </div>
@@ -684,7 +753,16 @@ const Opportunities = () => {
                 <div className="flex items-center gap-2">
                   <CustomButton
                     variant="outline"
-                    onClick={() => handleDetails(applicant)}
+                    // onClick={() => handleDetails(applicant)}
+                    onClick={() =>
+                      handleDetails({
+                        ...applicant,
+                        skillsMatchPercentage:
+                          applicant?.skillsMatchPercentage ?? 0,
+                        answersMatchPercentage:
+                          applicant?.answersMatchPercentage ?? 0,
+                      })
+                    }
                   >
                     Details
                   </CustomButton>
