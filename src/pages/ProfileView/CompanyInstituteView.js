@@ -19,6 +19,7 @@ import { MdEmail, MdGroups, MdOutlineContentCopy } from "react-icons/md";
 import { FaLinkedin } from "react-icons/fa";
 import Button from "../../components/ui/Button/Button";
 import { BsPersonFillAdd } from "react-icons/bs";
+import { BaseUrl } from "../../components/hooks/axiosProvider";
 
 function capitalizeWords(str = "") {
   return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
@@ -36,7 +37,7 @@ const CompanyInstituteView = () => {
   });
   const [followActionLoading, setFollowActionLoading] = useState(false);
   const handleResumeDownload = async (data) => {
-    const url = `https://dev-verifide.verifide.xyz/company-details/${data?._id}`;
+    const url = `${BaseUrl}company-details/${data?._id}`;
 
     try {
       await navigator.clipboard.writeText(url);

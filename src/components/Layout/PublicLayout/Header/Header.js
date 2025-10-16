@@ -5,6 +5,7 @@ import HeaderJson from "./Header.json";
 
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../ui/Button/Button";
+import { BaseUrl } from "../../../hooks/axiosProvider";
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -137,7 +138,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
           <div className="flex items-center gap-4">
             <Button>
               <Link
-                to={`https://dev-verifide.verifide.xyz/login?redirect=${redirectURL}`}
+                to={`${BaseUrl}login?redirect=${redirectURL}`}
               >
                 Sign In
               </Link>

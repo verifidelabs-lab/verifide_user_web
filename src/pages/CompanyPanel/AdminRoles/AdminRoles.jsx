@@ -21,7 +21,9 @@ const AdminRoles = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   let isCompany = getCookie("ACTIVE_MODE");
-  let isAssignedUser = getCookie("ASSIGNED_USER");
+  const isAssignedUser = Boolean(getCookie("ASSIGNED_USER") === "true");
+
+  console.log("This is the test", isAssignedUser)
   const [activeTab, setActiveTab] = useState("user");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);

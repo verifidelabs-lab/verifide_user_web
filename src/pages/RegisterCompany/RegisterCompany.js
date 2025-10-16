@@ -41,8 +41,8 @@ import {
 const initialFormData = {
   username: "",
   email: "",
-  password: "",
-  confirmPassword: "",
+  // password: "",
+  // confirmPassword: "",
   name: "",
   display_name: "",
   description: "",
@@ -398,16 +398,16 @@ const RegisterCompany = () => {
     }
 
     // Password validation
-    if (!formData.password?.trim()) newErrors.password = "Password is required";
-    else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-    }
+    // if (!formData.password?.trim()) newErrors.password = "Password is required";
+    // else if (formData.password.length < 8) {
+    //   newErrors.password = "Password must be at least 8 characters";
+    // }
 
-    if (!formData.confirmPassword?.trim()) {
-      newErrors.confirmPassword = "Please confirm your password";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
+    // if (!formData.confirmPassword?.trim()) {
+    //   newErrors.confirmPassword = "Please confirm your password";
+    // } else if (formData.password !== formData.confirmPassword) {
+    //   newErrors.confirmPassword = "Passwords do not match";
+    // }
 
     // Industry validation
     if (!Array.isArray(formData.industry) || formData.industry.length === 0) {
@@ -498,8 +498,8 @@ const RegisterCompany = () => {
         linkedin_page_url: formData.linkedin_page_url,
         email: formData.email,
         username: formData.username,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
+        password: "",
+        confirmPassword: "",
       };
 
       const res = await dispatch(createCompany(createPayload)).unwrap();
@@ -541,8 +541,8 @@ const RegisterCompany = () => {
   const inputRefs = {
     username: useRef(null),
     email: useRef(null),
-    password: useRef(null),
-    confirmPassword: useRef(null),
+    // password: useRef(null),
+    // confirmPassword: useRef(null),
     name: useRef(null),
     display_name: useRef(null),
     phone_no: useRef(null),
@@ -670,7 +670,7 @@ const RegisterCompany = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <PasswordInput
                   label="Password *"
                   value={formData?.password}
@@ -689,7 +689,7 @@ const RegisterCompany = () => {
                   placeholder="Confirm password"
                   error={errors?.confirmPassword}
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="border-t border-gray-200 pt-6">

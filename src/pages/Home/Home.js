@@ -49,6 +49,7 @@ import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.min.css";
 import ActionButtonComment from "../../components/ui/Button/ActionButtonComment";
 import MessageText2 from "./components/MessageText2";
+import { BaseUrl } from "../../components/hooks/axiosProvider";
 
 const useIO = ({ onIntersect, rootMargin = "120px", threshold = 0.1 }) => {
   const observerRef = useRef(null);
@@ -572,8 +573,8 @@ const Home = () => {
   };
   const handleCopyLink = useCallback((post) => {
     if (post && post?._id) {
-      const baseUrl = `https://dev-verifide.verifide.xyz/post-view/${post?._id}`;
-      // const baseUrl = `https://dev-verifide.verifide.xyz/user/feed/${post?._id}`;
+      const baseUrl = `${BaseUrl}post-view/${post?._id}`;
+      // const baseUrl = `${BaseUrl}user/feed/${post?._id}`;
 
       navigator.clipboard.writeText(baseUrl);
       toast.success("Link copied to clipboard");

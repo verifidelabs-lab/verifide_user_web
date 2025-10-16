@@ -21,6 +21,7 @@ import CertificateCard from "../../components/ui/cards/CertificateCard";
 import SkillTag from "../../components/ui/SkillTag/SkillTag";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { BaseUrl } from "../../components/hooks/axiosProvider";
 // import Loader from '../Loader/Loader';
 
 const StatsCard = ({ icon, value, label }) => (
@@ -152,8 +153,8 @@ const UsersProfile = ({ currentUserId }) => {
   };
 
   const handleResumeDownload = async (data) => {
-    const url = `https://dev-verifide.verifide.xyz/user-details/${data?.username}/${data?._id}`;
-    // const url = `https://dev-verifide.verifide.xyz/user/profile/${data?.first_name}/${data?._id}`;
+    const url = `${BaseUrl}user-details/${data?.username}/${data?._id}`;
+    // const url = `${BaseUrl}user/profile/${data?.first_name}/${data?._id}`;
     try {
       await navigator.clipboard.writeText(url);
       toast.success("URL copied to clipboard!");

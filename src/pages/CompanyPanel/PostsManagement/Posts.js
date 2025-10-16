@@ -52,6 +52,7 @@ import MessageText2 from "../../../pages/Home/components/MessageText2";
 import { getCookie } from "../../../components/utils/cookieHandler";
 import NoDataFound from "../../../components/ui/No Data/NoDataFound";
 import Button from "../../../components/ui/Button/Button";
+import { BaseUrl } from "../../../components/hooks/axiosProvider";
 
 const useIO = ({ onIntersect, rootMargin = "120px", threshold = 0.1 }) => {
   const observerRef = useRef(null);
@@ -575,7 +576,7 @@ const Posts = () => {
   };
   const handleCopyLink = useCallback((post) => {
     if (post && post?._id) {
-      const baseUrl = `https://dev-verifide.verifide.xyz/user/feed/${post?._id}`;
+      const baseUrl = `${BaseUrl}user/feed/${post?._id}`;
 
       navigator.clipboard.writeText(baseUrl);
       toast.success("Link copied to clipboard");

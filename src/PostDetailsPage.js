@@ -6,6 +6,7 @@ import { LuMessageCircle } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
+import { BaseUrl } from "./components/hooks/axiosProvider";
 
 const PostDetailsPage = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const PostDetailsPage = () => {
     const fetchPost = async () => {
       try {
         const res = await fetch(
-          `https://dev-verifide.verifide.xyz/api/v1/user/post/get-post-details?post_id=${id}`
+          `${BaseUrl}api/v1/user/post/get-post-details?post_id=${id}`
         );
         if (!res.ok) throw new Error("Failed to fetch post");
 

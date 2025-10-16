@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { apiUrl } from "../components/hooks/axiosProvider";
+import { apiUrl, BaseUrl } from "../components/hooks/axiosProvider";
 import Button from "../components/ui/Button/Button";
 
 const UserCertificate = () => {
@@ -90,7 +90,7 @@ const UserCertificate = () => {
                         </>
                     ) :
                         <Button>
-                            <Link to={`https://dev-verifide.verifide.xyz/`}>Sign In</Link>
+                            <Link to={`${BaseUrl}`}>Sign In</Link>
                         </Button>
                     }
 

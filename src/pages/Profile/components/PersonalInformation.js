@@ -7,6 +7,7 @@ import FilterSelect2 from "../../../components/ui/Input/FilterSelect2";
 import { BiEditAlt, BiLeftArrowAlt } from "react-icons/bi";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { toast } from "sonner";
+import { BaseUrl } from "../../../components/hooks/axiosProvider";
 
 const PersonalInformation = ({
   formData,
@@ -146,19 +147,19 @@ const PersonalInformation = ({
             />
             <span className="text-blue-500 text-[10px] font-medium top-[75px] absolute flex items-center gap-1">
               <a
-                href={`https://dev-verifide.verifide.xyz/user-details/${formData?.username}`}
+                href={`${BaseUrl}user-details/${formData?.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
               >
-                {`https://dev-verifide.verifide.xyz/${formData?.username}`}
+                {`${BaseUrl}${formData?.username}`}
               </a>
 
               <MdOutlineContentCopy
                 className="cursor-pointer text-gray-600 hover:text-gray-800"
                 onClick={async () => {
                   try {
-                    const url = `https://dev-verifide.verifide.xyz/user-details/${formData?.username}`;
+                    const url = `${BaseUrl}user-details/${formData?.username}`;
                     await navigator.clipboard.writeText(url);
                     toast.success("URL copied to clipboard!");
                   } catch (err) {

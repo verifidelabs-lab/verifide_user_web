@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import JobPost from '../Home/components/JobPost';
 import LinkedInCertificate from '../Certificates/Certificates';
 import { convertTimestampToDate } from '../../components/utils/globalFunction';
+import { BaseUrl } from '../../components/hooks/axiosProvider';
 // import PdfThumbnail from '../../components/ui/PdfThumbnail/PdfThumbnail';
 
 
@@ -340,7 +341,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
   const handleCopyLink = useCallback((post) => {
     // console.log(post)
     if (post) {
-      navigator.clipboard.writeText(`https://dev-verifide.verifide.xyz/user/feed/${post}`);
+      navigator.clipboard.writeText(`${BaseUrl}user/feed/${post}`);
       // http://localhost:3000/post-view/68a2f34d189e623973cda851
       navigate(`/user/feed/${post}`)
       toast.success('Link copied to clipboard');
