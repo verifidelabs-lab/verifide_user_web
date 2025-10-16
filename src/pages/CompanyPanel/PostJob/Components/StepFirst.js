@@ -4,6 +4,7 @@ import CustomInput from "../../../../components/ui/Input/CustomInput";
 import CustomDateInput from "../../../../components/ui/Input/CustomDateInput";
 import FilterSelect from "../../../../components/ui/Input/FilterSelect";
 import selectJson from "../../../../components/utils/selectJson.json";
+import { useEffect } from "react";
 
 const StepFirst = ({
   allCompanies,
@@ -21,9 +22,8 @@ const StepFirst = ({
   citiesList,
   setInputField,
   isCreatableIndustry,
-  getSelectedOption
+  getSelectedOption,
 }) => {
-  console.log(formData?.start_date);
   return (
     <div className="space-y-8">
       {/* Company & Industry Section */}
@@ -47,7 +47,11 @@ const StepFirst = ({
               required
               error={errors?.company_id}
               onCreateOption={(inputValue, field) => {
-                console.log("this is the inputalue and field", field, inputValue)
+                console.log(
+                  "this is the inputalue and field",
+                  field,
+                  inputValue
+                );
 
                 setAddModalState({ isOpen: true, type: "companies", field });
                 setInputField((prev) => ({ ...prev, name: inputValue }));
@@ -58,28 +62,60 @@ const StepFirst = ({
             />
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-3">
+            {/* <FilterSelect
+              // label="Industry Name"
+              name="industry_id"
+              placeholder="Select Industry"
+              // options={allIndustry}
+              // selectedOption={getSelectedOption(
+              //   allIndustry,
+              //   formData?.industry_id
+              // )}
+              onChange={(selected) =>
+                handleSelectChange("industry_id", selected)
+              }
+              error={errors.industry_id}
+              className="w-full h-10"
+              required
+              // onCreateOption={(inputValue, field) => {
+              //   setAddModalState({
+              //     isOpen: true,
+              //     type: "industries",
+              //     field: field,
+              //   });
+              //   setInputField((prev) => ({ ...prev, name: inputValue }));
+              // }}
+              isClearable
+              isDisabled={!formData?.industry_id}
+              disabledTooltip="Please select first Company"
+              isCreatedByUser={isCreatableIndustry}
+            /> */}
             <FilterSelect
               label="Industry Name"
               name="industry_id"
               placeholder="Select Industry"
               options={allIndustry}
-              selectedOption={getSelectedOption(allIndustry, formData?.industry_id)}
-              onChange={(selected) => handleSelectChange("industry_id", selected)}
+              selectedOption={getSelectedOption(
+                allIndustry,
+                formData?.industry_id
+              )}
+              onChange={(selected) =>
+                handleSelectChange("industry_id", selected)
+              }
               error={errors.industry_id}
               className="w-full h-10"
               required
-              onCreateOption={(inputValue, field) => {
-                setAddModalState({
-                  isOpen: true,
-                  type: 'industries',
-                  field: field
-                });
-                setInputField(prev => ({ ...prev, name: inputValue }))
-
-              }}
-              isClearable={true}
+              // onCreateOption={(inputValue, field) => {
+              //   setAddModalState({
+              //     isOpen: true,
+              //     type: "industries",
+              //     field: field,
+              //   });
+              //   setInputField((prev) => ({ ...prev, name: inputValue }));
+              // }}
+              isClearable={false}
               isDisabled={!formData?.company_id}
-              disabledTooltip='Please select first Company'
+              disabledTooltip="Please select first Company"
               isCreatedByUser={isCreatableIndustry}
             />
             {/* <FilterSelect
@@ -113,7 +149,7 @@ const StepFirst = ({
                 handleInputChange("current_openings", e.target.value)
               }
               name="current_openings"
-              className="w-full h-10 border rounded-lg px-4"
+              className="w-full h-12 border rounded-lg px-4"
               placeholder={`Enter number of available posts `}
               required
               error={errors?.current_openings}
@@ -168,25 +204,24 @@ const StepFirst = ({
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-
           {!(
             formData.job_type === "internship" || formData.pay_type === "unpaid"
           ) && (
-              <CustomInput
-                label="Salary Range"
-                placeholder="e.g. ₹30,000 - ₹50,000"
-                value={formData.salary_range}
-                onChange={(e) =>
-                  handleInputChange("salary_range", e.target.value)
-                }
-                required
-                error={errors?.salary_range}
-                className="h-10 w-full"
-              />
-            )}
+            <CustomInput
+              label="Salary Range"
+              placeholder="e.g. ₹30,000 - ₹50,000"
+              value={formData.salary_range}
+              onChange={(e) =>
+                handleInputChange("salary_range", e.target.value)
+              }
+              required
+              error={errors?.salary_range}
+              className="h-10 w-full"
+            />
+          )}
 
           <CustomDateInput
-            label="Start Date"
+            label="Job Start Date"
             value={formData?.start_date}
             onChange={(e) => handleInputChange("start_date", e.target.value)}
             required
@@ -195,7 +230,7 @@ const StepFirst = ({
           />
 
           <CustomDateInput
-            label="End Date"
+            label="Job End Date"
             value={formData?.end_date}
             onChange={(e) => handleInputChange("end_date", e.target.value)}
             required

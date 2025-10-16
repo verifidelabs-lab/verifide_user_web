@@ -6,10 +6,13 @@ import {
   formatDateByMomentTimeZone,
 } from "../../../components/utils/globalFunction";
 import { SkillsCard2 } from "../../../components/ui/cards/Card";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 // import { TbSquaresSelected } from "react-icons/tb";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiCalendar, CiLocationOn } from "react-icons/ci";
+import { BaseUrl } from "../../../components/hooks/axiosProvider";
+import { toast } from "sonner";
+import { MdClose, MdContentCopy } from "react-icons/md"; // add this at the top
 
 const JobCard = ({
   job,
@@ -29,8 +32,19 @@ const JobCard = ({
   const [showAllSkills, setShowAllSkills] = useState(false);
   const isThisJobLoading = isLoading === job._id;
   const remainingCount = Math.max(0, job?.user_id?.topSkills?.length - limit);
-  
-  console.log("activeTabactiveTabactiveTab", activeTab);
+  const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
+
+  const handleCopyLink = useCallback((job) => {
+    if (job && job?._id) {
+      const baseUrl = `${BaseUrl}user/opportunitiess/${job?._id}`;
+      navigator.clipboard.writeText(baseUrl);
+      toast.success("Link copied to clipboard");
+    } else {
+      toast.error("Invalid job data");
+    }
+    setShowOptionsDropdown(false);
+  }, []);
+
   const isDateInRange = () => {
     const currentDate = new Date().getTime();
     return currentDate >= job?.start_date && currentDate <= job?.end_date;
@@ -136,7 +150,11 @@ const JobCard = ({
                 </span>
                 <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
                   {job?.salary_range}{" "}
-                  {job?.pay_type === "unpaid" ? "unpaid":job?.pay_type === "monthly" ? "Monthly" : "LPA"}
+                  {job?.pay_type === "unpaid"
+                    ? "unpaid"
+                    : job?.pay_type === "monthly"
+                    ? "Monthly"
+                    : "LPA"}
                 </span>
               </div>
             )}
@@ -166,7 +184,9 @@ const JobCard = ({
                   dateInRange ? "text-green-600" : "text-red-600"
                 }`}
               >
-                <span>From: {moment(job?.start_date).format("DD MMM YYYY")}</span>
+                <span>
+                  From: {moment(job?.start_date).format("DD MMM YYYY")}
+                </span>
                 <span>To: {moment(job?.end_date).format("DD MMM YYYY")}</span>
               </div>
               {!dateInRange && (
@@ -186,22 +206,32 @@ const JobCard = ({
             </p>
             <div className="mb-4">
               {job?.job_description ? (
-                <p className="leading-relaxed text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
-                  {showAllSkills // you already have this state, better to use a new one to avoid clash
-                    ? job?.job_description
-                    : job?.job_description?.slice(0, 120)}
-                  {job?.job_description?.length > 120 && (
-                    <>
-                      {!showAllSkills && "..."}
+                <div
+                  className={`relative bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-700 leading-relaxed ${
+                    showAllSkills
+                      ? "max-h-64 overflow-y-auto"
+                      : "max-h-32 overflow-hidden"
+                  }`}
+                >
+                  <span className="whitespace-pre-line">
+                    {showAllSkills
+                      ? job?.job_description
+                      : `${job?.job_description?.slice(0, 80)}${
+                          job?.job_description?.length > 80 ? "..." : ""
+                        }`}
+                  </span>
+
+                  {job?.job_description?.length > 80 && (
+                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-gray-50 via-gray-50/70 to-transparent flex justify-center items-end pb-2">
                       <button
                         onClick={() => setShowAllSkills(!showAllSkills)}
-                        className="ml-2 text-blue-600 text-xs md:text-sm hover:underline focus:outline-none"
+                        className="text-blue-600 text-xs hover:underline focus:outline-none"
                       >
                         {showAllSkills ? "See less" : "See more"}
                       </button>
-                    </>
+                    </div>
                   )}
-                </p>
+                </div>
               ) : (
                 <p className="text-gray-500 text-sm">
                   No description provided.
@@ -338,13 +368,48 @@ const JobCard = ({
                 >
                   Details
                 </Button>
-                {activeTab === "open" && (
+                {/* {activeTab === "open" && (
                   <span
                     className="hover:bg-gray-300 text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
                     onClick={() => handleCloseJob(job)}
                   >
                     <BsThreeDotsVertical />
                   </span>
+                )} */}
+                {activeTab === "open" && (
+                  <div className="relative">
+                    <span
+                      className="hover:bg-gray-300 text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
+                      onClick={() =>
+                        setShowOptionsDropdown(!showOptionsDropdown)
+                      }
+                    >
+                      <BsThreeDotsVertical />
+                    </span>
+
+                    {showOptionsDropdown && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                        <button
+                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 text-sm"
+                          onClick={() => {
+                            handleCloseJob(job);
+                            setShowOptionsDropdown(false);
+                          }}
+                        >
+                          <MdClose className="w-4 h-4" /> Close Job
+                        </button>
+                        <button
+                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 text-sm"
+                          onClick={() => {
+                            handleCopyLink(job);
+                            setShowOptionsDropdown(false);
+                          }}
+                        >
+                          <MdContentCopy className="w-4 h-4" /> Copy Link
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 )}
               </>
             )}

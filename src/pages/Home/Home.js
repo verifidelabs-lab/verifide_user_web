@@ -675,11 +675,11 @@ const Home = () => {
     };
   }, [showOptionsDropdown]);
 
-  console.log(
-    "2222222222222",
-    commentsData["68c506de8c890beb0a1c427c"] || [],
-    commentsData
-  );
+  // console.log(
+  //   "2222222222222",
+  //   commentsData["68c506de8c890beb0a1c427c"] || [],
+  //   commentsData
+  // );
 
   const [commentLoadingStates, setCommentLoadingStates] = useState({});
 

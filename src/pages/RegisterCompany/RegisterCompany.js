@@ -101,8 +101,6 @@ const Company_Sizes = [
   { value: "5001-10000", label: "5001-10000" },
 ];
 
-
-
 const RegisterCompany = () => {
   const {
     formData,
@@ -225,14 +223,10 @@ const RegisterCompany = () => {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
-
-
-
   const selector = useSelector((state) => state.global);
 
   const allIndustry = [
-    { value: "", label: "Select" },
+    // { value: "", label: "Select" },
     ...arrayTransform(selector?.masterIndustryData?.data?.data?.list),
   ];
   const getIndustries = () => {
@@ -383,10 +377,8 @@ const RegisterCompany = () => {
       newErrors.display_name = "Display name is required";
     if (!formData.phone_no?.trim())
       newErrors.phone_no = "Phone number is required";
-    if (!formData.country?.trim())
-      newErrors.country = "country is required";
-    if (!formData.country?.trim())
-      newErrors.country = "country is required";
+    if (!formData.country?.trim()) newErrors.country = "country is required";
+    if (!formData.country?.trim()) newErrors.country = "country is required";
     if (!formData.email?.trim()) newErrors.email = "Email is required";
 
     // Email format validation
@@ -396,19 +388,6 @@ const RegisterCompany = () => {
     ) {
       newErrors.email = "Please enter a valid email address";
     }
-
-    // Password validation
-    // if (!formData.password?.trim()) newErrors.password = "Password is required";
-    // else if (formData.password.length < 8) {
-    //   newErrors.password = "Password must be at least 8 characters";
-    // }
-
-    // if (!formData.confirmPassword?.trim()) {
-    //   newErrors.confirmPassword = "Please confirm your password";
-    // } else if (formData.password !== formData.confirmPassword) {
-    //   newErrors.confirmPassword = "Passwords do not match";
-    // }
-
     // Industry validation
     if (!Array.isArray(formData.industry) || formData.industry.length === 0) {
       newErrors.industry = "At least one industry is required";
@@ -486,8 +465,8 @@ const RegisterCompany = () => {
         headquarters: formData.headquarters,
         founded_year: formData.founded_year
           ? Math.floor(
-            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-          )
+              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+            )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -498,8 +477,8 @@ const RegisterCompany = () => {
         linkedin_page_url: formData.linkedin_page_url,
         email: formData.email,
         username: formData.username,
-        password: "",
-        confirmPassword: "",
+        // password: " ",
+        // confirmPassword: " ",
       };
 
       const res = await dispatch(createCompany(createPayload)).unwrap();
@@ -510,7 +489,6 @@ const RegisterCompany = () => {
       console.log("formDataformData11111111111111111111", res);
 
       if (res?.data?.redisToken) {
-
       } else {
         const apiPayload = {
           page: 1,
@@ -741,7 +719,6 @@ const RegisterCompany = () => {
                     handleCountryChange("country_code", country)
                   }
                   error={errors?.country_code}
-
                 />
               </div>
 
@@ -772,15 +749,21 @@ const RegisterCompany = () => {
                     allIndustry,
                     formData?.industry
                   )}
+                  // onChange={(selected) => {
+                  //   // store only IDs
+                  //   const ids = Array.isArray(selected)
+                  //     ? selected.map((s) => s.value)
+                  //     : selected?.value;
+                  //   handleSelectChange(
+                  //     "industry",
+                  //     ids,
+                  //     Array.isArray(selected)
+                  //   );
+                  // }}
                   onChange={(selected) => {
-                    // store only IDs
-                    const ids = Array.isArray(selected)
-                      ? selected.map((s) => s.value)
-                      : selected?.value;
                     handleSelectChange(
                       "industry",
-                      ids,
-                      Array.isArray(selected)
+                      selected ? [selected.value] : []
                     );
                   }}
                   error={errors.industry}
@@ -798,7 +781,7 @@ const RegisterCompany = () => {
                   // isDisabled={!formData?.company_id}
                   disabledTooltip="Please select first Company"
                   isCreatedByUser={true}
-                  isMulti
+                  // isMulti
                 />
 
                 <FilterSelect
@@ -933,9 +916,7 @@ const RegisterCompany = () => {
                     (opt) =>
                       opt.state_code === formData?.headquarters?.state?.code
                   )}
-                  onChange={(state) =>
-                    handleHeadquartersChange("state", state)
-                  }
+                  onChange={(state) => handleHeadquartersChange("state", state)}
                   placeholder="Select State"
                   isDisabled={!formData?.headquarters?.country?.short_name}
                 />
