@@ -510,7 +510,10 @@ const Opportunitiess2 = () => {
                   <img
                     src={"/36369.jpg"}
                     alt={"company name"}
-                    onError={() => setImageError(true)}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/36369.jpg";
+                    }}
                     className="md:w-12 md:h-12 w-10 h-10 object-cover "
                   />
                 </div>
@@ -519,7 +522,10 @@ const Opportunitiess2 = () => {
                   src={selectedJob.company_id.logo_url}
                   alt={selectedJob.company_id.name}
                   className="w-12 h-12 rounded-lg object-cover"
-                  onError={() => setImageError(true)}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/36369.jpg";
+                  }}
                 />
               )}
               <div>
@@ -672,6 +678,159 @@ const Opportunitiess2 = () => {
               month: "long",
               day: "numeric",
             })}
+          </div>
+        </div>
+      )}
+      {/* MOBILE MODAL VIEW */}
+      {selectedJob && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center md:hidden">
+          <div className="bg-white w-[90%] max-h-[90vh] overflow-y-auto rounded-2xl p-4 relative">
+            <button
+              onClick={() => setSelectedJob(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <IoClose size={24} />
+            </button>
+
+            {/* ✅ Reuse same content as your sidebar */}
+            <div className="pt-6">
+              <div className="flex items-center space-x-3 mb-4">
+                <img
+                  src={selectedJob.company_id?.logo_url || "/36369.jpg"}
+                  alt={selectedJob.company_id?.name}
+                  className="w-12 h-12 rounded-lg object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/36369.jpg";
+                  }}
+                />
+                <div>
+                  <h3 className="font-semibold text-[#000000E6]">
+                    {selectedJob.company_id?.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    {selectedJob.industry_id?.name}
+                  </p>
+                </div>
+              </div>
+
+              <h2 className="text-xl font-bold text-[#000000E6] mb-2">
+                {selectedJob.job_title?.name || "Job Title"}
+              </h2>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-0.5 rounded">
+                  {selectedJob.job_type?.replace("-", " ") || "Full-time"}
+                </span>
+                <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded">
+                  {selectedJob.job_location === "on-site"
+                    ? "On-site"
+                    : "Remote"}
+                </span>
+              </div>
+
+              {/* ✅ Job Description */}
+              <div className="text-sm text-gray-700">
+                <p className="font-medium mb-1">Job Description:</p>
+                <p className="bg-gray-50 p-2 rounded-lg border border-gray-100 whitespace-pre-line">
+                  {selectedJob.job_description || "No description provided."}
+                </p>
+              </div>
+
+              {/* ✅ Required Skills */}
+              {selectedJob.required_skills?.length > 0 && (
+                <div className="mt-4">
+                  <strong className="text-gray-700 block mb-2">
+                    Required Skills:
+                  </strong>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedJob.required_skills.map((skill, index) => (
+                      <span
+                        key={index}
+                        className="bg-gray-100 text-gray-800 text-xs px-2.5 py-0.5 rounded"
+                      >
+                        {skill.name || skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* ✅ Application Status */}
+              {selectedJob.isApplied && (
+                <div className="mt-4">
+                  <strong className="text-gray-700">Application Status:</strong>
+                  <span
+                    className={`ml-2 ${
+                      selectedJob.jobApplication?.status === "applied"
+                        ? "text-blue-600"
+                        : selectedJob.jobApplication?.passed
+                        ? "text-green-600"
+                        : "text-yellow-600"
+                    }`}
+                  >
+                    {selectedJob.jobApplication?.status === "applied"
+                      ? "Applied"
+                      : selectedJob.jobApplication?.passed
+                      ? "Accepted"
+                      : "Under Review"}
+                  </span>
+                </div>
+              )}
+
+              {/* ✅ Interview Details */}
+              {selectedJob?.isSchedule && selectedJob?.interviewDetails && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-800 capitalize mb-3">
+                    📅 Interview Details
+                  </h3>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+                    <div>
+                      <span className="font-medium">Interview Date:</span>
+                      <div className="text-gray-600">
+                        {convertTimestampToDate(
+                          selectedJob.interviewDetails.select_date
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="font-medium">Interview Time:</span>
+                      <div className="text-gray-600">
+                        {convertTimestampToDate(
+                          selectedJob.interviewDetails.select_time
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <span className="font-medium">Meeting Link:</span>
+                      <div className="text-blue-600 truncate">
+                        <a
+                          href={selectedJob.interviewDetails.meeting_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          {selectedJob.interviewDetails.meeting_url}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ✅ Posted Date */}
+              <div className="text-sm text-gray-500 mt-4">
+                Posted on:{" "}
+                {new Date(selectedJob.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </div>
+            </div>
           </div>
         </div>
       )}
