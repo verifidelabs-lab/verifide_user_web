@@ -2,16 +2,16 @@ import axios from "axios";
 import { getCookie, removeCookie } from "../utils/cookieHandler";
 import { CiNoWaitingSign } from "react-icons/ci";
 
-// const isLive = false;
-const isLive = true;
-// export const BaseUrl = "https://verifide.xyz/"
-export const BaseUrl = "https://dev-verifide.verifide.xyz/";
+const isLive = false;
+// const isLive = true;
+export const BaseUrl = "https://verifide.xyz/"
+// export const BaseUrl = "https://dev-verifide.verifide.xyz/";
 export const apiUrl = isLive
   ? `${BaseUrl}api/v1/`
-  : "http://192.168.1.63:5004/api/v1/";
+  : "http://192.168.1.9:5004/api/v1/";
 export const socketApiUrl = isLive
   ? `${BaseUrl}socket`
-  : "http://192.168.1.63:5004/socket";
+  : "http://192.168.1.9:5004/socket";
 
 const axiosPublic = axios.create({
   baseURL: apiUrl,

@@ -123,7 +123,6 @@ const Login = () => {
         toast.success(res?.message || "Login successful");
         // navigate("/user/feed");
         navigate(redirectUrl, { replace: true });
-
       }
     } catch (error) {
       // console.log(error);
@@ -194,7 +193,6 @@ const Login = () => {
             toast.success("Login successful 🎉");
             // navigate("/user/feed");
             navigate(redirectUrl, { replace: true });
-
           } else {
             toast.error(response?.message || "Something went wrong.");
             navigate("/login");
@@ -280,7 +278,6 @@ const Login = () => {
         } else {
           // navigate(`/user/feed`);
           navigate(redirectUrl, { replace: true });
-
         }
       } else {
         toast.error(response?.message || "Please try again later.");
@@ -438,7 +435,10 @@ const Login = () => {
                     className="hover:opacity-80 transition-opacity duration-200"
                   />
                   <Link
-                    to={"/forgot-password"}
+                    // to={"/forgot-password"}
+                    to={`/forgot-password?redirect=${encodeURIComponent(
+                      redirectUrl
+                    )}`}
                     className="flex justify-end font-medium text-sm text-[#2563EB] hover:text-[#1d4ed8] transition-colors duration-300 hover:underline"
                   >
                     Forgot Password?
@@ -465,7 +465,14 @@ const Login = () => {
                     Don't have an account?
                   </span>{" "}
                   <span className="text-[#000000] text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">
-                    <Link to="/create-account">Create account</Link>
+                    {/* <Link to="/create-account">Create account</Link> */}
+                    <Link
+                      to={`/create-account?redirect=${encodeURIComponent(
+                        redirectUrl
+                      )}`}
+                    >
+                      Create account
+                    </Link>
                   </span>
                 </div>
                 {/* <div className="flex justify-center gap-4 items-center text-sm font-medium text-blue-600">

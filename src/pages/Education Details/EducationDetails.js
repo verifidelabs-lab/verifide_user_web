@@ -1,7 +1,7 @@
 /* eslint-disable default-case */
 import React, { useEffect, useState } from "react";
 import CustomInput from "../../components/ui/Input/CustomInput";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import useFormHandler from "../../components/hooks/useFormHandler";
 import Button from "../../components/ui/Button/Button";
@@ -40,6 +40,8 @@ import { addOneData } from "../../redux/Users/userSlice";
 
 const EducationDetails = () => {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/user/feed"; // default if not present
   const navigate = useNavigate();
   const selector = useSelector((state) => state.educations);
 
@@ -183,7 +185,8 @@ const EducationDetails = () => {
       const res = await dispatch(addEducation(submissionData)).unwrap();
       toast.success(res?.message);
 
-      navigate("/work-experience");
+      // navigate("/work-experience");
+      navigate(`/work-experience?redirect=${encodeURIComponent(redirectUrl)}`);
     } catch (error) {
       console.error("Error saving education details:", error);
       toast.error(error);
@@ -883,9 +886,24 @@ const EducationDetails = () => {
                 </div>
 
                 <div className="flex justify-between place-items-center gap-4 py-5">
-                  <Button variant="outline" className="w-full" type="button">
+                  {/* <Button variant="outline" className="w-full" type="button">
+                    Prev
+                  </Button> */}
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    type="button"
+                    onClick={() =>
+                      navigate(
+                        `/create-account?redirect=${encodeURIComponent(
+                          redirectUrl
+                        )}`
+                      )
+                    }
+                  >
                     Prev
                   </Button>
+
                   <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? "Saving..." : "Next"}
                   </Button>
@@ -894,7 +912,10 @@ const EducationDetails = () => {
 
               <div className="mt-2 text-center text-base text-[#646464]">
                 <Link
-                  to="/work-experience"
+                  // to="/work-experience"
+                  to={`/work-experience?redirect=${encodeURIComponent(
+                    redirectUrl
+                  )}`}
                   className="text-[#2563EB] hover:underline font-medium text-base hover:text-blue-500"
                 >
                   Skip Now

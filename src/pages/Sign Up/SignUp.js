@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import CustomInput from "../../components/ui/Input/CustomInput";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaLinkedinIn } from "react-icons/fa";
 import useFormHandler from "../../components/hooks/useFormHandler";
@@ -18,6 +18,9 @@ import {
 import { apiUrl } from "../../components/hooks/axiosProvider";
 
 const SignUp = () => {
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/user/feed"; // fallback
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOtpState, setIsOtpState] = useState(false);
@@ -218,13 +221,25 @@ const SignUp = () => {
       ).unwrap();
 
       toast.success(res?.message || "Email verified successfully!");
+      // if (!res?.data?.user?.first_education_added) {
+      //   navigate("/education-details");
+      // } else if (!res?.data?.user?.first_experience_added) {
+      //   navigate("/experience-details");
+      // } else {
+      //   navigate(redirectUrl);
+      // }
       if (!res?.data?.user?.first_education_added) {
-        navigate("/education-details");
+        navigate(
+          `/education-details?redirect=${encodeURIComponent(redirectUrl)}`
+        );
       } else if (!res?.data?.user?.first_experience_added) {
-        navigate("/experience-details");
+        navigate(
+          `/experience-details?redirect=${encodeURIComponent(redirectUrl)}`
+        );
       } else {
-        navigate(`/user/feed`);
+        navigate(redirectUrl);
       }
+
       removeCookie("register_token");
       setCookie("VERIFIED_TOKEN", JSON.stringify(res?.data?.token));
       setCookie("ACCESS_MODE", JSON.stringify(res?.data?.user?.accessMode));
@@ -735,7 +750,8 @@ const SignUp = () => {
             <div className="mt-6 text-center text-base text-[#646464]">
               Already have an account?{" "}
               <Link
-                to="/login"
+                // to="/login"
+                to={`/login?redirect=${encodeURIComponent(redirectUrl)}`}
                 className="font-medium text-[#000000] hover:text-blue-500"
               >
                 Sign in

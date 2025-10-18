@@ -143,56 +143,128 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
   };
 
   return (
+    //  <div
+    //   className={`flex items-start justify-between p-4 border-b border-gray-200 ${
+    //     !notification.isRead ? "bg-blue-50" : "bg-white"
+    //   }`}
+    // >
+    //   <div className="flex items-start space-x-3 w-full">
+    //     {/* Icon */}
+    //     <div className={`p-2 rounded-full ${color}`}>
+    //       <Icon className="w-4 h-4 text-white" />
+    //     </div>
+
+    //     {/* Content */}
+    //     <div className="flex-1">
+    //       {/* Title + Date */}
+    //       <div className="flex justify-between items-center">
+    //         <h3 className="text-sm font-semibold text-gray-900">
+    //           {cleanTitle}
+    //         </h3>
+    //         <span className="text-xs text-gray-500">
+    //           {formatDate(notification.createdAt)}
+    //         </span>
+    //       </div>
+
+    //       {/* Job Info */}
+    //       <div className="flex flex-wrap gap-4 text-xs text-gray-700 mt-1">
+    //         {event && (
+    //           <span>
+    //             <strong className="text-gray-900">Job Position:</strong> {event}
+    //           </span>
+    //         )}
+    //         {type && (
+    //           <span>
+    //             <strong className="text-gray-900">Job Type:</strong> {type}
+    //           </span>
+    //         )}
+    //         {company && (
+    //           <span>
+    //             <strong className="text-gray-900">Company:</strong> {company}
+    //           </span>
+    //         )}
+    //       </div>
+
+    //       {/* Message */}
+    //       <p className="text-xs text-gray-600 mt-2">{notification.message}</p>
+    //     </div>
+    //   </div>
+
+    //   {/* Button */}
+    //   <button
+    //     onClick={handleActionClick}
+    //     className="ml-4 px-3 py-1 text-blue-600 bg-blue-100 hover:bg-blue-200 text-sm font-medium rounded"
+    //   >
+    //     {notification.meta?.buttonText || "View"}
+    //   </button>
+    // </div>
+
     <div
-      className={`flex items-start justify-between p-4 border-b border-gray-100 ${
+      className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-gray-200 hover:bg-gray-50 transition ${
         !notification.isRead ? "bg-blue-50" : "bg-white"
       }`}
     >
-      <div className="flex items-start space-x-3">
+      <div className="flex items-start space-x-3 w-full">
         {/* Icon */}
         <div className={`p-2 rounded-full ${color}`}>
-          <Icon className="w-4 h-4 text-white" />
+          <Icon className="w-5 h-5 text-white" />
         </div>
 
-        {/* Notification Content */}
+        {/* Content */}
         <div className="flex-1">
-          {/* Title */}
-          <h3 className="text-sm font-semibold text-[#000000E6] mb-1">
-            {cleanTitle}
-          </h3>
+          {/* Title + Date */}
+          {/* <div className="flex flex-col sm:flex-row sm:justify-between">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1 sm:mb-0">
+              {cleanTitle}
+            </h3>
+            <span className="text-xs text-gray-500">
+              {formatDate(notification.createdAt)}
+            </span>
+          </div> */}
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-gray-900">
+              {cleanTitle}
+            </h3>
+            <span className="text-xs text-gray-500 italic">
+              {formatDate(notification.createdAt)}
+            </span>
+          </div>
 
-          {/* Message */}
-          <p className="text-xs text-gray-600 mb-2">{notification.message}</p>
-
-          {/* Highlighted Details */}
-          <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-[#2563EB] mb-1">
-            {type && (
-              <span className="px-2 py-0.5 bg-blue-100 rounded">{type}</span>
-            )}
+          {/* Job Info */}
+          <div className="mt-2 space-y-1 text-xs text-gray-700">
             {event && (
-              <span className="px-2 py-0.5 bg-green-100 rounded">{event}</span>
+              <p className="flex items-center gap-1">
+                <span className="text-gray-900 font-medium">
+                  💼 Job Position:
+                </span>{" "}
+                {event}
+              </p>
+            )}
+            {type && (
+              <p className="flex items-center gap-1">
+                <span className="text-gray-900 font-medium">🕒 Job Type:</span>{" "}
+                {type}
+              </p>
             )}
             {company && (
-              <span className="px-2 py-0.5 bg-yellow-100 rounded">
+              <p className="flex items-center gap-1">
+                <span className="text-gray-900 font-medium">🏢 Company:</span>{" "}
                 {company}
-              </span>
+              </p>
             )}
           </div>
 
-          {/* Date and Time */}
-          <div className="flex items-center    text-sm font-semibold text-[#000000E6] mb-1">
-             <CiLock className="w-3 h-3 mr-1" />
-            {formatDate(notification.createdAt)}
-          </div>
+          {/* Message */}
+          <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+            {notification.message}
+          </p>
         </div>
       </div>
 
-      {/* Action Button */}
+      {/* Button */}
       <button
         onClick={handleActionClick}
-        className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${
-          notification.isRead ? "opacity-50 cursor-default" : ""
-        }`}
+        className="mt-3 sm:mt-0 ml-8 sm:ml-4 px-4 py-1 text-blue-600 bg-blue-100 hover:bg-blue-200 text-sm font-medium rounded transition"
       >
         {notification.meta?.buttonText || "View"}
       </button>

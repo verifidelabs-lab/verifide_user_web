@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useFormHandler from "../../components/hooks/useFormHandler";
 import CustomInput from "../../components/ui/Input/CustomInput";
 import Button from "../../components/ui/Button/Button";
@@ -16,6 +16,9 @@ import {
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/user/feed";
+
   const { formData, setFormData, errors, setErrors, handleChange } =
     useFormHandler({
       email: "",
@@ -181,7 +184,8 @@ const ForgotPassword = () => {
         })
       ).unwrap();
       toast.success(response?.message);
-      navigate("/login");
+      // navigate("/login");
+      navigate(`/login?redirect=${encodeURIComponent(redirectUrl)}`);
     } catch (error) {
       toast.error(error);
     } finally {
@@ -333,7 +337,8 @@ const ForgotPassword = () => {
               Back to?{" "}
             </span>
             <Link
-              to="/login"
+              // to="/login"
+              to={`/login?redirect=${encodeURIComponent(redirectUrl)}`}
               className="text-blue-600 text-sm sm:text-base font-medium hover:underline transition-colors"
             >
               Login
@@ -423,7 +428,8 @@ const ForgotPassword = () => {
               Back to?{" "}
             </span>
             <Link
-              to="/login"
+              // to="/login"
+              to={`/login?redirect=${encodeURIComponent(redirectUrl)}`} 
               className="text-blue-600 text-sm sm:text-base font-medium hover:underline transition-colors"
             >
               Login
