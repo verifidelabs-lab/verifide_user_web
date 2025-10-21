@@ -7,6 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Toaster } from "sonner";
+import "react-medium-image-zoom/dist/styles.css";
 
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Sign Up/SignUp";
@@ -180,10 +181,6 @@ const App = () => {
             element={<PrivateRoute component={Userpost2} />}
           />
           <Route path="/post-view/:id" element={<PostDetailsPage />} />
-          {/* <Route
-            path="/user-details/:username/:id?"
-            element={<PrivateRoute component={UserDetails} />}
-          /> */}
           <Route
             path="/company-details/:username/:id?"
             element={<PrivateRoute component={CompanyDetails} />}

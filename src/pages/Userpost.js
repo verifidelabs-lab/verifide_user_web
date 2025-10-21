@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { FaChartBar } from 'react-icons/fa';
-import { apiUrl } from '../components/hooks/axiosProvider';
-import Button from '../components/ui/Button/Button';
-import { getCookie } from '../components/utils/cookieHandler';
-import { useDispatch } from 'react-redux';
-import { getProfile } from '../redux/slices/authSlice';
-import MediaCarousel from './Home/components/MediaCarousel';
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { FaChartBar } from "react-icons/fa";
+import { apiUrl } from "../components/hooks/axiosProvider";
+import Button from "../components/ui/Button/Button";
+import { getCookie } from "../components/utils/cookieHandler";
+import { useDispatch } from "react-redux";
+import { getProfile } from "../redux/slices/authSlice";
+import MediaCarousel from "./Home/components/MediaCarousel";
 // import { toast } from 'sonner';
 
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
@@ -23,20 +23,22 @@ const MessageText = ({ msg }) => {
     try {
       let videoId = null;
       const u = new URL(url);
-      const host = u.hostname.replace('www.', '');
-      if (host === 'youtube.com') {
-        if (u.pathname === '/watch') videoId = u.searchParams.get('v');
-        if (u.pathname.startsWith('/embed/')) videoId = u.pathname.split('/embed/')[1];
-        if (u.pathname.startsWith('/v/')) videoId = u.pathname.split('/v/')[1];
-        if (u.pathname.startsWith('/shorts/')) videoId = u.pathname.split('/shorts/')[1];
-      } else if (host === 'youtu.be') {
-        videoId = u.pathname.replace('/', '');
+      const host = u.hostname.replace("www.", "");
+      if (host === "youtube.com") {
+        if (u.pathname === "/watch") videoId = u.searchParams.get("v");
+        if (u.pathname.startsWith("/embed/"))
+          videoId = u.pathname.split("/embed/")[1];
+        if (u.pathname.startsWith("/v/")) videoId = u.pathname.split("/v/")[1];
+        if (u.pathname.startsWith("/shorts/"))
+          videoId = u.pathname.split("/shorts/")[1];
+      } else if (host === "youtu.be") {
+        videoId = u.pathname.replace("/", "");
       }
       if (videoId) {
         return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}&rel=0&modestbranding=1`;
       }
     } catch (e) {
-      console.error('Error parsing YouTube URL:', e);
+      console.error("Error parsing YouTube URL:", e);
     }
     return null;
   };
@@ -47,7 +49,11 @@ const MessageText = ({ msg }) => {
       return (
         <a href={url} target="_blank" rel="noopener noreferrer">
           <div className="mt-3 border rounded-lg overflow-hidden w-full h-80">
-            <iframe title="YouTube preview" src={yt} className="w-full h-full pointer-events-none" />
+            <iframe
+              title="YouTube preview"
+              src={yt}
+              className="w-full h-full pointer-events-none"
+            />
           </div>
         </a>
       );
@@ -55,14 +61,23 @@ const MessageText = ({ msg }) => {
     if (isImageUrl(url)) {
       return (
         <a href={url} target="_blank" rel="noopener noreferrer">
-          <img src={url} alt="Preview" className="w-full h-auto max-h-80 object-contain rounded-lg" />
+          <img
+            src={url}
+            alt="Preview"
+            className="w-full h-auto max-h-80 object-contain rounded-lg"
+          />
         </a>
       );
     }
     if (isVideoUrl(url)) {
       return (
         <a href={url} target="_blank" rel="noopener noreferrer">
-          <video src={url} controls autoPlay className="w-full max-h-80 rounded-lg" />
+          <video
+            src={url}
+            controls
+            autoPlay
+            className="w-full max-h-80 rounded-lg"
+          />
         </a>
       );
     }
@@ -91,7 +106,13 @@ const MessageText = ({ msg }) => {
       <div className="text-sm whitespace-pre-wrap break-words">
         {parts.map((part, i) =>
           urlRegex.test(part) ? (
-            <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+            <a
+              key={i}
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+            >
               {part}
             </a>
           ) : (
@@ -100,7 +121,11 @@ const MessageText = ({ msg }) => {
         )}
       </div>
       {urls.length > 0 && (
-        <div className="mt-3 space-y-3 w-full max-w-md mx-auto">{urls.map((u, i) => <div key={i}>{renderPreview(u)}</div>)}</div>
+        <div className="mt-3 space-y-3 w-full max-w-md mx-auto">
+          {urls.map((u, i) => (
+            <div key={i}>{renderPreview(u)}</div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -117,19 +142,19 @@ const Userpost = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef();
   const [isUserData, setIsUserData] = useState(null);
-  const [accessMode,] = useState(getCookie("VERIFIED_TOKEN"));
+  const [accessMode] = useState(getCookie("VERIFIED_TOKEN"));
   const dispatch = useDispatch();
 
   // Initialize ogData with a loading state
   const [ogData, setOgData] = useState({
-    title: 'Loading Post...',
-    description: 'Loading post content...',
+    title: "Loading Post...",
+    description: "Loading post content...",
     image: `${window.location.origin}/default-og-image.png`,
     url: `${window.location.origin}/user/post/view/${id}`,
-    type: 'website',
-    siteName: 'Your App Name',
-    author: 'Your App Name',
-    tags: []
+    type: "website",
+    siteName: "Your App Name",
+    author: "Your App Name",
+    tags: [],
   });
 
   // Fetch post data
@@ -168,29 +193,33 @@ const Userpost = () => {
   // Update ogData when postData is available
   useEffect(() => {
     if (postData) {
-      const userName = postData.userData?.name || 'Anonymous User';
+      const userName = postData.userData?.name || "Anonymous User";
 
       let title = `${userName}`;
-      if (postData.post_type === 'poll') {
-        title += ' - Poll';
+      if (postData.post_type === "poll") {
+        title += " - Poll";
       } else if (postData.content) {
-        const firstLine = postData.content.split('\n')[0];
-        title += ` - ${firstLine.length > 50 ? firstLine.substring(0, 50) + '...' : firstLine}`;
+        const firstLine = postData.content.split("\n")[0];
+        title += ` - ${
+          firstLine.length > 50 ? firstLine.substring(0, 50) + "..." : firstLine
+        }`;
       }
-      title += ' | Your App Name';
+      title += " | Your App Name";
 
-      let description = '';
-      if (postData.post_type === 'poll' && postData.poll) {
+      let description = "";
+      if (postData.post_type === "poll" && postData.poll) {
         description = `${userName} created a poll with ${postData.poll.total_votes} votes. `;
         if (postData.content) {
-          description += postData.content.length > 100
-            ? postData.content.substring(0, 100) + '...'
-            : postData.content;
+          description +=
+            postData.content.length > 100
+              ? postData.content.substring(0, 100) + "..."
+              : postData.content;
         }
       } else if (postData.content) {
-        description = postData.content.length > 160
-          ? postData.content.substring(0, 160) + '...'
-          : postData.content;
+        description =
+          postData.content.length > 160
+            ? postData.content.substring(0, 160) + "..."
+            : postData.content;
       } else {
         description = `Check out this post by ${userName} on Your App Name`;
       }
@@ -209,12 +238,12 @@ const Userpost = () => {
         description,
         image,
         url: `${window.location.origin}/user/post/view/${id}`,
-        type: 'article',
-        siteName: 'Your App Name',
+        type: "article",
+        siteName: "Your App Name",
         author: userName,
         publishedTime: postData.createdAt,
         modifiedTime: postData.updatedAt,
-        tags: postData.tags || []
+        tags: postData.tags || [],
       });
     }
   }, [postData, id]); // Depend on postData to re-run when it changes
@@ -240,14 +269,14 @@ const Userpost = () => {
   // const handleReport = () => triggerPopup();
 
   const formatDate = (timestamp) => {
-    if (!timestamp) return '';
+    if (!timestamp) return "";
     const date = new Date(timestamp);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -286,55 +315,56 @@ const Userpost = () => {
     // Rest of the generateStructuredData logic
     const structuredData = {
       "@context": "https://schema.org",
-      "@type": postData.post_type === 'poll' ? "Question" : "SocialMediaPosting",
-      "headline": ogData.title,
-      "description": ogData.description,
-      "image": ogData.image,
-      "url": ogData.url,
-      "author": {
+      "@type":
+        postData.post_type === "poll" ? "Question" : "SocialMediaPosting",
+      headline: ogData.title,
+      description: ogData.description,
+      image: ogData.image,
+      url: ogData.url,
+      author: {
         "@type": "Person",
-        "name": postData.userData?.name || "Anonymous",
-        "image": postData.userData?.profile_picture_url
+        name: postData.userData?.name || "Anonymous",
+        image: postData.userData?.profile_picture_url,
       },
-      "publisher": {
+      publisher: {
         "@type": "Organization",
-        "name": ogData.siteName,
-        "logo": {
+        name: ogData.siteName,
+        logo: {
           "@type": "ImageObject",
-          "url": `${window.location.origin}/logo.png`
-        }
+          url: `${window.location.origin}/logo.png`,
+        },
       },
-      "datePublished": postData.createdAt,
-      "dateModified": postData.updatedAt,
-      "interactionStatistic": [
+      datePublished: postData.createdAt,
+      dateModified: postData.updatedAt,
+      interactionStatistic: [
         {
           "@type": "InteractionCounter",
-          "interactionType": "https://schema.org/LikeAction",
-          "userInteractionCount": postData.like_count || 0
+          interactionType: "https://schema.org/LikeAction",
+          userInteractionCount: postData.like_count || 0,
         },
         {
           "@type": "InteractionCounter",
-          "interactionType": "https://schema.org/CommentAction",
-          "userInteractionCount": postData.comments || 0
+          interactionType: "https://schema.org/CommentAction",
+          userInteractionCount: postData.comments || 0,
         },
         {
           "@type": "InteractionCounter",
-          "interactionType": "https://schema.org/ShareAction",
-          "userInteractionCount": postData.share_count || 0
-        }
-      ]
+          interactionType: "https://schema.org/ShareAction",
+          userInteractionCount: postData.share_count || 0,
+        },
+      ],
     };
 
-    if (postData.post_type === 'poll' && postData.poll) {
-      structuredData.acceptedAnswer = postData.poll.options.map(option => ({
+    if (postData.post_type === "poll" && postData.poll) {
+      structuredData.acceptedAnswer = postData.poll.options.map((option) => ({
         "@type": "Answer",
-        "text": option.text,
-        "upvoteCount": option.vote_count
+        text: option.text,
+        upvoteCount: option.vote_count,
       }));
     }
 
     if (postData.tags && postData.tags.length > 0) {
-      structuredData.keywords = postData.tags.join(', ');
+      structuredData.keywords = postData.tags.join(", ");
     }
 
     return structuredData;
@@ -362,9 +392,15 @@ const Userpost = () => {
       <>
         <Helmet>
           <title>Error Loading Post | Your App Name</title>
-          <meta name="description" content="An error occurred while loading the post." />
+          <meta
+            name="description"
+            content="An error occurred while loading the post."
+          />
           <meta property="og:title" content="Error Loading Post" />
-          <meta property="og:description" content="An error occurred while loading the post." />
+          <meta
+            property="og:description"
+            content="An error occurred while loading the post."
+          />
           <meta property="og:type" content="website" />
         </Helmet>
         <div className="flex justify-center items-center h-screen">
@@ -379,9 +415,15 @@ const Userpost = () => {
       <>
         <Helmet>
           <title>Post Not Found | Your App Name</title>
-          <meta name="description" content="The requested post could not be found." />
+          <meta
+            name="description"
+            content="The requested post could not be found."
+          />
           <meta property="og:title" content="Post Not Found" />
-          <meta property="og:description" content="The requested post could not be found." />
+          <meta
+            property="og:description"
+            content="The requested post could not be found."
+          />
           <meta property="og:type" content="website" />
         </Helmet>
         <div className="flex justify-center items-center h-screen">
@@ -396,7 +438,7 @@ const Userpost = () => {
       <Helmet>
         <title>{ogData.title}</title>
         <meta name="description" content={ogData.description} />
-        <meta name="keywords" content={ogData.tags.join(', ')} />
+        <meta name="keywords" content={ogData.tags.join(", ")} />
         <meta name="author" content={ogData.author} />
 
         {/* Enhanced OpenGraph Tags */}
@@ -433,8 +475,14 @@ const Userpost = () => {
         {ogData.publishedTime && (
           <>
             <meta property="article:author" content={ogData.author} />
-            <meta property="article:published_time" content={ogData.publishedTime} />
-            <meta property="article:modified_time" content={ogData.modifiedTime} />
+            <meta
+              property="article:published_time"
+              content={ogData.publishedTime}
+            />
+            <meta
+              property="article:modified_time"
+              content={ogData.modifiedTime}
+            />
             {ogData.tags.map((tag, index) => (
               <meta key={index} property="article:tag" content={tag} />
             ))}
@@ -503,19 +551,24 @@ const Userpost = () => {
         {/* User Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            {postData?.userData?.profile_picture_url ?
+            {postData?.userData?.profile_picture_url ? (
               <img
                 src={postData?.userData?.profile_picture_url}
                 alt={postData?.userData?.name}
                 className="w-10 h-10 rounded-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src =
+                    "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                }}
               />
-              :
+            ) : (
               <img
                 src={`/0684456b-aa2b-4631-86f7-93ceaf33303c.png`}
                 alt="logo"
                 className="w-12 h-12 rounded-full object-cover"
               />
-            }
+            )}
             <div>
               <h3 className="font-semibold text-gray-900">
                 {postData?.userData?.name}
@@ -525,20 +578,19 @@ const Userpost = () => {
               </p>
             </div>
           </div>
-
         </div>
 
         {/* Post Content */}
         <div className="mb-4">
           {/* <p className="text-gray-800 whitespace-pre-line">{postData?.content}</p> */}
         </div>
-        {postData?.post_type === 'link' && postData?.link && (
+        {postData?.post_type === "link" && postData?.link && (
           <div className="mx-auto w-full">
             <MessageText msg={postData?.link} />
           </div>
         )}
 
-        {postData?.post_type === 'jobs' && postData?.job_id && (
+        {postData?.post_type === "jobs" && postData?.job_id && (
           <div className="mb-6 border border-gray-200 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 overflow-hidden">
             {/* Job Header */}
             <div className="bg-white p-6 border-b border-gray-100">
@@ -550,6 +602,11 @@ const Userpost = () => {
                         src={postData.job_id.company.logo_url}
                         alt={postData.job_id.company.name}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src =
+                            "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                        }}
                       />
                     ) : (
                       <img
@@ -561,23 +618,24 @@ const Userpost = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-1">
-                      {postData.job_id.job_title_details?.name || 'Job Position'}
+                      {postData.job_id.job_title_details?.name ||
+                        "Job Position"}
                     </h2>
                     <p className="text-lg text-gray-700 font-semibold">
-                      {postData.job_id.company?.name || 'Company Name'}
+                      {postData.job_id.company?.name || "Company Name"}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {postData.job_id.industry?.name || 'Industry'}
+                      {postData.job_id.industry?.name || "Industry"}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-2">
                     {/* <FaBriefcase className="mr-1" /> */}
-                    {(postData.job_id.job_type)}
+                    {postData.job_id.job_type}
                   </div>
                   <p className="text-xs text-gray-500 uppercase tracking-wide">
-                    {postData.job_id.job_location || 'Remote'}
+                    {postData.job_id.job_location || "Remote"}
                   </p>
                 </div>
               </div>
@@ -598,40 +656,46 @@ const Userpost = () => {
 
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                   {/* <FaClock className="text-blue-500" /> */}
-                  <span className="capitalize">{postData.job_id.pay_type || 'Payment type not specified'}</span>
+                  <span className="capitalize">
+                    {postData.job_id.pay_type || "Payment type not specified"}
+                  </span>
                 </div>
               </div>
 
               {/* Required Skills */}
-              {postData.job_id.required_skills && postData.job_id.required_skills.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">Required Skills:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {postData.job_id.required_skills.map((skill, index) => (
-                      <span
-                        key={skill._id || index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
+              {postData.job_id.required_skills &&
+                postData.job_id.required_skills.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">
+                      Required Skills:
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {postData.job_id.required_skills.map((skill, index) => (
+                        <span
+                          key={skill._id || index}
+                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border"
+                        >
+                          {skill.name}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Apply Button */}
               <div className="flex justify-between items-center">
                 <div className="text-xs text-gray-500">
                   Posted {formatDate(postData.updatedAt)}
                 </div>
-
               </div>
             </div>
 
             {/* Job Description */}
             {postData.job_id.job_description && (
               <div className="p-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">Job Description</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-3">
+                  Job Description
+                </h4>
                 <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
                   {postData.job_id.job_description}
                 </div>
@@ -641,9 +705,11 @@ const Userpost = () => {
         )}
 
         {/* Regular Post Content (for non-job posts) */}
-        {postData?.post_type !== 'jobs' && postData?.content && (
+        {postData?.post_type !== "jobs" && postData?.content && (
           <div className="mb-4">
-            <p className="text-gray-800 whitespace-pre-line">{postData?.content}</p>
+            <p className="text-gray-800 whitespace-pre-line">
+              {postData?.content}
+            </p>
           </div>
         )}
 
@@ -660,20 +726,23 @@ const Userpost = () => {
           </div>
         )}
 
-
         {/* Poll Display */}
-        {postData?.post_type === 'poll' && postData?.poll && (
+        {postData?.post_type === "poll" && postData?.poll && (
           <div className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
             <div className="flex items-center gap-2 mb-3 text-blue-600">
               <FaChartBar />
               <span className="font-medium">Poll</span>
               <span className="text-xs text-gray-500 ml-auto">
-                {postData.poll.total_votes} votes • {postData.poll.voting_length} days left
+                {postData.poll.total_votes} votes •{" "}
+                {postData.poll.voting_length} days left
               </span>
             </div>
 
             {postData.poll.options.map((option, index) => {
-              const percentage = calculatePercentage(option.vote_count, postData.poll.total_votes);
+              const percentage = calculatePercentage(
+                option.vote_count,
+                postData.poll.total_votes
+              );
               return (
                 <div key={index} className="mb-3 last:mb-0">
                   <div className="flex justify-between items-center mb-1">
@@ -687,7 +756,7 @@ const Userpost = () => {
                     ></div>
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
-                    {option.vote_count} vote{option.vote_count !== 1 ? 's' : ''}
+                    {option.vote_count} vote{option.vote_count !== 1 ? "s" : ""}
                   </div>
                 </div>
               );
@@ -722,7 +791,12 @@ const Userpost = () => {
               alt="Post content"
               className="w-full h-auto max-h-96 object-contain rounded-lg"
             /> */}
-            <MediaCarousel post={{ image_urls: postData.image_urls, video_url: postData.video_url, }} />
+            <MediaCarousel
+              post={{
+                image_urls: postData.image_urls,
+                video_url: postData.video_url,
+              }}
+            />
           </div>
         )}
 
@@ -730,7 +804,10 @@ const Userpost = () => {
         {postData?.tags && postData?.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
             {postData?.tags.map((tag, index) => (
-              <span key={index} className="text-blue-500 text-sm hover:underline cursor-pointer">
+              <span
+                key={index}
+                className="text-blue-500 text-sm hover:underline cursor-pointer"
+              >
                 #{tag}
               </span>
             ))}
@@ -752,29 +829,34 @@ const Userpost = () => {
           <h4 className="font-semibold mb-3">Comments</h4>
           {postData?.commentList && postData?.commentList.length > 0 ? (
             <div className="space-y-4">
-              {postData.commentList.slice(0, 4).map(comment => (
+              {postData.commentList.slice(0, 4).map((comment) => (
                 <div key={comment._id} className="flex space-x-3">
-                  {comment.user.profile_picture_url ?
+                  {comment.user.profile_picture_url ? (
                     <img
                       src={comment.user.profile_picture_url}
                       alt={comment.user.name}
                       className="w-8 h-8 rounded-full flex-shrink-0"
-                    /> :
+                    />
+                  ) : (
                     <img
                       src={`/0684456b-aa2b-4631-86f7-93ceaf33303c.png`}
                       alt={comment.user.name}
                       className="w-8 h-8 rounded-full flex-shrink-0"
                     />
-                  }
+                  )}
                   <div className="bg-gray-100 p-3 rounded-lg flex-1">
-                    <div className="font-semibold text-sm">{comment?.user?.first_name}</div>
+                    <div className="font-semibold text-sm">
+                      {comment?.user?.first_name}
+                    </div>
                     <div className="text-sm mt-1">{comment.text}</div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No comments yet. Be the first to comment!</p>
+            <p className="text-gray-500 text-center py-4">
+              No comments yet. Be the first to comment!
+            </p>
           )}
         </div>
       </div>

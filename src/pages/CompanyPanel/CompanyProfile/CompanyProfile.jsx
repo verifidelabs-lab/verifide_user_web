@@ -532,71 +532,32 @@ const CompanyProfile = ({
 
         {/* Industry Multi-Select */}
         <div className="md:col-span-2">
-          {/* <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Industry <span className="text-red-500">*</span>
-          </label> */}
-          {/* <CreatableSelect
+          </label>
+          <CreatableSelect
             isMulti
             options={allIndustry}
             value={formData.industry?.map((ind) => ({
               value: ind._id,
               label: ind.name,
             }))}
-            // onChange={(selectedOptions) =>
-            //   handleChange("industry", {
-            //     target: {
-            //       value:
-            //         selectedOptions?.map((opt) => ({
-            //           _id: opt.value,
-            //           name: opt.label,
-            //         })) || [],
-            //     },
-            //   })
-            // }
+            onChange={(selectedOptions) =>
+              handleChange("industry", {
+                target: {
+                  value:
+                    selectedOptions?.map((opt) => ({
+                      _id: opt.value,
+                      name: opt.label,
+                    })) || [],
+                },
+              })
+            }
             placeholder="Select industries..."
             styles={customStyles}
             className={selectClasses}
             classNamePrefix="react-select"
-          /> */}
-          <FilterSelect
-            label="Industry Name"
-            name="industry"
-            placeholder="Select Industry"
-            options={allIndustry} // array of {value: _id, label: name}
-            selectedOption={
-              formData.industry && formData.industry.length > 0
-                ? allIndustry.find(
-                    (opt) => opt.value === formData.industry[0]?._id
-                  )
-                : null
-            }
-            onChange={(selected) => {
-              if (selected) {
-                handleChange("industry", {
-                  target: {
-                    value: [{ _id: selected.value, name: selected.label }],
-                  },
-                });
-              } else {
-                handleChange("industry", { target: { value: [] } });
-              }
-            }}
-            className="block text-sm font-medium text-gray-700 mb-1"
-            error={errors.industry}
-            required
-            // onCreateOption={(inputValue, field) => {
-            //   setAddModalState({
-            //     isOpen: true,
-            //     type: "industries",
-            //     field: field,
-            //   });
-            //   setInputFields((prev) => ({ ...prev, name: inputValue }));
-            // }}
-            isClearable={true}
-            isCreatedByUser={false}
-            labelClassName="block text-sm font-medium text-gray-700 mb-1" // ✅ use labelClassName instead of className
           />
-
           {errors.industry && (
             <p className="mt-1 text-sm text-red-600">{errors.industry}</p>
           )}
@@ -932,7 +893,7 @@ const CompanyProfile = ({
                       className="w-12 h-12 rounded-full object-cover border border-gray-200"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = "/companylogo.png"; // fallback image
+                        e.currentTarget.src = "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
                       }}
                     />
                   ) : null}

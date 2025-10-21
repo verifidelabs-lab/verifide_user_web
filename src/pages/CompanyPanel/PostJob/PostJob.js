@@ -56,14 +56,7 @@ const PostJob = () => {
     (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
   );
   console.log("this is te company prifie data", companiesProfileData);
-  // Use industries from company profile
-  const companyIndustries =
-    companiesProfileData?.industry?.map((ind) => ({
-      value: ind._id,
-      label: ind.name,
-      created_by_users: companiesProfileData?.created_by_users || false,
-    })) || [];
-
+  console.log("This is the company");
   const workSelector = useSelector((state) => state.work);
   const industrySelector = useSelector((state) => state.global);
   const countriesSelector = useSelector((state) => state.global);
@@ -119,7 +112,7 @@ const PostJob = () => {
   });
   const [formData, setFormData] = useState({
     company_id: companiesProfileData._id || "",
-    industry_id: companyIndustries.length > 0 ? companyIndustries[0].value : [],
+    industry_id: "",
     job_type: "",
     job_location: "",
     pay_type: "",
@@ -150,25 +143,12 @@ const PostJob = () => {
     isDisable: false,
     isShareAsPost: false,
   });
-
   useEffect(() => {
     setFormData({
       ...formData,
       company_id: companiesProfileData?._id,
     });
   }, [companiesProfileData?._id]);
-  // Prefill with first industry if editing and no industry_id yet
-  formData.industry_id =
-    companyIndustries.length > 0 ? companyIndustries[0].value : "";
-  // useEffect(() => {
-  //   if (!formData.industry_id && companyIndustries.length > 0) {
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       industry_id: companyIndustries[0].value,
-  //     }));
-  //   }
-  // }, [companyIndustries]);
-
   const [isCreatableIndustry, setIsCreatbleIndustry] = useState(true);
 
   const { handleLocationSelectChange } = useLocationFormHandlers(
@@ -207,14 +187,14 @@ const PostJob = () => {
     dispatch(companiesProfile());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getAllIndustry({
-  //       company_id: companiesProfileData?._id,
-  //       created_by_users: companiesProfileData?.created_by_users,
-  //     })
-  //   );
-  // }, [dispatch, companiesProfileData?._id]);
+  useEffect(() => {
+    dispatch(
+      getAllIndustry({
+        company_id: companiesProfileData?._id,
+        created_by_users: companiesProfileData?.created_by_users,
+      })
+    );
+  }, [dispatch, companiesProfileData?._id]);
   // Populate selected skills from skill IDs
   const populateSelectedSkills = useCallback(
     (skillIds) => {
@@ -253,7 +233,6 @@ const PostJob = () => {
         ...jobData,
         address: addressData,
         company_id: res?.data?.company_id?._id,
-        // industry_id: res?.data?.industry_id?._id,
         industry_id: res?.data?.industry_id?._id,
         start_date: res?.data?.start_date
           ? new Date(res.data.start_date).toISOString().split("T")[0]
@@ -938,7 +917,7 @@ const PostJob = () => {
     <div className="space-y-3">
       <StepFirst
         allCompanies={allCompanies}
-        allIndustry={companyIndustries}
+        allIndustry={allIndustry}
         formData={formData}
         setFormData={setFormData}
         handleInputChange={handleInputChange}

@@ -6,6 +6,8 @@ import HeaderJson from "./Header.json";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../ui/Button/Button";
 import { BaseUrl } from "../../../hooks/axiosProvider";
+import { getProfile } from "../../../../redux/slices/authSlice";
+import { getCookie } from "../../../utils/cookieHandler";
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -14,35 +16,56 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
-  const [isUserData, setIsUserData] = useState(null);
   const navigate = useNavigate();
+  const [isUserData, setIsUserData] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const [accessMode] = useState(getCookie("VERIFIED_TOKEN"));
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!accessMode) {
+        setLoadingUser(false);
+        return;
+      }
+      try {
+        const reduxRes = await dispatch(getProfile()).unwrap();
+        setIsUserData(reduxRes?.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingUser(false);
+      }
+    };
+
+    fetchUserData();
+  }, [accessMode, dispatch]);
 
   const dropdownRef = useRef();
   const modeDropdownRef = useRef();
   const [modeDropdown, setModeDropdown] = useState(false);
 
-  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
   // Example condition logic
   const getRedirectPath = () => {
     const currentPath = location.pathname;
 
     // Example conditions
     if (currentPath.includes("/company-details/")) {
-      return `/user/view-details/companies/${id}`;
+      return `user/view-details/companies/${id}`;
     } else if (currentPath.includes("/post-view/")) {
-      return `/user/feed/${id}`;
+      return `user/feed/${id}`;
     } else {
-      return `/user/profile/${username}/${id}`;
+      return `user/profile/${username}/${id}`;
     }
   };
 
-  const redirectURL = encodeURIComponent(getRedirectPath());
-  useEffect(() => {
-    if (isUserData) {
-      // Redirect to the user's own profile page (example)
-      navigate(redirectURL);
-    }
-  }, [isUserData, navigate]); // Close dropdowns when clicking outside
+  const redirectURL = encodeURIComponent("/" + getRedirectPath());
+  const redirectpath = getRedirectPath();
+  // useEffect(() => {
+  //   if (isUserData) {
+  //     // Redirect to the user's own profile page (example)
+  //     navigate(redirectURL);
+  //   }
+  // }, [isUserData, navigate]); // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Close profile dropdown
@@ -134,7 +157,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
           </nav>
         </div>
 
-        <div className="flex gap-3 items-center relative">
+        {/* <div className="flex gap-3 items-center relative">
           <div className="flex items-center gap-4">
             <Button>
               <Link
@@ -144,6 +167,42 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
               </Link>
             </Button>
           </div>
+        </div> */}
+        <div className="flex items-center space-x-6">
+          {isUserData ? (
+            <>
+              <Link
+                to={`${BaseUrl}${redirectpath}`}
+                className="flex justify-start gap-2 items-center"
+              >
+                <div className="flex justify-start gap-2 items-center">
+                  {isUserData.personalInfo?.profile_picture_url ? (
+                    <img
+                      src={isUserData.personalInfo?.profile_picture_url}
+                      alt="user"
+                      className="w-8 h-8 rounded-full border"
+                    />
+                  ) : (
+                    <img
+                      src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
+                      className="w-8 h-8 rounded-full border"
+                      alt="user"
+                    />
+                  )}
+                  <h2>{isUserData.personalInfo?.username}</h2>
+                </div>
+              </Link>
+            </>
+          ) : (
+            <Button>
+              <Link
+                to={`${BaseUrl}login?redirect=${redirectURL}`}
+                onClick={() => window.localStorage.setItem("postId", id)}
+              >
+                Sign In
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
 

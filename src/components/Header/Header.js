@@ -177,10 +177,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       scrollToTop();
                     }
                   }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
+                    isActive
                       ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
                       : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                    } pb-1`}
+                  } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -252,8 +253,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   </p>
                 </div>
                 <FiChevronDown
-                  className={`text-gray-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""
-                    }`}
+                  className={`text-gray-500 transition-transform ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
@@ -373,8 +375,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     >
                       Companies
                       <FiChevronDown
-                        className={`ml-2 text-gray-500 transition-transform ${isCompanyDropdownOpen ? "rotate-180" : ""
-                          }`}
+                        className={`ml-2 text-gray-500 transition-transform ${
+                          isCompanyDropdownOpen ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
@@ -404,7 +407,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                   // }}
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
-                                    e.currentTarget.src = "/companylogo.png"; // fallback image
+                                    e.currentTarget.src =
+                                      "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
                                   }}
                                 />
                               ) : (
@@ -471,10 +475,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
               <Link
                 key={index}
                 to={item?.path}
-                className={`block px-3 py-2 text-base transition duration-200 ${isActive
+                className={`block px-3 py-2 text-base transition duration-200 ${
+                  isActive
                     ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
                     : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                  }`}
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item?.name}

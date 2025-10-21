@@ -13,12 +13,12 @@ const UserDetails = () => {
   const [isUserData, setIsUserData] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (isUserData) {
-      // Redirect to the user's own profile page (example)
-      navigate(`/user/profile/${username}/${id}`);
-    }
-  }, [isUserData, navigate]);
+  // useEffect(() => {
+  //   if (isUserData) {
+  //     // Redirect to the user's own profile page (example)
+  //     navigate(`/user/profile/${username}/${id}`);
+  //   }
+  // }, [isUserData, navigate]);
 
   useEffect(() => {
     const fetchData = async () => {

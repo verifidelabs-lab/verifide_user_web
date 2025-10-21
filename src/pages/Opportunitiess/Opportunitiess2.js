@@ -164,6 +164,7 @@ const Opportunitiess2 = () => {
   const hasActiveFilters = () => {
     return Object.values(selectedFilters).some(Boolean);
   };
+  
 
   const handleAction = (data) => {
     setSelectedJob(data);
@@ -501,8 +502,14 @@ const Opportunitiess2 = () => {
 
       {selectedJob && (
         <div
-          className={`w-full md:block hidden xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] max-w-[200px] bg-[#FFFFFF] rounded-2xl border-l border-gray-200 p-6 overflow-y-auto mt-10`}
+          className={`w-full md:block hidden xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] max-w-[200px] bg-[#FFFFFF] rounded-2xl border-l border-gray-200 p-6 overflow-y-auto mt-10 transition-all duration-300 ease-in-out
+      shadow-lg ring-2 ring-blue-200`}
         >
+          <div className="mb-4">
+            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
+              Selected Job
+            </span>
+          </div>
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center space-x-3">
               {!selectedJob.company_id?.logo_url || imageError ? (
@@ -585,7 +592,7 @@ const Opportunitiess2 = () => {
             <strong className="text-gray-700 block mb-2">
               Job Description:
             </strong>
-            <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
+            <p className="text-gray-700 text-sm   bg-white p-4 rounded-lg border border-gray-100">
               {selectedJob.job_description || "No description provided."}
             </p>
           </div>

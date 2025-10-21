@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   applyJobApplication,
@@ -248,20 +248,29 @@ const CareerGoal = () => {
         {/* Job Information Card */}
         <div className="bg-white rounded-2xl shadow-lg mb-6 p-6">
           <div className="flex items-start gap-4">
-            <img
-              src={jobData?.company_id?.logo_url}
-              alt="Company Logo"
-              className="w-16 h-16 rounded-lg object-cover border"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = "/companylogo.png"; // fallback image
-              }}
-            />
+            <Link
+              to={`/user/view-details/companies/${jobData?.company_id?._id}`}
+            >
+              <img
+                src={jobData?.company_id?.logo_url}
+                alt="Company Logo"
+                className="w-16 h-16 rounded-lg object-cover border"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src =
+                    "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                }}
+              />
+            </Link>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <h1 className="text-xl font-bold text-gray-900">
-                  {jobData.job_title.name}
-                </h1>
+                <Link
+                  to={`/user/view-details/companies/${jobData?.company_id?._id}`}
+                >
+                  <h1 className="text-xl font-bold text-gray-900">
+                    {jobData.job_title.name}
+                  </h1>
+                </Link>
                 <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
                   {jobData.job_type}
                 </span>
