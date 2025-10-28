@@ -162,8 +162,8 @@ const CustomImageVideoUpload = ({
     <div className={`w-full max-w-4xl mx-auto ${className}`}>
       {/* Loading overlay */}
       {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg flex items-center space-x-3">
+        <div className="fixed inset-0 glassy-card bg-opacity-50 flex items-center justify-center z-50">
+          <div className="glassy-card p-6 rounded-lg flex items-center space-x-3">
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             <span className="text-gray-700">Processing files...</span>
           </div>
@@ -198,8 +198,8 @@ const CustomImageVideoUpload = ({
               </svg>
             </div>
             <p className="text-gray-700 font-medium">Drag & drop files here or click to browse</p>
-            <p className="text-sm text-gray-500">Supports images & videos, up to {maxSizeMB}MB each</p>
-            <p className="text-sm text-gray-500">Max {maxFiles} images and 1 video</p>
+            <p className="text-sm glassy-text-secondary">Supports images & videos, up to {maxSizeMB}MB each</p>
+            <p className="text-sm glassy-text-secondary">Max {maxFiles} images and 1 video</p>
           </div>
         </div>
       ) : (
@@ -218,7 +218,7 @@ const CustomImageVideoUpload = ({
               className="h-64 md:h-96 rounded-lg overflow-hidden"
             >
               {allMedia.map((media, index) => (
-                <SwiperSlide key={index} className="flex items-center justify-center bg-black">
+                <SwiperSlide key={index} className="flex items-center justify-center glassy-card">
                   {media.type === 'image' ? (
                     <img
                       src={media.url}
@@ -236,7 +236,7 @@ const CustomImageVideoUpload = ({
                   )}
                   <button
                     onClick={(e) => handleRemoveMedia(index, e)}
-                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 w-7 h-7 flex items-center justify-center z-10"
+                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 glassy-text-primary rounded-full p-1 w-7 h-7 flex items-center justify-center z-10"
                     title={`Remove ${media.type}`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -271,7 +271,7 @@ const CustomImageVideoUpload = ({
                     />
                   ) : (
                     <div className="relative w-full h-full bg-gray-800 rounded flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 glassy-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                       </svg>
                     </div>
@@ -294,7 +294,7 @@ const CustomImageVideoUpload = ({
                   </svg>
                 </div>
                 <span className="text-sm font-medium text-gray-600">Add more files</span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs glassy-text-secondary">
                   {maxFiles - totalImages} image{maxFiles - totalImages !== 1 ? 's' : ''} remaining
                   {!hasVideo && ', 1 video allowed'}
                 </span>

@@ -145,10 +145,20 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   }, [dispatch, fetchCompaniesList]);
   return (
     <header
-      className="bg-white z-10 border-b border-black border-opacity-10"
+      className=""
       ref={topRef}
     >
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        <div className="flex items-center justify-between p-4   relative">
+          <div className="flex items-center gap-3">
+            <img
+              src="/Frame 1000004906.png"
+              alt="logo"
+              className="h-8 transition-transform duration-300 hover:scale-105"
+              onClick={() => navigate(`/user/feed`)}
+            />
+          </div>
+        </div>
         <div className="flex items-center gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -179,11 +189,10 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       scrollToTop();
                     }
                   }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
-                    isActive
-                      ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                      : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                  } pb-1`}
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
+                    ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                    : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                    } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -217,7 +226,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 {accessLabel}
               </Button>
               {modeDropdown && (
-                <div className="absolute md:right-0 right-[88px] md:mt-2 mt-16 w-32 bg-white border rounded shadow-lg z-50">
+                <div className="absolute md:right-0 right-[88px] md:mt-2 mt-16 w-32 glassy-card border rounded shadow-lg z-50">
 
                 </div>
               )}
@@ -247,133 +256,45 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   </span>
                 )}
                 <div className="text-left hidden sm:block">
-                  <p className="text-sm font-medium text-[#000000E6] leading-none">
+                  <p className="text-sm font-medium glassy-text-primary leading-none">
                     {profileData?.personalInfo?.first_name}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs glassy-text-secondary">
                     {profileData?.personalInfo?.email}
                   </p>
                 </div>
                 <FiChevronDown
-                  className={`text-gray-500 transition-transform ${
-                    isDropdownOpen ? "rotate-180" : ""
-                  }`}
+                  className={`glassy-text-secondary transition-transform ${isDropdownOpen ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-20">
+                <div className="absolute right-0 mt-2 w-52 min-w-[200px] glassy-card-header rounded-2xl border-[var(--border-color)] shadow-xl z-50 overflow-hidden transition-all duration-200 ease-out">
+
+                  {/* Profile Link */}
                   <Link
                     to="/user/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     Profile
                   </Link>
-                  {/* <button
-                    className={`block w-full text-left px-4 py-2 text-sm ${accessLabel === "Recruiter"
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : "text-gray-700 hover:bg-blue-100"
-                      }`}
-                    onClick={() => {
-                      if (accessLabel !== "Recruiter") {
-                        switchAccountFunction("RECRUITERS");
-                      }
-                    }}
-                    disabled={accessLabel === "Recruiter"}
-                  >
-                    Broadcast 
-                  </button>
 
-                  <button
-                    className={`block w-full text-left px-4 py-2 text-sm ${accessLabel === "User"
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : "text-gray-700 hover:bg-blue-100"
-                      }`}
-                    onClick={() => {
-                      if (accessLabel !== "User") {
-                        switchAccountFunction("STUDENT");
-                      }
-                    }}
-                    disabled={accessLabel === "User"}
-                  >
-                    User
-                  </button> */}
-                  {/* Mobile-only mode switcher inside profile dropdown */}
-                  {/* <div className="block md:hidden border-t border-gray-200">
-                    <div className="px-4 py-2">
-                      <p className="text-xs text-gray-500 mb-1">Switch to:</p>
-                      <div className="flex gap-2">
-                        <button
-                          className={`text-xs px-3 py-1 rounded ${
-                            accessLabel === "User"
-                              ? "bg-blue-600 text-white"
-                              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                          }`}
-                          onClick={() => {
-                            if (accessLabel !== "User") {
-                              switchAccountFunction("STUDENT");
-                            }
-                          }}
-                          disabled={accessLabel === "User"}
-                        >
-                          User
-                        </button>
-                        <button
-                          className={`text-xs px-3 py-1 rounded ${accessLabel === "Recruiter"
-                            ? "bg-blue-600 text-white"
-                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                            }`}
-                          onClick={() => {
-                            if (accessLabel !== "Recruiter") {
-                              switchAccountFunction("RECRUITERS");
-                            }
-                          }}
-                          disabled={accessLabel === "Recruiter"}
-                        >
-                          Recruiter
-                        </button>
-                      </div>
-                    </div>
-                  </div> */}
-
+                  {/* Change Password */}
                   <Link
                     to="/user/change-password"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     Change Password
                   </Link>
-                  {/* {companiesData?.data?.list.length > 0
-                    ? companiesData?.data?.list.map((company) => (
-                        <button
-                          key={company._id}
-                          className="block w-full text-left text-gray-700 px-4 py-2 text-sm hover:bg-gray-100 capitalize"
-                        >
-                          <Link
-                            to={`/company/login?email=${encodeURIComponent(
-                              company.email
-                            )}`}
-                          >
-                            Company : {company.name}
-                          </Link>
-                        </button>
-                      ))
-                    : null} */}
-                  {/* {companiesData?.data?.list.length < 5 && (
-                    <Link
-                      to="/user/create-company"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Create Company
-                    </Link>
-                  )} */}
-                  {/* Companies inside Profile Dropdown */}
-                  <div className="border-t border-gray-200">
+
+                  {/* Companies Dropdown */}
+                  <div className="border-t border-[var(--border-color)]">
                     <button
                       onClick={() => setIsCompanyDropdownOpen((prev) => !prev)}
-                      className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="w-full flex justify-between items-center px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
                     >
                       Companies
                       <FiChevronDown
@@ -383,56 +304,41 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       />
                     </button>
 
-                    {/* Expand inline */}
                     {isCompanyDropdownOpen && (
-                      <div className="pl-4 space-y-1">
+                      <div className="pl-4 space-y-1 max-h-60 overflow-y-auto">
                         {companiesData?.data?.list?.length > 0 ? (
                           companiesData.data.list.map((company) => (
                             <Link
                               key={company._id}
-                              // to={`/company/login?email=${encodeURIComponent(
-                              //   company.email
-                              // )}`}
-                              className="flex items-center gap-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
-                              onClick={() => {
-                                switchAccountFunction(company._id);
-                              }}
+                              className="flex items-center gap-2 py-2 text-sm glassy-text-primary rounded-lg hover:bg-[var(--bg-card)] transition-colors"
+                              onClick={() => switchAccountFunction(company._id)}
                             >
-                              {/* ✅ Company logo with fallback */}
                               {company.logo_url ? (
                                 <img
                                   src={company.logo_url}
                                   alt={`${company.name} logo`}
-                                  className="w-6 h-6 rounded-full object-cover border border-gray-200"
-                                  // onError={(e) => {
-                                  //   e.currentTarget.src = "/default-company.png"; // your fallback image
-                                  // }}
+                                  className="w-6 h-6 rounded-full object-cover border border-[var(--border-color)]"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
-                                    e.currentTarget.src =
-                                      "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                                    e.currentTarget.src = "/companylogo.png"; // fallback
                                   }}
                                 />
                               ) : (
                                 <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-semibold">
-                                  {company.name?.charAt(0)?.toUpperCase() ||
-                                    "C"}
+                                  {company.name?.charAt(0)?.toUpperCase() || "C"}
                                 </div>
                               )}
-
                               <span className="truncate">{company.name}</span>
                             </Link>
                           ))
                         ) : (
-                          <p className=" py-2 text-sm text-gray-500">
-                            No companies found
-                          </p>
+                          <p className="py-2 text-sm glassy-text-secondary">No companies found</p>
                         )}
 
                         {companiesData?.data?.list?.length < 5 && (
                           <Link
                             to="/user/create-company"
-                            className="block   py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="block py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] rounded-lg transition-colors"
                             onClick={() => {
                               setIsCompanyDropdownOpen(false);
                               setIsDropdownOpen(false);
@@ -533,12 +439,13 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       removeCookie("VERIFIED_TOKEN");
                       window.location.reload();
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t border-gray-200"
+                    className="w-full text-left px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] border-t border-[var(--border-color)] transition-colors"
                   >
                     Logout
                   </button>
                 </div>
               )}
+
             </div>
           </div>
         </div>
@@ -546,18 +453,17 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden px-4 pb-3 space-y-2 bg-white border-t border-gray-200">
+        <div className="md:hidden px-4 pb-3 space-y-2 glassy-card border-t border-gray-200">
           {HeaderJson?.headerItems?.map((item, index) => {
             const isActive = location.pathname === item?.path;
             return (
               <Link
                 key={index}
                 to={item?.path}
-                className={`block px-3 py-2 text-base transition duration-200 ${
-                  isActive
-                    ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                }`}
+                className={`block px-3 py-2 text-base transition duration-200 ${isActive
+                  ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                  : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item?.name}

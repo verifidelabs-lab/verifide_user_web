@@ -686,7 +686,7 @@ const Posts = () => {
   const [commentLoadingStates, setCommentLoadingStates] = useState({});
 
   return (
-    <div className="  bg-[#F6FAFD] space-y-3 p-4">
+    <div className="   space-y-3 p-4">
       <div className="flex flex-col md:flex-row w-full mx-auto gap-4">
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
           <div className="flex justify-between items-center gap-2 mb-2 text-sm">
@@ -737,7 +737,7 @@ const Posts = () => {
                     )}
                   <div
                     key={post._id}
-                    className="p-6 bg-white shadow-sm rounded-xl border border-gray-100"
+                    className="p-6 glassy-card shadow-sm rounded-xl border border-gray-100"
                     ref={
                       isFirst ? firstPostRef : isLast ? lastPostRef : undefined
                     }
@@ -794,7 +794,7 @@ const Posts = () => {
                         )}
 
                         <div className="text-left">
-                          <h3 className="md:text-lg text-md font-semibold text-[#000000E6] capitalize hover:text-gray-700">
+                          <h3 className="md:text-lg text-md font-semibold glassy-text-primary capitalize hover:text-gray-700">
                             {post.userData?.first_name || post?.userData?.name}{" "}
                             {post.userData?.last_name}
                           </h3>
@@ -839,11 +839,11 @@ const Posts = () => {
                           {showOptionsDropdown === post._id && (
                             <div
                               role="menu"
-                              className="absolute right-0 mt-3 w-40 bg-white rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
+                              className="absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
                             >
                               <button
                                 onClick={() => handleCopyLink(post)}
-                                className="flex items-center gap-2 px-4 py-2 text-sm text-[#000000E6] hover:bg-gray-50 w-full text-left border-b border-gray-200"
+                                className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left border-b border-gray-200"
                                 role="menuitem"
                               >
                                 <IoCopyOutline size={18} /> Copy link
@@ -855,7 +855,7 @@ const Posts = () => {
                               ) : (
                                 <button
                                   onClick={() => handleReportPost(post._id)}
-                                  className="flex items-center gap-2 px-4 py-2 text-sm text-[#000000E6] hover:bg-gray-50 w-full text-left"
+                                  className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left"
                                   role="menuitem"
                                 >
                                   <BsExclamationCircle size={18} /> Report
@@ -878,12 +878,12 @@ const Posts = () => {
                       </div>
                     </div>
                     {post?.title ? (
-                      <p className="mb-3 leading-relaxed text-[#000000] md:text-base font-normal text-sm">
+                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm">
                         {isExpanded ? post?.title : post?.title}
                       </p>
                     ) : null}
                     {post?.content ? (
-                      <p className="mb-3 leading-relaxed text-[#000000] md:text-base font-normal text-sm text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
+                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm text-gray-700 text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                         {isExpanded
                           ? post?.content
                           : post?.content?.slice(0, 200)}

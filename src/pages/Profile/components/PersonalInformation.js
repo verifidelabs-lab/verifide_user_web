@@ -75,10 +75,10 @@ const PersonalInformation = ({
   };
 
   return (
-    <div className="flex flex-col gap-6 bg-white border rounded-2xl">
+    <div className="flex flex-col gap-6 glassy-card border rounded-2xl">
       <div className="p-8 rounded-lg">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-[#000000E6]">
+          <h3 className="text-lg font-semibold glassy-text-primary">
             Personal Info
           </h3>
 
@@ -87,7 +87,7 @@ const PersonalInformation = ({
               <button
                 type="button"
                 onClick={handleToggle}
-                className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                className="p-2 glassy-text-secondary hover:text-gray-700 transition-colors"
                 aria-label={isExtended ? "Collapse form" : "Expand form"}
               >
                 {isExtended ? (

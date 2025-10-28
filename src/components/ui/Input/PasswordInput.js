@@ -4,7 +4,7 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 const PasswordInput = ({
   label,
   value = "",
-  onChange = () => { },
+  onChange = () => {},
   className = "",
   name,
   placeholder = "",
@@ -19,12 +19,13 @@ const PasswordInput = ({
       {label && (
         <label
           htmlFor={name}
-          className="text-[#282828] font-medium text-base leading-5  align-middle mb-2"
+          className="glassy-text-primary font-medium text-base mb-2"
         >
           {label}
           {required && <span className="ml-1 text-red-500">*</span>}
         </label>
       )}
+
       <div className="relative">
         <input
           id={name}
@@ -34,17 +35,18 @@ const PasswordInput = ({
           onChange={onChange}
           placeholder={placeholder}
           disabled={disabled}
-          className={`${className} opacity-100 rounded-[10px] border border-[#0000001A] bg-white px-4 transition-all duration-200 ease-in-out
-  ${error ? 'border-red-500' : 'border-[#0000001A]'} focus:border-[#A1A1A1]`}
+          className={`glassy-input pr-10`}
         />
+
         <span
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute inset-y-0 flex items-center text-gray-500 cursor-pointer right-3"
+          className="absolute inset-y-0 flex items-center cursor-pointer right-3 glassy-text-secondary"
         >
           {showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
         </span>
       </div>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+
+      {error && <p className="glassy-text-secondary text-xs mt-1">{error}</p>}
     </div>
   );
 };

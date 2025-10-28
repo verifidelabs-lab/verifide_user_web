@@ -57,7 +57,7 @@ const UserCertificate = () => {
     return (
         <div className="max-w-4xl mx-auto p-8 bg-gray-50">
 
-            <nav className="bg-white shadow-md py-3 px-6 flex justify-between items-center">
+            <nav className="glassy-card shadow-md py-3 px-6 flex justify-between items-center">
                 <div className="flex items-center">
                     <div className="flex items-center gap-3">
                         <img
@@ -97,7 +97,7 @@ const UserCertificate = () => {
 
                 </div>
             </nav>
-            <div className="relative border border-gray-200 rounded-xl overflow-hidden bg-white">
+            <div className="relative border border-gray-200 rounded-xl overflow-hidden glassy-card">
                 {/* Watermark */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
                     <img src="/logo.png" alt="Watermark" className="w-96 h-96 object-contain" />
@@ -107,7 +107,7 @@ const UserCertificate = () => {
                 <div className="bg-blue-400 px-8 py-6 flex justify-center border-b border-gray-200 relative z-10">
                     <div className="flex items-center space-x-2">
                         <img src="/logo.png" alt="logo" className="" />
-                        <span className="text-white text-2xl font-semibold">Learning</span>
+                        <span className="glassy-text-primary text-2xl font-semibold">Learning</span>
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@ const UserCertificate = () => {
                         <h2 className="text-3xl font-bold text-blue-700 leading-relaxed max-w-2xl mx-auto">
                             {certificateName}
                         </h2>
-                        <p className="mt-2 text-gray-500 text-sm">Issued by {issueBy}</p>
+                        <p className="mt-2 glassy-text-secondary text-sm">Issued by {issueBy}</p>
                     </div>
 
                     {/* Date */}

@@ -152,7 +152,7 @@ const RejectedRequests = () => {
     return (
       <div className="grid grid-cols-1 gap-6">
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto">
+          <div className="glassy-card p-6 rounded-lg shadow-lg max-w-xl mx-auto">
             <div className="flex flex-col items-center relative">
               <img
                 src={user?.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
@@ -164,11 +164,11 @@ const RejectedRequests = () => {
                 className="w-24 h-24 rounded-full border-4 border-gray-200 mb-2"
               />
               {selectedRequest?.is_verified ? (
-                <span className="absolute top-0 right-0 bg-green-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                <span className="absolute top-0 right-0 bg-green-500 glassy-text-primary text-xs font-semibold px-2 py-0.5 rounded-full">
                   Verified
                 </span>
               ) : (
-                <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                <span className="absolute top-0 right-0 bg-red-500 glassy-text-primary text-xs font-semibold px-2 py-0.5 rounded-full">
                   Not Verified
                 </span>
               )}
@@ -202,7 +202,7 @@ const RejectedRequests = () => {
                   />
                   <div>
                     <p className="font-medium">{assignedTo.first_name} {assignedTo.last_name}</p>
-                    <p className="text-sm text-gray-500">@{assignedTo.username}</p>
+                    <p className="text-sm glassy-text-secondary">@{assignedTo.username}</p>
                   </div>
                 </div>
               </div>
@@ -225,12 +225,12 @@ const RejectedRequests = () => {
                   <p className="font-medium">
                     {selectedRequest.verifier_id.first_name} {selectedRequest.verifier_id.last_name}
                   </p>
-                  <p className="text-sm text-gray-500">@{selectedRequest.verifier_id.username}</p>
+                  <p className="text-sm glassy-text-secondary">@{selectedRequest.verifier_id.username}</p>
                 </div>
               </div>
             </div>
           )}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="glassy-card p-6 rounded-lg shadow-lg">
             {model && (
               <h3 className="font-semibold text-xl text-gray-800 capitalize">
                 {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
@@ -292,7 +292,7 @@ const RejectedRequests = () => {
           </div>
         </div>
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="glassy-card p-6 rounded-lg shadow-lg">
             <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>
             {selectedRequest.attach_file && selectedRequest.attach_file.length > 0 ? (
               <div className="space-y-4 mt-4">
@@ -311,7 +311,7 @@ const RejectedRequests = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500">No attached files available.</p>
+              <p className="text-sm glassy-text-secondary">No attached files available.</p>
             )}
           </div>
         </div>

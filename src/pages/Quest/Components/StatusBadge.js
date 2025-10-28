@@ -13,9 +13,9 @@ const SurveyButton = ({ onClick }) => {
 
 const StatusBadge = ({ status }) => {
   const statusConfig = {
-    Ongoing: { color: "bg-green-500 text-white", icon: <BiRun className="text-xs" /> },
-    Upcoming: { color: "bg-blue-500 text-white", icon: <BiCalendar className="text-xs" /> },
-    Ended: { color: "bg-gray-500 text-white", icon: <BiMedal className="text-xs" /> },
+    Ongoing: { color: "bg-green-500 glassy-text-primary", icon: <BiRun className="text-xs" /> },
+    Upcoming: { color: "bg-blue-500 glassy-text-primary", icon: <BiCalendar className="text-xs" /> },
+    Ended: { color: "bg-gray-500 glassy-text-primary", icon: <BiMedal className="text-xs" /> },
   };
 
   const config = statusConfig[status] || statusConfig.Ongoing;
@@ -29,7 +29,7 @@ const StatusBadge = ({ status }) => {
 };
 
 const EngagementBadge = ({ count }) => (
-  <div className="absolute top-4 left-4 bg-black/80 text-white px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-sm z-10 flex items-center gap-1">
+  <div className="absolute top-4 left-4 glassy-card/80 glassy-text-primary px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-sm z-10 flex items-center gap-1">
     <BiUser className="text-xs" />
     <span>{count} Engaged</span>
   </div>

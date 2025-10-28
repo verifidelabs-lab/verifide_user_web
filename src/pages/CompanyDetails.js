@@ -78,7 +78,7 @@ const CompanyDetails = () => {
 
   // 🔹 Header Component
   const Header = () => (
-    <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
+    <div className="max-w-5xl mx-auto glassy-card rounded-2xl shadow-md overflow-hidden">
       {/* Banner */}
       <div className="relative h-52 bg-gray-100">
         <img
@@ -96,7 +96,7 @@ const CompanyDetails = () => {
 
         {/* Logo */}
         <div className="absolute -bottom-14 left-6">
-          <div className="w-28 h-28 rounded-full border-4 border-white shadow-lg bg-white overflow-hidden">
+          <div className="w-28 h-28 rounded-full border-4 border-white shadow-lg glassy-card overflow-hidden">
             <img
               src={
                 agencyData?.logo ||
@@ -124,7 +124,7 @@ const CompanyDetails = () => {
               {agencyData?.description}
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 mt-3 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center gap-3 mt-3 text-sm glassy-text-secondary">
               {agencyData?.industry && <span>{agencyData?.industry}</span>}
               {agencyData?.founded !== "N/A" && (
                 <>
@@ -163,7 +163,7 @@ const CompanyDetails = () => {
   //           className={`py-3 px-6 text-sm font-medium transition-all ${
   //             activeTab === tab
   //               ? "text-blue-600 border-b-2 border-blue-600"
-  //               : "text-gray-500 hover:text-blue-600"
+  //               : "glassy-text-secondary hover:text-blue-600"
   //           }`}
   //         >
   //           {tab}
@@ -263,11 +263,11 @@ const CompanyDetails = () => {
   return (
     <div className="bg-gray-50 min-h-screen py-8">
       {loading ? (
-        <div className="text-center py-20 text-gray-500">Loading...</div>
+        <div className="text-center py-20 glassy-text-secondary">Loading...</div>
       ) : (
         <div className="max-w-5xl mx-auto space-y-6">
           <Header />
-          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+          <div className="glassy-card p-6 rounded-2xl shadow-md border border-gray-100">
             <HomeTab /> 
           </div>
         </div>

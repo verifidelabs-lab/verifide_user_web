@@ -593,7 +593,7 @@ const RegisterInstitute = () => {
   return (
     <>
       <div className="h-screen">
-        {/* <header className="bg-white fixed top-0 w-full z-50 shadow">
+        {/* <header className="glassy-card fixed top-0 w-full z-50 shadow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex-shrink-0 flex items-center">
@@ -606,7 +606,7 @@ const RegisterInstitute = () => {
               <div>
                 <button
                   onClick={() => navigate('/institute/login')}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors rounded"
+                  className="px-4 py-2 text-sm font-medium glassy-text-primary bg-blue-600 hover:bg-blue-700 transition-colors rounded"
                 >
                   Login
                 </button>
@@ -615,7 +615,7 @@ const RegisterInstitute = () => {
           </div>
         </header> */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="bg-white  overflow-hidden">
+          <div className="glassy-card  overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
               <button
                 onClick={handleBack} title='go back'

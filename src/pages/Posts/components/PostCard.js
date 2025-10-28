@@ -45,7 +45,7 @@ function CustomVideoPlayer({ videoUrl }) {
     };
 
     return (
-        <div className="relative w-full h-full bg-black flex items-center justify-center">
+        <div className="relative w-full h-full glassy-card flex items-center justify-center">
             <video
                 ref={videoRef}
                 src={videoUrl}
@@ -55,13 +55,13 @@ function CustomVideoPlayer({ videoUrl }) {
             />
             <button
                 onClick={togglePlayPause}
-                className="absolute text-white bg-black/50 p-4 rounded-full text-xl hover:bg-black/70 transition"
+                className="absolute glassy-text-primary glassy-card/50 p-4 rounded-full text-xl hover:glassy-card/70 transition"
             >
                 {isPlaying ? <FaPause /> : <FaPlay />}
             </button>
             <button
                 onClick={toggleFullscreen}
-                className="absolute bottom-4 right-4 text-white bg-black/50 p-2 rounded-full text-sm hover:bg-black/70 transition"
+                className="absolute bottom-4 right-4 glassy-text-primary glassy-card/50 p-2 rounded-full text-sm hover:glassy-card/70 transition"
             >
                 <FaExpand />
             </button>
@@ -137,7 +137,7 @@ const PollComponent = ({ poll }) => {
                     );
                 })}
             </div>
-            <p className="text-xs text-gray-500 mt-2">{totalVotes} votes</p>
+            <p className="text-xs glassy-text-secondary mt-2">{totalVotes} votes</p>
         </div>
     );
 };
@@ -183,7 +183,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                             }}
                         />
                     ) : (
-                        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-[#000000E6] text-lg font-semibold">
+                        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center glassy-text-primary text-lg font-semibold">
                             {profileData?.first_name?.charAt(0).toUpperCase() || "U"}
                         </div>
                     )}
@@ -195,7 +195,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                                 <span className="ml-1 text-blue-500">✓</span>
                             )}
                         </p>
-                        <p className="text-xs text-gray-500">{profileData?.headline}</p>
+                        <p className="text-xs glassy-text-secondary">{profileData?.headline}</p>
                         <p className="text-xs text-gray-400">{formatDate(post.createdAt)} • <span className={`${post.isDisable ? 'text-red-500' : 'text-green-500'}`}>{post.isDisable ? 'Disabled' : 'Active'}</span></p>
                     </div>
                 </div>
@@ -208,7 +208,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                             <FiMoreHorizontal size={20} />
                         </button>
                         {showActions && (
-                            <div className="absolute right-0 top-10 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-10 min-w-[120px]">
+                            <div className="absolute right-0 top-10 glassy-card border border-gray-200 rounded-lg shadow-lg py-2 z-10 min-w-[120px]">
                                 <button
                                     onClick={() => { onView(post); setShowActions(false) }}
                                     className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
@@ -292,7 +292,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                                             <div className="w-full max-h-[480px]">
                                                 {/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//.test(media.url) ? (
                                                     <div
-                                                        className="w-full h-[300px] flex items-center justify-center bg-black text-white cursor-pointer rounded"
+                                                        className="w-full h-[300px] flex items-center justify-center glassy-card glassy-text-primary cursor-pointer rounded"
                                                         onClick={() => window.open(media.url, "_blank")}
                                                     >
                                                         <div className="text-center">
@@ -323,7 +323,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                     <div className="w-full flex justify-center bg-neutral-100 mt-3 rounded-lg overflow-hidden">
                         {isYouTubeUrl ? (
                             <div
-                                className="w-full h-[300px] flex items-center justify-center bg-black text-white cursor-pointer"
+                                className="w-full h-[300px] flex items-center justify-center glassy-card glassy-text-primary cursor-pointer"
                                 onClick={() => window.open(post.video_url, "_blank")}
                             >
                                 <div className="text-center">
@@ -411,7 +411,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
 
 
                 <div className="px-4 py-2 border-t border-gray-100 flex items-center justify-between bg-gray-50">
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs glassy-text-secondary">
                         Post Status: <span className={post.isDisable ? 'text-red-500 font-medium' : 'text-green-500 font-medium'}>{post.isDisable ? 'Disabled' : 'Active'}</span>
                     </span>
 
@@ -431,7 +431,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
 
 
     return (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm mb-6">
+        <div className="glassy-card rounded-lg border border-gray-200 overflow-hidden shadow-sm mb-6">
             <PostHeader
                 profileData={profileData}
                 post={post}

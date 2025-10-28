@@ -741,7 +741,7 @@ const Courses = () => {
           </div>
 
           {['what_you_will_learn', 'target_audience', 'prerequisites'].map((field) => (
-            <div key={field} className="bg-white border rounded-md p-4 shadow-sm mb-6">
+            <div key={field} className="glassy-card border rounded-md p-4 shadow-sm mb-6">
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-base font-semibold text-gray-800 capitalize">
                   {field.replace(/_/g, ' ')}
@@ -797,7 +797,7 @@ const Courses = () => {
               </Button>
             </div>
             {formData.modules?.length === 0 ? (
-              <p className="text-sm text-gray-500">No modules added yet</p>
+              <p className="text-sm glassy-text-secondary">No modules added yet</p>
             ) : (
               <div className="space-y-4">
                 {Array.isArray(formData.modules) && formData.modules.map((module, index) => (
@@ -806,7 +806,7 @@ const Courses = () => {
                       <div>
                         <h4 className="font-medium">{module.title}</h4>
                         <p className="text-sm text-gray-600">{module.content}</p>
-                        <div className="mt-2 text-xs text-gray-500">
+                        <div className="mt-2 text-xs glassy-text-secondary">
                           <p>Duration: {module.duration}</p>
                           {module.video_url && <p>Video: {module.video_url}</p>}
                           {module.materials && (
@@ -855,7 +855,7 @@ const Courses = () => {
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 glassy-text-primary py-3"
             >
               {isSubmitting ? (
                 <>
@@ -1090,7 +1090,7 @@ const Courses = () => {
                       ) : null;
                     })
                   ) : (
-                    <p className="text-gray-500">None selected</p>
+                    <p className="glassy-text-secondary">None selected</p>
                   )}
                 </div>
               </div>
@@ -1112,7 +1112,7 @@ const Courses = () => {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-gray-500">None specified</p>
+                  <p className="glassy-text-secondary">None specified</p>
                 )}
               </div>
             ))}
@@ -1153,7 +1153,7 @@ const Courses = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500">No modules added</p>
+                <p className="glassy-text-secondary">No modules added</p>
               )}
             </div>
           </div>

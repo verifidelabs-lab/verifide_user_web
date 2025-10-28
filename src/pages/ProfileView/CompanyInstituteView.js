@@ -129,7 +129,7 @@ const CompanyInstituteView = () => {
         {/* Stats Skeleton */}
         <div className="grid sm:grid-cols-3 gap-6 mt-8">
           {[1, 2, 3].map((item) => (
-            <div key={item} className="bg-white p-4 rounded-xl shadow border">
+            <div key={item} className="glassy-card p-4 rounded-xl shadow border">
               <div className="h-5 bg-gray-200 rounded w-1/2 mb-2"></div>
               <div className="h-8 bg-gray-200 rounded w-1/3"></div>
             </div>
@@ -146,7 +146,7 @@ const CompanyInstituteView = () => {
         <h2 className="text-2xl font-semibold text-gray-700 mb-2">
           Organization Not Found
         </h2>
-        <p className="text-gray-500 max-w-md">
+        <p className="glassy-text-secondary max-w-md">
           We couldn't find the organization you're looking for. It may have been
           removed or you may have followed an invalid link.
         </p>
@@ -199,10 +199,10 @@ const CompanyInstituteView = () => {
       </div> */}
 
       {/* Main Content Card */}
-      <div className="bg-white rounded-2xl mt-4 relative overflow-hidden h-screen">
+      <div className="glassy-card rounded-2xl mt-4 relative overflow-hidden h-screen">
         {/* Header */}
         <div className="p-6 pb-0 flex flex-col md:flex-row items-start gap-6">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl bg-white flex items-center justify-center shadow-lg border-4 border-white  overflow-hidden">
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl glassy-card flex items-center justify-center shadow-lg border-4 border-white  overflow-hidden">
             {info?.logo_url && !imageErrors.logo ? (
               <img
                 src={info.logo_url}
@@ -247,7 +247,7 @@ const CompanyInstituteView = () => {
             </div>
 
             {info?.name && info.name !== info?.display_name && (
-              <p className="text-gray-500 mt-1">{info?.name}</p>
+              <p className="glassy-text-secondary mt-1">{info?.name}</p>
             )}
 
             {/* Quick Stats */}
@@ -299,11 +299,11 @@ const CompanyInstituteView = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {info?.website_url && (
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="p-2 bg-white rounded-lg shadow-sm">
+                <div className="p-2 glassy-card rounded-lg shadow-sm">
                   <BiGlobe className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-500">Website</p>
+                  <p className="text-sm glassy-text-secondary">Website</p>
                   <a
                     href={info.website_url}
                     target="_blank"
@@ -318,11 +318,11 @@ const CompanyInstituteView = () => {
 
             {info?.phone_no && (
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="p-2 bg-white rounded-lg shadow-sm">
+                <div className="p-2 glassy-card rounded-lg shadow-sm">
                   <BiPhoneIncoming className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Phone</p>
+                  <p className="text-sm glassy-text-secondary">Phone</p>
                   <a
                     href={`tel:${info.phone_no}`}
                     className="text-gray-800 hover:text-blue-600"
@@ -335,11 +335,11 @@ const CompanyInstituteView = () => {
 
             {info?.email && (
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="p-2 bg-white rounded-lg shadow-sm">
+                <div className="p-2 glassy-card rounded-lg shadow-sm">
                   <MdEmail className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-sm glassy-text-secondary">Email</p>
                   <a
                     href={`mailto:${info.email}`}
                     className="text-gray-800 hover:text-blue-600"
@@ -352,11 +352,11 @@ const CompanyInstituteView = () => {
 
             {info?.linkedin_page_url && (
               <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="p-2 bg-white rounded-lg shadow-sm">
+                <div className="p-2 glassy-card rounded-lg shadow-sm">
                   <FaLinkedin className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-500">LinkedIn</p>
+                  <p className="text-sm glassy-text-secondary">LinkedIn</p>
                   <a
                     href={info.linkedin_page_url}
                     target="_blank"
@@ -438,7 +438,7 @@ const CompanyInstituteView = () => {
                   )
                 )
               ) : (
-                <p className="text-gray-500">
+                <p className="glassy-text-secondary">
                   No {isInstitute ? "specialties" : "industries"} listed
                 </p>
               )}

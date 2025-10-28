@@ -127,7 +127,7 @@ const CourseDetailPage = () => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assessmentState.timerActive]);
 
   const fetchDataById = useCallback(async () => {
@@ -283,10 +283,10 @@ const CourseDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen glassy-card flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading course details...</p>
+          <p className="glassy-text-secondary">Loading course details...</p>
         </div>
       </div>
     );
@@ -294,14 +294,14 @@ const CourseDetailPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen glassy-card flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-6">
           <div className="text-red-500 text-6xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Error Loading Course</h2>
-          <p className="text-gray-600 mb-6">{error}</p>
+          <p className="glassy-text-secondary mb-6">{error}</p>
           <button
             onClick={fetchDataById}
-            className="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 glassy-text-primary px-6 py-2 rounded font-semibold hover:bg-blue-700 transition-colors"
           >
             Try Again
           </button>
@@ -312,9 +312,9 @@ const CourseDetailPage = () => {
 
   if (!apiRes) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen glassy-card flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">No course data available</p>
+          <p className="glassy-text-secondary">No course data available</p>
         </div>
       </div>
     );
@@ -506,12 +506,12 @@ const CourseDetailPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 px-4 md:px-8 py-6">
+      <div className="min-h-screen   px-4 md:px-8 py-6">
 
         <nav className="flex items-center gap-2 text-sm py-3">
-          <span className="text-gray-600">Course</span>
+          <span className="glassy-text-secondary">Course</span>
           <span className="text-gray-400">›</span>
-          <span className="font-medium text-gray-600">{apiRes.categories?.name || 'Category'}</span>
+          <span className="font-medium glassy-text-secondary">{apiRes.categories?.name || 'Category'}</span>
           <span className="text-gray-400">›</span>
           <span className="font-medium text-blue-600">{apiRes.name || 'Course'}</span>
         </nav>
@@ -520,15 +520,15 @@ const CourseDetailPage = () => {
           <div className="lg:col-span-2">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
               <div className="flex items-center gap-4">
-                <h1 className="text-xl font-bold">{apiRes.title || apiRes.name}</h1>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${apiRes.is_paid ? 'bg-zinc-900 text-white' : 'bg-green-100 text-green-800'
+                <h1 className="text-xl font-bold glassy-text-primary">{apiRes.title || apiRes.name}</h1>
+                <span className={`px-3 py-1 rounded-full text-sm font-medium ${apiRes.is_paid ? 'bg-zinc-900 glassy-text-primary' : 'bg-green-100 text-green-800'
                   }`}>
                   {apiRes.is_paid ? 'Paid' : 'Free'}
                 </span>
               </div>
               {!apiRes?.isResumed && (
                 <Button
-                  className="bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition-colors"
+                  className="bg-blue-600 glassy-text-primary px-4 py-2 rounded font-semibold hover:bg-blue-700 transition-colors"
                   onClick={() => handleEnroll(apiRes)}
                 >
                   {apiRes.is_paid ? `Enroll now - $${apiRes.amount}` : 'Enroll now'}
@@ -585,7 +585,7 @@ const CourseDetailPage = () => {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-slate-700">
-                          <div className="text-center text-white">
+                          <div className="text-center glassy-text-primary">
                             <BiPlay className="w-16 h-16 mx-auto mb-2 opacity-50" />
                             <p className="text-sm opacity-75">Video Preview</p>
                           </div>
@@ -595,7 +595,7 @@ const CourseDetailPage = () => {
                       <div className="absolute inset-0 flex items-center justify-center">
                         <button
                           onClick={handlePlayPause}
-                          className="bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-6 transition-all shadow-lg transform hover:scale-105"
+                          className="glassy-card bg-opacity-90 hover:bg-opacity-100 rounded-full p-6 transition-all shadow-lg transform hover:scale-105"
                           aria-label="Play video"
                         >
                           <BiPlay className="w-12 h-12 text-gray-800 ml-1" />
@@ -603,11 +603,11 @@ const CourseDetailPage = () => {
                       </div>
 
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                        <h2 className="text-2xl font-bold text-white mb-3">
+                        <h2 className="text-2xl font-bold glassy-text-primary mb-3">
                           {apiRes.name?.toUpperCase() || 'COURSE PREVIEW'}
                         </h2>
                         {!apiRes?.isResumed && (
-                          <p className="text-white/80 text-sm">
+                          <p className="glassy-text-primary/80 text-sm">
                             {apiRes.is_paid ? 'Enroll to watch full course' : 'Click to enroll and start learning'}
                           </p>
                         )}
@@ -617,7 +617,7 @@ const CourseDetailPage = () => {
 
                   {videoError && apiRes?.isResumed && (
                     <div className="absolute inset-0 bg-slate-800 flex items-center justify-center">
-                      <div className="text-center text-white">
+                      <div className="text-center glassy-text-primary">
                         <div className="text-red-400 text-4xl mb-4">⚠️</div>
                         <p className="text-lg font-medium mb-2">Video Unavailable</p>
                         <p className="text-sm opacity-75">Unable to load video content</p>
@@ -626,7 +626,7 @@ const CourseDetailPage = () => {
                             setVideoError(false);
                             window.location.reload();
                           }}
-                          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors"
+                          className="mt-4 bg-blue-600 glassy-text-primary px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors"
                         >
                           Retry
                         </button>
@@ -637,7 +637,7 @@ const CourseDetailPage = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 text-sm mb-6 bg-white p-4 rounded-lg shadow-sm">
+            <div className="flex flex-wrap items-center gap-6 text-sm mb-6 glassy-card p-4 rounded-lg shadow-sm">
               <div className="flex items-center gap-2">
                 <img
                   src={apiRes?.organization_logo_url || "/logo.png"}
@@ -647,33 +647,33 @@ const CourseDetailPage = () => {
                     e.target.src = "/logo.png";
                   }}
                 />
-                <span className="text-gray-700 font-medium">{apiRes?.organization_name || ''}</span>
+                <span className="glassy-text-secondary font-medium">{apiRes?.organization_name || ''}</span>
               </div>
               {/* <div className="flex items-center gap-2">
                 <BiStar className="text-orange-400 w-5 h-5" />
-                <span className="font-semibold text-[#000000E6]">4.6</span>
+                <span className="font-semibold glassy-text-primary">4.6</span>
               </div> */}
               <div className="flex items-center gap-2">
-                <BiUser className="text-gray-500 w-5 h-5" />
-                <span className="font-semibold text-[#000000E6]">{apiRes?.enrolledEntities || 0}</span>
+                <BiUser className="glassy-text-secondary w-5 h-5" />
+                <span className="font-semibold glassy-text-primary">{apiRes?.enrolledEntities || 0}</span>
               </div>
               <div className="flex items-center gap-2">
-                <BiTimeFive className="text-gray-500 w-5 h-5" />
-                <span className="font-semibold text-[#000000E6]">{apiRes?.duration || 'N/A'}</span>
+                <BiTimeFive className="glassy-text-secondary w-5 h-5" />
+                <span className="font-semibold glassy-text-primary">{apiRes?.duration || 'N/A'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <BiCalendar className="text-gray-500 w-5 h-5" />
-                <span className="font-semibold text-[#000000E6]">
+                <BiCalendar className="glassy-text-secondary w-5 h-5" />
+                <span className="font-semibold glassy-text-primary">
                   {apiRes?.updatedAt ? getDuration(apiRes.updatedAt, Date.now()) : 'Recently updated'}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <BiGlobe className="text-gray-500 w-5 h-5" />
-                <span className="font-semibold text-[#000000E6]">{apiRes?.language || 'English'}</span>
+                <BiGlobe className="glassy-text-secondary w-5 h-5" />
+                <span className="font-semibold glassy-text-primary">{apiRes?.language || 'English'}</span>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg p-6 mb-4 shadow-sm">
+            <div className="glassy-card rounded-lg p-6 mb-4 shadow-sm">
 
               {skills.length > 0 && (
                 <div className="mb-6">
@@ -681,7 +681,7 @@ const CourseDetailPage = () => {
                     {apiRes?.skills.map((skill, i) => (
                       <span
                         key={i}
-                        className="bg-gray-100 text-gray-700 px-3 py-2 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
+                        className="glassy-card glassy-text-primary px-3 py-2 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
                       >
                         {skill?.name}
                       </span>
@@ -690,19 +690,19 @@ const CourseDetailPage = () => {
                 </div>
               )}
 
-              <h3 className="font-bold text-lg mb-3">About this course</h3>
-              <p className="text-gray-700 mb-4 leading-relaxed">
+              <h3 className="font-bold text-lg mb-3 glassy-text-primary">About this course</h3>
+              <p className="glassy-text-secondary mb-4 leading-relaxed">
                 {apiRes.description || 'Course description not available.'}
               </p>
 
               {apiRes.what_you_will_learn && apiRes.what_you_will_learn.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="font-semibold mb-3 text-[#000000E6]">What you'll learn:</h4>
+                  <h4 className="font-semibold mb-3 glassy-text-primary">What you'll learn:</h4>
                   <ul className="space-y-2">
                     {apiRes.what_you_will_learn.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <FaCheck className="text-green-500 mt-1 flex-shrink-0" size={12} />
-                        <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                        <span className="glassy-text-secondary text-sm leading-relaxed">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -711,12 +711,12 @@ const CourseDetailPage = () => {
 
               {apiRes.prerequisites && apiRes.prerequisites.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="font-semibold mb-3 text-[#000000E6]">Prerequisites:</h4>
+                  <h4 className="font-semibold mb-3 glassy-text-primary">Prerequisites:</h4>
                   <ul className="space-y-2">
                     {apiRes.prerequisites.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <span className="text-blue-500 mt-1 font-bold">•</span>
-                        <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                        <span className="glassy-text-secondary text-sm leading-relaxed">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -725,12 +725,12 @@ const CourseDetailPage = () => {
 
               {apiRes.target_audience && apiRes.target_audience.length > 0 && (
                 <div>
-                  <h4 className="font-semibold mb-3 text-[#000000E6]">Who this course is for:</h4>
+                  <h4 className="font-semibold mb-3 glassy-text-primary">Who this course is for:</h4>
                   <ul className="space-y-2">
                     {apiRes.target_audience.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <BiUser className="text-blue-500 mt-1 flex-shrink-0" size={14} />
-                        <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                        <span className="glassy-text-secondary text-sm leading-relaxed">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -740,10 +740,10 @@ const CourseDetailPage = () => {
           </div>
 
           <div>
-            <div className="bg-white rounded-lg shadow-sm border">
-              <div className="p-4 border-b bg-gray-50">
+            <div className="glassy-card rounded-lg shadow-sm border">
+              <div className="p-4 border-b glassy-card">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-sm text-gray-600 tracking-wide">COURSE CONTENT</h3>
+                  <h3 className="font-bold text-sm glassy-text-secondary tracking-wide">COURSE CONTENT</h3>
                   <button className="text-blue-600 hover:text-blue-700 transition-colors">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path
@@ -754,8 +754,8 @@ const CourseDetailPage = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="text-base font-semibold text-[#000000E6] mt-1">Course Intro</div>
-                <span className="text-xs text-gray-500">{apiRes?.duration || 'Duration not specified'}</span>
+                <div className="text-base font-semibold glassy-text-primary mt-1">Course Intro</div>
+                <span className="text-xs glassy-text-secondary">{apiRes?.duration || 'Duration not specified'}</span>
               </div>
 
               <div className="max-h-[500px] overflow-y-auto">
@@ -763,17 +763,17 @@ const CourseDetailPage = () => {
                   <div
                     key={item.id}
 
-                    className={`p-4 cursor-pointer flex items-center justify-between border-b border-gray-100 hover:bg-blue-50 transition-colors group ${selectedSection === item.id ? 'bg-blue-50 border-l-4 border-l-blue-600' : ''
+                    className={`p-4 cursor-pointer flex items-center justify-between border-b border-gray-100   transition-colors group ${selectedSection === item.id ? '  border-l-4 border-l-blue-600' : ''
                       }`}
                     onClick={() => setSelectedSection(item.video_url)}
                   >
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-[#000000E6] text-sm mb-1 group-hover:text-blue-600 truncate"
+                      <h4 className="font-medium glassy-text-primary text-sm mb-1 group-hover:text-blue-600 truncate"
                       >
                         {item.title}
                       </h4>
                       {item.content && (
-                        <p className="text-xs text-gray-500 mb-1 line-clamp-2">{item.content}</p>
+                        <p className="text-xs glassy-text-secondary mb-1 line-clamp-2">{item.content}</p>
                       )}
                       {item.duration && (
                         <p className="text-xs text-gray-400">Duration: {item.duration}</p>
@@ -782,7 +782,7 @@ const CourseDetailPage = () => {
                     <div className="ml-3 flex-shrink-0">
                       {item.completed ? (
                         <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-                          <FaCheck size={10} className="text-white" />
+                          <FaCheck size={10} className="glassy-text-primary" />
                         </div>
                       ) : (
                         <div className="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center group-hover:border-blue-600 transition-colors">
@@ -804,7 +804,7 @@ const CourseDetailPage = () => {
                 ))}
 
                 {(!apiRes?.modules || apiRes.modules.length === 0) && (
-                  <div className="p-8 text-center text-gray-500">
+                  <div className="p-8 text-center glassy-text-secondary">
                     <BiTimeFive className="w-12 h-12 mx-auto mb-3 opacity-50" />
                     <p className="text-sm">No course modules available</p>
                   </div>
@@ -813,7 +813,7 @@ const CourseDetailPage = () => {
             </div>
             {(apiRes?.is_assessment && apiRes?.assessment_setup && apiRes?.isResumed) && (
               <div className='flex justify-end py-2'>
-                <Button className='' variant='zinc' onClick={() => handleAssessment(apiRes)}>Start Assessment</Button>
+                <Button className='' variant='outline' onClick={() => handleAssessment(apiRes)}>Start Assessment</Button>
               </div>
             )}
           </div>
@@ -833,11 +833,11 @@ const CourseDetailPage = () => {
           {assessmentState.assessments.map((assessment) => (
             <div
               key={assessment._id}
-              className="border rounded-lg p-4 hover:bg-gray-50 transition cursor-pointer"
+              className="border rounded-lg p-4 hover:glassy-card transition cursor-pointer"
               onClick={() => startSelectedAssessment(assessment)}
             >
               <h3 className="font-semibold text-lg">{assessment.title}</h3>
-              <p className="text-gray-600 text-sm">{assessment.description}</p>
+              <p className="glassy-text-secondary text-sm">{assessment.description}</p>
               <div className="flex flex-wrap gap-2 mt-2">
                 <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                   Level: {assessment.level_id?.name}
@@ -849,11 +849,11 @@ const CourseDetailPage = () => {
                   Time: {assessment.time_limit} mins
                 </span>
 
-                 <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                  Max Attempt: {assessment.max_attempts} 
+                <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
+                  Max Attempt: {assessment.max_attempts}
                 </span>
 
-                
+
               </div>
               <p className='cursor-pointer text-blue-500 text-base font-semibold text-end
 Add New Assessment'>Click here to start assessment</p>
@@ -944,10 +944,10 @@ Add New Assessment'>Click here to start assessment</p>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[#000000E6]">
+            <h3 className="text-lg font-semibold glassy-text-primary">
               {currentQuestion?.question}
             </h3>
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm glassy-text-secondary italic">
               {currentQuestion?.question_type === 'multi_choice'
                 ? 'Select all that apply'
                 : 'Select one option'}
@@ -962,7 +962,7 @@ Add New Assessment'>Click here to start assessment</p>
                     className={`p-4 border rounded-xl cursor-pointer transition duration-300 ease-in-out 
                       ${isSelected
                         ? 'border-blue-500 bg-blue-50 shadow-sm'
-                        : 'border-gray-200 hover:bg-gray-50'
+                        : 'border-gray-200 hover:glassy-card'
                       }`}
                     onClick={() => handleOptionSelect(option)}
                   >
@@ -973,7 +973,7 @@ Add New Assessment'>Click here to start assessment</p>
                         checked={isSelected}
                         readOnly
                       />
-                      <label className="ml-3 block text-gray-700 text-sm font-medium">
+                      <label className="ml-3 block glassy-text-secondary text-sm font-medium">
                         {String.fromCharCode(65 + index)}. {option}
                       </label>
                     </div>
@@ -1043,7 +1043,7 @@ Add New Assessment'>Click here to start assessment</p>
               >
                 {assessmentState.result.passed ? "Congratulations!" : "Assessment Failed"}
               </h3>
-              <p className="text-gray-600 mt-2">
+              <p className="glassy-text-secondary mt-2">
                 {assessmentState.result.passed
                   ? "You have successfully passed the assessment."
                   : "You did not meet the passing criteria."}
@@ -1052,26 +1052,26 @@ Add New Assessment'>Click here to start assessment</p>
 
             {/* Summary Stats */}
             <div className="grid grid-cols-2 gap-4 mt-6">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-500">Score</p>
+              <div className="glassy-card p-4 rounded-lg">
+                <p className="text-sm glassy-text-secondary">Score</p>
                 <p className="text-2xl font-bold">
                   {assessmentState.result.total_score} / {assessmentState.result.total_questions}
                 </p>
               </div>
-              {/* <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-500">Percentage</p>
+              {/* <div className="glassy-card p-4 rounded-lg">
+                <p className="text-sm glassy-text-secondary">Percentage</p>
                 <p className="text-2xl font-bold">
                   {Math.round(assessmentState.result.percentage)}%
                 </p>
               </div> */}
-              {/* <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-500">Passing Percentage</p>
+              {/* <div className="glassy-card p-4 rounded-lg">
+                <p className="text-sm glassy-text-secondary">Passing Percentage</p>
                 <p className="text-2xl font-bold">
                   {assessmentState.result.passing_percentage}%
                 </p>
               </div> */}
-              {/* <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-500">Time Taken</p>
+              {/* <div className="glassy-card p-4 rounded-lg">
+                <p className="text-sm glassy-text-secondary">Time Taken</p>
                 <p className="text-2xl font-bold">
                   {Math.floor(assessmentState.result.time_taken / 60)}m{" "}
                   {assessmentState.result.time_taken % 60}s
@@ -1082,7 +1082,7 @@ Add New Assessment'>Click here to start assessment</p>
             {/* Questions with Answers */}
             <div className="mt-8 space-y-6">
               {assessmentState.result.answers.map((ans, idx) => (
-                <div key={idx} className="p-4 border rounded-lg shadow-sm bg-white">
+                <div key={idx} className="p-4 border rounded-lg shadow-sm glassy-card">
                   <p className="font-semibold text-gray-800">
                     Q{idx + 1}: {ans.question}
                   </p>
@@ -1093,10 +1093,10 @@ Add New Assessment'>Click here to start assessment</p>
                         <li
                           key={i}
                           className={`px-3 py-1 rounded ${isSelected
-                              ? ans.is_correct
-                                ? "bg-green-100 text-green-700"
-                                : "bg-red-100 text-red-700"
-                              : "bg-gray-50 text-gray-600"
+                            ? ans.is_correct
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
+                            : "glassy-card glassy-text-secondary"
                             }`}
                         >
                           {opt}

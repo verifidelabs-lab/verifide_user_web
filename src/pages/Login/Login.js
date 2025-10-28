@@ -316,7 +316,7 @@ const Login = () => {
         </div>
 
         <div
-          className="flex items-center justify-center h-screen bg-white"
+          className="flex items-center justify-center h-screen glassy-card"
           data-aos="fade-left"
           data-aos-duration="1000"
           data-aos-easing="ease-out-quart"
@@ -343,7 +343,7 @@ const Login = () => {
                   <div className="flex justify-center items-center gap-3">
                     {/* <button
                       disabled
-                      className="bg-white border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300
+                      className="glassy-card border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300
                      hover:shadow-lg hover:border-[#0077B5]/30 hover:scale-105 cursor-pointer"
                       style={{ boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)" }}
                       data-aos="zoom-in"
@@ -352,7 +352,7 @@ const Login = () => {
                       <FaLinkedinIn className="text-[#0077B5] w-6 h-6 transition-transform duration-300 hover:scale-110" />
                     </button> */}
                     <button
-                      className="bg-white border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 
+                      className="glassy-card border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 
                     hover:shadow-lg hover:scale-105 hover:border-[#0077B5]/30"
                       style={{ boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)" }}
                       data-aos="zoom-in"
@@ -464,7 +464,7 @@ const Login = () => {
                   <span className="text-[#646464] text-base font-normal">
                     Don't have an account?
                   </span>{" "}
-                  <span className="text-[#000000] text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">
+                  <span className="glassy-text-primary text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">
                     {/* <Link to="/create-account">Create account</Link> */}
                     <Link
                       to={`/create-account?redirect=${encodeURIComponent(
@@ -581,7 +581,7 @@ const Login = () => {
                   <span className="text-[#646464] text-base font-normal">
                     Don't have an account?
                   </span>{" "}
-                  <span className="text-[#000000] text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">
+                  <span className="glassy-text-primary text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">
                     <Link to="/create-account">Create account</Link>
                   </span>
                 </div>

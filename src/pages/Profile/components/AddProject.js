@@ -107,7 +107,7 @@ const AddProject = ({
                             Project Type
                             <span className='text-sky-500 ml-1 text-xs font-normal'>(Optional)</span>
                         </p>
-                        <p className="text-xs text-gray-500 -mt-2">
+                        <p className="text-xs glassy-text-secondary -mt-2">
                             Select whether this was a personal project or done for an organization
                         </p>
 
@@ -204,7 +204,7 @@ const AddProject = ({
                             required
                             error={error?.description}
                         />
-                        <p className='text-end text-sm text-gray-500'>
+                        <p className='text-end text-sm glassy-text-secondary'>
                             {formData?.description?.length || 0}/200 characters
                         </p>
                     </div>

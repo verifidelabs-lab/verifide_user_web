@@ -108,7 +108,7 @@ const TermsAndConditions = () => {
             {/* ✅ DESKTOP/TABLET VIEW */}
             <div className='hidden md:flex space-x-6 items-start   mx-auto'>
                 {/* Sidebar Table of Contents */}
-                <div className="w-80 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-6">
+                <div className="w-80 glassy-card border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-6">
                     <div className="flex items-center gap-2 mb-6">
                         <div className="w-1 h-6 bg-blue-600 rounded-full"></div>
                         <h2 className="text-lg font-bold text-gray-900">TABLE OF CONTENTS</h2>
@@ -146,7 +146,7 @@ const TermsAndConditions = () => {
                     </nav>
 
                     {/* Header Card */}
-                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-10 rounded-2xl shadow-lg">
+                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 glassy-text-primary p-10 rounded-2xl shadow-lg">
                         <div className="max-w-3xl mx-auto text-center">
                             <h1 className="text-3xl font-bold mb-4">
                                 {termsData?.title}
@@ -154,7 +154,7 @@ const TermsAndConditions = () => {
                             <p className="text-blue-50 text-base leading-relaxed">
                                 {termsData?.description}
                             </p>
-                            <div className="mt-6 inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
+                            <div className="mt-6 inline-flex items-center gap-2 glassy-card/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
                                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                                 </svg>
@@ -164,7 +164,7 @@ const TermsAndConditions = () => {
                     </div>
 
                     {/* Content Sections */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <div className="glassy-card rounded-2xl shadow-sm border border-gray-200 p-8">
                         <div className="space-y-10 max-w-4xl">
                             {termsData?.tableOfContents?.map((item, index) => (
                                 <div
@@ -221,7 +221,7 @@ const TermsAndConditions = () => {
                 </nav>
 
                 {/* Header Card */}
-                <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-6 rounded-xl mb-4 shadow-lg">
+                <div className="bg-gradient-to-br from-blue-600 to-blue-700 glassy-text-primary p-6 rounded-xl mb-4 shadow-lg">
                     <h1 className="text-xl font-bold text-center mb-2">
                         {termsData?.title}
                     </h1>
@@ -249,12 +249,12 @@ const TermsAndConditions = () => {
                                     }
                                     className={`
                                         w-full text-left p-4 font-semibold text-sm flex items-center gap-3 transition-colors
-                                        ${isExpanded ? 'bg-blue-50 text-blue-700' : 'bg-white text-gray-800'}
+                                        ${isExpanded ? 'bg-blue-50 text-blue-700' : 'glassy-card text-gray-800'}
                                     `}
                                 >
                                     <div className={`
                                         flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold
-                                        ${isExpanded ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'}
+                                        ${isExpanded ? 'bg-blue-600 glassy-text-primary' : 'bg-gray-100 text-gray-600'}
                                     `}>
                                         {item.display_order}
                                     </div>
@@ -269,7 +269,7 @@ const TermsAndConditions = () => {
                                     overflow-hidden transition-all duration-300
                                     ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}
                                 `}>
-                                    <div className="p-4 text-sm text-gray-700 bg-white border-t border-gray-100 leading-relaxed">
+                                    <div className="p-4 text-sm text-gray-700 glassy-card border-t border-gray-100 leading-relaxed">
                                         <div
                                             className="prose prose-sm"
                                             dangerouslySetInnerHTML={{ __html: item.content }}

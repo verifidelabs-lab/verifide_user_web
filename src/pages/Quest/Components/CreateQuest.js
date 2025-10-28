@@ -499,7 +499,7 @@ const CreateQuest = () => {
                     px-5 py-2.5 rounded-xl text-sm font-medium
                     transition-all duration-300 ease-in-out
                     ${activeTab === value
-                      ? "bg-blue-600 text-white shadow-lg"
+                      ? "bg-blue-600 glassy-text-primary shadow-lg"
                       : "bg-gray-50 text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600"
                     }
                     ${id ? "cursor-not-allowed opacity-70" : ""}
@@ -690,7 +690,7 @@ const CreateQuest = () => {
                   type="button"
                   variant="outline"
                   onClick={handleAddFeedbackModule}
-                  className="flex items-center gap-2 hover:text-white"
+                  className="flex items-center gap-2 hover:glassy-text-primary"
                   icon={<BiAddToQueue className="w-5 h-5" />}
                   disabled={questData.feedbackModules.length >= 5}
 
@@ -705,7 +705,7 @@ const CreateQuest = () => {
 
           {
             activeTab === "survey-polls" && (
-              <label className="text-black mt-2">Survey & Polls <span className="text-red-500">*</span></label>
+              <label className="text-whitemt-2">Survey & Polls <span className="text-red-500">*</span></label>
             )
           }
 
@@ -726,7 +726,7 @@ const CreateQuest = () => {
               type="submit"
               disabled={isLoading}
               className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 
-                px-8 py-3 rounded-lg text-white font-semibold shadow-md 
+                px-8 py-3 rounded-lg glassy-text-primary font-semibold shadow-md 
                 transition transform hover:scale-105 active:scale-95
                 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >

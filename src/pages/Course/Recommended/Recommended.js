@@ -84,7 +84,7 @@ const Recommended = () => {
   }
 
   return (
-    <div className=" flex flex-col md:flex-row justify-between gap-3 bg-[#F6FAFD] h-[90vh] p-2 overflow-hidden">
+    <div className=" flex flex-col md:flex-row justify-between gap-3   h-[90vh] p-2 overflow-hidden">
 
       <div className="md:hidden md:mb-4">
         <div className="flex justify-between border-b border-gray-200 ">
@@ -93,7 +93,7 @@ const Recommended = () => {
             return (
               <button
                 key={index}
-                className={`py-2 px-4 text-sm font-medium ${isActive ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`py-2 px-4 text-sm font-medium ${isActive ? 'text-blue-600 border-b-2 border-blue-600' : 'glassy-text-secondary hover:text-gray-700'}`}
                 onClick={() => handleSectionClick(item)}
               >
                 {item}
@@ -104,13 +104,13 @@ const Recommended = () => {
       </div>
 
       <div className="hidden md:block xl:w-[15%] lg:w-[20%] md:w-[25%]   ">
-        <div className="bg-[#FFFFFF] h-full rounded-lg flex justify-around pt-5">
+        <div className="glassy-card h-full rounded-lg flex justify-around pt-5">
           <div className="sticky top-4">
             <ul className="space-y-2">
               {tab?.map((item, index) => {
-                let textColor = 'text-[#000000]'
+                let textColor = 'glassy-text-primary'
                 if (item < activeSection) {
-                  textColor = 'text-gray-500'
+                  textColor = 'glassy-text-secondary'
                 } else if (item === activeSection) {
                   textColor = 'text-blue-600  bg-[#2563EB1A]/10 text-[#2563EB]  rounded';
                 }
@@ -140,7 +140,7 @@ const Recommended = () => {
           </div>
 
           <div className="flex flex-col md:flex-row flex-wrap items-center justify-between gap-4">
-            <h1 className="text-xl md:text-2xl font-semibold text-gray-800">{activeSection} Courses</h1>
+            <h1 className="text-xl md:text-2xl font-semibold glassy-text-primary">{activeSection} Courses</h1>
             <div className="flex items-end gap-2 md:gap-4 w-full md:w-auto">
               <div className="relative flex-grow md:flex-grow-0">
                 <BiSearchAlt className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -149,12 +149,12 @@ const Recommended = () => {
                   placeholder="Search..."
                   value={keyWord}
                   onChange={(e) => setKeyWord(e.target.value)}
-                  className="pl-10 pr-4 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                  className="pl-10 pr-4 py-1.5 glassy-input-notification border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                 />
               </div>
 
               <FilterSelect2
-               key={activeSection}
+                key={activeSection}
                 options={coursecategoryList || []}
                 label="Course category"
                 onChange={(select) => setSelectedOptions(select?.value || "")}
@@ -163,7 +163,7 @@ const Recommended = () => {
               />
 
               {/* 
-              <button className="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+              <button className="hidden md:block bg-blue-600 glassy-text-primary px-4 py-2 rounded-md hover:bg-blue-700">
                 View All
               </button> */}
               {/* <button className="text-blue-600 md:hidden block border border-gray-300 rounded-lg hover:bg-gray-50 p-2">

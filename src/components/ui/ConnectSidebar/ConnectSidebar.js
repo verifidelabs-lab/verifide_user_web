@@ -117,55 +117,64 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
 
 
   return (
-    <div className="overflow-hidden bg-[#FFFFFF] rounded-2xl  p-2">
-      <div className="w-full bg-[#F9FAFB] border border-gray-200 rounded-xl p-1 flex">
-        {[
-          { key: "user", label: "User" },
-          { key: "companies", label: "Companies" },
-          { key: "institutions", label: "Institute" },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 
-        ${activeTab === tab.key
-                ? "bg-white text-[#2563EB] shadow-md"
-                : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
-              }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+   <div className="overflow-hidden glassy-card p-2">
+  {/* Tabs */}
+  <div className="w-full bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-1 flex">
+    {[
+      { key: "user", label: "User" },
+      { key: "companies", label: "Companies" },
+      { key: "institutions", label: "Institute" },
+    ].map((tab) => (
+      <button
+        key={tab.key}
+        onClick={() => setActiveTab(tab.key)}
+        className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300
+          ${activeTab === tab.key
+            ? "bg-[var(--bg-button)] text-[var(--text-primary)] shadow-md"
+            : "text-[var(--text-secondary)] hover:bg-[var(--bg-button-hover)] hover:text-[var(--text-primary)]"
+          }`}
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
 
+  {/* Person Cards */}
+  <div className="mt-2 space-y-2">
+    {data && data.length > 0 ? (
+      data.map((person) => (
+        <PersonCard
+          key={person.id}
+          person={person}
+          isConnected={connectedIds.includes(person._id)}
+          isLoading={loadingIds.includes(person._id)}
+          handleConnect={handleConnect}
+          handleConnectUser={handleConnectUser}
+          loading={loading}
+        />
+      ))
+    ) : (
+      <p className="py-4 text-center text-[var(--text-secondary)]">
+        No results found
+      </p>
+    )}
+  </div>
 
-      <div>
-        {data && data?.length > 0 ? data?.map((person) => (
-          <PersonCard
-            key={person.id}
-            person={person}
-            isConnected={connectedIds.includes(person._id)}
-            isLoading={loadingIds.includes(person._id)}
-            handleConnect={handleConnect}
-            handleConnectUser={handleConnectUser}
-            loading={loading}
-          />
-        )) : <></>}
-      </div>
-      <div className="px-6 py-4 border-t border-gray-200">
-        <button
-          className="w-full font-medium text-blue-600 transition-colors hover:text-blue-700"
-          onClick={() =>
-            isCompany === "company"
-              ? navigate(`/company/suggested-users?tab=${activeTab}`)
-              : navigate(`/user/suggested-users?tab=${activeTab}`)
-          }
-        >
-          Explore
-        </button>
-      </div>
+  {/* Explore Button */}
+  <div className="px-6 py-4 border-t border-[var(--border-color)]">
+    <button
+      className="w-full glassy-button"
+      onClick={() =>
+        isCompany === "company"
+          ? navigate(`/company/suggested-users?tab=${activeTab}`)
+          : navigate(`/user/suggested-users?tab=${activeTab}`)
+      }
+    >
+      Explore
+    </button>
+  </div>
+</div>
 
-    </div>
   );
 };
 

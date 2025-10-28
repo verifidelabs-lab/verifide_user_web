@@ -203,7 +203,7 @@ const PostsManagement = () => {
         title="Post Details"
       >
         {modalData.data && (
-          <div className="relative overflow-hidden rounded-2xl text-black shadow-md p-8 transition-all duration-500">
+          <div className="relative overflow-hidden rounded-2xl text-whiteshadow-md p-8 transition-all duration-500">
             <div className="relative z-10 flex items-center gap-4 mb-6">
               <img
                 src={modalData?.data?.user_id?.profile_picture_url || 'https://i.pinimg.com/736x/0f/36/88/0f368853758639a4839897ac215b462b.jpg'}
@@ -217,7 +217,7 @@ const PostsManagement = () => {
                 <h2 className="text-lg font-semibold">
                   {modalData.data.user_id?.first_name} {modalData.data.user_id?.last_name}
                 </h2>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm glassy-text-secondary">
                   Updated on{" "}
                   {new Date(modalData.data.updatedAt).toLocaleString('en-US', {
                     year: 'numeric',
@@ -244,7 +244,7 @@ const PostsManagement = () => {
                   href={modalData.data.video_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-5 py-2 rounded-full bg-black text-white font-semibold shadow-md hover:scale-105 transition-transform duration-300"
+                  className="inline-block px-5 py-2 rounded-full glassy-card glassy-text-primary font-semibold shadow-md hover:scale-105 transition-transform duration-300"
                 >
                   🎬 Watch Video
                 </a>
@@ -260,7 +260,7 @@ const PostsManagement = () => {
                   key={i}
                   className="rounded-xl bg-neutral-100 p-4 text-center hover:shadow-md transition-all duration-200"
                 >
-                  <p className="text-sm text-gray-500">{stat.label}</p>
+                  <p className="text-sm glassy-text-secondary">{stat.label}</p>
                   <p className="text-xl font-bold">{stat.value}</p>
                 </div>
               ))}
@@ -268,7 +268,7 @@ const PostsManagement = () => {
 
             {modalData.data.tags?.length > 0 && (
               <div className="mb-6 relative z-10">
-                <p className="text-sm text-gray-500 mb-2 font-medium">Tags</p>
+                <p className="text-sm glassy-text-secondary mb-2 font-medium">Tags</p>
                 <div className="flex flex-wrap gap-2">
                   {modalData.data.tags.map(tag => (
                     <span
@@ -299,7 +299,7 @@ const PostsManagement = () => {
             </div>
             {/* {modalData.data.reports?.length > 0 && (
               <div className="space-y-4 relative z-10">
-                <p className="text-sm font-medium text-gray-500">Reported Users</p>
+                <p className="text-sm font-medium glassy-text-secondary">Reported Users</p>
                 {modalData.data.reports.map((report, index) => (
                   <div
                     key={index}
@@ -320,7 +320,7 @@ const PostsManagement = () => {
                     </div>
                     <p><span className="font-semibold">Type:</span> {report.type}</p>
                     <p><span className="font-semibold">Reason:</span> {report.reason}</p>
-                    <p className="text-gray-500 text-sm">
+                    <p className="glassy-text-secondary text-sm">
                       {new Date(report.updatedAt).toLocaleString()}
                     </p>
                   </div>
@@ -340,7 +340,7 @@ const PostsManagement = () => {
           <div className="mt-6">
             <h3 className="text-lg font-semibold mb-3">Reports</h3>
             <div className="overflow-x-auto">
-              <table className="min-w-full bg-white border border-gray-200">
+              <table className="min-w-full glassy-card border border-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-4 py-2 text-left font-semibold">User</th>

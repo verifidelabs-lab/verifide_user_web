@@ -45,21 +45,21 @@ const Button = ({
     transform hover:scale-[1.02] active:scale-[0.98]
     focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50
     after:content-[''] after:absolute after:inset-0
-    after:bg-white after:opacity-0 after:transition-opacity duration-300
+    after:glassy-card after:opacity-0 after:transition-opacity duration-300
     hover:after:opacity-10 active:after:opacity-20  
     ${getRoundedClass()}
   `;
 
   const variantStyles = {
-    primary: `bg-[#2563EB] text-[#FFFFFF] hover:bg-blue-700 focus:ring-blue-500 text-[16px] font-[700]`,
-    secondary: `bg-[#8989894D]/30 text-[#000000E6] hover:bg-gray-700 hover:bg-[#FFFFFF] focus:ring-gray-500 text-[16px] font-[700]`,
-    outline: `border border-[#2563EB] text-[#2563EB] font-[700] bg-transparent  hover:bg-[#2563EB] hover:text-[#FFFFFF] hover:border-gray-400 focus:ring-gray-300 text-[16px] font-[700]`,
+    primary: `glassy-text-primary text-[#FFFFFF] hover:bg-blue-700 focus:ring-blue-500 text-[16px] font-[700]`,
+    secondary: `bg-[#8989894D]/30 glassy-text-primary hover:bg-gray-700 hover:glassy-card focus:ring-gray-500 text-[16px] font-[700]`,
+    outline: `border border-[#2563EB] text-[#2563EB] font-[700] bg-transparent  hover:glassy-text-primary hover:text-[#FFFFFF] hover:border-gray-400 focus:ring-gray-300 text-[16px] font-[700]`,
     ghost: `bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-200 text-[16px] font-[700]`,
     danger: `bg-red-600 text-[#FFFFFF] hover:bg-red-700 focus:ring-red-500 text-[16px] font-[700]`,
     success: `bg-green-600 text-[#FFFFFF] hover:bg-green-700 focus:ring-green-500 text-[16px] font-[700]`,
     warning: `bg-yellow-500 text-[#FFFFFF] hover:bg-yellow-600 focus:ring-yellow-400 text-[16px] font-[700]`,
     zinc: `bg-zinc-900 text-[#FFFFFF] hover:bg-zinc-800 focus:ring-zinc-700 rounded-full text-[16px] font-[700]`,
-    connect: `bg-blue-900 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-800 transition-colors`
+    connect: `bg-blue-900 glassy-text-primary px-6 py-2 rounded-md font-medium hover:bg-blue-800 transition-colors`
   };
 
   const sizeStyles = {
@@ -137,7 +137,7 @@ const Button = ({
 
         {!isDisabled && (
           <span className="absolute inset-0 overflow-hidden">
-            <span className="absolute top-1/2 left-1/2 w-0 h-0 rounded-full bg-white opacity-0 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-out"></span>
+            <span className="absolute top-1/2 left-1/2 w-0 h-0 rounded-full glassy-card opacity-0 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-out"></span>
           </span>
         )}
       </button>
@@ -145,7 +145,7 @@ const Button = ({
       {showTooltip && (
         <div
           className={`
-            absolute z-50 px-3 py-1.5 text-xs text-white min-w-40  bg-gray-800 rounded-md
+            absolute z-50 px-3 py-1.5 text-xs glassy-text-primary min-w-40  bg-gray-800 rounded-md
             -top-10 left-1/2 transform -translate-x-1/2
             transition-all duration-300 opacity-100
           `}

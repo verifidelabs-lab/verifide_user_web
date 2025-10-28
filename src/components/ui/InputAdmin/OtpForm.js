@@ -65,9 +65,9 @@ const OtpForm = ({
 
     return (
         <div className="flex justify-center items-center min-h-[500px]">
-            <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 min-w-2xl w-full max-w-md">
+            <div className="glassy-card py-8 px-4 shadow sm:rounded-lg sm:px-10 min-w-2xl w-full max-w-md">
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                    <h2 className="text-center text-2xl font-semibold text-black">{title}</h2>
+                    <h2 className="text-center text-2xl font-semibold glassy-text-primary">{title}</h2>
 
                     <div className="flex justify-center mb-4">
                         <img src="/logo.png" alt="logo" className="h-16 w-auto" />

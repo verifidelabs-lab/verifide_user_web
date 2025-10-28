@@ -627,8 +627,8 @@ export default function Message({ profileData, socket }) {
     if (messages.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center py-8">
-          <div className="text-gray-500 text-sm">No messages yet</div>
-          <div className="text-gray-400 text-xs mt-1">Send a message to start the conversation</div>
+          <div className="glassy-text-secondary text-sm">No messages yet</div>
+          <div className="glassy-text-secondary text-xs mt-1">Send a message to start the conversation</div>
         </div>
       );
     }
@@ -636,7 +636,7 @@ export default function Message({ profileData, socket }) {
     return (
       <>
         <div className="text-center mb-4">
-          <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm">
+          <span className="text-xs glassy-text-secondary glassy-card px-3 py-1 rounded-full shadow-sm">
             Today
           </span>
         </div>
@@ -673,11 +673,11 @@ export default function Message({ profileData, socket }) {
 
   if (isMobileView) {
     return (
-      <div className="h-screen bg-white flex flex-col">
+      <div className="h-screen glassy-card flex flex-col">
         {!showChat ? (
           <>
-            <div className="p-4 border-b border-gray-200 sticky top-0 bg-white z-10">
-              <h1 className="text-xl font-bold text-[#000000E6]">Messages</h1>
+            <div className="p-4 border-b border-gray-200 sticky top-0 glassy-card z-10">
+              <h1 className="text-xl font-bold glassy-text-primary">Messages</h1>
               <div className="relative mt-2">
                 <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -685,7 +685,7 @@ export default function Message({ profileData, socket }) {
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   placeholder="Search conversations..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 glassy-input-notification border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -708,25 +708,25 @@ export default function Message({ profileData, socket }) {
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                     <BiSearch className="w-8 h-8 text-gray-400" />
                   </div>
-                  <p className="text-gray-500 text-center">No conversations found</p>
+                  <p className="glassy-text-secondary text-center">No conversations found</p>
                 </div>
               )}
             </div>
           </>
         ) : (
           <div className="h-full flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-10">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 glassy-card sticky top-0 z-10">
               <div className="flex items-center space-x-3">
                 <button onClick={handleBackClick} className="p-1">
                   <BiArrowBack className="w-5 h-5 text-gray-600" />
                 </button>
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">
+                  <span className="glassy-text-primary text-sm font-semibold">
                     {(selectedContact?.first_name?.[0] || '?').toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold text-[#000000E6] capitalize">
+                  <h2 className="text-base font-semibold glassy-text-primary capitalize">
                     {selectedContact?.first_name} {selectedContact?.last_name}
                   </h2>
                 </div>
@@ -738,7 +738,7 @@ export default function Message({ profileData, socket }) {
               </div>
 
               {isMenuShow && (
-                <div className="absolute md:right-0 right-[40px] md:mt-20 mt-16 w-32 bg-white border border-gray-200 rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out">
+                <div className="absolute md:right-0 right-[40px] md:mt-20 mt-16 w-32 glassy-card border border-gray-200 rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out">
                   <ul className="text-xs font-medium divide-y divide-gray-100">
                     <li className="px-4 py-1.5 cursor-pointer hover:bg-gray-50 hover:text-red-500 flex items-center gap-2 transition-colors duration-150"
                       onClick={() => handleUserAction("BLOCK")}>
@@ -753,7 +753,7 @@ export default function Message({ profileData, socket }) {
               )}
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 bg-gray-200">
+            <div className="flex-1 overflow-y-auto p-4 ">
               {renderMessages()}
             </div>
 
@@ -780,20 +780,22 @@ export default function Message({ profileData, socket }) {
   }
 
   return (
-    <div className="h-[92vh] bg-gray-50 p-4">
-      <div className="bg-white h-full rounded-xl shadow-sm overflow-hidden">
+    <div className="h-[92vh] p-4">
+      <div className="glassy-card h-full rounded-xl shadow-sm overflow-hidden">
         <div className="flex h-full">
-          <div className="w-1/3 border-r border-gray-200 flex flex-col">
-            <div className="p-4 border-b border-gray-200">
-              <h1 className="text-xl font-bold text-[#000000E6]">Messages</h1>
+
+          {/* Left Sidebar: Conversations */}
+          <div className="w-1/3  flex flex-col">
+            <div className="p-4  ">
+              <h1 className="text-xl font-bold glassy-text-primary">Messages</h1>
               <div className="relative mt-3">
-                <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 glassy-text-secondary" />
                 <input
                   type="text"
                   value={searchKeyword}
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   placeholder="Search conversations..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 glassy-input-notification text-sm"
                 />
               </div>
             </div>
@@ -815,50 +817,56 @@ export default function Message({ profileData, socket }) {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center h-64">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <BiSearch className="w-8 h-8 text-gray-400" />
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-card-unread">
+                    <BiSearch className="w-8 h-8 glassy-text-secondary" />
                   </div>
-                  <p className="text-gray-500 text-center">No conversations found</p>
+                  <p className="glassy-text-secondary text-center">No conversations found</p>
                 </div>
               )}
             </div>
           </div>
 
+          {/* Right Sidebar: Chat */}
           <div className="flex-1 flex flex-col">
             {selectedContact ? (
               <>
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 relative">
+                <div className="flex items-center justify-between p-4  relative">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-card-unread rounded-full flex items-center justify-center">
                       {selectedContact?.profile_picture_url ? (
                         <img src={selectedContact?.profile_picture_url} alt="user" className="rounded-full" />
                       ) : (
-                        <span className="text-white text-sm font-semibold rounded-full">
+                        <span className="glassy-text-primary text-sm font-semibold rounded-full">
                           <img src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png" alt="default logo" className="rounded-full" />
                         </span>
                       )}
                     </div>
                     <div>
-                      <h2 className="text-lg font-semibold text-[#000000E6] capitalize">
+                      <h2 className="text-lg font-semibold glassy-text-primary capitalize">
                         {selectedContact.first_name} {selectedContact.last_name}
                       </h2>
                     </div>
                   </div>
+
                   <div className="flex items-center space-x-4">
-                    <button className="p-1 hover:bg-gray-100 rounded-full">
-                      <FiMoreVertical className="w-5 h-5 text-gray-600" onClick={() => handleShowOption()} />
+                    <button className="p-1 rounded-full hover:bg-button-hover/20">
+                      <FiMoreVertical className="w-5 h-5 glassy-text-primary" onClick={() => handleShowOption()} />
                     </button>
                   </div>
 
                   {isMenuShow && (
-                    <div className="absolute md:right-0 right-[88px] md:mt-20 mt-16 w-32 bg-white border border-gray-200 rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out">
+                    <div className="absolute md:right-0 right-[88px] md:mt-20 mt-16 w-32 glassy-card-header border rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out">
                       <ul className="text-xs font-medium divide-y divide-gray-100">
-                        <li className="px-4 py-1.5 cursor-pointer hover:bg-gray-50 hover:text-red-500 flex items-center gap-2 transition-colors duration-150"
-                          onClick={() => handleUserAction("BLOCK")}>
+                        <li
+                          className="px-4 py-1.5 cursor-pointer hover:bg-button-hover/20 hover:text-red-500 flex items-center gap-2 transition-colors duration-150 glassy-text-primary"
+                          onClick={() => handleUserAction("BLOCK")}
+                        >
                           {selectedContact?.isBlocked ? "UnBlock" : "Block"}
                         </li>
-                        <li className="px-4 py-1.5 cursor-pointer hover:bg-gray-50 hover:text-blue-500 flex items-center gap-2 transition-colors duration-150"
-                          onClick={() => handleUserAction("CLEAR")}>
+                        <li
+                          className="px-4 py-1.5 cursor-pointer hover:bg-button-hover/20 hover:text-blue-500 flex items-center gap-2 transition-colors duration-150 glassy-text-primary"
+                          onClick={() => handleUserAction("CLEAR")}
+                        >
                           Clear
                         </li>
                       </ul>
@@ -866,7 +874,7 @@ export default function Message({ profileData, socket }) {
                   )}
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 bg-gray-200">
+                <div className="flex-1 overflow-y-auto p-4">
                   {renderMessages()}
                 </div>
 
@@ -888,21 +896,23 @@ export default function Message({ profileData, socket }) {
                 />
               </>
             ) : (
-              <div className="flex-1 flex items-center justify-center bg-gray-50">
+              <div className="flex-1 flex items-center justify-center">
                 <div className="text-center p-6 max-w-md">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-20 h-20 bg-card-unread rounded-full flex items-center justify-center mx-auto mb-6">
                     <BiSearch className="w-10 h-10 text-blue-500" />
                   </div>
-                  <h3 className="text-xl font-semibold text-[#000000E6] mb-2">Select a chat to start messaging</h3>
-                  <p className="text-sm text-gray-500 mb-4">
+                  <h3 className="text-xl font-semibold glassy-text-primary mb-2">Select a chat to start messaging</h3>
+                  <p className="text-sm glassy-text-secondary mb-4">
                     Choose from your existing conversations or start a new one
                   </p>
                 </div>
               </div>
             )}
           </div>
+
         </div>
       </div>
     </div>
+
   );
 }

@@ -68,7 +68,7 @@ const ChangePassword = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center  p-4">
-            <div className="w-full max-w-2xl bg-white rounded-2xl shadow-sm transition-all duration-500 hover:shadow-purple-300 ">
+            <div className="w-full max-w-2xl glassy-card rounded-2xl shadow-sm transition-all duration-500 hover:shadow-purple-300 ">
                 <div className="p-8 animate-fade-in">
                     <div className="text-center mb-8">
                         <h2 className="text-3xl font-bold text-gray-800">Change Password</h2>

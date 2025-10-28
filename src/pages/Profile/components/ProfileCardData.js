@@ -125,8 +125,8 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
       />
 
       {showCropper && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg max-w-lg w-full">
+        <div className="fixed inset-0 z-50 flex items-center justify-center glassy-card bg-opacity-50">
+          <div className="glassy-card p-4 rounded-lg max-w-lg w-full">
             <h2 className="text-xl font-bold mb-4">Crop Profile Image</h2>
             <div className="mb-4" style={{ height: '400px' }}>
               <Cropper
@@ -153,12 +153,12 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               </button>
               <button
                 onClick={handleCrop}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center"
+                className="px-4 py-2 bg-blue-500 glassy-text-primary rounded-md flex items-center justify-center"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 glassy-text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -190,8 +190,8 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
             />
           )}
         </div>
-        <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <BsPencil className="text-white text-lg" />
+        <div className="absolute inset-0 glassy-card bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <BsPencil className="glassy-text-primary text-lg" />
         </div>
       </div>
 
@@ -203,7 +203,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
           {
             data?.personalInfo?.first_name && (
 
-              <h1 className="xl:text-[20px] lg:text-[18px] md:text-[16px] font-bold text-[#000000E6]">
+              <h1 className="xl:text-[20px] lg:text-[18px] md:text-[16px] font-bold glassy-text-primary">
                 {`${data?.personalInfo?.first_name || ''} ${data?.personalInfo?.last_name || ''}`}
               </h1>
             )
@@ -220,7 +220,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
         {
           data?.personalInfo?.headline && (
 
-            <p className="mt-1 md:text-[16px] font-medium text-[#000000]">
+            <p className="mt-1 md:text-[16px] font-medium glassy-text-primary">
               {data?.personalInfo?.headline || "Management Executive at Zara"}
             </p>
           )
@@ -238,7 +238,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
         <div className="flex items-center mt-2.5 space-x-3">
           <OpenToWorkSelect options={frameStatusOptions} value={frameStatus} onSelect={handleSelection} />
           <Button icon={<BiDownload />} variant='outline' size='sm'
-            className="bg-[#FFFFFF] border border-[#8C8C8C4F]/30 text-sm !text-[#0C0C0C]"
+            className="glassy-card border border-[#8C8C8C4F]/30 text-sm text-primary"
             tooltip={`Create Resume / profile`}
             onClick={() => {
               // handleResumeDownload();

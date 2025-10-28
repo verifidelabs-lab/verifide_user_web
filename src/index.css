@@ -20,7 +20,7 @@ body {
     "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell,
     "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Lucida Grande", Helvetica, Arial, sans-serif; */
-        font-family: "DM Sans", sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
 
 
@@ -39,9 +39,12 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 
@@ -124,14 +127,18 @@ input[type="date"]::-webkit-clear-button {
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: white; /* Make arrows white */
-  width: 24px;   /* Smaller width */
-  height: 24px;  /* Smaller height */
+  color: white;
+  /* Make arrows white */
+  width: 24px;
+  /* Smaller width */
+  height: 24px;
+  /* Smaller height */
 }
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 20px; /* Smaller arrow icon */
+  font-size: 20px;
+  /* Smaller arrow icon */
 }
 
 
@@ -182,7 +189,7 @@ input[type="date"]::-webkit-clear-button {
 }
 
 .hide-scrollbar {
-  overflow: auto; 
+  overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -190,9 +197,11 @@ input[type="date"]::-webkit-clear-button {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 /* Add this to your global CSS (e.g., styles.css or in Tailwind config if needed) */
 .loader {
-  border-top-color: #0a66c2; /* LinkedIn blue */
+  border-top-color: #0a66c2;
+  /* LinkedIn blue */
   animation: spin 1s linear infinite;
 }
 
@@ -206,12 +215,14 @@ input[type="date"]::-webkit-clear-button {
 .reply-line {
   position: absolute;
   top: 0.75rem;
-  left: 1rem; /* slightly right of avatar */
+  left: 1rem;
+  /* slightly right of avatar */
   width: 1.5rem;
   height: 100%;
   border-left: 2px solid #d1d5db;
   border-bottom: 2px solid #d1d5db;
-  border-bottom-left-radius: 12px; /* more curve */
+  border-bottom-left-radius: 12px;
+  /* more curve */
 }
 
 
@@ -236,83 +247,87 @@ input[type="date"]::-webkit-clear-button {
 }
 
 .create-post-container {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .post-type-selector::-webkit-scrollbar {
-    height: 4px;
+  height: 4px;
 }
 
 .post-type-selector::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 .post-type-selector::-webkit-scrollbar-thumb {
-    background: #c5c5c5;
-    border-radius: 4px;
+  background: #c5c5c5;
+  border-radius: 4px;
 }
 
 .post-type-selector::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+  background: #a8a8a8;
 }
 
 .tag {
-    animation: scaleIn 0.2s ease-in-out;
+  animation: scaleIn 0.2s ease-in-out;
 }
 
 @keyframes scaleIn {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .character-count {
-    transition: color 0.2s ease;
+  transition: color 0.2s ease;
 }
 
-input:focus, textarea:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .drafts-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .poll-options {
-    animation: slideDown 0.3s ease-out;
+  animation: slideDown 0.3s ease-out;
 }
 
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
@@ -325,11 +340,12 @@ input:focus, textarea:focus {
   background-size: 200% auto;
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
- }
+}
 
 
 .btn:hover {
-  background-position: right center; /* change the direction of the change here */
+  background-position: right center;
+  /* change the direction of the change here */
 }
 
 .btn-4 {
@@ -341,8 +357,185 @@ input:focus, textarea:focus {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;   
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+/* ---------- Light Theme Variables ---------- */
+/* ---------- Light Theme Variables ---------- */
+/* ---------- Light Theme Variables ---------- */
+:root {
+  --bg-app: rgb(25, 25, 25);
+  /* app background */
+  --bg-card: rgba(247, 243, 243, 0.05);
+  /* card background */
+  --bg-modal: rgba(32, 39, 55, 0.3);
+  /* modal/card glassy background */
+  --bg-button: rgba(250, 250, 250, 1);
+  --bg-button-hover: rgba(240, 240, 240, 1);
+  --text-primary: #111111;
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --bg-card-unread: rgba(247, 243, 243, 0.15);
+}
+
+/* ---------- Dark Theme Variables ---------- */
+[data-theme="dark"] {
+  --bg-app: #141414;
+  --bg-card: rgba(35, 35, 35, 0.7);
+  --bg-modal: rgba(32, 39, 55, 0.3);
+  /* keep modal consistent */
+  --bg-button: rgba(40, 40, 40, 0.7);
+  --bg-button-hover: rgba(60, 60, 60, 0.85);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --bg-card-unread: rgba(35, 35, 35, 0.85);
+
+}
+
+/* Glassy notification unread background */
+.bg-card-unread {
+  background-color: var(--bg-card-unread);
+  /* border-radius: 1rem; */
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ---------- Glassy App Background ---------- */
+.glassy-app {
+  position: relative;
+  min-height: 100vh;
+  background: url('/public/theme background.svg') no-repeat center center;
+  background-size: cover;
+  transition: all 0.4s ease;
+}
+
+
+/* ---------- Glassy Header ---------- */
+.glassy-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  transition: all 0.3s ease-in-out;
+}
+
+.glassy-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0.05),
+      rgba(255, 255, 255, 0.02));
+  pointer-events: none;
+}
+
+/* ---------- Glassy Card ---------- */
+.glassy-card {
+  position: relative;
+  background-color: var(--bg-modal);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-radius: 1rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.glassy-card-header {
+  position: absolute;
+  background-color: var(--bg-modal);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-radius: 1rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ---------- Glassy Modal ---------- */
+.glassy-modal {
+  background-color: var(--bg-modal);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border-radius: 1rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ---------- Glassy Button ---------- */
+.glassy-button {
+  background: linear-gradient(90deg, #0066FF 0%, #217AFF 50.96%, #A1BEFF 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(33, 122, 255, 0.35);
+  transition: all 0.25s ease-in-out;
+}
+
+.glassy-button:hover {
+  background: linear-gradient(90deg, #0052cc 0%, #1b6eff 50.96%, #8fb6ff 100%);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(33, 122, 255, 0.5);
+}
+
+.glassy-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(33, 122, 255, 0.3);
+}
+
+[data-theme="dark"] .glassy-button {
+  background: linear-gradient(90deg, #0040cc 0%, #1b6eff 50.96%, #8fb6ff 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(33, 122, 255, 0.25);
+}
+
+[data-theme="dark"] .glassy-button:hover {
+  background: linear-gradient(90deg, #0036aa 0%, #1b6eff 50.96%, #a1c4ff 100%);
+  box-shadow: 0 6px 18px rgba(33, 122, 255, 0.4);
+}
+
+/* ---------- Glassy Input ---------- */
+.glassy-input {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+.glassy-input-notification {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+.glassy-input:focus {
+  outline: none;
+  border-color: var(--bg-button-hover);
+}
+
+/* ---------- Glassy Text ---------- */
+.glassy-text-primary {
+  color: var(--text-primary);
+}
+
+.glassy-text-secondary {
+  color: var(--text-secondary);
+}

@@ -5,7 +5,7 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
   const data = modalState?.data;
 
   return (
-    <div className=" bg-white rounded-xl">
+    <div className=" glassy-card rounded-xl">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium">Job Details</h2>
         <button
@@ -13,7 +13,7 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
             setIsViewDetails(false);
             setViewDetails(false);
           }}
-          className="text-gray-500 hover:text-gray-700"
+          className="glassy-text-secondary hover:text-gray-700"
         >
           ✕
         </button>
@@ -41,36 +41,36 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
           <div>
             <h3 className="font-semibold text-gray-800 text-lg">{data?.job_title?.name}</h3>
             <p className="text-gray-600">{data?.company_id?.name}</p>
-            <p className="text-sm text-gray-500">{data?.industry_id?.name}</p>
+            <p className="text-sm glassy-text-secondary">{data?.industry_id?.name}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-500">Job Type</p>
+            <p className="text-sm font-medium glassy-text-secondary">Job Type</p>
             <p className="text-sm capitalize">{data?.job_type?.replace('-', ' ')}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-500">Location</p>
+            <p className="text-sm font-medium glassy-text-secondary">Location</p>
             <p className="text-sm capitalize">{data?.job_location}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-500">Pay Type</p>
+            <p className="text-sm font-medium glassy-text-secondary">Pay Type</p>
             <p className="text-sm capitalize">{data?.pay_type}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-sm font-medium text-gray-500">Status</p>
+            <p className="text-sm font-medium glassy-text-secondary">Status</p>
             <p className="text-sm capitalize">{data?.status}</p>
           </div>
         </div>
 
         <div className="bg-blue-50 p-3 rounded-lg">
-          <p className="text-sm font-medium text-gray-500 mb-1">Salary Range</p>
+          <p className="text-sm font-medium glassy-text-secondary mb-1">Salary Range</p>
           <p className="font-medium">{data?.salary_range}</p>
         </div>
 
         {/* <div>
-          <p className="text-sm font-medium text-gray-500 mb-1">Work Address</p>
+          <p className="text-sm font-medium glassy-text-secondary mb-1">Work Address</p>
           <p className="text-sm">{data?.work_location}</p>
         </div> */}
 
@@ -97,11 +97,11 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
 
         <div className="grid grid-cols-2 gap-4 border-t pt-4">
           <div>
-            <p className="text-sm font-medium text-gray-500">Posted On</p>
+            <p className="text-sm font-medium glassy-text-secondary">Posted On</p>
             <p className="text-sm">{convertTimestampToDate(data?.createdAt)}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-500">Total Applicants</p>
+            <p className="text-sm font-medium glassy-text-secondary">Total Applicants</p>
             <p className="text-sm">{data?.total_applicants || 0}</p>
           </div>
         </div>

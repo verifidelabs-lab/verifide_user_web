@@ -4,7 +4,7 @@ import Button from '../../../components/Atoms/Button/Button';
 
 const PersonalInformation = () => {
   return (
-    <div className="flex flex-col gap-6 bg-white border rounded-2xl">
+    <div className="flex flex-col gap-6 glassy-card border rounded-2xl">
       <div className="p-6 rounded-lg">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>

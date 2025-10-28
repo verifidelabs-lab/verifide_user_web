@@ -25,7 +25,7 @@ const ProgressBarWithBall = () => {
             top: `calc(${progress}% - 1rem)` 
           }}
         >
-          <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-xs font-bold text-blue-600">
+          <div className="w-6 h-6 rounded-full glassy-card flex items-center justify-center text-xs font-bold text-blue-600">
             <img src="/progressIcon.png" alt="" className="w-6 h-6"/>
           </div>
         </div>

@@ -6,7 +6,7 @@ const LoadingSpinner = ({ loading = true, overlayClass = '' }) => {
     <>
       {loading && (
         <div
-          className={`fixed inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm z-[1000] ${overlayClass}`}
+          className={`fixed inset-0 flex flex-col items-center justify-center glassy-card/80 backdrop-blur-sm z-[1000] ${overlayClass}`}
         >
           <div className="flex space-x-2 mb-4">
             <span className="w-4 h-4 bg-blue-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>

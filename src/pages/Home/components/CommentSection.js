@@ -283,7 +283,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
           />
           <button
             disabled={!newComment.trim() || loading}
-            className="text-[#000000E6] hover:text-blue-700 disabled:opacity-50"
+            className="glassy-text-primary hover:text-blue-700 disabled:opacity-50"
             type="submit"
           >
             <FiSend size={23} />
@@ -296,7 +296,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
           {loading ? (
             <div className="flex justify-center items-center py-4">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
-              <span className="ml-2 text-gray-500">Loading comments...</span>
+              <span className="ml-2 glassy-text-secondary">Loading comments...</span>
             </div>
           ) : (
             <div className="space-y-4">
@@ -324,11 +324,11 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                           </div>
                           <div className="bg-gray-50 rounded-lg p-2">
                             <div className="flex items-center space-x-2">
-                              <h4 className="text-[13px] font-semibold text-[#000000E6]">
+                              <h4 className="text-[13px] font-semibold glassy-text-primary">
                                 {comment?.user?.first_name} {comment?.user?.last_name}
                               </h4>
-                              <span className="text-xs text-gray-500">•</span>
-                              <span className="text-xs text-gray-500">
+                              <span className="text-xs glassy-text-secondary">•</span>
+                              <span className="text-xs glassy-text-secondary">
                                 {moment(comment?.updatedAt).fromNow()}
                               </span>
                             </div>
@@ -425,12 +425,12 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                                 </div>
                                 <div className="bg-gray-50 rounded-lg p-2 flex-1">
                                   <div className="flex items-center space-x-2">
-                                    <h4 className="text-[13px] font-semibold text-[#000000E6]">
+                                    <h4 className="text-[13px] font-semibold glassy-text-primary">
                                       {reply?.user?.first_name}{" "}
                                       {reply?.user?.last_name}
                                     </h4>
-                                    <span className="text-xs text-gray-500">•</span>
-                                    <span className="text-xs text-gray-500">
+                                    <span className="text-xs glassy-text-secondary">•</span>
+                                    <span className="text-xs glassy-text-secondary">
                                       {moment(reply?.updatedAt).fromNow()}
                                     </span>
                                   </div>
@@ -492,7 +492,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                   )}
                 </>
               ) : (
-                <div className="text-center py-4 text-gray-500">
+                <div className="text-center py-4 glassy-text-secondary">
                   No comments yet. Be the first to comment!
                 </div>
               )}

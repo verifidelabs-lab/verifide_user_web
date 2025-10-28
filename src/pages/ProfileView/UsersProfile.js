@@ -27,7 +27,7 @@ import { BaseUrl } from "../../components/hooks/axiosProvider";
 const StatsCard = ({ icon, value, label }) => (
   <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
     <div className="text-2xl font-bold text-gray-900">{value}</div>
-    <div className="text-sm text-gray-500">{label}</div>
+    <div className="text-sm glassy-text-secondary">{label}</div>
   </div>
 );
 
@@ -76,7 +76,7 @@ const ProfileCard = ({ formData, handleResumeDownload }) => {
           </p>
         )}
         {profile?.address?.city?.name && (
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm glassy-text-secondary mt-1">
             {profile?.address?.city?.name || "N/A"},{" "}
             {profile?.address?.state?.name || "N/A"}
           </p>
@@ -193,7 +193,7 @@ const UsersProfile = ({ currentUserId }) => {
             <div className="grid grid-cols-1  gap-8  ">
               <div className="lg:col-span-2 space-y-2 ">
                 <div
-                  className=" rounded-lg p-6 bg-white border border-[#D3D3D3]"
+                  className=" rounded-lg p-6 glassy-card border border-[#D3D3D3]"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
@@ -239,7 +239,7 @@ const UsersProfile = ({ currentUserId }) => {
                   <div className=" mt-5">
                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
                       <div className="exp-edu-card">
-                        <h2 className="md:mb-1 lg:mb-1 xl:text-lg lg:text-[14px] md:text-[12px]  font-semibold text-[#000000E6]">
+                        <h2 className="md:mb-1 lg:mb-1 xl:text-lg lg:text-[14px] md:text-[12px]  font-semibold glassy-text-primary">
                           LATEST WORK EXPERIENCE
                         </h2>
                         <ExpEduCard
@@ -269,7 +269,7 @@ const UsersProfile = ({ currentUserId }) => {
                       </div>
 
                       <div className="exp-edu-card">
-                        <h2 className="md:mb-1 lg:mb-1 xl:text-lg lg:text-[14px] md:text-[12px] font-semibold text-[#000000E6]">
+                        <h2 className="md:mb-1 lg:mb-1 xl:text-lg lg:text-[14px] md:text-[12px] font-semibold glassy-text-primary">
                           LATEST EDUCATION
                         </h2>
                         <ExpEduCard
@@ -297,7 +297,7 @@ const UsersProfile = ({ currentUserId }) => {
                         />
                       </div>
                       <div className="lg:col-span-1 md:col-span-2 mt-6 lg:mt-0">
-                        <h2 className="md:mb-1 lg:mb-2 lg:text-lg md:text-[14px] font-semibold text-[#000000E6]">
+                        <h2 className="md:mb-1 lg:mb-2 lg:text-lg md:text-[14px] font-semibold glassy-text-primary">
                           Top Skills
                         </h2>
                         <div className="flex flex-wrap gap-2">
@@ -322,10 +322,10 @@ const UsersProfile = ({ currentUserId }) => {
                 </div>
                 {formData?.personalInfo?.summary && (
                   <div
-                    className="bg-white rounded-lg p-6 border border-[#D3D3D3]"
+                    className="glassy-card rounded-lg p-6 border border-[#D3D3D3]"
                     data-aos="fade-up"
                   >
-                    <h2 className="text-xl font-bold text-[#000000E6] mb-4">
+                    <h2 className="text-xl font-bold glassy-text-primary mb-4">
                       About
                     </h2>
                     <p className="text-gray-600 leading-relaxed">
@@ -335,7 +335,7 @@ const UsersProfile = ({ currentUserId }) => {
                 )}
 
                 {formData?.personalInfo && (
-                  <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200">
+                  <div className="glassy-card rounded-xl shadow-sm p-4 border border-gray-200">
                     <div className="grid grid-cols-3 gap-2">
                       <StatsCard
                         icon={<BsEye className="w-5 h-5" />}
@@ -356,8 +356,8 @@ const UsersProfile = ({ currentUserId }) => {
                   </div>
                 )}
 
-                <div className="bg-white rounded-lg p-6 border border-[#D3D3D3]">
-                  <h2 className="text-xl font-bold text-[#000000E6] mb-6">
+                <div className="glassy-card rounded-lg p-6 border border-[#D3D3D3]">
+                  <h2 className="text-xl font-bold glassy-text-primary mb-6">
                     EXPERIENCE
                   </h2>
                   {formData?.experiences.length > 0 ? (
@@ -377,7 +377,7 @@ const UsersProfile = ({ currentUserId }) => {
                                 className="w-10 h-10  rounded"
                               />
                               <div>
-                                <h3 className="font-semibold text-[#000000] text-base">
+                                <h3 className="font-semibold glassy-text-primary text-base">
                                   {exp.companyName || ""}
                                 </h3>
                                 <p className="text-[#00000099]/60 text-sm">
@@ -402,7 +402,7 @@ const UsersProfile = ({ currentUserId }) => {
                     </>
                   ) : (
                     <>
-                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg bg-[#FBFBFB] hover:border-blue-300 transition-colors duration-300">
+                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
                         <div className="flex items-center justify-center mx-auto mb-4">
                           <img
                             src={`/Img/Profile/Frame (1).png`}
@@ -410,10 +410,10 @@ const UsersProfile = ({ currentUserId }) => {
                             className="hover:scale-110 transition-transform duration-300"
                           />
                         </div>
-                        <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
+                        <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
                           {`No experiences added`}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm glassy-text-secondary">
                           {`Add your professional experiences to build a comprehensive profile`}
                         </p>
                       </div>
@@ -421,8 +421,8 @@ const UsersProfile = ({ currentUserId }) => {
                   )}
                 </div>
 
-                <div className="bg-white rounded-lg p-6 border border-[#D3D3D3]">
-                  <h2 className="text-xl font-bold text-[#000000E6] mb-6">
+                <div className="glassy-card rounded-lg p-6 border border-[#D3D3D3]">
+                  <h2 className="text-xl font-bold glassy-text-primary mb-6">
                     Education
                   </h2>
                   {formData?.educations.length > 0 ? (
@@ -443,13 +443,13 @@ const UsersProfile = ({ currentUserId }) => {
                                 className="w-10 h-10 rounded-full"
                               />
                               <div>
-                                <h3 className="font-bold text-[#000000E6] text-lg">
+                                <h3 className="font-bold glassy-text-primary text-lg">
                                   {edu.institution || "Unspecified institution"}
                                 </h3>
                                 <p className="text-gray-600 text-sm">
                                   {edu.degree || "No degree specified"}
                                 </p>
-                                <p className="text-gray-500 text-sm flex items-center gap-1 mt-1">
+                                <p className="glassy-text-secondary text-sm flex items-center gap-1 mt-1">
                                   <BsCalendarEvent size={12} />{" "}
                                   {getDuration(edu.start_date, edu.end_date)}
                                 </p>
@@ -467,7 +467,7 @@ const UsersProfile = ({ currentUserId }) => {
                     </div>
                   ) : (
                     <>
-                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg bg-[#FBFBFB] hover:border-blue-300 transition-colors duration-300">
+                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
                         <div className="flex items-center justify-center mx-auto mb-4">
                           <img
                             src={`/Img/Profile/Frame.png`}
@@ -475,17 +475,17 @@ const UsersProfile = ({ currentUserId }) => {
                             className="hover:scale-110 transition-transform duration-300"
                           />
                         </div>
-                        <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
+                        <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
                           {`No Education records`}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm glassy-text-secondary">
                           {`Add your education history to enhance your profile`}
                         </p>
                       </div>
                     </>
                   )}
                 </div>
-                <div className="bg-[#FFFFFF] p-2 rounded-md border border-[#D3D3D3]">
+                <div className="glassy-card p-2 rounded-md border border-[#D3D3D3]">
                   <h2 className="capitalize text-base font-medium py-2">
                     projects
                   </h2>
@@ -510,7 +510,7 @@ const UsersProfile = ({ currentUserId }) => {
                     </div>
                   ) : (
                     <div>
-                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg bg-[#FBFBFB] hover:border-blue-300 transition-colors duration-300">
+                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
                         <div className="flex items-center justify-center mx-auto mb-4">
                           <img
                             src={`/Img/Profile/fi_1336494.png`}
@@ -518,17 +518,17 @@ const UsersProfile = ({ currentUserId }) => {
                             className="hover:scale-110 transition-transform duration-300"
                           />
                         </div>
-                        <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
+                        <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
                           {`No  Project`}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm glassy-text-secondary">
                           {`Add your Project to build a comprehensive profile`}
                         </p>
                       </div>
                     </div>
                   )}
                 </div>
-                <div className="bg-[#FFFFFF] p-2 rounded-md border border-[#D3D3D3]">
+                <div className="glassy-card p-2 rounded-md border border-[#D3D3D3]">
                   <h2 className="capitalize text-base font-medium py-2">
                     Certifications
                   </h2>
@@ -555,7 +555,7 @@ const UsersProfile = ({ currentUserId }) => {
                     </div>
                   ) : (
                     <div>
-                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg bg-[#FBFBFB] hover:border-blue-300 transition-colors duration-300">
+                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
                         <div className="flex items-center justify-center mx-auto mb-4">
                           <img
                             src={`/Img/Profile/Frame (2).png`}
@@ -563,10 +563,10 @@ const UsersProfile = ({ currentUserId }) => {
                             className="hover:scale-110 transition-transform duration-300"
                           />
                         </div>
-                        <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
+                        <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
                           {`No Certifications added`}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm glassy-text-secondary">
                           {`Add your certifications to build a comprehensive profile`}
                         </p>
                       </div>

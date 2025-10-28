@@ -137,7 +137,7 @@ const UserProfileCard = ({
   const displayData = getDisplayData();
 
   return (
-    <div className="w-80 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+    <div className="w-80 glassy-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
       {/* Image */}
       <div className="relative h-[170px]">
         <img
@@ -152,7 +152,7 @@ const UserProfileCard = ({
         />
 
         {user?.is_verified && (
-          <span className="absolute top-3 right-3 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+          <span className="absolute top-3 right-3 bg-blue-600 glassy-text-primary text-xs px-2 py-1 rounded-full">
             ✔ Verified
           </span>
         )}
@@ -162,7 +162,7 @@ const UserProfileCard = ({
         <h2 className="text-lg font-semibold text-gray-900 truncate">
           {displayData.title}
         </h2>
-        <p className="text-sm text-gray-500 truncate">{displayData.subtitle}</p>
+        <p className="text-sm glassy-text-secondary truncate">{displayData.subtitle}</p>
         <p className="text-sm text-gray-600 mt-2 line-clamp-2">
           {displayData.description}
         </p>
@@ -177,7 +177,7 @@ const UserProfileCard = ({
                   <p className="text-lg font-bold text-blue-600">
                     {stat.value}
                   </p>
-                  <p className="text-xs text-gray-500">{stat.label}</p>
+                  <p className="text-xs glassy-text-secondary">{stat.label}</p>
                 </>
               )}
             </div>
@@ -188,8 +188,8 @@ const UserProfileCard = ({
           <button
             className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold ${
               displayData.isConnected
-                ? "bg-green-500 text-white cursor-default"
-                : "bg-blue-600 text-white hover:bg-blue-700"
+                ? "bg-green-500 glassy-text-primary cursor-default"
+                : "bg-blue-600 glassy-text-primary hover:bg-blue-700"
             }`}
             onClick={() => !displayData.isConnected && handleFollowClick(user)}
             disabled={isLoading || displayData.isConnected}

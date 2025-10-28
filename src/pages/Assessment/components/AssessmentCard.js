@@ -24,7 +24,7 @@ const CandidateCard = ({ candidate }) => {
   const remainingCount = candidate.skills.length - MAX_VISIBLE_SKILLS;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 max-w-md mx-auto">
+    <div className="glassy-card rounded-2xl shadow-sm border border-gray-200 p-6 max-w-md mx-auto">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
           <img
@@ -33,10 +33,10 @@ const CandidateCard = ({ candidate }) => {
             className="w-12 h-12 rounded-full object-cover"
           />
           <div>
-            <h3 className="font-semibold text-[#000000E6] text-lg">
+            <h3 className="font-semibold glassy-text-primary text-lg">
               {candidate.name}
             </h3>
-            <p className="text-sm text-gray-500 flex items-center">
+            <p className="text-sm glassy-text-secondary flex items-center">
               <BiCalendar size={14} className="mr-1" />
               {candidate.date}
             </p>
@@ -46,7 +46,7 @@ const CandidateCard = ({ candidate }) => {
 
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h4 className="font-medium text-[#000000E6] text-lg">
+          <h4 className="font-medium glassy-text-primary text-lg">
             {candidate.position}
           </h4>
           <p className="text-blue-600 font-medium text-sm">
@@ -126,32 +126,33 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
   //     [id]: !prev[id],
   //   }));
   // };
+const renderStatusButton = (passed, attempt_number, max_attempts) => {
+  const isDisabled = passed || attempt_number >= max_attempts;
+  const buttonText = isDisabled ? "Start" : attempt_number ? "Resume" : "Start";
 
-  const renderStatusButton = (passed, attempt_number, max_attempts) => {
-    const isDisabled = passed || attempt_number >= max_attempts;
-    const buttonText = isDisabled ? "Start" : attempt_number ? "Resume" : "Start";
+  return (
+    <div className="flex justify-between pt-3 mt-auto gap-6">
+      <Button
+        variant="outline"
+        className={`w-44 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+        disabled={isDisabled}
+        onClick={() => handleStartAssessment(assessment)}
+      >
+        {buttonText}
+      </Button>
 
-    return (
-      <div className="flex justify-between pt-3 mt-auto gap-6">
-        <Button
-          variant="primary"
-          className='w-44'
-          disabled={isDisabled}
-          onClick={() => handleStartAssessment(assessment)}
+      {assessment.assessment_id?.material_url && (
+        <button
+          className="flex-1 gap-2 flex items-center justify-center px-4 py-2.5 rounded-md border border-[var(--border-color)] glassy-card glassy-text-primary hover:glassy-text-secondary transition-all duration-200"
+          onClick={() => window.open(assessment.assessment_id?.material_url, '_blank')}
         >
-          {buttonText}
-        </Button>
-        {assessment.assessment_id?.material_url && (
-          <button
-            className="gap-2 flex-1 w-24 bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium py-2.5 px-4 rounded-md border border-blue-200 transition-colors flex items-center justify-center space-x-2 W-24 "
-            onClick={() => window.open(assessment.assessment_id?.material_url, '_blank')}
-          >
-            Guide <PiDownloadBold size={23} />
-          </button>
-        )}
-      </div>
-    );
-  };
+          Guide <PiDownloadBold size={23} />
+        </button>
+      )}
+    </div>
+  );
+};
+
 
   const assessmentId = assessment.assessment_id?._id;
   const skill_ids = assessment.assessment_id?.skill_ids || [];
@@ -160,38 +161,62 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
   // const remainingCount = skill_ids.length - MAX_VISIBLE_SKILLS;
 
   return (
-    <div key={assessment._id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-2 flex flex-col h-full">
+    <div
+      key={assessment._id}
+      className="glassy-card rounded-xl p-6 flex flex-col h-full space-y-3 border border-[var(--border-color)] shadow-sm hover:shadow-md transition-all duration-300"
+    >
+      {/* Top Section */}
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-3">
-          {assessment.assessment_id?.action_by?.profile_picture_url || assessment.assessment_id?.action_by?.logo_url || "https://i.pinimg.com/736x/bb/29/40/bb294045fe0db26c02bf0f63926e923b.jpg" ? (
+          {assessment.assessment_id?.action_by?.profile_picture_url ||
+            assessment.assessment_id?.action_by?.logo_url ? (
             <img
-              src={assessment.assessment_id?.action_by?.profile_picture_url || assessment.assessment_id?.action_by?.logo_url}
-              alt={assessment.assessment_id?.action_by?.first_name || assessment.assessment_id?.action_by?.name}
-              className="w-14 h-14 object-cover"
+              src={
+                assessment.assessment_id?.action_by?.profile_picture_url ||
+                assessment.assessment_id?.action_by?.logo_url
+              }
+              alt={
+                assessment.assessment_id?.action_by?.first_name ||
+                assessment.assessment_id?.action_by?.name
+              }
+              className="w-14 h-14 object-cover rounded-full border border-[var(--border-color)]"
               onError={(e) => {
-                e.target.src = "https://i.pinimg.com/736x/bb/29/40/bb294045fe0db26c02bf0f63926e923b.jpg";
+                e.target.src =
+                  'https://i.pinimg.com/736x/bb/29/40/bb294045fe0db26c02bf0f63926e923b.jpg';
               }}
             />
-          ) : null}
+          ) : (
+            <img
+              src="https://i.pinimg.com/736x/bb/29/40/bb294045fe0db26c02bf0f63926e923b.jpg"
+              alt="Default"
+              className="w-14 h-14 object-cover rounded-full border border-[var(--border-color)]"
+            />
+          )}
+
           <div>
-            <h3 className="font-medium text-[16px] text-[#000000E6]">
+            <h3 className="font-semibold text-[16px] glassy-text-primary">
               {assessment.assessment_id?.action_by?.name ||
                 `${assessment.assessment_id?.action_by?.first_name} ${assessment.assessment_id?.action_by?.last_name}`}
             </h3>
-            <p className="text-sm text-gray-500 flex items-center">
-              <span className="mr-1 text-[#6B6B6B] font-normal text-[12px]">
-                <CiCalendarDate size={17} />
-              </span>
-              {formatDateByMomentTimeZone(assessment.assessment_id.updatedAt, 'D MMM YYYY')}
+
+            <p className="text-sm glassy-text-secondary flex items-center gap-1">
+              <CiCalendarDate className="text-[var(--accent-color)]" size={16} />
+              {formatDateByMomentTimeZone(
+                assessment.assessment_id.updatedAt,
+                'D MMM YYYY'
+              )}
             </p>
           </div>
         </div>
 
+        {/* Status Section */}
         {assessment.passed ? (
           <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-2 px-4 py-2 rounded-full">
-              <img src="/Img/assVerified.png" alt="Passed" className="h-8 w-8" />
-              <span className="font-medium text-[16px]">Passed</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
+              <img src="/Img/assVerified.png" alt="Passed" className="h-7 w-7" />
+              <span className="font-medium text-[15px] glassy-text-primary">
+                Passed
+              </span>
             </div>
           </div>
         ) : (
@@ -199,51 +224,69 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
             <div
               className="absolute inset-0 rounded-full"
               style={{
-                background: `conic-gradient(#2563EB ${(assessment.total_score / assessment.assessment_id.no_of_questions) * 360}deg, #E5E7EB ${(assessment.total_score / assessment.assessment_id.no_of_questions) * 360}deg)`
+                background: `conic-gradient(var(--accent-color) ${(assessment.total_score /
+                  assessment.assessment_id.no_of_questions) *
+                  360
+                  }deg, var(--border-color) ${(assessment.total_score /
+                    assessment.assessment_id.no_of_questions) *
+                  360
+                  }deg)`,
               }}
             ></div>
-            <div className="absolute w-11 h-11 bg-white rounded-full z-10"></div>
-            <div className="absolute inset-0 flex items-center justify-center text-[11px] font-medium text-gray-800 z-20 rounded-full">
+            <div className="absolute w-11 h-11 glassy-card rounded-full z-10 border border-[var(--border-color)]"></div>
+            <div className="absolute inset-0 flex items-center justify-center text-[11px] font-medium glassy-text-primary z-20 rounded-full">
               {assessment.total_score} of {assessment.assessment_id.no_of_questions}
             </div>
           </div>
         )}
       </div>
 
+      {/* Title + Passing Score */}
       <div className="flex justify-between w-full">
-        <h4 className="font-medium text-[16px] text-[#000000E6]">
+        <h4 className="font-semibold text-[16px] glassy-text-primary truncate">
           {assessment.assessment_id.title}
         </h4>
-        <p className="text-[#5D5FEF] font-[400] text-[14px]">
+        <p className="glassy-text-secondary font-medium text-[14px]">
           {assessment.assessment_id.passing_score}% Passing Score
         </p>
       </div>
+      {/* Info Pills */}
+      <div className="flex items-center flex-wrap gap-3">
+        <div className="flex items-center text-xs gap-1 glassy-card border border-[var(--border-color)] rounded-full px-2.5 py-1">
+          <GoClock className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{assessment.assessment_id.time_limit} Min</span>
+        </div>
 
-      <div className="flex items-center space-x-6 text-gray-600">
-        <div className="flex items-center text-xs space-x-1 border border-gray-200 rounded-full p-1.5">
-          <GoClock className="w-4 h-4" />
-          <span>{assessment.assessment_id.time_limit} Min</span>
+        <div className="flex items-center text-xs gap-1 glassy-card border border-[var(--border-color)] rounded-full px-2.5 py-1">
+          <HiOutlineClipboardList className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{assessment.assessment_id.no_of_questions} Quiz’s</span>
         </div>
-        <div className="flex items-center text-xs space-x-1 border border-gray-200 rounded-full p-1.5">
-          <HiOutlineClipboardList className="w-4 h-4" />
-          <span>{assessment.assessment_id.no_of_questions} Quiz's</span>
-        </div>
-        <div className="flex items-center text-xs space-x-1 border border-gray-200 rounded-full p-1.5">
-          <BsBarChartLine className="w-4 h-4" />
-          <span className='capitalize'>{assessment.assessment_id?.level_id?.name}</span>
+
+        <div className="flex items-center text-xs gap-1 glassy-card border border-[var(--border-color)] rounded-full px-2.5 py-1 capitalize">
+          <BsBarChartLine className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{assessment.assessment_id?.level_id?.name}</span>
         </div>
       </div>
 
-      <p className="text-[#6B6B6B] text-[14px] font-[400] leading-relaxed">
+
+      {/* Description */}
+      <p className="text-[14px] font-normal leading-relaxed glassy-text-secondary">
         {assessment.assessment_id.description}
       </p>
 
+      {/* Skills */}
       <div>
-        <SkillsCard2 skills={visibleSkills} limit={2}/>
+        <SkillsCard2 skills={visibleSkills} limit={2} />
       </div>
 
-      {renderStatusButton(assessment.passed, assessment.attempt_number, assessment.assessment_id.max_attempts)}
+      {/* CTA Button */}
+      {renderStatusButton(
+        assessment.passed,
+        assessment.attempt_number,
+        assessment.assessment_id.max_attempts
+      )}
     </div>
+
   );
 };
 

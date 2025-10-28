@@ -203,7 +203,7 @@ const CareerGoal = () => {
   if (screeningQuestions.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="glassy-card rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="animate-spin w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
           <p className="text-lg text-gray-600">
             Loading screening questions...
@@ -216,7 +216,7 @@ const CareerGoal = () => {
   if (showSuccess) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+        <div className="glassy-card rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <BiCheckCircle className="w-12 h-12 text-green-600" />
           </div>
@@ -229,7 +229,7 @@ const CareerGoal = () => {
               : "Your screening answers have been successfully submitted."}
           </p>
           <button
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            className="w-full bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold py-3 px-6 rounded-lg transition-colors"
             onClick={() => navigate(`/user/opportunitiess/`)}
           >
             Back to Your Opportunities
@@ -246,7 +246,7 @@ const CareerGoal = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Job Information Card */}
-        <div className="bg-white rounded-2xl shadow-lg mb-6 p-6">
+        <div className="glassy-card rounded-2xl shadow-lg mb-6 p-6">
           <div className="flex items-start gap-4">
             <Link
               to={`/user/view-details/companies/${jobData?.company_id?._id}`}
@@ -299,14 +299,14 @@ const CareerGoal = () => {
         </div>
 
         {/* Question Card */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <div className="glassy-card rounded-2xl shadow-lg p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div>
               <h2 className="text-lg font-semibold text-gray-900">
                 Screening Questions
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm glassy-text-secondary">
                 Question {currentQuestion + 1} of {screeningQuestions.length}
               </p>
             </div>
@@ -401,7 +401,7 @@ const CareerGoal = () => {
                   value={currentAnswer.selected_options?.[0] || ""}
                   onChange={handleTextAnswerChange}
                 />
-                <div className="mt-2 text-sm text-gray-500">
+                <div className="mt-2 text-sm glassy-text-secondary">
                   Character count:{" "}
                   {(currentAnswer.selected_options?.[0] || "").length}
                 </div>
@@ -413,7 +413,7 @@ const CareerGoal = () => {
             {currentQuestion < screeningQuestions.length - 1 ? (
               <button
                 onClick={handleNext}
-                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold rounded-lg transition-all"
               >
                 Next
                 <BiChevronRightCircle className="w-4 h-4" />
@@ -422,7 +422,7 @@ const CareerGoal = () => {
               <button
                 onClick={() => handleSubmit(false)}
                 disabled={loading}
-                className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all"
+                className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 glassy-text-primary font-semibold rounded-lg transition-all"
               >
                 <BiCheckCircle className="w-4 h-4" />
                 {loading ? "Submitting..." : "Submit"}

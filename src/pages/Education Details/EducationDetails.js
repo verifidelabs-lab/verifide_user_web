@@ -718,7 +718,7 @@ const EducationDetails = () => {
 
           <div className="w-full md:w-1/2 flex items-center justify-center p-6">
             <div
-              className="w-full max-w-lg border-[0.5px] bg-[#FFFFFF] border-[#A9A9A9]/50 shadow-sm rounded-[10px] p-4"
+              className="w-full max-w-lg border-[0.5px] glassy-card border-[#A9A9A9]/50 shadow-sm rounded-[10px] p-4"
               data-aos="fade-left"
             >
               <div className="text-center mb-4">
@@ -727,10 +727,10 @@ const EducationDetails = () => {
                   alt="logo"
                   className="mx-auto max-w-56 h-10 my-2"
                 />
-                <p className="text-[#000000] text-base font-normal">
+                <p className="glassy-text-primary text-base font-normal">
                   Learn More. Earn More
                 </p>
-                <h1 className="text-3xl font-semibold text-[#000000] py-3">
+                <h1 className="text-3xl font-semibold glassy-text-primary py-3">
                   Education Details
                 </h1>
                 <p className="text-[#646464] text-base font-normal mb-3">

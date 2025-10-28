@@ -288,7 +288,7 @@ const ForgotPassword = () => {
     <div className="w-full flex items-center justify-center p-4 sm:p-6">
       <div
         ref={formRef}
-        className="w-full max-w-sm sm:max-w-md border-[0.5px] bg-white border-gray-200 shadow-sm rounded-xl p-6 sm:p-8"
+        className="w-full max-w-sm sm:max-w-md border-[0.5px] glassy-card border-gray-200 shadow-sm rounded-xl p-6 sm:p-8"
         style={{
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
           transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
@@ -303,10 +303,10 @@ const ForgotPassword = () => {
           <p className="text-gray-600 text-sm sm:text-base">
             Learn More. Earn More
           </p>
-          <h1 className="text-2xl sm:text-3xl font-semibold text-[#000000E6] py-3">
+          <h1 className="text-2xl sm:text-3xl font-semibold glassy-text-primary py-3">
             Forgot Password
           </h1>
-          <p className="text-gray-500 text-sm sm:text-base mb-4">
+          <p className="glassy-text-secondary text-sm sm:text-base mb-4">
             Enter your email to receive a verification code
           </p>
         </div>
@@ -333,7 +333,7 @@ const ForgotPassword = () => {
             </Button>
           </div>
           <div className="text-center pt-2">
-            <span className="text-gray-500 text-sm sm:text-base">
+            <span className="glassy-text-secondary text-sm sm:text-base">
               Back to?{" "}
             </span>
             <Link
@@ -353,7 +353,7 @@ const ForgotPassword = () => {
     <div className="w-full flex items-center justify-center p-4 sm:p-6">
       <div
         ref={formRef}
-        className="w-full max-w-sm sm:max-w-md border-[0.5px] bg-white border-gray-200 shadow-sm rounded-xl p-6 sm:p-8"
+        className="w-full max-w-sm sm:max-w-md border-[0.5px] glassy-card border-gray-200 shadow-sm rounded-xl p-6 sm:p-8"
         style={{
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
           transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
@@ -368,10 +368,10 @@ const ForgotPassword = () => {
           <p className="text-gray-600 text-sm sm:text-base">
             Learn More. Earn More
           </p>
-          <h1 className="text-2xl sm:text-3xl font-semibold text-[#000000E6] py-3">
+          <h1 className="text-2xl sm:text-3xl font-semibold glassy-text-primary py-3">
             Verify OTP
           </h1>
-          <p className="text-gray-500 text-sm sm:text-base mb-4">
+          <p className="glassy-text-secondary text-sm sm:text-base mb-4">
             We've sent a 6-digit code to {formData.email}
           </p>
         </div>
@@ -411,7 +411,7 @@ const ForgotPassword = () => {
             {isLoading ? "Verifying..." : "Verify OTP"}
           </Button>
           <div className="text-center pt-1">
-            <span className="text-gray-500 text-sm sm:text-base">
+            <span className="glassy-text-secondary text-sm sm:text-base">
               Didn't receive code?{" "}
             </span>
             <button
@@ -424,7 +424,7 @@ const ForgotPassword = () => {
             </button>
           </div>
           <div className="text-center pt-1">
-            <span className="text-gray-500 text-sm sm:text-base">
+            <span className="glassy-text-secondary text-sm sm:text-base">
               Back to?{" "}
             </span>
             <Link
@@ -444,7 +444,7 @@ const ForgotPassword = () => {
     <div className="w-full flex items-center justify-center p-4 sm:p-6">
       <div
         ref={formRef}
-        className="w-full max-w-sm sm:max-w-md border-[0.5px] bg-white border-gray-200 md:shadow-sm shadow-none rounded-xl p-6 sm:p-8"
+        className="w-full max-w-sm sm:max-w-md border-[0.5px] glassy-card border-gray-200 md:shadow-sm shadow-none rounded-xl p-6 sm:p-8"
         style={{
           boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
           transition: "opacity 0.3s ease-out, transform 0.3s ease-out",
@@ -459,10 +459,10 @@ const ForgotPassword = () => {
           <p className="text-gray-600 text-sm sm:text-base">
             Learn More. Earn More
           </p>
-          <h1 className="text-2xl sm:text-3xl font-semibold text-[#000000E6] py-3">
+          <h1 className="text-2xl sm:text-3xl font-semibold glassy-text-primary py-3">
             Reset Password
           </h1>
-          <p className="text-gray-500 text-sm sm:text-base mb-4">
+          <p className="glassy-text-secondary text-sm sm:text-base mb-4">
             Create a new password for your account
           </p>
         </div>
@@ -493,7 +493,7 @@ const ForgotPassword = () => {
             className="w-full h-11 sm:h-12"
           />
 
-          <div className="text-xs sm:text-sm text-gray-500 bg-gray-50 p-3 rounded-lg mt-5">
+          <div className="text-xs sm:text-sm glassy-text-secondary bg-gray-50 p-3 rounded-lg mt-5">
             <p className="font-medium mb-1">Password must contain:</p>
             <ul className="grid grid-cols-2 gap-1">
               <li
@@ -555,7 +555,7 @@ const ForgotPassword = () => {
           </Button>
 
           <div className="text-center pt-2">
-            <span className="text-gray-500 text-sm sm:text-base">
+            <span className="glassy-text-secondary text-sm sm:text-base">
               Back to?{" "}
             </span>
             <Link
@@ -587,8 +587,8 @@ const ForgotPassword = () => {
               ))}
 
               {/* Animated decorative elements */}
-              <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-white bg-opacity-10 rounded-full blur-xl animate-pulse"></div>
-              <div className="absolute bottom-1/3 left-1/4 w-24 h-24 bg-white bg-opacity-5 rounded-full blur-lg animate-pulse delay-300"></div>
+              <div className="absolute top-1/4 right-1/4 w-32 h-32 glassy-card bg-opacity-10 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute bottom-1/3 left-1/4 w-24 h-24 glassy-card bg-opacity-5 rounded-full blur-lg animate-pulse delay-300"></div>
             </div>
           )}
         </div>

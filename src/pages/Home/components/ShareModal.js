@@ -49,8 +49,8 @@ const ShareModal = ({ post, onClose, userData, hanleCopyLink }) => {
 
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl w-full max-w-2xl h-[600px] flex flex-col shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="glassy-card rounded-xl w-full max-w-2xl h-[600px] flex flex-col shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-800 capitalize">Share with</h2>
           <button
@@ -115,7 +115,7 @@ const ShareModal = ({ post, onClose, userData, hanleCopyLink }) => {
 
         <div className="flex-1 overflow-y-auto">
           {filteredUsers.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500 p-6">
+            <div className="flex flex-col items-center justify-center h-full glassy-text-secondary p-6">
               <FiSearch size={32} className="mb-3 text-gray-300" />
               <p>No connections found</p>
               <p className="text-sm text-gray-400 mt-1">Try a different search term</p>
@@ -158,10 +158,10 @@ const ShareModal = ({ post, onClose, userData, hanleCopyLink }) => {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-[#000000E6] truncate">
+                        <h3 className="font-medium glassy-text-primary truncate">
                           {user.first_name} {user.last_name}
                         </h3>
-                        <p className="text-sm text-gray-500 truncate">
+                        <p className="text-sm glassy-text-secondary truncate">
                           {user.headline || "No headline"}
                         </p>
                       </div>
@@ -172,7 +172,7 @@ const ShareModal = ({ post, onClose, userData, hanleCopyLink }) => {
                           : 'border-gray-300 hover:border-blue-300'
                           }`}
                       >
-                        {isSelected && <FiCheck size={12} className="text-white" />}
+                        {isSelected && <FiCheck size={12} className="glassy-text-primary" />}
                       </div>
                     </button>
                   </li>
@@ -182,12 +182,12 @@ const ShareModal = ({ post, onClose, userData, hanleCopyLink }) => {
           )}
         </div>
 
-        <div className="p-4 border-t border-gray-200 bg-white">
+        <div className="p-4 border-t border-gray-200 glassy-card">
           <button
             onClick={handleSendPost}
             disabled={selectedUsers.length === 0}
             className={`w-full py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-all ${selectedUsers.length > 0
-              ? 'bg-blue-600 text-white hover:bg-blue-700 shadow'
+              ? 'bg-blue-600 glassy-text-primary hover:bg-blue-700 shadow'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
           >

@@ -516,7 +516,7 @@ const SignUp = () => {
 
         <div className="w-full md:w-1/2 flex items-center justify-center p-6">
           <div
-            className="w-full max-w-lg border-[0.5px] bg-[#FFFFFF] border-[#A9A9A9]/50 shadow-sm rounded-[10px] p-4"
+            className="w-full max-w-lg border-[0.5px] glassy-card border-[#A9A9A9]/50 shadow-sm rounded-[10px] p-4"
             data-aos="fade-left"
           >
             <div className="text-center mb-4">
@@ -525,10 +525,10 @@ const SignUp = () => {
                 alt="logo"
                 className="mx-auto max-w-56 h-10 my-2"
               />
-              <p className="text-[#000000] text-base font-normal">
+              <p className="glassy-text-primary text-base font-normal">
                 Learn More. Earn More
               </p>
-              <h1 className="text-3xl font-semibold text-[#000000] py-3">
+              <h1 className="text-3xl font-semibold glassy-text-primary py-3">
                 {isOtpState ? "Verify Your Email" : "Create Account"}
               </h1>
 
@@ -541,7 +541,7 @@ const SignUp = () => {
                   <div className="flex justify-center items-center gap-3">
                     {/* <button
                                             type="button"
-                                            className="bg-white border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 hover:shadow-lg hover:border-[#0077B5]/30 hover:scale-105"
+                                            className="glassy-card border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 hover:shadow-lg hover:border-[#0077B5]/30 hover:scale-105"
                                             style={{ boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)' }}
                                             data-aos="zoom-in"
                                             data-aos-delay="150"
@@ -551,7 +551,7 @@ const SignUp = () => {
                                         </button> */}
                     <button
                       type="button"
-                      className="bg-white border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 hover:shadow-lg hover:scale-105"
+                      className="glassy-card border border-[#EDEDED] w-24 h-14 flex justify-center items-center rounded-[10px] transition-all duration-300 hover:shadow-lg hover:scale-105"
                       style={{ boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)" }}
                       data-aos="zoom-in"
                       data-aos-delay="200"
@@ -579,7 +579,7 @@ const SignUp = () => {
                   <p className="text-[#646464] text-sm mb-4">
                     We've sent a 6-digit verification code to
                   </p>
-                  <p className="text-[#000000] font-medium mb-4">
+                  <p className="glassy-text-primary font-medium mb-4">
                     {formData.email}
                   </p>
                 </div>
@@ -601,7 +601,7 @@ const SignUp = () => {
                         onChange={(e) => handleOtpChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
                         disabled={isSubmitting}
-                        className={`w-12 h-12 mx-1 text-center text-xl bg-[#FFFFFF] border-2 rounded-lg focus:ring-2 focus:ring-blue-300/30 outline-none transition-all duration-200 ${
+                        className={`w-12 h-12 mx-1 text-center text-xl glassy-card border-2 rounded-lg focus:ring-2 focus:ring-blue-300/30 outline-none transition-all duration-200 ${
                           otpError
                             ? "border-red-500 focus:border-red-500"
                             : "border-blue-500 focus:border-purple-300"
@@ -626,7 +626,7 @@ const SignUp = () => {
                   </div>
 
                   <div className="text-center mb-4">
-                    <p className="text-gray-500 text-sm">
+                    <p className="glassy-text-secondary text-sm">
                       Didn't receive the code?{" "}
                       <button
                         type="button"
@@ -752,7 +752,7 @@ const SignUp = () => {
               <Link
                 // to="/login"
                 to={`/login?redirect=${encodeURIComponent(redirectUrl)}`}
-                className="font-medium text-[#000000] hover:text-blue-500"
+                className="font-medium glassy-text-primary hover:text-blue-500"
               >
                 Sign in
               </Link>

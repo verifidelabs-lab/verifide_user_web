@@ -59,7 +59,7 @@ const PostDetailsPage = () => {
 
   if (!postData) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-gray-500">
+      <div className="min-h-screen flex items-center justify-center glassy-text-secondary">
         No post data available.
       </div>
     );
@@ -68,11 +68,11 @@ const PostDetailsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+      <header className="glassy-card border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-600 hover:text-black"
+            className="text-gray-600 hover:glassy-text-primary"
           >
             ← Back
           </button>
@@ -83,7 +83,7 @@ const PostDetailsPage = () => {
 
       {/* Post */}
       <div className="max-w-2xl mx-auto p-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="glassy-card rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           {/* Post header */}
           <div className="p-4 border-b border-gray-100 flex items-center space-x-3">
             <img
@@ -93,7 +93,7 @@ const PostDetailsPage = () => {
             />
             <div className="flex-1">
               <h3 className="font-semibold">{postData.userData?.name || "Unknown"}</h3>
-              <p className="text-sm text-gray-500">Posted publicly</p>
+              <p className="text-sm glassy-text-secondary">Posted publicly</p>
             </div>
           </div>
 

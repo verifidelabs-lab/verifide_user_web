@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -28,6 +28,7 @@ import { getCookie } from "./components/utils/cookieHandler";
 import CompanyDetails from "./pages/CompanyDetails";
 import PublicLayout from "./components/Layout/PublicLayout/PublicLayout";
 import CompanyInstituteView from "./pages/ProfileView/CompanyInstituteView";
+import { ThemeContext } from "./context/ThemeContext";
 
 const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
@@ -83,10 +84,15 @@ const PublicRoute = ({ children, allowCompanyLogin = false }) => {
     return <Navigate to="/user/feed" replace />;
   return children;
 };
-
 const App = () => {
+const { theme } = useContext(ThemeContext);
+
+useEffect(() => {
+  document.documentElement.setAttribute("data-theme", theme);
+}, [theme]);
+
   return (
-    <>
+    <div className="glassy-app">
       <Router>
         <Routes>
           {/* Root redirect */}
@@ -206,7 +212,7 @@ const App = () => {
       </Router>
 
       <Toaster position="top-center" richColors closeButton />
-    </>
+   </div>
   );
 };
 

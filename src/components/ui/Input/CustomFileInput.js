@@ -32,10 +32,10 @@ const CustomFileInput = ({
             ${error ? "border-red-500" : "border-[#0000001A]"} 
             focus:outline-none focus:ring-2 focus:ring-blue-500`}
         >
-          <span className={`truncate ${value ? "text-[#000000E6]" : "text-gray-400"} max-w-[90%]`}>
+          <span className={`truncate ${value ? "glassy-text-primary" : "text-gray-400"} max-w-[90%]`}>
             {value || placeholder}
           </span>
-          <BiPaperclip className="w-5 h-5 text-gray-500" />
+          <BiPaperclip className="w-5 h-5 glassy-text-secondary" />
         </div>
       </div>
 

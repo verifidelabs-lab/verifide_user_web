@@ -16,14 +16,14 @@ const CourseCard = ({
     tags = [],
 }) => {
     return (
-        <div className="w-[256px] max-h-[342px] rounded-[14px] p-3 overflow-hidden bg-[#FFFFFF]">
+        <div className="w-[256px] max-h-[342px] rounded-[14px] p-3 overflow-hidden glassy-card">
             <div className="relative ">
                 <img src={bannerImage} alt={courseTitle} className=" mb-2 rounded-lg mx-auto" />
                 <div className="absolute bottom-2 left-2 flex space-x-1">
                     {tags.map((tag, index) => (
                         <span
                             key={index}
-                            className="bg-white/80 text-xs px-1.5 py-0.5 rounded font-medium text-gray-700"
+                            className="glassy-card/80 text-xs px-1.5 py-0.5 rounded font-medium text-gray-700"
                         >
                             {tag}
                         </span>
@@ -32,7 +32,7 @@ const CourseCard = ({
             </div>
 
             <div className="">
-                <h3 className="text-[14px] text-[#000000] font-semibold ">{courseTitle}</h3>
+                <h3 className="text-[14px] glassy-text-primary font-semibold ">{courseTitle}</h3>
                 <a href={authorLink} className="text-[12px] text-[#3DCBB1] font-normal flex items-center gap-1 mb-2">
                    <CiUser className='text-gray-600 text-md'/>
                     {author}
@@ -42,7 +42,7 @@ const CourseCard = ({
                     {[...Array(5)].map((_, i) => (
                         <FaStar key={i} size={16} fill={i < rating ? '#facc15' : 'none'} stroke="#facc15" />
                     ))}
-                    <span className="text-gray-500 text-xs ml-2">({reviews})</span>
+                    <span className="glassy-text-secondary text-xs ml-2">({reviews})</span>
                 </div>
                 <div className="flex items-center space-x-2">
                     <span className="text-lg font-bold text-[#1B1B1BE5]/90">${price}</span>

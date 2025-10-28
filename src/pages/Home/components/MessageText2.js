@@ -152,7 +152,7 @@ const MessageText2 = ({ msg }) => {
                     <div className="p-4 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300">
                         <div className="flex items-center gap-3">
                             <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-lg">PDF</span>
+                                <span className="glassy-text-primary font-bold text-lg">PDF</span>
                             </div>
                             <div className="flex-1 min-w-0">
                                 <h4 className="font-medium truncate">{preview?.title || 'PDF Document'}</h4>
@@ -168,7 +168,7 @@ const MessageText2 = ({ msg }) => {
         if (preview) {
             return (
                 <a href={url} target="_blank" rel="noopener noreferrer" className="block mt-3">
-                    <div className="border rounded-lg overflow-hidden bg-white hover:bg-gray-50 transition-colors">
+                    <div className="border rounded-lg overflow-hidden glassy-card hover:bg-gray-50 transition-colors">
                         {preview.image && (
                             <img
                                 src={preview.image}
@@ -188,7 +188,7 @@ const MessageText2 = ({ msg }) => {
                                     alt="favicon"
                                     className="w-4 h-4 mr-2"
                                 />
-                                <span className="text-xs text-gray-500 truncate">{new URL(url).hostname}</span>
+                                <span className="text-xs glassy-text-secondary truncate">{new URL(url).hostname}</span>
                             </div>
                         </div>
                     </div>

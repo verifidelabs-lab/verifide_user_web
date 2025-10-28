@@ -4,35 +4,34 @@ import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 
 const FilterSelect = React.forwardRef(
-  ({
-    label = "Filter By",
-    name,
-    options = [],
-    selectedOption,
-    onChange,
-    isMulti = false,
-    containerClassName = "",
-    selectClassName = "",
-    labelClassName = "",
-    placeholder = "Select...",
-    error = false,
-    isLoading = false,
-    required = false,
-    isCreatedByUser = false, // <-- new prop
-    onCreateOption,
-    formatCreateLabel = (inputValue) => `Create "${inputValue}"`,
-    isClearable = true,
-    isDisabled,
-    disabledTooltip = "",
-  },ref) => {
+  (
+    {
+      label = "Filter By",
+      name,
+      options = [],
+      selectedOption,
+      onChange,
+      isMulti = false,
+      containerClassName = "",
+      selectClassName = "",
+      labelClassName = "",
+      placeholder = "Select...",
+      error = false,
+      isLoading = false,
+      required = false,
+      isCreatedByUser = false,
+      onCreateOption,
+      formatCreateLabel = (inputValue) => `Create "${inputValue}"`,
+      isClearable = true,
+      isDisabled,
+      disabledTooltip = "",
+    },
+    ref
+  ) => {
     const [isInternalLoading, setInternalLoading] = useState(false);
+
     const selectClasses = classNames(
-      "h-[50px] opacity-100 rounded-[10px] border w-full",
-      {
-        "border-gray-300": !error,
-        "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
-          error,
-      },
+      "h-[50px] opacity-100 rounded-[10px] border w-full glassy-input !p-0",
       selectClassName
     );
 
@@ -40,36 +39,59 @@ const FilterSelect = React.forwardRef(
       control: (base, state) => ({
         ...base,
         borderRadius: "10px",
-        borderColor: error ? "#f87171" : "#d1d5db", // red-300 or gray-300
+        borderColor: "var(--border-color)",
         minHeight: "52px",
         opacity: 1,
-        boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none", // blue ring on focus
+        backgroundColor: "var(--bg-card)",
+        color: "var(--text-primary)",
+        boxShadow: state.isFocused ? `0 0 0 1px var(--bg-button-hover)` : "none",
         "&:hover": {
-          borderColor: error ? "#f87171" : "#9ca3af",
+          borderColor: "var(--bg-button-hover)",
         },
       }),
       placeholder: (base) => ({
         ...base,
-        color: "#000000",
-        opacity: 0.5,
+        color: "var(--text-secondary)",
+        opacity: 0.7,
+      }),
+      singleValue: (base) => ({
+        ...base,
+        color: "var(--text-primary)",
       }),
       multiValue: (base) => ({
         ...base,
-        backgroundColor: "#e5e7eb",
+        backgroundColor: "rgba(255,255,255,0.1)",
         borderRadius: "4px",
       }),
       multiValueLabel: (base) => ({
         ...base,
-        color: "#374151",
+        color: "var(--text-primary)",
       }),
       multiValueRemove: (base) => ({
         ...base,
-        color: "#6b7280",
+        color: "var(--text-secondary)",
         ":hover": {
-          backgroundColor: "#f87171",
-          color: "white",
+          backgroundColor: "var(--bg-button-hover)",
+          color: "var(--text-primary)",
         },
       }),
+      menu: (base) => ({
+        ...base,
+        backgroundColor: "var(--bg-card)",
+        color: "var(--text-primary)",
+        borderRadius: "0.5rem",
+      }),
+      menuList: (base) => ({
+        ...base,
+        maxHeight: "200px",
+      }),
+      option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isFocused ? "var(--bg-button-hover)" : "var(--bg-card)",
+        color: "var(--text-primary)",
+        cursor: "pointer",
+      }),
+      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
     };
 
     const handleChange = async (selectedOption, actionMeta) => {
@@ -87,23 +109,18 @@ const FilterSelect = React.forwardRef(
       }
     };
 
-    // Use CreatableSelect only if allowed
     const SelectComponent = isCreatedByUser ? CreatableSelect : Select;
 
     return (
       <div className={`w-full space-y-2 ${containerClassName}`}>
         <label
-          className={`text-base text-[#282828] font-medium flex items-center gap-1 ${labelClassName}`}
+          className={`text-base font-medium flex items-center gap-1 glassy-text-primary ${labelClassName}`}
         >
           {label}
           {required && <span className="text-red-500 text-sm">*</span>}
         </label>
 
-        {/* Wrapper with tooltip */}
-        <div
-          title={isDisabled ? disabledTooltip : ""}
-          className="relative w-full" ref={ref}
-        >
+        <div title={isDisabled ? disabledTooltip : ""} className="relative w-full" ref={ref}>
           <SelectComponent
             isMulti={isMulti}
             options={Array.isArray(options) ? options : []}
@@ -114,13 +131,7 @@ const FilterSelect = React.forwardRef(
             classNamePrefix="react-select"
             placeholder={placeholder}
             isSearchable
-            styles={{
-              ...customStyles,
-              menuPortal: (base) => ({
-                ...base,
-                zIndex: 9999,
-              }),
-            }}
+            styles={customStyles}
             menuPortalTarget={document.body}
             menuPosition="absolute"
             isLoading={isLoading || isInternalLoading}

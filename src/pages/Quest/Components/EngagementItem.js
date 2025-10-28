@@ -7,7 +7,7 @@ const EngagementItem = ({ engagement, navigate }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="bg-white shadow-sm hover:shadow-md transition-shadow duration-200 p-5 rounded-xl border border-gray-100">
+    <div className="glassy-card shadow-sm hover:shadow-md transition-shadow duration-200 p-5 rounded-xl border border-gray-100">
       <div
         className="flex items-center gap-4 cursor-pointer group"
         onClick={() =>
@@ -28,7 +28,7 @@ const EngagementItem = ({ engagement, navigate }) => {
           <h4 className="font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
             {engagement.user_id.first_name} {engagement.user_id.last_name}
           </h4>
-          <p className="text-sm text-gray-500">@{engagement.user_id.username}</p>
+          <p className="text-sm glassy-text-secondary">@{engagement.user_id.username}</p>
         </div>
       </div>
 
@@ -65,7 +65,7 @@ const EngagementItem = ({ engagement, navigate }) => {
         </div>
       )}
 
-      <div className="flex items-center text-gray-500 text-xs mt-4">
+      <div className="flex items-center glassy-text-secondary text-xs mt-4">
         <BiTime className="mr-1 text-indigo-400" />
         <span>{formatDate(engagement.date)}</span>
       </div>

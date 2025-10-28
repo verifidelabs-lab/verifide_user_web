@@ -9,8 +9,8 @@ const ResumeViewSelection = ({ isOpen, onClose, title, userData }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="w-full max-w-md p-4 mx-auto bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center glassy-card/40">
+            <div className="w-full max-w-md p-4 mx-auto glassy-card border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
 
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="md:text-sm text-xs font-semibold tracking-wide text-gray-800 uppercase">
@@ -27,12 +27,12 @@ const ResumeViewSelection = ({ isOpen, onClose, title, userData }) => {
 
                 <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="w-full p-4 mx-auto bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer" onClick={() => navigate(`/user/resume/${userData.username}`)}>
+                        <div className="w-full p-4 mx-auto glassy-card border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer" onClick={() => navigate(`/user/resume/${userData.username}`)}>
                             <FaFileAlt className="text-2xl text-gray-600 mb-2" />
                             <span className="text-sm font-medium text-gray-700">Resume</span>
                         </div>
 
-                        <div className="w-full p-4 mx-auto bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer" onClick={() => navigate(`/user/profile/${userData.username}/${userData?.userId}`)}>
+                        <div className="w-full p-4 mx-auto glassy-card border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center justify-center cursor-pointer" onClick={() => navigate(`/user/profile/${userData.username}/${userData?.userId}`)}>
                             <FaUser className="text-2xl text-gray-600 mb-2" />
                             <span className="text-sm font-medium text-gray-700">Profile</span>
                         </div>

@@ -27,7 +27,7 @@ const StepFirst = ({
   return (
     <div className="space-y-8">
       {/* Company & Industry Section */}
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+      <div className="glassy-card p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
         <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
           Company & Industry
         </h2>
@@ -123,7 +123,7 @@ const StepFirst = ({
       </div>
 
       {/* Job Details Section */}
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+      <div className="glassy-card p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
         <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
           Job Details
         </h2>
@@ -207,7 +207,7 @@ const StepFirst = ({
       </div>
 
       {/* Location Section */}
-      <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+      <div className="glassy-card p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
         <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
           Location
         </h2>

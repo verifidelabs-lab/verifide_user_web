@@ -104,7 +104,7 @@ const PollForm = ({ questions, setQuestions, errors }) => {
 
   return (
     <div className="">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg border border-gray-300 p-6">
+      <div className="max-w-3xl mx-auto glassy-card rounded-lg border border-gray-300 p-6">
         {formSubmitted ? (
           <div className="text-center py-12">
             <div className="bg-blue-100 text-blue-800 p-4 rounded-full inline-block mb-4">
@@ -116,7 +116,7 @@ const PollForm = ({ questions, setQuestions, errors }) => {
             <p className="text-gray-600 mb-6">Thank you for completing the form.</p>
             <button
               onClick={resetForm}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
+              className="bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-2 px-4 rounded"
             >
               Submit another response
             </button>

@@ -335,11 +335,11 @@ const renderFeedbackForm = () => {
                 />
                 <button
                   onClick={() => removeImage(imgIndex)}
-                  className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-100 group-hover:opacity-100 transition-opacity text-xs"
+                  className="absolute -top-2 -right-2 bg-red-500 glassy-text-primary p-1 rounded-full opacity-100 group-hover:opacity-100 transition-opacity text-xs"
                 >
                   <RxCross2 />
                 </button>
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 text-center">
+                <div className="absolute bottom-0 left-0 right-0 glassy-card bg-opacity-50 glassy-text-primary text-xs p-1 text-center">
                   {imgIndex + 1}/5
                 </div>
               </div>
@@ -347,7 +347,7 @@ const renderFeedbackForm = () => {
           </div>
         )}
 
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs glassy-text-secondary mt-2">
           You can upload up to 5 images per feedback
         </p>
       </div>
@@ -358,12 +358,12 @@ const renderFeedbackForm = () => {
 
 const renderPreviousFeedback = () => {
   return (
-    <div className="bg-white p-5 rounded-lg border border-gray-200">
+    <div className="glassy-card p-5 rounded-lg border border-gray-200">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-900">Previous Feedback</h3>
         <button
           onClick={() => setShowPreviousFeedback(false)}
-          className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+          className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
         >
           <RxCross2 className="text-xl" />
         </button>
@@ -391,7 +391,7 @@ const renderPreviousFeedback = () => {
                     
                     <div className="flex justify-between items-start mb-2 pr-6">
                       <span className="text-sm font-medium text-gray-700">Feedback #{fbIndex + 1}</span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs glassy-text-secondary">
                         {new Date(feedback.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -417,7 +417,7 @@ const renderPreviousFeedback = () => {
         })}
         
         {Object.keys(existingFeedback).filter(key => existingFeedback[key].length > 0).length === 0 && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 glassy-text-secondary">
             <BiHistory className="text-3xl mx-auto mb-2" />
             <p>No previous feedback available</p>
           </div>
@@ -428,8 +428,8 @@ const renderPreviousFeedback = () => {
 };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="glassy-card rounded-xl shadow-xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Provide Feedback</h2>
@@ -458,7 +458,7 @@ const renderPreviousFeedback = () => {
             </button>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors"
+              className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors"
             >
               <RxCross2 className="text-2xl" />
             </button>
@@ -482,7 +482,7 @@ const renderPreviousFeedback = () => {
                     className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
                       isActive
                         ? 'bg-blue-100 border-2 border-blue-300 text-blue-800 shadow-sm'
-                        : 'bg-white border border-gray-200 hover:bg-gray-50'
+                        : 'glassy-card border border-gray-200 hover:bg-gray-50'
                     }`}
                   >
                     <div className="font-medium text-sm">{module.title}</div>
@@ -542,7 +542,7 @@ const renderPreviousFeedback = () => {
                       <button
                         onClick={handleSaveAndNext}
                         disabled={loading}
-                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
+                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 glassy-text-primary font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
                       >
                         {loading ? (
                           <>
@@ -559,7 +559,7 @@ const renderPreviousFeedback = () => {
                       <button
                         onClick={handleSubmitAll}
                         disabled={loading}
-                        className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
+                        className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 glassy-text-primary font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
                       >
                         {loading ? (
                           <>

@@ -83,7 +83,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
   const remainingCount = assessment.skill_ids.length - MAX_VISIBLE_SKILLS;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mx-auto w-full">
+    <div className="glassy-card rounded-xl shadow-sm border border-gray-200 p-4 mx-auto w-full">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3 w-full">
           <img
@@ -92,10 +92,10 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
             className="w-14 h-14 object-cover"
           />
           <div>
-            <h3 className="font-semibold text-[#000000E6] text-lg">
+            <h3 className="font-semibold glassy-text-primary text-lg">
               {`${assessment.action_by.first_name} ${assessment.action_by.last_name}`}
             </h3>
-            <p className="text-sm text-gray-500 flex items-center">
+            <p className="text-sm glassy-text-secondary flex items-center">
               <BiCalendar size={14} className="mr-1" />
               {moment(assessment.updatedAt).format("DD MM YYYY")}
             </p>
@@ -111,7 +111,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
         )}
       </div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full">
-        <h3 className="font-semibold text-[#000000E6] text-lg mb-1">
+        <h3 className="font-semibold glassy-text-primary text-lg mb-1">
           {assessment.title}
         </h3>
         <div className="flex mb-2 flex-row md:items-center gap-2 mt-2 md:mt-0">
@@ -211,7 +211,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
 };
 const AssessmentCardSkeleton = () => {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 w-full">
+    <div className="glassy-card rounded-xl shadow-sm border border-gray-200 p-4 w-full">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3 w-full">
           <Skeleton circle width={56} height={56} />
@@ -813,14 +813,14 @@ const RecruiterAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:text-[#000000E6] disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronLeft size={18} />
           </button>
           {getPageNumbers().map((item, index) => {
             if (item === 'start-ellipsis' || item === 'end-ellipsis') {
               return (
-                <span key={index} className="px-2 text-gray-500">
+                <span key={index} className="px-2 glassy-text-secondary">
                   ...
                 </span>
               );
@@ -830,7 +830,7 @@ const RecruiterAssessment = () => {
                 key={item}
                 onClick={() => handlePageChange(item)}
                 className={`w-8 h-8 rounded flex items-center justify-center transition ${currentPage === item
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-blue-600 glassy-text-primary'
                   : 'text-gray-700 hover:bg-gray-100'
                   }`}
               >
@@ -841,7 +841,7 @@ const RecruiterAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:text-[#000000E6] disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronRight size={18} />
           </button>
@@ -896,7 +896,7 @@ const RecruiterAssessment = () => {
     <div className="bg-gray-50 min-h-screen px-4 lg:px-6 md:py-6 py-2">
       <div className="w-full mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-center gap-4 mb-6">
-          <h1 className="text-2xl font-bold text-[#000000E6]">Assessments</h1>
+          <h1 className="text-2xl font-bold glassy-text-primary">Assessments</h1>
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <form onSubmit={handleSearch} className="relative w-full sm:w-80">
               <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -954,10 +954,10 @@ const RecruiterAssessment = () => {
             </div>
           </>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+          <div className="glassy-card rounded-xl shadow-sm border border-gray-200 p-8 text-center">
             <HiOutlineClipboardList className="mx-auto w-12 h-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-[#000000E6] mb-2">No assessments found</h3>
-            <p className="text-gray-500 mb-6">
+            <h3 className="text-lg font-medium glassy-text-primary mb-2">No assessments found</h3>
+            <p className="glassy-text-secondary mb-6">
               {searchTerm ?
                 "Try adjusting your search query" :
                 "Create your first assessment to get started"}
@@ -1182,7 +1182,7 @@ const RecruiterAssessment = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 glassy-text-secondary">
                   <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                     <PiPlus className="w-8 h-8 text-gray-400" />
                   </div>
@@ -1233,7 +1233,7 @@ const RecruiterAssessment = () => {
           </div>
 
           <div className="space-y-4 p-4 bg-gray-50 rounded-lg border">
-            <h3 className="text-lg font-semibold text-[#000000E6] flex items-center gap-2">
+            <h3 className="text-lg font-semibold glassy-text-primary flex items-center gap-2">
               <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
               Answer Options
             </h3>
@@ -1253,7 +1253,7 @@ const RecruiterAssessment = () => {
                 </div>
                 <button
                   type="button"
-                  className='bg-blue-500 text-white w-8 h-8 flex justify-center items-center rounded-full hover:bg-blue-600 transition-colors'
+                  className='bg-blue-500 glassy-text-primary w-8 h-8 flex justify-center items-center rounded-full hover:bg-blue-600 transition-colors'
                   onClick={addOption}
                 >
                   <PiPlus className="w-4 h-4" />
@@ -1265,7 +1265,7 @@ const RecruiterAssessment = () => {
               <div className="space-y-3">
                 <div className="text-sm font-medium text-gray-700">
                   Options ({questionFormData.options.length})
-                  <span className="text-gray-500 ml-2">
+                  <span className="glassy-text-secondary ml-2">
                     {questionFormData.question_type?.value === 'single_choice'
                       ? '(Select one correct answer)'
                       : '(Select one or more correct answers)'}
@@ -1278,7 +1278,7 @@ const RecruiterAssessment = () => {
                       key={idx}
                       className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${questionFormData.correct_options.includes(opt)
                         ? 'bg-green-50 border-green-200'
-                        : 'bg-white border-gray-200 hover:border-gray-300'
+                        : 'glassy-card border-gray-200 hover:border-gray-300'
                         }`}
                     >
                       <div className="flex items-center gap-3 flex-1">
@@ -1289,7 +1289,7 @@ const RecruiterAssessment = () => {
                           className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                           name={questionFormData.question_type?.value === 'single_choice' ? 'correct-option' : `correct-option-${idx}`}
                         />
-                        <span className="flex-1 text-[#000000E6]">
+                        <span className="flex-1 glassy-text-primary">
                           {idx + 1}. {opt}
                         </span>
                         {questionFormData.correct_options.includes(opt) && (
@@ -1311,7 +1311,7 @@ const RecruiterAssessment = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 glassy-text-secondary">
                 <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                   <PiPlus className="w-8 h-8 text-gray-400" />
                 </div>

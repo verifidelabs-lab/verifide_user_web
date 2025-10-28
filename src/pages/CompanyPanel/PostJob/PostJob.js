@@ -960,7 +960,7 @@ const PostJob = () => {
         <label className="block text-sm font-medium text-gray-700 mb-4">
           Screening Questions <span className="text-red-500">*</span>
         </label>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm glassy-text-secondary mb-4">
           Add screening questions to filter candidates. All questions are
           required.
         </p>
@@ -1194,10 +1194,10 @@ const PostJob = () => {
               >
                 <BiArrowBack size={32} />
               </button>
-              <h1 className="text-2xl font-semibold text-[#000000E6]">
+              <h1 className="text-2xl font-semibold glassy-text-primary">
                 {id ? "Edit Job" : "Post a Job"}
               </h1>
-              <span className="text-sm text-gray-500">{currentStep}/3</span>
+              <span className="text-sm glassy-text-secondary">{currentStep}/3</span>
             </div>
 
             <div className="mb-8">
@@ -1219,7 +1219,7 @@ const PostJob = () => {
               {currentStep < 3 ? (
                 <button
                   onClick={nextStep}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 ml-auto"
+                  className="px-4 py-2 bg-blue-500 glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
                 >
                   Next
                 </button>
@@ -1228,7 +1228,7 @@ const PostJob = () => {
                   <Button
                     onClick={handleSubmit}
                     loading={submitting}
-                    className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 ml-auto"
+                    className="px-4 py-2 bg-green-500 glassy-text-primary rounded-md hover:bg-green-600 ml-auto"
                   >
                     {id ? "Update Job" : "Post Job"}
                   </Button>

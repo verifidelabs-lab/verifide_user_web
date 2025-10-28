@@ -43,8 +43,8 @@ const NoData = ({ message = "No Data found", description = "There are no data to
         d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
       ></path>
     </svg>
-    <h3 className="mt-4 text-lg font-medium text-[#000000E6]">{message}</h3>
-    <p className="mt-1 text-sm text-gray-500">{description}</p>
+    <h3 className="mt-4 text-lg font-medium glassy-text-primary">{message}</h3>
+    <p className="mt-1 text-sm glassy-text-secondary">{description}</p>
   </div>
 );
 
@@ -112,14 +112,14 @@ const Table = ({
             />
           ) : (
             <>
-              <div className="hidden w-full border-b-[#E2E8F0] bg-[#FFFFFF] lg:block overflow-hidden overflow-x-auto overflow-y-auto">
+              <div className="hidden w-full border-b-[#E2E8F0] glassy-card lg:block overflow-hidden overflow-x-auto overflow-y-auto">
                 <table className="table-auto w-full text-sm text-gray-800 border-collapse bg-transparent border border-[#E2E8F0]">
                   <thead className="">
                     <tr className="border-b border-[#edeff1] bg-[#EEF0FA]">
                       {tableHeadings.map((heading, index) => (
                         <th
                           key={`heading-${index}`}
-                          className={`px-4 py-4 font-medium text-left text-[#000000E6] whitespace-nowrap ${sortableColumns.includes(index)
+                          className={`px-4 py-4 font-medium text-left glassy-text-primary whitespace-nowrap ${sortableColumns.includes(index)
                             ? "cursor-pointer"
                             : "cursor-default"
                             }`}
@@ -182,7 +182,7 @@ const Table = ({
                               colSpan={
                                 tableHeadings.length + (showExtraHeading ? 5 : 0)
                               }
-                              className="p-2 text-center text-gray-500 whitespace-nowrap"
+                              className="p-2 text-center glassy-text-secondary whitespace-nowrap"
                             >
                               No Data Available
                             </td>
@@ -199,7 +199,7 @@ const Table = ({
                   </tbody>
                 </table>
                 {data && data.length > 0 && (
-                  <div className="flex justify-start items-center gap-4 text-sm text-gray-500 p-2">
+                  <div className="flex justify-start items-center gap-4 text-sm glassy-text-secondary p-2">
                     <p>Total Records:</p>
                     <p>{totalData}</p>
                   </div>
@@ -221,7 +221,7 @@ const Table = ({
                               key={`mobile-cell-${rowIndex}-${cellIndex}`}
                               className="flex justify-between items-center border-b pb-1 last:border-0"
                             >
-                              <span className="text-xs font-medium text-gray-500 uppercase">
+                              <span className="text-xs font-medium glassy-text-secondary uppercase">
                                 {tableHeadings[cellIndex] || `Field ${cellIndex + 1}`}
                               </span>
                               <span className="text-sm text-gray-800">
@@ -230,7 +230,7 @@ const Table = ({
                             </div>
                           ))
                         ) : (
-                          <div className="h-4 p-4 text-sm text-center text-gray-500">
+                          <div className="h-4 p-4 text-sm text-center glassy-text-secondary">
                             No Data Available
                           </div>
                         )}

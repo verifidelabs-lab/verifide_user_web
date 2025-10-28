@@ -119,7 +119,7 @@ const Resume = () => {
     return (
       <div className="flex flex-col items-center justify-center h-72 gap-3 animate-pulse">
         <div className="h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        <span className="text-gray-500">Loading...</span>
+        <span className="glassy-text-secondary">Loading...</span>
       </div>
     );
   }
@@ -139,7 +139,7 @@ const Resume = () => {
           <button
             onClick={downloadPDF}
             disabled={isGeneratingPDF}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGeneratingPDF ? (
               <>
@@ -158,9 +158,9 @@ const Resume = () => {
         </div>
 
         <div className="min-h-screen py-10 flex justify-center">
-          <div ref={resumeRef} className="w-[900px] bg-white shadow-xl grid grid-cols-3 rounded-lg overflow-hidden">
+          <div ref={resumeRef} className="w-[900px] glassy-card shadow-xl grid grid-cols-3 rounded-lg overflow-hidden">
             {/* Left Sidebar */}
-            <div className="bg-gray-800 text-white p-6 flex flex-col gap-8">
+            <div className="bg-gray-800 glassy-text-primary p-6 flex flex-col gap-8">
               {/* Profile Image */}
               <div className="flex justify-center">
                 <img
@@ -263,7 +263,7 @@ const Resume = () => {
                       </p>
 
                       {/* Dates */}
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm glassy-text-secondary">
                         {formatDateByMomentTimeZone(exp.start_date, "YYYY")} -{" "}
                         {exp.currently_available
                           ? "Present"

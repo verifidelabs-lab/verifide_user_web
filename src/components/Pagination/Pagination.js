@@ -67,7 +67,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
             className={`flex items-center justify-center w-10 h-10 rounded-full border ${page === '...' 
               ? 'border-transparent cursor-default' 
               : currentPage === page 
-                ? 'border-blue-500 bg-blue-500 text-white' 
+                ? 'border-blue-500 bg-blue-500 glassy-text-primary' 
                 : 'border-gray-300 hover:bg-gray-100'}`}
             onClick={() => handlePageChange(page)}
             disabled={page === '...'}

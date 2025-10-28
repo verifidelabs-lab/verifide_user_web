@@ -278,7 +278,7 @@ const PostDetails = () => {
             className="relative w-full h-full cursor-pointer group"
           >
             <img src={thumbnail} alt="External Video" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-lg font-semibold group-hover:bg-black/60 transition">
+            <div className="absolute inset-0 glassy-card/40 flex items-center justify-center glassy-text-primary text-lg font-semibold group-hover:glassy-card/60 transition">
               Watch Video
             </div>
           </div>
@@ -302,7 +302,7 @@ const PostDetails = () => {
           <div className="absolute inset-0 group-hover:opacity-100 opacity-0 transition-opacity flex items-center justify-center">
             <button
               onClick={togglePlayPause}
-              className="p-2 rounded-full bg-black/50 text-white hover:bg-black/70"
+              className="p-2 rounded-full glassy-card/50 glassy-text-primary hover:glassy-card/70"
             >
               {isPlaying ? (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -317,13 +317,13 @@ const PostDetails = () => {
             </button>
             <button
               onClick={toggleMute}
-              className="absolute top-3 right-3 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+              className="absolute top-3 right-3 glassy-card/50 glassy-text-primary p-2 rounded-full hover:glassy-card/70"
             >
               {isMuted ? <HiSpeakerXMark className="w-5 h-5" /> : <HiSpeakerWave className="w-5 h-5" />}
             </button>
             <button
               onClick={toggleFullscreen}
-              className="absolute top-3 left-3 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+              className="absolute top-3 left-3 glassy-card/50 glassy-text-primary p-2 rounded-full hover:glassy-card/70"
             >
               <FaExpand className="w-5 h-5" />
             </button>
@@ -399,7 +399,7 @@ const PostDetails = () => {
             />
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+              className="bg-blue-500 glassy-text-primary px-4 py-2 rounded-full hover:bg-blue-600"
             >
               Post
             </button>
@@ -418,14 +418,14 @@ const PostDetails = () => {
                 <div className="">
                   <div className="flex items-center space-x-2">
                     <span className="font-semibold">{comment.user?.first_name} {comment.user?.last_name}</span>
-                    <span className="text-xs text-gray-500">{new Date(comment.updatedAt).toLocaleString()}</span>
+                    <span className="text-xs glassy-text-secondary">{new Date(comment.updatedAt).toLocaleString()}</span>
                   </div>
                   <p className="mt-1">{comment.text}</p>
                 </div>
                 <div className="flex items-center space-x-4 mt-2 ml-2">
                   <button
                     onClick={() => onLike(comment._id, "Comment")}
-                    className="flex items-center space-x-1 text-gray-500 hover:text-blue-500"
+                    className="flex items-center space-x-1 glassy-text-secondary hover:text-blue-500"
                   >
                     {comment.isLiked ? (
                       <BiSolidHeart className="text-red-500" />
@@ -436,7 +436,7 @@ const PostDetails = () => {
                   </button>
                   <button
                     onClick={() => setReplyingTo(replyingTo === comment._id ? null : comment._id)}
-                    className="text-gray-500 hover:text-blue-500"
+                    className="glassy-text-secondary hover:text-blue-500"
                   >
                     Reply
                   </button>
@@ -453,7 +453,7 @@ const PostDetails = () => {
                     />
                     <button
                       type="submit"
-                      className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm hover:bg-blue-600"
+                      className="bg-blue-500 glassy-text-primary px-3 py-1 rounded-full text-sm hover:bg-blue-600"
                     >
                       Post
                     </button>
@@ -472,7 +472,7 @@ const PostDetails = () => {
                         <div className="rounded-lg">
                           <div className="flex items-center space-x-2">
                             <span className="font-semibold">{reply.user?.first_name} {reply.user?.last_name}</span>
-                            <span className="text-xs text-gray-500">{new Date(reply.updatedAt).toLocaleString()}</span>
+                            <span className="text-xs glassy-text-secondary">{new Date(reply.updatedAt).toLocaleString()}</span>
                           </div>
                           <p className="mt-1">{reply.text}</p>
                         </div>
@@ -494,27 +494,27 @@ const PostDetails = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         {accessMode !== '6' && (
-          <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+          <header className="glassy-card border-b border-gray-200 sticky top-0 z-40">
             <div className="max-w-6xl mx-auto px-4">
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={() => navigate(-1)}
-                    className="text-gray-600 hover:text-[#000000E6]"
+                    className="text-gray-600 hover:glassy-text-primary"
                   >
                     ← Back
                   </button>
-                  <h1 className="text-lg font-semibold text-[#000000E6]">Post</h1>
+                  <h1 className="text-lg font-semibold glassy-text-primary">Post</h1>
                 </div>
                 <div className="relative">
                   <button
                     onClick={handleOptionsClick}
-                    className="text-gray-600 hover:text-[#000000E6]"
+                    className="text-gray-600 hover:glassy-text-primary"
                   >
                     <FiMoreHorizontal className="w-6 h-6" />
                   </button>
                   {showOptionsDropdown && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1 border border-gray-200">
+                    <div className="absolute right-0 mt-2 w-48 glassy-card rounded-md shadow-lg z-10 py-1 border border-gray-200">
                       <button
                         onClick={handleCopyLink}
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
@@ -545,11 +545,11 @@ const PostDetails = () => {
         <div className="max-w-6xl mx-auto p-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 mb-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-all ease-in-out duration-300 transform hover:scale-105" title="Back"
+            className="p-2 mb-2 bg-blue-600 glassy-text-primary rounded-full shadow-md hover:bg-blue-700 transition-all ease-in-out duration-300 transform hover:scale-105" title="Back"
           >
             <IoReturnDownBackOutline size={22} />
           </button>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 overflow-hidden">
+          <div className="glassy-card rounded-lg shadow-sm border border-gray-200 mb-6 overflow-hidden">
             <div className="p-4 pb-2">
               <div className="flex items-start space-x-3">
                 <img
@@ -563,18 +563,18 @@ const PostDetails = () => {
                 />
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <h3 className="font-semibold text-[#000000E6]">
+                    <h3 className="font-semibold glassy-text-primary">
                       {postData.userData?.first_name} {postData.userData?.last_name}
                     </h3>
                     {postData.isConnected && (
                       <>
                         <span className="text-gray-400">•</span>
-                        <span className="text-sm text-gray-500">Connected</span>
+                        <span className="text-sm glassy-text-secondary">Connected</span>
                       </>
                     )}
                   </div>
                   <p className="text-sm text-gray-600">{postData.userData?.headline || "Professional"}</p>
-                  <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
+                  <div className="flex items-center space-x-1 text-xs glassy-text-secondary mt-1">
                     <span>{moment(postData.createdAt).format("DD/MM/YYYY")}</span>
                     <span>•</span>
                     <span>🌐</span>
@@ -584,7 +584,7 @@ const PostDetails = () => {
             </div>
 
             <div className="px-4 py-2">
-              <div className="text-[#000000E6] whitespace-pre-line leading-relaxed">
+              <div className="glassy-text-primary whitespace-pre-line leading-relaxed">
                 {expandedPost
                   ? postData.content
                   : postData.content.length > 200
@@ -620,7 +620,7 @@ const PostDetails = () => {
               </div>
             )}
 
-            <div className="px-4 py-2 border-t border-gray-100 text-sm text-gray-500">
+            <div className="px-4 py-2 border-t border-gray-100 text-sm glassy-text-secondary">
               <div className="flex space-x-4">
                 {postData.like_count > 0 && (
                   <span>{postData.like_count} likes</span>

@@ -53,7 +53,7 @@ const Button = ({ children, onClick, className = "", type = "button" }) => (
   <button
     type={type}
     onClick={onClick}
-    className={`px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors ${className}`}
+    className={`px-4 py-2 bg-blue-600 glassy-text-primary rounded-lg hover:bg-blue-700 transition-colors ${className}`}
   >
     {children}
   </button>
@@ -566,7 +566,7 @@ const Opportunities = () => {
                 {isDetailsData?.user_id?.first_name}{" "}
                 {isDetailsData?.user_id?.last_name}
               </h1>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs glassy-text-secondary">
                 {isDetailsData?.status
                   ? `${
                       isDetailsData.status.charAt(0).toUpperCase() +
@@ -628,7 +628,7 @@ const Opportunities = () => {
             ))
           ) : (
             <div className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="text-sm text-gray-500">No answers available</p>
+              <p className="text-sm glassy-text-secondary">No answers available</p>
             </div>
           )}
         </div>
@@ -1000,9 +1000,9 @@ const Opportunities = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-3 bg-[#F6FAFD] h-[90vh] p-2 overflow-hidden ">
+    <div className="flex flex-col md:flex-row justify-between gap-3 glassy-card h-[90vh] p-2 overflow-hidden ">
       <div className="hidden md:block xl:w-[15%] lg:w-[20%] md:w-[25%]">
-        <div className="bg-white h-full rounded-lg shadow-sm p-4">
+        <div className="glassy-card h-full rounded-lg shadow-sm p-4">
           <div className="sticky top-4">
             <ul className="space-y-2">
               {tabs.map((tab) => {
@@ -1037,7 +1037,7 @@ const Opportunities = () => {
         } `}
       >
         <div className="flex justify-between md:flex-row flex-col mb-6 space-y-4 lg:space-y-0">
-          <h1 className="text-2xl font-bold text-[#000000E6] md:text-start text-center">
+          <h1 className="text-2xl font-bold glassy-text-primary md:text-start text-center">
             Opportunity
           </h1>
           <div className="flex  items-center gap-3">
@@ -1049,16 +1049,16 @@ const Opportunities = () => {
                 <TbAdjustmentsHorizontal className="w-5 h-5 text-gray-600" />
                 <span className="text-gray-700">Filter</span>
                 {getActiveFiltersCount() > 0 && (
-                  <span className="bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="bg-blue-600 glassy-text-primary text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {getActiveFiltersCount()}
                   </span>
                 )}
               </button>
 
               {showFilterDropdown && (
-                <div className="absolute md:right-0 left-4 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="absolute md:right-0 left-4 mt-2 w-48 glassy-card rounded-lg shadow-lg border border-gray-200 z-50">
                   <div className="p-4">
-                    <h3 className="text-sm font-medium text-[#000000E6] mb-3">
+                    <h3 className="text-sm font-medium glassy-text-primary mb-3">
                       Filter Settings
                     </h3>
 
@@ -1135,13 +1135,13 @@ const Opportunities = () => {
         <div className="md:hidden block">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-4 sm:space-y-0">
             <div className="overflow-x-auto whitespace-nowrap no-scrollbar">
-              <div className="inline-flex space-x-1 p-1 rounded-full bg-white border border-gray-200 w-max">
+              <div className="inline-flex space-x-1 p-1 rounded-full glassy-card border border-gray-200 w-max">
                 <button
                   onClick={() => handleActiveTab("open")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "open"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:text-[#000000E6]"
+                      : "text-gray-600 hover:glassy-text-primary"
                   }`}
                 >
                   Open Jobs
@@ -1151,7 +1151,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "shortlisted"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:text-[#000000E6]"
+                      : "text-gray-600 hover:glassy-text-primary"
                   }`}
                 >
                   Shortlisted
@@ -1161,7 +1161,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "schedule-interviews"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:text-[#000000E6]"
+                      : "text-gray-600 hover:glassy-text-primary"
                   }`}
                 >
                   Schedules Interviews
@@ -1171,7 +1171,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "closed"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:text-[#000000E6]"
+                      : "text-gray-600 hover:glassy-text-primary"
                   }`}
                 >
                   Closed Jobs
@@ -1181,7 +1181,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "rejected"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:text-[#000000E6]"
+                      : "text-gray-600 hover:glassy-text-primary"
                   }`}
                 >
                   Rejected Interviews
@@ -1191,7 +1191,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "selected_in_interview"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:text-[#000000E6]"
+                      : "text-gray-600 hover:glassy-text-primary"
                   }`}
                 >
                   Ready to Join
@@ -1314,7 +1314,7 @@ const Opportunities = () => {
                 </div>
               ))
             ) : (
-              <div className="col-span-full text-center py-6 text-gray-500 text-lg">
+              <div className="col-span-full text-center py-6 glassy-text-secondary text-lg">
                 <NoDataFound />
               </div>
             )}
@@ -1323,7 +1323,7 @@ const Opportunities = () => {
       </div>
 
       {(selectedJob || viewDetails) && (
-        <div className="hidden md:block xl:w-[25%] lg:w-[30%] md:w-[40%] bg-white rounded-xl border-l border-gray-200 p-6 overflow-y-auto mt-10">
+        <div className="hidden md:block xl:w-[25%] lg:w-[30%] md:w-[40%] glassy-card rounded-xl border-l border-gray-200 p-6 overflow-y-auto mt-10">
           <RightSideContent />
         </div>
       )}
@@ -1412,7 +1412,7 @@ const Opportunities = () => {
                   <div className="space-y-3">
                     <div className="space-y-8">
                       {/* Interview Details */}
-                      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                      <div className="glassy-card border border-gray-200 rounded-lg p-6 shadow-sm">
                         <div className="flex justify-between items-center mb-4">
                           <h3 className="text-xl font-semibold text-gray-900">
                             Interview Details
@@ -1478,7 +1478,7 @@ const Opportunities = () => {
                                   Join Google Meet
                                 </a>
                               ) : (
-                                <span className="text-gray-500 text-sm">
+                                <span className="glassy-text-secondary text-sm">
                                   Not Provided
                                 </span>
                               )}
@@ -1487,7 +1487,7 @@ const Opportunities = () => {
                         </div>
                       </div>
                       {selectedApplication?.status === "rejected" && (
-                        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+                        <div className="glassy-card border border-gray-200 rounded-xl p-6 shadow-md">
                           <div className="flex items-center mb-4">
                             <h3 className="text-xl font-semibold text-red-600">
                               Rejection History
@@ -1509,7 +1509,7 @@ const Opportunities = () => {
                                     <p className="text-sm text-gray-800">
                                       {ele?.remarks || "No remarks provided"}
                                     </p>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs glassy-text-secondary">
                                       {moment(ele?.date).format("DD-MM-YYYY")}
                                     </p>
                                   </div>
@@ -1526,7 +1526,7 @@ const Opportunities = () => {
 
                       {selectedApplication?.status ===
                         "selected_in_interview" && (
-                        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-md">
+                        <div className="glassy-card border border-gray-200 rounded-xl p-6 shadow-md">
                           <div className="flex items-center mb-4">
                             <h3 className="text-xl font-semibold text-gray-900">
                               Interview Feedback
@@ -1545,7 +1545,7 @@ const Opportunities = () => {
                                     "N/A"}
                                 </span>
                                 {selectedApplication?.feedback?.rating && (
-                                  <span className="ml-2 text-sm text-gray-500">
+                                  <span className="ml-2 text-sm glassy-text-secondary">
                                     ({selectedApplication.feedback.rating}/5)
                                   </span>
                                 )}
@@ -1618,11 +1618,11 @@ const Opportunities = () => {
                     </div>
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500 italic"></p>
+                  <p className="text-sm glassy-text-secondary italic"></p>
                 )}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 italic">
+              <p className="text-sm glassy-text-secondary italic">
                 No application selected.
               </p>
             );

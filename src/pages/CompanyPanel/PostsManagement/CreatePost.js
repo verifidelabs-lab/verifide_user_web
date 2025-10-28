@@ -508,7 +508,7 @@ const CreatePost = () => {
     const percentage = (current / max) * 100;
     if (percentage >= 90) return 'text-red-500';
     if (percentage >= 70) return 'text-yellow-500';
-    return 'text-gray-500';
+    return 'glassy-text-secondary';
   };
 
 
@@ -536,7 +536,7 @@ const CreatePost = () => {
                 key={type}
                 onClick={() => handlePostTypeChange(type)}
                 className={`relative flex items-center px-3 py-2 text-sm font-medium transition-all duration-200 ease-in-out rounded-md
-                                        ${postData.post_type === type ? "text-blue-600 " : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                                        ${postData.post_type === type ? "text-blue-600 " : "glassy-text-secondary hover:text-gray-700 hover:bg-gray-100"
                   }`}
               >
                 {label}
@@ -740,7 +740,7 @@ const CreatePost = () => {
                 <button
                   type="button"
                   onClick={handleAddTag}
-                  className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-blue-500 glassy-text-primary px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={postData.tags.length >= 10 || !postData.tagInput.trim()}
                 >
                   Add
@@ -754,20 +754,20 @@ const CreatePost = () => {
                     {postData.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="tag bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 rounded-full text-sm flex items-center shadow-sm hover:shadow-md transition-shadow"
+                        className="tag bg-gradient-to-r from-blue-500 to-blue-600 glassy-text-primary px-3 py-1 rounded-full text-sm flex items-center shadow-sm hover:shadow-md transition-shadow"
                       >
                         #{tag}
                         <button
                           type="button"
                           onClick={() => handleRemoveTag(index)}
-                          className="ml-2 text-blue-200 hover:text-white focus:outline-none transition-colors"
+                          className="ml-2 text-blue-200 hover:glassy-text-primary focus:outline-none transition-colors"
                         >
                           ×
                         </button>
                       </span>
                     ))}
                   </div>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm glassy-text-secondary">
                     {postData.tags.length}/10 tags • Press Enter or click Add to add tags
                   </p>
                 </div>
@@ -778,12 +778,12 @@ const CreatePost = () => {
               <button
                 type="submit"
                 disabled={isSubmitting || isLoading}
-                className={`px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-medium flex items-center shadow-lg hover:shadow-xl ${isSubmitting ? 'opacity-75 cursor-not-allowed transform scale-95' : 'hover:transform hover:scale-105'
+                className={`px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 glassy-text-primary rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-medium flex items-center shadow-lg hover:shadow-xl ${isSubmitting ? 'opacity-75 cursor-not-allowed transform scale-95' : 'hover:transform hover:scale-105'
                   }`}
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 glassy-text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>

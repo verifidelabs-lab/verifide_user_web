@@ -99,8 +99,8 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="glassy-card rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
           <div className="flex items-center justify-between p-6 border-b">
             <h2 className="text-xl font-bold">Buy Course</h2>
             <button
@@ -111,7 +111,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             </button>
           </div>
 
-          <div className="flex items-start gap-4 p-4 bg-white">
+          <div className="flex items-start gap-4 p-4 glassy-card">
             <div className='border border-[#918e8e34] flex p-3 gap-4 rounded-lg shadow'>
               <div className="flex-shrink-0 overflow-hidden">
                 <img
@@ -128,9 +128,9 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                       <BiStar key={i} className="w-4 h-4 text-yellow-500 fill-current" />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-500">(1.2K)</span>
+                  <span className="text-sm glassy-text-secondary">(1.2K)</span>
                 </div>
-                <h3 className="font-semibold text-base text-[#000000E6] mb-2">
+                <h3 className="font-semibold text-base glassy-text-primary mb-2">
                   Certified Life Coach Training (Beginner to Advanced)
                 </h3>
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -169,7 +169,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                         />
                         <div className="flex-1">
                           <div className="font-medium text-sm">{card.name}</div>
-                          <div className="text-xs text-gray-500">{card.number}</div>
+                          <div className="text-xs glassy-text-secondary">{card.number}</div>
                         </div>
                       </label>
                       <div className="flex items-center gap-2">
@@ -294,7 +294,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                 <div className="text-sm text-gray-600">Bill will be Send on email</div>
               </div>
               <button
-                className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
+                className="bg-blue-600 glassy-text-primary px-8 py-3 rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
                 disabled={!selectedPayment}
               >
                 Proceed to Pay
@@ -306,11 +306,11 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
 
       {/* Add Card Modal */}
       {showAddCardModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 glassy-card bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="glassy-card rounded-lg w-full max-w-md">
             <div className="flex items-center justify-between p-4 border-b">
               <h3 className="text-lg font-semibold">Add New Card</h3>
-              <button onClick={() => setShowAddCardModal(false)} className="text-gray-500">
+              <button onClick={() => setShowAddCardModal(false)} className="glassy-text-secondary">
                 <RxCross2 className="w-5 h-5" />
               </button>
             </div>
@@ -368,7 +368,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
               <button
                 onClick={handleAddCard}
                 disabled={!newCard.name || !newCard.number || !newCard.expiry || !newCard.cvv}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700 disabled:opacity-50"
               >
                 Add Card
               </button>
@@ -379,11 +379,11 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
 
       {/* Add UPI Modal */}
       {showAddUpiModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 glassy-card bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="glassy-card rounded-lg w-full max-w-md">
             <div className="flex items-center justify-between p-4 border-b">
               <h3 className="text-lg font-semibold">Add New UPI</h3>
-              <button onClick={() => setShowAddUpiModal(false)} className="text-gray-500">
+              <button onClick={() => setShowAddUpiModal(false)} className="glassy-text-secondary">
                 <RxCross2 className="w-5 h-5" />
               </button>
             </div>
@@ -419,7 +419,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
               <button
                 onClick={handleAddUpi}
                 disabled={!newUpi.name || !newUpi.upiId}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700 disabled:opacity-50"
               >
                 Add UPI
               </button>

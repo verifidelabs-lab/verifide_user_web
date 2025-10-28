@@ -244,17 +244,22 @@ function CompanyLayout() {
   const location = useLocation()
 
   return (
-    <div className='flex h-screen overflow-hidden'>
-      {location.pathname !== "/company/opportunities" && <div className={`h-full ${navbarOpen ? "w-72 absolute md:relative transition ease-in-out delay-150" : "w-0"}`}>
-        <CompanySidebar navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
-      </div>}
+    <div className=" min-h-screen flex flex-col ">
+      <Header companiesProfileData={companiesProfileData} />
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
+        {location.pathname !== "/company/opportunities" && <div
+          className={`transition-all duration-300 ${navbarOpen ? 'md:w-72 w-full' : 'w-0 md:w-20'
+            }`}
+        >
+          <CompanySidebar navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} />
+        </div>}
 
 
-      <div className={`flex flex-col ${navbarOpen ? "flex-1" : "w-full"} overflow-hidden`}>
-        <Header companiesProfileData={companiesProfileData} />
+
+
         {/* <Header openLogout={openLogout} sideBarJson={sideBarJson} profileData={companiesProfileData}  playAndShowNotification={playAndShowNotification} /> */}
 
-        <main className='flex-1 overflow-auto'>
+        <main className='flex-1 overflow-auto custom-scrollbar  '>
           <Suspense fallback={<Loader />}>
             <Routes>
               {/* <Route index element={<Navigate to={`${basePath}/dashboard`} replace />} /> */}
@@ -300,7 +305,7 @@ function CompanyLayout() {
               {(
                 <>
                   <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} />} />
-                  <Route path={`/admin-role`} element={<AdminRoles  />} />
+                  <Route path={`/admin-role`} element={<AdminRoles />} />
                   {/* <Route path="post" element={<Posts />} /> */}
                   <Route path="profile" element={<CompanyProfile adminProfileData={adminProfileData} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   {/* <Route path="login" element={<Login role="company" />} /> */}

@@ -124,7 +124,7 @@ const MessageText = ({ msg, isOwn }) => {
         className={`text-sm whitespace-pre-wrap break-words ${urls.length
           ? "text-blue-600 cursor-pointer hover:underline"
           : isOwn
-            ? "text-[#000000E6]"
+            ? "glassy-text-primary"
             : "text-gray-800"
           }`}
       >
@@ -226,11 +226,11 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
         ? 'bg-gray-600 border-white/40'
         : 'bg-gray-100 border-gray-300'
         }`}>
-        <p className={`text-xs font-medium mb-1 ${isOwn ? 'text-white/80' : 'text-gray-600'
+        <p className={`text-xs font-medium mb-1 ${isOwn ? 'glassy-text-primary/80' : 'text-gray-600'
           }`}>
           {repliedMessageOwn ? 'You' : 'Them'}
         </p>
-        <p className={`text-xs truncate ${isOwn ? 'text-white/90' : 'text-gray-700'
+        <p className={`text-xs truncate ${isOwn ? 'glassy-text-primary/90' : 'text-gray-700'
           }`}>
           {getReplyPreviewText()}
         </p>
@@ -249,9 +249,9 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               className="w-full h-32 object-cover rounded-lg cursor-pointer hover:brightness-95 transition-all"
               onClick={() => window.open(sharedData.image_urls[0], '_blank')}
             />
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-full p-1.5">
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity glassy-card/30 rounded-full p-1.5">
               <BiDownload
-                className="w-4 h-4 text-white cursor-pointer"
+                className="w-4 h-4 glassy-text-primary cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDownload(sharedData.image_urls[0], getFileName(sharedData.image_urls[0]));
@@ -268,15 +268,15 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
         <div className="relative group mb-3">
           <video
             controls
-            className="w-full h-32 object-contain bg-black rounded-lg"
+            className="w-full h-32 object-contain glassy-card rounded-lg"
             preload="metadata"
           >
             <source src={sharedData.video_url} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-full p-1.5">
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity glassy-card/30 rounded-full p-1.5">
             <BiDownload
-              className="w-4 h-4 text-white cursor-pointer"
+              className="w-4 h-4 glassy-text-primary cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 handleDownload(sharedData.video_url, getFileName(sharedData.video_url));
@@ -298,9 +298,9 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 className="w-full h-32 object-cover rounded-lg cursor-pointer hover:brightness-95 transition-all"
                 onClick={() => window.open(sharedData.image_urls[0], '_blank')}
               />
-              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-full p-1.5">
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity glassy-card/30 rounded-full p-1.5">
                 <BiDownload
-                  className="w-4 h-4 text-white cursor-pointer"
+                  className="w-4 h-4 glassy-text-primary cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDownload(sharedData.image_urls[0], getFileName(sharedData.image_urls[0]));
@@ -318,9 +318,9 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                     className="w-full h-20 object-cover rounded cursor-pointer hover:brightness-95 transition-all"
                     onClick={() => window.open(url, '_blank')}
                   />
-                  <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-full p-1">
+                  <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity glassy-card/30 rounded-full p-1">
                     <BiDownload
-                      className="w-3 h-3 text-white cursor-pointer"
+                      className="w-3 h-3 glassy-text-primary cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDownload(url, getFileName(url));
@@ -349,7 +349,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
       toast.error('Invalid post data');
     }
     // setShowOptionsDropdown(null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePollVote = (optionIndex) => {
@@ -375,26 +375,26 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
         {/* Link details */}
         <div
-          className={`p-3 rounded-lg border cursor-pointer hover:bg-opacity-80 transition-all ${isOwn ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-200'
+          className={`p-3 rounded-lg border cursor-pointer hover:bg-opacity-80 transition-all ${isOwn ? 'glassy-card/10 border-white/20' : ' border-gray-200'
             }`}
           onClick={() => window.open(sharedData.link, '_blank')}
         >
           <div className="flex items-start justify-between">
             <div className="flex-1">
               {sharedData.title && (
-                <h4 className={`font-semibold text-sm mb-1 ${isOwn ? 'text-black/90' : 'text-gray-800'
+                <h4 className={`font-semibold text-sm mb-1 ${isOwn ? 'glassy-text-primary/90' : 'text-gray-800'
                   }`}>
                   {sharedData.title}
                 </h4>
               )}
               {sharedData.link && (
-                <p className={`text-xs mb-2 ${isOwn ? 'text-black/70' : 'text-gray-600'
+                <p className={`text-xs mb-2 ${isOwn ? 'glassy-text-primary/70' : 'text-gray-600'
                   }`}>
                   {new URL(sharedData.link).hostname}
                 </p>
               )}
             </div>
-            <BiLink className={`w-4 h-4 ml-2 ${isOwn ? 'text-black/70' : 'text-gray-500'
+            <BiLink className={`w-4 h-4 ml-2 ${isOwn ? 'glassy-text-primary/70' : 'glassy-text-secondary'
               }`} />
           </div>
         </div>
@@ -408,7 +408,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
     return (
       <div className="mb-3">
-        <div className={`flex items-center space-x-2 mb-3 ${isOwn ? 'text-black/80' : 'text-gray-600'
+        <div className={`flex items-center space-x-2 mb-3 ${isOwn ? 'glassy-text-primary/80' : 'text-gray-600'
           }`}>
           {/* <ch className="w-4 h-4" /> */}
           <span className="text-xs font-medium">Poll • {totalVotes} votes</span>
@@ -427,8 +427,8 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                     ? 'bg-blue-500/20 border-blue-400/50'
                     : 'bg-blue-50 border-blue-200'
                   : isOwn
-                    ? 'bg-white/10 border-white/20 hover:bg-white/20'
-                    : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                    ? 'glassy-card/10 border-white/20 hover:glassy-card/20'
+                    : ' border-gray-200 hover:bg-gray-100'
                   }`}
                 onClick={() => handlePollVote(index)}
               >
@@ -440,16 +440,16 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 />
 
                 <div className="relative flex items-center justify-between">
-                  <span className={`text-sm font-medium ${isOwn ? 'text-black/90' : 'text-gray-800'
+                  <span className={`text-sm font-medium ${isOwn ? 'glassy-text-primary/90' : 'text-gray-800'
                     }`}>
                     {option.text}
                   </span>
                   <div className="flex items-center space-x-2">
-                    <span className={`text-xs ${isOwn ? 'text-black/70' : 'text-gray-600'
+                    <span className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'text-gray-600'
                       }`}>
                       {percentage}%
                     </span>
-                    <span className={`text-xs ${isOwn ? 'text-black/70' : 'text-gray-600'
+                    <span className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'text-gray-600'
                       }`}>
                       ({option.vote_count})
                     </span>
@@ -461,7 +461,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
         </div>
 
         {poll.voting_length && (
-          <p className={`text-xs mt-2 ${isOwn ? 'text-black/70' : 'text-gray-500'
+          <p className={`text-xs mt-2 ${isOwn ? 'glassy-text-primary/70' : 'glassy-text-secondary'
             }`}>
             Voting ends in {poll.voting_length} days
           </p>
@@ -480,16 +480,16 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
         return (
           <div
-            className={`border rounded-lg overflow-hidden max-w-[320px] ${isOwn ? 'bg-white/10 border-white/20' : 'bg-white border-gray-200'
+            className={`border rounded-lg overflow-hidden max-w-[320px] ${isOwn ? 'glassy-card/10 border-white/20' : 'glassy-card border-gray-200'
               }`}
           >
             <div
               className={`flex items-center space-x-2 p-3 border-b ${isOwn ? 'border-white/20' : 'border-gray-200'
                 }`}
             >
-              <BiShare className={`w-4 h-4 ${isOwn ? 'text-[#000000E6]' : 'text-gray-500'}`} />
+              <BiShare className={`w-4 h-4 ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`} />
               <span
-                className={`text-xs font-medium ${isOwn ? 'text-[#000000E6]' : 'text-gray-500'}`}
+                className={`text-xs font-medium ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`}
               >
                 Interview Scheduled
               </span>
@@ -506,7 +506,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 )}
                 <div>
                   <p className="text-sm font-semibold text-gray-800">{company.name}</p>
-                  <p className="text-xs text-gray-500">{job.job_title_details?.name}</p>
+                  <p className="text-xs glassy-text-secondary">{job.job_title_details?.name}</p>
                 </div>
               </div>
 
@@ -578,13 +578,13 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               onClick={() => window.open(msg.file_url, '_blank')}
             />
             {msg.message && (
-              <div className={`mt-2 text-sm ${isOwn ? 'text-white' : 'text-gray-800'}`}>
+              <div className={`mt-2 text-sm ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
                 {msg.message}
               </div>
             )}
-            <div className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-full p-1.5`}>
+            <div className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity glassy-card/30 rounded-full p-1.5`}>
               <BiDownload
-                className="w-4 h-4 text-white cursor-pointer"
+                className="w-4 h-4 glassy-text-primary cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDownload(msg.file_url, getFileName(msg.file_url));
@@ -606,13 +606,13 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               Your browser does not support the video tag.
             </video>
             {msg.message && (
-              <div className={`mt-2 text-sm ${isOwn ? 'text-white' : 'text-gray-800'}`}>
+              <div className={`mt-2 text-sm ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
                 {msg.message}
               </div>
             )}
-            <div className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 rounded-full p-1.5`}>
+            <div className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity glassy-card/30 rounded-full p-1.5`}>
               <BiDownload
-                className="w-4 h-4 text-white cursor-pointer"
+                className="w-4 h-4 glassy-text-primary cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDownload(msg.file_url, getFileName(msg.file_url));
@@ -624,10 +624,10 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
       case 'pdf':
         return (
-          <div className={`flex items-center space-x-3 p-3 rounded-lg max-w-[280px] ${isOwn ? 'bg-white/20' : 'bg-gray-100'}`}>
+          <div className={`flex items-center space-x-3 p-3 rounded-lg max-w-[280px] ${isOwn ? 'glassy-card/20' : 'bg-gray-100'}`}>
 
             <div className="flex-1 min-w-0">
-              <p className={`text-sm font-medium truncate ${isOwn ? 'text-[#000000E6]' : 'text-[#000000E6]'}`}>
+              <p className={`text-sm font-medium truncate ${isOwn ? 'glassy-text-primary' : 'glassy-text-primary'}`}>
 
                 {msg?.file_url && (
                   <iframe
@@ -639,15 +639,15 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 )}
 
               </p>
-              <p className={`text-xs ${isOwn ? 'text-[#000000E6]/70' : 'text-gray-500'}`}>
+              <p className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'glassy-text-secondary'}`}>
                 PDF Document
               </p>
             </div>
             <button
               onClick={() => handleDownload(msg.file_url, getFileName(msg.file_url))}
-              className={`flex-shrink-0 p-2 rounded-full hover:bg-opacity-20 transition-colors ${isOwn ? 'hover:bg-white/30' : 'hover:bg-gray-300'}`}
+              className={`flex-shrink-0 p-2 rounded-full hover:bg-opacity-20 transition-colors ${isOwn ? 'hover:glassy-card/30' : 'hover:bg-gray-300'}`}
             >
-              <BiDownload className={`w-4 h-4 ${isOwn ? 'text-[#000000E6]' : 'text-gray-600'}`} />
+              <BiDownload className={`w-4 h-4 ${isOwn ? 'glassy-text-primary' : 'text-gray-600'}`} />
             </button>
           </div>
         );
@@ -663,7 +663,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
             date={convertTimestampToDate(sharedData?.post_certificate_id?.issue_date)} record={sharedData?.post_certificate_id} type="certifications" username={sharedData?.user_details?.name} />
         }
         return (
-          <div className={`border rounded-lg overflow-hidden max-w-[320px] ${isOwn ? 'bg-white/10 border-white/20' : 'bg-white border-gray-200'}`}>
+          <div className={`border rounded-lg overflow-hidden max-w-[320px] ${isOwn ? 'glassy-card/10 border-white/20' : 'glassy-card border-gray-200'}`}>
             <div className={`flex items-center space-x-2 p-3 border-b ${isOwn ? 'border-white/20' : 'border-gray-200'}`}
               onClick={() => {
                 sessionStorage.setItem('currentPostId', msg?.shared_data?.share_id);
@@ -671,8 +671,8 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 handleCopyLink(msg?.shared_data?.share_id)
               }}
             >
-              <BiShare className={`w-4 h-4 ${isOwn ? 'text-[#000000E6]' : 'text-gray-500'}`} />
-              <span className={`text-xs font-medium ${isOwn ? 'text-[#000000E6]' : 'text-gray-500'}`}>
+              <BiShare className={`w-4 h-4 ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`} />
+              <span className={`text-xs font-medium ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`}>
                 Shared Post
               </span>
             </div>
@@ -694,7 +694,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
             <div className="p-3">
               {sharedData.content && (
-                <p className={`text-sm mb-3 ${isOwn ? 'text-[#000000E6]' : 'text-gray-800'}`}>
+                <p className={`text-sm mb-3 ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
                   {sharedData.content}
                 </p>
               )}
@@ -708,7 +708,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                   {sharedData.tags.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
-                      className={`inline-flex items-center space-x-1 text-xs px-2 py-1 rounded-full ${isOwn ? 'bg-white/20 text-[#000000E6]' : 'bg-blue-100 text-blue-800'
+                      className={`inline-flex items-center space-x-1 text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'bg-blue-100 text-blue-800'
                         }`}
                     >
                       <BiTag className="w-3 h-3" />
@@ -716,7 +716,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                     </span>
                   ))}
                   {sharedData.tags.length > 3 && (
-                    <span className={`text-xs px-2 py-1 rounded-full ${isOwn ? 'bg-white/20 text-[#000000E6]' : 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'bg-gray-100 text-gray-600'}`}>
                       +{sharedData.tags.length - 3} more
                     </span>
                   )}
@@ -724,7 +724,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               )}
 
               <div>
-                <img src={sharedData?.image_urls[0]} alt='img'/>
+                <img src={sharedData?.image_urls[0]} alt='img' />
               </div>
             </div>
           </div>
@@ -733,7 +733,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
       case 'text':
       default:
         return msg.message ? (
-          <div className={`text-sm whitespace-pre-wrap break-words ${isOwn ? 'text-[#000000E6]' : 'text-gray-800'}`}>
+          <div className={`text-sm whitespace-pre-wrap break-words ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
             {/* {msg.message} */}
             <MessageText msg={msg} />
           </div>
@@ -743,53 +743,50 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
   return (
     <div className={`flex msg_ui overflow-hidden overflow-auto mb-1.5 px-4 ${isOwn ? 'justify-end' : 'justify-start'}`}>
-      <div className={`max-w-[85%] relative group ${isOwn
-        ? 'bg-[#fcfcff] text-[#000000E6] rounded-tr-none rounded-lg'
-        : 'bg-white text-gray-800 rounded-tl-none rounded-lg shadow-sm'
-        }`}
+      <div
+        className={`max-w-[85%] relative group ${isOwn
+            ? 'glassy-text-primary rounded-tr-none rounded-lg'
+            : 'glassy-card rounded-tl-none rounded-lg shadow-sm'
+          }`}
         style={{
           borderRadius: isOwn ? '7.5px 0 7.5px 7.5px' : '0 7.5px 7.5px 7.5px'
         }}
       >
-
-        <div className="px-3 pt-3 pb-1 ">
+        <div className="px-3 pt-3 pb-1">
           {renderRepliedMessage()}
 
           {renderMessageContent()}
 
-          <div className={`flex justify-between items-center mt-2 space-x-2 ${isOwn ? 'text-[#000000E6]' : 'text-gray-500'
-            }`}>
+          <div className={`flex justify-between items-center mt-2 space-x-2 ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`}>
             {/* Reply button */}
             <button
               onClick={handleReplyClick}
-              className={`  transition-opacity p-1 rounded-full hover:bg-gray-200/50 ${isOwn ? 'hover:bg-white/20' : 'hover:bg-gray-100'
-                }`}
+              className={`transition-opacity p-1 rounded-full hover:bg-button-hover/20`}
               title="Reply"
             >
               <FaReply className="w-4 h-4" />
             </button>
 
             {/* Timestamp and read status */}
-            <div className='flex justify-end items-center gap-2'>
-              <span className="text-[11px]">
+            <div className="flex justify-end items-center gap-2">
+              <span className="text-[11px] glassy-text-secondary">
                 {formatTime(msg.timestamp || msg.createdAt)}
               </span>
               {isOwn && (
                 <span className="text-xs">
                   {msg.isRead ? (
-
-                    <RiCheckDoubleLine size={20} color="blue" />
+                    <RiCheckDoubleLine size={20} color="var(--text-primary)" />
                   ) : (
-                    <RiCheckLine size={20} color="blue" />
+                    <RiCheckLine size={20} color="var(--text-primary)" />
                   )}
                 </span>
               )}
-
             </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 };
 

@@ -121,7 +121,7 @@ const Profile = ({ adminProfileData, companiesProfileData, instituteProfileData 
     );
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg border border-gray-200">
+    <div className="max-w-3xl mx-auto mt-10 p-6 glassy-card shadow-md rounded-lg border border-gray-200">
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
         <img
           src={
@@ -257,7 +257,7 @@ export default Profile;
 //     return <div className="p-4 text-red-600">No profile data available.</div>;
 
 //   return (
-//     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg border border-gray-200">
+//     <div className="max-w-3xl mx-auto mt-10 p-6 glassy-card shadow-md rounded-lg border border-gray-200">
 //       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
 //         <img
 //           src={
