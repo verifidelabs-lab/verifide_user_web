@@ -164,7 +164,6 @@ const Opportunitiess2 = () => {
   const hasActiveFilters = () => {
     return Object.values(selectedFilters).some(Boolean);
   };
-  
 
   const handleAction = (data) => {
     setSelectedJob(data);
@@ -616,12 +615,35 @@ const Opportunitiess2 = () => {
           )}
 
           {selectedJob.isApplied && (
+            // <div className="mb-4">
+            //   <strong className="text-gray-700">Application Status:</strong>
+            //   <span
+            //     className={`ml-2 ${
+            //       selectedJob.jobApplication?.status === "applied"
+            //         ? "text-blue-600"
+            //         : selectedJob.jobApplication?.passed
+            //         ? "text-green-600"
+            //         : "text-yellow-600"
+            //     }`}
+            //   >
+            //     {selectedJob.jobApplication?.status === "applied"
+            //       ? "Applied"
+            //       : selectedJob.jobApplication?.passed
+            //       ? "Accepted"
+            //       : "Under Review"}
+            //   </span>
+            // </div>
             <div className="mb-4">
               <strong className="text-gray-700">Application Status:</strong>
               <span
                 className={`ml-2 ${
                   selectedJob.jobApplication?.status === "applied"
                     ? "text-blue-600"
+                    : selectedJob.jobApplication?.status === "rejected"
+                    ? "text-red-600"
+                    : selectedJob.jobApplication?.status ===
+                      "selected_in_interview"
+                    ? "text-green-600"
                     : selectedJob.jobApplication?.passed
                     ? "text-green-600"
                     : "text-yellow-600"
@@ -629,6 +651,11 @@ const Opportunitiess2 = () => {
               >
                 {selectedJob.jobApplication?.status === "applied"
                   ? "Applied"
+                  : selectedJob.jobApplication?.status === "rejected"
+                  ? "Not Selected"
+                  : selectedJob.jobApplication?.status ===
+                    "selected_in_interview"
+                  ? "🎉 Selected"
                   : selectedJob.jobApplication?.passed
                   ? "Accepted"
                   : "Under Review"}
@@ -636,47 +663,50 @@ const Opportunitiess2 = () => {
             </div>
           )}
 
-          {selectedJob?.isSchedule && selectedJob?.interviewDetails && (
-            <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-800 capitalize mb-3">
-                📅 Interview Details
-              </h3>
+          {selectedJob?.isSchedule &&
+            selectedJob?.interviewDetails &&
+            selectedJob?.jobApplication?.status !== "rejected" &&
+            selectedJob?.jobApplication?.status !== "selected_in_interview" && (
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-800 capitalize mb-3">
+                  📅 Interview Details
+                </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
-                <div>
-                  <span className="font-medium">Interview Date:</span>
-                  <div className="text-gray-600">
-                    {convertTimestampToDate(
-                      selectedJob.interviewDetails.select_date
-                    )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+                  <div>
+                    <span className="font-medium">Interview Date:</span>
+                    <div className="text-gray-600">
+                      {convertTimestampToDate(
+                        selectedJob.interviewDetails.select_date
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <span className="font-medium">Interview Time:</span>
-                  <div className="text-gray-600">
-                    {convertTimestampToDate(
-                      selectedJob.interviewDetails.select_time
-                    )}
+                  <div>
+                    <span className="font-medium">Interview Time:</span>
+                    <div className="text-gray-600">
+                      {convertTimestampToDate(
+                        selectedJob.interviewDetails.select_time
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="sm:col-span-2">
-                  <span className="font-medium">Meeting Link:</span>
-                  <div className="text-blue-600 truncate">
-                    <a
-                      href={selectedJob.interviewDetails.meeting_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                    >
-                      {selectedJob.interviewDetails.meeting_url}
-                    </a>
+                  <div className="sm:col-span-2">
+                    <span className="font-medium">Meeting Link:</span>
+                    <div className="text-blue-600 truncate">
+                      <a
+                        href={selectedJob.interviewDetails.meeting_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {selectedJob.interviewDetails.meeting_url}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
           <div className="text-sm text-gray-500 mt-4">
             Posted on:{" "}

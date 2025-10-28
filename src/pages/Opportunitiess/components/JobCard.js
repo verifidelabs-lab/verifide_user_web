@@ -323,7 +323,7 @@ const JobCard = ({
                 ? `${job?.work_location.city.name}, ${job?.work_location.state.name}`
                 : "Location not specified"}
             </p>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               {job?.job_description || job?.user_id?.summary ? (
                 <div
                   className={`relative bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-700 leading-relaxed ${
@@ -353,6 +353,42 @@ const JobCard = ({
                         className="text-blue-600 text-xs hover:underline focus:outline-none"
                       >
                         {showAllSkills ? "See less" : "See more"}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">
+                  No description or summary provided.
+                </p>
+              )}
+            </div> */}
+            <div className="mb-4">
+              {job?.job_description || job?.user_id?.summary ? (
+                <div
+                  className={`relative bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-700 leading-relaxed`}
+                >
+                  <span className="whitespace-pre-line">
+                    {showAllSkills
+                      ? job?.job_description || job?.user_id?.summary
+                      : `${(
+                          job?.job_description || job?.user_id?.summary
+                        )?.slice(0, 250)}${
+                          (job?.job_description || job?.user_id?.summary)
+                            ?.length > 250
+                            ? "..."
+                            : ""
+                        }`}
+                  </span>
+
+                  {(job?.job_description || job?.user_id?.summary)?.length >
+                    250 && (
+                    <div className="mt-2 text-right">
+                      <button
+                        onClick={() => setShowAllSkills(!showAllSkills)}
+                        className="text-blue-600 text-sm font-medium hover:underline focus:outline-none"
+                      >
+                        {showAllSkills ? "See less ▲" : "See more ▼"}
                       </button>
                     </div>
                   )}

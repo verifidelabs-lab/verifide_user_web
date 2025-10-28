@@ -67,7 +67,7 @@ const CompanyPrivateRoute = ({ component: Component, ...rest }) => {
   if (!isCompanyAuthenticated) {
     return (
       <Navigate
-        to={`/company/login?redirect=${encodeURIComponent(location.pathname)}`}
+        to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
         replace
       />
     );

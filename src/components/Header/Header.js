@@ -37,6 +37,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     profileImage || profileData?.personalInfo?.profile_picture_url;
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
+  const [isInstitutionDropdownOpen, setIsInstitutionDropdownOpen] =
+    useState(false);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -450,6 +452,82 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Create Institution
                   </Link> */}
+                  <div className="border-t border-gray-200">
+                    <button
+                      onClick={() =>
+                        setIsInstitutionDropdownOpen((prev) => !prev)
+                      }
+                      className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Institution
+                      <FiChevronDown
+                        className={`ml-2 text-gray-500 transition-transform ${
+                          isInstitutionDropdownOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Expand inline */}
+                    {isInstitutionDropdownOpen && (
+                      <div className="pl-4 space-y-1">
+                        {companiesData?.data?.list?.length > 0 ? (
+                          companiesData.data.list.map((company) => (
+                            <Link
+                              key={company._id}
+                              // to={`/company/login?email=${encodeURIComponent(
+                              //   company.email
+                              // )}`}
+                              className="flex items-center gap-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+                              onClick={() => {
+                                switchAccountFunction(company._id);
+                              }}
+                            >
+                              {/* ✅ Company logo with fallback */}
+                              {company.logo_url ? (
+                                <img
+                                  src={company.logo_url}
+                                  alt={`${company.name} logo`}
+                                  className="w-6 h-6 rounded-full object-cover border border-gray-200"
+                                  // onError={(e) => {
+                                  //   e.currentTarget.src = "/default-company.png"; // your fallback image
+                                  // }}
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src =
+                                      "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-semibold">
+                                  {company.name?.charAt(0)?.toUpperCase() ||
+                                    "C"}
+                                </div>
+                              )}
+
+                              <span className="truncate">{company.name}</span>
+                            </Link>
+                          ))
+                        ) : (
+                          <p className=" py-2 text-sm text-gray-500">
+                            No Institution found
+                          </p>
+                        )}
+
+                        {companiesData?.data?.list?.length && (
+                          <Link
+                            to="/user/create-institute"
+                            className="block   py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                            onClick={() => {
+                              setIsInstitutionDropdownOpen(false);
+                              setIsDropdownOpen(false);
+                            }}
+                          >
+                            ➕ Create Institution
+                          </Link>
+                        )}
+                      </div>
+                    )}
+                  </div>
                   <button
                     onClick={() => {
                       removeCookie("VERIFIED_TOKEN");

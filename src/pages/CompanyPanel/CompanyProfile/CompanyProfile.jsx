@@ -22,7 +22,7 @@ import {
 } from "../../../redux/CompanySlices/CompanyAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { suggestedUser } from "../../../redux/Users/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bookmark, Plus } from "lucide-react";
 import useFormHandler from "../../../components/hooks/useFormHandler";
 import {
@@ -48,6 +48,7 @@ import { AiOutlineLike, AiOutlineEye } from "react-icons/ai";
 import { jobsList } from "../../../redux/Global Slice/cscSlice";
 import classNames from "classnames";
 import JobPost from "../../Home/components/JobPost";
+import NoDataFound from "../../../components/ui/No Data/NoDataFound";
 
 const CompanyProfile = ({
   adminProfileData,
@@ -64,6 +65,7 @@ const CompanyProfile = ({
   };
   const userRole = Number(getCookie("COMPANY_ROLE"));
   const dispatch = useDispatch();
+
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [activeTab, setActiveTab] = useState("Home");
   const [agencyData, setAgencyData] = useState({});
@@ -81,6 +83,10 @@ const CompanyProfile = ({
   const { jobsListData: { data: jobs = [] } = {} } = useSelector(
     (state) => state.global
   );
+  const companiesSelector = useSelector((state) => state.companies);
+  const assignedUsers =
+    companiesSelector?.getAssignedUsersData?.data?.data || [];
+  console.log("this is the companies users list", assignedUsers);
 
   const allIndustry = arrayTransform(
     IndusteryData?.companyIndustryData?.data?.data?.list || []
@@ -211,6 +217,9 @@ const CompanyProfile = ({
       dispatch(instituteProfile());
     }
   };
+  const navigate = useNavigate();
+  let isCompany = getCookie("ACTIVE_MODE");
+  const isAssignedUser = Boolean(getCookie("ASSIGNED_USER") === "true");
   const validateProfileForm = () => {
     const newErrors = {};
 
@@ -532,10 +541,10 @@ const CompanyProfile = ({
 
         {/* Industry Multi-Select */}
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          {/* <label className="block text-sm font-medium text-gray-700 mb-1">
             Industry <span className="text-red-500">*</span>
-          </label>
-          <CreatableSelect
+          </label> */}
+          {/* <CreatableSelect
             isMulti
             options={allIndustry}
             value={formData.industry?.map((ind) => ({
@@ -557,7 +566,46 @@ const CompanyProfile = ({
             styles={customStyles}
             className={selectClasses}
             classNamePrefix="react-select"
+          /> */}
+          <FilterSelect
+            label="Industry Name"
+            name="industry *"
+            placeholder="Select Industry"
+            options={allIndustry} // array of {value: _id, label: name}
+            selectedOption={
+              formData.industry && formData.industry.length > 0
+                ? allIndustry.find(
+                    (opt) => opt.value === formData.industry[0]?._id
+                  )
+                : null
+            }
+            onChange={(selected) => {
+              if (selected) {
+                handleChange("industry", {
+                  target: {
+                    value: [{ _id: selected.value, name: selected.label }],
+                  },
+                });
+              } else {
+                handleChange("industry", { target: { value: [] } });
+              }
+            }}
+            className="block text-sm font-medium text-gray-700 mb-1"
+            error={errors.industry}
+            required
+            // onCreateOption={(inputValue, field) => {
+            //   setAddModalState({
+            //     isOpen: true,
+            //     type: "industries",
+            //     field: field,
+            //   });
+            //   setInputFields((prev) => ({ ...prev, name: inputValue }));
+            // }}
+            isClearable={true}
+            isCreatedByUser={false}
+            labelClassName="block text-sm font-medium text-gray-700 mb-1" // ✅ use labelClassName instead of className
           />
+
           {errors.industry && (
             <p className="mt-1 text-sm text-red-600">{errors.industry}</p>
           )}
@@ -893,7 +941,8 @@ const CompanyProfile = ({
                       className="w-12 h-12 rounded-full object-cover border border-gray-200"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                        e.currentTarget.src =
+                          "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
                       }}
                     />
                   ) : null}
@@ -1112,7 +1161,28 @@ const CompanyProfile = ({
       bio: "",
     });
     const [showAddForm, setShowAddForm] = useState(false);
+    const handleConnect = async (data) => {
+      if (!data?.user_path) {
+        navigate(
+          isCompany === "company"
+            ? `/company/profile/${data?.first_name}/${data?._id}`
+            : `/user/profile/${data?.first_name}/${data?._id}`
+        );
+      } else {
+        const name =
+          data?.user_path === "Companies"
+            ? "companies"
+            : data?.user_path === "Institutions"
+            ? "institutions"
+            : "users";
 
+        navigate(
+          isCompany === "company"
+            ? `/company/view-details/${name}/${data?._id}`
+            : `/user/view-details/${name}/${data?._id}`
+        );
+      }
+    };
     const addPerson = () => {
       if (newPerson.name && newPerson.position && newPerson.bio) {
         setPeople((prev) => [
@@ -1134,15 +1204,15 @@ const CompanyProfile = ({
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Our Team</h2>
-            <button
+            {/* <button
               onClick={() => setShowAddForm(!showAddForm)}
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
               Add Team Member
-            </button>
+            </button> */}
           </div>
 
-          {showAddForm && (
+          {/* {showAddForm && (
             <div className="px-4 py-2 bg-white-600 text-black rounded hover:bg-white-700">
               <h3 className="text-lg font-semibold mb-4">Add Team Member</h3>
               <div className="space-y-4">
@@ -1197,10 +1267,10 @@ const CompanyProfile = ({
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {people.map((person) => (
+            {/* {people.map((person) => (
               <div
                 key={person.id}
                 className="bg-white-800 rounded-lg p-6 border border-gray-700 text-center"
@@ -1214,7 +1284,44 @@ const CompanyProfile = ({
                 <p className="text-blue-400 mb-3">{person.position}</p>
                 <p className="text-gray-600 text-sm">{person.bio}</p>
               </div>
-            ))}
+            ))} */}
+            {assignedUsers && assignedUsers.length > 0 ? (
+              assignedUsers.map((user) => (
+                <div
+                  key={user._id}
+                  className="bg-white-800 rounded-lg p-6 border border-gray-700 text-center"
+                  onClick={() => handleConnect(user)}
+                >
+                  <img
+                    src={
+                      user.profile_picture_url ||
+                      "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
+                    }
+                    alt={user.first_name}
+                    className="w-16 h-16 rounded-full mx-auto mb-4 object-cover"
+                  />
+                  <h3 className="text-lg font-semibold mb-1">
+                    {user.first_name} {user.last_name}
+                  </h3>
+                  {/* <p className="text-blue-400 mb-3">
+                    {user.position || "No designation"}
+                  </p> */}
+                  <p className="text-gray-600 text-sm">{user.email}</p>
+
+                  {/* Optional remove button */}
+                  {/* {!isAssignedUser && (
+                    <button
+                      onClick={() => handleRemoveUser(user._id)}
+                      className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
+                    >
+                      Remove
+                    </button>
+                  )} */}
+                </div>
+              ))
+            ) : (
+              <NoDataFound />
+            )}
           </div>
         </div>
       </div>
