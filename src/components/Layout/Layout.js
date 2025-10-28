@@ -193,18 +193,37 @@ function Layout() {
   }, []);
 
   return (
-    <div className='flex  overflow-hidden  '>
-      {
-        (location.pathname !== '/app/opportunities' && location.pathname !== '/user/terms-and-conditions') && (location.pathname !== '/user/course/recommended'  ) && (
-          <div className={`h-full ${navbarOpen ? "w-72 absolute md:relative transition ease-in-out delay-150" : "w-0 "}`}>
-            <Sidebar openLogout={openLogout} setNavbarOpen={setNavbarOpen} navbarOpen={navbarOpen} profileData={profileData?.getProfileData?.data?.data}
-              unreadCounts={unreadCounts} />
-          </div>
-        )
-      }
-      <div className={`flex flex-col  ${navbarOpen ? " flex-1  " : "w-full"} overflow-hidden`}>
-        <Header openLogout={openLogout} sideBarJson={sideBarJson} profileData={profileData?.getProfileData?.data?.data} setUserType={setUserType} playAndShowNotification={playAndShowNotification} />
-        <main className='flex-1 overflow-auto custom-scrollbar  bg-[#F6FAFD]'>
+    <div className=" min-h-screen flex flex-col ">
+      {/* Full-width Header */}
+      <Header
+        openLogout={openLogout}
+        sideBarJson={sideBarJson}
+        profileData={profileData?.getProfileData?.data?.data}
+        setUserType={setUserType}
+        playAndShowNotification={playAndShowNotification}
+      />
+
+      {/* Sidebar + Content stacked below header */}
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
+        {/* Sidebar (below header in mobile, side-by-side in desktop if you want) */}
+        {(location.pathname !== '/app/opportunities' &&
+          location.pathname !== '/user/terms-and-conditions' &&
+          location.pathname !== '/user/course/recommended') && 
+          location.pathname !== '/user/opportunitiess'&& (
+            <div
+              className={`transition-all duration-300 ${navbarOpen ? 'md:w-72 w-full' : 'w-0 md:w-20'
+                }`}
+            >
+              <Sidebar
+                openLogout={openLogout}
+                setNavbarOpen={setNavbarOpen}
+                navbarOpen={navbarOpen}
+                profileData={profileData?.getProfileData?.data?.data}
+                unreadCounts={unreadCounts}
+              />
+            </div>
+          )}
+        <main className='flex-1 overflow-auto custom-scrollbar  '>
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />
@@ -215,7 +234,7 @@ function Layout() {
               <Route path="/message/:id?/:isConnected?" element={<Message profileData={profileData} socket={socket} />} />
               <Route path="/notification" element={<NotificationInterface />} />
               <Route path="/activity" element={<ActivityList />} />
-              <Route path="/verification-category" element={<VerificationCategory profileData={profileData?.getProfileData?.data?.data?.personalInfo}/>} />
+              <Route path="/verification-category" element={<VerificationCategory profileData={profileData?.getProfileData?.data?.data?.personalInfo} />} />
               <Route path="/post-job/:id?" element={<PostJob />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
               {/* <Route path="/feed" element={<Home />} /> */}

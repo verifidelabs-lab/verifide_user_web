@@ -179,13 +179,13 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
   };
   if (!quest?.surveyPolls || quest.surveyPolls.length === 0) {
     return (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
             <h2 className="text-xl font-medium text-gray-800">Survey</h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+              className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
             >
               <BiX className="text-2xl" />
             </button>
@@ -198,13 +198,13 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
     );
   }
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h2 className="text-xl font-medium text-gray-800 capitalize">{formStructure.title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+            className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
           >
             <BiX className="text-2xl" />
           </button>
@@ -224,7 +224,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
               <div className="mb-6">
                 <p className="text-gray-600">{formStructure.description}</p>
                 {formStructure.pages.length > 1 && (
-                  <div className="text-sm text-gray-500 mt-2">
+                  <div className="text-sm glassy-text-secondary mt-2">
                     Page {currentPage + 1} of {formStructure.pages.length}
                   </div>
                 )}
@@ -259,7 +259,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-2 px-6 rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? 'Submitting...' :
                       (currentPage < formStructure.pages.length - 1 ? 'Next' : 'Submit')}

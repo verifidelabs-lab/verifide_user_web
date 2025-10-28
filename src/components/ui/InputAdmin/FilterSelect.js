@@ -13,13 +13,13 @@ const FilterSelect = ({
   labelClassName = '',
   placeholder = 'Select...',
   error = false,
-  required = false, // ✅ Add required prop
+  required = false,
 }) => {
   const selectClasses = classNames(
-    'h-[50px] opacity-100 rounded-[10px] border w-full',
+    'rounded-[10px] w-full text-sm',
     {
-      'border-gray-300': !error,
-      'border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500': error,
+      'border border-gray-300': !error,
+      'border border-red-300 text-red-900': error,
     },
     selectClassName
   );
@@ -28,44 +28,64 @@ const FilterSelect = ({
     control: (base, state) => ({
       ...base,
       borderRadius: '10px',
-      borderColor: error ? '#f87171' : '#d1d5db', // red-300 or gray-300
-      minHeight: '52px',
-      opacity: 1,
-      boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none', // blue ring on focus
+      borderColor: error ? 'var(--border-color)' : 'var(--border-color)',
+      minHeight: '50px',
+      backgroundColor: 'var(--bg-card)',
+      color: 'var(--text-primary)',
+      boxShadow: state.isFocused ? `0 0 0 1px #3b82f6` : 'none',
       '&:hover': {
-        borderColor: error ? '#f87171' : '#9ca3af',
+        borderColor: state.isFocused ? '#3b82f6' : 'var(--border-color)',
       },
     }),
     placeholder: (base) => ({
       ...base,
-      color: '#000000',
-      opacity: 0.5,
+      color: 'var(--text-secondary)',
+      opacity: 1,
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: 'var(--text-primary)',
     }),
     multiValue: (base) => ({
       ...base,
-      backgroundColor: '#e5e7eb',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
       borderRadius: '4px',
     }),
     multiValueLabel: (base) => ({
       ...base,
-      color: '#374151',
+      color: 'var(--text-primary)',
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: '#6b7280',
+      color: 'var(--text-secondary)',
       ':hover': {
         backgroundColor: '#f87171',
         color: 'white',
       },
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: 'var(--bg-card)',
+      color: 'var(--text-primary)',
+      borderRadius: '10px',
+      boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused
+        ? 'rgba(255,255,255,0.1)'
+        : 'var(--bg-card)',
+      color: 'var(--text-primary)',
+      cursor: 'pointer',
     }),
   };
 
   return (
     <div className={`w-full ${containerClassName}`}>
       {label && (
-        <label className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}>
+        <label className={`block text-sm glassy-text-secondary font-medium mb-2 ${labelClassName}`}>
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>} {/* ✅ Add red asterisk */}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
 

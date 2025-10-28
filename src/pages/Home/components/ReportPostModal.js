@@ -65,8 +65,8 @@ export default function ReportPostModal({
 
   if (currentModal === 'thank-you') {
     return (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-xl max-w-xl w-full p-8 relative">
+      <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div className="glassy-card rounded-xl max-w-xl w-full p-8 relative">
           <button
             onClick={handleClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
@@ -81,7 +81,7 @@ export default function ReportPostModal({
               </div>
             </div>
 
-            <h2 className="text-xl font-semibold text-[#000000E6] mb-4">
+            <h2 className="text-xl font-semibold glassy-text-primary mb-4">
               Thank you for submitting a report
             </h2>
 
@@ -95,8 +95,8 @@ export default function ReportPostModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl max-w-2xl w-full p-6 relative">
+    <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="glassy-card rounded-xl max-w-2xl w-full p-6 relative">
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
@@ -104,7 +104,7 @@ export default function ReportPostModal({
           <RxCross2 size={24} />
         </button>
 
-        <h1 className="text-2xl font-semibold text-[#000000E6] mb-8">Report Post</h1>
+        <h1 className="text-2xl font-semibold glassy-text-primary mb-8">Report Post</h1>
 
         <div className="space-y-3 mb-8 space-x-5">
           {reasons.map((reason) => (
@@ -123,7 +123,7 @@ export default function ReportPostModal({
 
         {selectedReason === REPORT_REASONS_ENUM.SOMETHING_ELSE && (
           <div className="mb-8">
-            <h3 className="text-lg font-medium text-[#000000E6] mb-2">Reason</h3>
+            <h3 className="text-lg font-medium glassy-text-primary mb-2">Reason</h3>
             <p className="text-gray-600 text-sm mb-4">
               Please let us know the reason for reporting this post.
             </p>
@@ -147,8 +147,8 @@ export default function ReportPostModal({
             onClick={handleSubmit}
             disabled={!selectedReason || (selectedReason === REPORT_REASONS_ENUM.SOMETHING_ELSE && !customReason)}
             className={`flex-1 px-6 py-3 rounded-lg font-medium transition-colors ${!selectedReason || (selectedReason === REPORT_REASONS_ENUM.SOMETHING_ELSE && !customReason)
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+              ? 'bg-gray-300 glassy-text-secondary cursor-not-allowed'
+              : 'bg-blue-600 glassy-text-primary hover:bg-blue-700'
               }`}
           >
             Submit

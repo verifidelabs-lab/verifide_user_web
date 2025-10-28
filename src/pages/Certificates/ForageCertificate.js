@@ -2,15 +2,15 @@ import React from "react";
 const ForageCertificate = () => {
     return (
         <>
-            <div className="max-w-4xl mx-auto bg-white border-2 border-gray-300 rounded-lg shadow-lg p-8 font-sans mt-40">
+            <div className="max-w-4xl mx-auto glassy-card border-2 border-gray-300 rounded-lg shadow-lg p-8 font-sans mt-40">
                 {/* Header */}
                 <img src='/logo.png' alt="" className="pb-5" />
-                <div className="max-w-3xl bg-white pt-8">
+                <div className="max-w-3xl glassy-card pt-8">
                     {/* Name */}
-                    <h1 className="text-5xl font-bold text-black">Jane Smith</h1>
+                    <h1 className="text-5xl font-bold glassy-text-primary">Jane Smith</h1>
 
                     {/* Program Title */}
-                    <h2 className="text-3xl font-extrabold text-black mt-1">
+                    <h2 className="text-3xl font-extrabold text-whitemt-1">
                         Bank &amp; Merge Co Private Equity Program
                     </h2>
 
@@ -39,13 +39,13 @@ const ForageCertificate = () => {
                         <div className="text-center">
                             <div className="h-10"></div> {/* Placeholder for signature */}
                             <p className="font-medium">[e.g Jane Smith]</p>
-                            <p className="text-sm text-gray-500">[Title e.g Partner]</p>
+                            <p className="text-sm glassy-text-secondary">[Title e.g Partner]</p>
                         </div>
 
                         <div className="">
                             <div className="h-10"></div> {/* Placeholder for signature */}
                             <p className="font-medium">Tom Brunskill</p>
-                            <p className="text-sm text-gray-500">CEO, Co-Founder of Forage</p>
+                            <p className="text-sm glassy-text-secondary">CEO, Co-Founder of Forage</p>
                         </div>
                     </div>
             </div>

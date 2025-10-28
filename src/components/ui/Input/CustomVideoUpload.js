@@ -77,7 +77,7 @@ const CustomVideoUpload = ({
   };
 
   const getFileIcon = (url) => {
-    if (!url) return <BiPaperclip className="w-5 h-5 text-gray-500" />;
+    if (!url) return <BiPaperclip className="w-5 h-5 glassy-text-secondary" />;
 
     const fileExtension = url.split('.').pop()?.toLowerCase();
     if (['mp4'].includes(fileExtension)) {
@@ -85,7 +85,7 @@ const CustomVideoUpload = ({
     } else if (fileExtension === 'pdf') {
       return <BiFile className="w-5 h-5 text-red-500" />;
     }
-    return <BiPaperclip className="w-5 h-5 text-gray-500" />;
+    return <BiPaperclip className="w-5 h-5 glassy-text-secondary" />;
   };
 
   const getFileName = (url) => {
@@ -160,10 +160,10 @@ const CustomVideoUpload = ({
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 {getFileIcon(value)}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#000000E6] truncate">
+                  <p className="text-sm font-medium glassy-text-primary truncate">
                     {getFileName(value)}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs glassy-text-secondary">
                     Uploaded successfully
                   </p>
                 </div>
@@ -196,7 +196,7 @@ const CustomVideoUpload = ({
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
 
       {!value && !error && (
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs glassy-text-secondary mt-1">
           {placeholder}
         </p>
       )}

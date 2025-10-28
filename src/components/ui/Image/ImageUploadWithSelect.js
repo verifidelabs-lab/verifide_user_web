@@ -68,7 +68,7 @@ const FileUpload = ({
     setIsDragging(false);
     const droppedFile = e.dataTransfer.files[0];
     validateAndSetFile(droppedFile);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeFile = useCallback(() => {
@@ -96,13 +96,13 @@ const FileUpload = ({
     <div className="w-full mx-auto">
       <div
         className={`
-          relative border border-dashed rounded-xl p-5 text-center transition-all duration-300 cursor-pointer
-          ${isDragging ? 'border-blue-400 bg-[#F6F8FA] scale-105' :
+      relative border border-dashed rounded-xl p-5 text-center transition-all duration-300 cursor-pointer
+      ${isDragging ? 'border-blue-400 bg-[#F6F8FA] scale-105' :
             file ? 'border-green-300 bg-green-50' :
               error ? 'border-red-300 bg-red-50' :
-                'border-gray-300 bg-gray-50 hover:border-gray-400 hover:bg-gray-100'}
-          ${isUploading ? 'pointer-events-none opacity-70' : ''}
-        `}
+                'border-gray-300 bg-card  '}
+      ${isUploading ? 'pointer-events-none opacity-70' : ''}
+    `}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -121,7 +121,7 @@ const FileUpload = ({
         {isUploading ? (
           <div className="space-y-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="text-gray-600 font-medium">Uploading...</p>
+            <p className="glassy-text-primary font-medium">Uploading...</p>
           </div>
         ) : previewUrl ? (
           <div className="relative">
@@ -129,32 +129,32 @@ const FileUpload = ({
               <img
                 src={previewUrl}
                 alt="preview"
-                className="w-full md:max-w-full md:min-h-80 min-h-80 max-h-80 object-contain"
+                className="w-full md:max-w-full md:min-h-80 min-h-80 max-h-80 object-contain rounded-lg"
               />
             ) : (
               <iframe
                 src={`https://docs.google.com/gview?url=${encodeURIComponent(previewUrl)}&embedded=true`}
                 title="file-preview"
-                className="w-full h-80 border rounded"
+                className="w-full h-80 border rounded glassy-card"
               />
             )}
             <button
               onClick={removeFile}
-              className="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-md hover:bg-red-100 transition"
+              className="absolute -top-2 -right-2 p-1 glassy-card rounded-full shadow-md hover:bg-red-100 transition"
             >
               <IoMdClose className="h-4 w-4 text-red-500" />
             </button>
           </div>
         ) : (
           <div className="space-y-4">
-            <div className={`rounded-full p-4 mx-auto w-16 h-16 flex items-center justify-center ${isDragging ? "bg-blue-100" : "bg-gray-100"}`}>
-              <BiUpload className={`h-8 w-8 ${isDragging ? "text-blue-500" : "text-gray-400"}`} />
+            <div className={`rounded-full p-4 mx-auto w-16 h-16 flex items-center justify-center ${isDragging ? "bg-blue-100" : "bg-card"}`}>
+              <BiUpload className={`h-8 w-8 ${isDragging ? "text-blue-500" : "text-secondary"}`} />
             </div>
-            <p className={`font-semibold ${isDragging ? "text-blue-600" : "text-gray-700"}`}>
+            <p className={`glassy-text-primary font-semibold ${isDragging ? "text-blue-600" : ""}`}>
               {isDragging ? "Drop your file here" : "Upload your file"}
             </p>
-            <p className="text-gray-500">Drag and drop or click to browse</p>
-            <div className="bg-white rounded-lg p-3 border border-gray-200 text-xs text-gray-600">
+            <p className="glassy-text-secondary">Drag and drop or click to browse</p>
+            <div className="glassy-card rounded-lg p-3 border border-gray-200 text-xs glassy-text-secondary">
               <p><strong>Supported:</strong> {allowedTypes.map((t) => t.split("/")[1].toUpperCase()).join(", ")}</p>
               <p className="mt-1"><strong>Max size:</strong> {maxSize}MB</p>
             </div>
@@ -169,6 +169,9 @@ const FileUpload = ({
         </div>
       )}
     </div>
+
+
+
   );
 };
 

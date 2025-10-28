@@ -30,7 +30,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
         interviewDetails,
         current_openings
     } = job;
-
+    console.log("This is the setsdfsdfsdf", job)
     const [imageError, setImageError] = useState(false);
 
     const isDateInRange = () => {
@@ -40,7 +40,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
 
     const formatSalaryRange = () => {
         if (!salary_range) return 'Not specified';
-        
+
         if (salary_range.includes('-')) {
             const [min, max] = salary_range.split('-');
             return `₹${parseInt(min).toLocaleString()} - ₹${parseInt(max).toLocaleString()}`;
@@ -50,7 +50,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
 
     const getApplicationStatus = () => {
         if (!isApplied) return null;
-        
+
         const status = jobApplication?.status;
         switch (status) {
             case 'applied':
@@ -68,7 +68,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
 
     const getInterviewStatus = () => {
         if (!isSchedule || !interviewDetails?.status) return null;
-        
+
         const status = interviewDetails.status;
         switch (status) {
             case 'scheduled':
@@ -100,55 +100,71 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
     const recommendationBadge = getRecommendationBadge();
     const applyStatus = shouldDisableApply();
     const dateInRange = isDateInRange();
-
+    console.log("this is the set", imageError, company_id?.logo_url)
     return (
-        <div className={`bg-white border relative ${isSelected ? "border-blue-300 shadow-md" : "border-gray-200"}  rounded-lg shadow-sm p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-md`}>
-            
+        <div
+            className={`glassy-card relative ${isSelected ? "border-blue-300 shadow-md" : "border-[var(--border-color)]"} rounded-2xl p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-lg`}
+        >
             {/* Header Section */}
             <div className="flex items-center space-x-4 min-h-[3rem]">
+                {/* Company Logo */}
                 {!imageError && company_id?.logo_url ? (
                     <img
                         src={company_id.logo_url}
                         alt={company_id?.name || 'Company'}
                         onError={() => setImageError(true)}
-                        className="md:w-12 md:h-12 w-10 h-10 object-cover rounded-full border"
+                        className="md:w-12 md:h-12 w-10 h-10 object-cover rounded-lg"
                     />
                 ) : (
-                    <div className="md:w-12 md:h-12 w-10 h-10 bg-gray-600 border rounded-full overflow-hidden flex items-center justify-center font-bold text-white text-lg">
-                        {company_id?.name?.charAt(0) || 'C'}
+                    <div className="w-12 h-12 bg-gray-800 flex items-center justify-center glassy-text-primary font-bold text-lg rounded-lg">
+                        <img
+                            src={"/36369.jpg"}
+                            alt={"company name"}
+                            onError={() => setImageError(true)}
+                            className="md:w-12 md:h-12 w-10 h-10 object-cover rounded-lg"
+                        />
                     </div>
                 )}
+
+                {/* Company Info */}
                 <div className="flex-1 min-w-0">
-                    <h2 className="text-sm font-semibold truncate text-gray-900">{company_id?.name || 'Company Name'}</h2>
-                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                    <h2 className="glassy-text-primary text-sm font-semibold truncate">
+                        {company_id?.name || 'Company Name'}
+                    </h2>
+                    <p className="glassy-text-secondary text-xs flex items-center gap-1 truncate">
                         <CiCalendar className="w-3 h-3" />
-                        <span className="truncate">Posted {convertTimestampToDate(createdAt)}</span>
-                        {industry_id?.name && (
-                            <span className="text-gray-400">• {industry_id.name}</span>
-                        )}
+                        <span>Posted {convertTimestampToDate(createdAt)}</span>
+                        {industry_id?.name && <span className="text-gray-400">• {industry_id.name}</span>}
                     </p>
                 </div>
-                
+
                 {/* Status Badges */}
                 <div className="flex flex-col gap-1 items-end">
                     {applicationStatus && (
-                        <span className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${applicationStatus.color}`}>
+                        <span
+                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${applicationStatus.color} glassy-text-primary`}
+                        >
                             {applicationStatus.text}
                         </span>
                     )}
                     {interviewStatus && (
-                        <span className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${interviewStatus.color}`}>
+                        <span
+                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${interviewStatus.color} glassy-text-primary`}
+                        >
                             {interviewStatus.text}
                         </span>
                     )}
                     {recommendationBadge && !applicationStatus && (
-                        <span className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${recommendationBadge.color}`}>
+                        <span
+                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${recommendationBadge.color} glassy-text-primary`}
+                        >
                             {recommendationBadge.text}
                         </span>
                     )}
                 </div>
             </div>
 
+            {/* Application Period */}
             <div className={`flex flex-col gap-1 text-sm p-3 rounded-md ${dateInRange ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
                 <div className="flex items-center">
                     <CiCalendar className={`mr-2 w-4 h-4 ${dateInRange ? 'text-green-600' : 'text-red-600'}`} />
@@ -167,53 +183,50 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                 )}
             </div>
 
+            {/* Job Details */}
             <div className="flex flex-wrap gap-2 text-sm min-h-[2.5rem]">
-                <span className="bg-white border border-gray-300 capitalize px-3 py-1 rounded-full whitespace-nowrap text-gray-700">
-                    {job_type || 'Not specified'}
-                </span>
-                <span className="bg-white border border-gray-300 capitalize px-3 py-1 rounded-full whitespace-nowrap text-gray-700">
-                    {job_location || 'Not specified'}
-                </span>
-                <span className="bg-white border border-gray-300 capitalize px-3 py-1 rounded-full whitespace-nowrap text-gray-700">
-                    {pay_type || 'Not specified'}
-                </span>
-                <span className="bg-white border border-gray-300 px-3 py-1 rounded-full whitespace-nowrap text-gray-700">
-                    {formatSalaryRange()}
+                {[job_type, job_location, pay_type].map((item, idx) => (
+                    <span
+                        key={idx}
+                        className="bg-[var(--bg-card)] border border-[var(--border-color)] capitalize px-3 py-1 rounded-full whitespace-nowrap glassy-text-primary"
+                    >
+                        {item || 'Not specified'}
+                    </span>
+                ))}
+                <span className="bg-[var(--bg-card)] border border-[var(--border-color)] px-3 py-1 rounded-full whitespace-nowrap glassy-text-primary">
+                    {formatSalaryRange() || 'Not specified'}
                 </span>
             </div>
 
-
+            {/* Job Description */}
             <div className="flex-1">
-                <h3 className="text-lg text-gray-900 font-semibold mb-2 line-clamp-1">
+                <h3 className="glassy-text-primary text-lg font-semibold mb-2 line-clamp-1">
                     {job_title?.name || 'Job Title Not Available'}
                 </h3>
-
-                <p className="text-gray-600 text-sm font-normal mb-3 flex items-center gap-1">
+                <p className="glassy-text-secondary text-sm font-normal mb-3 flex items-center gap-1 truncate">
                     <CiLocationOn className="w-4 h-4" />
-                    {work_location?.state?.name && work_location?.city?.name 
+                    {work_location?.state?.name && work_location?.city?.name
                         ? `${work_location.city.name}, ${work_location.state.name}`
-                        : 'Location not specified'
-                    }
+                        : 'Location not specified'}
                 </p>
-                
-                <p className="text-gray-600 text-sm font-normal line-clamp-3 leading-relaxed">
+                <p className="glassy-text-secondary text-sm font-normal line-clamp-3 leading-relaxed">
                     {job_description || 'Job description not available.'}
                 </p>
             </div>
 
-
+            {/* Required Skills */}
             {required_skills && required_skills.length > 0 && (
                 <div className="flex flex-wrap gap-2 min-h-[3rem]">
                     <SkillsCard2 skills={required_skills} />
                 </div>
             )}
 
-
+            {/* Footer */}
             <div className="border-t pt-4 mt-4">
                 <div className="flex justify-between items-center mb-3">
-                    <div className="flex gap-4 text-xs text-gray-500">
-                        <span>{total_applicants || 0} applicant{(total_applicants !== 1) ? 's' : ''}</span>
-                        <span>{current_openings || 0} opening{(current_openings !== 1) ? 's' : ''}</span>
+                    <div className="flex gap-4 text-xs glassy-text-secondary">
+                        <span>{total_applicants || 0} applicant{total_applicants !== 1 ? 's' : ''}</span>
+                        <span>{current_openings || 0} opening{current_openings !== 1 ? 's' : ''}</span>
                     </div>
                     {isSchedule && interviewDetails?.select_date && (
                         <div className="text-xs text-purple-600 font-medium">
@@ -221,30 +234,32 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                         </div>
                     )}
                 </div>
-                
+
                 <div className='flex justify-between items-center gap-3'>
-                    <Button 
-                        size='sm' 
-                        disabled={applyStatus.disabled} 
+                    <Button
+                        size='sm'
+                        disabled={applyStatus.disabled}
                         onClick={() => !applyStatus.disabled && applyForJob(job)}
                         className={`flex-1 ${applyStatus.disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
+                        variant='outline'
                     >
                         {applyStatus.reason}
                     </Button>
-                    
-                    <Button 
-                        size='sm' 
-                        variant='zinc' 
+
+                    <Button
+                        size='sm'
+                        variant='zinc'
                         onClick={() => handleAction(job)}
                         className="flex-1"
                     >
                         View Details
                     </Button>
-                    
-                   
                 </div>
             </div>
         </div>
+
+
+
     );
 };
 

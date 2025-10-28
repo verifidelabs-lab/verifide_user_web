@@ -41,15 +41,15 @@ import { FiMoreVertical } from "react-icons/fi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Modal2 from "../../components/ui/Modal/Modal2";
 
-const EmptyState = ({ activeTab, onCreateQuest, accessMode ,IsCompany}) => (
-  <div className="flex flex-col items-center justify-center mt-12 py-16 bg-white rounded-2xl shadow-sm border border-gray-200">
+const EmptyState = ({ activeTab, onCreateQuest, accessMode, IsCompany }) => (
+  <div className="flex flex-col items-center justify-center mt-12 py-16 glassy-card rounded-2xl shadow-sm border border-gray-200">
     <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-6 rounded-full mb-6">
       <BiTrophy className="h-10 w-10 text-blue-600" />
     </div>
     <p className="text-xl font-bold mb-2 text-gray-800">
       No {activeTab !== "all" ? activeTab : ""} Quests Found
     </p>
-    <p className="text-sm text-gray-500 mb-6 text-center max-w-md">
+    <p className="text-sm glassy-text-secondary mb-6 text-center max-w-md">
       {activeTab === "all"
         ? "Start by creating your first Quest to engage your community."
         : `You don't have any ${activeTab.toLowerCase()} quests right now.`}
@@ -57,7 +57,7 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode ,IsCompany}) => (
     {accessMode === "6" || IsCompany === "company" && (
       <button
         onClick={onCreateQuest}
-        className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-6
+        className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 glassy-text-primary px-6
          py-3 rounded-lg flex items-center gap-2 font-medium transition-all shadow-md hover:shadow-lg"
       >
         <BiPlus className="h-5 w-5" />
@@ -163,8 +163,8 @@ const ShortsClone = () => {
   ];
 
   const handleCreateQuest = () => {
-    const companyRole=getCookie("COMPANY_ROLE")
-    console.log("This is te company role ",companyRole)
+    const companyRole = getCookie("COMPANY_ROLE")
+    console.log("This is te company role ", companyRole)
     if (companyRole && companyRole === "3" && IsCompany === "company") {
       navigate(`/company/quest/create-your-quest`);
     } else {
@@ -316,21 +316,25 @@ const ShortsClone = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6">
+    <div className="min-h-screen  p-4 md:p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8" data-aos="fade-down">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Quest <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Campaigns</span>
+          <h1 className="text-3xl md:text-4xl font-bold glassy-text-primary">
+            Quest{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-300">
+              Campaigns
+            </span>
           </h1>
-          <p className="mt-2 text-gray-600 font-medium flex items-center">
-            <BiTrophy className="mr-2 text-amber-500" /> Level up your growth journey with engaging quests
+          <p className="mt-2 glassy-text-secondary font-medium flex items-center">
+            <BiTrophy className="mr-2 text-yellow-400" /> Level up your growth journey with engaging quests
           </p>
         </div>
+
 
         {accessMode === "6" || IsCompany === "company" && (
           <button
             onClick={handleCreateQuest}
-            className="mt-4 md:mt-0 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-all shadow-md hover:shadow-lg"
+            className="mt-4 md:mt-0 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 glassy-text-primary px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-all shadow-md hover:shadow-lg"
           >
             <BiPlus className="h-5 w-5" />
             New Quest
@@ -345,9 +349,9 @@ const ShortsClone = () => {
               key={value}
               onClick={() => setActiveTab(value)}
               className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 whitespace-nowrap flex items-center gap-2
-              ${activeTab === value
-                  ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md"
-                  : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+        ${activeTab === value
+                  ? "bg-gradient-to-r from-blue-500 to-blue-300 glassy-text-primary shadow-md"
+                  : "glassy-card glassy-text-primary hover:bg-[var(--bg-button-hover)] border border-[var(--border-color)]"
                 }`}
             >
               {icon}
@@ -357,6 +361,7 @@ const ShortsClone = () => {
         </div>
         <FilterDropdown tabs={questTypes} tabActive={activeTab2} setTabActive={setActiveTab2} />
       </div>
+
 
       {loading && (
         <div className="flex justify-center items-center py-20" data-aos="fade-in">
@@ -376,7 +381,7 @@ const ShortsClone = () => {
               onDelete={handleDelete}
               onVote={handleVote}
               accessMode={accessMode}
-            IsCompany={IsCompany}
+              IsCompany={IsCompany}
 
               data-aos="fade-up"
               data-aos-delay={index * 80}
@@ -475,7 +480,7 @@ const ShortsClone = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-10 text-gray-500">
+              <div className="text-center py-10 glassy-text-secondary">
                 <BiUser className="mx-auto text-5xl mb-3 opacity-50 text-indigo-400" />
                 <p className="font-medium">No engagements found for this quest.</p>
               </div>
@@ -494,7 +499,7 @@ const ShortsClone = () => {
           <div className="w-full max-h-[90vh] overflow-hidden">
             <div className="overflow-y-auto">
               {!feedbackData?.feedbackModules || feedbackData?.feedbackModules.length === 0 ? (
-                <div className="text-gray-500 text-sm p-4 text-center">
+                <div className="glassy-text-secondary text-sm p-4 text-center">
                   No feedback data available.
                 </div>
               ) : (
@@ -547,10 +552,10 @@ const ShortsClone = () => {
                                             href={img}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 hover:bg-opacity-50 transition-all opacity-0 hover:opacity-100"
+                                            className="absolute inset-0 flex items-center justify-center glassy-card bg-opacity-0 hover:bg-opacity-50 transition-all opacity-0 hover:opacity-100"
                                             title="View image in full size"
                                           >
-                                            <span className="text-white text-xs bg-blue-500 rounded px-2 py-1">
+                                            <span className="glassy-text-primary text-xs bg-blue-500 rounded px-2 py-1">
                                               View
                                             </span>
                                           </a>
@@ -581,7 +586,7 @@ const ShortsClone = () => {
                             ))}
                           </div>
                         ) : (
-                          <div className="p-4 border border-dashed border-gray-300 rounded-lg text-center text-gray-500">
+                          <div className="p-4 border border-dashed border-gray-300 rounded-lg text-center glassy-text-secondary">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-12 w-12 mx-auto text-gray-300 mb-2"
@@ -615,7 +620,7 @@ const ShortsClone = () => {
 
         <div className=" bg-gray-50 min-h-screen">
           {/* Header */}
-          <div className="bg-white ">
+          <div className="glassy-card ">
 
             <div className="p-4 bg-purple-50 border-b border-gray-200">
               {/* <div className="flex items-center justify-between">
@@ -646,7 +651,7 @@ const ShortsClone = () => {
 
               <div className="flex items-center justify-between mt-4">
                 <select
-                  className="border border-gray-300 rounded px-3 py-2 bg-white"
+                  className="border border-gray-300 rounded px-3 py-2 glassy-card"
                   value={currentQuestion}
                   onChange={(e) => setCurrentQuestion(parseInt(e.target.value))}
                 >
@@ -684,7 +689,7 @@ const ShortsClone = () => {
             <div className="p-6">
               <div className="border border-gray-200 rounded-lg p-6">
                 <h3 className="text-lg font-medium mb-4">{currentPoll?.title}</h3>
-                <p className="text-gray-500 mb-4">{currentPoll?.description}</p>
+                <p className="glassy-text-secondary mb-4">{currentPoll?.description}</p>
 
                 {/* Display options based on question type */}
                 {currentPoll.type === 'short-answer' ? (
@@ -702,7 +707,7 @@ const ShortsClone = () => {
                       return (
                         <div key={optIdx} className="relative flex items-center">
                           <div className="absolute top-0 left-0 h-full bg-purple-200 rounded-lg" style={{ width: `${percentage}%` }}></div>
-                          <div className="relative z-10 w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 bg-white">
+                          <div className="relative z-10 w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 glassy-card">
                             <div className="flex items-center space-x-2">
                               <span className={`text-sm font-medium ${isSelected ? 'text-purple-800' : 'text-gray-700'}`}>
                                 {option}
@@ -728,7 +733,7 @@ const ShortsClone = () => {
           )}
 
           {activeTab3 === 'Individual' && (
-            <div className="bg-white border-x border-b border-gray-200 rounded-b-lg">
+            <div className="glassy-card border-x border-b border-gray-200 rounded-b-lg">
               <div className="p-4 border-b border-gray-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
@@ -762,10 +767,10 @@ const ShortsClone = () => {
               </div>
 
               <div className="p-6">
-                <div className="text-sm text-gray-500 mb-2">Responses cannot be edited</div>
+                <div className="text-sm glassy-text-secondary mb-2">Responses cannot be edited</div>
 
                 {/* Form Title */}
-                <div className="bg-purple-600 text-white p-6 rounded-t-lg mb-6">
+                <div className="bg-purple-600 glassy-text-primary p-6 rounded-t-lg mb-6">
                   <h1 className="text-2xl font-normal">Survey Form</h1>
                   <p className="text-purple-100 mt-1">Form description</p>
                 </div>
@@ -789,7 +794,7 @@ const ShortsClone = () => {
                           <span className="text-sm font-medium text-gray-700">
                             {response.user.first_name} {response.user.last_name}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs glassy-text-secondary">
                             Submitted {new Date().toLocaleDateString()}
                           </span>
                         </div>
@@ -814,7 +819,7 @@ const ShortsClone = () => {
                             {currentPoll.type === 'checkbox' && (
                               <label className="flex items-center space-x-2">
                                 <input type="checkbox" disabled className="form-checkbox" />
-                                <span className="text-gray-500">Other...</span>
+                                <span className="glassy-text-secondary">Other...</span>
                               </label>
                             )}
                           </div>

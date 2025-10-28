@@ -172,7 +172,7 @@ const Posts = ({ profileData }) => {
     };
 
     return (
-      <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200 mt-4">
+      <div className="flex items-center justify-between p-4 glassy-card rounded-lg border border-gray-200 mt-4">
 
         <div className="text-sm text-gray-600">
           Showing {(currentPage - 1) * postsPerPage + 1} to{' '}
@@ -189,7 +189,7 @@ const Posts = ({ profileData }) => {
           {getPageNumbers().map((item, index) => {
             if (item === 'start-ellipsis' || item === 'end-ellipsis') {
               return (
-                <span key={index} className="px-2 text-gray-500">
+                <span key={index} className="px-2 glassy-text-secondary">
                   ...
                 </span>
               );
@@ -199,7 +199,7 @@ const Posts = ({ profileData }) => {
                 key={item}
                 onClick={() => handlePageChange(item)}
                 className={`w-8 h-8 rounded flex items-center justify-center transition ${currentPage === item
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-blue-600 glassy-text-primary'
                   : 'text-gray-700 hover:bg-gray-100'
                   }`}
               >
@@ -237,7 +237,7 @@ const Posts = ({ profileData }) => {
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="w-full mx-auto">
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="glassy-card rounded-lg shadow-md p-6">
 
           {/* DESKTOP/TABLET VIEW */}
           <div className="hidden md:flex flex-col md:flex-row items-start gap-6 md:gap-8 mb-6">
@@ -398,8 +398,8 @@ const Posts = ({ profileData }) => {
 
           </div>
         ) : filteredPosts.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-500">No posts found. Create your first post!</p>
+          <div className="glassy-card rounded-lg shadow p-8 text-center">
+            <p className="glassy-text-secondary">No posts found. Create your first post!</p>
           </div>
         ) : (
           <>
@@ -434,14 +434,14 @@ const Posts = ({ profileData }) => {
                         <span className="font-semibold text-sm">
                           {comment.user.first_name} {comment.user.last_name}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs glassy-text-secondary">
                           {new Date(comment.updatedAt).toLocaleString()}
                         </span>
                       </div>
 
                       <p className="text-gray-800 text-sm">{comment.text}</p>
 
-                      <div className="flex items-center space-x-4 mt-1 text-xs text-gray-500">
+                      <div className="flex items-center space-x-4 mt-1 text-xs glassy-text-secondary">
                         <button className="hover:text-blue-600">
                           👍 {comment.likeCount}
                         </button>
@@ -460,11 +460,11 @@ const Posts = ({ profileData }) => {
         )}
 
         {viewModalOpen && currentPost && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+          <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
               <button
                 onClick={() => setViewModalOpen(false)}
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl z-10 bg-white rounded-full p-1"
+                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl z-10 glassy-card rounded-full p-1"
               >
                 <FaTimes />
               </button>

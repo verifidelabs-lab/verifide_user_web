@@ -32,12 +32,12 @@ const AlertModal = ({
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50 p-4'>
-      <div className='bg-white p-6 md:p-8 rounded-lg w-full lg:w-[500px] shadow-lg'>
+    <div className='fixed inset-0 glassy-card bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50 p-4'>
+      <div className='glassy-card p-6 md:p-8 rounded-lg w-full lg:w-[500px] shadow-lg'>
        
 
         <div className='space-y-2 text-center mb-5'>
-          <h2 className='md:text-lg text-sm text-black font-bold'>{title}</h2>
+          <h2 className='md:text-lg text-sm text-whitefont-bold'>{title}</h2>
           <p className='text-[#212121CC]/80 md:text-sm text-xs'>{description}</p>
         </div>
 
@@ -52,7 +52,7 @@ const AlertModal = ({
             value={inputValue}
             onChange={onInputChange}
             textareaClassName='border-white/15'
-            labelClassName='text-white/70'
+            labelClassName='glassy-text-primary/70'
             required
             errorMessage={inputError}
             maxLength={500}

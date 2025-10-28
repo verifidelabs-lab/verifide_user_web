@@ -86,7 +86,7 @@ const CalendarView = ({ jobs }) => {
             <span className={`text-sm font-medium ${moment().isSame(date, 'day') ? 'text-blue-600' : ''}`}>
               {day}
             </span>
-            {day === 1 && <span className="text-xs text-gray-500">{date.format('MMM')}</span>}
+            {day === 1 && <span className="text-xs glassy-text-secondary">{date.format('MMM')}</span>}
           </div>
           <div className="mt-1 overflow-y-auto max-h-16">
             {dayEvents.map(event => (
@@ -195,13 +195,13 @@ const CalendarView = ({ jobs }) => {
                   {moment(event.start).format('HH:mm')} - {moment(event.end).format('HH:mm')}
                 </div>
                 <div className="text-gray-700">{event.title}</div>
-                <div className="text-sm text-gray-500 mt-2">
+                <div className="text-sm glassy-text-secondary mt-2">
                   Meeting URL: {event.job.interviewDetails.meeting_url}
                 </div>
               </div>
             ))
           ) : (
-            <div className="text-center text-gray-500 py-8">
+            <div className="text-center glassy-text-secondary py-8">
               No interviews scheduled for this day
             </div>
           )}
@@ -217,14 +217,14 @@ const CalendarView = ({ jobs }) => {
     const job = selectedEvent.job;
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-1/2 max-h-screen overflow-y-auto">
+      <div className="fixed inset-0 glassy-card bg-opacity-50 flex items-center justify-center z-50">
+        <div className="glassy-card rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-1/2 max-h-screen overflow-y-auto">
           <div className="p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Interview Details</h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="glassy-text-secondary hover:text-gray-700"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -245,17 +245,17 @@ const CalendarView = ({ jobs }) => {
                     <div className="font-medium">
                       {job.user_id.first_name} {job.user_id.last_name}
                     </div>
-                    <div className="text-sm text-gray-500">{job.user_id.headline}</div>
+                    <div className="text-sm glassy-text-secondary">{job.user_id.headline}</div>
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-sm text-gray-500">Summary</div>
+                  <div className="text-sm glassy-text-secondary">Summary</div>
                   <div className="text-sm">{job.user_id.summary}</div>
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-sm text-gray-500 mb-1">Top Skills</div>
+                  <div className="text-sm glassy-text-secondary mb-1">Top Skills</div>
                   <div className="flex flex-wrap gap-2">
                     {job.user_id.topSkills.slice(0, 5).map(skill => (
                       <span key={skill._id} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
@@ -270,12 +270,12 @@ const CalendarView = ({ jobs }) => {
                 <h3 className="font-medium text-gray-700 mb-2">Interview Details</h3>
 
                 <div className="mb-4">
-                  <div className="text-sm text-gray-500">Job Title</div>
+                  <div className="text-sm glassy-text-secondary">Job Title</div>
                   <div className="font-medium">{job.job_details.job_title}</div>
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-sm text-gray-500">Date & Time</div>
+                  <div className="text-sm glassy-text-secondary">Date & Time</div>
                   <div className="font-medium">
                     {moment(job.interviewDetails.select_date).format('MMMM D, YYYY')} at{' '}
                     {moment(job.interviewDetails.select_time).format('h:mm A')}
@@ -283,7 +283,7 @@ const CalendarView = ({ jobs }) => {
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-sm text-gray-500">Meeting URL</div>
+                  <div className="text-sm glassy-text-secondary">Meeting URL</div>
                   <a
                     href={job.interviewDetails.meeting_url}
                     target="_blank"
@@ -295,7 +295,7 @@ const CalendarView = ({ jobs }) => {
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-sm text-gray-500">Status</div>
+                  <div className="text-sm glassy-text-secondary">Status</div>
                   <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize bg-green-100 text-green-800">
                     {job.status}
                   </div>
@@ -307,7 +307,7 @@ const CalendarView = ({ jobs }) => {
                     <div className="space-y-2">
                       {job.reviews.map((review, index) => (
                         <div key={index} className="text-sm p-2 bg-gray-100 rounded">
-                          <div className="text-gray-500">{moment(review.date).format('MMM D, YYYY')}</div>
+                          <div className="glassy-text-secondary">{moment(review.date).format('MMM D, YYYY')}</div>
                           <div>{review.remarks}</div>
                         </div>
                       ))}
@@ -328,7 +328,7 @@ const CalendarView = ({ jobs }) => {
                 href={job.interviewDetails.meeting_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700"
               >
                 Join Meeting
               </a>
@@ -341,7 +341,7 @@ const CalendarView = ({ jobs }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="glassy-card rounded-lg shadow-md overflow-hidden">
         {/* Calendar Header */}
         <div className="flex flex-wrap items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center space-x-4">

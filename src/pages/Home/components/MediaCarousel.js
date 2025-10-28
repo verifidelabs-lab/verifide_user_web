@@ -50,7 +50,7 @@ export default function MediaCarousel({ post }) {
                         alt="External Video"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-lg font-semibold group-hover:bg-black/60 transition">
+                    <div className="absolute inset-0 glassy-card/40 flex items-center justify-center glassy-text-primary text-lg font-semibold group-hover:glassy-card/60 transition">
                         ▶ Watch Video
                     </div>
                 </div>

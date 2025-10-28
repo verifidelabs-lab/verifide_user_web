@@ -178,8 +178,8 @@ const CustomImageVideoUpload = ({
             <p className="text-gray-700">
               {isLoading ? 'Uploading...' : 'Drag & drop files here '}
             </p>
-            <p className="text-xs text-gray-500">Supports images & videos, up to {maxSizeMB}MB each</p>
-            <p className="text-xs text-gray-500">Max {maxFiles} images and 1 video</p>
+            <p className="text-xs glassy-text-secondary">Supports images & videos, up to {maxSizeMB}MB each</p>
+            <p className="text-xs glassy-text-secondary">Max {maxFiles} images and 1 video</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -190,7 +190,7 @@ const CustomImageVideoUpload = ({
                 <div className="relative group border rounded-lg overflow-hidden shadow-md">
                   <button
                     onClick={(e) => { e.stopPropagation(); removeFile(files.video, 'video'); }}
-                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                    className="absolute top-2 right-2 bg-red-500 glassy-text-primary rounded-full p-1 w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
                   >
                     ✕
                   </button>
@@ -209,17 +209,17 @@ const CustomImageVideoUpload = ({
                       <source src={URL.createObjectURL(files.video)} type={files.video.type} />
                     </video>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-12 h-12 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <div className="w-12 h-12 glassy-card bg-opacity-50 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 glassy-text-primary" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="p-2 bg-white">
+                  <div className="p-2 glassy-card">
                     <p className="text-xs font-medium truncate">{files.video.name}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs glassy-text-secondary">
                       {(files.video.size / (1024 * 1024)).toFixed(2)} MB
                     </p>
                   </div>
@@ -237,7 +237,7 @@ const CustomImageVideoUpload = ({
                     <div key={`${file.name}-${index}`} className="relative group border rounded-lg overflow-hidden shadow-md">
                       <button
                         onClick={(e) => { e.stopPropagation(); removeFile(file, 'image'); }}
-                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                        className="absolute top-2 right-2 bg-red-500 glassy-text-primary rounded-full p-1 w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
                       >
                         ✕
                       </button>
@@ -257,9 +257,9 @@ const CustomImageVideoUpload = ({
                         className="object-cover w-full h-32" 
                       />
                       
-                      <div className="p-2 bg-white">
+                      <div className="p-2 glassy-card">
                         <p className="text-xs font-medium truncate">{file.name}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs glassy-text-secondary">
                           {(file.size / (1024 * 1024)).toFixed(2)} MB
                         </p>
                       </div>
@@ -274,7 +274,7 @@ const CustomImageVideoUpload = ({
                       <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                       </svg>
-                      <p className="text-xs text-gray-500 mt-1">Add more</p>
+                      <p className="text-xs glassy-text-secondary mt-1">Add more</p>
                     </div>
                   )}
                 </div>

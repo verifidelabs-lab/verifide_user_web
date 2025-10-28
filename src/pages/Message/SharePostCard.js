@@ -8,10 +8,10 @@ const SharedPostCard = ({ sharedData, isOwn }) => {
   // console.log("vide:---------",video_url)
 
   return (
-    <div className={`border rounded-lg overflow-hidden shadow-sm max-w-sm ${isOwn ? 'bg-white' : 'bg-gray-50'}`}>
+    <div className={`border rounded-lg overflow-hidden shadow-sm max-w-sm ${isOwn ? 'glassy-card' : 'bg-gray-50'}`}>
  
       {video_url ? (
-        <div className="relative w-full h-40 bg-black">
+        <div className="relative w-full h-40 glassy-card">
           <video 
             controls 
             className="w-full h-full object-contain"
@@ -49,8 +49,8 @@ const SharedPostCard = ({ sharedData, isOwn }) => {
                     }}
                   />
                   {index === 3 && image_urls.length > 4 && (
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                      <span className="text-white font-semibold">+{image_urls.length - 4}</span>
+                    <div className="absolute inset-0 glassy-card bg-opacity-50 flex items-center justify-center">
+                      <span className="glassy-text-primary font-semibold">+{image_urls.length - 4}</span>
                     </div>
                   )}
                 </div>
@@ -78,7 +78,7 @@ const SharedPostCard = ({ sharedData, isOwn }) => {
               </span>
             ))}
             {tags.length > 3 && (
-              <span className="text-xs text-gray-500">+{tags.length - 3} more</span>
+              <span className="text-xs glassy-text-secondary">+{tags.length - 3} more</span>
             )}
           </div>
         )}

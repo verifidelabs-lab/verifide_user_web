@@ -77,7 +77,7 @@ function PublicLayout({ children }) {
         //   setUserType={setUserType}
         //   playAndShowNotification={playAndShowNotification}
         />
-        <main className="flex-2 overflow-auto custom-scrollbar  bg-[#F6FAFD]">
+        <main className="flex-2 overflow-auto custom-scrollbar  glassy-card">
           {children}
         </main>
       </div>

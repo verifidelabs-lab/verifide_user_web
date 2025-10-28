@@ -166,7 +166,7 @@ const handleSubmit = async (e) => {
               onChange={(e) => handleChange("username", e)}
               error={errors.username}
               autoComplete="off"
-              className="md:bg-white bg-white/40"
+              className="md:glassy-card glassy-card/40"
               readOnly={!!prefillEmail}  // if email comes from dropdown → disable editing
             />
             <PasswordInput

@@ -254,76 +254,81 @@ const StudentAssessment = () => {
 
   // Sub-components
   const ResultDisplay = () => (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-sm">
+    <div className="min-h-screen p-4">
+      <div className="max-w-7xl mx-auto glassy-card rounded-lg shadow-sm">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--border-color)]">
           <div className="flex items-center gap-4">
-            <button className="p-1 hover:bg-gray-100 rounded" onClick={handleBackToAssessments}>
-              <BiChevronLeft className="w-5 h-5 text-gray-600" />
+            <button
+              className="p-1 rounded hover:bg-[var(--bg-card-unread)] transition-colors"
+              onClick={handleBackToAssessments}
+            >
+              <BiChevronLeft className="w-5 h-5 glassy-text-secondary" />
             </button>
-            <h1 className="text-lg font-medium text-[#000000E6]">Assessment Results</h1>
+            <h1 className="text-lg font-medium glassy-text-primary">
+              Assessment Results
+            </h1>
           </div>
           {resultData?.certificate_id && (
             <Button onClick={() => handleViewCertificate(resultData?.certificate_id)}>
               Certificate View
             </Button>
           )}
-          <div className={`px-4 py-2 rounded-lg font-semibold ${resultData?.passed
-            ? 'bg-green-100 text-green-800'
-            : 'bg-red-100 text-red-800'
-            }`}>
+          <div
+            className={`px-4 py-2 rounded-lg font-semibold ${resultData?.passed
+                ? 'glassy-card text-green-600'
+                : 'glassy-card text-red-600'
+              }`}
+          >
             {resultData?.passed ? '✅ PASSED' : '❌ FAILED'}
           </div>
         </div>
 
         <div className="p-6">
-          <div className="space-y-4 max-h-[70vh] overflow-hidden overflow-y-auto">
+          <div className="space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Summary Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-blue-50 p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-blue-600">
+              <div className="glassy-card p-4 text-center">
+                <div className="text-2xl font-bold glassy-text-primary">
                   {resultData?.total_questions}
                 </div>
-                <div className="text-sm text-gray-600">Total Questions</div>
+                <div className="text-sm glassy-text-secondary">Total Questions</div>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg text-center">
-                <div className="text-2xl font-bold text-green-600">
+              <div className="glassy-card p-4 text-center">
+                <div className="text-2xl font-bold glassy-text-primary">
                   {resultData?.total_score}
                 </div>
-                <div className="text-sm text-gray-600">Total Score</div>
+                <div className="text-sm glassy-text-secondary">Total Score</div>
               </div>
-              <div className={`p-4 rounded-lg text-center ${resultData?.passed
-                ? 'bg-green-50'
-                : 'bg-red-50'
-                }`}>
-                <div className={`text-2xl font-bold ${resultData?.passed
-                  ? 'text-green-600'
-                  : 'text-red-600'
-                  }`}>
+              <div className="glassy-card p-4 text-center">
+                <div className="text-2xl font-bold glassy-text-primary">
                   {resultData?.passed ? 'PASSED' : 'FAILED'}
                 </div>
-                <div className="text-sm text-gray-600">Status</div>
+                <div className="text-sm glassy-text-secondary">Status</div>
               </div>
             </div>
 
             {/* Question by Question Results */}
-            <h3 className="text-lg font-semibold mb-4">Detailed Results</h3>
+            <h3 className="text-lg font-semibold mb-4 glassy-text-primary">
+              Detailed Results
+            </h3>
             {resultData?.answers?.map((answer, index) => (
-              <div key={index} className="border p-4 rounded-lg shadow-sm bg-gray-50">
+              <div key={index} className="glassy-card p-4 rounded-lg shadow-sm">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="font-medium text-base">
+                  <div className="font-medium text-base glassy-text-primary">
                     Q{index + 1}: {answer.question}
                   </div>
-                  <div className={`px-2 py-1 rounded text-sm font-semibold ${answer.is_correct
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                    }`}>
+                  <div
+                    className={`px-2 py-1 rounded text-sm font-semibold ${answer.is_correct
+                        ? 'glassy-card text-green-600'
+                        : 'glassy-card text-red-600'
+                      }`}
+                  >
                     {answer.is_correct ? 'Correct' : 'Incorrect'}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm glassy-text-secondary">
                   <div>
                     <span className="font-semibold">Type:</span> {answer.question_type}
                   </div>
@@ -333,15 +338,18 @@ const StudentAssessment = () => {
                 </div>
 
                 <div className="mt-3">
-                  <div className="font-semibold text-sm mb-2">Options:</div>
+                  <div className="font-semibold text-sm mb-2 glassy-text-primary">Options:</div>
                   <ul className="list-none space-y-1">
                     {answer.options.map((opt, i) => (
-                      <li key={i} className={`p-2 rounded text-sm ${answer.selected_options.includes(opt)
-                        ? answer.is_correct
-                          ? 'bg-green-100 text-green-800 font-semibold'
-                          : 'bg-red-100 text-red-800 font-semibold'
-                        : 'bg-white text-gray-700'
-                        }`}>
+                      <li
+                        key={i}
+                        className={`p-2 rounded text-sm ${answer.selected_options.includes(opt)
+                            ? answer.is_correct
+                              ? 'glassy-card text-green-600 font-semibold'
+                              : 'glassy-card text-red-600 font-semibold'
+                            : 'glassy-card glassy-text-secondary'
+                          }`}
+                      >
                         <span className="font-medium">{String.fromCharCode(65 + i)}.</span> {opt}
                         {answer.selected_options.includes(opt) && (
                           <span className="ml-2 text-xs">
@@ -354,8 +362,8 @@ const StudentAssessment = () => {
                 </div>
 
                 <div className="mt-3 text-sm">
-                  <span className="font-semibold">Your Selection:</span>{' '}
-                  <span className={answer.selected_options.length > 0 ? 'text-blue-600' : 'text-gray-500'}>
+                  <span className="font-semibold glassy-text-primary">Your Selection:</span>{' '}
+                  <span className={answer.selected_options.length > 0 ? 'glassy-text-primary' : 'glassy-text-secondary'}>
                     {answer.selected_options.join(', ') || 'No answer selected'}
                   </span>
                 </div>
@@ -363,10 +371,9 @@ const StudentAssessment = () => {
             ))}
           </div>
 
-          <div className="flex justify-center mt-6 pt-4 border-t border-gray-200">
-            <Button
+          <div className="flex justify-center mt-6 pt-4 border-t border-[var(--border-color)]">
+            <Button className="px-8 py-2 glassy-card glassy-text-primary rounded-lg hover:glassy-text-primary transition-colors"
               onClick={handleBackToAssessments}
-              className="px-8 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Back to Assessments
             </Button>
@@ -375,6 +382,7 @@ const StudentAssessment = () => {
       </div>
     </div>
   );
+
 
   const Pagination = () => {
     const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
@@ -426,14 +434,14 @@ const StudentAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:text-[#000000E6] disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronLeft size={18} />
           </button>
           {getPageNumbers().map((item, index) => {
             if (item === 'start-ellipsis' || item === 'end-ellipsis') {
               return (
-                <span key={index} className="px-2 text-gray-500">
+                <span key={index} className="px-2 glassy-text-secondary">
                   ...
                 </span>
               );
@@ -443,7 +451,7 @@ const StudentAssessment = () => {
                 key={item}
                 onClick={() => handlePageChange(item)}
                 className={`w-8 h-8 rounded flex items-center justify-center transition ${currentPage === item
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-blue-600 glassy-text-primary'
                   : 'text-gray-700 hover:bg-gray-100'
                   }`}
               >
@@ -454,7 +462,7 @@ const StudentAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:text-[#000000E6] disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronRight size={18} />
           </button>
@@ -466,7 +474,7 @@ const StudentAssessment = () => {
   const AssessmentList = () => (
     <div className="w-full">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-4 mb-6">
-        <h1 className="text-2xl font-bold text-[#000000E6]">Assessments</h1>
+        <h1 className="text-2xl font-bold glassy-text-primary">Assessments</h1>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
           <div className="relative w-full sm:w-80">
             <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -488,14 +496,14 @@ const StudentAssessment = () => {
         </div>
       </div>
 
-      <div className="flex space-x-1 p-1 rounded-full bg-white w-fit border border-[#adadad4b] mb-6">
+      <div className="flex space-x-1 p-1 rounded-full glassy-card w-fit border border-[#adadad4b] mb-6">
         {TABS.map((item) => (
           <button
             key={item.value}
             onClick={() => handleTabChange(item.value)}
             className={`px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeSection === item.value
               ? 'bg-[#2563EB1A] text-blue-500 shadow'
-              : 'text-gray-600 hover:text-[#000000E6]'
+              : 'text-gray-600 hover:glassy-text-primary'
               }`}
           >
             {item.label}
@@ -530,15 +538,14 @@ const StudentAssessment = () => {
   );
 
   const ActiveAssessment = () => (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-2xl mx-auto  rounded-lg shadow-sm">
+    <div className="min-h-screen p-4 glassy-app">
+      <div className="max-w-2xl mx-auto rounded-lg glassy-card shadow-sm">
 
-
-        <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm mb-10">
+        {/* Top Info */}
+        <div className="flex items-center justify-between px-6 py-4 glassy-card border-b border-[var(--border-color)] shadow-sm mb-10">
           {/* Left Section */}
-          <div className="flex items-center gap-3 ">
-            
-            <h1 className="text-xl font-semibold text-gray-800">
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl font-semibold glassy-text-primary">
               {tokenData?.no_of_questions
                 ? `${tokenData.no_of_questions} Questions`
                 : "Assessment"}
@@ -547,54 +554,56 @@ const StudentAssessment = () => {
 
           {/* Right Section */}
           <div className="flex items-center gap-6">
-            <div className="flex  items-center gap-3">
-              <span className="text-sm text-gray-500">Passing Score</span>
-              <span className="text-base font-medium text-gray-800">
+            <div className="flex items-center gap-3">
+              <span className="text-sm glassy-text-secondary">Passing Score</span>
+              <span className="text-base font-medium glassy-text-primary">
                 {tokenData?.passing_score ?? "-"} %
               </span>
             </div>
-            <div className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full font-medium">
+            <div className="px-3 py-1 glassy-card rounded-full text-sm font-medium text-[var(--text-primary)]">
               Max Attempts: {tokenData?.max_attempts ?? "-"}
             </div>
           </div>
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--border-color)] glassy-card">
           <div className="flex items-center gap-4">
             <button
-              className="p-1 hover:bg-gray-100 rounded"
+              className="p-1 rounded hover:glassy-card transition"
               onClick={handleBackToAssessments}
             >
-              <BiChevronLeft className="w-5 h-5 text-gray-600" />
+              <BiChevronLeft className="w-5 h-5 glassy-text-primary" />
             </button>
-            <h1 className="text-lg font-medium text-[#000000E6]">
+            <h1 className="text-lg font-medium glassy-text-primary">
               {tokenData?.title || "Assessment"}
             </h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm glassy-text-secondary">
               {currentQuestionIndex + 1}/{tokenData?.no_of_questions}
             </span>
-            <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-              <span className="text-sm">😊</span>
+            <div className="w-8 h-8 glassy-card rounded-full flex items-center justify-center">
+              <span className="text-sm glassy-text-primary">😊</span>
             </div>
           </div>
         </div>
 
-        <div className="p-6 space-y-6 bg-white">
+        {/* Question Card */}
+        <div className="p-6 space-y-6 glassy-card">
+          {/* Progress & Timer */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex flex-col items-center gap-1">
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
-                    className="text-gray-200"
+                    className="text-[var(--border-color)]"
                     strokeWidth="4"
                     fill="none"
                     stroke="currentColor"
                     d="M18 2.0845
-               a 15.9155 15.9155 0 0 1 0 31.831
-               a 15.9155 15.9155 0 0 1 0 -31.831"
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                   <path
                     className="text-blue-500"
@@ -604,34 +613,35 @@ const StudentAssessment = () => {
                     strokeLinecap="round"
                     stroke="currentColor"
                     d="M18 2.0845
-               a 15.9155 15.9155 0 0 1 0 31.831
-               a 15.9155 15.9155 0 0 1 0 -31.831"
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
                   {currentQuestionIndex + 1}/{totalQuestions}
                 </div>
               </div>
-              <span className="text-xs text-blue-700 font-medium">Progress</span>
+              <span className="text-xs glassy-text-secondary font-medium">Progress</span>
             </div>
+
             <div className="flex flex-col items-center gap-1">
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
-                    className="text-gray-200"
+                    className="text-[var(--border-color)]"
                     strokeWidth="4"
                     fill="none"
                     stroke="currentColor"
                     d="M18 2.0845
-               a 15.9155 15.9155 0 0 1 0 31.831
-               a 15.9155 15.9155 0 0 1 0 -31.831"
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                   <path
                     className={`${timeLeft <= 10
-                      ? 'text-red-500'
+                      ? "text-red-500"
                       : timeLeft <= 30
-                        ? 'text-orange-400'
-                        : 'text-green-500'
+                        ? "text-orange-400"
+                        : "text-green-500"
                       }`}
                     strokeWidth="4"
                     strokeDasharray={`${(timeLeft / QUESTION_TIME_LIMIT) * 100}, 100`}
@@ -639,23 +649,24 @@ const StudentAssessment = () => {
                     strokeLinecap="round"
                     stroke="currentColor"
                     d="M18 2.0845
-               a 15.9155 15.9155 0 0 1 0 31.831
-               a 15.9155 15.9155 0 0 1 0 -31.831"
+                     a 15.9155 15.9155 0 0 1 0 31.831
+                     a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
                   {timeLeft}s
                 </div>
               </div>
-              <span className="text-xs text-blue-700 font-medium">Timer</span>
+              <span className="text-xs glassy-text-secondary font-medium">Timer</span>
             </div>
           </div>
 
+          {/* Question & Options */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[#000000E6]">
+            <h3 className="text-lg font-semibold glassy-text-primary">
               {currentQuestion?.question}
             </h3>
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm glassy-text-secondary italic">
               {currentQuestion?.question_type === 'multi_choice'
                 ? 'Select all that apply'
                 : 'Select one option'}
@@ -667,10 +678,10 @@ const StudentAssessment = () => {
                 return (
                   <div
                     key={index}
-                    className={`p-4 border rounded-xl cursor-pointer transition duration-300 ease-in-out 
-                  ${isSelected
-                        ? 'border-blue-500 bg-blue-50 shadow-sm'
-                        : 'border-gray-200 hover:bg-gray-50'
+                    className={`p-4 border rounded-xl cursor-pointer transition duration-300 ease-in-out
+                    ${isSelected
+                        ? 'border-blue-500 bg-[var(--bg-card-unread)] shadow-sm'
+                        : 'border-[var(--border-color)] hover:glassy-card'
                       }`}
                     onClick={() => {
                       if (currentQuestion.question_type === 'multi_choice') {
@@ -691,7 +702,7 @@ const StudentAssessment = () => {
                         checked={isSelected}
                         readOnly
                       />
-                      <label className="ml-3 block text-gray-700 text-sm font-medium">
+                      <label className="ml-3 block text-sm font-medium glassy-text-primary">
                         {String.fromCharCode(65 + index)}. {option}
                       </label>
                     </div>
@@ -702,15 +713,16 @@ const StudentAssessment = () => {
           </div>
 
           {timeLeft <= 10 && timeLeft > 0 && (
-            <div className="bg-red-100 border border-red-300 text-red-700 p-3 rounded-lg text-sm font-medium">
+            <div className="p-3 rounded-lg glassy-card glassy-text-primary text-sm font-medium border border-red-300">
               ⚠️ Hurry up! Only {timeLeft} seconds left!
             </div>
           )}
         </div>
 
-        <div className="flex justify-end items-center p-6 border-t border-gray-200">
+        {/* Next / Submit Button */}
+        <div className="flex justify-end items-center p-6 border-t border-[var(--border-color)]">
           <button
-            className="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-6 py-2 glassy-card glassy-text-primary rounded-lg hover:glassy-text-secondary transition-colors"
             onClick={() =>
               currentQuestionIndex === totalQuestions - 1
                 ? handleQuestionSubmit()
@@ -726,9 +738,10 @@ const StudentAssessment = () => {
     </div>
   );
 
+
   // Main render logic
   return (
-    <div className="bg-gray-50 min-h-screen px-4 lg:px-6 md:py-6 py-2">
+    <div className="  min-h-screen px-4 lg:px-6 md:py-6 py-2">
       {showResult ? (
         <ResultDisplay />
       ) : !token ? (

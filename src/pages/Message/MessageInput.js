@@ -58,7 +58,7 @@ const MessageInput = ({
         };
 
         return (
-            <div className="px-4 py-3 border-t border-gray-200 bg-blue-50">
+            <div className="px-4 py-3   ">
                 <div className="flex items-start justify-between">
                     <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
@@ -104,7 +104,7 @@ const MessageInput = ({
         if (!mediaPreview.file_url) return null;
 
         return (
-            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+            <div className="px-4 py-3     ">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                         {mediaPreview.file_type === 'image' && typeof mediaPreview.file_url === 'string' && mediaPreview.file_url.startsWith('blob:') ? (
@@ -120,13 +120,13 @@ const MessageInput = ({
                                 muted
                             />
                         ) : (
-                            <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <div className="w-12 h-12  rounded-lg flex items-center justify-center">
                                 {getFileIcon(mediaPreview.file_type)}
                             </div>
                         )}
 
                         <div className="flex-1">
-                            <p className="text-sm font-medium text-[#000000E6]">
+                            <p className="text-sm font-medium glassy-text-primary">
                                 {mediaPreview.file_type === 'pdf'
                                     ? mediaPreview.file_url
                                     : `${mediaPreview.file_type.charAt(0).toUpperCase() + mediaPreview.file_type.slice(1)} file`
@@ -134,10 +134,10 @@ const MessageInput = ({
                             </p>
                             {loading && (
                                 <div className="mt-1">
-                                    <div className="text-xs text-gray-500 mb-1">
+                                    <div className="text-xs glassy-text-secondary mb-1">
                                         Uploading... {uploadProgress}%
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-1">
+                                    <div className="w-full  rounded-full h-1">
                                         <div
                                             className="bg-blue-500 h-1 rounded-full transition-all duration-300"
                                             style={{ width: `${uploadProgress}%` }}
@@ -150,10 +150,10 @@ const MessageInput = ({
 
                     <button
                         onClick={clearMediaPreview}
-                        className="p-1 hover:bg-gray-200 rounded-full transition-colors"
+                        className="p-1 hover: rounded-full transition-colors"
                         disabled={loading}
                     >
-                        <BiX className="w-5 h-5 text-gray-500" />
+                        <BiX className="w-5 h-5 glassy-text-secondary" />
                     </button>
                 </div>
             </div>
@@ -163,7 +163,7 @@ const MessageInput = ({
     return (
         <>
             {!contacts?.isBlocked ? (
-                <div className="border-t border-gray-200 bg-white">
+                <div className="border-t  glassy-card">
                     {/* Reply Preview */}
                     {renderReplyPreview()}
 
@@ -176,7 +176,7 @@ const MessageInput = ({
                             <div className="relative">
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+                                    className="p-2 glassy-text-secondary hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
                                     disabled={loading || sendingMessage}
                                 >
                                     <BiPaperclip className="w-5 h-5" />
@@ -198,7 +198,7 @@ const MessageInput = ({
                                     onChange={(e) => setMessageInput(e.target.value)}
                                     onKeyPress={handleKeyPress}
                                     placeholder={replyingTo ? "Reply to message..." : "Type a message..."}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent max-h-32 min-h-[40px]"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent max-h-32 min-h-[40px] glassy-input"
                                     rows={1}
                                     disabled={loading || sendingMessage}
                                     style={{
@@ -214,7 +214,7 @@ const MessageInput = ({
                                 />
                                 <span
                                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                    className="absolute right-3 top-2.5 text-gray-500 cursor-pointer hover:text-gray-700"
+                                    className="absolute right-3 top-2.5 glassy-text-secondary cursor-pointer hover:text-gray-700"
                                 >
                                     <FaRegSmile size={20} />
                                 </span>
@@ -230,8 +230,8 @@ const MessageInput = ({
                                 onClick={handleSendMessage}
                                 disabled={(!messageInput.trim() && !mediaPreview.file_url) || sendingMessage || loading}
                                 className={`p-2 rounded-full transition-all duration-200 ${(!messageInput.trim() && !mediaPreview.file_url) || sendingMessage || loading
-                                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                                        : 'bg-blue-500 text-white hover:bg-blue-600 transform hover:scale-105'
+                                    ? ' text-gray-400 cursor-not-allowed'
+                                    : 'bg-blue-500 glassy-text-primary hover:bg-blue-600 transform hover:scale-105'
                                     }`}
                             >
                                 {sendingMessage ? (
@@ -244,16 +244,16 @@ const MessageInput = ({
                     </div>
                 </div>
             ) : (
-                <div className="border-t border-gray-200 bg-white">
+                <div className="border-t  glassy-card">
                     <div className="p-6 text-center">
                         <div className="flex flex-col items-center justify-center space-y-4">
                             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
                                 <BiBlock className="w-8 h-8 text-red-500" />
                             </div>
-                            <h3 className="text-lg font-medium text-[#000000E6]">
+                            <h3 className="text-lg font-medium glassy-text-primary">
                                 {contacts?.isBlockedByYou ? "You blocked this user" : "You've been blocked"}
                             </h3>
-                            <p className="text-gray-500 max-w-md text-center">
+                            <p className="glassy-text-secondary max-w-md text-center">
                                 {contacts?.isBlockedByYou
                                     ? "You won't be able to send or receive messages from this user until you unblock them."
                                     : "This user has blocked you. You can't send messages to them."}
@@ -262,7 +262,7 @@ const MessageInput = ({
                             {contacts?.isBlockedByYou && onUnblock && (
                                 <button
                                     onClick={onUnblock}
-                                    className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    className="mt-4 px-6 py-2 bg-blue-500 glassy-text-primary rounded-lg hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                 >
                                     Unblock User
                                 </button>

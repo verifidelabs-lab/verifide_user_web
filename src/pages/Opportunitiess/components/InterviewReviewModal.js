@@ -203,7 +203,7 @@ const InterviewReviewModal = ({
               </label>
             );
           })}
-          <span className="ml-3 text-sm text-gray-500">
+          <span className="ml-3 text-sm glassy-text-secondary">
             {rating > 0 ? `${rating} / 5` : "Not rated"}
           </span>
         </div>

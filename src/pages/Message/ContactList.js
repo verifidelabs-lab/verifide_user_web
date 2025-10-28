@@ -22,20 +22,18 @@ const ContactItem = React.memo(
 
     return (
       <div
-        className={`flex items-center p-4 hover:bg-gray-50 cursor-pointer transition-colors duration-150 ${
-          isSelected ? "bg-blue-50 border-r-2 border-blue-500" : ""
-        }`}
+        className={`flex items-center p-4 hover:bg-card-unread cursor-pointer transition-colors duration-150 ${isSelected ? "bg-card-unread border-r-2 border-blue-500" : ""
+          }`}
         onClick={() => onClick(contact)}
       >
         {/* Avatar */}
         <div className="relative">
           <div
             className={`w-12 h-12 rounded-full flex items-center justify-center overflow-hidden shadow-md
-             ${
-               contact?.isBlocked
-                 ? "bg-gradient-to-br from-gray-400 to-gray-600"
-                 : "bg-gradient-to-br from-blue-400 to-blue-600"
-             }`}
+             ${contact?.isBlocked
+                ? "bg-gradient-to-br from-gray-400 to-gray-600"
+                : "bg-gradient-to-br from-blue-400 to-blue-600"
+              }`}
           >
             {contact?.profile_picture_url ? (
               <img
@@ -69,7 +67,7 @@ const ContactItem = React.memo(
         {/* Content */}
         <div className="ml-3 flex-1 min-w-0">
           <div className="flex items-center justify-between relative" ref={menuRef}>
-            <h3 className="text-sm font-medium text-[#000000E6] truncate capitalize">
+            <h3 className="text-sm font-medium text-white truncate capitalize">
               {contact.first_name} {contact?.last_name}
               {contact?.isBlocked && (
                 <span className="ml-2 text-xs text-red-500">(Blocked)</span>
@@ -81,7 +79,7 @@ const ContactItem = React.memo(
 
             {/* Dots menu toggle */}
             <button
-              className="ml-2 p-1 rounded-full hover:bg-gray-200"
+              className="ml-2 p-1 rounded-full hover:bg-gray-200 glassy-text-primary"
               onClick={(e) => {
                 e.stopPropagation(); // prevent parent onClick
                 setMenuOpen((prev) => !prev);
@@ -92,7 +90,7 @@ const ContactItem = React.memo(
 
             {/* Dropdown menu */}
             {menuOpen && (
-              <div className="absolute right-0 top-6 w-28 bg-white border rounded-lg shadow-lg z-10">
+              <div className="absolute right-0 top-6 w-28 bg-black border rounded-lg shadow-lg z-10">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -108,11 +106,10 @@ const ContactItem = React.memo(
           </div>
 
           <p
-            className={`text-sm truncate mt-1 ${
-              contact?.isBlocked
+            className={`text-sm truncate mt-1 ${contact?.isBlocked
                 ? "text-gray-400 italic"
                 : "text-gray-600"
-            }`}
+              }`}
           >
             {contact?.isBlocked
               ? "You have blocked this user"

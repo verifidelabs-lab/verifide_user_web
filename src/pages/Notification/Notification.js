@@ -91,21 +91,21 @@ const parseNotificationTitle = (title) => {
 //   return (
 //     <div
 //       className={`flex items-start justify-between p-4 border-b border-gray-100 ${
-//         !notification.isRead ? "bg-blue-50" : "bg-white"
+//         !notification.isRead ? "bg-blue-50" : "glassy-card"
 //       }`}
 //     >
 //       <div className="flex items-start space-x-3">
 //         <div className={`p-2 rounded-full ${color}`}>
-//           <Icon className="w-4 h-4 text-white" />
+//           <Icon className="w-4 h-4 glassy-text-primary" />
 //         </div>
 //         <div className="flex-1">
-//           <h3 className="text-sm font-medium text-[#000000E6] mb-1">
+//           <h3 className="text-sm font-medium glassy-text-primary mb-1">
 //             {cleanTitle}
 //           </h3>
-//           <p className="text-xs text-gray-500 mb-2">{notification.message}</p>
+//           <p className="text-xs glassy-text-secondary mb-2">{notification.message}</p>
 //           {/* 🟢 Added this block for type | event | company */}
 //           {(type || event || company) && (
-//             <div className="text-xs text-gray-500 mb-1">
+//             <div className="text-xs glassy-text-secondary mb-1">
 //               {[type, event, company].filter(Boolean).join(" | ")}
 //             </div>
 //           )}
@@ -117,7 +117,7 @@ const parseNotificationTitle = (title) => {
 //       </div>
 //       <button
 //         onClick={handleActionClick}
-//         className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${
+//         className={`px-3 py-1 text-[#2563EB] glassy-text-primary/10 text-sm font-semibold rounded hover:opacity-80 ${
 //           notification.isRead ? "opacity-50 cursor-default" : ""
 //         }`}
 //       >
@@ -144,44 +144,42 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
 
   return (
     <div
-      className={`flex items-start justify-between p-4 border-b border-gray-100 ${
-        !notification.isRead ? "bg-blue-50" : "bg-white"
-      }`}
+      className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? "bg-card-unread" : "glassy-card"
+        }`}
     >
+
       <div className="flex items-start space-x-3">
         {/* Icon */}
-        <div className={`p-2 rounded-full ${color}`}>
-          <Icon className="w-4 h-4 text-white" />
+        <div className={`p-2 rounded-full bg-card`}>
+          <Icon className="w-4 h-4 glassy-text-primary" />
         </div>
 
         {/* Notification Content */}
         <div className="flex-1">
           {/* Title */}
-          <h3 className="text-sm font-semibold text-[#000000E6] mb-1">
+          <h3 className="text-sm font-semibold glassy-text-primary mb-1">
             {cleanTitle}
           </h3>
 
           {/* Message */}
-          <p className="text-xs text-gray-600 mb-2">{notification.message}</p>
+          <p className="text-xs glassy-text-secondary mb-2">{notification.message}</p>
 
           {/* Highlighted Details */}
-          <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-[#2563EB] mb-1">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium glassy-text-primary/70 mb-1">
             {type && (
-              <span className="px-2 py-0.5 bg-blue-100 rounded">{type}</span>
+              <span className="px-2 py-0.5 glassy-card rounded">{type}</span>
             )}
             {event && (
-              <span className="px-2 py-0.5 bg-green-100 rounded">{event}</span>
+              <span className="px-2 py-0.5 glassy-card rounded">{event}</span>
             )}
             {company && (
-              <span className="px-2 py-0.5 bg-yellow-100 rounded">
-                {company}
-              </span>
+              <span className="px-2 py-0.5 glassy-card rounded">{company}</span>
             )}
           </div>
 
           {/* Date and Time */}
-          <div className="flex items-center    text-sm font-semibold text-[#000000E6] mb-1">
-             <CiLock className="w-3 h-3 mr-1" />
+          <div className="flex items-center text-sm font-semibold glassy-text-secondary mb-1">
+            <CiLock className="w-3 h-3 mr-1" />
             {formatDate(notification.createdAt)}
           </div>
         </div>
@@ -190,13 +188,14 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
       {/* Action Button */}
       <button
         onClick={handleActionClick}
-        className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${
-          notification.isRead ? "opacity-50 cursor-default" : ""
-        }`}
+        className={`px-3 py-1 glassy-button text-sm font-semibold rounded ${notification.isRead ? "opacity-50 cursor-default" : ""
+          }`}
+        disabled={notification.isRead}
       >
         {notification.meta?.buttonText || "View"}
       </button>
     </div>
+
   );
 };
 
@@ -219,7 +218,7 @@ const NotificationHeader = ({
   };
 
   return (
-    // <div className="bg-white border-b border-gray-200 px-6 md:py-4 py-2">
+    // <div className="glassy-card border-b border-gray-200 px-6 md:py-4 py-2">
     //   <div className="flex md:flex-row flex-col items-center justify-between mb-4">
     //     <nav className="flex items-center space-x-2 text-sm">
     //       <span className="text-blue-600 hover:text-blue-800 cursor-pointer" onClick={() => navigate('/user/feed')}>Home</span>
@@ -250,7 +249,7 @@ const NotificationHeader = ({
     //         </button>
 
     //         {showFilters && (
-    //           <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+    //           <div className="absolute right-0 mt-2 w-56 glassy-card rounded-md shadow-lg z-10 border border-gray-200">
     //             <div className="p-2">
     //               <select
     //                 value={filterValue}
@@ -272,7 +271,7 @@ const NotificationHeader = ({
 
     //       <button
     //         onClick={onMarkAllRead}
-    //         className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+    //         className="px-4 py-2 bg-blue-600 glassy-text-primary text-sm rounded-md hover:bg-blue-700"
     //       >
     //         Mark All as Read
     //       </button>
@@ -280,38 +279,45 @@ const NotificationHeader = ({
     //   </div>
 
     //   <div className="flex items-center justify-between">
-    //     <h1 className="text-xl font-semibold text-[#000000E6]">All Notification</h1>
-    //     <span className="text-sm text-gray-500 flex"><CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread</span>
+    //     <h1 className="text-xl font-semibold glassy-text-primary">All Notification</h1>
+    //     <span className="text-sm glassy-text-secondary flex"><CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread</span>
     //   </div>
     // </div>
-    <div className="bg-white border-b border-gray-200 px-4 md:px-6 py-2 md:py-4">
+    <div className="glassy-card border-b border-gray-200 px-4 md:px-6 py-2 md:py-4">
+      {/* Desktop Header */}
       <div className="hidden md:flex flex-col">
         <div className="flex flex-row items-center justify-between mb-4">
+          {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm">
             <span
-              className="text-blue-600 hover:text-blue-800 cursor-pointer"
+              className="glassy-text-primary hover:glassy-text-primary-dark cursor-pointer"
               onClick={() => navigate("/user/feed")}
             >
               Home
             </span>
-            <span className="text-gray-400">›</span>
-            <span className="text-gray-600">Notifications</span>
+            <span className="glassy-text-secondary">›</span>
+            <span className="glassy-text-secondary">Notifications</span>
           </nav>
+
+          {/* Search + Filter + Mark All */}
           <div className="flex items-center space-x-4">
+            {/* Search */}
             <form onSubmit={handleSearch} className="relative">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="pl-10 pr-4 py-2 glassy-input-notification  text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </form>
+
+            {/* Filter Dropdown */}
             <div className="relative">
               <button
                 type="button"
-                className="flex items-center space-x-2 px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50"
+                className="flex items-center space-x-2 px-3 py-2 glassy-button text-sm hover:scale-105"
                 onClick={() => setShowFilters(!showFilters)}
               >
                 <BiFilterAlt className="w-4 h-4" />
@@ -319,83 +325,89 @@ const NotificationHeader = ({
               </button>
 
               {showFilters && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-                  <div className="p-2">
-                    <select
-                      value={filterValue}
-                      onChange={(e) => {
-                        onFilterChange(e.target.value);
-                        setShowFilters(false);
-                      }}
-                      className="w-full p-2 border border-gray-300 rounded-md text-sm"
-                    >
-                      <option value="">All Notifications</option>
-                      {Object.entries(NOTIFICATION_TYPES).map(
-                        ([label, value]) => (
-                          <option key={value} value={value}>
-                            {label}
-                          </option>
-                        )
-                      )}
-                    </select>
-                  </div>
+                <div className="absolute right-0 mt-2 w-56 glassy-card rounded-md shadow-lg z-10 border border-gray-200">
+
+                  <select
+                    value={filterValue}
+                    onChange={(e) => {
+                      onFilterChange(e.target.value);
+                      setShowFilters(false);
+                    }}
+                    className="w-full p-2 glassy-input text-sm"
+                  >
+                    <option value="">All Notifications</option>
+                    {Object.entries(NOTIFICATION_TYPES).map(([label, value]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
               )}
             </div>
+
+            {/* Mark All Button */}
             <button
               onClick={onMarkAllRead}
-              className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+              className="px-4 py-2 glassy-button text-sm hover:scale-105"
             >
               Mark All as Read
             </button>
           </div>
         </div>
+
+        {/* Title + Toggle */}
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-[#000000E6]">
+          <h1 className="text-xl font-semibold glassy-text-primary">
             All Notifications
           </h1>
-          <span className="text-sm text-gray-500 flex">
-            <CustomToggle
-              handleClick={() => setIsToggle((prev) => !prev)}
-              isToggle={isToggle}
-            />
+          <span className="text-sm glassy-text-secondary flex items-center">
+            <CustomToggle handleClick={() => setIsToggle((prev) => !prev)} isToggle={isToggle} />
             Unread
           </span>
         </div>
       </div>
+
+      {/* Mobile Header */}
       <div className="md:hidden flex flex-col gap-3">
+        {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm mb-2">
           <span
-            className="text-blue-600 hover:text-blue-800 cursor-pointer"
+            className="glassy-text-primary hover:glassy-text-primary-dark cursor-pointer"
             onClick={() => navigate("/user/feed")}
           >
             Home
           </span>
-          <span className="text-gray-400">›</span>
-          <span className="text-gray-600">Notifications</span>
+          <span className="glassy-text-secondary">›</span>
+          <span className="glassy-text-secondary">Notifications</span>
         </nav>
+
+        {/* Search + Filter */}
         <div className="flex flex-col gap-2">
           <form onSubmit={handleSearch} className="relative w-full">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-4 h-4" />
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="pl-10 pr-4 py-2 glassy-input-notification   text-sm w-full focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </form>
+
           <div className="relative w-full">
             <button
               type="button"
-              className="w-full flex items-center justify-center space-x-2 px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50"
+              className="w-full flex items-center justify-center space-x-2 px-3 py-2 glassy-button text-sm hover:scale-105"
               onClick={() => setShowFilters(!showFilters)}
             >
               <BiFilterAlt className="w-4 h-4" />
               <span>Filter</span>
             </button>
+
             {showFilters && (
-              <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg z-10 border border-gray-200">
+              <div className="absolute right-0 mt-2 w-full glassy-card rounded-md shadow-lg z-10 border border-gray-200">
                 <div className="p-2">
                   <select
                     value={filterValue}
@@ -403,37 +415,34 @@ const NotificationHeader = ({
                       onFilterChange(e.target.value);
                       setShowFilters(false);
                     }}
-                    className="w-full p-2 border border-gray-300 rounded-md text-sm"
+                    className="w-full p-2 glassy-input text-sm"
                   >
                     <option value="">All Notifications</option>
-                    {Object.entries(NOTIFICATION_TYPES).map(
-                      ([label, value]) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      )
-                    )}
+                    {Object.entries(NOTIFICATION_TYPES).map(([label, value]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
             )}
           </div>
         </div>
+
+        {/* Title + Toggle + Mark All */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mt-2">
-          <h1 className="text-lg font-semibold text-[#000000E6]">
+          <h1 className="text-lg font-semibold glassy-text-primary">
             All Notifications
           </h1>
           <div className="flex justify-between w-full sm:w-auto items-center gap-2">
-            <span className="text-sm text-gray-500 flex items-center">
-              <CustomToggle
-                handleClick={() => setIsToggle((prev) => !prev)}
-                isToggle={isToggle}
-              />
+            <span className="text-sm glassy-text-secondary flex items-center">
+              <CustomToggle handleClick={() => setIsToggle((prev) => !prev)} isToggle={isToggle} />
               Unread
             </span>
             <button
               onClick={onMarkAllRead}
-              className="px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 w-full sm:w-auto"
+              className="px-3 py-2 glassy-button text-sm hover:scale-105 w-full sm:w-auto"
             >
               Mark All as Read
             </button>
@@ -441,6 +450,7 @@ const NotificationHeader = ({
         </div>
       </div>
     </div>
+
   );
 };
 
@@ -533,13 +543,13 @@ const NotificationInterface = () => {
         setIsToggle={setIsToggle}
       />
 
-      <div className="w-full mx-auto shadow-sm">
+      <div className="w-full mx-auto shadow-sm ">
         {loading ? (
           <div className="flex justify-center items-center p-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
           </div>
         ) : notifications.length === 0 ? (
-          <div className="text-center p-8 text-gray-500">
+          <div className="text-center p-8 glassy-text-secondary">
             No notifications found
           </div>
         ) : (
@@ -554,26 +564,34 @@ const NotificationInterface = () => {
         )}
 
         {!loading && notifyData?.total > size && (
-          <div className="flex justify-between items-center p-4 bg-white border-t border-gray-100">
+          <div className="flex justify-between items-center p-4 glassy-card border-t border-[var(--border-color)]">
+            {/* Previous Button */}
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 border border-gray-300 rounded-md text-sm disabled:opacity-50"
+              className="px-4 py-2 rounded-md text-sm border border-[var(--border-color)] glassy-text-primary transition-all duration-200
+                 hover:bg-[var(--bg-button-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </button>
-            <span className="text-sm text-gray-500">
+
+            {/* Page Info */}
+            <span className="text-sm glassy-text-secondary">
               Page {page} of {Math.ceil(notifyData.total / size)}
             </span>
+
+            {/* Next Button */}
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={page >= Math.ceil(notifyData.total / size)}
-              className="px-4 py-2 border border-gray-300 rounded-md text-sm disabled:opacity-50"
+              className="px-4 py-2 rounded-md text-sm border border-[var(--border-color)] glassy-text-primary transition-all duration-200
+                 hover:bg-[var(--bg-button-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </button>
           </div>
         )}
+
       </div>
     </div>
   );

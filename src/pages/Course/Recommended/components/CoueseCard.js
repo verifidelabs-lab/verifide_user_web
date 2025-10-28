@@ -17,10 +17,10 @@ const ProviderIcon = ({ course, isPaid }) => {
             />
           )
         }
-        <p className="text-[#000000E6] text-xs">{course?.organization_name}</p>
+        <p className="glassy-text-primary text-xs">{course?.organization_name}</p>
       </div>
       {isPaid && (
-        <span className="bg-black text-white text-xs px-3 py-1 rounded-full">
+        <span className="glassy-card glassy-text-primary text-xs px-3 py-1 rounded-full">
           Paid
         </span>
       )}
@@ -31,7 +31,7 @@ const ProviderIcon = ({ course, isPaid }) => {
 const CourseCard = ({ course, handleCourseDetails, onBookmarkToggle }) => {
   return (
     <div
-      className="rounded-xl relative bg-white hover:shadow-lg transition-shadow duration-300 p-3 cursor-pointer group"
+      className="rounded-xl relative glassy-card hover:shadow-lg transition-shadow duration-300 p-3 cursor-pointer group"
 
     >
       <div className=" w-full h-40 overflow-hidden rounded-4xl ">
@@ -59,20 +59,20 @@ const CourseCard = ({ course, handleCourseDetails, onBookmarkToggle }) => {
             {course?.isBookMarked ? <FcBookmark /> : <BiBookmark />}
           </button>
         </div>
-        <h3 className="text-lg font-semibold text-[#000000] line-clamp-2 mb-1 min-h-14 max-h-10 overflow-hidden  flex flex-col">
+        <h3 className="text-lg font-semibold glassy-text-primary line-clamp-2 mb-1 min-h-14 max-h-10 overflow-hidden  flex flex-col">
           {course?.title?.split(' ').slice(0, 5).join(' ') + (course.title.split(' ').length > 8 ? '...' : '')}
-          <p className="text-base text-[#000000] mb-2 capitalize">
+          <p className="text-base glassy-text-primary mb-2 capitalize">
             ( {course?.proficiency_level})
           </p>
         </h3>
 
-        <p className="text-sm text-gray-600 line-clamp-2 mb-2 ">
+        <p className="text-sm glassy-text-secondary line-clamp-2 mb-2 ">
           {course?.description}
         </p>
 
         {course?.categories?.name && (
           <div className="mb-2 flex justify-between place-items-center">
-            <span className="text-xs text-white bg-indigo-500 px-2 py-0.5 rounded-full">
+            <span className="text-xs glassy-text-primary bg-indigo-500 px-2 py-0.5 rounded-full">
               {course.categories.name}
             </span>
 
@@ -83,7 +83,7 @@ const CourseCard = ({ course, handleCourseDetails, onBookmarkToggle }) => {
           {course?.skills?.map((e) => {
             return (
               <>
-                <span className="bg-gray-50 rounded-full px-2 py-0.5 border text-[10px] ">{e?.name}</span>
+                <span className="glassy-card glassy-text-primary rounded-full px-2 py-0.5 border text-[10px] ">{e?.name}</span>
               </>
             )
           })}

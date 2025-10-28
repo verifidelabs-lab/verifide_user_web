@@ -15,9 +15,9 @@ const ActivityList = () => {
                     <span className="font-medium text-blue-600">Activity</span>
                 </nav>
                 <div>
-                    <div className="w-full mx-auto p-6 bg-white rounded-xl border">
+                    <div className="w-full mx-auto p-6 glassy-card rounded-xl border">
                         <div className="mb-8">
-                            <h1 className="text-[28px] font-bold text-[#000000] mb-3">Project Management</h1>
+                            <h1 className="text-[28px] font-bold glassy-text-primary mb-3">Project Management</h1>
                             <p className="text-[#6B6B6B] text-[18px]">
                                 Learn how to confidently develop custom & profitable Responsive WordPress Themes and Websites with no prior experience.
                             </p>
@@ -25,14 +25,14 @@ const ActivityList = () => {
 
                         <div className="flex items-center justify-between mb-8 relative">
                             <div className="absolute top-9 left-6 right-0 h-0.5 bg-gray-200">
-                                <div className="h-full bg-[#2563EB] w-1/4"></div>
+                                <div className="h-full glassy-text-primary w-1/4"></div>
                             </div>
                             <div className="flex flex-col items-center relative z-10">
                                 <div className="text-center">
                                     <div className="text-base font-medium text-[#6B6B6B]">15 Courses</div>
                                 </div>
-                                <div className="w-6 h-6 bg-[#2563EB] rounded-full flex items-center justify-center mb-2">
-                                    <HiOutlineCheck className='text-white' />
+                                <div className="w-6 h-6 glassy-text-primary rounded-full flex items-center justify-center mb-2">
+                                    <HiOutlineCheck className='glassy-text-primary' />
                                 </div>
                             </div>
 
@@ -40,8 +40,8 @@ const ActivityList = () => {
                                 <div className="text-center">
                                     <div className="text-base font-medium text-[#6B6B6B]">20 Assessment</div>
                                 </div>
-                                <div className="w-6 h-6 bg-[#2563EB] rounded-full flex items-center justify-center mb-2">
-                                    <HiOutlineCheck className='text-white' />
+                                <div className="w-6 h-6 glassy-text-primary rounded-full flex items-center justify-center mb-2">
+                                    <HiOutlineCheck className='glassy-text-primary' />
 
                                 </div>
                             </div>
@@ -94,11 +94,11 @@ const ActivityList = () => {
                     </div>
 
                     <div className="">
-                        <h2 className="text-2xl font-medium text-[#000000E6] py-4">Running Activities</h2>
+                        <h2 className="text-2xl font-medium glassy-text-primary py-4">Running Activities</h2>
 
-                        <div className="bg-white rounded-lg border border-gray-200  relative">
+                        <div className="glassy-card rounded-lg border border-gray-200  relative">
 
-                            <div className='bg-[#FFFFFF] p-3 border-b'>
+                            <div className='glassy-card p-3 border-b'>
                                 <button className="absolute top-6 right-6 p-1 hover:bg-gray-100 rounded">
                                     <BiChevronUp className="w-5 h-5 text-gray-400" />
                                 </button>
@@ -117,17 +117,17 @@ const ActivityList = () => {
 
                                 <div className="mb-4">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center glassy-text-primary font-bold">
                                             1
                                         </div>
-                                        <h3 className="text-[20px] font-semibold text-[#000000E6]">UI/UX Design for Beginners</h3>
+                                        <h3 className="text-[20px] font-semibold glassy-text-primary">UI/UX Design for Beginners</h3>
                                     </div>
                                     <p className="text-gray-600 ml-11">
                                         Learn how to confidently develop custom & profitable Responsive WordPress Themes and Websites with no prior experience.
                                     </p>
                                 </div>
 
-                                <div className="flex items-center gap-6 mb-6 ml-11 text-sm text-gray-500">
+                                <div className="flex items-center gap-6 mb-6 ml-11 text-sm glassy-text-secondary">
                                     <div className="flex items-center gap-1">
                                         <BiBookAdd className="w-4 h-4" />
                                         <span>Number of Chapters: 3</span>
@@ -145,23 +145,23 @@ const ActivityList = () => {
                                 <div className="space-y-1">
                                     <div className="flex items-center gap-3 p-2  ">
                                         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                            <BiBook className="w-4 h-4 text-white" />
+                                            <BiBook className="w-4 h-4 glassy-text-primary" />
                                         </div>
-                                        <span className="font-medium text-[18px] text-[#000000]">Introduction to UI/UX</span>
+                                        <span className="font-medium text-[18px] glassy-text-primary">Introduction to UI/UX</span>
                                     </div>
 
                                     <div className="flex items-center gap-3 p-2 ">
                                         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                            <BiBook className="w-4 h-4 text-white" />
+                                            <BiBook className="w-4 h-4 glassy-text-primary" />
                                         </div>
-                                        <span className="font-medium text-[18px] text-[#000000]">Design Thinking Process</span>
+                                        <span className="font-medium text-[18px] glassy-text-primary">Design Thinking Process</span>
                                     </div>
 
                                     <div className="flex items-center gap-3 p-2 ">
                                         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                            <BiBook className="w-4 h-4 text-white" />
+                                            <BiBook className="w-4 h-4 glassy-text-primary" />
                                         </div>
-                                        <span className="font-medium text-[18px] text-[#000000]">Wireframing Basics</span>
+                                        <span className="font-medium text-[18px] glassy-text-primary">Wireframing Basics</span>
                                     </div>
                                 </div>
                                 <div className='flex justify-end p-2'>

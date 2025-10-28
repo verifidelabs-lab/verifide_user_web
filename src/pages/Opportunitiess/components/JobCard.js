@@ -39,7 +39,7 @@ const JobCard = ({
 
   return (
     <div className="mb-20">
-      <div className="relative z-20 border rounded-lg shadow-md p-4 bg-white flex flex-col justify-between h-auto">
+      <div className="relative z-20 border rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto">
         <div>
           <div className="flex items-center justify-between relative">
             <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ const JobCard = ({
                   className="w-12 h-12 object-cover rounded-full"
                 />
               ) : (
-                <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold rounded-full overflow-hidden">
+                <div className="w-12 h-12 glassy-card glassy-text-primary flex items-center justify-center font-bold rounded-full overflow-hidden">
                   {job?.company_id?.logo_url ? (
                     <img
                       src={job.company_id.logo_url}
@@ -75,10 +75,10 @@ const JobCard = ({
               <div>
                 {job?.user_id ? (
                   <>
-                    <h2 className="text-lg font-semibold text-[#000000]">
+                    <h2 className="text-lg font-semibold glassy-text-primary">
                       {job?.user_id?.first_name} {job?.user_id?.last_name}
                     </h2>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs glassy-text-secondary">
                       {job?.user_id?.headline}
                     </p>
                     {job?.createdAt && (
@@ -89,10 +89,10 @@ const JobCard = ({
                   </>
                 ) : (
                   <>
-                    <h2 className="text-sm font-medium text-[#000000]">
+                    <h2 className="text-sm font-medium glassy-text-primary">
                       {job?.company_id?.name}
                     </h2>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs glassy-text-secondary">
                       {moment(job?.createdAt).format("DD-MM-YYYY")}
                     </p>
                   </>
@@ -186,7 +186,7 @@ const JobCard = ({
             </p>
             <div className="mb-4">
               {job?.job_description ? (
-                <p className="leading-relaxed text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
+                <p className="leading-relaxed text-gray-700 text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                   {showAllSkills // you already have this state, better to use a new one to avoid clash
                     ? job?.job_description
                     : job?.job_description?.slice(0, 120)}
@@ -203,7 +203,7 @@ const JobCard = ({
                   )}
                 </p>
               ) : (
-                <p className="text-gray-500 text-sm">
+                <p className="glassy-text-secondary text-sm">
                   No description provided.
                 </p>
               )}
@@ -306,7 +306,7 @@ const JobCard = ({
                   Comment
                 </Button>
                 <span
-                  className="bg-blue-300 text-blue-700 hover:bg-blue-500 hover:text-white cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
+                  className="bg-blue-300 text-blue-700 hover:bg-blue-500 hover:glassy-text-primary cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
                   onClick={() => handleMessage(job)}
                 >
                   <MdMessage />
@@ -340,7 +340,7 @@ const JobCard = ({
                 </Button>
                 {activeTab === "open" && (
                   <span
-                    className="hover:bg-gray-300 text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
+                    className="hover:bg-gray-300 text-whitecursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
                     onClick={() => handleCloseJob(job)}
                   >
                     <BsThreeDotsVertical />

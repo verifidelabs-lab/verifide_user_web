@@ -665,7 +665,7 @@ const Profile = ({ profileData }) => {
       handleClose();
     } catch (error) {
       console.error('Education submission error:', error);
-      toast.error(error );
+      toast.error(error);
     } finally {
       setLoading(false);
     }
@@ -1132,7 +1132,7 @@ const Profile = ({ profileData }) => {
           }
         `}
       </style>
-      <div className="  bg-[##F4F2EE] space-y-3 p-4">
+      <div className="    space-y-3 p-4">
 
         <div className="flex flex-col md:flex-row w-full mx-auto gap-4">
           <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
@@ -1144,13 +1144,13 @@ const Profile = ({ profileData }) => {
 
             <div className="flex flex-col gap-6 lg:flex-row mx-auto">
               <div className="w-full mx-auto space-y-4 overflow-y-auto">
-                <div className="overflow-hidden bg-white border border-gray-200 rounded-lg" >
+                <div className="overflow-hidden glassy-card border border-gray-200 rounded-lg" >
                   <div className="p-4">
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between" >
                       <ProfileCardData data={profileInfo} setFrameStatus={setFrameStatus} frameStatus={frameStatus} handleSelection={handleSelection} />
                       <div className="lg:text-right border border-[#dddddda8] p-2 rounded-lg relative group">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="xl:text-lg lg:text-base font-semibold text-[#000000E6]">
+                          <h3 className="xl:text-lg lg:text-base font-semibold glassy-text-primary">
                             Badges Earned
                           </h3>
                           <button className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
@@ -1164,7 +1164,7 @@ const Profile = ({ profileData }) => {
                           ))}
                         </div>
                         <div
-                          className="fixed md:right-[20%] right-[6%] z-10 mt-2 w-96 rounded-md bg-[#2563EB] p-4 shadow-lg border border-[#D3D3D3] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"   >
+                          className="fixed md:right-[20%] right-[6%] z-10 mt-2 w-96 rounded-md glassy-text-primary p-4 shadow-lg border border-[#D3D3D3] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"   >
                           <h4 className="text-start text-[#FFFFFF] font-semibold mb-2">How it works?</h4>
                           <ul className='text-[#FFFFFF] text-start font-normal text-sm'>
                             <li>🚀 Complete Deliveries: Get 1 badge for every 10 on-time deliveries</li>
@@ -1182,7 +1182,7 @@ const Profile = ({ profileData }) => {
                   <div className="px-6 pb-6" >
                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
                       <div className="exp-edu-card " data-aos="fade-right" data-aos-duration="1500">
-                        <h2 className="md:mb-1 lg:mb-2 xl:text-base lg:text-[14px] md:text-[12px]  font-semibold text-[#000000E6]">
+                        <h2 className="md:mb-1 lg:mb-2 xl:text-base lg:text-[14px] md:text-[12px]  font-semibold glassy-text-primary">
                           LATEST WORK EXPERIENCE
                         </h2>
                         <ExpEduCard
@@ -1205,7 +1205,7 @@ const Profile = ({ profileData }) => {
                       </div>
 
                       <div className="exp-edu-card " data-aos="fade-up" data-aos-duration="1500">
-                        <h2 className="md:mb-1 lg:mb-2 xl:text-base lg:text-[14px] md:text-[12px] font-semibold text-[#000000E6]">
+                        <h2 className="md:mb-1 lg:mb-2 xl:text-base lg:text-[14px] md:text-[12px] font-semibold glassy-text-primary">
                           LATEST EDUCATION
                         </h2>
                         <ExpEduCard
@@ -1229,7 +1229,7 @@ const Profile = ({ profileData }) => {
 
 
                       <div className="lg:col-span-1 md:col-span-2 mt-6 lg:mt-0" data-aos="fade-left" data-aos-duration="1500">
-                        <h2 className="md:mb-1 lg:mb-2 lg:text-lg md:text-[14px] font-semibold text-[#000000E6]">
+                        <h2 className="md:mb-1 lg:mb-2 lg:text-lg md:text-[14px] font-semibold glassy-text-primary">
                           Top Skills
                         </h2>
                         <div className="flex flex-wrap gap-2">
@@ -1258,7 +1258,7 @@ const Profile = ({ profileData }) => {
                     loading={loading} error={errors} setErrors={setErrors} isExtended={isExtended} setIsExtended={setIsExtended} />
 
                 </div>
-                <div className="space-y-4 bg-gray-50" >
+                <div className="space-y-4 " >
                   <CommonSection title="EDUCATION" buttonText="Add Education"
                     emptyStateTitle="No Education Records" emptyStateDescription="Add your education history to enhance your profile"
                     logo="/Img/Profile/Frame.png" handleOpenModal={() => handleOpenModal('education')}
@@ -1281,15 +1281,15 @@ const Profile = ({ profileData }) => {
 
                   <div>
 
-                    <div className='bg-white p-2'>
+                    <div className='glassy-card p-2'>
                       <div className="flex items-center justify-between mb-6 ">
-                        <h2 className="md:text-sm text-xs font-semibold tracking-wide text-gray-800 uppercase">
+                        <h2 className="md:text-sm text-xs font-semibold tracking-wide glassy-text-primary uppercase">
                           PROJECTS
                         </h2>
                         <Button
                           onClick={() => handleOpenModal('projects')}
                           icon={<GoPlus />}
-                          className="hover:scale-105 transition-transform duration-200"
+                          className="glassy-button hover:scale-105 transition-transform duration-200"
                         > Add Projects </Button>
                       </div>
 
@@ -1327,27 +1327,27 @@ const Profile = ({ profileData }) => {
 
                             <button
                               ref={prevRef}
-                              className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100"
+                              className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
                               <BiChevronLeft className="w-6 h-6 text-gray-700" />
                             </button>
                             <button
                               ref={nextRef}
-                              className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100"
+                              className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
                               <BiChevronRight className="w-6 h-6 text-gray-700" />
                             </button>
 
                           </div>
                         ) : (
-                          <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg bg-[#FBFBFB] hover:border-blue-300 transition-colors duration-300">
+                          <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
                             <div className="flex items-center justify-center mx-auto mb-4">
                               <img src={`/Img/Profile/Frame (2).png`} alt='' className="hover:scale-110 transition-transform duration-300" />
                             </div>
-                            <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
+                            <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
                               {`No Projects added`}
                             </h3>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm glassy-text-secondary">
                               {`Add your projects to build a comprehensive profile`}
                             </p>
                           </div>
@@ -1364,15 +1364,16 @@ const Profile = ({ profileData }) => {
 
                   <div>
 
-                    <div className='bg-white p-2'>
+                    <div className='glassy-card p-2'>
                       <div className="flex items-center justify-between mb-6 ">
-                        <h2 className="md:text-sm text-xs font-semibold tracking-wide text-gray-800 uppercase">
+                        <h2 className="md:text-sm text-xs font-semibold tracking-wide glassy-text-primary uppercase">
                           Certificate
                         </h2>
                         <Button
                           onClick={() => handleOpenModal('certifications')}
                           icon={<GoPlus />}
-                          className="hover:scale-105 transition-transform duration-200"
+                          className="glassy-button hover:scale-105 transition-transform duration-200"
+
                         > Add Certificate</Button>
                       </div>
 
@@ -1412,26 +1413,26 @@ const Profile = ({ profileData }) => {
 
                             <button
                               ref={prevRef2}
-                              className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100"
+                              className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
                               <BiChevronLeft className="w-6 h-6 text-gray-700" />
                             </button>
                             <button
                               ref={nextRef2}
-                              className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow hover:bg-gray-100"
+                              className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
                               <BiChevronRight className="w-6 h-6 text-gray-700" />
                             </button>
                           </div>
                         ) : (
-                          <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg bg-[#FBFBFB] hover:border-blue-300 transition-colors duration-300">
+                          <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
                             <div className="flex items-center justify-center mx-auto mb-4">
                               <img src={`/Img/Profile/Frame (2).png`} alt='' className="hover:scale-110 transition-transform duration-300" />
                             </div>
-                            <h3 className="mb-2 text-[20px]  font-semibold text-[#000000E6]">
+                            <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
                               {`No Certifications added`}
                             </h3>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm glassy-text-secondary">
                               {`Add your certifications to build a comprehensive profile`}
                             </p>
                           </div>

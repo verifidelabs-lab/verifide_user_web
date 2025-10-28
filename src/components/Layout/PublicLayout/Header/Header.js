@@ -87,7 +87,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
   return (
     <header
-      className="bg-white z-10 border-b border-black border-opacity-10"
+      className="glassy-card z-10 border-b border-black border-opacity-10"
       ref={topRef}
     >
       <div className="mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
@@ -123,7 +123,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   }}
                   className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
                     isActive
-                      ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                      ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
                       : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                   } pb-1`}
                 >
@@ -149,7 +149,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden px-4 pb-3 space-y-2 bg-white border-t border-gray-200">
+        <div className="md:hidden px-4 pb-3 space-y-2 glassy-card border-t border-gray-200">
           {HeaderJson?.headerItems?.map((item, index) => {
             const isActive = location.pathname === item?.path;
             return (
@@ -158,7 +158,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 to={item?.path}
                 className={`block px-3 py-2 text-base transition duration-200 ${
                   isActive
-                    ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
+                    ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
                     : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}

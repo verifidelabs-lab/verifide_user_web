@@ -10,44 +10,33 @@ const JobPost = ({ job }) => {
   const isCompany = getCookie("ACTIVE_MODE");
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleSeeMore = () => {
-    setIsExpanded(!isExpanded);
-  };
+  const handleSeeMore = () => setIsExpanded(!isExpanded);
   const content = job?.job_description || "No description available.";
 
   if (!job) return null;
 
-  const handleApply = () => {
-    navigate(`/user/career-goal/${job?._id}`);
-  };
+  const handleApply = () => navigate(`/user/career-goal/${job?._id}`);
+
   const isDateInRange = () => {
     const currentDate = new Date().getTime();
     return currentDate >= job?.start_date && currentDate <= job?.end_date;
   };
-  console.log("This is theskdjsldf", isDateInRange());
 
   const shouldDisableApply = () => {
     if (job?.isApplied) return { disabled: true, reason: "Already Applied" };
-    // if (isDisable) return { disabled: true, reason: 'Position Disabled' };
     if (!isDateInRange())
       return { disabled: true, reason: "Applications Closed" };
-    // if (current_openings === 0) return { disabled: true, reason: 'No Openings' };
     return { disabled: false, reason: "Apply Now" };
   };
-
-  // const getRecommendationBadge = () => {
-  //   if (!isRecommend) return null;
-  //   return { text: 'Recommended', color: 'bg-amber-50 text-amber-600 border-amber-200' };
-  // };
 
   const applyStatus = shouldDisableApply();
 
   return (
-    <div className="mt-6 rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 relative">
+    <div className="mt-6 glassy-card p-6 relative">
       {/* Job Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-2xl font-semibold text-gray-900 leading-snug">
+          <h3 className="text-2xl font-semibold glassy-text-primary leading-snug">
             {job.job_title_details?.name || "Untitled Job"}
           </h3>
           <div className="flex flex-wrap gap-2 mt-2">
@@ -75,10 +64,8 @@ const JobPost = ({ job }) => {
             size="sm"
             disabled={applyStatus.disabled}
             onClick={() => !applyStatus.disabled && handleApply()}
-            className={`flex-1 ${
-              applyStatus.disabled
-                ? "opacity-60 cursor-not-allowed px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200"
-                : "px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all duration-200"
+            className={`flex-1 glassy-button ${
+              applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
             }`}
           >
             {applyStatus.reason}
@@ -89,14 +76,16 @@ const JobPost = ({ job }) => {
       {/* Salary Section */}
       {job.salary_range && (
         <div className="mt-4">
-          <p className="text-sm text-gray-500">Salary Range</p>
-          <p className="text-lg text-green-600 font-bold">{job.salary_range}</p>
+          <p className="text-sm glassy-text-secondary">Salary Range</p>
+          <p className="text-lg glassy-text-primary font-bold">
+            {job.salary_range}
+          </p>
         </div>
       )}
 
       {/* Location */}
-      <div className="mt-4 flex items-center text-sm text-gray-700">
-        <BiLocationPlus className="mr-2 text-lg text-gray-500" />
+      <div className="mt-4 flex items-center text-sm glassy-text-secondary">
+        <BiLocationPlus className="mr-2 text-lg" />
         <p>
           {job.work_location?.city?.name || "—"},{" "}
           {job.work_location?.state?.name || ""}
@@ -104,20 +93,15 @@ const JobPost = ({ job }) => {
       </div>
 
       {/* Description */}
-      {/* <div className="mt-4">
-        <p className="text-sm text-gray-600 leading-relaxed  text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
-          {job.job_description || "No description available."}
-        </p>
-      </div> */}
       <div className="mt-4">
-        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
+        <p className="glassy-text-primary leading-relaxed whitespace-pre-line p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]">
           {isExpanded ? content : content.slice(0, 200)}
           {content.length > 200 && (
             <>
               {!isExpanded && "..."}
               <button
                 onClick={handleSeeMore}
-                className="ml-2 md:text-sm text-xs text-blue-600 hover:underline"
+                className="ml-2 md:text-sm text-xs glassy-text-primary hover:underline"
               >
                 {isExpanded ? "See less" : "See more"}
               </button>
@@ -129,7 +113,9 @@ const JobPost = ({ job }) => {
       {/* Required Skills */}
       {job.required_skills?.length > 0 && (
         <div className="mt-5">
-          <p className="text-sm font-semibold text-gray-700">Required Skills</p>
+          <p className="text-sm font-semibold glassy-text-primary">
+            Required Skills
+          </p>
           <div className="flex flex-wrap gap-2 mt-2">
             <SkillsCard2 skills={job.required_skills} />
           </div>

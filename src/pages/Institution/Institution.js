@@ -227,7 +227,7 @@ const Institution = () => {
         <div className="flex gap-2" key={`actions-${Institute._id}`}>
           <button
             onClick={() => handleAddFromUser(Institute)}
-            className="p-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="p-2 text-sm bg-blue-500 glassy-text-primary rounded hover:bg-blue-600"
           >
             <CiCircleCheck size={18} />
           </button>
@@ -1255,7 +1255,7 @@ const Institution = () => {
               <h2 className="text-2xl font-semibold text-gray-800">
                 {viewData?.name}
               </h2>
-              <p className="text-sm text-gray-500">{viewData?.display_name}</p>
+              <p className="text-sm glassy-text-secondary">{viewData?.display_name}</p>
 
               {/* Verified Status */}
               {viewData?.is_verified ? (
@@ -1447,7 +1447,7 @@ const Institution = () => {
             <Button
               type="button"
               onClick={handlePasswordSubmit}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 transition-all duration-200 shadow-md hover:shadow-lg"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 glassy-text-primary py-3 transition-all duration-200 shadow-md hover:shadow-lg"
             >
               {isSubmitting ? (
                 <>

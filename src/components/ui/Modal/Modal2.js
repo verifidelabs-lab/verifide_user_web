@@ -17,13 +17,13 @@ const Modal2 = ({
   return (
     <>
       <div
-        className={`fixed inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "bg-black bg-opacity-30 backdrop-blur-sm" : "bg-transparent pointer-events-none"
+        className={`fixed inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur-sm" : "bg-transparent pointer-events-none"
           }`}
         onClick={onClose}
       />
 
       <div
-        className={`fixed z-50 bg-white rounded-lg top-0 shadow-xl transition-all duration-300 ease-in-out
+        className={`fixed z-50 glassy-card rounded-lg top-0 shadow-xl transition-all duration-300 ease-in-out
           transform -translate-x-1/2 -translate-y-1/2
           ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
         style={{

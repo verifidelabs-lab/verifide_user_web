@@ -329,7 +329,7 @@ const Companies = () => {
           <div className="flex gap-2" key={`actions-${company._id}`}>
             <button
               onClick={() => handleAddFromUser(company)}
-              className="p-2 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="p-2 text-sm bg-blue-500 glassy-text-primary rounded hover:bg-blue-600"
             >
               <CiCircleCheck size={18} />
             </button>
@@ -1334,7 +1334,7 @@ const Companies = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium glassy-text-secondary">
                   Company Name
                 </p>
                 <p className="mt-1 text-sm text-gray-900">
@@ -1342,7 +1342,7 @@ const Companies = () => {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium glassy-text-secondary">
                   Display Name
                 </p>
                 <p className="mt-1 text-sm text-gray-900">
@@ -1353,7 +1353,7 @@ const Companies = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium glassy-text-secondary">
                   Phone Number
                 </p>
                 <p className="mt-1 text-sm text-gray-900">
@@ -1364,7 +1364,7 @@ const Companies = () => {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium glassy-text-secondary">
                   Company Type
                 </p>
                 <p className="mt-1 text-sm text-gray-900">
@@ -1374,7 +1374,7 @@ const Companies = () => {
             </div>
 
             <div>
-              <p className="text-sm font-medium text-gray-500">Description</p>
+              <p className="text-sm font-medium glassy-text-secondary">Description</p>
               <p className="mt-1 text-sm text-gray-900">
                 {companyDetails?.data?.description || "N/A"}
               </p>
@@ -1382,7 +1382,7 @@ const Companies = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-500">Website</p>
+                <p className="text-sm font-medium glassy-text-secondary">Website</p>
                 <p className="mt-1 text-sm text-gray-900 line-clamp-2">
                   {companyDetails?.data?.website_url ? (
                     <a
@@ -1399,7 +1399,7 @@ const Companies = () => {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500">LinkedIn</p>
+                <p className="text-sm font-medium glassy-text-secondary">LinkedIn</p>
                 <p className="mt-1 text-sm text-gray-900 line-clamp-2">
                   {companyDetails?.data?.linkedin_page_url ? (
                     <a
@@ -1423,7 +1423,7 @@ const Companies = () => {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Address</p>
+                  <p className="text-sm font-medium glassy-text-secondary">Address</p>
                   <p className="mt-1 text-sm text-gray-900">
                     {[
                       companyDetails?.data?.headquarters?.address_line_1,
@@ -1442,7 +1442,7 @@ const Companies = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium glassy-text-secondary">
                   Founded Year
                 </p>
                 <p className="mt-1 text-sm text-gray-900">
@@ -1450,7 +1450,7 @@ const Companies = () => {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium glassy-text-secondary">
                   Company Size
                 </p>
                 <p className="mt-1 text-sm text-gray-900">
@@ -1460,7 +1460,7 @@ const Companies = () => {
             </div>
 
             <div>
-              <p className="text-sm font-medium text-gray-500">Specialties</p>
+              <p className="text-sm font-medium glassy-text-secondary">Specialties</p>
               <p className="mt-1 text-sm text-gray-900">
                 {companyDetails?.data?.specialties?.length
                   ? companyDetails.data.specialties.join(", ")
@@ -1469,7 +1469,7 @@ const Companies = () => {
             </div>
             <div className="grid grid-cols-2">
               <div>
-                <p className="text-sm font-medium text-gray-500">Employee</p>
+                <p className="text-sm font-medium glassy-text-secondary">Employee</p>
                 <p className="mt-1 text-sm text-gray-900">
                   {companyDetails?.data?.employee_count ?? "N/A"}
                 </p>
@@ -1527,7 +1527,7 @@ const Companies = () => {
             <Button
               type="button"
               onClick={handlePasswordSubmit}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 transition-all duration-200 shadow-md hover:shadow-lg"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 glassy-text-primary py-3 transition-all duration-200 shadow-md hover:shadow-lg"
             >
               {isSubmitting ? (
                 <>

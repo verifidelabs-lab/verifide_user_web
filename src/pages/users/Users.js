@@ -196,7 +196,7 @@ const Users = () => {
               className={`flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-2
         ${
           activeTab === tab.key
-            ? "bg-white text-[#2563EB] shadow-md"
+            ? "glassy-card text-[#2563EB] shadow-md"
             : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
         }`}
             >
@@ -243,7 +243,7 @@ const Users = () => {
             No {tabConfig.find((t) => t.key === activeTab)?.label.toLowerCase()}{" "}
             found
           </h3>
-          <p className="text-gray-500 max-w-md mx-auto">
+          <p className="glassy-text-secondary max-w-md mx-auto">
             {activeTab === "user" &&
               "No user suggestions available right now. Check back later for connection opportunities."}
             {activeTab === "companies" &&

@@ -128,7 +128,7 @@ const SuggestedUsersSwiper = ({
                       <div className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-0.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 text-white"
+                          className="h-4 w-4 glassy-text-primary"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -159,7 +159,7 @@ const SuggestedUsersSwiper = ({
                     disabled={isLoading}
                     className={`px-4 py-2 text-xs font-medium rounded-lg transition-colors w-full flex items-center justify-center ${user.isConnected
                       ? "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
-                      : "bg-blue-600 text-white hover:bg-blue-700 shadow-sm"
+                      : "bg-blue-600 glassy-text-primary hover:bg-blue-700 shadow-sm"
                       } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     {isLoading ? (

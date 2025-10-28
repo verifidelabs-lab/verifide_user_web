@@ -176,14 +176,14 @@ const CompanyProfile = ({
 
     return (
       <div className="relative group">
-        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg bg-white relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg glassy-card relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
           {isImageUploading && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+            <div className="absolute inset-0 glassy-card/50 flex items-center justify-center z-10">
               <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
             </div>
           )}
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <FiCamera className="w-6 h-6 text-white" />
+          <div className="absolute inset-0 glassy-card/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <FiCamera className="w-6 h-6 glassy-text-primary" />
           </div>
           <img
             src={
@@ -349,8 +349,8 @@ const CompanyProfile = ({
           headquarters: dataToUse.headquarters,
           founded_year: dataToUse.founded_year
             ? Math.floor(
-                new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
-              )
+              new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
+            )
             : null,
           specialties: (dataToUse.specialties || [])
             .map((s) => String(s || "").trim())
@@ -449,11 +449,10 @@ const CompanyProfile = ({
   };
   const renderProfileFormFields = () => {
     const selectClasses = classNames(
-      "h-[50px] opacity-100 rounded-[10px] border w-full",
+      "h-[50px] rounded-[10px] w-full",
       {
-        "border-gray-300": !errors.industry,
-        "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
-          errors.industry,
+        "border border-gray-300": !errors.industry,
+        "border border-red-300 text-red-900": errors.industry,
       }
     );
 
@@ -461,37 +460,58 @@ const CompanyProfile = ({
       control: (base, state) => ({
         ...base,
         borderRadius: "10px",
-        borderColor: errors.industry ? "#f87171" : "#d1d5db",
+        borderColor: errors.industry ? "#f87171" : "var(--border-color)",
         minHeight: "52px",
-        opacity: 1,
+        backgroundColor: "var(--bg-card)",
+        color: "var(--text-primary)",
         boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
         "&:hover": {
-          borderColor: errors.industry ? "#f87171" : "#9ca3af",
+          borderColor: state.isFocused ? "#3b82f6" : "var(--border-color)",
         },
       }),
       placeholder: (base) => ({
         ...base,
-        color: "#000000",
-        opacity: 0.5,
+        color: "var(--text-secondary)",
+        opacity: 1,
+      }),
+      singleValue: (base) => ({
+        ...base,
+        color: "var(--text-primary)",
       }),
       multiValue: (base) => ({
         ...base,
-        backgroundColor: "#e5e7eb",
+        backgroundColor: "rgba(255,255,255,0.1)",
         borderRadius: "4px",
       }),
       multiValueLabel: (base) => ({
         ...base,
-        color: "#374151",
+        color: "var(--text-primary)",
       }),
       multiValueRemove: (base) => ({
         ...base,
-        color: "#6b7280",
+        color: "var(--text-secondary)",
         ":hover": {
           backgroundColor: "#f87171",
           color: "white",
         },
       }),
+      menu: (base) => ({
+        ...base,
+        backgroundColor: "var(--bg-card)",
+        color: "var(--text-primary)",
+        borderRadius: "10px",
+        boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+      }),
+      option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isFocused
+          ? "rgba(255,255,255,0.1)"
+          : "var(--bg-card)",
+        color: "var(--text-primary)",
+        cursor: "pointer",
+      }),
     };
+
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Company / Institute Name */}
@@ -540,7 +560,7 @@ const CompanyProfile = ({
 
         {/* Industry Multi-Select */}
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium glassy-text-secondary mb-1">
             Industry <span className="text-red-500">*</span>
           </label>
           <CreatableSelect
@@ -618,6 +638,7 @@ const CompanyProfile = ({
       </div>
     );
   };
+
   const handleImageClick = (fieldName = "logo_url") => {
     const inputId = `imageUpload-${fieldName}`;
     document.getElementById(inputId).click();
@@ -696,11 +717,10 @@ const CompanyProfile = ({
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${
-              activeTab === tab
-                ? "text-blue-600 border-b-2 border-blue-600"
-                : "text-gray-500 hover:text-blue-600"
-            }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "glassy-text-secondary hover:text-blue-600"
+              }`}
           >
             {tab}
           </button>
@@ -877,11 +897,11 @@ const CompanyProfile = ({
 
   const PostsTab = ({ posts }) => {
     return (
-      <div className="bg-white min-h-screen py-8 px-4">
+      <div className="glassy-card min-h-screen py-8 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-7">
             <h2 className="text-2xl font-bold text-gray-900">Page posts</h2>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 glassy-text-primary rounded-lg hover:bg-blue-700 transition">
               <Link to="/company/create-post">Create Post</Link>
             </button>
           </div>
@@ -890,7 +910,7 @@ const CompanyProfile = ({
             {posts?.map((post) => (
               <div
                 key={post?._id}
-                className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col gap-4"
+                className="glassy-card rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col gap-4"
               >
                 {/* Header row: company/user info */}
                 <div className="flex items-center gap-3">
@@ -909,7 +929,7 @@ const CompanyProfile = ({
                     <h3 className="text-lg font-bold text-gray-900 leading-tight">
                       {agencyData?.name}
                     </h3>
-                    <div className="text-gray-500 text-xs">
+                    <div className="glassy-text-secondary text-xs">
                       {agencyData?.followers
                         ? `${agencyData?.followers} followers`
                         : ""}
@@ -1008,10 +1028,10 @@ const CompanyProfile = ({
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-900">Opening Jobs</h1>
-            <button className="w-10 h-10 bg-white hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm">
+            <button className="w-10 h-10 glassy-card hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm">
               <Link
                 to="/company/post-job"
-                className="w-10 h-10 bg-white hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm"
+                className="w-10 h-10 glassy-card hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm"
               >
                 <Plus size={24} className="text-gray-700" />
               </Link>
@@ -1024,7 +1044,7 @@ const CompanyProfile = ({
               jobs?.map((job) => (
                 <div
                   key={job?._id}
-                  className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-colors shadow-sm"
+                  className="glassy-card rounded-2xl p-6 border border-gray-200 hover:border-gray-300 transition-colors shadow-sm"
                 >
                   {/* Header with logo, title, and status */}
                   <div className="flex items-start justify-between mb-4">
@@ -1138,20 +1158,20 @@ const CompanyProfile = ({
     };
 
     return (
-      <div className="bg-white text-black min-h-screen">
+      <div className="glassy-card text-whitemin-h-screen">
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Our Team</h2>
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700"
             >
               Add Team Member
             </button>
           </div>
 
           {showAddForm && (
-            <div className="px-4 py-2 bg-white-600 text-black rounded hover:bg-white-700">
+            <div className="px-4 py-2 glassy-card-600 text-whiterounded hover:glassy-card-700">
               <h3 className="text-lg font-semibold mb-4">Add Team Member</h3>
               <div className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
@@ -1165,7 +1185,7 @@ const CompanyProfile = ({
                         name: e.target.value,
                       }))
                     }
-                    className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-3 glassy-card-700 border border-gray-600 text-whiterounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <input
                     type="text"
@@ -1177,7 +1197,7 @@ const CompanyProfile = ({
                         position: e.target.value,
                       }))
                     }
-                    className="p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="p-3 glassy-card-700 border border-gray-600 text-whiterounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <textarea
@@ -1187,18 +1207,18 @@ const CompanyProfile = ({
                     setNewPerson((prev) => ({ ...prev, bio: e.target.value }))
                   }
                   rows={3}
-                  className="w-full p-3 bg-white-700 border border-gray-600 text-black rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 glassy-card-700 border border-gray-600 text-whiterounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div className="flex gap-2">
                   <button
                     onClick={addPerson}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700"
                   >
                     Add Member
                   </button>
                   <button
                     onClick={() => setShowAddForm(false)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700"
                   >
                     Cancel
                   </button>
@@ -1211,7 +1231,7 @@ const CompanyProfile = ({
             {people.map((person) => (
               <div
                 key={person.id}
-                className="bg-white-800 rounded-lg p-6 border border-gray-700 text-center"
+                className="glassy-card-800 rounded-lg p-6 border border-gray-700 text-center"
               >
                 <img
                   src={person.avatar}
@@ -1264,9 +1284,9 @@ const CompanyProfile = ({
     };
 
     return (
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto glassy-card">
         {/* 🔹 Editable Banner */}
-        <div className="relative rounded-t-2xl overflow-hidden h-46 sm:h-54 md:h-52 bg-gray-200 group cursor-pointer transition-all">
+        <div className="relative rounded-t-2xl overflow-hidden h-46 sm:h-54 md:h-52  group cursor-pointer transition-all">
           {previewBanner ? (
             <img
               src={formData["banner_image_url"]}
@@ -1274,7 +1294,7 @@ const CompanyProfile = ({
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
-            <div className="flex items-center justify-center w-full h-full text-gray-400 text-sm">
+            <div className="flex items-center justify-center w-full h-full glassy-text-primary text-sm">
               Click to upload banner
             </div>
           )}
@@ -1282,16 +1302,16 @@ const CompanyProfile = ({
           {/* Overlay for edit button */}
           <div
             onClick={handleBannerClick}
-            className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300"
+            className="absolute inset-0 glassy-card/80  opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300"
           >
-            <div className="flex items-center gap-2 text-white text-sm bg-black/40 px-3 py-2 rounded-lg">
+            <div className="flex items-center gap-2 glassy-text-primary text-sm glassy-card px-3 py-2 rounded-lg">
               <FiCamera className="w-4 h-4" /> Change Banner
             </div>
           </div>
 
           {/* Loading spinner */}
           {isBannerUploading && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <div className="absolute inset-0 glassy-card/50 flex items-center justify-center">
               <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
             </div>
           )}
@@ -1307,12 +1327,12 @@ const CompanyProfile = ({
         </div>
 
         {/* 🔹 White card content below banner */}
-        <div className="bg-white rounded-b-2xl shadow-md">
+        <div className="  rounded-b-2xl shadow-md">
           <div className="p-6">
             {/* Row 1: Logo + Edit Button */}
             <div className="flex items-start justify-between gap-2">
               <div className="relative -mt-16 flex-shrink-0">
-                <div className="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl border-4 border-zinc-800 bg-black overflow-hidden">
+                <div className="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl    overflow-hidden">
                   {agencyData?.logo ? (
                     <img
                       src={agencyData?.logo}
@@ -1328,7 +1348,7 @@ const CompanyProfile = ({
               </div>
 
               <button
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 text-sm"
+                className="px-4 py-2 bg-blue-600 glassy-text-primary rounded hover:bg-blue-700 flex items-center gap-2 text-sm"
                 onClick={handleProfileUpdate}
               >
                 Edit Page
@@ -1337,13 +1357,13 @@ const CompanyProfile = ({
 
             {/* Row 2: Company Details */}
             <div className="mt-3">
-              <h1 className="font-bold text-gray-700 mb-2">
+              <h1 className="font-bold glassy-text-primary mb-2">
                 {agencyData.name}
               </h1>
-              <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+              <p className="glassy-text-secondary text-sm mb-3 leading-relaxed">
                 {agencyData?.description}
               </p>
-              <div className="flex items-center gap-3 text-xs text-gray-700">
+              <div className="flex items-center gap-3 text-xs glassy-text-secondary">
                 <span>{agencyData?.industry}</span>
                 <span>•</span>
                 <span>{agencyData?.founded}</span>
@@ -1521,11 +1541,11 @@ const CompanyProfile = ({
     dispatch(companyIndustries());
   }, [companiesProfileData?._id]);
   return (
-    <div className="bg-gray-50   p-6">
+    <div className="   p-6">
       <div className="flex flex-col md:flex-row gap-6   ">
         <div className="w-full md:w-3/4 space-y-6">
           <Header />
-          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+          <div className="glassy-card p-6 rounded-2xl shadow-md border border-gray-200">
             <Navigation />
             {renderActiveTab()}
           </div>
@@ -1667,7 +1687,7 @@ const CompanyProfile = ({
 
           <div>
             <Button
-              variant="primary"
+              variant="outline"
               onClick={handleProfileSubmit}
               loading={isLoading}
               className="px-4 py-2"

@@ -79,7 +79,7 @@ const UploadMultipleImages = ({
                 <button
                   type="button"
                   onClick={() => removeFile(index)}
-                  className="absolute top-1 right-1 bg-white text-gray-700 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-gray-200 hover:bg-gray-100"
+                  className="absolute top-1 right-1 glassy-card text-gray-700 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-gray-200 hover:bg-gray-100"
                 >
                   <FaTimes size={14} />
                 </button>
@@ -120,7 +120,7 @@ const UploadMultipleImages = ({
               width="24"
               height="24"
               strokeWidth="2"
-              className={`mx-auto text-gray-500 ${iconClassName}`}
+              className={`mx-auto glassy-text-secondary ${iconClassName}`}
             >
               <path d="M15 8h.01"></path>
               <path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5"></path>
@@ -132,7 +132,7 @@ const UploadMultipleImages = ({
             <span className="block text-gray-700 mt-2 text-sm">
               Drag & Drop or Click to Upload ({files.length}/{maxFiles})
             </span>
-            <span className="block text-gray-500 text-xs mt-1">
+            <span className="block glassy-text-secondary text-xs mt-1">
               Supports {allowedTypes.join(', ')} up to {maxFileSize / 1024 / 1024}MB each
             </span>
           </div>

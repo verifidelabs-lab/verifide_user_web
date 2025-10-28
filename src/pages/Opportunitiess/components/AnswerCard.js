@@ -5,7 +5,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
     const renderAnswer = () => {
 
         if (!correctOptions && !selectedOptions) {
-            return <p className="text-sm text-gray-500">No answer provided</p>;
+            return <p className="text-sm glassy-text-secondary">No answer provided</p>;
         }
 
 
@@ -13,13 +13,13 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
             return (
                 <div className="space-y-2">
                     <div>
-                        <p className="text-xs font-medium text-gray-500"> Answer:</p>
+                        <p className="text-xs font-medium glassy-text-secondary"> Answer:</p>
                         <p className="text-sm   py-1.5 rounded">
                             {correctOptions?.[0] || "Not specified"}
                         </p>
                     </div>
  <div>
-                        <p className="text-xs font-medium text-gray-500"> Selected Answer:</p>
+                        <p className="text-xs font-medium glassy-text-secondary"> Selected Answer:</p>
                         <p className="text-sm   py-1.5 rounded">
                             {selectedOptions?.[0] || "Not specified"}
                         </p>
@@ -34,7 +34,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
             <div className="space-y-2">
                 {correctOptions && (
                     <div>
-                        <p className="text-xs font-medium text-gray-500">Correct Options:</p>
+                        <p className="text-xs font-medium glassy-text-secondary">Correct Options:</p>
                         <ul className="list-disc pl-5">
                             {correctOptions.map((option, i) => (
                                 <li key={i} className="text-sm text-green-600">{option}</li>
@@ -44,7 +44,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
                 )}
                 {selectedOptions && (
                     <div>
-                        <p className="text-xs font-medium text-gray-500">Selected Options:</p>
+                        <p className="text-xs font-medium glassy-text-secondary">Selected Options:</p>
                         <ul className="list-disc pl-5">
                             {selectedOptions.map((option, i) => (
                                 <li key={i} className="text-sm text-gray-700">{option}</li>
@@ -57,7 +57,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
     };
 
     return (
-        <div className="bg-white rounded-xl border  space-y-2 mb-4 last:mb-0">
+        <div className="glassy-card rounded-xl border  space-y-2 mb-4 last:mb-0">
             <p className="text-sm font-medium text-gray-800 bg-[#F2F2F7] p-3">
                 {index + 1}. {question}
             </p>

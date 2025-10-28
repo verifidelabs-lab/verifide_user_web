@@ -17,7 +17,7 @@ const ProfileCardData = () => {
           <img src="/Img/GroupMain.png" alt="group" />
           <h1 className="text-2xl font-bold text-gray-900">Sarah Joe</h1>
           <div className="flex items-center justify-center w-5 h-5 bg-blue-500 rounded-full">
-            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-3 h-3 glassy-text-primary" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
                 d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -27,7 +27,7 @@ const ProfileCardData = () => {
           </div>
         </div>
         <p className="mt-1 text-lg text-gray-700">Management Executive at Zara</p>
-        <p className="text-sm text-gray-500">Jaipur, Rajasthan</p>
+        <p className="text-sm glassy-text-secondary">Jaipur, Rajasthan</p>
         <div className="flex items-center mt-4 space-x-3">
     
         </div>

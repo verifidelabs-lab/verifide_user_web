@@ -90,7 +90,7 @@ const DynamicFormModal = ({
             <input
               type="file"
               onChange={(e) => handleChange(field.name, e.target.files[0])}
-              className="block w-full text-sm text-gray-500
+              className="block w-full text-sm glassy-text-secondary
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-md file:border-0
                 file:text-sm file:font-semibold

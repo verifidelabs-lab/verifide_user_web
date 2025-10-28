@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 const ExpEduCard = ({ title, company, duration, location, logo }) => {
   return (
-    <div className="flex items-start  space-x-2 bg-white md:p-4 p-2 rounded-lg  hover:shadow-sm transition duration-300">
+    <div className="glassy-card flex items-start space-x-2 md:p-4 p-2 hover:shadow-sm transition duration-300">
       <div className="flex items-center justify-center flex-shrink-0 lg:w-12 lg:h-12 w-8 h-8">
         <img
           src={logo}
@@ -16,15 +16,19 @@ const ExpEduCard = ({ title, company, duration, location, logo }) => {
         />
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-[#000000] lg:text-sm text-xs">{title}</h3>
-        <p className="font-normal text-[#00000099]/60 text-xs">{company}</p>
-        <p className="mt-1 text-[#00000099]/60 text-[12px]">{duration}</p>
-        <p className="text-[10px] text-[#000000]">{location}</p>
+        <h3 className="glassy-text-primary font-semibold lg:text-sm text-xs">{title}</h3>
+        <p className="glassy-text-secondary font-normal text-xs">{company}</p>
+        <p className="glassy-text-secondary mt-1 text-[12px]">{duration}</p>
+        <p className="glassy-text-primary text-[10px]">{location}</p>
       </div>
     </div>
   );
 };
-export default ExpEduCard
+
+export default ExpEduCard;
+
+
+
 
 
 
@@ -72,13 +76,13 @@ export const SkillsCard = ({
   return (
     <div className="w-full">
       {title && (
-        <div className="tracking-wide text-[12px] font-medium text-[#00000080]/50 mb-2">
+        <div className="tracking-wide text-[12px] font-medium glassy-text-secondary mb-2">
           {title}
         </div>
       )}
 
       {suggestedSkills.length === 0 ? (
-        <div className="text-sm text-gray-500 py-2">
+        <div className="text-sm glassy-text-secondary py-2">
           No skills available
         </div>
       ) : (
@@ -91,14 +95,14 @@ export const SkillsCard = ({
                 key={skill.value || `${skill.label}-${index}`}
                 type="button"
                 className={`
-                  ${isSkillSelected
-                    ? "bg-[#6390F1] text-white border-[#6390F1]"
-                    : "bg-[#FAFAFA] text-[#202226] border-[#E8E8E8] hover:bg-gray-100"
+              ${isSkillSelected
+                    ? "bg-gradient-to-r from-[#0066FF] to-[#A1BEFF] glassy-text-primary border-transparent"
+                    : "bg-[var(--bg-card)] text-[var(--text-primary)] border-[var(--border-color)] hover:bg-[var(--bg-button-hover)]"
                   } 
-                  rounded-full border flex justify-center items-center px-3 py-1 
-                  transition-all duration-200 ease-in-out cursor-pointer
-                  focus:outline-none focus:ring-2 focus:ring-[#6390F1] focus:ring-opacity-50
-                `}
+              rounded-full border flex justify-center items-center px-3 py-1 
+              transition-all duration-200 ease-in-out cursor-pointer
+              focus:outline-none focus:ring-2 focus:ring-[#6390F1] focus:ring-opacity-50
+            `}
                 onClick={() => handleSkillSelection(skill)}
                 aria-label={`${isSkillSelected ? 'Deselect' : 'Select'} ${skill.label || skill.name} skill`}
               >
@@ -113,9 +117,9 @@ export const SkillsCard = ({
             <button
               type="button"
               onClick={() => setShowAll(true)}
-              className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
-                       hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
-                       focus:ring-[#6390F1] focus:ring-opacity-50"
+              className="bg-[var(--bg-card)] px-4 py-1 rounded-full text-xs glassy-text-primary border border-[var(--border-color)] 
+                     hover:bg-[var(--bg-button-hover)] transition-colors duration-200 focus:outline-none focus:ring-2 
+                     focus:ring-[#6390F1] focus:ring-opacity-50"
               aria-label={`Show ${remainingCount} more skills`}
             >
               +{remainingCount}
@@ -126,9 +130,9 @@ export const SkillsCard = ({
             <button
               type="button"
               onClick={() => setShowAll(false)}
-              className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
-                       hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
-                       focus:ring-[#6390F1] focus:ring-opacity-50"
+              className="bg-[var(--bg-card)] px-4 py-1 rounded-full text-xs glassy-text-primary border border-[var(--border-color)] 
+                     hover:bg-[var(--bg-button-hover)] transition-colors duration-200 focus:outline-none focus:ring-2 
+                     focus:ring-[#6390F1] focus:ring-opacity-50"
               aria-label="Show less skills"
             >
               Show Less
@@ -137,6 +141,7 @@ export const SkillsCard = ({
         </div>
       )}
     </div>
+
   );
 };
 
@@ -185,17 +190,17 @@ export const SkillsCard2 = ({
   return (
     <div className="w-full">
       {title && (
-        <div className="tracking-wide text-[12px] font-medium text-[#00000080]/50 mb-2">
+        <div className="tracking-wide text-[12px] font-medium glassy-text-secondary mb-2">
           {title}
         </div>
       )}
 
       {suggestedSkills.length === 0 ? (
-        <div className="text-sm text-gray-500 py-2">
+        <div className="text-sm glassy-text-secondary py-2">
           No skills available
         </div>
       ) : (
-        <div className="flex justify-start items-center gap-2 flex-wrap">
+        <div className="flex flex-wrap justify-start items-center gap-2">
           {visibleSkills.map((skill, index) => {
             const isSkillSelected = checkIfSkillSelected(skill);
 
@@ -204,20 +209,18 @@ export const SkillsCard2 = ({
                 key={skill.value || `${skill.label}-${index}`}
                 type="button"
                 className={`
-                  ${isSkillSelected
-                    ? "bg-[#6390F1] text-white border-[#6390F1]"
-                    : "bg-[#FAFAFA] text-[#202226] border-[#E8E8E8] hover:bg-gray-100"
-                  } 
-                  rounded-full border flex justify-center items-center px-3 py-1 
-                  transition-all duration-200 ease-in-out cursor-pointer
-                  focus:outline-none focus:ring-2 focus:ring-[#6390F1] focus:ring-opacity-50
-                `}
+              rounded-full border flex justify-center items-center px-3 py-1 text-xs font-medium
+              transition-all duration-200 ease-in-out cursor-pointer
+              focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50
+              ${isSkillSelected
+                    ? "bg-blue-600 glassy-text-primary border-blue-600"
+                    : "bg-[var(--bg-card)] glassy-text-primary border-[var(--border-color)] hover:bg-[var(--bg-button-hover)]"
+                  }
+            `}
                 onClick={() => handleSkillSelection(skill)}
                 aria-label={`${isSkillSelected ? 'Deselect' : 'Select'} ${skill.label || skill.name} skill`}
               >
-                <span className="text-xs font-medium">
-                  {skill.label || skill.name}
-                </span>
+                {skill.label || skill.name}
               </button>
             );
           })}
@@ -226,9 +229,9 @@ export const SkillsCard2 = ({
             <button
               type="button"
               onClick={() => setShowAll(true)}
-              className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
-                       hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
-                       focus:ring-[#6390F1] focus:ring-opacity-50"
+              className="bg-[var(--bg-card)] glassy-text-primary border border-[var(--border-color)] rounded-full px-4 py-1 text-xs
+                     hover:bg-[var(--bg-button-hover)] transition-colors duration-200
+                     focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               aria-label={`Show ${remainingCount} more skills`}
             >
               +{remainingCount}
@@ -239,9 +242,9 @@ export const SkillsCard2 = ({
             <button
               type="button"
               onClick={() => setShowAll(false)}
-              className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
-                       hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
-                       focus:ring-[#6390F1] focus:ring-opacity-50"
+              className="bg-[var(--bg-card)] glassy-text-primary border border-[var(--border-color)] rounded-full px-4 py-1 text-xs
+                     hover:bg-[var(--bg-button-hover)] transition-colors duration-200
+                     focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               aria-label="Show less skills"
             >
               Show Less
@@ -250,5 +253,7 @@ export const SkillsCard2 = ({
         </div>
       )}
     </div>
+
+
   );
 };

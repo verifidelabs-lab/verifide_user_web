@@ -22,7 +22,7 @@ onPermission
     {showEye && (
       <button
         onClick={onView}
-        className="p-1 text-[#000000] hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 glassy-text-primary hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
         title="View"
       >
         <BsEye size={16} title="View" />

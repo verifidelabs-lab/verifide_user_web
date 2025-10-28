@@ -67,27 +67,27 @@ const CreateCompany = () => {
 
       {/* Options */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="border rounded-lg p-6 shadow-sm hover:shadow-md bg-white cursor-pointer text-center"
+        <div className="border rounded-lg p-6 shadow-sm hover:shadow-md glassy-card cursor-pointer text-center"
           onClick={() => setIsModalState({ isOpen: true, type: "Add Company" })}>
           <div className="text-4xl mb-3">🏢</div>
           <h2 className="font-semibold">Company</h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm glassy-text-secondary">
             Small, medium, and large businesses
           </p>
         </div>
 
-        <div className="border rounded-lg p-6 shadow-sm hover:shadow-md bg-white cursor-pointer text-center">
+        <div className="border rounded-lg p-6 shadow-sm hover:shadow-md glassy-card cursor-pointer text-center">
           <div className="text-4xl mb-3">📄</div>
           <h2 className="font-semibold">Showcase page</h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm glassy-text-secondary">
             Sub-pages associated with an existing page
           </p>
         </div>
 
-        <div className="border rounded-lg p-6 shadow-sm hover:shadow-md bg-white cursor-pointer text-center">
+        <div className="border rounded-lg p-6 shadow-sm hover:shadow-md glassy-card cursor-pointer text-center">
           <div className="text-4xl mb-3">🎓</div>
           <h2 className="font-semibold">Educational institution</h2>
-          <p className="text-sm text-gray-500">Schools and universities</p>
+          <p className="text-sm glassy-text-secondary">Schools and universities</p>
         </div>
       </div>
 
@@ -96,7 +96,7 @@ const CreateCompany = () => {
           <img src="/Img/createe.png" alt="create" />
         </div>
 
-        <div className="relative w-40 h-72 bg-white border rounded-lg shadow-lg overflow-hidden">
+        <div className="relative w-40 h-72 glassy-card border rounded-lg shadow-lg overflow-hidden">
 
           <div className="h-[400px]">
             <img src="https://static.licdn.com/aero-v1/sc/h/3v3wzhnr3kapuzwpk1zt6r1jt" alt="" />

@@ -118,16 +118,16 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
   };
 
   return (
-    <div className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? 'bg-blue-50' : 'bg-white'}`}>
+    <div className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? 'bg-blue-50' : 'glassy-card'}`}>
       <div className="flex items-start space-x-3">
         <div className={`p-2 rounded-full ${color}`}>
-          <Icon className="w-4 h-4 text-white" />
+          <Icon className="w-4 h-4 glassy-text-primary" />
         </div>
         <div className="flex-1">
           <h3 className="text-sm font-medium text-gray-900 mb-1">
             {notification.title}
           </h3>
-          <p className="text-xs text-gray-500 mb-2">
+          <p className="text-xs glassy-text-secondary mb-2">
             {notification.message}
           </p>
           <div className="flex items-center text-xs text-gray-400">
@@ -138,7 +138,7 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
       </div>
       <button
         onClick={handleActionClick}
-        className={`px-3 py-1 text-[#2563EB] bg-[#2563EB]/10 text-sm font-semibold rounded hover:opacity-80 ${notification.isRead ? 'opacity-50 cursor-default' : ''
+        className={`px-3 py-1 text-[#2563EB] glassy-text-primary/10 text-sm font-semibold rounded hover:opacity-80 ${notification.isRead ? 'opacity-50 cursor-default' : ''
           }`}
       >
         {notification.meta?.buttonText || 'View'}
@@ -165,7 +165,7 @@ const NotificationHeader = ({
   };
 
   return (
-    <div className="bg-white border-b border-gray-200 px-6 py-4">
+    <div className="glassy-card border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
           <form onSubmit={handleSearch} className="relative">
@@ -180,7 +180,7 @@ const NotificationHeader = ({
           </form>
           <button
             onClick={onMarkAllRead}
-            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-blue-600 glassy-text-primary text-sm rounded-md hover:bg-blue-700"
           >
             Mark All as Read
           </button>
@@ -196,7 +196,7 @@ const NotificationHeader = ({
           </button>
 
           {showFilters && (
-            <div className="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+            <div className="absolute right-0 mt-2 w-56 glassy-card rounded-md shadow-lg z-10 border border-gray-200">
               <div className="p-2">
                 <select
                   value={filterValue}
@@ -219,7 +219,7 @@ const NotificationHeader = ({
 
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold text-gray-900">All Notification</h1>
-        <span className="text-sm text-gray-500 flex"><CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread</span>
+        <span className="text-sm glassy-text-secondary flex"><CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread</span>
       </div>
     </div>
   );
@@ -328,7 +328,7 @@ const NotificationInterface = () => {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
           </div>
         ) : notifications.length === 0 ? (
-          <div className="flex flex-col items-center justify-center text-center p-8 text-gray-500 bg-white rounded-md shadow-sm border border-gray-200">
+          <div className="flex flex-col items-center justify-center text-center p-8 glassy-text-secondary glassy-card rounded-md shadow-sm border border-gray-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-12 w-12 text-gray-300 mb-4"
@@ -359,7 +359,7 @@ const NotificationInterface = () => {
         )}
 
         {!loading && notifyData?.total > size && (
-          <div className="flex justify-between items-center p-4 bg-white border-t border-gray-100">
+          <div className="flex justify-between items-center p-4 glassy-card border-t border-gray-100">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
@@ -367,7 +367,7 @@ const NotificationInterface = () => {
             >
               Previous
             </button>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm glassy-text-secondary">
               Page {page} of {Math.ceil(notifyData.total / size)}
             </span>
             <button

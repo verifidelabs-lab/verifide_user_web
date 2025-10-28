@@ -3,7 +3,7 @@ import React from 'react'
 const PageNotFound = () => {
     return (
         <div>
-            <section className="py-10 bg-white font-serif h-screen">
+            <section className="py-10 glassy-card font-serif h-screen">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col items-center ">
                         <div className="w-full max-w-md text-center">
@@ -19,7 +19,7 @@ const PageNotFound = () => {
 
                             <div className="mt-[-50px]">
                                 <h3 className="text-2xl font-semibold">Look like you're lost</h3>
-                                <p className="text-gray-500 my-4">
+                                <p className="glassy-text-secondary my-4">
                                     The page you are looking for is not available!
                                 </p>
                                

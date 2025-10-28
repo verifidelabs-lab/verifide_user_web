@@ -125,12 +125,12 @@ const AdminRoles = () => {
 
 
   return (
-    <div className="bg-[#F6FAFD] p-6 min-h-screen">
+    <div className="glassy-card p-6 min-h-screen">
       <div className="flex flex-col md:flex-row w-full mx-auto gap-6">
         {/* Left Section */}
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6">
           {/* Admin Roles Section */}
-          <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+          <div className="glassy-card p-6 rounded-2xl shadow-md border border-gray-200">
             <h2 className="text-xl font-bold text-gray-900 mb-2">Admin Roles</h2>
             <p className="text-gray-600 mb-6">
               {/* You can add only members who work in the company. */}
@@ -147,7 +147,7 @@ const AdminRoles = () => {
               <button
                 onClick={handleAssignUser}
                 disabled={!selectedUser}
-                className={`absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors
+                className={`absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 rounded-lg text-sm font-medium glassy-text-primary transition-colors
                   ${selectedUser ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
               >
                 Add Admin
@@ -155,12 +155,12 @@ const AdminRoles = () => {
 
               {/* Dropdown */}
               {showDropdown && (
-                <div className="absolute z-50 bg-white border border-gray-200 rounded-xl shadow-lg w-full mt-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <div className="absolute z-50 glassy-card border border-gray-200 rounded-xl shadow-lg w-full mt-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                   {loadingSearch && (
-                    <div className="p-3 text-center text-gray-500">Loading...</div>
+                    <div className="p-3 text-center glassy-text-secondary">Loading...</div>
                   )}
                   {!loadingSearch && searchedUsers.length === 0 && (
-                    <div className="p-3 text-center text-gray-500">No users found</div>
+                    <div className="p-3 text-center glassy-text-secondary">No users found</div>
                   )}
                   {!loadingSearch &&
                     searchedUsers.map((user) => (
@@ -178,7 +178,7 @@ const AdminRoles = () => {
                           <span className="text-gray-900 font-medium text-sm">
                             {user.first_name} {user.last_name}
                           </span>
-                          <span className="text-gray-500 text-xs">{user.email}</span>
+                          <span className="glassy-text-secondary text-xs">{user.email}</span>
                         </div>
                       </div>
                     ))}
@@ -194,7 +194,7 @@ const AdminRoles = () => {
                 assignedUsers.map((user) => (
                   <div
                     key={user._id}
-                    className="bg-white rounded-xl p-4 shadow-md border border-gray-200 flex justify-between items-center hover:shadow-lg transition-all duration-200"
+                    className="glassy-card rounded-xl p-4 shadow-md border border-gray-200 flex justify-between items-center hover:shadow-lg transition-all duration-200"
                   >
                     <div className="flex items-center gap-3" onClick={() => handleConnect(user)}>
                       <img
@@ -211,7 +211,7 @@ const AdminRoles = () => {
                     </div>
                     {!isAssignedUser && <button
                       onClick={() => handleRemoveUser(user._id)}
-                      className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm text-white font-medium transition"
+                      className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm glassy-text-primary font-medium transition"
                     >
                       Remove
                     </button>}

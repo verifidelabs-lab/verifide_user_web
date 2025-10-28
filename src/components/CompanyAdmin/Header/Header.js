@@ -93,17 +93,28 @@ const Header = ({
   const profileData = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
     ? adminProfileData
     : [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
-    ? companiesProfileData
-    : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-    ? instituteProfileData
-    : {};
+      ? companiesProfileData
+      : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+        ? instituteProfileData
+        : {};
   console.log("htis is the profiledata", profileData);
   return (
     <div
-      className="bg-white z-10 flex-shrink-0 h-16 border-b border-black border-opacity-10 "
+      className="mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16"
       ref={topRef}
     >
+
       <div className="flex-1 px-4 flex justify-between items-center h-full">
+        <div className="flex items-center justify-between p-4   relative">
+          <div className="flex items-center gap-3">
+            <img
+              src="/Frame 1000004906.png"
+              alt="logo"
+              className="h-8 transition-transform duration-300 hover:scale-105"
+              onClick={() => navigate(`/user/feed`)}
+            />
+          </div>
+        </div>
         <div className="flex items-center gap-4"></div>
         <div className="flex items-center gap-4">
           <button
@@ -126,11 +137,10 @@ const Header = ({
                       scrollToTop();
                     }
                   }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
-                    isActive
-                      ? "font-semibold text-[#000000E6] border-b-2 border-blue-600"
-                      : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                  } pb-1`}
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
+                    ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                    } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -166,15 +176,15 @@ const Header = ({
                     ? `${profileData?.display_name || ""} `.trim()
                     : getDefaultName(profileData?.role_ids?.[0])}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs glassy-text-secondary">
                   {profileData?.username ?? "N/A"}
                 </p>
               </div>
-              <FiChevronDown className="text-gray-500" />
+              <FiChevronDown className="glassy-text-secondary" />
             </button>
 
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg transition-all">
+              <div className="absolute right-0 mt-2 w-40 glassy-card border rounded shadow-lg transition-all">
                 <Link
                   to={"/company/profile"}
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -210,18 +220,17 @@ const Header = ({
       </div>
 
       {isMobileMenuOpen && (
-        <div className="px-4 pb-3 space-y-2 bg-white border-t border-gray-200 md:hidden">
+        <div className="px-4 pb-3 space-y-2 glassy-card border-t border-gray-200 md:hidden">
           {HeaderJson?.headerItems?.map((item, index) => {
             const isActive = location.pathname === item?.path;
             return (
               <Link
                 key={index}
                 to={item?.path}
-                className={`block px-3 py-2 text-[16px] transition duration-200 ${
-                  isActive
-                    ? "font-semibold text-[#000000] border-b-2 border-blue-600"
-                    : "font-medium text-[#000000]"
-                } hover:border-b-2 hover:border-blue-600 hover:text-blue-600`}
+                className={`block px-3 py-2 text-[16px] transition duration-200 ${isActive
+                  ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                  : "font-medium glassy-text-primary"
+                  } hover:border-b-2 hover:border-blue-600 hover:text-blue-600`}
               >
                 {item?.name}
               </Link>

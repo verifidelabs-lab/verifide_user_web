@@ -21,7 +21,7 @@ const PasswordInput = ({
           htmlFor={name}
           className="text-[16px] leading-[20px] text-[#00000080]/50 pb-2 font-medium"
         >
-          {label}
+          {label}x``
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
@@ -35,14 +35,14 @@ const PasswordInput = ({
           onChange={onChange}
           placeholder={placeholder}
           disabled={disabled}
-          className={`w-full h-[52px] rounded-[10px] border bg-white p-4 placeholder-[#000000] 
+          className={`w-full h-[52px] rounded-[10px] border glassy-card p-4 placeholder-[#000000] 
             ${error ? "border-red-500" : "border-[#0000001A]"} 
             focus:border-[#A1A1A1] focus:outline-none`}
         />
 
         <span
           onClick={() => setShowPassword((prev) => !prev)}
-          className="absolute inset-y-0 right-3 flex items-center text-gray-500 cursor-pointer"
+          className="absolute inset-y-0 right-3 flex items-center glassy-text-secondary cursor-pointer"
         >
           {showPassword ? <IoMdEyeOff size={20} /> : <IoMdEye size={20} />}
         </span>

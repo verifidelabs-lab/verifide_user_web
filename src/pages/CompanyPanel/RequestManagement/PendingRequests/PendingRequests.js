@@ -257,7 +257,7 @@ const PendingRequests = () => {
     return (
       <div className="grid grid-cols-1 gap-6">
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto">
+          <div className="bg-black p-6 rounded-lg shadow-lg max-w-xl mx-auto">
             <div className="flex flex-col items-center">
               <img
                 src={user?.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
@@ -299,13 +299,13 @@ const PendingRequests = () => {
                   />
                   <div>
                     <p className="font-medium">{assignedTo.first_name} {assignedTo.last_name}</p>
-                    <p className="text-sm text-gray-500">@{assignedTo.username}</p>
+                    <p className="text-sm glassy-text-secondary">@{assignedTo.username}</p>
                   </div>
                 </div>
               </div>
             )}
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-black p-6 rounded-lg shadow-lg">
             {model && (
               <h3 className="font-semibold text-xl text-gray-800 capitalize">
                 {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
@@ -367,7 +367,7 @@ const PendingRequests = () => {
           </div>
         </div>
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-black p-6 rounded-lg shadow-lg">
             <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
             {selectedRequest.attach_file && selectedRequest.attach_file.length >= 0 ? (
               <div className="space-y-4 mt-4">
@@ -392,7 +392,7 @@ const PendingRequests = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500">No attached files available.</p>
+              <p className="text-sm glassy-text-secondary">No attached files available.</p>
             )}
           </div>
         </div>
@@ -530,11 +530,11 @@ const PendingRequests = () => {
     }, [data?.data?.list, currentPage]);
 
     if (loading) {
-      return <p className="text-center text-gray-500">Loading...</p>;
+      return <p className="text-center glassy-text-secondary">Loading...</p>;
     }
 
     if (!cardRows.length) {
-      return <p className="text-center text-gray-500">No Data Found</p>;
+      return <p className="text-center glassy-text-secondary">No Data Found</p>;
     }
 
     return (
@@ -542,7 +542,7 @@ const PendingRequests = () => {
         {cardRows.map((card) => (
           <div
             key={card.id}
-            className="bg-white rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
+            className="bg-black rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
           >
             <div className="flex items-start justify-between">
               {/* Left: Avatar or Icon */}
@@ -630,7 +630,7 @@ const PendingRequests = () => {
         {/* Check for no data */}
         {loading ? (
           <div className="flex justify-center py-10">
-            <span className="text-gray-500">Loading...</span>
+            <span className="glassy-text-secondary">Loading...</span>
           </div>
         ) : data?.data?.list && data?.data?.list?.length <= 0 ? (
           <NoDataFound />

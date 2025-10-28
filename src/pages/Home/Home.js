@@ -307,10 +307,10 @@ const Home = () => {
         prevPosts.map((post) =>
           post._id === postId
             ? {
-                ...post,
-                like_count: newLikeCount,
-                isLiked: newLikedState,
-              }
+              ...post,
+              like_count: newLikeCount,
+              isLiked: newLikedState,
+            }
             : post
         )
       );
@@ -335,13 +335,13 @@ const Home = () => {
             prevPosts.map((post) =>
               post._id === postId
                 ? {
-                    ...post,
-                    like_count: response.data.likeCount || newLikeCount,
-                    isLiked:
-                      response.data.isLiked !== undefined
-                        ? response.data.isLiked
-                        : newLikedState,
-                  }
+                  ...post,
+                  like_count: response.data.likeCount || newLikeCount,
+                  isLiked:
+                    response.data.isLiked !== undefined
+                      ? response.data.isLiked
+                      : newLikedState,
+                }
                 : post
             )
           );
@@ -363,10 +363,10 @@ const Home = () => {
           prevPosts.map((post) =>
             post._id === postId
               ? {
-                  ...post,
-                  like_count: currentLikeCount,
-                  isLiked: wasLiked,
-                }
+                ...post,
+                like_count: currentLikeCount,
+                isLiked: wasLiked,
+              }
               : post
           )
         );
@@ -684,7 +684,7 @@ const Home = () => {
   const [commentLoadingStates, setCommentLoadingStates] = useState({});
 
   return (
-    <div className="  bg-[#F6FAFD] space-y-3 p-4">
+    <div className="  space-y-3 p-4">
       <div className="flex flex-col md:flex-row w-full mx-auto gap-4">
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
           <div className="flex justify-between items-center gap-2 mb-2 text-sm">
@@ -727,7 +727,7 @@ const Home = () => {
                     )}
                   <div
                     key={post._id}
-                    className="p-6 bg-white shadow-sm rounded-xl border border-gray-100"
+                    className="p-6 glassy-card shadow-sm rounded-xl border border-gray-100"
                     ref={
                       isFirst ? firstPostRef : isLast ? lastPostRef : undefined
                     }
@@ -739,8 +739,7 @@ const Home = () => {
                         onClick={() => {
                           if (post.userData?.user_path !== "Companies") {
                             navigate(
-                              `/user/profile/${
-                                post.userData?.first_name || post.userData?.name
+                              `/user/profile/${post.userData?.first_name || post.userData?.name
                               }/${post.userData?._id}`
                             );
                           } else if (post.userData?.user_path === "Companies") {
@@ -764,9 +763,8 @@ const Home = () => {
                               post?.userData?.profile_picture_url ||
                               "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
                             }
-                            alt={`${
-                              post?.userData?.first_name || post?.userData?.name
-                            } ${post?.userData?.last_name || ""}`}
+                            alt={`${post?.userData?.first_name || post?.userData?.name
+                              } ${post?.userData?.last_name || ""}`}
                             className="object-cover rounded-full w-12 h-12 border"
                             onError={(e) => {
                               const fallback =
@@ -778,26 +776,26 @@ const Home = () => {
                         ) : (
                           <img
                             src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
-                            alt={`${
-                              post?.userData?.first_name || post?.userData?.name
-                            } ${post?.userData?.last_name || ""}`}
+                            alt={`${post?.userData?.first_name || post?.userData?.name
+                              } ${post?.userData?.last_name || ""}`}
                             className="object-cover rounded-full w-12 h-12 border"
                             loading="lazy"
                           />
                         )}
 
                         <div className="text-left">
-                          <h3 className="md:text-lg text-md font-semibold text-[#000000E6] capitalize hover:text-gray-700">
+                          <h3 className="md:text-lg text-md font-semibold glassy-text-primary capitalize hover:glassy-text-secondary">
                             {post.userData?.first_name || post?.userData?.name}{" "}
                             {post.userData?.last_name}
                           </h3>
-                          <p className="md:text-sm text-xs text-gray-600">
+                          <p className="md:text-sm text-xs glassy-text-secondary">
                             {post.userData?.headline ||
                               (post.userData?.user_path === "Users"
                                 ? "user"
                                 : post?.userData?.user_path)}
                           </p>
                         </div>
+
                       </button>
 
                       <div className="flex items-center">
@@ -832,23 +830,23 @@ const Home = () => {
                           {showOptionsDropdown === post._id && (
                             <div
                               role="menu"
-                              className="absolute right-0 mt-3 w-40 bg-white rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
+                              className="absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
                             >
                               <button
                                 onClick={() => handleCopyLink(post)}
-                                className="flex items-center gap-2 px-4 py-2 text-sm text-[#000000E6] hover:bg-gray-50 w-full text-left border-b border-gray-200"
+                                className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left border-b border-gray-200"
                                 role="menuitem"
                               >
                                 <IoCopyOutline size={18} /> Copy link
                               </button>
 
                               {post?.post_type === "certificates" ||
-                              post?.post_type === "jobs" ? (
+                                post?.post_type === "jobs" ? (
                                 <></>
                               ) : (
                                 <button
                                   onClick={() => handleReportPost(post._id)}
-                                  className="flex items-center gap-2 px-4 py-2 text-sm text-[#000000E6] hover:bg-gray-50 w-full text-left"
+                                  className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left"
                                   role="menuitem"
                                 >
                                   <BsExclamationCircle size={18} /> Report
@@ -870,29 +868,29 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                    {post?.title ? (
-                      <p className="mb-3 leading-relaxed text-[#000000] md:text-base font-normal text-sm">
+                    {post?.title && (
+                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm">
                         {isExpanded ? post?.title : post?.title}
                       </p>
-                    ) : null}
-                    {post?.content ? (
-                      <p className="mb-3 leading-relaxed text-[#000000] md:text-base font-normal text-sm">
-                        {isExpanded
-                          ? post?.content
-                          : post?.content?.slice(0, 200)}
+                    )}
+
+                    {post?.content && (
+                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm">
+                        {isExpanded ? post?.content : post?.content?.slice(0, 200)}
                         {post?.content?.length > 200 && (
                           <>
                             {!isExpanded && "..."}
                             <button
                               onClick={() => handleSeeMore(post?._id)}
-                              className="ml-2 md:text-sm text-xs text-blue-600 hover:underline"
+                              className="ml-2 md:text-sm text-xs glassy-text-primary hover:underline"
                             >
                               {isExpanded ? "See less" : "See more"}
                             </button>
                           </>
                         )}
                       </p>
-                    ) : null}
+                    )}
+
 
                     {post?.post_type === "link" && post?.link && (
                       <div className="mx-auto w-full">
@@ -905,13 +903,15 @@ const Home = () => {
                         {post.tags.map((tag, i) => (
                           <span
                             key={i}
-                            className="md:text-sm text-sm font-semibold text-[#6B6B6B] capitalize"
+                            className="md:text-sm text-sm font-semibold glassy-text-secondary capitalize"
                           >
                             #{tag}
                           </span>
                         ))}
                       </div>
                     )}
+
+
 
                     <div className="space-y-3">
                       {post?.post_type === "jobs" && post.job_id && (
@@ -1016,11 +1016,12 @@ const Home = () => {
               {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className="animate-pulse bg-gray-100 p-6 rounded-xl h-36"
+                  className="animate-pulse p-6 rounded-xl h-36 bg-[var(--bg-card)]"
                 />
               ))}
             </div>
           )}
+
         </div>
 
         <div className="xl:w-[25%] lg:w-[30%] md:w-[40%] md:block hidden mt-1">

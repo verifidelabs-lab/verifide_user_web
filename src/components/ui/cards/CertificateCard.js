@@ -51,13 +51,12 @@ const CertificateCard = ({
     // console.log(record)
 
     return (
-        <div className="max-w-full w-full bg-white rounded-lg shadow-md border p-4 flex flex-col items-center">
+        <div className="glassy-card max-w-full w-full rounded-lg shadow-md border p-4 flex flex-col items-center transition-all duration-300 hover:shadow-lg">
 
-            {/* 👉 Instead of image/pdf, show LinkedInCertificate if Verifide & verified */}
-            <div className="w-full rounded-lg overflow-hidden bg-gray-50">
+            {/* 👉 Certificate Preview */}
+            <div className="w-full rounded-lg overflow-hidden ">
                 {(record?.issuing_organization === "Verifide" || issueBy === "Verifide") && record?.is_verified ? (
-                    <div className='md:max-w-full md:min-h-80 min-h-80 max-h-80 overflow-hidden overflow-y-auto custom-scrollbar'>
-
+                    <div className="md:max-w-full md:min-h-80 min-h-80 max-h-80 overflow-hidden overflow-y-auto custom-scrollbar">
                         <LinkedInCertificate
                             certificateName={certificateName}
                             issueBy={issueBy}
@@ -86,42 +85,42 @@ const CertificateCard = ({
                 )}
             </div>
 
-            <div className="w-full mt-3">
+            {/* 👉 Certificate Info */}
+            <div className="w-full mt-3 flex flex-col space-y-2">
                 <div className="flex justify-between items-start">
-                    <h2 className="md:text-base text-sm font-semibold text-[#000000]">{certificateName ? certificateName.split(' ').slice(0, 5).join(' ') : ""}</h2>
-                    <span className="text-sm text-gray-500">{date}</span>
+                    <h2 className="md:text-base text-sm font-semibold glassy-text-primary">
+                        {certificateName ? certificateName.split(' ').slice(0, 5).join(' ') : ""}
+                    </h2>
+                    <span className="text-sm glassy-text-secondary">{date}</span>
                 </div>
 
                 {issueBy && (
-                    <p className="text-sm text-gray-700">
-                        <span className="font-medium">Issue By :</span> {issueBy}
+                    <p className="text-sm glassy-text-secondary">
+                        <span className="font-medium">Issued By:</span> {issueBy}
                     </p>
                 )}
 
-                <div className="space-y-2">
-                    {companyName && (
-                        <div className="flex justify-start gap-2 items-center  ">
-                            <p className="text-sm font-semibold text-gray-900">Company</p>
-                            <p className="text-xs text-gray-500 font-medium">{companyName}</p>
-                        </div>
-                    )}
+                {companyName && (
+                    <div className="flex justify-start gap-2 items-center">
+                        <p className="text-sm font-semibold glassy-text-primary">Company:</p>
+                        <p className="text-xs glassy-text-secondary font-medium">{companyName}</p>
+                    </div>
+                )}
 
-                    {instituteName && (
-                        <div className="flex justify-start gap-2 items-center ">
-                            <p className=" text-sm font-semibold text-gray-900">Institute</p>
-                            <p className="text-xs text-gray-500 font-medium">{instituteName}</p>
-                        </div>
-                    )}
-                </div>
-
+                {instituteName && (
+                    <div className="flex justify-start gap-2 items-center">
+                        <p className="text-sm font-semibold glassy-text-primary">Institute:</p>
+                        <p className="text-xs glassy-text-secondary font-medium">{instituteName}</p>
+                    </div>
+                )}
 
                 {description && (
                     <div className="text-xs mt-2 min-h-10">
                         <p
                             ref={textRef}
-                            className={`text-gray-700 transition-all ${showFullText ? "line-clamp-none" : "line-clamp-1"}`}
+                            className={`glassy-text-secondary transition-all ${showFullText ? "line-clamp-none" : "line-clamp-1"}`}
                         >
-                            <span className="font-medium">Disc Optional :</span> {description}
+                            <span className="font-medium">Description:</span> {description}
                         </p>
                         {description.split(" ").length > 10 && (
                             <button
@@ -133,10 +132,10 @@ const CertificateCard = ({
                         )}
                     </div>
                 )}
-
+                {/* 👉 Copy Credential ID */}
                 {certificateUrlOrNumber && (
                     <button
-                        className="mt-3 w-full md:text-sm text-xs flex justify-between place-items-center border border-gray-300 rounded-lg py-2  px-4 hover:bg-gray-50 transition"
+                        className="mt-3 w-full md:text-sm text-xs flex justify-between items-center border border-gray-300 rounded-lg py-2 px-4  transition-all duration-300 ease-in-out glassy-card"
                         onClick={() => {
                             if (navigator.clipboard && window.isSecureContext) {
                                 navigator.clipboard.writeText(certificateUrlOrNumber)
@@ -145,30 +144,29 @@ const CertificateCard = ({
                             }
                         }}
                     >
-                        {certificateUrlOrNumber ? certificateUrlOrNumber.split('-').slice(0, 2) : ""}
-                        <BiCopy />
+                        <span className="truncate glassy-text-secondary hover:glassy-text-primary">
+                            {certificateUrlOrNumber ? certificateUrlOrNumber.split('-').slice(0, 2).join('-') : ""}
+                        </span>
+                        <BiCopy className="ml-2" />
                     </button>
                 )}
 
+
+                {/* 👉 Action Buttons: Edit / Delete / Share */}
                 {isAction && (
                     <div className="h-12 overflow-hidden">
                         {!['requested', 'approved'].includes(record?.status) && (
                             <>
                                 {!record?.is_verified ? (
                                     <div className="flex justify-end items-center gap-2 py-2">
+
                                         {/* Edit Button */}
                                         <button
                                             onClick={() => onEdit(type, record)}
                                             disabled={isDeleting}
-                                            className={`flex items-center gap-1 ${isDeleting
-                                                ? 'text-blue-400 cursor-not-allowed'
-                                                : 'text-blue-600 hover:text-blue-800 hover:scale-105'
-                                                } transition-all duration-200`}
+                                            className={`flex items-center gap-1 transition-all duration-200 ${isDeleting ? 'text-blue-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800 hover:scale-105'}`}
                                         >
-                                            <span
-                                                className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'bg-blue-100' : 'hover:bg-blue-100'
-                                                    }`}
-                                            >
+                                            <span className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'bg-blue-100' : 'hover:bg-blue-100'}`}>
                                                 <FaRegEdit />
                                             </span>
                                             Edit
@@ -178,31 +176,23 @@ const CertificateCard = ({
                                         <button
                                             onClick={() => onDelete(type, record._id)}
                                             disabled={isDeleting}
-                                            className={`flex items-center gap-1 ${isDeleting
-                                                ? 'text-red-400 cursor-not-allowed'
-                                                : 'text-red-600 hover:text-red-800 hover:scale-105'
-                                                } ml-2`}
+                                            className={`flex items-center gap-1 ml-2 transition-all duration-200 ${isDeleting ? 'text-red-400 cursor-not-allowed' : 'text-red-600 hover:text-red-800 hover:scale-105'}`}
                                         >
-                                            <span
-                                                className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'bg-red-100' : 'hover:bg-red-100'
-                                                    }`}
-                                            >
+                                            <span className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'bg-red-100' : 'hover:bg-red-100'}`}>
                                                 <RiDeleteBin6Line />
                                             </span>
                                             {isDeleting ? 'Deleting...' : 'Delete'}
                                         </button>
+
                                     </div>
                                 ) : (
                                     <div className='pt-2 flex justify-end'>
-                                        {/* <Button variant='outline' size='sm'></Button> */}
                                         <span
-                                            className="inline-block text-blue-700 font-semibold px-3 py-1 rounded-md border border-transparent 
-             hover:border-blue-500 hover:bg-blue-50 hover:text-blue-800 cursor-pointer 
-             transition-all duration-300 ease-in-out  hover:shadow-md"
-                                            onClick={() => sharePost(record)}>
+                                            className="inline-block text-blue-700 font-semibold px-3 py-1 rounded-md border border-transparent hover:border-blue-500 hover:bg-blue-50 hover:text-blue-800 cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md"
+                                            onClick={() => sharePost(record)}
+                                        >
                                             ✨ Share your achievement
                                         </span>
-
                                     </div>
                                 )}
                             </>
@@ -212,6 +202,7 @@ const CertificateCard = ({
 
             </div>
         </div>
+
     )
 }
 

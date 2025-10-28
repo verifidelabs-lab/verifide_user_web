@@ -244,36 +244,44 @@ const Connections = () => {
 
   return (
     <div className="w-full mx-auto p-6 min-h-screen">
+      {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+        {/* Search Bar */}
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
           <form className="relative w-full sm:w-80">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-5 h-5" />
             <input
               type="text"
               placeholder="Search connections or followings..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full shadow-sm"
+              className="pl-10 pr-10 py-2 rounded-full glassy-input-notification text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full shadow-sm"
             />
             {searchTerm && (
               <button
                 type="button"
                 onClick={() => setSearchTerm("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary hover:opacity-80 transition-all"
               >
                 <IoClose size={18} />
               </button>
             )}
           </form>
         </div>
-        <div className="flex bg-white rounded-xl p-1 shadow-sm border border-gray-200 md:w-fit w-full">
+
+        {/* Tabs */}
+        <div className="flex glassy-card rounded-xl p-1 shadow-sm border border-[var(--border-color)] md:w-fit w-full">
           {[
             {
               key: "connection",
               label: "Connections",
               count: filteredConnections.length,
             },
-            { key: "following", label: "Following", count: filteredFollowing.length },
+            {
+              key: "following",
+              label: "Following",
+              count: filteredFollowing.length,
+            },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -281,17 +289,18 @@ const Connections = () => {
                 setActiveTab(tab.key);
                 setSearchParams({ tab: tab.key });
               }}
-              className={`
-        relative px-6 py-2.5 rounded-lg w-full flex items-center gap-2 text-sm font-medium transition-all duration-300
-        ${activeTab === tab.key
-                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-sm"
-                  : "text-gray-600 hover:bg-gray-100"}`}>
+              className={`relative px-6 py-2.5 rounded-lg w-full flex items-center gap-2 text-sm font-medium transition-all duration-300
+            ${activeTab === tab.key
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 glassy-text-primary shadow-md"
+                  : "glassy-text-secondary hover:bg-[var(--bg-button-hover)]"}`}
+            >
               {tab.label}
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full transition-all duration-300
-                  ${activeTab === tab.key
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "bg-gray-200 text-gray-700"}`}>
+              ${activeTab === tab.key
+                    ? "glassy-card text-blue-500 shadow-sm"
+                    : "bg-[var(--bg-button)] glassy-text-secondary"}`}
+              >
                 {tab.count}
               </span>
             </button>
@@ -299,6 +308,7 @@ const Connections = () => {
         </div>
       </div>
 
+      {/* Connections / Following Grid */}
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
         {activeTab === "connection" ? (
           filteredConnections.length > 0 ? (
@@ -313,7 +323,9 @@ const Connections = () => {
               />
             ))
           ) : (
-            <div className="col-span-full text-center py-16 text-gray-500">No connections found</div>
+            <div className="col-span-full text-center py-16 glassy-text-secondary">
+              No connections found
+            </div>
           )
         ) : filteredFollowing.length > 0 ? (
           filteredFollowing.map((u) => (
@@ -325,18 +337,17 @@ const Connections = () => {
               handleUserClick={handleUserClick}
               getEntityIcon={getEntityIcon}
               DEFAULT_AVATAR={DEFAULT_AVATAR}
-
             />
           ))
         ) : (
-          <div className="col-span-full text-center py-24 text-gray-400">
+          <div className="col-span-full text-center py-24 glassy-text-secondary">
             <p className="text-3xl mb-4">👀</p>
             <p className="text-lg">No following found.</p>
           </div>
         )}
       </div>
-
     </div>
+
   );
 };
 

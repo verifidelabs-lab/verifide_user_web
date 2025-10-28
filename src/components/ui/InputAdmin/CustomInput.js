@@ -30,34 +30,29 @@ const CustomInput = (({
 
     const labelClasses = classNames(
         {
-            'text-[16px] text-[#121212] font-[500] mb-2': !isCheckboxOrRadio,
-            'ml-2 text-sm text-gray-700': isCheckboxOrRadio,
+            'glassy-text-primary font-medium mb-2': !isCheckboxOrRadio,
+            'ml-2 text-sm glassy-text-secondary': isCheckboxOrRadio,
         },
         labelClass
     );
 
     const inputClasses = classNames(
         {
-            'h-[50px] opacity-100 rounded-[10px] border border-[#0000001A]/10 bg-[#FFFFFF] p-2':
-                !isCheckboxOrRadio && !isPassword,
-            'h-[50px] opacity-100 rounded-[10px] border border-[#0000001A]/10 bg-[#FFFFFF] p-4 pr-10':
-                isPassword,
-            'border-gray-300 placeholder-[#6B6B6B]': type !== 'textarea' && !isCheckboxOrRadio,
-            'h-4 w-4 text-primary-600 focus:ring-primary-500 border-[#0000001A]/10 bg-[#FFFFFF] rounded':
+            'glassy-input pr-10': !isCheckboxOrRadio && isPassword,
+            'glassy-input': !isCheckboxOrRadio && !isPassword,
+            'h-4 w-4 rounded bg-[var(--bg-card)] border border-[var(--border-color)] text-[var(--text-primary)] focus:ring-1 focus:ring-[var(--text-primary)]':
                 isCheckboxOrRadio,
-            'border-gray-300': type === 'textarea',
+            'min-h-[100px] py-2': isTextarea,
+            'w-full': fullWidth && !isCheckboxOrRadio,
             'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500':
                 error,
-            'px-3 py-2': !isTextarea && !isCheckboxOrRadio,
-            'px-3 py-2 min-h-[100px]': isTextarea,
-            'w-full': fullWidth && !isCheckboxOrRadio,
         },
         inputClass,
         className
     );
 
     const helperTextClasses = classNames('mt-1 text-sm', {
-        'text-gray-500': !error,
+        'glassy-text-secondary': !error,
         'text-red-600': error,
     });
 
@@ -95,6 +90,7 @@ const CustomInput = (({
 
         return (
             <input
+                ref={ref}
                 type={type}
                 className={inputClasses}
                 placeholder={placeholder}

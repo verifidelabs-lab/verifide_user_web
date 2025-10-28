@@ -350,7 +350,7 @@ const Userpost = () => {
           <meta property="og:description" content={ogData.description} />
           <meta property="og:type" content={ogData.type} />
         </Helmet>
-        <div className="max-w-2xl mx-auto p-4 bg-white min-h-screen flex items-center justify-center">
+        <div className="max-w-2xl mx-auto p-4 glassy-card min-h-screen flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       </>
@@ -385,7 +385,7 @@ const Userpost = () => {
           <meta property="og:type" content="website" />
         </Helmet>
         <div className="flex justify-center items-center h-screen">
-          <div className="text-gray-500">Post not found</div>
+          <div className="glassy-text-secondary">Post not found</div>
         </div>
       </>
     );
@@ -455,7 +455,7 @@ const Userpost = () => {
       </Helmet>
 
       {/* Rest of the component's JSX */}
-      {/* <nav className="bg-white shadow-md py-3 px-6 flex justify-between items-center z-[9999]">
+      {/* <nav className="glassy-card shadow-md py-3 px-6 flex justify-between items-center z-[9999]">
         <div className="flex items-center">
           <div className="flex items-center gap-3">
             <img
@@ -520,7 +520,7 @@ const Userpost = () => {
               <h3 className="font-semibold text-gray-900">
                 {postData?.userData?.name}
               </h3>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs glassy-text-secondary">
                 {formatDate(postData?.updatedAt)}
               </p>
             </div>
@@ -541,10 +541,10 @@ const Userpost = () => {
         {postData?.post_type === 'jobs' && postData?.job_id && (
           <div className="mb-6 border border-gray-200 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 overflow-hidden">
             {/* Job Header */}
-            <div className="bg-white p-6 border-b border-gray-100">
+            <div className="glassy-card p-6 border-b border-gray-100">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 bg-white rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 glassy-card rounded-lg shadow-md flex items-center justify-center overflow-hidden">
                     {postData.job_id.company?.logo_url ? (
                       <img
                         src={postData.job_id.company.logo_url}
@@ -566,7 +566,7 @@ const Userpost = () => {
                     <p className="text-lg text-gray-700 font-semibold">
                       {postData.job_id.company?.name || 'Company Name'}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm glassy-text-secondary">
                       {postData.job_id.industry?.name || 'Industry'}
                     </p>
                   </div>
@@ -576,7 +576,7 @@ const Userpost = () => {
                     {/* <FaBriefcase className="mr-1" /> */}
                     {(postData.job_id.job_type)}
                   </div>
-                  <p className="text-xs text-gray-500 uppercase tracking-wide">
+                  <p className="text-xs glassy-text-secondary uppercase tracking-wide">
                     {postData.job_id.job_location || 'Remote'}
                   </p>
                 </div>
@@ -621,7 +621,7 @@ const Userpost = () => {
 
               {/* Apply Button */}
               <div className="flex justify-between items-center">
-                <div className="text-xs text-gray-500">
+                <div className="text-xs glassy-text-secondary">
                   Posted {formatDate(postData.updatedAt)}
                 </div>
 
@@ -632,7 +632,7 @@ const Userpost = () => {
             {postData.job_id.job_description && (
               <div className="p-6">
                 <h4 className="text-lg font-semibold text-gray-900 mb-3">Job Description</h4>
-                <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-white p-4 rounded-lg border border-gray-100">
+                <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                   {postData.job_id.job_description}
                 </div>
               </div>
@@ -667,7 +667,7 @@ const Userpost = () => {
             <div className="flex items-center gap-2 mb-3 text-blue-600">
               <FaChartBar />
               <span className="font-medium">Poll</span>
-              <span className="text-xs text-gray-500 ml-auto">
+              <span className="text-xs glassy-text-secondary ml-auto">
                 {postData.poll.total_votes} votes • {postData.poll.voting_length} days left
               </span>
             </div>
@@ -678,7 +678,7 @@ const Userpost = () => {
                 <div key={index} className="mb-3 last:mb-0">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm font-medium">{option.text}</span>
-                    <span className="text-xs text-gray-500">{percentage}%</span>
+                    <span className="text-xs glassy-text-secondary">{percentage}%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2.5">
                     <div
@@ -686,7 +686,7 @@ const Userpost = () => {
                       style={{ width: `${percentage}%` }}
                     ></div>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="text-xs glassy-text-secondary mt-1">
                     {option.vote_count} vote{option.vote_count !== 1 ? 's' : ''}
                   </div>
                 </div>
@@ -696,7 +696,7 @@ const Userpost = () => {
             {!postData.isVoted && (
               <button
                 onClick={triggerPopup}
-                className="mt-3 w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                className="mt-3 w-full py-2 bg-blue-600 glassy-text-primary rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
               >
                 Vote in Poll
               </button>
@@ -738,7 +738,7 @@ const Userpost = () => {
         )}
 
         {/* Post Stats */}
-        <div className="flex justify-between text-sm text-gray-500 mb-4 border-gray-200 pb-3">
+        <div className="flex justify-between text-sm glassy-text-secondary mb-4 border-gray-200 pb-3">
           <div className="flex space-x-4">
             <span>{postData?.like_count} likes</span>
             <span>{postData?.comments} comments</span>
@@ -774,15 +774,15 @@ const Userpost = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-4">No comments yet. Be the first to comment!</p>
+            <p className="glassy-text-secondary text-center py-4">No comments yet. Be the first to comment!</p>
           )}
         </div>
       </div>
 
       {/* Login Prompt Popup */}
       {showPopup && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white w-full max-w-md p-6 rounded-xl shadow-xl flex flex-col items-center space-y-5">
+        <div className="fixed inset-0 glassy-card/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="glassy-card w-full max-w-md p-6 rounded-xl shadow-xl flex flex-col items-center space-y-5">
             <img
               src="/headerlogo-D3k-kYIk 2.png"
               alt="App Logo"
@@ -797,7 +797,7 @@ const Userpost = () => {
             <div className="flex flex-col sm:flex-row gap-3 w-full mt-2">
               <button
                 onClick={() => navigate("/login")}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg font-medium transition duration-300"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 glassy-text-primary px-4 py-2.5 rounded-lg font-medium transition duration-300"
               >
                 Log in
               </button>

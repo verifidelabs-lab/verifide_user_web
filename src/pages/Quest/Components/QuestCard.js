@@ -32,7 +32,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
 
   return (
     <>
-      <div className="relative bg-white rounded-xl  border-[#D3D3D3] overflow-hidden  transition-all duration-300 transform hover:-translate-y-1 border ">
+      <div className="relative glassy-card rounded-xl  border-[#D3D3D3] overflow-hidden  transition-all duration-300 transform hover:-translate-y-1 border ">
         <div className="h-48 relative overflow-hidden group cursor-pointer">
           {quest?.video ? (
             <video
@@ -62,7 +62,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
           <StatusBadge status={status} />
           <EngagementBadge count={quest.engagement_count} />
           {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/50 to-transparent"></div> */}
-          <div className="absolute bottom-3 left-3 flex items-center text-white">
+          <div className="absolute bottom-3 left-3 flex items-center glassy-text-primary">
             {quest?.user_id?.profile_picture_url ? (
               <>
                 <img
@@ -101,7 +101,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
             {quest.description}
           </p>
 
-          <div className="flex items-center text-xs text-gray-500 mb-3">
+          <div className="flex items-center text-xs glassy-text-secondary mb-3">
             <BiCalendar className="mr-1.5" />
             <span>
               {formatDateByMomentTimeZone(quest.startDate)} -{" "}
@@ -120,9 +120,9 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
                   <span>Community Poll ({quest.poll.total_votes} votes)</span>
                 </div>
                 {pollExpanded ? (
-                  <BiChevronRight className="transform rotate-90 transition-transform text-gray-500" />
+                  <BiChevronRight className="transform rotate-90 transition-transform glassy-text-secondary" />
                 ) : (
-                  <BiChevronRight className="transform -rotate-90 transition-transform text-gray-500" />
+                  <BiChevronRight className="transform -rotate-90 transition-transform glassy-text-secondary" />
                 )}
               </div>
 
@@ -164,14 +164,14 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
                             ></div>
                           </div>
                           <div className="flex justify-between items-center mt-1">
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs glassy-text-secondary">
                               {votedOption === optIdx ? (
                                 <span className="flex items-center text-green-600">
                                   <BiCheck className="mr-1" /> Voted
                                 </span>
                               ) : null}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs glassy-text-secondary">
                               {option.vote_count} vote
                               {option.vote_count !== 1 ? "s" : ""}
                             </span>
@@ -202,7 +202,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
             {accessMode === "6"|| IsCompany === "company"   && (
               <button
-                className="text-xs text-gray-500 hover:text-blue-600 transition-colors flex items-center"
+                className="text-xs glassy-text-secondary hover:text-blue-600 transition-colors flex items-center"
                 onClick={() => onViewEngagement(quest)}
               >
                 View details <BiChevronRight className="text-sm" />
@@ -222,7 +222,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
                             status === "Upcoming"
                               ? "bg-gray-400 cursor-not-allowed"
                               : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
-                          } text-white px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1`}
+                          } glassy-text-primary px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1`}
                           disabled={status === "Upcoming"}
                           onClick={() => onEngage(quest)}
                         >
@@ -264,7 +264,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
           </div>
         </div>
         {/* {status === "Ended" && (
-          <div className="absolute inset-0 z-40 bg-white/30 flex items-center justify-center pointer-events-none rounded-xl">
+          <div className="absolute inset-0 z-40 glassy-card/30 flex items-center justify-center pointer-events-none rounded-xl">
             <img
               src="/endpreview.png"
               alt="Ended"

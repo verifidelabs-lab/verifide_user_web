@@ -571,57 +571,60 @@ const Verification = ({ headline }) => {
 
   return (
     <>
-      <div className='p-4 bg-[#F6FAFD] space-y-3'>
-        <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
+      <div className='p-4   space-y-3'>
+       
+        <nav className="flex items-center gap-2 text-sm">
           <span className="text-gray-600">Home</span>
           <span className="text-gray-400">›</span>
-          <span className="font-semibold text-base text-[#2563EB]">All Category</span>
+          <span className="font-medium text-blue-600">All Category</span>
         </nav>
-
-        <div className='bg-[#FFFFFF] border border-[#00000033]/20 p-4 rounded-md'>
-          <TitleValue title={`Verification Center`} desc={`Manager your Learning Activates for: ${headline ? headline : ""}`} />
+        <div className='glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300'>
+          <TitleValue
+            title={`Verification Center`}
+            desc={`Manage your Learning Activities for: ${headline ? headline : ""}`}
+          />
           <div className='grid md:grid-cols-3 grid-cols-1 gap-3 mt-3'>
             <ProgressItem
               title={`${verificationDashboardData?.verification_percentage || "N/A"} %`}
               desc="Overall Verification"
-              icon={<BiCheckCircle className="text-[#000000]" />}
+              icon={<BiCheckCircle className="glassy-text-primary" />}
               progress={45}
               bg={`bg-[#BCCFFA57]/30`}
             />
             <ProgressItem
-              title={`${verificationDashboardData?.verification_rating || "0"} Star `}
+              title={`${verificationDashboardData?.verification_rating || "0"} Star`}
               desc="Average Rating"
-              icon={<FaRegStar className="text-[#000000]" />}
+              icon={<FaRegStar className="glassy-text-primary" />}
               progress={45}
               bg={`bg-[#FEA6131A]/10`}
             />
             <ProgressItem
-              title={`${verificationDashboardData?.verification_strength || "N/A"} `}
-              desc=" Verification Strength"
-              icon={<GiNetworkBars className="text-[#000000]" />}
+              title={`${verificationDashboardData?.verification_strength || "N/A"}`}
+              desc="Verification Strength"
+              icon={<GiNetworkBars className="glassy-text-primary" />}
               progress={45}
               bg={`bg-[#00BA001A]/30`}
             />
           </div>
         </div>
-        <div className='md:hidden block '>
-          <div className=" flex  justify-evenly gap-4 overflow-hidden overflow-x-scroll  w-full ">
+
+        <div className='md:hidden block'>
+          <div className="flex justify-evenly gap-4 overflow-hidden overflow-x-scroll w-full">
             {tabs.map((tab) => (
               <button
                 key={tab.label}
                 onClick={() => handleTabChange(tab.key)}
-                className={`relative   flex items-center gap-2 text-xs font-medium transition-colors ${activeTab === tab.key
-                  ? "text-[#000000E6] border-b border-blue-600"
-                  : "text-gray-500 hover:text-gray-700"
+                className={`relative flex items-center gap-2 text-xs font-medium transition-colors ${activeTab === tab.key
+                  ? "glassy-text-primary border-b border-blue-600"
+                  : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
               >
                 {tab.name}
                 {tab.count !== undefined && (
-                  <span className="w-5 h-5 flex items-center justify-center rounded-full border border-gray-300 text-xs">
+                  <span className="w-5 h-5 flex items-center justify-center rounded-full border border-[var(--border-color)] text-xs">
                     {tab.count}
                   </span>
                 )}
-
                 {activeTab === tab.label && (
                   <span className="absolute left-0 -bottom-[1px] w-full h-[2px] bg-blue-500 rounded"></span>
                 )}
@@ -629,24 +632,24 @@ const Verification = ({ headline }) => {
             ))}
           </div>
         </div>
-        <div className='py-2 md:py-4 bg-[#FFFFFF] border border-[#00000033]/20 p-4 rounded-md'>
+
+        <div className='py-2 md:py-4 glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300'>
           <div className='md:block hidden'>
-            <h2 className='text-[#000000] text-[22px] font-bold'>Verification Categories</h2>
-            <div className="flex justify-between md:w-fit bg-[#F5F5F4] rounded-[10px] p-2 w-full flex-wrap ">
+            <h2 className='glassy-text-primary text-[22px] font-bold'>Verification Categories</h2>
+            <div className="flex justify-between md:w-fit bg-[var(--bg-card)] rounded-[10px] p-2 w-full flex-wrap">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
                   className={`px-4 py-2 text-sm rounded-md transition-all ${activeTab === tab.key
-                    ? 'bg-white text-[#2563EB] border-b-2 border-[#2563EB] font-semibold shadow-sm'
-                    : 'text-[#00000099]/60 font-medium'
+                    ? 'glassy-card text-[#2563EB] border-b-2 border-[#2563EB] font-semibold shadow-sm'
+                    : 'glassy-text-secondary font-medium'
                     }`}
                   onClick={() => handleTabChange(tab.key)}
                 >
                   {tab.name}
                   {tab.count !== null && tab.count > 0 && (
                     <span
-                      className={`ml-1.5 ${activeTab === tab.key ? 'text-gray-500' : 'text-gray-400'
-                        }`}
+                      className={`ml-1.5 ${activeTab === tab.key ? 'glassy-text-secondary' : 'glassy-text-secondary/60'}`}
                     >
                       {tab.count}
                     </span>
@@ -655,10 +658,10 @@ const Verification = ({ headline }) => {
               ))}
             </div>
           </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
             {loading ? (
-              Array.from({ length: verificationData?.length || 6 }).map((_, index) =>
-                <SkeletonCard key={index} />)
+              Array.from({ length: verificationData?.length || 6 }).map((_, index) => <SkeletonCard key={index} />)
             ) : verificationData && verificationData.length > 0 ? (
               verificationData.map((item, index) => (
                 <CategoryCard
@@ -670,11 +673,12 @@ const Verification = ({ headline }) => {
                 />
               ))
             ) : (
-              <div className="col-span-full text-center text-gray-500">No Data Found</div>
+              <div className="col-span-full text-center glassy-text-secondary">No Data Found</div>
             )}
           </div>
         </div>
       </div>
+
 
       <Modal
         isOpen={modalState?.isOpen}
@@ -914,10 +918,10 @@ const Verification = ({ headline }) => {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-[#000000E6]">
+            <h3 className="text-lg font-semibold text-white">
               {currentQuestion?.question}
             </h3>
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm glassy-text-secondary italic">
               {currentQuestion?.question_type === 'multi_choice'
                 ? 'Select all that apply'
                 : 'Select one option'}

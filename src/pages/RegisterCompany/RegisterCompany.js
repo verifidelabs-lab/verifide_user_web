@@ -626,7 +626,7 @@ const RegisterCompany = () => {
   return (
     <div className="h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="bg-white overflow-hidden">
+        <div className="glassy-card overflow-hidden">
           <div className="px-6 py-5 border-b border-gray-200">
             <button
               onClick={handleBack}

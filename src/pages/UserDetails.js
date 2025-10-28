@@ -147,7 +147,7 @@ const UserDetails = () => {
   if (!userData)
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="text-gray-500 text-xl">No profile data found</div>
+        <div className="glassy-text-secondary text-xl">No profile data found</div>
       </div>
     );
 
@@ -195,7 +195,7 @@ const UserDetails = () => {
       </noscript>
 
       <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="glassy-card rounded-lg shadow overflow-hidden">
           <div className="h-48 bg-gradient-to-r from-blue-500 to-blue-700"></div>
 
           <div className="px-6 pb-6 relative">
@@ -221,14 +221,14 @@ const UserDetails = () => {
                   {personalInfo?.first_name} {personalInfo?.last_name}
                 </h1>
                 <p className="text-gray-700">{personalInfo?.headline}</p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="glassy-text-secondary text-sm mt-1">
                   {personalInfo?.address?.city?.name}{" "}
                   {personalInfo?.address?.state?.name}{" "}
                   {personalInfo?.address?.country?.name}
                   {/* <span className="text-blue-600 ml-1">Contact info</span> */}
                 </p>
 
-                <div className="flex flex-wrap items-center mt-3 text-sm text-gray-500">
+                <div className="flex flex-wrap items-center mt-3 text-sm glassy-text-secondary">
                   <span className="mr-4">
                     {personalInfo.connection_count} connections
                   </span>
@@ -240,7 +240,7 @@ const UserDetails = () => {
 
                 <div className="flex flex-wrap gap-2 mt-4">
                   {personalInfo?.frame_status !== "none" && (
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-1.5 px-4 rounded-full text-sm">
+                    <button className="bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-1.5 px-4 rounded-full text-sm">
                       {personalInfo?.frame_status === "none"
                         ? ""
                         : personalInfo?.frame_status}
@@ -258,14 +258,14 @@ const UserDetails = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* About Section */}
             {personalInfo.summary && (
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="glassy-card rounded-lg shadow p-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">About</h2>
                 <p className="text-gray-700">{personalInfo.summary}</p>
               </div>
             )}
 
             {/* Experience Section */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="glassy-card rounded-lg shadow p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
                 Experience
               </h2>
@@ -276,7 +276,7 @@ const UserDetails = () => {
                       <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6 text-gray-500"
+                          className="h-6 w-6 glassy-text-secondary"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -295,11 +295,11 @@ const UserDetails = () => {
                         {exp.profileName}
                       </h3>
                       <p className="text-gray-700">{exp.companyName}</p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="glassy-text-secondary text-sm">
                         {formatDate(exp.start_date)} -{" "}
                         {formatDate(exp.end_date)}
                       </p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="glassy-text-secondary text-sm">
                         {exp.industryName}
                       </p>
                       {exp.description && (
@@ -325,7 +325,7 @@ const UserDetails = () => {
             </div>
 
             {/* Education Section */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="glassy-card rounded-lg shadow p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
                 Education
               </h2>
@@ -336,7 +336,7 @@ const UserDetails = () => {
                       <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6 text-gray-500"
+                          className="h-6 w-6 glassy-text-secondary"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -369,7 +369,7 @@ const UserDetails = () => {
                       <p className="text-gray-700">
                         {edu.degree} - {edu.field_of_studies}
                       </p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="glassy-text-secondary text-sm">
                         {formatDate(edu.start_date)} -{" "}
                         {formatDate(edu.end_date)}
                       </p>
@@ -396,7 +396,7 @@ const UserDetails = () => {
             </div>
 
             {/* Projects Section */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="glassy-card rounded-lg shadow p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Projects</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {projects.map((project, index) => (
@@ -423,7 +423,7 @@ const UserDetails = () => {
                       <h3 className="font-semibold text-gray-900">
                         {project.name}
                       </h3>
-                      <p className="text-gray-500 text-sm">
+                      <p className="glassy-text-secondary text-sm">
                         {formatDate(project.start_date)} -{" "}
                         {formatDate(project.end_date)}
                       </p>
@@ -442,7 +442,7 @@ const UserDetails = () => {
                           <p className=" text-sm font-semibold text-gray-900">
                             Institute
                           </p>
-                          <p className="text-xs text-gray-500 font-medium">
+                          <p className="text-xs glassy-text-secondary font-medium">
                             {project.institution}
                           </p>
                         </div>
@@ -464,7 +464,7 @@ const UserDetails = () => {
             </div>
 
             {/* Certifications Section */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="glassy-card rounded-lg shadow p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
                 {" "}
                 Certifications
@@ -476,7 +476,7 @@ const UserDetails = () => {
                       <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6 text-gray-500"
+                          className="h-6 w-6 glassy-text-secondary"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -497,11 +497,11 @@ const UserDetails = () => {
                       <p className="text-gray-700">
                         {cert.issuing_organization}
                       </p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="glassy-text-secondary text-sm">
                         Issued {formatDate(cert.issue_date)}
                       </p>
                       {cert.credential_id && (
-                        <p className="text-gray-500 text-sm">
+                        <p className="glassy-text-secondary text-sm">
                           Credential ID {cert.credential_id}
                         </p>
                       )}

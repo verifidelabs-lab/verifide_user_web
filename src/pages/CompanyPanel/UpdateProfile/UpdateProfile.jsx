@@ -453,14 +453,14 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
 
     return (
       <div className="relative group">
-        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg bg-white relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg glassy-card relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
           {isImageUploading && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+            <div className="absolute inset-0 glassy-card/50 flex items-center justify-center z-10">
               <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
             </div>
           )}
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <FiCamera className="w-6 h-6 text-white" />
+          <div className="absolute inset-0 glassy-card/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <FiCamera className="w-6 h-6 glassy-text-primary" />
           </div>
           <img
             src={imageUrl || "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"}
@@ -486,7 +486,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
     if ([ROLES.SUPER_ADMIN, ROLES.ADMIN, ROLES.COMPANIES, ROLES.COMPANIES_ADMIN, ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
       return (
         <>
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold glassy-text-primary">
             {adminProfileData?.first_name || companiesProfileData?.name || instituteProfileData?.name || "N/A"} {adminProfileData?.last_name || ""}
           </h2>
           <p className="text-blue-100">{adminProfileData?.email || companiesProfileData?.email || instituteProfileData?.email || "N/A"}</p>
@@ -495,7 +495,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
     } else {
       // return (
       //   <>
-      //     <h2 className="text-2xl font-bold text-white">
+      //     <h2 className="text-2xl font-bold glassy-text-primary">
       //       {adminProfileData?.name || adminProfileData?.display_name || "N/A"}
       //     </h2>
       //     <p className="text-blue-100">{adminProfileData?.email ||  "N/A"}</p>
@@ -510,17 +510,17 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
       return (
         <>
           <div>
-            <p className="text-xs text-gray-500">Full Name</p>
+            <p className="text-xs glassy-text-secondary">Full Name</p>
             <p className="font-medium">
               {adminProfileData?.first_name || "N/A"} {adminProfileData?.last_name || ""}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Email</p>
+            <p className="text-xs glassy-text-secondary">Email</p>
             <p className="font-medium">{adminProfileData?.email || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Phone</p>
+            <p className="text-xs glassy-text-secondary">Phone</p>
             <p className="font-medium">
               +{adminProfileData?.country_code?.dial_code} {adminProfileData?.phone_number || "N/A"}
             </p>
@@ -531,25 +531,25 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
       return (
         <>
           <div>
-            <p className="text-xs text-gray-500">Company Name</p>
+            <p className="text-xs glassy-text-secondary">Company Name</p>
             <p className="font-medium">{adminProfileData?.name || companiesProfileData?.name || instituteProfileData?.name || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Display Name</p>
+            <p className="text-xs glassy-text-secondary">Display Name</p>
             <p className="font-medium">{adminProfileData?.display_name || companiesProfileData?.display_name || instituteProfileData?.display_name || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Email</p>
+            <p className="text-xs glassy-text-secondary">Email</p>
             <p className="font-medium">{adminProfileData?.email || companiesProfileData?.email || instituteProfileData?.email || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Phone</p>
+            <p className="text-xs glassy-text-secondary">Phone</p>
             <p className="font-medium">
               +{adminProfileData?.country_code?.dial_code || companiesProfileData?.country_code?.dial_code || instituteProfileData?.country_code?.dial_code} {adminProfileData?.phone_no || companiesProfileData?.phone_no || instituteProfileData?.phone_no || "N/A"}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Website</p>
+            <p className="text-xs glassy-text-secondary">Website</p>
             <p className="font-medium">{adminProfileData?.website_url || companiesProfileData?.website_url || instituteProfileData?.website_url || "N/A"}</p>
           </div>
         </>
@@ -558,25 +558,25 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
       return (
         <>
           <div>
-            <p className="text-xs text-gray-500">Institute Name</p>
+            <p className="text-xs glassy-text-secondary">Institute Name</p>
             <p className="font-medium">{instituteProfileData?.name || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Display Name</p>
+            <p className="text-xs glassy-text-secondary">Display Name</p>
             <p className="font-medium">{instituteProfileData?.display_name || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Email</p>
+            <p className="text-xs glassy-text-secondary">Email</p>
             <p className="font-medium">{instituteProfileData?.email || "N/A"}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Phone</p>
+            <p className="text-xs glassy-text-secondary">Phone</p>
             <p className="font-medium">
               +{instituteProfileData?.country_code?.dial_code} {instituteProfileData?.phone_no || "N/A"}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-500">Website</p>
+            <p className="text-xs glassy-text-secondary">Website</p>
             <p className="font-medium">{instituteProfileData?.website_url || "N/A"}</p>
           </div>
         </>
@@ -673,7 +673,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
           <h1 className="text-3xl font-bold text-gray-800 mb-2">{getDefaultName(userRole)} Profile</h1>
           <p className="text-gray-600">Manage your account information and security</p>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="glassy-card rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 relative">
             <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
             <div className="relative z-10 flex flex-col md:flex-row items-center">
@@ -681,7 +681,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
               <div className="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
                 {renderProfileHeader()}
                 {/* <div className="mt-2 flex justify-center md:justify-start">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white backdrop-blur-sm">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium glassy-card/20 glassy-text-primary backdrop-blur-sm">
                     <span className="w-2 h-2 bg-green-300 rounded-full mr-2"></span>
                     Active {getDefaultName(userRole)}
                   </span>
@@ -728,11 +728,11 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
                 </div>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-xs text-gray-500">Password</p>
+                    <p className="text-xs glassy-text-secondary">Password</p>
                     <p className="font-medium">•••••••••••</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Last Updated</p>
+                    <p className="text-xs glassy-text-secondary">Last Updated</p>
                     <p className="font-medium">
                       {adminProfileData?.updatedAt ? new Date(adminProfileData.updatedAt).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -742,7 +742,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Member Since</p>
+                    <p className="text-xs glassy-text-secondary">Member Since</p>
                     <p className="font-medium">
                       {adminProfileData?.createdAt ? new Date(adminProfileData.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -759,7 +759,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 onClick={handleProfileUpdate}
-                className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between p-4 glassy-card border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center">
                   <div className="p-2 bg-blue-100 rounded-full mr-3">
@@ -767,14 +767,14 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Edit Profile</p>
-                    <p className="text-sm text-gray-500">Update your personal information</p>
+                    <p className="text-sm glassy-text-secondary">Update your personal information</p>
                   </div>
                 </div>
                 <FiEdit2 className="text-gray-400" />
               </button>
               <button
                 onClick={handlePasswordUpdate}
-                className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between p-4 glassy-card border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center">
                   <div className="p-2 bg-purple-100 rounded-full mr-3">
@@ -782,7 +782,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">Change Password</p>
-                    <p className="text-sm text-gray-500">Update your security credentials</p>
+                    <p className="text-sm glassy-text-secondary">Update your security credentials</p>
                   </div>
                 </div>
                 <FiEdit2 className="text-gray-400" />
@@ -808,7 +808,7 @@ const UpdateProfile = ({ adminProfileData, companiesProfileData, instituteProfil
               <FiLock className="h-5 w-5 text-blue-600" />
             </div>
             <h3 className="text-lg font-medium text-gray-900">Update your password</h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm glassy-text-secondary">
               Ensure your account is using a long, random password to stay secure.
             </p>
           </div>

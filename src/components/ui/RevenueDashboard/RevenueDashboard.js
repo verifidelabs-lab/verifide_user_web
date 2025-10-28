@@ -36,7 +36,7 @@ const METRIC_ICONS = {
     bg: 'bg-blue-100'
   },
   default: {
-    icon: <FaChartLine className="text-gray-500 w-6 h-6" />,
+    icon: <FaChartLine className="glassy-text-secondary w-6 h-6" />,
     bg: 'bg-gray-100'
   }
 };
@@ -81,7 +81,7 @@ const RevenueDashboard = ({
 
     return (
       <div className="rounded-md shadow-md border border-gray-200">
-        <p className="font-medium text-[#000000E6]">{label}</p>
+        <p className="font-medium glassy-text-primary">{label}</p>
         {payload.map((entry, index) => (
           <div key={`tooltip-${index}`} className="flex items-center justify-between mt-1">
             <div className="flex items-center">
@@ -120,7 +120,7 @@ const RevenueDashboard = ({
 );
 
   return (
-    <div className={`p-4 bg-white/80 rounded-lg shadow-md  ${className}`}>
+    <div className={`p-4 glassy-card/80 rounded-lg shadow-md  ${className}`}>
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-gray-800 mb-1">{title}</h2>
         {subtitle && <p className="text-sm font-medium text-[#667085]">{subtitle}</p>}
@@ -143,7 +143,7 @@ const RevenueDashboard = ({
                   {iconConfig.icon}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 mb-1">{metric.name || metric.key}</p>
+                  <p className="text-sm glassy-text-secondary mb-1">{metric.name || metric.key}</p>
                   {renderMetricValue(metric.value, metric.change)}
                 </div>
               </div>
@@ -191,7 +191,7 @@ const RevenueDashboard = ({
         </div>
       ) : (
         emptyState || (
-          <div className="flex items-center justify-center h-64 text-gray-500">
+          <div className="flex items-center justify-center h-64 glassy-text-secondary">
             No chart data available
           </div>
         )
