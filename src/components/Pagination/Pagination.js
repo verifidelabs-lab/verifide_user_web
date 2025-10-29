@@ -51,12 +51,12 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
     <div className='flex items-center justify-between w-full max-w-full mx-auto my-4 px-4'>
  
       <button
-        className={`flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer'}`}
+        className={`flex items-center justify-center w-10 h-10 rounded-full border glassy-text-secondary ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:glassy-button cursor-pointer'}`}
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         aria-label="Previous page"
       >
-        <LuChevronLeft className="text-gray-600" />
+        <LuChevronLeft className="glassy-text-secondary" />
       </button>
 
       {/* Page Numbers - Centered */}
@@ -67,8 +67,8 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
             className={`flex items-center justify-center w-10 h-10 rounded-full border ${page === '...' 
               ? 'border-transparent cursor-default' 
               : currentPage === page 
-                ? 'border-blue-500 bg-blue-500 glassy-text-primary' 
-                : 'border-gray-300 hover:bg-gray-100'}`}
+                ? 'glassy-button  glassy-text-primary' 
+                : ' glassy-text-secondary'}`}
             onClick={() => handlePageChange(page)}
             disabled={page === '...'}
             aria-label={page === '...' ? 'More pages' : `Page ${page}`}
@@ -79,12 +79,12 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
       </div>
 
       <button
-        className={`flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100 cursor-pointer'}`}
+        className={`flex items-center justify-center w-10 h-10 rounded-full border glassy-text-secondary ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:cursor-pointer'}`}
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         aria-label="Next page"
       >
-        <LuChevronRight className="text-gray-600" />
+        <LuChevronRight className="glassy-text-secondary" />
       </button>
     </div>
   )

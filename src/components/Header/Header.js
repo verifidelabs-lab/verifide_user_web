@@ -169,7 +169,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
           {location.pathname === "/user/terms-and-conditions" && (
             <div className="flex items-center gap-3 w-72">
               <img
-                src="/logo.png"
+                src="/Frame 1000004906.png"
                 alt="logo"
                 className="h-8 transition-transform duration-300 hover:scale-105"
               />

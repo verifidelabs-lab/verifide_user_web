@@ -106,32 +106,35 @@ const CompanyInstituteView = () => {
   // Loading skeleton
   if (loading) {
     return (
-      <div className="p-6 max-w-6xl mx-auto animate-pulse">
+      <div className="p-6 max-w-6xl mx-auto animate-pulse glassy-card">
         {/* Banner Skeleton */}
-        <div className="h-56 w-full rounded-2xl bg-gray-200 mb-6"></div>
+        <div className="h-56 w-full rounded-2xl glassy-text-secondary mb-6"></div>
 
         {/* Header Skeleton */}
         <div className="flex items-center mt-6 gap-4">
-          <div className="w-20 h-20 rounded-xl bg-gray-200"></div>
+          <div className="w-20 h-20 rounded-xl glassy-text-secondary"></div>
           <div className="flex-1">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+            <div className="h-8 glassy-text-secondary rounded w-1/3 mb-2"></div>
+            <div className="h-4 glassy-text-secondary rounded w-1/4"></div>
           </div>
         </div>
 
         {/* Description Skeleton */}
         <div className="mt-6 space-y-2">
-          <div className="h-4 bg-gray-200 rounded w-full"></div>
-          <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-          <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+          <div className="h-4 glassy-text-secondary rounded w-full"></div>
+          <div className="h-4 glassy-text-secondary rounded w-5/6"></div>
+          <div className="h-4 glassy-text-secondary rounded w-4/6"></div>
         </div>
 
         {/* Stats Skeleton */}
         <div className="grid sm:grid-cols-3 gap-6 mt-8">
           {[1, 2, 3].map((item) => (
-            <div key={item} className="glassy-card p-4 rounded-xl shadow border">
-              <div className="h-5 bg-gray-200 rounded w-1/2 mb-2"></div>
-              <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+            <div
+              key={item}
+              className="glassy-card p-4 rounded-xl shadow border"
+            >
+              <div className="h-5 glassy-text-secondary rounded w-1/2 mb-2"></div>
+              <div className="h-8 glassy-text-secondary rounded w-1/3"></div>
             </div>
           ))}
         </div>
@@ -141,9 +144,9 @@ const CompanyInstituteView = () => {
 
   if (!data) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center">
+      <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center glassy-card">
         <IoAlertCircleOutline className="w-16 h-16 text-gray-400 mb-4" />
-        <h2 className="text-2xl font-semibold text-gray-700 mb-2">
+        <h2 className="text-2xl font-semibold glassy-text-primary mb-2">
           Organization Not Found
         </h2>
         <p className="glassy-text-secondary max-w-md">
@@ -163,20 +166,20 @@ const CompanyInstituteView = () => {
       <div>
         <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
           <span
-            className="text-gray-600 cursor-pointer"
+            className="glassy-text-secondary cursor-pointer"
             onClick={() => navigate(`/user/feed`)}
           >
             Home
           </span>
           <span className="text-gray-400">›</span>
           <span
-            className="text-gray-600 cursor-pointer"
+            className="glassy-text-secondary cursor-pointer"
             onClick={() => navigate(`/user/suggested-users?tab=${data?.type}`)}
           >
             Suggested Profiles
           </span>
           <span className="text-gray-400">›</span>
-          <span className="font-medium text-blue-600 cursor-pointer">
+          <span className="font-medium glassy-text-primary cursor-pointer">
             {capitalizeWords(info?.name || data?.type)}
           </span>
         </nav>
@@ -220,7 +223,7 @@ const CompanyInstituteView = () => {
           <div className="flex-1">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+                <h1 className="text-2xl md:text-3xl font-bold glassy-text-primary">
                   {info?.display_name || info?.name || "Unnamed Organization"}
                 </h1>
                 {info?.is_verified && (
@@ -241,6 +244,7 @@ const CompanyInstituteView = () => {
                 }
                 loading={followActionLoading}
                 icon={<BsPersonFillAdd />}
+                className="w-full glassy-button"
               >
                 {!data.isFollowed ? "Follow" : "Unfollow"}
               </Button>
@@ -251,7 +255,7 @@ const CompanyInstituteView = () => {
             )}
 
             {/* Quick Stats */}
-            <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-600">
+            <div className="flex flex-wrap gap-4 mt-4 text-sm glassy-text-secondary">
               {info?.country_code?.name && (
                 <span className="flex items-center gap-1">
                   <span className="text-lg">{info.country_code?.emoji}</span>
@@ -260,7 +264,7 @@ const CompanyInstituteView = () => {
               )}
 
               {info?.founded_year && isInstitute && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 ">
                   <BiCalendar className="w-4 h-4" />
                   Est. {new Date(info.founded_year).getFullYear()}
                 </span>
@@ -274,7 +278,7 @@ const CompanyInstituteView = () => {
               )}
             </div>
             <button
-              className="border border-gray-300 text-sm px-3 py-1 rounded-md hover:bg-gray-100 font-medium flex items-center gap-1"
+              className="border text-sm px-3 py-1 rounded-md glassy-button mt-2 font-medium flex items-center gap-1"
               onClick={() => handleResumeDownload(companydata)}
             >
               Profile URL <MdOutlineContentCopy />
@@ -286,10 +290,10 @@ const CompanyInstituteView = () => {
           {/* Description */}
           {info?.description && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 capitalize mb-2">
+              <h2 className="text-lg font-semibold glassy-text-primary capitalize mb-2">
                 About
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="glassy-text-secondary leading-relaxed">
                 {info.description}
               </p>
             </div>
@@ -298,17 +302,17 @@ const CompanyInstituteView = () => {
           {/* Contact Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {info?.website_url && (
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
+              <div className="flex items-center gap-3 p-3 glassy-card hover:bg-black rounded-lg transition-colors">
                 <div className="p-2 glassy-card rounded-lg shadow-sm">
-                  <BiGlobe className="w-5 h-5 text-blue-600" />
+                  <BiGlobe className="w-5 h-5 glassy-text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm glassy-text-secondary">Website</p>
+                  <p className="text-sm glassy-text-primary">Website</p>
                   <a
                     href={info.website_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-600 hover:underline truncate block"
+                    className="glassy-text-secondary hover:underline truncate block"
                   >
                     {info.website_url.replace(/^https?:\/\//, "")}
                   </a>
@@ -317,15 +321,15 @@ const CompanyInstituteView = () => {
             )}
 
             {info?.phone_no && (
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
+              <div className="flex items-center gap-3 p-3  rounded-lg glassy-card hover:bg-black transition-colors">
                 <div className="p-2 glassy-card rounded-lg shadow-sm">
-                  <BiPhoneIncoming className="w-5 h-5 text-blue-600" />
+                  <BiPhoneIncoming className="w-5 h-5 glassy-text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm glassy-text-secondary">Phone</p>
+                  <p className="text-sm glassy-text-primary">Phone</p>
                   <a
                     href={`tel:${info.phone_no}`}
-                    className="text-gray-800 hover:text-blue-600"
+                    className="glassy-text-secondary hover:glassy-text-primary"
                   >
                     {info.phone_no}
                   </a>
@@ -334,15 +338,15 @@ const CompanyInstituteView = () => {
             )}
 
             {info?.email && (
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
+              <div className="flex items-center gap-3 p-3 rounded-lg glassy-card hover:bg-black transition-colors">
                 <div className="p-2 glassy-card rounded-lg shadow-sm">
-                  <MdEmail className="w-5 h-5 text-blue-600" />
+                  <MdEmail className="w-5 h-5 glassy-text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm glassy-text-secondary">Email</p>
+                  <p className="text-sm glassy-text-primary">Email</p>
                   <a
                     href={`mailto:${info.email}`}
-                    className="text-gray-800 hover:text-blue-600"
+                    className="glassy-text-secondary hover:glassy-text-primary"
                   >
                     {info.email}
                   </a>
@@ -351,17 +355,17 @@ const CompanyInstituteView = () => {
             )}
 
             {info?.linkedin_page_url && (
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors">
+              <div className="flex items-center gap-3 p-3 rounded-lg glassy-card hover:bg-black transition-colors">
                 <div className="p-2 glassy-card rounded-lg shadow-sm">
-                  <FaLinkedin className="w-5 h-5 text-blue-600" />
+                  <FaLinkedin className="w-5 h-5 glassy-text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm glassy-text-secondary">LinkedIn</p>
+                  <p className="text-sm glassy-text-primary">LinkedIn</p>
                   <a
                     href={info.linkedin_page_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-600 hover:underline truncate block"
+                    className="glassy-text-secondary hover:underline truncate block"
                   >
                     LinkedIn Page
                   </a>
@@ -371,45 +375,49 @@ const CompanyInstituteView = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 " >
+            <div className="glassy-card p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <BiUser className="w-5 h-5 text-blue-600" />
+                <div className="p-2 rounded-lg">
+                  <BiUser className="w-5 h-5 glassy-text-primary" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Followers</p>
+                <p className="text-sm font-medium glassy-text-primary">
+                  Followers
+                </p>
               </div>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-2xl font-bold glassy-text-secondary">
                 {info?.follower_count?.toLocaleString() || 0}
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
+            <div className="glassy-card p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <MdGroups className="w-5 h-5 text-blue-600" />
+                <div className="p-2 rounded-lg">
+                  <MdGroups className="w-5 h-5 glassy-text-primary" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Employees</p>
+                <p className="text-sm font-medium glassy-text-primary">
+                  Employees
+                </p>
               </div>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-2xl font-bold glassy-text-secondary">
                 {info?.employee_count?.toLocaleString() || 0}
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
+            <div className="glassy-card p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-blue-100 rounded-lg">
+                <div className="p-2  rounded-lg">
                   {isInstitute ? (
-                    <BiCalendar className="w-5 h-5 text-blue-600" />
+                    <BiCalendar className="w-5 h-5 glassy-text-primary" />
                   ) : (
-                    <BiBuilding className="w-5 h-5 text-blue-600" />
+                    <BiBuilding className="w-5 h-5 glassy-text-primary" />
                   )}
                 </div>
-                <p className="text-sm font-medium text-gray-700">
+                <p className="text-sm font-medium glassy-text-primary">
                   {isInstitute ? "Founded" : "Company Type"}
                 </p>
               </div>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-2xl font-bold glassy-text-secondary">
                 {isInstitute
                   ? info?.founded_year
                     ? new Date(info.founded_year).getFullYear()
@@ -421,7 +429,7 @@ const CompanyInstituteView = () => {
 
           {/* Tags */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-800 capitalize mb-3">
+            <h2 className="text-lg font-semibold glassy-text-primary capitalize mb-3">
               {isInstitute ? "Specialties" : "Industries"}
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -431,7 +439,7 @@ const CompanyInstituteView = () => {
                   (item, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm border border-blue-100 hover:bg-blue-100 transition-colors"
+                      className="px-3 py-1 rounded-full text-[13px] font-semibold  border border-[#E8E8E8] glassy-text-secondary hover:glassy-text-primary"
                     >
                       {typeof item === "string" ? item : item?.name}
                     </span>

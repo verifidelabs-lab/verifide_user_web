@@ -160,30 +160,30 @@ const Users = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 ">
       <div className="flex md:flex-row flex-col justify-between place-items-center">
         <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
           <form className="relative w-full sm:w-80">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2  w-5 h-5 glassy-text-secondary" />
             <input
               type="text"
               placeholder="Search connections or followings..."
               value={keyWord}
               onChange={(e) => setKeyWord(e.target.value)}
-              className="pl-10 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full shadow-sm"
+              className=" glassy-input-notification pl-10 pr-10 py-2 border  rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full shadow-sm"
             />
             {keyWord && (
               <button
                 type="button"
                 onClick={() => setKeyWord("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 glassy-button hover:text-gray-600"
               >
                 <IoClose size={18} />
               </button>
             )}
           </form>
         </nav>
-        <div className=" bg-[#F9FAFB] border border-gray-200 rounded-xl p-1 flex">
+        <div className="  border glassy-card rounded-xl p-1 flex">
           {tabConfig.map((tab) => (
             <button
               key={tab.key}
@@ -196,8 +196,8 @@ const Users = () => {
               className={`flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center justify-center gap-2
         ${
           activeTab === tab.key
-            ? "glassy-card text-[#2563EB] shadow-md"
-            : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+            ? " glassy-text-primary shadow-md"
+            : "glassy-text-secondary  hover:text-gray-800"
         }`}
             >
               <span>{tab.label}</span>
@@ -209,8 +209,8 @@ const Users = () => {
       <div className="mb-8 flex md:flex-row flex-col justify-between items-center"></div>
 
       {  isLoading ? (
-        <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        <div className="flex justify-center py-8 glassy-card">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 "></div>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-10 justify-items-center">
@@ -239,7 +239,7 @@ const Users = () => {
             {activeTab === "companies" && "🏢"}
             {activeTab === "institutions" && "🎓"}
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          <h3 className="text-xl font-semibold glassy-text-primary mb-2">
             No {tabConfig.find((t) => t.key === activeTab)?.label.toLowerCase()}{" "}
             found
           </h3>

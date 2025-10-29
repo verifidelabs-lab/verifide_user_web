@@ -28,7 +28,7 @@ const SkillTags = ({ skills = [], limit }) => {
       {hiddenCount > 0 && (
         <span
           onClick={() => setExpanded(true)}
-          className="px-3 py-1 rounded-full text-[10px] font-semibold bg-blue-50 border border-[#E8E8E8] text-blue-600 cursor-pointer"
+          className="px-3 py-1 rounded-full text-[10px] font-semibold bg-blue-50 border border-[#E8E8E8] glassy-text-secondary cursor-pointer"
         >
           +{hiddenCount} more
         </span>
@@ -37,7 +37,7 @@ const SkillTags = ({ skills = [], limit }) => {
       {expanded && skills.length > limit && (
         <span
           onClick={() => setExpanded(false)}
-          className="px-3 py-1 rounded-full text-[10px] font-semibold bg-gray-100 border border-[#E8E8E8] text-gray-600 cursor-pointer"
+          className="px-3 py-1 rounded-full text-[10px] font-semibold bg-gray-100 border border-[#E8E8E8] glassy-text-secondary cursor-pointer"
         >
           Show less
         </span>
@@ -45,5 +45,6 @@ const SkillTags = ({ skills = [], limit }) => {
     </div>
   );
 };
+
 
 export default SkillTags;

@@ -200,7 +200,7 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
     // </div>
 
     <div
-      className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? "bg-card-unread" : "glassy-card"
+      className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? "glassy-card" : "bg-card-unread glassy-card"
         }`}
     >
 
@@ -213,28 +213,20 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
         {/* Content */}
         <div className="flex-1">
           {/* Title + Date */}
-          {/* <div className="flex flex-col sm:flex-row sm:justify-between">
-            <h3 className="text-sm font-semibold text-gray-900 mb-1 sm:mb-0">
-              {cleanTitle}
-            </h3>
-            <span className="text-xs text-gray-500">
-              {formatDate(notification.createdAt)}
-            </span>
-          </div> */}
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-gray-900">
+            <h3 className="text-sm font-semibold glassy-text-primary">
               {cleanTitle}
             </h3>
-            <span className="text-xs text-gray-500 italic">
+            <span className="text-xs italic glassy-text-secondary">
               {formatDate(notification.createdAt)}
             </span>
           </div>
 
           {/* Job Info */}
-          <div className="mt-2 space-y-1 text-xs text-gray-700">
+          <div className="mt-2 space-y-1 text-xs glassy-text-secondary">
             {event && (
               <p className="flex items-center gap-1">
-                <span className="text-gray-900 font-medium">
+                <span className="glassy-text-primary font-medium">
                   💼 Job Position:
                 </span>{" "}
                 {event}
@@ -242,20 +234,20 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
             )}
             {type && (
               <p className="flex items-center gap-1">
-                <span className="text-gray-900 font-medium">🕒 Job Type:</span>{" "}
+                <span className="glassy-text-primary font-medium">🕒 Job Type:</span>{" "}
                 {type}
               </p>
             )}
             {company && (
               <p className="flex items-center gap-1">
-                <span className="text-gray-900 font-medium">🏢 Company:</span>{" "}
+                <span className="glassy-text-primary font-medium">🏢 Company:</span>{" "}
                 {company}
               </p>
             )}
           </div>
 
           {/* Message */}
-          <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+          <p className="text-xs glassy-text-secondary mt-2 leading-relaxed">
             {notification.message}
           </p>
         </div>
@@ -366,13 +358,13 @@ const NotificationHeader = ({
           {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm">
             <span
-              className="glassy-text-primary hover:glassy-text-primary-dark cursor-pointer"
+              className="glassy-text-secondary hover:glassy-text-primary-dark cursor-pointer"
               onClick={() => navigate("/user/feed")}
             >
               Home
             </span>
             <span className="glassy-text-secondary">›</span>
-            <span className="glassy-text-secondary">Notifications</span>
+            <span className="glassy-text-primary">Notifications</span>
           </nav>
 
           {/* Search + Filter + Mark All */}
@@ -401,7 +393,7 @@ const NotificationHeader = ({
               </button>
 
               {showFilters && (
-                <div className="absolute right-0 mt-2 w-56 glassy-card rounded-md shadow-lg z-10 border border-gray-200">
+                <div className="absolute right-0 mt-2 w-56 glassy-card rounded-md shadow-lg z-10 border ">
 
                   <select
                     value={filterValue}
@@ -409,7 +401,7 @@ const NotificationHeader = ({
                       onFilterChange(e.target.value);
                       setShowFilters(false);
                     }}
-                    className="w-full p-2 glassy-input text-sm"
+                    className="w-full p-2 glassy-input-notification text-sm"
                   >
                     <option value="">All Notifications</option>
                     {Object.entries(NOTIFICATION_TYPES).map(([label, value]) => (
@@ -438,7 +430,7 @@ const NotificationHeader = ({
           <h1 className="text-xl font-semibold glassy-text-primary">
             All Notifications
           </h1>
-          <span className="text-sm glassy-text-secondary flex items-center">
+          <span className="text-sm glassy-text-primary flex items-center">
             <CustomToggle handleClick={() => setIsToggle((prev) => !prev)} isToggle={isToggle} />
             Unread
           </span>
@@ -450,13 +442,13 @@ const NotificationHeader = ({
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm mb-2">
           <span
-            className="glassy-text-primary hover:glassy-text-primary-dark cursor-pointer"
+            className="glassy-text-secondary hover:glassy-text-primary-dark cursor-pointer"
             onClick={() => navigate("/user/feed")}
           >
             Home
           </span>
           <span className="glassy-text-secondary">›</span>
-          <span className="glassy-text-secondary">Notifications</span>
+          <span className="glassy-text-primary">Notifications</span>
         </nav>
 
         {/* Search + Filter */}
@@ -478,7 +470,7 @@ const NotificationHeader = ({
               className="w-full flex items-center justify-center space-x-2 px-3 py-2 glassy-button text-sm hover:scale-105"
               onClick={() => setShowFilters(!showFilters)}
             >
-              <BiFilterAlt className="w-4 h-4" />
+              <BiFilterAlt className="w-4 h-4 glassy-text-primary" />
               <span>Filter</span>
             </button>
 
@@ -512,7 +504,7 @@ const NotificationHeader = ({
             All Notifications
           </h1>
           <div className="flex justify-between w-full sm:w-auto items-center gap-2">
-            <span className="text-sm glassy-text-secondary flex items-center">
+            <span className="text-sm glassy-text-primary flex items-center">
               <CustomToggle handleClick={() => setIsToggle((prev) => !prev)} isToggle={isToggle} />
               Unread
             </span>
@@ -619,13 +611,13 @@ const NotificationInterface = () => {
         setIsToggle={setIsToggle}
       />
 
-      <div className="w-full mx-auto shadow-sm ">
+      <div className="w-full mx-auto shadow-sm mt-2">
         {loading ? (
           <div className="flex justify-center items-center p-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 glassy-text-secondary"></div>
           </div>
         ) : notifications.length === 0 ? (
-          <div className="text-center p-8 glassy-text-secondary">
+          <div className="text-center p-8 glassy-text-secondary glassy-card" >
             No notifications found
           </div>
         ) : (
@@ -640,7 +632,7 @@ const NotificationInterface = () => {
         )}
 
         {!loading && notifyData?.total > size && (
-          <div className="flex justify-between items-center p-4 glassy-card border-t border-[var(--border-color)]">
+          <div className="flex justify-between items-center p-4  border-t border-[var(--border-color)]">
             {/* Previous Button */}
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}

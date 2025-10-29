@@ -11,7 +11,7 @@ const ExpEduCard = ({ title, company, duration, location, logo }) => {
           className="object-contain"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = '/Img/Profile/Frame (2).png';
+            e.target.src = '/Img/Profile/Frame (1).png';
           }}
         />
       </div>
