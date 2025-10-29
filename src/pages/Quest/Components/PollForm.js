@@ -104,19 +104,19 @@ const PollForm = ({ questions, setQuestions, errors }) => {
 
   return (
     <div className="">
-      <div className="max-w-3xl mx-auto glassy-card rounded-lg border border-gray-300 p-6">
+      <div className="max-w-3xl mx-auto  rounded-lg border  p-6">
         {formSubmitted ? (
           <div className="text-center py-12">
-            <div className="bg-blue-100 text-blue-800 p-4 rounded-full inline-block mb-4">
+            <div className="glassy-text-secondary p-4 rounded-full inline-block mb-4">
               <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Your response has been recorded.</h2>
-            <p className="text-gray-600 mb-6">Thank you for completing the form.</p>
+            <h2 className="text-2xl font-bold glassy-text-secondary mb-2">Your response has been recorded.</h2>
+            <p className="glassy-text-secondary mb-6">Thank you for completing the form.</p>
             <button
               onClick={resetForm}
-              className="bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-2 px-4 rounded"
+              className="glassy-button glassy-text-primary font-medium py-2 px-4 rounded"
             >
               Submit another response
             </button>
@@ -145,7 +145,7 @@ const PollForm = ({ questions, setQuestions, errors }) => {
               <button
                 type="button"
                 onClick={() => addQuestion('short-answer')}
-                className="flex items-center text-blue-600 hover:bg-blue-50 px-4 py-2 rounded"
+                className="flex items-center glassy-button px-4 py-2 rounded"
               >
                 <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -156,7 +156,7 @@ const PollForm = ({ questions, setQuestions, errors }) => {
               <button
                 type="button"
                 onClick={() => addQuestion('multi-choice')}
-                className="flex items-center text-blue-600 hover:bg-blue-50 px-4 py-2 rounded"
+                className="flex items-center glassy-button px-4 py-2 rounded"
               >
                 Add multi choice
               </button>
@@ -164,14 +164,14 @@ const PollForm = ({ questions, setQuestions, errors }) => {
               <button
                 type="button"
                 onClick={() => addQuestion('checkbox')}
-                className="flex items-center text-blue-600 hover:bg-blue-50 px-4 py-2 rounded"
+                className="flex items-center glassy-button px-4 py-2 rounded"
               >
                 Add checkbox
               </button>
               <button
                 type="button"
                 onClick={() => addQuestion('checkbox')}
-                className="flex items-center text-blue-600 hover:bg-blue-50 px-4 py-2 rounded"
+                className="flex items-center glassy-button px-4 py-2 rounded"
               >
                 Add Poll
               </button>

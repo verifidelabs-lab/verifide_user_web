@@ -472,16 +472,16 @@ const CreateQuest = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-3xl transition-all duration-500">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
+        <h1 className="text-2xl font-bold glassy-text-primary mb-6">
           {isEditMode ? "Edit Quest" : "Create New Quest"}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Quest Type Selection */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-3">
+            <label className="block text-sm font-semibold glassy-text-primary mb-3">
               Quest Type *
             </label>
             <div className="flex gap-3 flex-wrap">
@@ -499,8 +499,8 @@ const CreateQuest = () => {
                     px-5 py-2.5 rounded-xl text-sm font-medium
                     transition-all duration-300 ease-in-out
                     ${activeTab === value
-                      ? "bg-blue-600 glassy-text-primary shadow-lg"
-                      : "bg-gray-50 text-gray-700 border border-gray-300 hover:bg-blue-50 hover:text-blue-600"
+                      ? "glassy-button glassy-text-primary shadow-lg"
+                      : "glassy-text-secondary border "
                     }
                     ${id ? "cursor-not-allowed opacity-70" : ""}
                   `}
@@ -524,7 +524,7 @@ const CreateQuest = () => {
               onChange={handleInputChange}
               placeholder="Enter quest title"
               error={errors.title}
-              className="w-full h-11 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full h-11 px-4 py-2 border glassy-text-secondary rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               required
               enableEmoji={true}
             />
@@ -539,7 +539,7 @@ const CreateQuest = () => {
               onChange={handleInputChange}
               placeholder="Enter description"
               error={errors.description}
-              className="w-full h-11 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full h-11 px-4 py-2 border glassy-text-secondary rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               required
               type="textarea"
               row={4}
@@ -555,7 +555,7 @@ const CreateQuest = () => {
                 onChange={handleInputChange}
                 placeholder="Enter quest link"
                 error={errors.link}
-                className="w-full h-11 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full h-11 px-4 py-2 border glassy-text-secondary rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -572,6 +572,7 @@ const CreateQuest = () => {
                 selectsStart
                 startDate={questData.startDate}
                 endDate={questData.endDate}
+                
               />
             </div>
 
@@ -591,24 +592,24 @@ const CreateQuest = () => {
 
           {/* Media Type Selection */}
           <div className="flex gap-4">
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 glassy-text-primary">
               <input
                 type="radio"
                 name="mediaType"
                 checked={mediaType === "image"}
                 onChange={() => setMediaType("image")}
-                className="w-4 h-4"
+                className="w-4 h-4 glassy-input"
               />
               Image
             </label>
 
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 glassy-text-primary">
               <input
                 type="radio"
                 name="mediaType"
                 checked={mediaType === "video"}
                 onChange={() => setMediaType("video")}
-                className="w-4 h-4"
+                className="w-4 h-4 glassy-input"
               />
               Video
             </label>
@@ -646,8 +647,8 @@ const CreateQuest = () => {
           {activeTab === 'feedbacks' && (
             <div className="space-y-5">
               <div>
-                <h2 className="text-lg font-semibold">Feedback Modules</h2>
-                <p className="text-sm text-muted-foreground">
+                <h2 className="text-lg font-semibold glassy-text-primary">Feedback Modules</h2>
+                <p className="text-sm text-muted-foreground glassy-text-secondary">
                   Add titles for your feedback modules. You can add more or remove them anytime.
                 </p>
                 {errors.feedbackModules && (
@@ -660,13 +661,13 @@ const CreateQuest = () => {
                 {questData.feedbackModules.map((module, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition"
+                    className="flex items-center gap-2 p-3 glassy-card border  rounded-xl transition"
                   >
                     <CustomInput
                       placeholder={`Title ${index + 1}`}
                       value={module.title}
                       onChange={(e) => handleFeedbackModuleChange(index, e.target.value)}
-                      className="h-10 flex-1"
+                      className="h-10 flex-1 glassy-text-secondary"
                       error={errors[`feedbackModule-${index}`]}
                     />
 
@@ -676,7 +677,7 @@ const CreateQuest = () => {
                         variant="ghost"
                         size="icon"
                         onClick={() => handleRemoveFeedbackModule(index)}
-                        className="text-red-500 hover:bg-red-50"
+                        className="text-red-500  hover:bg-red-50"
                       >
                         <BiTrash className="w-5 h-5" />
                       </Button>
@@ -690,7 +691,7 @@ const CreateQuest = () => {
                   type="button"
                   variant="outline"
                   onClick={handleAddFeedbackModule}
-                  className="flex items-center gap-2 hover:glassy-text-primary"
+                  className="flex items-center gap-2 glassy-button hover:glassy-text-primary"
                   icon={<BiAddToQueue className="w-5 h-5" />}
                   disabled={questData.feedbackModules.length >= 5}
 
@@ -705,7 +706,7 @@ const CreateQuest = () => {
 
           {
             activeTab === "survey-polls" && (
-              <label className="text-whitemt-2">Survey & Polls <span className="text-red-500">*</span></label>
+              <label className="text-whitemt-2 glassy-text-primary">Survey & Polls <span className="text-red-500">*</span></label>
             )
           }
 
@@ -725,7 +726,7 @@ const CreateQuest = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 
+              className="glassy-button 
                 px-8 py-3 rounded-lg glassy-text-primary font-semibold shadow-md 
                 transition transform hover:scale-105 active:scale-95
                 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"

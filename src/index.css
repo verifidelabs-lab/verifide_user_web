@@ -543,3 +543,43 @@ textarea:focus {
 .glassy-text-secondary:hover {
   color: var(--text-primary);
 }
+
+
+/* input without width */
+.glassy-input-minimal {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+
+/* Base glassy dropdown */
+.glassy-select {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Hover + focus */
+.glassy-select:hover {
+  border-color: var(--primary-color);
+}
+
+.glassy-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
+}
+
+/* Dropdown options */
+.glassy-select option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}

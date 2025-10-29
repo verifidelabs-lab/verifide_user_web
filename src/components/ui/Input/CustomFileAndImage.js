@@ -92,7 +92,7 @@ const EnhancedFileInput = React.forwardRef(({
 
     const fileExtension = url.split('.').pop()?.toLowerCase();
     if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExtension)) {
-      return <BiImage className="w-5 h-5 text-blue-500" />;
+      return <BiImage className="w-5 h-5 glassy-text-primary" />;
     } else if (fileExtension === 'pdf') {
       return <BiFile className="w-5 h-5 text-red-500" />;
     }
@@ -116,7 +116,7 @@ const EnhancedFileInput = React.forwardRef(({
 
   return (
     <div className={`w-full ${className}`}>
-      <label className="block text-base text-[#282828] font-medium mb-2">
+      <label className="block text-base glassy-text-primary font-medium mb-2">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
@@ -128,7 +128,7 @@ const EnhancedFileInput = React.forwardRef(({
             className={`relative border-2 border-dashed rounded-lg transition-colors
             ${dragActive ? 'border-blue-400 bg-blue-50' :
                 error ? 'border-red-300' : 'border-gray-300'}
-            ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:bg-blue-50'}
+            ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 '}
           `}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
@@ -139,7 +139,7 @@ const EnhancedFileInput = React.forwardRef(({
               ref={fileInputRef}
               type="file"
               onChange={handleInputChange}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer glassy-input"
               accept={accept}
               disabled={uploading}
             />
@@ -148,26 +148,26 @@ const EnhancedFileInput = React.forwardRef(({
               {uploading ? (
                 <AiOutlineLoading3Quarters className="w-8 h-8 text-blue-500 animate-spin mb-2" />
               ) : (
-                <BiPaperclip className="w-8 h-8 text-gray-400 mb-2" />
+                <BiPaperclip className="w-8 h-8 glassy-text-secondary mb-2" />
               )}
 
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-sm glassy-text-secondary text-center">
                 {uploading ? 'Uploading...' : (
                   <>
-                    <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
+                    <span className="font-medium glassy-text-secondary hover:text-blue-500 cursor-pointer">
                       Click to upload
                     </span>
                   </>
                 )}
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs glassy-text-secondary mt-1">
                 {supportedFormats} (max {maxSize}MB)
               </p>
             </div>
           </div>
 
           : (
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+            <div className="flex items-center justify-between p-3 glassy-text-secondary rounded-lg border">
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 {getFileIcon(value)}
                 <div className="flex-1 min-w-0">
@@ -184,15 +184,15 @@ const EnhancedFileInput = React.forwardRef(({
                 <button
                   type="button"
                   onClick={() => openFile(value)}
-                  className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
+                  className="p-1.5 glassy-button hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
                   title="View file"
                 >
-                  <BiDownload className="w-4 h-4" />
+                  <BiDownload className="w-4 h-4 glassy-text-primary" />
                 </button>
                 <button
                   type="button"
                   onClick={handleDelete}
-                  className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-100 rounded transition-colors"
+                  className="p-1.5  text-red-600 hover:text-red-800 hover:bg-red-100 rounded transition-colors"
                   title="Delete file"
                 >
                   <BiTrash className="w-4 h-4" />

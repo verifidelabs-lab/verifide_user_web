@@ -105,7 +105,7 @@ const TermsAndConditions = () => {
   }
 
   return (
-    <div className="p-4 md:p-6 bg-gray-50 min-h-screen ">
+    <div className="p-4 md:p-6   min-h-screen ">
       {/* ✅ DESKTOP/TABLET VIEW */}
       <div className="hidden md:flex space-x-6 items-start   mx-auto">
         {/* Sidebar Table of Contents */}
