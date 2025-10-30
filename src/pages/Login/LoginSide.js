@@ -307,10 +307,10 @@ const OrbitalMenu = () => {
                     {activeMenu?.toUpperCase()}
                   </div>
                 </div>
-                <h2 className="mb-4 text-2xl font-bold text-gray-800">
+                <h2 className="mb-4 text-2xl font-bold glassy-text-primary">
                   {menuItems[activeMenu]?.title}
                 </h2>
-                <ul className="space-y-2 text-sm text-gray-600 border border-blue-500">
+                <ul className="space-y-2 text-sm glassy-text-secondary border border-blue-500">
                   {menuItems[activeMenu]?.items.map((item, index) => (
                     <li key={index} className="py-1 border-b border-gray-200 last:border-b-0">
                       {item}

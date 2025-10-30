@@ -570,7 +570,7 @@ const Userpost = () => {
               />
             )}
             <div>
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold glassy-text-primary">
                 {postData?.userData?.name}
               </h3>
               <p className="text-xs glassy-text-secondary">
@@ -582,7 +582,7 @@ const Userpost = () => {
 
         {/* Post Content */}
         <div className="mb-4">
-          {/* <p className="text-gray-800 whitespace-pre-line">{postData?.content}</p> */}
+          {/* <p className="glassy-text-primary whitespace-pre-line">{postData?.content}</p> */}
         </div>
         {postData?.post_type === "link" && postData?.link && (
           <div className="mx-auto w-full">
@@ -617,7 +617,7 @@ const Userpost = () => {
                     )}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-1">
+                    <h2 className="text-2xl font-bold glassy-text-primary mb-1">
                       {postData.job_id.job_title_details?.name ||
                         "Job Position"}
                     </h2>
@@ -642,19 +642,19 @@ const Userpost = () => {
 
               {/* Job Details Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
                   {/* <FaMapMarkerAlt className="text-gray-400" /> */}
                   {/* <span>{(postData.job_id.work_location) || 'Location not specified'}</span> */}
                 </div>
 
                 {postData.job_id.salary_range && (
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
                     {/* <FaMoneyBillWave className="text-green-500" /> */}
                     <span>₹{postData.job_id.salary_range}</span>
                   </div>
                 )}
 
-                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
                   {/* <FaClock className="text-blue-500" /> */}
                   <span className="capitalize">
                     {postData.job_id.pay_type || "Payment type not specified"}
@@ -693,7 +693,7 @@ const Userpost = () => {
             {/* Job Description */}
             {postData.job_id.job_description && (
               <div className="p-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">Job Description</h4>
+                <h4 className="text-lg font-semibold glassy-text-primary mb-3">Job Description</h4>
                 <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                   {postData.job_id.job_description}
                 </div>
@@ -705,7 +705,7 @@ const Userpost = () => {
         {/* Regular Post Content (for non-job posts) */}
         {postData?.post_type !== "jobs" && postData?.content && (
           <div className="mb-4">
-            <p className="text-gray-800 whitespace-pre-line">
+            <p className="glassy-text-primary whitespace-pre-line">
               {postData?.content}
             </p>
           </div>
@@ -865,10 +865,10 @@ const Userpost = () => {
               alt="App Logo"
               className="w-40 h-auto"
             />
-            <h2 className="text-xl font-bold text-center text-gray-800">
+            <h2 className="text-xl font-bold text-center glassy-text-primary">
               You're not logged in
             </h2>
-            <p className="text-center text-gray-600 text-sm">
+            <p className="text-center glassy-text-secondary text-sm">
               To interact with this content, please sign in to your account.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 w-full mt-2">

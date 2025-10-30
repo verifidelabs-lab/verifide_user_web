@@ -412,8 +412,10 @@ textarea:focus {
   min-height: 100vh;
   background: url('/public/theme background.svg') no-repeat center center;
   background-size: cover;
+  background-attachment: fixed; /* Make background fixed */
   transition: all 0.4s ease;
 }
+
 
 
 /* ---------- Glassy Header ---------- */

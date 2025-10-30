@@ -41,34 +41,34 @@ const Profile = ({ adminProfileData, companiesProfileData, instituteProfileData 
 
   const renderInstituteData = (instituteData) => {
     return (
-      <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-800">
+      <div className="grid sm:grid-cols-2 gap-4 text-sm glassy-text-primary">
         <div>
-          <span className="font-semibold text-gray-900">Name:</span> {instituteData.name ?? "N/A"}
+          <span className="font-semibold glassy-text-primary">Name:</span> {instituteData.name ?? "N/A"}
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Display Name:</span> {instituteData.display_name ?? "N/A"}
+          <span className="font-semibold glassy-text-primary">Display Name:</span> {instituteData.display_name ?? "N/A"}
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Description:</span> {instituteData.description ?? "N/A"}
+          <span className="font-semibold glassy-text-primary">Description:</span> {instituteData.description ?? "N/A"}
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Website:</span>{" "}
+          <span className="font-semibold glassy-text-primary">Website:</span>{" "}
           <a href={instituteData.website_url} target="_blank" rel="noopener noreferrer">
             {instituteData.website_url ?? "N/A"}
           </a>
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Phone:</span> {instituteData.phone_no ?? "N/A"}
+          <span className="font-semibold glassy-text-primary">Phone:</span> {instituteData.phone_no ?? "N/A"}
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Country:</span>{" "}
+          <span className="font-semibold glassy-text-primary">Country:</span>{" "}
           {instituteData.country_code?.name ?? "N/A"} {instituteData.country_code?.emoji ?? "N/A"}
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Address:</span> {instituteData.address?.address_line_1 ?? "N/A"}
+          <span className="font-semibold glassy-text-primary">Address:</span> {instituteData.address?.address_line_1 ?? "N/A"}
         </div>
         <div>
-          <span className="font-semibold text-gray-900">Founded Year:</span> {instituteData.founded_year ?? "N/A"}
+          <span className="font-semibold glassy-text-primary">Founded Year:</span> {instituteData.founded_year ?? "N/A"}
         </div>
       </div>
     );
@@ -94,10 +94,10 @@ const Profile = ({ adminProfileData, companiesProfileData, instituteProfileData 
     ];
 
     return (
-      <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-800">
+      <div className="grid sm:grid-cols-2 gap-4 text-sm glassy-text-primary">
         {fields.map(({ label, value, isLink }, index) => (
           <div key={index}>
-            <span className="font-semibold text-gray-900">{label}:</span>{" "}
+            <span className="font-semibold glassy-text-primary">{label}:</span>{" "}
             {isLink ? (
               <a href={value} target="_blank" rel="noopener noreferrer">
                 {value ?? "N/A"}
@@ -143,7 +143,7 @@ const Profile = ({ adminProfileData, companiesProfileData, instituteProfileData 
               ? `${profileData.first_name || ""} ${profileData.last_name || ""}`.trim()
               : getDefaultName(profileData.role_ids?.[0])}
           </h1>
-          <p className="text-sm text-gray-600">{profileData.email}</p>
+          <p className="text-sm glassy-text-secondary">{profileData.email}</p>
         </div>
       </div>
 
@@ -152,34 +152,34 @@ const Profile = ({ adminProfileData, companiesProfileData, instituteProfileData 
         : userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN
           ? renderCompanyData(profileData)
           : (
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-800">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm glassy-text-primary">
               <div>
-                <span className="font-semibold text-gray-900">Username:</span>{" "}
+                <span className="font-semibold glassy-text-primary">Username:</span>{" "}
                 {profileData.username ?? "N/A"}
               </div>
 
               <div>
-                <span className="font-semibold text-gray-900">Phone:</span>{" "}
+                <span className="font-semibold glassy-text-primary">Phone:</span>{" "}
                 {profileData.country_code?.dial_code ?? "N/A"} {profileData.phone_number ?? "--- --- ----"}
               </div>
 
               <div>
-                <span className="font-semibold text-gray-900">Country:</span>{" "}
+                <span className="font-semibold glassy-text-primary">Country:</span>{" "}
                 {profileData.country_code?.name ?? "N/A"} {profileData.country_code?.emoji ?? "N/A"}
               </div>
 
               <div>
-                <span className="font-semibold text-gray-900">Email Verified:</span>{" "}
+                <span className="font-semibold glassy-text-primary">Email Verified:</span>{" "}
                 {profileData.email_verified ? "✅ Yes" : "❌ No"}
               </div>
 
               <div>
-                <span className="font-semibold text-gray-900">Last Active:</span>{" "}
+                <span className="font-semibold glassy-text-primary">Last Active:</span>{" "}
                 {new Date(profileData.last_active_at).toLocaleString() ?? "N/A"}
               </div>
 
               <div>
-                <span className="font-semibold text-gray-900">Created At:</span>{" "}
+                <span className="font-semibold glassy-text-primary">Created At:</span>{" "}
                 {new Date(profileData.createdAt).toLocaleDateString() ?? "N/A"}
               </div>
             </div>
@@ -279,38 +279,38 @@ export default Profile;
 //               ? `${profileData.first_name || ""} ${profileData.last_name || ""}`.trim()
 //               : getDefaultName(profileData.role_ids?.[0])}
 //           </h1>
-//           <p className="text-sm text-gray-600">{profileData.email}</p>
+//           <p className="text-sm glassy-text-secondary">{profileData.email}</p>
 //         </div>
 //       </div>
 
-//       <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-800">
+//       <div className="grid sm:grid-cols-2 gap-4 text-sm glassy-text-primary">
 //         <div>
-//           <span className="font-semibold text-gray-900">Username:</span>{" "}
+//           <span className="font-semibold glassy-text-primary">Username:</span>{" "}
 //           {profileData.username ?? "N/A"}
 //         </div>
 
 //         <div>
-//           <span className="font-semibold text-gray-900">Phone:</span>{" "}
+//           <span className="font-semibold glassy-text-primary">Phone:</span>{" "}
 //           {profileData.country_code?.dial_code ?? "N/A"} {profileData.phone_number ?? "--- --- ----"}
 //         </div>
 
 //         <div>
-//           <span className="font-semibold text-gray-900">Country:</span>{" "}
+//           <span className="font-semibold glassy-text-primary">Country:</span>{" "}
 //           {profileData.country_code?.name ?? "N/A"} {profileData.country_code?.emoji ?? "N/A"}
 //         </div>
 
 //         <div>
-//           <span className="font-semibold text-gray-900">Email Verified:</span>{" "}
+//           <span className="font-semibold glassy-text-primary">Email Verified:</span>{" "}
 //           {profileData.email_verified ? "✅ Yes" : "❌ No"}
 //         </div>
 
 //         <div>
-//           <span className="font-semibold text-gray-900">Last Active:</span>{" "}
+//           <span className="font-semibold glassy-text-primary">Last Active:</span>{" "}
 //           {new Date(profileData.last_active_at).toLocaleString() ?? "N/A"}
 //         </div>
 
 //         <div>
-//           <span className="font-semibold text-gray-900">Created At:</span>{" "}
+//           <span className="font-semibold glassy-text-primary">Created At:</span>{" "}
 //           {new Date(profileData.createdAt).toLocaleDateString() ?? "N/A"}
 //         </div>
 //       </div>

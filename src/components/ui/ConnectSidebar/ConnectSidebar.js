@@ -10,34 +10,39 @@ import { getCookie } from '../../utils/cookieHandler';
 const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  let isCompany = getCookie("ACTIVE_MODE");
   const [connectedIds, setConnectedIds] = useState([]);
   const [loading, setLoading] = useState(false)
+  const activeMode = getCookie("ACTIVE_MODE"); // 'company' | 'institution' | 'user'
 
   const [loadingIds, setLoadingIds] = useState([]);
   const handleConnect = async (data) => {
 
-    if (!data?.user_path) {
-      navigate(
-        isCompany === "company"
-          ? `/company/profile/${data?.first_name}/${data?._id}`
-          : `/user/profile/${data?.first_name}/${data?._id}`
-      );
-    } else {
-      const name =
-        data?.user_path === "Companies"
-          ? "companies"
-          : data?.user_path === "Institutions"
-            ? "institutions"
-            : "users";
+    // Determine the base path dynamically
+    const basePath =
+      activeMode === "company"
+        ? "/company"
+        : activeMode === "institution"
+          ? "/institution"
+          : "/user";
 
-      navigate(
-        isCompany === "company"
-          ? `/company/view-details/${name}/${data?._id}`
-          : `/user/view-details/${name}/${data?._id}`
-      );
+    // If data has no user_path → it's a direct user/institution/company profile
+    if (!data?.user_path) {
+      navigate(`${basePath}/profile/${data?.first_name}/${data?._id}`);
+      return;
     }
+
+    // Determine what type of entity we're viewing
+    const name =
+      data?.user_path === "Companies"
+        ? "companies"
+        : data?.user_path === "Institutions"
+          ? "institutions"
+          : "users";
+
+    // Navigate dynamically according to the active mode
+    navigate(`${basePath}/view-details/${name}/${data?._id}`);
   };
+
 
 
   // const handleConnectUser = async (data) => {
@@ -117,63 +122,70 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
 
 
   return (
-   <div className="overflow-hidden glassy-card p-2">
-  {/* Tabs */}
-  <div className="w-full bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-1 flex">
-    {[
-      { key: "user", label: "User" },
-      { key: "companies", label: "Companies" },
-      { key: "institutions", label: "Institute" },
-    ].map((tab) => (
-      <button
-        key={tab.key}
-        onClick={() => setActiveTab(tab.key)}
-        className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300
+    <div className="overflow-hidden glassy-card p-2">
+      {/* Tabs */}
+      <div className="w-full bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl p-1 flex">
+        {[
+          { key: "user", label: "User" },
+          { key: "companies", label: "Companies" },
+          { key: "institutions", label: "Institute" },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300
           ${activeTab === tab.key
-            ? "bg-[var(--bg-button)] text-[var(--text-primary)] shadow-md"
-            : "text-[var(--text-secondary)] hover:bg-[var(--bg-button-hover)] hover:text-[var(--text-primary)]"
-          }`}
-      >
-        {tab.label}
-      </button>
-    ))}
-  </div>
+                ? "bg-[var(--bg-button)] text-[var(--text-primary)] shadow-md"
+                : "text-[var(--text-secondary)] hover:bg-[var(--bg-button-hover)] hover:text-[var(--text-primary)]"
+              }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-  {/* Person Cards */}
-  <div className="mt-2 space-y-2">
-    {data && data.length > 0 ? (
-      data.map((person) => (
-        <PersonCard
-          key={person.id}
-          person={person}
-          isConnected={connectedIds.includes(person._id)}
-          isLoading={loadingIds.includes(person._id)}
-          handleConnect={handleConnect}
-          handleConnectUser={handleConnectUser}
-          loading={loading}
-        />
-      ))
-    ) : (
-      <p className="py-4 text-center text-[var(--text-secondary)]">
-        No results found
-      </p>
-    )}
-  </div>
+      {/* Person Cards */}
+      <div className="mt-2 space-y-2">
+        {data && data.length > 0 ? (
+          data.map((person) => (
+            <PersonCard
+              key={person.id}
+              person={person}
+              isConnected={connectedIds.includes(person._id)}
+              isLoading={loadingIds.includes(person._id)}
+              handleConnect={handleConnect}
+              handleConnectUser={handleConnectUser}
+              loading={loading}
+            />
+          ))
+        ) : (
+          <p className="py-4 text-center text-[var(--text-secondary)]">
+            No results found
+          </p>
+        )}
+      </div>
 
-  {/* Explore Button */}
-  <div className="px-6 py-4 border-t border-[var(--border-color)]">
-    <button
-      className="w-full glassy-button"
-      onClick={() =>
-        isCompany === "company"
-          ? navigate(`/company/suggested-users?tab=${activeTab}`)
-          : navigate(`/user/suggested-users?tab=${activeTab}`)
-      }
-    >
-      Explore
-    </button>
-  </div>
-</div>
+      {/* Explore Button */}
+      <div className="px-6 py-4 border-t border-[var(--border-color)]">
+        <button
+          className="w-full glassy-button"
+          onClick={() => {
+
+            const basePath =
+              activeMode === "company"
+                ? "/company"
+                : activeMode === "institution"
+                  ? "/institution"
+                  : "/user";
+
+            navigate(`${basePath}/suggested-users?tab=${activeTab}`);
+          }}
+        >
+          Explore
+        </button>
+
+      </div>
+    </div>
 
   );
 };

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../../redux/CompanySlices/companiesSlice';
 import { uploadImageDirectly, uploadMultiImageDirectly, uploadVideoDirectly } from '../../../components/utils/globalFunction';
 import CustomInput from '../../../components/ui/InputAdmin/CustomInput';
- 
+
 import CustomImageVideoUpload from '../../../components/ui/InputAdmin/CustomImageVideoUpload';
 import EnhancedFileInput from '../../../components/ui/InputAdmin/CustomFileAndImage';
 import CustomVideoUpload from '../../../components/ui/InputAdmin/CustomVideoUpload';
@@ -328,7 +328,7 @@ const CreatePost = () => {
   }, [errors.media]);
 
 
-  const handleFileUpload2 = async (file) => { 
+  const handleFileUpload2 = async (file) => {
     if (!file) {
       toast.error('Please select a file');
       return;
@@ -377,7 +377,7 @@ const CreatePost = () => {
       toast.error('File size must be less than 5MB');
       return;
     }
-    const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"]; 
+    const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
     if (![...allowedImageTypes].includes(file.type)) {
       toast.error("Only image (JPEG, PNG) or PDF files are allowed");
       return;
@@ -515,17 +515,17 @@ const CreatePost = () => {
 
   return (
     <div className="create-post-container min-h-screen ">
-      <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto p-6 space-y-6 glassy-card">
         {/* Header */}
         <div className='flex justify-between items-center   p-4'>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Create New Post</h1>
-            <p className="text-gray-600 mt-1">Share your thoughts with the world</p>
+            <h1 className="text-3xl font-bold glassy-text-primary">Create New Post</h1>
+            <p className="glassy-text-secondary mt-1">Share your thoughts with the world</p>
           </div>
         </div>
 
         <div className=" overflow-hidden">
-          <div className="post-type-selector flex justify-start space-x-4 border-b border-gray-200">
+          <div className="post-type-selector flex justify-start space-x-4  ">
             {[
               { type: "text", label: "Text" },
               { type: "image-video", label: "Images & Video" },
@@ -536,7 +536,7 @@ const CreatePost = () => {
                 key={type}
                 onClick={() => handlePostTypeChange(type)}
                 className={`relative flex items-center px-3 py-2 text-sm font-medium transition-all duration-200 ease-in-out rounded-md
-                                        ${postData.post_type === type ? "text-blue-600 " : "glassy-text-secondary hover:text-gray-700 hover:bg-gray-100"
+                                        ${postData.post_type === type ? "text-blue-600 " : "glassy-text-secondary hover:glassy-text-secondary "
                   }`}
               >
                 {label}
@@ -549,7 +549,7 @@ const CreatePost = () => {
 
           <form className='p-6 space-y-6' onSubmit={handleSubmit}>
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">
+              <label className="block text-sm font-semibold glassy-text-secondary">
                 Post Title <span className="text-red-500">*</span>
               </label>
               <CustomInput
@@ -571,7 +571,7 @@ const CreatePost = () => {
             {(postData.post_type === 'text' || postData?.post_type === 'poll' || postData?.post_type === 'link' || postData?.post_type === 'image-video') && (
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="block text-sm font-semibold text-gray-700">
+                  <label className="block text-sm font-semibold glassy-text-secondary">
                     Content <span className="text-red-500">*</span>
                   </label>
                 </div>
@@ -597,7 +597,7 @@ const CreatePost = () => {
 
             {postData.post_type === "image-video" && (
               <div className="space-y-3">
-                <label className="block text-sm font-semibold text-gray-700">
+                <label className="block text-sm font-semibold glassy-text-secondary">
                   Upload Media <span className="text-red-500">*</span>
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 transition-colors">
@@ -618,7 +618,7 @@ const CreatePost = () => {
 
             {postData.post_type === 'link' && (
               <div className="space-y-3">
-                <label className="block text-sm font-semibold text-gray-700">
+                <label className="block text-sm font-semibold glassy-text-secondary">
                   Link URL <span className="text-red-500">*</span>
                 </label>
                 <CustomInput
@@ -631,7 +631,7 @@ const CreatePost = () => {
                   onChange={handleInputChange}
                 />
                 {renderError('link')}
-                <p className="text-sm text-gray-600">Share an interesting link with your audience</p>
+                <p className="text-sm glassy-text-secondary">Share an interesting link with your audience</p>
 
                 <EnhancedFileInput label='Thumbnail' value={postData?.thumbnail} onChange={handleFileUpload} supportedFormats="Images"
                   onDelete={
@@ -650,7 +650,7 @@ const CreatePost = () => {
             {postData.post_type === 'poll' && (
               <div className="space-y-4">
                 <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700">
+                  <label className="block text-sm font-semibold glassy-text-secondary">
                     Poll Duration (Days) <span className="text-red-500">*</span>
                   </label>
                   <CustomInput
@@ -664,12 +664,12 @@ const CreatePost = () => {
                     onChange={handlePollDurationChange}
                   />
                   {renderError('pollDuration')}
-                  <p className="text-sm text-gray-600">How long should the poll be open for voting? (1-30 days)</p>
+                  <p className="text-sm glassy-text-secondary">How long should the poll be open for voting? (1-30 days)</p>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <label className="block text-sm font-semibold text-gray-700">
+                    <label className="block text-sm font-semibold glassy-text-secondary">
                       Poll Options <span className="text-red-500">*</span>
                     </label>
                     <button
@@ -709,7 +709,7 @@ const CreatePost = () => {
                     ))}
                   </div>
 
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm glassy-text-secondary">
                     {postData.poll.options.length}/10 options • Add at least 2 options for your poll
                   </p>
                 </div>
@@ -717,7 +717,7 @@ const CreatePost = () => {
             )}
 
             <div className="space-y-3">
-              <label className="block text-sm font-semibold text-gray-700">
+              <label className="block text-sm font-semibold glassy-text-secondary">
                 Tags
               </label>
               <div className="flex gap-2">

@@ -369,7 +369,7 @@ const CalendarView = ({ jobs }) => {
 
             <div className="mt-6 flex justify-end space-x-3">
               <button
-                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                className="px-4 py-2 bg-gray-200 glassy-text-primary rounded hover:bg-gray-300"
                 onClick={() => setIsModalOpen(false)}
               >
                 Close

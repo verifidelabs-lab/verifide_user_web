@@ -156,7 +156,7 @@ const MessageText2 = ({ msg }) => {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <h4 className="font-medium truncate">{preview?.title || 'PDF Document'}</h4>
-                                <p className="text-sm text-gray-600 truncate">Click to view PDF document</p>
+                                <p className="text-sm glassy-text-secondary truncate">Click to view PDF document</p>
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@ const MessageText2 = ({ msg }) => {
                         )}
                         <div className="p-3">
                             <h4 className="font-medium text-sm mb-1 line-clamp-2">{preview.title}</h4>
-                            <p className="text-xs text-gray-600 line-clamp-2">{preview.description}</p>
+                            <p className="text-xs glassy-text-secondary line-clamp-2">{preview.description}</p>
                             <div className="flex items-center mt-2">
                                 <img
                                     src={`https://www.google.com/s2/favicons?sz=64&domain_url=${url}`}

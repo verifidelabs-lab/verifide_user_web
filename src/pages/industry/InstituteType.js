@@ -235,7 +235,7 @@ const InstituteType = () => {
                 <div className=" p-6">
                     <div className="flex justify-between place-items-center">
                         <div>
-                            <h1 className="md:text-3xl text-sm font-bold text-gray-900 mb-2">
+                            <h1 className="md:text-3xl text-sm font-bold glassy-text-primary mb-2">
                                 institution Type Management
                             </h1>
 
@@ -381,13 +381,13 @@ const InstituteType = () => {
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Name
                                 </label>
-                                <p className="text-gray-900">{modalData.data.name}</p>
+                                <p className="glassy-text-primary">{modalData.data.name}</p>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Display Name
                                 </label>
-                                <p className="text-gray-900">{modalData.data.display_name}</p>
+                                <p className="glassy-text-primary">{modalData.data.display_name}</p>
                             </div>
 
                         </div>

@@ -101,9 +101,9 @@ const Resume = () => {
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div>
           <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
-            <span className="text-gray-600 cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
+            <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
             <span className="text-gray-400">›</span>
-            <span className="text-gray-600 cursor-pointer" onClick={() => navigate(`/user/profile`)}>Profile</span>
+            <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/profile`)}>Profile</span>
             <span className="text-gray-400">›</span>
             <span className="font-medium text-blue-600 cursor-pointer">Resume Preview</span>
           </nav>
@@ -129,9 +129,9 @@ const Resume = () => {
       <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex justify-between items-center mb-4">
           <nav className="flex justify-start items-center gap-2 text-sm">
-            <span className="text-gray-600 cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
+            <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
             <span className="text-gray-400">›</span>
-            <span className="text-gray-600 cursor-pointer" onClick={() => navigate(`/user/profile`)}>Profile</span>
+            <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/profile`)}>Profile</span>
             <span className="text-gray-400">›</span>
             <span className="font-medium text-blue-600 cursor-pointer">Resume Preview</span>
           </nav>
@@ -234,8 +234,8 @@ const Resume = () => {
             <div className="col-span-2 p-10 flex flex-col gap-10">
               {/* Header */}
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 capitalize">{profileData.personalInfo.first_name} {profileData.personalInfo.last_name}</h1>
-                <p className="text-gray-600 text-lg">{profileData.personalInfo.headline}</p>
+                <h1 className="text-3xl font-bold glassy-text-primary capitalize">{profileData.personalInfo.first_name} {profileData.personalInfo.last_name}</h1>
+                <p className="glassy-text-secondary text-lg">{profileData.personalInfo.headline}</p>
               </div>
 
               {/* About */}

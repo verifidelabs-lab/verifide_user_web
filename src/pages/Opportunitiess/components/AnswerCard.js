@@ -58,7 +58,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
 
     return (
         <div className="glassy-card rounded-xl border  space-y-2 mb-4 last:mb-0">
-            <p className="text-sm font-medium text-gray-800 bg-[#F2F2F7] p-3">
+            <p className="text-sm font-medium glassy-text-primary bg-[#F2F2F7] p-3">
                 {index + 1}. {question}
             </p>
             <div className="mt-2 p-3">{renderAnswer()}</div>

@@ -360,7 +360,7 @@ const renderPreviousFeedback = () => {
   return (
     <div className="glassy-card p-5 rounded-lg border border-gray-200">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Previous Feedback</h3>
+        <h3 className="text-lg font-semibold glassy-text-primary">Previous Feedback</h3>
         <button
           onClick={() => setShowPreviousFeedback(false)}
           className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
@@ -395,7 +395,7 @@ const renderPreviousFeedback = () => {
                         {new Date(feedback.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className="text-gray-800 text-sm mb-2">{feedback.remarks}</p>
+                    <p className="glassy-text-primary text-sm mb-2">{feedback.remarks}</p>
                     
                     {feedback.images && feedback.images.length > 0 && (
                       <div className="grid grid-cols-3 gap-2 mt-2">
@@ -432,18 +432,18 @@ const renderPreviousFeedback = () => {
       <div className="glassy-card rounded-xl shadow-xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Provide Feedback</h2>
+            <h2 className="text-2xl font-bold glassy-text-primary">Provide Feedback</h2>
             <div className="flex flex-wrap gap-4 mt-2">
               <div className="text-sm">
-                <span className="text-gray-600">Quest: </span>
+                <span className="glassy-text-secondary">Quest: </span>
                 <span className="font-medium">{questData?.title}</span>
               </div>
               <div className="text-sm">
-                <span className="text-gray-600">Participant: </span>
+                <span className="glassy-text-secondary">Participant: </span>
                 <span className="font-medium">{questData?.user_id?.name}</span>
               </div>
               <div className="text-sm">
-                <span className="text-gray-600">Engagements: </span>
+                <span className="glassy-text-secondary">Engagements: </span>
                 <span className="font-medium">{questData?.engagement_count}</span>
               </div>
             </div>
@@ -499,10 +499,10 @@ const renderPreviousFeedback = () => {
               <>
                 <div className="flex justify-between items-center">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900">
+                    <h3 className="text-xl font-semibold glassy-text-primary">
                       {currentModule?.title || ''}
                     </h3>
-                    <p className="text-xs text-gray-600 mt-1 font-semibold">
+                    <p className="text-xs glassy-text-secondary mt-1 font-semibold">
                       Provide your feedback for this module
                     </p>
                   </div>
@@ -532,7 +532,7 @@ const renderPreviousFeedback = () => {
                 <div className="flex justify-between mt-6">
                   <button
                     onClick={onClose}
-                    className="text-gray-600 hover:text-gray-800 font-medium py-2.5 px-6 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                    className="glassy-text-secondary hover:glassy-text-primary font-medium py-2.5 px-6 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
                   >
                     Cancel
                   </button>

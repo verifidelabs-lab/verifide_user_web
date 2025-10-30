@@ -79,7 +79,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
             case 'scheduled':
                 return { text: 'Interview Scheduled', color: 'bg-purple-50 text-purple-600 border-purple-200' };
             case 'completed':
-                return { text: 'Interview Completed', color: 'bg-gray-50 text-gray-600 border-gray-200' };
+                return { text: 'Interview Completed', color: 'bg-gray-50 glassy-text-secondary border-gray-200' };
             case 'cancelled':
                 return { text: 'Interview Cancelled', color: 'bg-red-50 text-red-600 border-red-200' };
             default:

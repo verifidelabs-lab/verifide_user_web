@@ -121,7 +121,7 @@ const PostsManagement = () => {
         //     alt={`${user?.first_name} ${user?.last_name}`}
         //     className="w-8 h-8 rounded-full object-cover border"
         //   />
-        //   <span className="font-medium text-gray-800">
+        //   <span className="font-medium glassy-text-primary">
         //     {user?.first_name} {user?.last_name}
         //   </span>
         // </div>,
@@ -153,7 +153,7 @@ const PostsManagement = () => {
         <div className="p-6">
           <div className="flex justify-between place-items-center">
             <div>
-              <h1 className="md:text-3xl text-sm font-bold text-gray-900 mb-2">
+              <h1 className="md:text-3xl text-sm font-bold glassy-text-primary mb-2">
                 Reported Posts
               </h1>
             </div>

@@ -133,7 +133,7 @@ const Recommended = () => {
 
       <div className="w-full flex-1 p-1 md:p-6 mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto">
         <div className="mb-8">
-          <div className="hidden md:flex items-center gap-2 text-sm text-gray-600 mb-4">
+          <div className="hidden md:flex items-center gap-2 text-sm glassy-text-secondary mb-4">
             <span>Course</span>
             <span>›</span>
             <span className="text-[#2563EB] font-semibold">{activeSection}</span>

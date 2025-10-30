@@ -1,4 +1,4 @@
-import { BiCalendar, BiCheck, BiChevronRight,BiEdit, BiImage, BiLink, BiPlus, BiPoll, BiTrash,} from "react-icons/bi";
+import { BiCalendar, BiCheck, BiChevronRight, BiEdit, BiImage, BiLink, BiPlus, BiPoll, BiTrash, } from "react-icons/bi";
 import PollFormUser from "./PollFormUser";
 import { toast } from "sonner";
 import QuestTypeBadge from "./QuestTypeBadge";
@@ -15,8 +15,8 @@ const getStatus = (startDate, endDate) => {
     return "Ended";
   }
 };
-const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVote, accessMode,
-  isLoading2, IsCompany  
+const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote, accessMode,
+  isLoading2, isCompany, isInstitution,
 }) => {
   const status = getStatus(quest.startDate, quest.endDate);
   const [votedOption, setVotedOption] = useState(null);
@@ -115,7 +115,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
                 className="flex items-center justify-between p-3 cursor-pointer"
                 onClick={() => setPollExpanded(!pollExpanded)}
               >
-                <div className="flex items-center text-sm font-medium text-gray-800">
+                <div className="flex items-center text-sm font-medium glassy-text-primary">
                   <BiPoll className="mr-2 text-blue-500" />
                   <span>Community Poll ({quest.poll.total_votes} votes)</span>
                 </div>
@@ -133,8 +133,8 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
                       const percentage =
                         quest.poll.total_votes > 0
                           ? Math.round(
-                              (option.vote_count / quest.poll.total_votes) * 100
-                            )
+                            (option.vote_count / quest.poll.total_votes) * 100
+                          )
                           : 0;
 
                       return (
@@ -144,13 +144,13 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
                           onClick={() =>
                             quest?.isVoted
                               ? toast.info(
-                                  "You are already vote in this poll !"
-                                )
+                                "You are already vote in this poll !"
+                              )
                               : handleVoteClick(quest._id, optIdx)
                           }
                         >
                           <div className="flex justify-between items-center mb-1">
-                            <span className="text-sm text-gray-800">
+                            <span className="text-sm glassy-text-primary">
                               {option.text}
                             </span>
                             <span className="text-xs font-medium text-blue-600">
@@ -200,7 +200,7 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
           )}
 
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-            {accessMode === "6"|| IsCompany === "company"   && (
+            {accessMode === "6" || isCompany() || isInstitution() && (
               <button
                 className="text-xs glassy-text-secondary hover:text-blue-600 transition-colors flex items-center"
                 onClick={() => onViewEngagement(quest)}
@@ -212,34 +212,33 @@ const QuestCard = ({  quest, onEngage, onViewEngagement, onEdit, onDelete, onVot
             <div className="flex items-center gap-2">
               {(quest.type === "sign-up" || quest.type === "feedbacks") && (
                 <>
-                  {accessMode === "6" || IsCompany === "company" ||
-                  status === "Ended" ||
-                  quest?.isFullyFeedback
+                  {accessMode === "6" || isCompany() || isInstitution() ||
+                    status === "Ended" ||
+                    quest?.isFullyFeedback
                     ? null
                     : !quest?.isEngaged && (
-                        <button
-                          className={`text-xs ${
-                            status === "Upcoming"
-                              ? "bg-gray-400 cursor-not-allowed"
-                              : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
+                      <button
+                        className={`text-xs ${status === "Upcoming"
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
                           } glassy-text-primary px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1`}
-                          disabled={status === "Upcoming"}
-                          onClick={() => onEngage(quest)}
-                        >
-                          <BiPlus className="text-sm" /> Join
-                        </button>
-                      )}
+                        disabled={status === "Upcoming"}
+                        onClick={() => onEngage(quest)}
+                      >
+                        <BiPlus className="text-sm" /> Join
+                      </button>
+                    )}
                 </>
               )}
 
               {quest.type === "survey-polls" &&
-                accessMode !== "6" &&  IsCompany !== "company"  &&
+                accessMode !== "6" && !isCompany() &&
                 status === "Ongoing" &&
                 !quest?.isVoted && (
                   <SurveyButton onClick={() => setShowForm(true)} />
                 )}
 
-              {accessMode === "6" || IsCompany === "company"  && (
+              {accessMode === "6" || isCompany() || isInstitution() && (
                 <>
                   {(status === "Upcoming" || status === "Ended") && (
                     <button

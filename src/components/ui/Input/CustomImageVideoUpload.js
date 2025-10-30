@@ -293,7 +293,7 @@ const CustomImageVideoUpload = ({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                   </svg>
                 </div>
-                <span className="text-sm font-medium text-gray-600">Add more files</span>
+                <span className="text-sm font-medium glassy-text-secondary">Add more files</span>
                 <span className="text-xs glassy-text-secondary">
                   {maxFiles - totalImages} image{maxFiles - totalImages !== 1 ? 's' : ''} remaining
                   {!hasVideo && ', 1 video allowed'}

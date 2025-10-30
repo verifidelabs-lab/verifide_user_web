@@ -17,7 +17,7 @@ const MediaPreview = ({ url, type, onRemove }) => {
             onClick={onRemove}
             className="absolute -top-2 -right-2 glassy-card rounded-full p-1 shadow-md hover:bg-gray-100"
           >
-            <FiX className="w-4 h-4 text-gray-600" />
+            <FiX className="w-4 h-4 glassy-text-secondary" />
           </button>
         </div>
       )}
@@ -30,7 +30,7 @@ const MediaPreview = ({ url, type, onRemove }) => {
             onClick={onRemove}
             className="absolute -top-2 -right-2 glassy-card rounded-full p-1 shadow-md hover:bg-gray-100"
           >
-            <FiX className="w-4 h-4 text-gray-600" />
+            <FiX className="w-4 h-4 glassy-text-secondary" />
           </button>
         </div>
       )}

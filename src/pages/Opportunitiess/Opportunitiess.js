@@ -156,7 +156,7 @@ const Opportunities = () => {
       case "rejected":
         return "bg-red-100 text-red-600";
       default:
-        return "bg-gray-100 text-gray-600";
+        return "bg-gray-100 glassy-text-secondary";
     }
   };
 
@@ -562,7 +562,7 @@ const Opportunities = () => {
               />
             )}
             <div>
-              <h1 className="text-lg font-semibold text-gray-800 capitalize">
+              <h1 className="text-lg font-semibold glassy-text-primary capitalize">
                 {isDetailsData?.user_id?.first_name}{" "}
                 {isDetailsData?.user_id?.last_name}
               </h1>
@@ -578,21 +578,21 @@ const Opportunities = () => {
           </div>
           {/* <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">Skill Match Percentage</p>
-              <p className="text-lg font-semibold text-gray-800">
+              <p className="text-sm glassy-text-secondary">Skill Match Percentage</p>
+              <p className="text-lg font-semibold glassy-text-primary">
                 {isDetailsData?.skillsMatchPercentage?.toFixed(2) ?? "0.00"}%
               </p>
             </div>
             <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">Answer Match Percentage</p>
-              <p className="text-lg font-semibold text-gray-800">
+              <p className="text-sm glassy-text-secondary">Answer Match Percentage</p>
+              <p className="text-lg font-semibold glassy-text-primary">
                 {isDetailsData?.answersMatchPercentage?.toFixed(2) ?? "0.00"}%
               </p>
             </div>
           </div> */}
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">Skill Match %</p>
+              <p className="text-sm glassy-text-secondary">Skill Match %</p>
               <p
                 className={`text-lg font-semibold ${getMatchColor(
                   isDetailsData?.skillsMatchPercentage ?? 0
@@ -603,7 +603,7 @@ const Opportunities = () => {
             </div>
 
             <div className="bg-gray-100 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">Answer Match%</p>
+              <p className="text-sm glassy-text-secondary">Answer Match%</p>
               <p
                 className={`text-lg font-semibold ${getMatchColor(
                   isDetailsData?.answersMatchPercentage ?? 0
@@ -705,7 +705,7 @@ const Opportunities = () => {
 
                   <div>
                     <div className="flex justify-start items-start gap-2">
-                      <p className="font-medium text-gray-800 text-xs">
+                      <p className="font-medium glassy-text-primary text-xs">
                         {applicant?.user_id?.first_name}
                       </p>
                       <span
@@ -736,7 +736,7 @@ const Opportunities = () => {
                                   return "text-red-600 font-semibold";
                                 }
                               })()
-                            : "text-gray-600 font-semibold" // In case either of the values is not available
+                            : "glassy-text-secondary font-semibold" // In case either of the values is not available
                         }
                       >
                         Matching{"  "}
@@ -1015,7 +1015,7 @@ const Opportunities = () => {
                 ${
                   isActive
                     ? "bg-blue-50 text-blue-600  border-blue-500 rounded-lg"
-                    : "text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-lg"
+                    : "glassy-text-secondary hover:text-blue-600 hover:bg-gray-100 rounded-lg"
                 }`}
                     onClick={() => handleTabClick(tab.id)}
                   >
@@ -1046,7 +1046,7 @@ const Opportunities = () => {
                 onClick={() => setShowFilterDropdown(!showFilterDropdown)}
                 className="flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full sm:w-auto"
               >
-                <TbAdjustmentsHorizontal className="w-5 h-5 text-gray-600" />
+                <TbAdjustmentsHorizontal className="w-5 h-5 glassy-text-secondary" />
                 <span className="text-gray-700">Filter</span>
                 {getActiveFiltersCount() > 0 && (
                   <span className="bg-blue-600 glassy-text-primary text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -1141,7 +1141,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "open"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:glassy-text-primary"
+                      : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
                 >
                   Open Jobs
@@ -1151,7 +1151,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "shortlisted"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:glassy-text-primary"
+                      : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
                 >
                   Shortlisted
@@ -1161,7 +1161,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "schedule-interviews"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:glassy-text-primary"
+                      : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
                 >
                   Schedules Interviews
@@ -1171,7 +1171,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "closed"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:glassy-text-primary"
+                      : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
                 >
                   Closed Jobs
@@ -1181,7 +1181,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "rejected"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:glassy-text-primary"
+                      : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
                 >
                   Rejected Interviews
@@ -1191,7 +1191,7 @@ const Opportunities = () => {
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
                     activeTab === "selected_in_interview"
                       ? "bg-blue-50 text-blue-600 shadow-sm"
-                      : "text-gray-600 hover:glassy-text-primary"
+                      : "glassy-text-secondary hover:glassy-text-primary"
                   }`}
                 >
                   Ready to Join
@@ -1414,7 +1414,7 @@ const Opportunities = () => {
                       {/* Interview Details */}
                       <div className="glassy-card border border-gray-200 rounded-lg p-6 shadow-sm">
                         <div className="flex justify-between items-center mb-4">
-                          <h3 className="text-xl font-semibold text-gray-900">
+                          <h3 className="text-xl font-semibold glassy-text-primary">
                             Interview Details
                           </h3>
                           <div className="">
@@ -1435,7 +1435,7 @@ const Opportunities = () => {
                               <p className="text-sm font-medium text-gray-700">
                                 Date
                               </p>
-                              <p className="text-gray-900">
+                              <p className="glassy-text-primary">
                                 {selectedApplication?.interviewDetails
                                   ?.select_date
                                   ? convertTimestampToDate(
@@ -1451,7 +1451,7 @@ const Opportunities = () => {
                               <p className="text-sm font-medium text-gray-700">
                                 Time
                               </p>
-                              <p className="text-gray-900">
+                              <p className="glassy-text-primary">
                                 {moment(
                                   selectedApplication.interviewDetails
                                     .select_time
@@ -1506,7 +1506,7 @@ const Opportunities = () => {
 
                                   {/* Content */}
                                   <div>
-                                    <p className="text-sm text-gray-800">
+                                    <p className="text-sm glassy-text-primary">
                                       {ele?.remarks || "No remarks provided"}
                                     </p>
                                     <p className="text-xs glassy-text-secondary">
@@ -1517,7 +1517,7 @@ const Opportunities = () => {
                               ))}
                             </ul>
                           ) : (
-                            <p className="text-gray-600 text-sm">
+                            <p className="glassy-text-secondary text-sm">
                               No rejection remarks found.
                             </p>
                           )}
@@ -1528,7 +1528,7 @@ const Opportunities = () => {
                         "selected_in_interview" && (
                         <div className="glassy-card border border-gray-200 rounded-xl p-6 shadow-md">
                           <div className="flex items-center mb-4">
-                            <h3 className="text-xl font-semibold text-gray-900">
+                            <h3 className="text-xl font-semibold glassy-text-primary">
                               Interview Feedback
                             </h3>
                           </div>
@@ -1536,11 +1536,11 @@ const Opportunities = () => {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Rating */}
                             <div>
-                              <p className="text-sm font-medium text-gray-600 mb-1">
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
                                 Rating
                               </p>
                               <div className="flex items-center">
-                                <span className="text-lg font-semibold text-gray-900">
+                                <span className="text-lg font-semibold glassy-text-primary">
                                   {selectedApplication?.feedback?.rating ??
                                     "N/A"}
                                 </span>
@@ -1554,10 +1554,10 @@ const Opportunities = () => {
 
                             {/* Duration */}
                             <div>
-                              <p className="text-sm font-medium text-gray-600 mb-1">
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
                                 Duration
                               </p>
-                              <p className="text-gray-900">
+                              <p className="glassy-text-primary">
                                 {selectedApplication?.feedback?.duration
                                   ? `${selectedApplication.feedback.duration} minutes`
                                   : "N/A"}
@@ -1566,10 +1566,10 @@ const Opportunities = () => {
 
                             {/* Interviewer */}
                             <div>
-                              <p className="text-sm font-medium text-gray-600 mb-1">
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
                                 Interviewer
                               </p>
-                              <p className="text-gray-900">
+                              <p className="glassy-text-primary">
                                 {selectedApplication?.feedback?.interviewer ||
                                   "N/A"}
                               </p>
@@ -1577,7 +1577,7 @@ const Opportunities = () => {
 
                             {/* Recommendation */}
                             <div>
-                              <p className="text-sm font-medium text-gray-600 mb-1">
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
                                 Recommendation
                               </p>
                               <span
@@ -1589,7 +1589,7 @@ const Opportunities = () => {
                 ? "bg-blue-100 text-blue-700 border-blue-300"
                 : selectedApplication?.feedback?.recommendation === "no"
                 ? "bg-red-100 text-red-700 border-red-300"
-                : "bg-gray-100 text-gray-600 border-gray-300"
+                : "bg-gray-100 glassy-text-secondary border-gray-300"
             }`}
                               >
                                 {selectedApplication?.feedback?.recommendation
@@ -1603,7 +1603,7 @@ const Opportunities = () => {
 
                           {/* Remarks */}
                           <div className="mt-6">
-                            <p className="text-sm font-medium text-gray-600 mb-2">
+                            <p className="text-sm font-medium glassy-text-secondary mb-2">
                               Remarks
                             </p>
                             <div className="bg-gray-50 p-3 rounded-lg border">

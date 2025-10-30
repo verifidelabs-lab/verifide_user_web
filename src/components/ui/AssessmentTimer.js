@@ -50,7 +50,7 @@ const AssessmentTimer = ({ initialTime, onTimeUp }) => {
             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+        <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
           {timeLeft}s
         </div>
       </div>

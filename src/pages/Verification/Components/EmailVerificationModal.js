@@ -99,7 +99,7 @@ const EmailVerificationModal = ({
             <div className="glassy-card rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 border-b">
-                    <h2 className="text-xl font-semibold text-gray-800">Preview the mail</h2>
+                    <h2 className="text-xl font-semibold glassy-text-primary">Preview the mail</h2>
                     <button
                         onClick={onClose}
                         className="glassy-text-secondary hover:text-gray-700"

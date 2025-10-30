@@ -108,7 +108,7 @@ const ContactItem = React.memo(
           <p
             className={`text-sm truncate mt-1 ${contact?.isBlocked
                 ? "text-gray-400 italic"
-                : "text-gray-600"
+                : "glassy-text-secondary"
               }`}
           >
             {contact?.isBlocked

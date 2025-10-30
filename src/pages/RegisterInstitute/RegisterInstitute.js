@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { PiPlus, PiX } from 'react-icons/pi';
-import { arrayTransform } from '../../components/utils/globalFunction';
+import { arrayTransform, uploadImageDirectly } from '../../components/utils/globalFunction';
 import { useDispatch, useSelector } from 'react-redux';
 import { cities, countries, state } from '../../redux/Global Slice/cscSlice';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   institutionTypePublic,
   institutionDegreePublic,
@@ -24,6 +24,8 @@ import FilterSelect from '../../components/ui/InputAdmin/FilterSelect';
 import useFormHandler from '../../components/hooks/useFormHandler';
 import Button from '../../components/ui/Button/Button';
 import Input from '../../components/ui/InputAdmin/Input';
+import { createInstitution, getInstitutionsList } from '../../redux/slices/instituteSlice';
+import EnhancedFileInput from '../../components/ui/Input/CustomFileAndImage';
 
 const initialFormData = {
   username: "",
@@ -182,6 +184,8 @@ const RegisterInstitute = () => {
   const countriesList = arrayTransform(
     cscSelector?.countriesData?.data?.data || []
   );
+  const [loading, setLoading] = useState(false);
+  const [logoUrl, setLogoUrl] = useState(formData.logo_url || "");
   const [institutionTypes, setInstitutionTypes] = useState([]);
   const [degrees, setDegrees] = useState([]);
   const [customDegreeInput, setCustomDegreeInput] = useState("");
@@ -230,6 +234,7 @@ const RegisterInstitute = () => {
   useEffect(() => {
     dispatch(countries());
     getInstitutionTypes();
+    getInstitutionsList()
     getDegrees();
   }, []);
 
@@ -409,18 +414,18 @@ const RegisterInstitute = () => {
       newErrors.email = "Please enter a valid email address";
     }
 
-    // Password validation
-    if (!formData.password?.trim())
-      newErrors.password = "Password is required";
-    else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-    }
+    // // Password validation
+    // if (!formData.password?.trim())
+    //   newErrors.password = "Password is required";
+    // else if (formData.password.length < 8) {
+    //   newErrors.password = "Password must be at least 8 characters";
+    // }
 
-    if (!formData.confirmPassword?.trim()) {
-      newErrors.confirmPassword = "Please confirm your password";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
+    // if (!formData.confirmPassword?.trim()) {
+    //   newErrors.confirmPassword = "Please confirm your password";
+    // } else if (formData.password !== formData.confirmPassword) {
+    //   newErrors.confirmPassword = "Passwords do not match";
+    // }
 
     // Institution type validation
     if (!formData.institution_type_id) {
@@ -513,21 +518,36 @@ const RegisterInstitute = () => {
         linkedin_page_url: formData.linkedin_page_url,
         email: formData.email,
         username: formData.username,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
+        // password: formData.password,
+        // confirmPassword: formData.confirmPassword,
       };
 
-      const res = await dispatch(institutionsRegister(createPayload)).unwrap();
+      const res = await dispatch(createInstitution(createPayload)).unwrap();
       if (res?.error) {
         toast.error(res?.message || "Failed to create institution");
         return;
       }
 
-      if (res?.data?.redisToken) {
-        setInstitutionRedisToken(res.data.redisToken);
-        setShowOtpPopup(true);
-        toast.success("Registration successful! Please verify your OTP.");
-      } else {
+      // if (res?.data?.redisToken) {
+      //   setInstitutionRedisToken(res.data.redisToken);
+      //   setShowOtpPopup(true);
+      //   toast.success("Registration successful! Please verify your OTP.");
+      // } else 
+      {
+        const apiPayload = {
+          page: 1,
+          size: 100,
+          populate: "industry|name",
+          select:
+            "name display_name email industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+          searchFields: "name",
+          keyWord: "",
+          query: JSON.stringify({
+            created_by_users: false,
+          }),
+        };
+
+        dispatch(getInstitutionsList());
         toast.success(res?.message || "Institution created successfully");
         setFormData(initialFormData);
       }
@@ -590,6 +610,68 @@ const RegisterInstitute = () => {
   const handleBack = () => {
     navigate('/login-selection');
   };
+  const handleFileUpload = useCallback(
+    async (file, fileType) => {
+      if (!file) {
+        toast.error("Please select a file");
+        return;
+      }
+
+      const maxSize = fileType === "image" ? 5 * 1024 * 1024 : 20 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast.error(
+          `File size must be less than ${fileType === "image" ? "5MB" : "20MB"}`
+        );
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        if (fileType === "image") {
+          const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+          if (!allowedImageTypes.includes(file.type)) {
+            toast.error("Only JPEG, JPG, or PNG files are allowed");
+            return;
+          }
+
+          const result = await uploadImageDirectly(file, "COMPANY_LOGO");
+          if (result?.data?.imageURL) {
+            setLogoUrl(result.data.imageURL);
+            setFormData((prev) => ({
+              ...prev,
+              logo_url: result.data.imageURL,
+            }));
+
+            if (errors.logo_url) {
+              setErrors((prev) => ({ ...prev, logo_url: "" }));
+            }
+
+            toast.success(result?.message || "Logo uploaded successfully");
+          } else {
+            throw new Error("Logo upload failed");
+          }
+        }
+      } catch (error) {
+        console.error("File upload error:", error);
+        toast.error(error?.message || "Failed to upload logo");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [errors.logo_url, setFormData, setErrors]
+  );
+  const handleImageUpload = useCallback(
+    (file) => {
+      handleFileUpload(file, "image");
+    },
+    [handleFileUpload]
+  );
+
+  const removeImage = () => {
+    setLogoUrl("");
+    setFormData((prev) => ({ ...prev, logo_url: "" }));
+  };
   return (
     <>
       <div className="h-screen">
@@ -623,13 +705,13 @@ const RegisterInstitute = () => {
               >
                 <TbArrowBack size={20} />
               </button>
-              <h2 className="text-2xl font-bold text-gray-800">Register Your Institution</h2>
-              <p className="mt-1 text-sm text-gray-600">Fill in your institution details to create an account</p>
+              <h2 className="text-2xl font-bold glassy-text-primary">Register Your Institution</h2>
+              <p className="mt-1 text-sm glassy-text-secondary">Fill in your institution details to create an account</p>
             </div>
 
             <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Account Information</h3>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">Account Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <CustomInput
                     label="Username *"
@@ -649,7 +731,7 @@ const RegisterInstitute = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <PasswordInput
                     label="Password *"
                     value={formData?.password}
@@ -666,11 +748,11 @@ const RegisterInstitute = () => {
                     placeholder="Confirm password"
                     error={errors?.confirmPassword}
                   />
-                </div>
+                </div> */}
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Basic Institution Information</h3>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">Basic Institution Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <CustomInput
                     label="Institution Name *"
@@ -727,7 +809,7 @@ const RegisterInstitute = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Institution Details</h3>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">Institution Details</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <FilterSelect
@@ -832,7 +914,19 @@ const RegisterInstitute = () => {
                     error={errors.linkedin_page_url}
                   />
                 </div>
-
+                <div className="mt-4">
+                  <EnhancedFileInput
+                    accept=".jpg,.jpeg,.png"
+                    supportedFormats="Image"
+                    label="Institute Logo"
+                    name="logo_url"
+                    onChange={handleImageUpload}
+                    onDelete={removeImage}
+                    error={errors.logo_url}
+                    loading={loading}
+                    value={logoUrl}
+                  />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <CustomInput
                     label="Logo URL"
@@ -845,7 +939,7 @@ const RegisterInstitute = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Address</h3>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">Address</h3>
                 <div className="grid grid-cols-1 gap-4">
                   <CustomInput
                     label="Address Line 1"
@@ -920,11 +1014,12 @@ const RegisterInstitute = () => {
               {/* Specialties */}
               <div className="border-t border-gray-200 pt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">Specialties</h3>
+                  <h3 className="text-lg font-medium glassy-text-primary">Specialties</h3>
                   <Button
                     type="button"
-                    variant="outline"
+                    variant=""
                     size="sm"
+                    className='glassy-button'
                     icon={<PiPlus />}
                     onClick={addSpecialty}
                     disabled={formData?.specialties?.some(
@@ -954,11 +1049,11 @@ const RegisterInstitute = () => {
                       </div>
                       <Button
                         type="button"
-                        variant="outline"
+                        variant=""
                         size="sm"
                         icon={<PiX />}
                         onClick={() => removeSpecialty(index)}
-                        className="text-red-500 hover:text-red-700 mt-1"
+                        className="glassy-button text-red-500 hover:text-red-700 mt-1"
                         disabled={formData.specialties.length <= 1}
                       />
                     </div>
@@ -969,7 +1064,8 @@ const RegisterInstitute = () => {
               <div className="border-t border-gray-200 pt-6">
                 <Button
                   type="submit"
-                  className="w-full py-3"
+                  variant='primary'
+                  className="w-full  py-3"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? 'Registering...' : 'Register Institution'}

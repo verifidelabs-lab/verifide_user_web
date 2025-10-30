@@ -4,7 +4,7 @@ const ActionButton = ({ icon: Icon, count, onClick, isCount }) => {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-gray-100 ${isCount ? 'text-red-500' : 'text-gray-600'
+      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors  ${isCount ? 'text-red-500' : 'glassy-text-secondary'
         }`}
     >
       <Icon className="w-5 h-5" />

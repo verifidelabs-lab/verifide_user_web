@@ -9,10 +9,12 @@ import NoDataFound from '../../../components/ui/No Data/NoDataFound';
 
 const CompanyDashboard = ({
   companiesProfileData,
+  instituteProfileData,
   searchAppearancesChange = 32.6,
   newFollowersChange = -32.6,
 }) => {
-
+  // Determine which profile data to show (company or institution)
+  const profileData = instituteProfileData || companiesProfileData;
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.companyCourse);
   const { getVerificationCenterList: { data } = {} } = selector || {};
@@ -93,8 +95,8 @@ const CompanyDashboard = ({
               Grow your Page 3x faster by leveraging insights and analytics
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
-              <MetricCard value={companiesProfileData?.employee_count} label="Employers" />
-              <MetricCard value={companiesProfileData?.follower_count} label="Followers" />
+              <MetricCard value={profileData?.employee_count} label="Employers" />
+              <MetricCard value={profileData?.follower_count} label="Followers" />
             </div>
           </div>
 

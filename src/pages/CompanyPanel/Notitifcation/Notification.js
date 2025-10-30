@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notificationsList, notificationsMarkAllRead, notificationsMarkAsRead } from '../../../redux/CompanySlices/companiesSlice';
 import { getCookie } from '../../../components/utils/cookieHandler';
 import CustomToggle from '../../../components/ui/Toggle/CustomToggle';
+import { FiChevronDown } from 'react-icons/fi';
 
 const ROLE_BASED_NOTIFICATION_TYPES = {
   Admin: {
@@ -118,19 +119,19 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
   };
 
   return (
-    <div className={`flex items-start justify-between p-4 border-b border-gray-100 ${!notification.isRead ? 'bg-blue-50' : 'glassy-card'}`}>
+    <div className={`flex items-start justify-between p-4  border-gray-100 ${!notification.isRead ? 'bg-card-unread' : ''}`}>
       <div className="flex items-start space-x-3">
         <div className={`p-2 rounded-full ${color}`}>
           <Icon className="w-4 h-4 glassy-text-primary" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-medium text-gray-900 mb-1">
+          <h3 className="text-sm font-medium glassy-text-primary mb-1">
             {notification.title}
           </h3>
           <p className="text-xs glassy-text-secondary mb-2">
             {notification.message}
           </p>
-          <div className="flex items-center text-xs text-gray-400">
+          <div className="flex items-center text-xs glassy-text-secondary">
             <CiLock className="w-3 h-3 mr-1" />
             {formatDate(notification.createdAt)}
           </div>
@@ -138,8 +139,9 @@ const NotificationItem = ({ notification, onMarkAsRead }) => {
       </div>
       <button
         onClick={handleActionClick}
-        className={`px-3 py-1 text-[#2563EB] glassy-text-primary/10 text-sm font-semibold rounded hover:opacity-80 ${notification.isRead ? 'opacity-50 cursor-default' : ''
+        className={`px-3 py-1 glassy-button text-sm font-semibold rounded ${notification.isRead ? "opacity-50 cursor-default" : ""
           }`}
+        disabled={notification.isRead}
       >
         {notification.meta?.buttonText || 'View'}
       </button>
@@ -165,62 +167,107 @@ const NotificationHeader = ({
   };
 
   return (
-    <div className="glassy-card border-b border-gray-200 px-6 py-4">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-4">
-          <form onSubmit={handleSearch} className="relative">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+    <div className="glassy-card  border-gray-200 px-6 py-4">  <div className="hidden md:flex flex-col">
+      <div className="flex flex-row items-center justify-between mb-4">
+        {/* Breadcrumb */}
+        <nav className="flex items-center space-x-2 text-sm">
+          <span
+            className="glassy-text-primary hover:glassy-text-primary-dark cursor-pointer"
+          // onClick={() => navigate("/user/feed")}
+          >
+            Home
+          </span>
+          <span className="glassy-text-secondary">›</span>
+          <span className="glassy-text-secondary">Notifications</span>
+        </nav>
+
+        {/* Search + Filter + Mark All */}
+        <div className="flex flex-wrap md:flex-nowrap items-center gap-3 md:gap-4 relative z-40">
+
+          {/* 🔍 Search */}
+          <form onSubmit={handleSearch} className="relative w-full md:w-64">
+            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-4 h-4" />
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="pl-10 pr-4 py-2 glassy-input-notification text-sm w-full 
+                 focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+                 rounded-xl transition-all duration-200"
             />
           </form>
+
+          {/* 🧩 Filter Dropdown */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center justify-center space-x-2 px-4 py-2 glassy-button 
+                 text-sm rounded-xl border border-[var(--border-color)] 
+                 hover:scale-105 transition-all duration-200"
+            >
+              <BiFilterAlt className="w-4 h-4 glassy-text-primary" />
+              <span className="glassy-text-primary">Filter</span>
+              <FiChevronDown
+                className={`transition-transform duration-200 glassy-text-secondary ${showFilters ? "rotate-180" : ""
+                  }`}
+              />
+            </button>
+
+            {showFilters && (
+              <div
+                className="absolute right-0 mt-2 w-56 glassy-card-header rounded-xl 
+                   border border-[var(--border-color)] shadow-xl 
+                   backdrop-blur-lg z-50 transition-all duration-200 ease-out"
+              >
+                <div className="">
+                  <select
+                    value={filterValue}
+                    onChange={(e) => {
+                      onFilterChange(e.target.value);
+                      setShowFilters(false);
+                    }}
+                    className="w-full px-3 py-2 glassy-input text-sm rounded-lg 
+                       bg-transparent text-[var(--text-primary)] 
+                       focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">All Notifications</option>
+                    {allowedTypes.map((type) => (
+                      <option key={type} value={type}>
+                        {type.replace(/-/g, " ")}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ✅ Mark All as Read */}
           <button
             onClick={onMarkAllRead}
-            className="px-4 py-2 bg-blue-600 glassy-text-primary text-sm rounded-md hover:bg-blue-700"
+            className="px-4 py-2 glassy-button text-sm rounded-xl border border-[var(--border-color)] 
+               hover:scale-105 transition-all duration-200"
           >
             Mark All as Read
           </button>
         </div>
-        <div className="relative">
-          <button
-            type="button"
-            className="flex items-center space-x-2 px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50"
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <BiFilterAlt className="w-4 h-4" />
-            <span>Filter</span>
-          </button>
 
-          {showFilters && (
-            <div className="absolute right-0 mt-2 w-56 glassy-card rounded-md shadow-lg z-10 border border-gray-200">
-              <div className="p-2">
-                <select
-                  value={filterValue}
-                  onChange={(e) => {
-                    onFilterChange(e.target.value);
-                    setShowFilters(false);
-                  }}
-                  className="w-full p-2 border border-gray-300 rounded-md text-sm"
-                >
-                  <option value="">All Notifications</option>
-                  {allowedTypes.map((type) => (
-                    <option key={type} value={type}>{type.replace(/-/g, ' ')}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
 
+      {/* Title + Toggle */}
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold text-gray-900">All Notification</h1>
-        <span className="text-sm glassy-text-secondary flex"><CustomToggle handleClick={() => setIsToggle(prev => !prev)} isToggle={isToggle} />Unread</span>
+        <h1 className="text-xl font-semibold glassy-text-primary">
+          All Notifications
+        </h1>
+        <span className="text-sm glassy-text-secondary flex items-center">
+          <CustomToggle handleClick={() => setIsToggle((prev) => !prev)} isToggle={isToggle} />
+          Unread
+        </span>
       </div>
+    </div>
+
     </div>
   );
 };
@@ -239,7 +286,7 @@ const NotificationInterface = () => {
 
   const notifications = notifyData?.list || [];
   const unreadCount = notifications.filter(n => !n.isRead).length;
-  const userRole = Number(getCookie("COMPANY_ROLE"));
+  const userRole = Number(getCookie("ROLE"));
 
   const getAllowedNotificationTypes = () => {
     for (const key in ROLE_BASED_NOTIFICATION_TYPES) {
@@ -322,10 +369,10 @@ const NotificationInterface = () => {
         setIsToggle={setIsToggle}
         allowedTypes={allowedNotificationTypes}
       />
-      <div className="w-full mx-auto shadow-sm">
+      <div className="w-full mx-auto shadow-sm glassy-card">
         {loading ? (
           <div className="flex justify-center items-center p-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-8 w-8 -2 lue-500"></div>
           </div>
         ) : notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center p-8 glassy-text-secondary glassy-card rounded-md shadow-sm border border-gray-200">

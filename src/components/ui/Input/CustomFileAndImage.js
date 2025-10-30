@@ -116,20 +116,21 @@ const EnhancedFileInput = React.forwardRef(({
 
   return (
     <div className={`w-full ${className}`}>
-      <label className="block text-base text-[#282828] font-medium mb-2">
+      {/* Label */}
+      <label className="block text-sm font-medium glassy-text-primary mb-1">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
 
       <div className="space-y-2">
-
-        {!value ?
+        {!value ? (
           <div
-            className={`relative border-2 border-dashed rounded-lg transition-colors
-            ${dragActive ? 'border-blue-400 bg-blue-50' :
-                error ? 'border-red-300' : 'border-gray-300'}
-            ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:bg-blue-50'}
-          `}
+            className={`relative border-2 rounded-xl transition-colors
+          ${dragActive ? 'border-blue-400 bg-blue-50/30' :
+                error ? 'border-red-500 bg-black/10' :
+                  'border-[var(--border-color)] bg-black/5'}
+          ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:bg-blue-50/20'}
+        `}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
@@ -151,67 +152,63 @@ const EnhancedFileInput = React.forwardRef(({
                 <BiPaperclip className="w-8 h-8 text-gray-400 mb-2" />
               )}
 
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-sm glassy-text-secondary text-center">
                 {uploading ? 'Uploading...' : (
-                  <>
-                    <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
-                      Click to upload
-                    </span>
-                  </>
+                  <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
+                    Click to upload
+                  </span>
                 )}
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs glassy-text-secondary mt-1">
                 {supportedFormats} (max {maxSize}MB)
               </p>
             </div>
           </div>
-
-          : (
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                {getFileIcon(value)}
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium glassy-text-primary truncate">
-                    {getFileName(value)}
-                  </p>
-                  <p className="text-xs glassy-text-secondary">
-                    Uploaded successfully
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 ml-3">
-                <button
-                  type="button"
-                  onClick={() => openFile(value)}
-                  className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
-                  title="View file"
-                >
-                  <BiDownload className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDelete}
-                  className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-100 rounded transition-colors"
-                  title="Delete file"
-                >
-                  <BiTrash className="w-4 h-4" />
-                </button>
+        ) : (
+          <div className="flex items-center justify-between p-3 bg-black/10 rounded-xl border border-[var(--border-color)]">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              {getFileIcon(value)}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium glassy-text-primary truncate">
+                  {getFileName(value)}
+                </p>
+                <p className="text-xs glassy-text-secondary">
+                  Uploaded successfully
+                </p>
               </div>
             </div>
-          )
-        }
 
+            <div className="flex items-center gap-2 ml-3">
+              <button
+                type="button"
+                onClick={() => openFile(value)}
+                className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
+                title="View file"
+              >
+                <BiDownload className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-100 rounded transition-colors"
+                title="Delete file"
+              >
+                <BiTrash className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
 
-      {!value && !error && (
+      {!value && !error && placeholder && (
         <p className="text-xs glassy-text-secondary mt-1">
           {placeholder}
         </p>
       )}
     </div>
+
   );
 });
 

@@ -56,7 +56,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         disabled={currentPage === 1}
         aria-label="Previous page"
       >
-        <LuChevronLeft className="text-gray-600" />
+        <LuChevronLeft className="glassy-text-secondary" />
       </button>
 
       {/* Page Numbers - Centered */}
@@ -84,7 +84,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         disabled={currentPage === totalPages}
         aria-label="Next page"
       >
-        <LuChevronRight className="text-gray-600" />
+        <LuChevronRight className="glassy-text-secondary" />
       </button>
     </div>
   )

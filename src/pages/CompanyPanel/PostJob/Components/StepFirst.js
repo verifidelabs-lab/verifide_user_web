@@ -28,7 +28,7 @@ const StepFirst = ({
     <div className="space-y-8">
       {/* Company & Industry Section */}
       <div className="glassy-card p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-        <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
+        <h2 className="text-lg font-semibold glassy-text-primary capitalize border-b pb-2">
           Company & Industry
         </h2>
         <div className="grid md:grid-cols-2 gap-4">
@@ -160,7 +160,7 @@ const StepFirst = ({
 
       {/* Job Details Section */}
       <div className="glassy-card p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-        <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
+        <h2 className="text-lg font-semibold glassy-text-primary capitalize border-b pb-2">
           Job Details
         </h2>
         <div className="grid md:grid-cols-3 gap-4">
@@ -243,7 +243,7 @@ const StepFirst = ({
 
       {/* Location Section */}
       <div className="glassy-card p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-        <h2 className="text-lg font-semibold text-gray-800 capitalize border-b pb-2">
+        <h2 className="text-lg font-semibold glassy-text-primary capitalize border-b pb-2">
           Location
         </h2>
         <div className="grid md:grid-cols-4 gap-4">

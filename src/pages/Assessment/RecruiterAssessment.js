@@ -129,16 +129,16 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
 
       <div className="flex flex-wrap gap-2 mb-4">
         <span className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-          <HiOutlineClipboardList className="w-4 h-4 text-gray-600" />
-          <span className="text-gray-600">{assessment.no_of_questions} Questions</span>
+          <HiOutlineClipboardList className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{assessment.no_of_questions} Questions</span>
         </span>
         <span className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-          <GoClock className="w-4 h-4 text-gray-600" />
-          <span className="text-gray-600">{assessment.time_limit} mins</span>
+          <GoClock className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{assessment.time_limit} mins</span>
         </span>
         <span className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-          <BsBarChartLine className="w-4 h-4 text-gray-600" />
-          <span className="text-gray-600">{assessment.level_id?.name || 'N/A'}</span>
+          <BsBarChartLine className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{assessment.level_id?.name || 'N/A'}</span>
         </span>
       </div>
       <div className=''>
@@ -199,7 +199,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
             className={`flex items-center justify-center px-4 py-2.5 rounded-xl border transition-colors ${assessment.isDisable ? 'bg-gray-100 border-gray-200 hover:bg-gray-200' : 'bg-green-100 border-green-200 hover:bg-green-200'}`}
           >
             {assessment.isDisable ? (
-              <PiToggleLeft className="w-6 h-6 text-gray-600" />
+              <PiToggleLeft className="w-6 h-6 glassy-text-secondary" />
             ) : (
               <PiToggleRight className="w-6 h-6 text-green-600" />
             )}
@@ -805,7 +805,7 @@ const RecruiterAssessment = () => {
 
     return (
       <div className="flex items-center justify-between p-4">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm glassy-text-secondary">
           Showing {(currentPage - 1) * postsPerPage + 1} to{' '}
           {Math.min(currentPage * postsPerPage, totalPosts)} of {totalPosts} posts
         </div>
@@ -911,7 +911,7 @@ const RecruiterAssessment = () => {
                 <button
                   type="button"
                   onClick={handleClearSearch}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:glassy-text-secondary"
                 >
                   <IoClose size={18} />
                 </button>
@@ -1154,10 +1154,10 @@ const RecruiterAssessment = () => {
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="font-medium">{index + 1}. {question.question}</p>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <p className="text-sm glassy-text-secondary mt-1">
                             Type: {question.question_type?.label || question.question_type}
                           </p>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm glassy-text-secondary">
                             Correct Options: {question.correct_options.join(', ')}
                           </p>
                         </div>

@@ -718,7 +718,7 @@ export default function Message({ profileData, socket }) {
             <div className="flex items-center justify-between p-4 border-b border-gray-200 glassy-card sticky top-0 z-10">
               <div className="flex items-center space-x-3">
                 <button onClick={handleBackClick} className="p-1">
-                  <BiArrowBack className="w-5 h-5 text-gray-600" />
+                  <BiArrowBack className="w-5 h-5 glassy-text-secondary" />
                 </button>
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
                   <span className="glassy-text-primary text-sm font-semibold">
@@ -733,7 +733,7 @@ export default function Message({ profileData, socket }) {
               </div>
               <div className="flex items-center space-x-4">
                 <button className="p-1 hover:bg-gray-100 rounded-full">
-                  <FiMoreVertical className="w-5 h-5 text-gray-600" onClick={() => handleShowOption()} />
+                  <FiMoreVertical className="w-5 h-5 glassy-text-secondary" onClick={() => handleShowOption()} />
                 </button>
               </div>
 

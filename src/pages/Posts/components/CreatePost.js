@@ -544,8 +544,8 @@ const CreatePost = () => {
                 {/* Header */}
                 <div className='flex justify-between items-center   p-4'>
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">Create New Post</h1>
-                        <p className="text-gray-600 mt-1">Share your thoughts with the world</p>
+                        <h1 className="text-3xl font-bold glassy-text-primary">Create New Post</h1>
+                        <p className="glassy-text-secondary mt-1">Share your thoughts with the world</p>
                     </div>
                 </div>
 
@@ -661,7 +661,7 @@ const CreatePost = () => {
                                     onChange={handleInputChange}
                                 />
                                 {renderError('link')}
-                                <p className="text-sm text-gray-600">Share an interesting link with your audience</p>
+                                <p className="text-sm glassy-text-secondary">Share an interesting link with your audience</p>
 
                                 {/* <EnhancedFileInput label='Thumbnail' value={postData?.thumbnail} onChange={handleFileUpload} supportedFormats="Images"
                                     onDelete={
@@ -694,7 +694,7 @@ const CreatePost = () => {
                                         onChange={handlePollDurationChange}
                                     />
                                     {renderError('pollDuration')}
-                                    <p className="text-sm text-gray-600">How long should the poll be open for voting? (1-30 days)</p>
+                                    <p className="text-sm glassy-text-secondary">How long should the poll be open for voting? (1-30 days)</p>
                                 </div>
 
                                 <div className="space-y-3">
@@ -739,7 +739,7 @@ const CreatePost = () => {
                                         ))}
                                     </div>
 
-                                    <p className="text-sm text-gray-600">
+                                    <p className="text-sm glassy-text-secondary">
                                         {postData.poll.options.length}/10 options • Add at least 2 options for your poll
                                     </p>
                                 </div>

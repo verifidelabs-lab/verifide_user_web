@@ -159,11 +159,11 @@ const UserProfileCard = ({
       </div>
 
       <div className="p-5">
-        <h2 className="text-lg font-semibold text-gray-900 truncate">
+        <h2 className="text-lg font-semibold glassy-text-primary truncate">
           {displayData.title}
         </h2>
         <p className="text-sm glassy-text-secondary truncate">{displayData.subtitle}</p>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+        <p className="text-sm glassy-text-secondary mt-2 line-clamp-2">
           {displayData.description}
         </p>
 

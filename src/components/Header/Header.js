@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   switchAccount,
   switchAccountCompany,
+  switchAccountInstitution,
 } from "../../redux/slices/authSlice";
 import { toast } from "sonner";
 import Modal from "../ui/Modal/Modal";
@@ -18,6 +19,8 @@ import FilterSelect2 from "../ui/Input/FilterSelect2";
 import CustomDateInput from "../ui/Input/CustomDateInput";
 import FileUpload from "../ui/Image/ImageUploadWithSelect";
 import { getCompaniesList } from "../../redux/slices/companiesSlice";
+import { getInstitutionsList } from "../../redux/slices/instituteSlice";
+import { useGlobalKeys } from "../../context/GlobalKeysContext";
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -31,6 +34,20 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const [accessLabel, setAccessLabel] = useState(
     showName === "6" ? "Recruiter" : "STUDENT"
   );
+   const {
+      token,
+      role,
+      activeMode,
+      isAssignedUser,
+      isCompany,
+      isInstitution,
+      isUser,
+      updateToken,
+      updateRole,
+      updateActiveMode,
+      updateIsAssignedUser,
+      clearAll,
+    } = useGlobalKeys();
   const navigate = useNavigate();
   const { profileImage } = useProfileImage();
   const imageToDisplay =
@@ -63,35 +80,73 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const switchAccountFunction = async (prefillEmail) => {
+  // const switchAccountFunction = async (prefillEmail) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await dispatch(
+  //       switchAccountCompany({
+  //         accessMode: accessLabel,
+  //         companyId: prefillEmail,
+  //       })
+  //     ).unwrap();
+  //     if (res) {
+  //       // Save company token separately
+  //       setCookie("COMPANY_TOKEN", JSON.stringify(res.data.token));
+  //       setCookie("ROLE", res.data.accessMode); // optional for role-based routing
+  //       setCookie("ACTIVE_MODE", "company"); // optional for role-based routing
+  //       setCookie("ASSIGNED_USER", res.data.isAssignedUser); // optional for role-based routing
+  //       toast.success(res?.message || "Company login successful");
+
+  //       // Navigate to company dashboard
+  //       navigate("/company");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error(error || "Invalid credentials or server error");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // Close dropdowns when route changes
+  const switchAccountFunction = async (prefillId, type) => {
+    // type can be "company" or "institution"
     setIsLoading(true);
     try {
+      const dispatchAction =
+        type === "company" ? switchAccountCompany : switchAccountInstitution;
+
       const res = await dispatch(
-        switchAccountCompany({
+        dispatchAction({
           accessMode: accessLabel,
-          companyId: prefillEmail,
+          [`${type}Id`]: prefillId, // dynamically set companyId or institutionId
         })
       ).unwrap();
-      if (res) {
-        // Save company token separately
-        setCookie("COMPANY_TOKEN", JSON.stringify(res.data.token));
-        setCookie("COMPANY_ROLE", res.data.accessMode); // optional for role-based routing
-        setCookie("ACTIVE_MODE", "company"); // optional for role-based routing
-        setCookie("ASSIGNED_USER", res.data.isAssignedUser); // optional for role-based routing
-        toast.success(res?.message || "Company login successful");
 
-        // Navigate to company dashboard
-        navigate("/company");
+      if (res) {
+        // Use the same keys for all types
+        setCookie("TOKEN", JSON.stringify(res.data.token));
+        setCookie("ROLE", res.data.accessMode); // role for routing
+        setCookie("ACTIVE_MODE", type); // 'company' or 'institution'
+        setCookie("ASSIGNED_USER", res.data.isAssignedUser);
+        // ✅ Update global context
+        updateToken(res.data.token);
+        updateRole(res.data.accessMode);
+        updateActiveMode(type);
+        updateIsAssignedUser(res.data.isAssignedUser);
+        toast.success(res?.message || `${type} login successful`);
+
+        // Navigate dynamically
+        navigate(`/${type}`);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error || "Invalid credentials or server error");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Close dropdowns when route changes
   useEffect(() => {
     setIsDropdownOpen(false);
     setModeDropdown(false);
@@ -114,6 +169,10 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     companiesList: { data: companiesData } = {},
     companyDetails: { data: companyDetails } = {},
   } = useSelector((state) => state.userCompanies);
+  const {
+    institutionsList: { data: institutionsList } = {},
+    // companyDetails: { data: companyDetails } = {},
+  } = useSelector((state) => state.institute);
   const fetchCompaniesList = useCallback(
     async (page = 1) => {
       const apiPayload = {
@@ -140,9 +199,37 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     },
     [dispatch]
   );
+  const fetchInstitutionsList = useCallback(
+    async (page = 1) => {
+      const apiPayload = {
+        page: 1,
+        size: 100,
+        // populate: "industry|name",
+        // select:
+        //   "name display_name email industry phone_no company_size company_type is_verified createdAt logo_url created_by_users ",
+        // searchFields: "name",
+        keyWord: "",
+        query: JSON.stringify({
+          created_by_users: true,
+        }),
+      };
+      try {
+        setIsLoading(true);
+        await dispatch(getInstitutionsList(apiPayload));
+      } catch (error) {
+        toast.error("Failed to fetch companies list");
+        console.error("Error fetching companies:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [dispatch]
+  );
   useEffect(() => {
     fetchCompaniesList();
-  }, [dispatch, fetchCompaniesList]);
+    fetchInstitutionsList()
+  }, [dispatch, fetchCompaniesList, fetchInstitutionsList]);
+
   return (
     <header
       className=""
@@ -298,9 +385,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     >
                       Companies
                       <FiChevronDown
-                        className={`ml-2 text-gray-500 transition-transform ${
-                          isCompanyDropdownOpen ? "rotate-180" : ""
-                        }`}
+                        className={`ml-2 glassy-text-primary transition-transform ${isCompanyDropdownOpen ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
 
@@ -311,7 +397,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                             <Link
                               key={company._id}
                               className="flex items-center gap-2 py-2 text-sm glassy-text-primary rounded-lg hover:bg-[var(--bg-card)] transition-colors"
-                              onClick={() => switchAccountFunction(company._id)}
+                              onClick={() => switchAccountFunction(company._id, "company")}
                             >
                               {company.logo_url ? (
                                 <img
@@ -324,7 +410,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                   }}
                                 />
                               ) : (
-                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-semibold">
+                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 glassy-text-secondary text-xs font-semibold">
                                   {company.name?.charAt(0)?.toUpperCase() || "C"}
                                 </div>
                               )}
@@ -358,34 +444,35 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Create Institution
                   </Link> */}
-                  <div className="border-t border-gray-200">
+                  <div className=" ">
                     <button
                       onClick={() =>
                         setIsInstitutionDropdownOpen((prev) => !prev)
                       }
-                      className="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="w-full flex justify-between items-center px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
+
                     >
                       Institution
                       <FiChevronDown
-                        className={`ml-2 text-gray-500 transition-transform ${
-                          isInstitutionDropdownOpen ? "rotate-180" : ""
-                        }`}
+                        className={`ml-2 glassy-text-primary transition-transform ${isInstitutionDropdownOpen ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
 
                     {/* Expand inline */}
                     {isInstitutionDropdownOpen && (
                       <div className="pl-4 space-y-1">
-                        {companiesData?.data?.list?.length > 0 ? (
-                          companiesData.data.list.map((company) => (
+                        {institutionsList?.data?.list?.length > 0 ? (
+                          institutionsList.data.list.map((company) => (
                             <Link
                               key={company._id}
                               // to={`/company/login?email=${encodeURIComponent(
                               //   company.email
                               // )}`}
-                              className="flex items-center gap-2 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+                              className="flex items-center gap-2 py-2 text-sm glassy-text-primary rounded-lg hover:bg-[var(--bg-card)] transition-colors"
+
                               onClick={() => {
-                                switchAccountFunction(company._id);
+                                switchAccountFunction(company._id, "institution");
                               }}
                             >
                               {/* ✅ Company logo with fallback */}
@@ -393,36 +480,34 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                 <img
                                   src={company.logo_url}
                                   alt={`${company.name} logo`}
-                                  className="w-6 h-6 rounded-full object-cover border border-gray-200"
-                                  // onError={(e) => {
-                                  //   e.currentTarget.src = "/default-company.png"; // your fallback image
-                                  // }}
+                                  className="w-6 h-6 rounded-full object-cover border border-[var(--border-color)]"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
-                                    e.currentTarget.src =
-                                      "https://res.cloudinary.com/dsnqduetr/image/upload/v1761043320/post-media/companylogo.png"; // fallback image
+                                    e.currentTarget.src = "/companylogo.png"; // fallback
                                   }}
                                 />
                               ) : (
-                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 text-gray-600 text-xs font-semibold">
+
+                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 glassy-text-secondary text-xs font-semibold">
+
                                   {company.name?.charAt(0)?.toUpperCase() ||
                                     "C"}
                                 </div>
                               )}
 
-                              <span className="truncate">{company.name}</span>
+                              <span className="truncate  ">{company.name}</span>
                             </Link>
                           ))
                         ) : (
-                          <p className=" py-2 text-sm text-gray-500">
+                          <p className=" py-2 text-sm glassy-text-primary">
                             No Institution found
                           </p>
                         )}
 
-                        {companiesData?.data?.list?.length && (
+                        {!institutionsList?.data?.list?.length && (
                           <Link
                             to="/user/create-institute"
-                            className="block   py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="block   py-2 text-sm glassy-text-primary rounded-lg transition-colors"
                             onClick={() => {
                               setIsInstitutionDropdownOpen(false);
                               setIsDropdownOpen(false);

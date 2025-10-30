@@ -139,7 +139,7 @@ const Userpost2 = () => {
 
         {/* Post Content */}
         <div className="mb-4">
-          <p className="text-gray-800 whitespace-pre-line">{postData?.content}</p>
+          <p className="glassy-text-primary whitespace-pre-line">{postData?.content}</p>
         </div>
       </div>
     </>

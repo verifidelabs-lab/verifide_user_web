@@ -51,7 +51,7 @@ const Button = ({
   `;
 
   const variantStyles = {
-    primary: `glassy-text-primary text-[#FFFFFF] hover:bg-blue-700 focus:ring-blue-500 text-[16px] font-[700]`,
+    primary: `glassy-button`,
     secondary: `bg-[#8989894D]/30 glassy-text-primary hover:bg-gray-700 hover:glassy-card focus:ring-gray-500 text-[16px] font-[700]`,
     outline: `border border-[#2563EB] text-[#2563EB] font-[700] bg-transparent  hover:glassy-text-primary hover:text-[#FFFFFF] hover:border-gray-400 focus:ring-gray-300 text-[16px] font-[700]`,
     ghost: `bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-200 text-[16px] font-[700]`,
@@ -128,7 +128,7 @@ const Button = ({
           </svg>
         )}
         {!loading && icon && iconPosition === 'left' && (
-          React.cloneElement(icon, { className: iconClasses })  
+          React.cloneElement(icon, { className: iconClasses })
         )}
         <span className="relative z-10">{children}</span>
         {!loading && icon && iconPosition === 'right' && (

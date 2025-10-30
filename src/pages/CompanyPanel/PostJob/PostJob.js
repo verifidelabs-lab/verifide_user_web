@@ -223,11 +223,11 @@ const PostJob = () => {
 
       const addressData = jobData.work_location ||
         jobData.address || {
-          country: { name: "", dial_code: "", short_name: "", emoji: "🇮" },
-          state: { name: "", code: "" },
-          city: { name: "" },
-          pin_code: "",
-        };
+        country: { name: "", dial_code: "", short_name: "", emoji: "🇮" },
+        state: { name: "", code: "" },
+        city: { name: "" },
+        pin_code: "",
+      };
 
       setFormData({
         ...jobData,
@@ -807,16 +807,20 @@ const PostJob = () => {
 
   const handleSubmit = async () => {
     console.log("this is te error", errors);
-    if (!validateStep(3)) {
-      const firstErrorKey = Object.keys(errors)[0];
-      if (firstErrorKey) {
-        const element = document.querySelector(
-          `[data-error="${firstErrorKey}"]`
-        );
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
+    const isValid = validateStep(3);
+
+    // 🚫 Stop if validation failed
+    if (!isValid) {
+      // Wait a tiny bit for setErrors to apply before accessing them
+      setTimeout(() => {
+        const firstErrorKey = Object.keys(errors)[0];
+        if (firstErrorKey) {
+          const element = document.querySelector(`[data-error="${firstErrorKey}"]`);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
         }
-      }
+      }, 100);
       return;
     }
 
@@ -853,8 +857,8 @@ const PostJob = () => {
       const res = await dispatch(action(finalData)).unwrap();
       toast.success(
         res?.message ||
-          res?.success ||
-          (id ? "Job updated successfully!" : "Job posted successfully!")
+        res?.success ||
+        (id ? "Job updated successfully!" : "Job posted successfully!")
       );
 
       // Reset form and navigate
@@ -904,9 +908,9 @@ const PostJob = () => {
       console.error("Error submitting job:", error);
       toast.error(
         error?.message ||
-          (id
-            ? "Failed to update job. Please try again."
-            : "Failed to post job. Please try again.")
+        (id
+          ? "Failed to update job. Please try again."
+          : "Failed to post job. Please try again.")
       );
     } finally {
       setIsSubmitting(false);
@@ -979,11 +983,10 @@ const PostJob = () => {
           return (
             <div
               key={qIndex}
-              className={`mb-6 p-4 border rounded-lg ${
-                questionError || optionsError || correctError
-                  ? "border-red-300 bg-red-50"
-                  : "border-gray-200"
-              }`}
+              className={`mb-6 p-4 border rounded-lg ${questionError || optionsError || correctError
+                ? "border-red-300 bg-red-50"
+                : "border-gray-200"
+                }`}
             >
               <div className="flex justify-between items-center mb-3">
                 <h3 className="font-medium">
@@ -1190,7 +1193,7 @@ const PostJob = () => {
             <div className="flex justify-between items-center mb-8">
               <button
                 onClick={() => navigate(-1)}
-                className="p-1 rounded hover:bg-gray-100"
+                className="p-1 rounded   glassy-text-primary"
               >
                 <BiArrowBack size={32} />
               </button>

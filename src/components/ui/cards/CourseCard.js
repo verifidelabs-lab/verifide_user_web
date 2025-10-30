@@ -34,7 +34,7 @@ const CourseCard = ({
             <div className="">
                 <h3 className="text-[14px] glassy-text-primary font-semibold ">{courseTitle}</h3>
                 <a href={authorLink} className="text-[12px] text-[#3DCBB1] font-normal flex items-center gap-1 mb-2">
-                   <CiUser className='text-gray-600 text-md'/>
+                   <CiUser className='glassy-text-secondary text-md'/>
                     {author}
                 </a>
                 <p className="text-[#1B1B1BE5]/90 text-[12.6px] mb-2">{description}</p>

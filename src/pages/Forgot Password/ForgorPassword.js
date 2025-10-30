@@ -300,7 +300,7 @@ const ForgotPassword = () => {
             alt="logo"
             className="mx-auto w-40 h-8 sm:w-48 sm:h-10 my-2"
           />
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p className="glassy-text-secondary text-sm sm:text-base">
             Learn More. Earn More
           </p>
           <h1 className="text-2xl sm:text-3xl font-semibold glassy-text-primary py-3">
@@ -365,7 +365,7 @@ const ForgotPassword = () => {
             alt="logo"
             className="mx-auto w-40 h-8 sm:w-48 sm:h-10 my-2"
           />
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p className="glassy-text-secondary text-sm sm:text-base">
             Learn More. Earn More
           </p>
           <h1 className="text-2xl sm:text-3xl font-semibold glassy-text-primary py-3">
@@ -456,7 +456,7 @@ const ForgotPassword = () => {
             alt="logo"
             className="mx-auto w-40 h-8 sm:w-48 sm:h-10 my-2"
           />
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p className="glassy-text-secondary text-sm sm:text-base">
             Learn More. Earn More
           </p>
           <h1 className="text-2xl sm:text-3xl font-semibold glassy-text-primary py-3">

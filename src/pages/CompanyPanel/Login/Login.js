@@ -97,8 +97,8 @@ const handleSubmit = async (e) => {
     const res = await dispatch(loginAction(payload)).unwrap();
     if (res?.data?.token) {
       // Save company token separately
-      setCookie('COMPANY_TOKEN', JSON.stringify(res.data.token));
-      setCookie('COMPANY_ROLE', res.data.accessMode); // optional for role-based routing
+      setCookie('TOKEN', JSON.stringify(res.data.token));
+      setCookie('ROLE', res.data.accessMode); // optional for role-based routing
       setCookie('ACTIVE_MODE', "company"); // optional for role-based routing
       toast.success(res?.message || 'Company login successful');
 

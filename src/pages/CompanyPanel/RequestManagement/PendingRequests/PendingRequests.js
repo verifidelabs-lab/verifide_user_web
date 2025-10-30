@@ -34,7 +34,7 @@ const StatusBadge = ({ status }) => {
       case 'assigned':
         return 'bg-[#CFF4FC] text-blue-800 border border-[#BBF3FF]';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 glassy-text-primary';
     }
   };
 
@@ -88,7 +88,7 @@ const PendingRequests = () => {
   }, [currentPage, searchTerm, documentTypeFilter, fetchRequestList]);
 
   const fetchAdmins = async () => {
-    const userRole = Number(getCookie("COMPANY_ROLE"));
+    const userRole = Number(getCookie("ROLE"));
     try {
       let res;
       if (userRole === ROLES.SUPER_ADMIN || userRole === ROLES.ADMIN) {
@@ -268,7 +268,7 @@ const PendingRequests = () => {
                 }}
                 className="w-24 h-24 rounded-full border-4 border-gray-200 mb-4"
               />
-              <h3 className="font-semibold text-xl text-gray-800">
+              <h3 className="font-semibold text-xl glassy-text-primary">
                 {user?.first_name} {user?.last_name}
               </h3>
             </div>
@@ -286,7 +286,7 @@ const PendingRequests = () => {
 
             {assignedTo && (
               <div className="mt-6 border-t pt-4">
-                <h4 className="font-semibold text-md text-gray-800 mb-2">Assigned To</h4>
+                <h4 className="font-semibold text-md glassy-text-primary mb-2">Assigned To</h4>
                 <div className="flex items-center space-x-4">
                   <img
                     src={assignedTo.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
@@ -307,7 +307,7 @@ const PendingRequests = () => {
           </div>
           <div className="bg-black p-6 rounded-lg shadow-lg">
             {model && (
-              <h3 className="font-semibold text-xl text-gray-800 capitalize">
+              <h3 className="font-semibold text-xl glassy-text-primary capitalize">
                 {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
               </h3>
             )}
@@ -368,7 +368,7 @@ const PendingRequests = () => {
         </div>
         <div className="space-y-6">
           <div className="bg-black p-6 rounded-lg shadow-lg">
-            <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
+            <h3 className="font-semibold text-xl glassy-text-primary">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
             {selectedRequest.attach_file && selectedRequest.attach_file.length >= 0 ? (
               <div className="space-y-4 mt-4">
                 {selectedRequest.attach_file.map((imageUrl, index) => (
@@ -478,7 +478,7 @@ const PendingRequests = () => {
   );
 
   const getDocumentTypeOptions = () => {
-    const userRole = Number(getCookie("COMPANY_ROLE"));
+    const userRole = Number(getCookie("ROLE"));
     const baseOptions = [{ value: '', label: 'All Document Types' }];
     const roleOptions = [];
     if ([1, 2, 4, 8].includes(userRole)) {
@@ -542,7 +542,7 @@ const PendingRequests = () => {
         {cardRows.map((card) => (
           <div
             key={card.id}
-            className="bg-black rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
+            className="rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
           >
             <div className="flex items-start justify-between">
               {/* Left: Avatar or Icon */}
@@ -556,7 +556,7 @@ const PendingRequests = () => {
                     />
                   ) : (
                     <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gray-100">
-                      <span className="text-gray-600 font-semibold text-lg">
+                      <span className="glassy-text-secondary font-semibold text-lg">
                         {card.name.charAt(0)}
                       </span>
                     </div>
@@ -565,10 +565,10 @@ const PendingRequests = () => {
 
                 {/* Middle: Details */}
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 mb-1 text-sm">
+                  <h3 className="font-semibold glassy-text-primary mb-1 text-sm">
                     {card.name}
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-sm glassy-text-secondary leading-relaxed">
                     Updated: {card.updatedAt}
                   </p>
 
@@ -609,7 +609,7 @@ const PendingRequests = () => {
       <div className="p-6">
         <div className='flex justify-between mb-4'>
           <div className='w-full'>
-            <h2 className="text-2xl font-semibold">Verifications</h2>
+            <h2 className="text-2xl font-semibold glassy-text-primary">Verifications</h2>
           </div>
           <div className='flex justify-end'>
             <FilterSelect

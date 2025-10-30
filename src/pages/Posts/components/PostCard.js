@@ -353,8 +353,8 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
 
         return (
             <div className="px-4 pb-2">
-                {post.title && <h3 className="font-semibold text-gray-900 text-base mb-2">{post.title}</h3>}
-                {post.content && <p className="text-sm text-gray-800 mb-2">{post.content}</p>}
+                {post.title && <h3 className="font-semibold glassy-text-primary text-base mb-2">{post.title}</h3>}
+                {post.content && <p className="text-sm glassy-text-primary mb-2">{post.content}</p>}
                 {post.tags && post.tags.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1">
                         {post.tags.map((tag, index) => (
@@ -386,7 +386,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                 <div className="flex justify-around border-t border-gray-100 py-2">
                     <button
                         onClick={handleLike}
-                        className={`flex items-center justify-center gap-3 text-sm text-gray-600 hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50`}
+                        className={`flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50`}
                     >
 
                         <span className={isLiked ? 'text-blue-600 font-medium' : ''}>
@@ -395,13 +395,13 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                     </button>
                     <button
                         onClick={() => handleComment(post)}
-                        className="flex items-center justify-center gap-3 text-sm text-gray-600 hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
+                        className="flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
                     >
                         <BiComment />
                         <span>Comment</span>
                     </button>
                     <button
-                        className="flex items-center justify-center gap-3 text-sm text-gray-600 hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
+                        className="flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
                         onClick={() => onShare(post)}
                     >
                         {post?.share_count}

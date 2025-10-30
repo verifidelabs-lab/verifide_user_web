@@ -500,7 +500,7 @@ const PostDetails = () => {
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={() => navigate(-1)}
-                    className="text-gray-600 hover:glassy-text-primary"
+                    className="glassy-text-secondary hover:glassy-text-primary"
                   >
                     ← Back
                   </button>
@@ -509,7 +509,7 @@ const PostDetails = () => {
                 <div className="relative">
                   <button
                     onClick={handleOptionsClick}
-                    className="text-gray-600 hover:glassy-text-primary"
+                    className="glassy-text-secondary hover:glassy-text-primary"
                   >
                     <FiMoreHorizontal className="w-6 h-6" />
                   </button>
@@ -573,7 +573,7 @@ const PostDetails = () => {
                       </>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600">{postData.userData?.headline || "Professional"}</p>
+                  <p className="text-sm glassy-text-secondary">{postData.userData?.headline || "Professional"}</p>
                   <div className="flex items-center space-x-1 text-xs glassy-text-secondary mt-1">
                     <span>{moment(postData.createdAt).format("DD/MM/YYYY")}</span>
                     <span>•</span>
@@ -638,7 +638,7 @@ const PostDetails = () => {
               <div className="flex items-center justify-around">
                 <button
                   onClick={handleLike}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 ${(localLikes[postId] ?? postData.like_count > 0) ? 'text-red-600' : 'text-gray-600'}`}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 ${(localLikes[postId] ?? postData.like_count > 0) ? 'text-red-600' : 'glassy-text-secondary'}`}
                 >
                   {(localLikes[postId] ?? postData.like_count > 0) ? (
                     <BiSolidHeart className="w-5 h-5" />
@@ -649,21 +649,21 @@ const PostDetails = () => {
                 </button>
                 <button
                   onClick={toggleComments}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 ${showComments ? 'text-blue-600' : 'text-gray-600'}`}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 ${showComments ? 'text-blue-600' : 'glassy-text-secondary'}`}
                 >
                   <LuMessageCircle className="w-5 h-5" />
                   <span>Comment</span>
                 </button>
                 <button
                   // onClick={handleShareClick}
-                  className="flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 text-gray-600"
+                  className="flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 glassy-text-secondary"
                 >
                   <LuRepeat2 className="w-5 h-5" />
                   <span>Repost</span>
                 </button>
                 <button
                   onClick={handleShareClick}
-                  className="flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 text-gray-600"
+                  className="flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 glassy-text-secondary"
                 >
                   <BsSend className="w-5 h-5" />
                   <span>Send</span>

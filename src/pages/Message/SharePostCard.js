@@ -62,7 +62,7 @@ const SharedPostCard = ({ sharedData, isOwn }) => {
 
       <div className="p-3">
         {content && (
-          <p className="text-sm text-gray-800 mb-2 line-clamp-3">
+          <p className="text-sm glassy-text-primary mb-2 line-clamp-3">
             {content}
           </p>
         )}

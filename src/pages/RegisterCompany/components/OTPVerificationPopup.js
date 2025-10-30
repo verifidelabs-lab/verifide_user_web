@@ -60,11 +60,11 @@ const OTPVerificationPopup = ({
     <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="glassy-card rounded-lg shadow-xl w-full max-w-md">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-800">Verify OTP</h2>
+          <h2 className="text-xl font-semibold glassy-text-primary">Verify OTP</h2>
         </div>
 
         <div className="px-6 py-4">
-          <p className="text-gray-600 mb-4">
+          <p className="glassy-text-secondary mb-4">
             Please enter the 6-digit verification code sent to your email.
           </p>
 

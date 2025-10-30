@@ -647,7 +647,7 @@ const Opportunitiess2 = () => {
                   <span className="font-medium glassy-text-primary">
                     Interview Date:
                   </span>
-                    <div className="text-gray-600">
+                    <div className="glassy-text-secondary">
                       {convertTimestampToDate(
                         selectedJob.interviewDetails.select_date
                       )}
@@ -656,7 +656,7 @@ const Opportunitiess2 = () => {
 
                   <div>
                     <span className="font-medium glassy-text-primary">Interview Time:</span>
-                    <div className="text-gray-600">
+                    <div className="glassy-text-secondary">
                       {convertTimestampToDate(
                         selectedJob.interviewDetails.select_time
                       )}
@@ -718,7 +718,7 @@ const Opportunitiess2 = () => {
                   <h3 className="font-semibold text-[#000000E6]">
                     {selectedJob.company_id?.name}
                   </h3>
-                  <p className="text-gray-600 text-sm">
+                  <p className="glassy-text-secondary text-sm">
                     {selectedJob.industry_id?.name}
                   </p>
                 </div>
@@ -757,7 +757,7 @@ const Opportunitiess2 = () => {
                     {selectedJob.required_skills.map((skill, index) => (
                       <span
                         key={index}
-                        className="bg-gray-100 text-gray-800 text-xs px-2.5 py-0.5 rounded"
+                        className="bg-gray-100 glassy-text-primary text-xs px-2.5 py-0.5 rounded"
                       >
                         {skill.name || skill}
                       </span>
@@ -791,14 +791,14 @@ const Opportunitiess2 = () => {
               {/* ✅ Interview Details */}
               {selectedJob?.isSchedule && selectedJob?.interviewDetails && (
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-800 capitalize mb-3">
+                  <h3 className="text-lg font-semibold glassy-text-primary capitalize mb-3">
                     📅 Interview Details
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
                     <div>
                       <span className="font-medium">Interview Date:</span>
-                      <div className="text-gray-600">
+                      <div className="glassy-text-secondary">
                         {convertTimestampToDate(
                           selectedJob.interviewDetails.select_date
                         )}
@@ -807,7 +807,7 @@ const Opportunitiess2 = () => {
 
                     <div>
                       <span className="font-medium">Interview Time:</span>
-                      <div className="text-gray-600">
+                      <div className="glassy-text-secondary">
                         {convertTimestampToDate(
                           selectedJob.interviewDetails.select_time
                         )}

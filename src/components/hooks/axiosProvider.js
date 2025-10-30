@@ -2,17 +2,17 @@ import axios from "axios";
 import { getCookie, removeCookie } from "../utils/cookieHandler";
 import { CiNoWaitingSign } from "react-icons/ci";
 
-// const isLive = false;
-const isLive = true;
+const isLive = false;
+// const isLive = true;
 // export const BaseUrl = "https://verifide.xyz/"
 export const BaseUrl = "https://dev-verifide.verifide.xyz/";
 // export const BaseUrl = "http://localhost:3000/";
 export const apiUrl = isLive
   ? `${BaseUrl}api/v1/`
-  : "http://192.168.1.9:5004/api/v1/";
+  : "http://192.168.43.208:5004/api/v1/";
 export const socketApiUrl = isLive
   ? `${BaseUrl}socket`
-  : "http://192.168.1.9:5004/socket";
+  : "http://192.168.43.208:5004/socket";
 
 const axiosPublic = axios.create({
   baseURL: apiUrl,
@@ -29,29 +29,35 @@ const axiosImage = axios.create({
   headers: { "Content-Type": "multipart/form-data" },
 });
 
-// Auth request interceptor for user OR company token
+// Auth request interceptor for user, company, or institution token
 const authRequestInterceptor = (config) => {
-  console.log("this is the config furl", config);
-  // Determine which token to use
+  console.log("Request config:", config);
+
   // Default to user token
   let token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, "");
-  let isCompany = getCookie("ACTIVE_MODE");
+  const activeMode = getCookie("ACTIVE_MODE"); // "company" | "institution" | undefined
 
-  console.log();
-  // If company token exists and path includes /company, use it
-  if (getCookie("COMPANY_TOKEN") && isCompany === "company") {
-    token = getCookie("COMPANY_TOKEN")?.replace(/^"|"$/g, "");
+  // Use TOKEN for company or institution if ACTIVE_MODE is set
+  if (activeMode === "company" || activeMode === "institution") {
+    token = getCookie("TOKEN")?.replace(/^"|"$/g, "");
   }
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   } else {
+    // Clear cookies if no valid token found
     removeCookie("VERIFIED_TOKEN");
-    removeCookie("COMPANY_TOKEN");
+    removeCookie("TOKEN");
+    removeCookie("ACTIVE_MODE");
+    removeCookie("ASSIGNED_USER");
     return Promise.reject(new Error("No authentication token found"));
   }
+
   return config;
 };
+
+export default authRequestInterceptor;
+
 
 // Central error interceptor
 const errorResponseInterceptor = (error) => {
@@ -84,7 +90,7 @@ const errorResponseInterceptor = (error) => {
     // Session expired handling for user OR company
     if (response?.data?.code === 3) {
       removeCookie("VERIFIED_TOKEN");
-      removeCookie("COMPANY_TOKEN");
+      removeCookie("TOKEN");
       return Promise.reject({ message: "Session expired" });
     }
     return response;

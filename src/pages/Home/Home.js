@@ -688,7 +688,7 @@ const Home = () => {
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
           <div className="flex justify-between items-center gap-2 mb-2 text-sm">
             <nav className="flex items-center gap-2 text-sm">
-              <span className="text-gray-600">Home</span>
+              <span className="glassy-text-secondary">Home</span>
               <span className="text-gray-400">›</span>
               <span className="font-medium text-blue-600">Highlights</span>
             </nav>
@@ -823,7 +823,7 @@ const Home = () => {
                             {loadingId === post._id ? (
                               <div className="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
                             ) : (
-                              <PiDotsThreeOutlineVerticalFill className="w-6 h-6 text-gray-600" />
+                              <PiDotsThreeOutlineVerticalFill className="w-6 h-6 glassy-text-secondary" />
                             )}
                           </button>
                           {showOptionsDropdown === post._id && (

@@ -69,7 +69,7 @@ const CreateQuest = () => {
   useEffect(() => {
     const handleStorageChange = () => {
       const newAccessMode = getCookie("ACCESS_MODE");
-      const isCompany = getCookie("COMPANY_ROLE");
+      const isCompany = getCookie("ROLE");
       if (newAccessMode == 5 && isCompany !== "3") {
         navigate(`/user/quest`);
       }
@@ -454,7 +454,7 @@ const CreateQuest = () => {
 
       if (result?.code === 1200) {
         toast.success(isEditMode ? "Quest updated successfully!" : "Quest created successfully!");
-        const isCompanyrole = getCookie("COMPANY_ROLE");
+        const isCompanyrole = getCookie("ROLE");
         if (IsCompany === "company" && isCompanyrole === "3") {
           navigate(`/company/quest`);
         } else {
@@ -474,7 +474,7 @@ const CreateQuest = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-3xl transition-all duration-500">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
+        <h1 className="text-2xl font-bold glassy-text-primary mb-6">
           {isEditMode ? "Edit Quest" : "Create New Quest"}
         </h1>
 

@@ -1,16 +1,7 @@
 {
   "headerItems": [
-    {
-      "name": "Home",
-      "path": "/company"
-    },
-    {
-      "name": "Opportunities",
-      "path": "/company/opportunities"
-    },
-    {
-      "name": "Quest",
-      "path": "/company/quest"
-    }
+    { "name": "Home", "path": "/" },
+    { "name": "Opportunities", "path": "/opportunities" },
+    { "name": "Quest", "path": "/quest" }
   ]
 }

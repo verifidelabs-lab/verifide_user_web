@@ -7,7 +7,7 @@ const PersonalInformation = () => {
     <div className="flex flex-col gap-6 glassy-card border rounded-2xl">
       <div className="p-6 rounded-lg">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
+          <h3 className="text-lg font-semibold glassy-text-primary">Personal Information</h3>
 
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-4">

@@ -25,7 +25,7 @@ const EngagementItem = ({ engagement, navigate }) => {
           className="w-12 h-12 rounded-full object-cover border-2 border-gray-200 group-hover:border-indigo-400 transition-colors"
         />
         <div className="flex-1">
-          <h4 className="font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
+          <h4 className="font-semibold glassy-text-primary group-hover:text-indigo-600 transition-colors">
             {engagement.user_id.first_name} {engagement.user_id.last_name}
           </h4>
           <p className="text-sm glassy-text-secondary">@{engagement.user_id.username}</p>
@@ -33,11 +33,11 @@ const EngagementItem = ({ engagement, navigate }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mt-4">
-        <div className="flex items-center text-gray-600">
+        <div className="flex items-center glassy-text-secondary">
           <BiEnvelope className="mr-2 text-indigo-500" />
           <span className="truncate">{engagement.email}</span>
         </div>
-        <div className="flex items-center text-gray-600">
+        <div className="flex items-center glassy-text-secondary">
           <BiUser className="mr-2 text-indigo-500" />
           <span className="font-medium">ID:</span>
           <span className="ml-1">{engagement.identifier}</span>

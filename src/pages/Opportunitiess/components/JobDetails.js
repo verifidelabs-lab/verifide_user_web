@@ -39,8 +39,8 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
             /></>}
 
           <div>
-            <h3 className="font-semibold text-gray-800 text-lg">{data?.job_title?.name}</h3>
-            <p className="text-gray-600">{data?.company_id?.name}</p>
+            <h3 className="font-semibold glassy-text-primary text-lg">{data?.job_title?.name}</h3>
+            <p className="glassy-text-secondary">{data?.company_id?.name}</p>
             <p className="text-sm glassy-text-secondary">{data?.industry_id?.name}</p>
           </div>
         </div>
@@ -75,18 +75,18 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
         </div> */}
 
         <div>
-          <h4 className="font-medium text-gray-800 mb-2">Job Description</h4>
-          <p className="text-sm text-gray-600 whitespace-pre-line">{data?.job_description}</p>
+          <h4 className="font-medium glassy-text-primary mb-2">Job Description</h4>
+          <p className="text-sm glassy-text-secondary whitespace-pre-line">{data?.job_description}</p>
         </div>
 
         {data?.required_skills?.length > 0 && (
           <div>
-            <h4 className="font-medium text-gray-800 mb-2">Required Skills</h4>
+            <h4 className="font-medium glassy-text-primary mb-2">Required Skills</h4>
             <div className="flex flex-wrap gap-2">
               {data.required_skills.map((skill) => (
                 <span
                   key={skill._id}
-                  className="px-3 py-1 bg-gray-100 text-xs text-gray-800 rounded-full"
+                  className="px-3 py-1 bg-gray-100 text-xs glassy-text-primary rounded-full"
                 >
                   {skill.name}
                 </span>

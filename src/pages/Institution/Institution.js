@@ -772,7 +772,7 @@ const Institution = () => {
       <Loader loading={isLoading} />
       <div className="p-3">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-gray-900">Institute</h2>
+          <h2 className="text-2xl font-semibold glassy-text-primary">Institute</h2>
           <Button icon={<PiPlus />} onClick={handleOpenModal}>
             Add Institute
           </Button>
@@ -1016,7 +1016,7 @@ const Institution = () => {
             />
 
             <div className="border-t border-gray-200 pt-4">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Address
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1096,7 +1096,7 @@ const Institution = () => {
 
             <div className=" pt-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium text-gray-900 flex items-center">
+                <h3 className="text-lg font-medium glassy-text-primary flex items-center">
                   Specialties
                   <span className="text-red-500 text-sm ml-1">*</span>
                 </h3>
@@ -1252,7 +1252,7 @@ const Institution = () => {
               />
             )}
             <div className="text-center sm:text-left">
-              <h2 className="text-2xl font-semibold text-gray-800">
+              <h2 className="text-2xl font-semibold glassy-text-primary">
                 {viewData?.name}
               </h2>
               <p className="text-sm glassy-text-secondary">{viewData?.display_name}</p>
@@ -1391,7 +1391,7 @@ const Institution = () => {
           {viewData?.specialties?.length > 0 && (
             <div>
               <p className="font-medium text-sm text-gray-700">Specialties:</p>
-              <ul className="list-disc list-inside text-sm text-gray-600">
+              <ul className="list-disc list-inside text-sm glassy-text-secondary">
                 {viewData.specialties.map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}

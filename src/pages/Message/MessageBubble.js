@@ -125,7 +125,7 @@ const MessageText = ({ msg, isOwn }) => {
           ? "text-blue-600 cursor-pointer hover:underline"
           : isOwn
             ? "glassy-text-primary"
-            : "text-gray-800"
+            : "glassy-text-primary"
           }`}
       >
         {msg.message.split(urlRegex).map((part, index) =>
@@ -226,7 +226,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
         ? 'bg-gray-600 border-white/40'
         : 'bg-gray-100 border-gray-300'
         }`}>
-        <p className={`text-xs font-medium mb-1 ${isOwn ? 'glassy-text-primary/80' : 'text-gray-600'
+        <p className={`text-xs font-medium mb-1 ${isOwn ? 'glassy-text-primary/80' : 'glassy-text-secondary'
           }`}>
           {repliedMessageOwn ? 'You' : 'Them'}
         </p>
@@ -382,13 +382,13 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
           <div className="flex items-start justify-between">
             <div className="flex-1">
               {sharedData.title && (
-                <h4 className={`font-semibold text-sm mb-1 ${isOwn ? 'glassy-text-primary/90' : 'text-gray-800'
+                <h4 className={`font-semibold text-sm mb-1 ${isOwn ? 'glassy-text-primary/90' : 'glassy-text-primary'
                   }`}>
                   {sharedData.title}
                 </h4>
               )}
               {sharedData.link && (
-                <p className={`text-xs mb-2 ${isOwn ? 'glassy-text-primary/70' : 'text-gray-600'
+                <p className={`text-xs mb-2 ${isOwn ? 'glassy-text-primary/70' : 'glassy-text-secondary'
                   }`}>
                   {new URL(sharedData.link).hostname}
                 </p>
@@ -408,7 +408,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
     return (
       <div className="mb-3">
-        <div className={`flex items-center space-x-2 mb-3 ${isOwn ? 'glassy-text-primary/80' : 'text-gray-600'
+        <div className={`flex items-center space-x-2 mb-3 ${isOwn ? 'glassy-text-primary/80' : 'glassy-text-secondary'
           }`}>
           {/* <ch className="w-4 h-4" /> */}
           <span className="text-xs font-medium">Poll • {totalVotes} votes</span>
@@ -440,16 +440,16 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 />
 
                 <div className="relative flex items-center justify-between">
-                  <span className={`text-sm font-medium ${isOwn ? 'glassy-text-primary/90' : 'text-gray-800'
+                  <span className={`text-sm font-medium ${isOwn ? 'glassy-text-primary/90' : 'glassy-text-primary'
                     }`}>
                     {option.text}
                   </span>
                   <div className="flex items-center space-x-2">
-                    <span className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'text-gray-600'
+                    <span className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'glassy-text-secondary'
                       }`}>
                       {percentage}%
                     </span>
-                    <span className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'text-gray-600'
+                    <span className={`text-xs ${isOwn ? 'glassy-text-primary/70' : 'glassy-text-secondary'
                       }`}>
                       ({option.vote_count})
                     </span>
@@ -505,12 +505,12 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                   />
                 )}
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">{company.name}</p>
+                  <p className="text-sm font-semibold glassy-text-primary">{company.name}</p>
                   <p className="text-xs glassy-text-secondary">{job.job_title_details?.name}</p>
                 </div>
               </div>
 
-              <div className="text-xs text-gray-600 space-y-1 mb-3">
+              <div className="text-xs glassy-text-secondary space-y-1 mb-3">
                 <p><strong>Type:</strong> {job.job_type}</p>
                 <p><strong>Location:</strong> {job.job_location} ({job.work_location})</p>
                 <p><strong>Pay:</strong> {job.pay_type} ({job.salary_range})</p>
@@ -518,11 +518,11 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               </div>
 
               {interview.content && (
-                <p className="text-sm mb-3 text-gray-800">{interview.content}</p>
+                <p className="text-sm mb-3 glassy-text-primary">{interview.content}</p>
               )}
 
               {(interview.select_date || interview.select_time) && (
-                <div className="text-xs text-gray-600 mb-3">
+                <div className="text-xs glassy-text-secondary mb-3">
                   {interview.select_date && (
                     <p>
                       <strong>Date:</strong>{' '}
@@ -578,7 +578,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               onClick={() => window.open(msg.file_url, '_blank')}
             />
             {msg.message && (
-              <div className={`mt-2 text-sm ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
+              <div className={`mt-2 text-sm ${isOwn ? 'glassy-text-primary' : 'glassy-text-primary'}`}>
                 {msg.message}
               </div>
             )}
@@ -606,7 +606,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               Your browser does not support the video tag.
             </video>
             {msg.message && (
-              <div className={`mt-2 text-sm ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
+              <div className={`mt-2 text-sm ${isOwn ? 'glassy-text-primary' : 'glassy-text-primary'}`}>
                 {msg.message}
               </div>
             )}
@@ -647,7 +647,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
               onClick={() => handleDownload(msg.file_url, getFileName(msg.file_url))}
               className={`flex-shrink-0 p-2 rounded-full hover:bg-opacity-20 transition-colors ${isOwn ? 'hover:glassy-card/30' : 'hover:bg-gray-300'}`}
             >
-              <BiDownload className={`w-4 h-4 ${isOwn ? 'glassy-text-primary' : 'text-gray-600'}`} />
+              <BiDownload className={`w-4 h-4 ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`} />
             </button>
           </div>
         );
@@ -686,7 +686,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 />
               )}
               <div>
-                <p className="text-sm font-semibold text-gray-800">
+                <p className="text-sm font-semibold glassy-text-primary">
                   {sharedData?.user_details?.first_name} {sharedData?.user_details?.last_name} {sharedData?.user_details?.name}
                 </p>
               </div>
@@ -694,7 +694,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
             <div className="p-3">
               {sharedData.content && (
-                <p className={`text-sm mb-3 ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
+                <p className={`text-sm mb-3 ${isOwn ? 'glassy-text-primary' : 'glassy-text-primary'}`}>
                   {sharedData.content}
                 </p>
               )}
@@ -716,7 +716,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                     </span>
                   ))}
                   {sharedData.tags.length > 3 && (
-                    <span className={`text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'bg-gray-100 glassy-text-secondary'}`}>
                       +{sharedData.tags.length - 3} more
                     </span>
                   )}
@@ -733,7 +733,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
       case 'text':
       default:
         return msg.message ? (
-          <div className={`text-sm whitespace-pre-wrap break-words ${isOwn ? 'glassy-text-primary' : 'text-gray-800'}`}>
+          <div className={`text-sm whitespace-pre-wrap break-words ${isOwn ? 'glassy-text-primary' : 'glassy-text-primary'}`}>
             {/* {msg.message} */}
             <MessageText msg={msg} />
           </div>

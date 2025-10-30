@@ -9,15 +9,14 @@ let socket = null;
 
 
 const initializeSocket = () => {
-    let token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, '');
-    let isCompany = getCookie("ACTIVE_MODE");
+    // Default to user token
+    let token = getCookie("VERIFIED_TOKEN")?.replace(/^"|"$/g, "");
+    const activeMode = getCookie("ACTIVE_MODE"); // "company" | "institution" | undefined
 
-    console.log()
-    // If company token exists and path includes /company, use it
-    if (getCookie("COMPANY_TOKEN") && isCompany === "company") {
-        token = getCookie("COMPANY_TOKEN")?.replace(/^"|"$/g, '');
+    // Use TOKEN for company or institution if ACTIVE_MODE is set
+    if (activeMode === "company" || activeMode === "institution") {
+        token = getCookie("TOKEN")?.replace(/^"|"$/g, "");
     }
-
     // console.log(token)
 
     if (token) {

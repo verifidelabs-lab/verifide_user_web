@@ -89,7 +89,7 @@ const RevenueDashboard = ({
                 className="w-2 h-2 rounded-full mr-2"
                 style={{ backgroundColor: entry.color }}
               />
-              <span className="text-sm text-gray-600">{entry.name}:</span>
+              <span className="text-sm glassy-text-secondary">{entry.name}:</span>
             </div>
             <span className="text-sm font-medium ml-2">
               {formatSalesNumber(entry.value)}
@@ -122,7 +122,7 @@ const RevenueDashboard = ({
   return (
     <div className={`p-4 glassy-card/80 rounded-lg shadow-md  ${className}`}>
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-1">{title}</h2>
+        <h2 className="text-xl font-semibold glassy-text-primary mb-1">{title}</h2>
         {subtitle && <p className="text-sm font-medium text-[#667085]">{subtitle}</p>}
       </div>
 

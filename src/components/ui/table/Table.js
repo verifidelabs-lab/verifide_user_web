@@ -113,7 +113,7 @@ const Table = ({
           ) : (
             <>
               <div className="hidden w-full border-b-[#E2E8F0] glassy-card lg:block overflow-hidden overflow-x-auto overflow-y-auto">
-                <table className="table-auto w-full text-sm text-gray-800 border-collapse bg-transparent border border-[#E2E8F0]">
+                <table className="table-auto w-full text-sm glassy-text-primary border-collapse bg-transparent border border-[#E2E8F0]">
                   <thead className="">
                     <tr className="border-b border-[#edeff1] bg-[#EEF0FA]">
                       {tableHeadings.map((heading, index) => (
@@ -224,7 +224,7 @@ const Table = ({
                               <span className="text-xs font-medium glassy-text-secondary uppercase">
                                 {tableHeadings[cellIndex] || `Field ${cellIndex + 1}`}
                               </span>
-                              <span className="text-sm text-gray-800">
+                              <span className="text-sm glassy-text-primary">
                                 {cell || '-'}
                               </span>
                             </div>

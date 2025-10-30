@@ -651,7 +651,7 @@ const SignUp = () => {
                       type="button"
                       onClick={handleBackToRegistration}
                       disabled={isSubmitting}
-                      className="text-lg text-gray-600 hover:text-gray-800 disabled:opacity-50 font-semibold"
+                      className="text-lg glassy-text-secondary hover:glassy-text-primary disabled:opacity-50 font-semibold"
                     >
                       ← Back to registration
                     </button>

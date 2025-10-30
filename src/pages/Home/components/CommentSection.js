@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import {  FiSend,FiMessageCircle,} from "react-icons/fi";
+import { FiSend, FiMessageCircle, } from "react-icons/fi";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import moment from "moment";
-import {commentOnPost,getCommentOnPost,getPostOnHome,getReplyOnPost,likeDislikePostComment,replyToComment,} from "../../../redux/Users/userSlice";
+import { commentOnPost, getCommentOnPost, getPostOnHome, getReplyOnPost, likeDislikePostComment, replyToComment, } from "../../../redux/Users/userSlice";
 import { toast } from "sonner";
 import { MdDelete } from "react-icons/md";
 
-const CommentSection = ({ postId, type, size, page, setPosts, showComments, setShowComments,handleDelete, commentPostData }) => {
+const CommentSection = ({ postId, type, size, page, setPosts, showComments, setShowComments, handleDelete, commentPostData }) => {
   const dispatch = useDispatch();
   const commentInputRef = useRef(null);
 
@@ -22,7 +22,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [commentPage, setCommentPage] = useState(1);
   const defaultAvatar = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
-   const handleImageError = (e) => {
+  const handleImageError = (e) => {
     e.target.onerror = null;
     e.target.src = defaultAvatar;
     e.target.onerror = () => {
@@ -38,25 +38,25 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
 
   useEffect(() => {
     // if (showComments && !initialLoadComplete) {
-      console.log(22222222222, showComments, initialLoadComplete);
-      setLoading(true);
-      dispatch(
-        getCommentOnPost({
-          post: postId,
-          page: 1,
-          size: 5
-        })
-      ).then((res) => {
-        if (res) {
-          const commentsData = res.payload.data.list || [];
-          console.log("commentsData:----", commentsData)
-          setComments(commentsData);
-          const hasMore = commentsData.length === 5;
-          setHasMoreComments(hasMore);
-          setInitialLoadComplete(true);
-        }
-        setLoading(false);
-      });
+    console.log(22222222222, showComments, initialLoadComplete);
+    setLoading(true);
+    dispatch(
+      getCommentOnPost({
+        post: postId,
+        page: 1,
+        size: 5
+      })
+    ).then((res) => {
+      if (res) {
+        const commentsData = res.payload.data.list || [];
+        console.log("commentsData:----", commentsData)
+        setComments(commentsData);
+        const hasMore = commentsData.length === 5;
+        setHasMoreComments(hasMore);
+        setInitialLoadComplete(true);
+      }
+      setLoading(false);
+    });
     // }
   }, [showComments, dispatch, postId, initialLoadComplete, commentPostData]);
 
@@ -273,7 +273,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Write a comment..."
-            className="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full p-2 border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 glassy-input"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -283,7 +283,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
           />
           <button
             disabled={!newComment.trim() || loading}
-            className="glassy-text-primary hover:text-blue-700 disabled:opacity-50"
+            className="glassy-text-primary hover:text-blue-700 disabled:opacity-50 glassy-button"
             type="submit"
           >
             <FiSend size={23} />
@@ -295,7 +295,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
         <>
           {loading ? (
             <div className="flex justify-center items-center py-4">
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+              <div className="animate-spin rounded-full h-6 w-6  border-blue-500"></div>
               <span className="ml-2 glassy-text-secondary">Loading comments...</span>
             </div>
           ) : (
@@ -303,7 +303,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
               {comments.length > 0 ? (
                 <>
                   {comments.map((comment) => (
-                    <div key={comment._id} className="p-2 border-b border-gray-100">
+                    <div key={comment._id} className="p-2  border-gray-100">
                       <div className="flex justify-between items-start">
                         <div className="flex space-x-2">
                           <div className="relative">
@@ -322,7 +322,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                               />
                             )}
                           </div>
-                          <div className="bg-gray-50 rounded-lg p-2">
+                          <div className="glassy-card rounded-lg p-2">
                             <div className="flex items-center space-x-2">
                               <h4 className="text-[13px] font-semibold glassy-text-primary">
                                 {comment?.user?.first_name} {comment?.user?.last_name}
@@ -332,15 +332,15 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                                 {moment(comment?.updatedAt).fromNow()}
                               </span>
                             </div>
-                            <p className="text-[12px] text-gray-600 mb-2 flex justify-between place-items-center">
+                            <p className="text-[12px] glassy-text-secondary mb-2 flex justify-between place-items-center">
                               {comment?.text}
-                              {comment?.isOwnComment && <MdDelete className="text-red-500 cursor-pointer" onClick={()=>handleDelete(comment?._id,postId)}/>}
+                              {comment?.isOwnComment && <MdDelete className="text-red-500 cursor-pointer" onClick={() => handleDelete(comment?._id, postId)} />}
                             </p>
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-4 mt-2 text-xs text-gray-600">
+                      <div className="flex items-center gap-4 mt-2 text-xs glassy-text-secondary">
                         <button
                           onClick={() => handleLike(comment._id, "Comment")}
                           className={`flex items-center gap-1 ${comment.isLiked ? "text-red-500" : "hover:text-red-500"
@@ -359,14 +359,14 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                               replyingTo === comment._id ? null : comment._id
                             )
                           }
-                          className="flex items-center gap-1 hover:text-blue-600"
+                          className="flex items-center gap-1 hover:glassy-text-primary"
                         >
                           <FiMessageCircle /> Reply
                         </button>
                         {comment.repliesCount > 0 && (
                           <button
                             onClick={() => toggleReplies(comment._id)}
-                            className="hover:text-blue-600"
+                            className="hover:glassy-text-primary"
                           >
                             {showReplyList[comment._id]
                               ? "Hide replies"
@@ -383,7 +383,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                               value={replyText}
                               onChange={(e) => setReplyText(e.target.value)}
                               placeholder="Write a reply..."
-                              className="flex-1 p-2 border rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              className="flex-1 p-2  rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 glassy-input"
                               onKeyDown={(e) => {
                                 if (e.key === "Enter" && !e.shiftKey) {
                                   e.preventDefault();
@@ -393,7 +393,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                             />
                             <button
                               disabled={!replyText.trim() || loading}
-                              className="p-2 text-blue-600 rounded-lg hover:bg-blue-50 disabled:opacity-50"
+                              className="p-2 glassy-text-primary glassy-button rounded-lg hover:bg-blue-50 disabled:opacity-50"
                               type="submit"
                             >
                               <FiSend size={18} />
@@ -423,7 +423,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                                     />
                                   )}
                                 </div>
-                                <div className="bg-gray-50 rounded-lg p-2 flex-1">
+                                <div className="glassy-card rounded-lg p-2 flex-1">
                                   <div className="flex items-center space-x-2">
                                     <h4 className="text-[13px] font-semibold glassy-text-primary">
                                       {reply?.user?.first_name}{" "}
@@ -434,14 +434,14 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                                       {moment(reply?.updatedAt).fromNow()}
                                     </span>
                                   </div>
-                                  <p className="text-[12px] text-gray-600 mb-1 flex justify-between place-items-center">
+                                  <p className="text-[12px] glassy-text-secondary mb-1 flex justify-between place-items-center">
                                     {reply?.text}
                                     {comment?.isOwnComment}
 
                                   </p>
                                 </div>
                               </div>
-                              {/* <div className="flex items-center gap-4 mt-2 text-xs text-gray-600 ml-9">
+                              {/* <div className="flex items-center gap-4 mt-2 text-xs glassy-text-secondary ml-9">
                                 <button
                                   onClick={() => handleLike(reply._id, "Comment")}
                                   className={`flex items-center gap-1 ${reply.isLiked ? "text-red-500" : "hover:text-red-500"
@@ -467,11 +467,11 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                       <button
                         onClick={loadMoreComments}
                         disabled={loadingMoreComments}
-                        className="px-4 py-2 text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50 flex items-center"
+                        className="px-4 py-2 text-sm glassy-text-primary hover:text-blue-800 disabled:opacity-50 flex items-center"
                       >
                         {loadingMoreComments ? (
                           <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                            <div className="animate-spin rounded-full h-4 w-4  border-blue-600 mr-2"></div>
                             Loading...
                           </>
                         ) : (
@@ -484,7 +484,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                     <div className="flex justify-center mt-2">
                       <button
                         onClick={showLessComments}
-                        className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
+                        className="px-4 py-2 text-sm glassy-text-secondary hover:glassy-text-primary"
                       >
                         Show less
                       </button>

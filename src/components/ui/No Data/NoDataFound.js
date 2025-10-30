@@ -2,7 +2,7 @@ import React from 'react';
 
 const NoDataFound = ({ message }) => {
     return (
-        <div className="flex flex-col items-center justify-center py-12 px-4 text-center text-gray-600">
+        <div className="flex flex-col items-center justify-center py-12 px-4 text-center glassy-text-secondary">
             {/* <svg
                 className="w-24 h-24 mb-4 text-gray-400"
                 fill="none"

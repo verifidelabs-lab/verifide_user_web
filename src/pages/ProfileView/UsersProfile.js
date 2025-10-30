@@ -26,7 +26,7 @@ import { BaseUrl } from "../../components/hooks/axiosProvider";
 
 const StatsCard = ({ icon, value, label }) => (
   <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
-    <div className="text-2xl font-bold text-gray-900">{value}</div>
+    <div className="text-2xl font-bold glassy-text-primary">{value}</div>
     <div className="text-sm glassy-text-secondary">{label}</div>
   </div>
 );
@@ -62,7 +62,7 @@ const ProfileCard = ({ formData, handleResumeDownload }) => {
       <div className="flex flex-col flex-1">
         <div className="flex items-center flex-wrap gap-2">
           {profile?.first_name && (
-            <h1 className="text-lg font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold glassy-text-primary">
               {`${profile?.first_name || ""} ${profile?.last_name || ""}`}
             </h1>
           )}
@@ -169,14 +169,14 @@ const UsersProfile = ({ currentUserId }) => {
         <div>
           <nav className="flex justify-start items-center gap-2 md:mb-2 text-sm mx-4">
             <span
-              className="text-gray-600 cursor-pointer"
+              className="glassy-text-secondary cursor-pointer"
               onClick={() => navigate(`/user/feed`)}
             >
               Home
             </span>
             <span className="text-gray-400">›</span>
             <span
-              className="text-gray-600 cursor-pointer"
+              className="glassy-text-secondary cursor-pointer"
               onClick={() => navigate(`/user/suggested-users?tab=user`)}
             >
 
@@ -328,7 +328,7 @@ const UsersProfile = ({ currentUserId }) => {
                     <h2 className="text-xl font-bold glassy-text-primary mb-4">
                       About
                     </h2>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="glassy-text-secondary leading-relaxed">
                       {formData?.personalInfo?.summary}
                     </p>
                   </div>
@@ -384,13 +384,13 @@ const UsersProfile = ({ currentUserId }) => {
                                   {exp.profileName || ""}
                                 </p>
                                 {exp.start_date && (
-                                  <p className="text-gray-600 mb-2">
+                                  <p className="glassy-text-secondary mb-2">
                                     {convertTimestampToDate(exp.start_date)} -{" "}
                                     {convertTimestampToDate(exp.end_date)}
                                   </p>
                                 )}
                                 {exp.grade && (
-                                  <p className="text-gray-600">
+                                  <p className="glassy-text-secondary">
                                     Grade: {exp.grade}
                                   </p>
                                 )}
@@ -446,7 +446,7 @@ const UsersProfile = ({ currentUserId }) => {
                                 <h3 className="font-bold glassy-text-primary text-lg">
                                   {edu.institution || "Unspecified institution"}
                                 </h3>
-                                <p className="text-gray-600 text-sm">
+                                <p className="glassy-text-secondary text-sm">
                                   {edu.degree || "No degree specified"}
                                 </p>
                                 <p className="glassy-text-secondary text-sm flex items-center gap-1 mt-1">

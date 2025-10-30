@@ -78,6 +78,13 @@ const authSlice = createSlice({
       };
     },
   },
+  // ✅ manually update institution profile data in store
+  setInstitutionsProfileData: (state, action) => {
+    state.institutionsProfileData = {
+      ...state.institutionsProfileData,
+      ...action.payload,
+    };
+  },
   extraReducers: builder => {
     createExtraReducersForThunk(builder, adminLogin, 'adminLoginData')
     createExtraReducersForThunk(builder, adminProfile, 'adminProfileData')
@@ -93,5 +100,5 @@ const authSlice = createSlice({
 
   }
 })
-export const { setCompaniesProfileData } = authSlice.actions;
+export const { setCompaniesProfileData, setInstitutionsProfileData } = authSlice.actions;
 export default authSlice.reducer

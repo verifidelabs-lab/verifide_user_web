@@ -314,10 +314,10 @@ const JobCard = ({
                 )}
             </div>
 
-            <h3 className="text-lg font-semibold text-gray-800 capitalize">
+            <h3 className="text-lg font-semibold glassy-text-primary capitalize">
               {job?.job_title?.name}
             </h3>
-            <p className="text-gray-600 text-sm font-normal mb-3 flex items-center gap-1">
+            <p className="glassy-text-secondary text-sm font-normal mb-3 flex items-center gap-1">
               <CiLocationOn className="w-4 h-4" />
               {job?.work_location?.state?.name && job?.work_location?.city?.name
                 ? `${job?.work_location.city.name}, ${job?.work_location.state.name}`
@@ -401,7 +401,7 @@ const JobCard = ({
             </div>
 
             {!job?.user_id && job?.company_id?.headquarters?.address_line_1 && (
-              <div className="flex text-sm text-gray-600">
+              <div className="flex text-sm glassy-text-secondary">
                 <MdLocationOn className="text-base mr-1" />
                 {job?.company_id?.headquarters?.address_line_1}
               </div>

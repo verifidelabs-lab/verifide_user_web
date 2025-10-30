@@ -112,8 +112,8 @@ const PollForm = ({ questions, setQuestions, errors }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Your response has been recorded.</h2>
-            <p className="text-gray-600 mb-6">Thank you for completing the form.</p>
+            <h2 className="text-2xl font-bold glassy-text-primary mb-2">Your response has been recorded.</h2>
+            <p className="glassy-text-secondary mb-6">Thank you for completing the form.</p>
             <button
               onClick={resetForm}
               className="bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-2 px-4 rounded"

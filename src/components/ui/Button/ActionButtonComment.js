@@ -2,7 +2,7 @@ const ActionButtonComment = ({ icon: Icon, count, isActive, isLoading, onClick, 
     <button
         onClick={onClick}
         disabled={isLoading}
-        className={`flex items-center gap-1 p-2 rounded-lg transition-colors ${isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+        className={`flex items-center gap-1 p-2 rounded-lg transition-colors ${isActive ? 'text-blue-600  ' : 'glassy-text-secondary hover:text-blue-600  '
             } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
         aria-label={ariaLabel}
     >

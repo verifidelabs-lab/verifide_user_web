@@ -509,7 +509,7 @@ const Courses = () => {
         <div className="p-6">
           <div className="flex justify-between place-items-center">
             <div>
-              <h1 className="md:text-3xl text-sm font-bold text-gray-900 mb-2">
+              <h1 className="md:text-3xl text-sm font-bold glassy-text-primary mb-2">
                 Course Management
               </h1>
             </div>
@@ -743,7 +743,7 @@ const Courses = () => {
           {['what_you_will_learn', 'target_audience', 'prerequisites'].map((field) => (
             <div key={field} className="glassy-card border rounded-md p-4 shadow-sm mb-6">
               <div className="flex justify-between items-center mb-3">
-                <h3 className="text-base font-semibold text-gray-800 capitalize">
+                <h3 className="text-base font-semibold glassy-text-primary capitalize">
                   {field.replace(/_/g, ' ')}
                 </h3>
                 <Button
@@ -788,7 +788,7 @@ const Courses = () => {
           {/* Modules section */}
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-medium text-gray-900">Modules *</h3>
+              <h3 className="text-lg font-medium glassy-text-primary">Modules *</h3>
               <Button
                 type="button"
                 onClick={handleAddModule}
@@ -805,7 +805,7 @@ const Courses = () => {
                     <div className="flex justify-between items-start">
                       <div>
                         <h4 className="font-medium">{module.title}</h4>
-                        <p className="text-sm text-gray-600">{module.content}</p>
+                        <p className="text-sm glassy-text-secondary">{module.content}</p>
                         <div className="mt-2 text-xs glassy-text-secondary">
                           <p>Duration: {module.duration}</p>
                           {module.video_url && <p>Video: {module.video_url}</p>}
@@ -983,19 +983,19 @@ const Courses = () => {
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Course Name
                 </label>
-                <p className="text-gray-900">{viewData.name}</p>
+                <p className="glassy-text-primary">{viewData.name}</p>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Title
                 </label>
-                <p className="text-gray-900">{viewData.title}</p>
+                <p className="glassy-text-primary">{viewData.title}</p>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Category
                 </label>
-                <p className="text-gray-900">
+                <p className="glassy-text-primary">
                   {categories.find(cat => cat._id === viewData.category_id)?.name || 'N/A'}
                 </p>
               </div>
@@ -1003,19 +1003,19 @@ const Courses = () => {
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Status
                 </label>
-                <p className="text-gray-900">{viewData.isDisable ? 'Disabled' : 'Enabled'}</p>
+                <p className="glassy-text-primary">{viewData.isDisable ? 'Disabled' : 'Enabled'}</p>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Language
                 </label>
-                <p className="text-gray-900">{viewData.language}</p>
+                <p className="glassy-text-primary">{viewData.language}</p>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Proficiency Level
                 </label>
-                <p className="text-gray-900">
+                <p className="glassy-text-primary">
                   {viewData.proficiency_level.charAt(0).toUpperCase() + viewData.proficiency_level.slice(1)}
                 </p>
               </div>
@@ -1023,19 +1023,19 @@ const Courses = () => {
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Duration
                 </label>
-                <p className="text-gray-900">{viewData.duration}</p>
+                <p className="glassy-text-primary">{viewData.duration}</p>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Minimum Experience
                 </label>
-                <p className="text-gray-900">{viewData.min_experience || 'N/A'}</p>
+                <p className="glassy-text-primary">{viewData.min_experience || 'N/A'}</p>
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Amount
                 </label>
-                <p className="text-gray-900">
+                <p className="glassy-text-primary">
                   {viewData.amount_currency} {viewData.amount}
                 </p>
               </div>
@@ -1043,7 +1043,7 @@ const Courses = () => {
                 <label className="block text-sm text-gray-700 mb-1 font-semibold">
                   Created At
                 </label>
-                <p className="text-gray-900">{formatDate(viewData.createdAt)}</p>
+                <p className="glassy-text-primary">{formatDate(viewData.createdAt)}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -1065,7 +1065,7 @@ const Courses = () => {
               <label className="block text-sm text-gray-700 mb-1 font-semibold">
                 Description
               </label>
-              <p className="text-gray-900 whitespace-pre-line">{viewData.description}</p>
+              <p className="glassy-text-primary whitespace-pre-line">{viewData.description}</p>
             </div>
 
             {[
@@ -1108,7 +1108,7 @@ const Courses = () => {
                 {viewData[field]?.length > 0 ? (
                   <ul className="list-disc pl-5 space-y-1">
                     {viewData[field].map((item, index) => (
-                      <li key={index} className="text-gray-900">{item}</li>
+                      <li key={index} className="glassy-text-primary">{item}</li>
                     ))}
                   </ul>
                 ) : (
@@ -1127,7 +1127,7 @@ const Courses = () => {
                   {viewData.modules.map((module, index) => (
                     <div key={index} className="border rounded-lg p-4">
                       <h4 className="font-medium">{module.title}</h4>
-                      <p className="text-sm text-gray-600 mt-1">{module.content}</p>
+                      <p className="text-sm glassy-text-secondary mt-1">{module.content}</p>
                       <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
                           <span className="font-medium">Duration:</span> {module.duration}

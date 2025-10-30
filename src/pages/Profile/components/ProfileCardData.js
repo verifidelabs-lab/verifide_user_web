@@ -177,7 +177,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
         <div className="w-full h-full">
           {imageError || !data?.personalInfo?.profile_picture_url ? (
             <div className="object-cover md:w-full md:h-full w-[100px] h-[100px] md:rounded-md rounded-full flex items-center justify-center bg-gray-300">
-              <span className="text-2xl font-bold text-gray-600">
+              <span className="text-2xl font-bold glassy-text-secondary">
                 <img src='/0684456b-aa2b-4631-86f7-93ceaf33303c.png' alt='dummy logo' />
               </span>
             </div>

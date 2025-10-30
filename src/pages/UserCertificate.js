@@ -115,11 +115,11 @@ const UserCertificate = () => {
                 <div className="px-12 py-10 relative z-10">
                     {/* Title */}
                     <div className="text-center mb-10">
-                        <h1 className="text-2xl font-semibold text-gray-800 leading-relaxed max-w-2xl mx-auto">
+                        <h1 className="text-2xl font-semibold glassy-text-primary leading-relaxed max-w-2xl mx-auto">
                             Verifide Learning {certificateName} <br /> Professional Certificate
                         </h1>
-                        <p className="mt-3 text-gray-600 text-sm italic">
-                            This is to certify that <span className="font-semibold text-gray-900">{username}</span> successfully
+                        <p className="mt-3 glassy-text-secondary text-sm italic">
+                            This is to certify that <span className="font-semibold glassy-text-primary">{username}</span> successfully
                             completed the learning path.
                         </p>
                     </div>
@@ -155,8 +155,8 @@ const UserCertificate = () => {
 
                     {/* Footer */}
                     <div className="text-center mt-12 border-t pt-6">
-                        <p className="text-sm text-gray-600 tracking-wide">
-                            Certificate ID: <span className="font-medium text-gray-800">{certificateUrlOrNumber}</span>
+                        <p className="text-sm glassy-text-secondary tracking-wide">
+                            Certificate ID: <span className="font-medium glassy-text-primary">{certificateUrlOrNumber}</span>
                         </p>
                     </div>
                 </div>

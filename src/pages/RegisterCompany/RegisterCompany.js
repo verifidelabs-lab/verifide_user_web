@@ -613,17 +613,17 @@ const RegisterCompany = () => {
             >
               <TbArrowBack size={20} />
             </button>
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold glassy-text-primary">
               Register Your Company
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm glassy-text-secondary">
               Fill in your company details to create an account
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Account Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -671,7 +671,7 @@ const RegisterCompany = () => {
             </div>
 
             <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Basic Company Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -736,7 +736,7 @@ const RegisterCompany = () => {
             </div>
 
             <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Company Details
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -871,7 +871,7 @@ const RegisterCompany = () => {
             </div>
 
             <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Headquarters
               </h3>
               <div className="grid grid-cols-1 gap-4">
@@ -946,7 +946,7 @@ const RegisterCompany = () => {
             </div>
             <div className="border-t border-gray-200 pt-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="text-lg font-medium glassy-text-primary">
                   Specialties
                 </h3>
                 <Button

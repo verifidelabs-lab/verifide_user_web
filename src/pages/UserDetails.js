@@ -217,7 +217,7 @@ const UserDetails = () => {
               </div>
 
               <div className="flex-1 mt-4 sm:mt-2">
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold glassy-text-primary">
                   {personalInfo?.first_name} {personalInfo?.last_name}
                 </h1>
                 <p className="text-gray-700">{personalInfo?.headline}</p>
@@ -259,14 +259,14 @@ const UserDetails = () => {
             {/* About Section */}
             {personalInfo.summary && (
               <div className="glassy-card rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">About</h2>
+                <h2 className="text-xl font-bold glassy-text-primary mb-4">About</h2>
                 <p className="text-gray-700">{personalInfo.summary}</p>
               </div>
             )}
 
             {/* Experience Section */}
             <div className="glassy-card rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl font-bold glassy-text-primary mb-4">
                 Experience
               </h2>
               {experiences.map((exp, index) => (
@@ -291,7 +291,7 @@ const UserDetails = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold glassy-text-primary">
                         {exp.profileName}
                       </h3>
                       <p className="text-gray-700">{exp.companyName}</p>
@@ -326,7 +326,7 @@ const UserDetails = () => {
 
             {/* Education Section */}
             <div className="glassy-card rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl font-bold glassy-text-primary mb-4">
                 Education
               </h2>
               {educations.map((edu, index) => (
@@ -363,7 +363,7 @@ const UserDetails = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold glassy-text-primary">
                         {edu.institution}
                       </h3>
                       <p className="text-gray-700">
@@ -397,7 +397,7 @@ const UserDetails = () => {
 
             {/* Projects Section */}
             <div className="glassy-card rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Projects</h2>
+              <h2 className="text-xl font-bold glassy-text-primary mb-4">Projects</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {projects.map((project, index) => (
                   <div
@@ -420,7 +420,7 @@ const UserDetails = () => {
                       />
                     )}
                     <div className="p-4">
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold glassy-text-primary">
                         {project.name}
                       </h3>
                       <p className="glassy-text-secondary text-sm">
@@ -439,7 +439,7 @@ const UserDetails = () => {
 
                       {project.institution && (
                         <div className="flex justify-start gap-2 items-center ">
-                          <p className=" text-sm font-semibold text-gray-900">
+                          <p className=" text-sm font-semibold glassy-text-primary">
                             Institute
                           </p>
                           <p className="text-xs glassy-text-secondary font-medium">
@@ -465,7 +465,7 @@ const UserDetails = () => {
 
             {/* Certifications Section */}
             <div className="glassy-card rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl font-bold glassy-text-primary mb-4">
                 {" "}
                 Certifications
               </h2>
@@ -491,7 +491,7 @@ const UserDetails = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold glassy-text-primary">
                         {cert.name}
                       </h3>
                       <p className="text-gray-700">

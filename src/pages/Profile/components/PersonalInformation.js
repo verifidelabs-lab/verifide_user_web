@@ -156,7 +156,7 @@ const PersonalInformation = ({
               </a>
 
               <MdOutlineContentCopy
-                className="cursor-pointer text-gray-600 hover:text-gray-800"
+                className="cursor-pointer glassy-text-secondary hover:glassy-text-primary"
                 onClick={async () => {
                   try {
                     const url = `${BaseUrl}user-details/${formData?.username}`;
@@ -185,9 +185,8 @@ const PersonalInformation = ({
         </div>
 
         <div
-          className={`overflow-hidden transition-all duration-500 ease-in-out ${
-            isExtended ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`overflow-hidden transition-all duration-500 ease-in-out ${isExtended ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <div className={`pt-6 ${isExtended ? "block" : "hidden"}`}>
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-4 items-end lg:grid-cols-4 md:grid-cols-2 mt-6">
@@ -323,11 +322,11 @@ const PersonalInformation = ({
             </div>
 
             <div className="mt-6">
-              <label className="block mb-2 text-sm font-medium text-gray-700">
+              <label className="block mb-2 text-sm font-medium glassy-text-primary">
                 Professional Bio *
               </label>
               <textarea
-                className="w-full h-32 p-3 border border-gray-300 rounded-lg"
+                className="w-full h-32 p-3 glassy-input rounded-lg"
                 placeholder="Write a short professional biography (min 10 and max 500)"
                 value={getFormValue("summary")}
                 onChange={(e) => handleChange("summary", e.target.value)}
@@ -338,13 +337,14 @@ const PersonalInformation = ({
 
             <div className="flex items-center justify-end mt-6 gap-3">
               <Button
-                variant="ghost"
+                variant=""
                 onClick={() => setIsExtended((prev) => !prev)}
+                className="glassy-button"
               >
                 Close
               </Button>
 
-              <Button type="button" onClick={handleSubmit} loading={loading}>
+              <Button type="button" onClick={handleSubmit} loading={loading} className="glassy-button">
                 Update
               </Button>
             </div>

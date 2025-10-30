@@ -225,7 +225,7 @@ export const PollFormQue = ({
           <button 
             type="button" 
             onClick={onDuplicate}
-            className="text-gray-900 hover:text-blue-600 p-1 rounded"
+            className="glassy-text-primary hover:text-blue-600 p-1 rounded"
             title="Duplicate"
           >
             <RxCopy />
@@ -234,7 +234,7 @@ export const PollFormQue = ({
           <button 
             type="button" 
             onClick={onDelete}
-            className="text-gray-600 hover:text-red-600 p-1 rounded ml-2"
+            className="glassy-text-secondary hover:text-red-600 p-1 rounded ml-2"
             title="Delete"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -244,7 +244,7 @@ export const PollFormQue = ({
         </div>
         
         <div className="flex items-center">
-          <span className="text-sm text-gray-600 mr-2">Required</span>
+          <span className="text-sm glassy-text-secondary mr-2">Required</span>
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"

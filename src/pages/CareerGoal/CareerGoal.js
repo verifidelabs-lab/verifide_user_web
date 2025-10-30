@@ -205,7 +205,7 @@ const CareerGoal = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
         <div className="glassy-card rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="animate-spin w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg glassy-text-secondary">
             Loading screening questions...
           </p>
         </div>
@@ -220,10 +220,10 @@ const CareerGoal = () => {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <BiCheckCircle className="w-12 h-12 text-green-600" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl font-bold glassy-text-primary mb-4">
             {autoSubmitted ? "Time Completed!" : "Thank You!"}
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="glassy-text-secondary mb-6">
             {autoSubmitted
               ? "Your screening answers have been automatically submitted due to time completion."
               : "Your screening answers have been successfully submitted."}
@@ -267,7 +267,7 @@ const CareerGoal = () => {
                 <Link
                   to={`/user/view-details/companies/${jobData?.company_id?._id}`}
                 >
-                  <h1 className="text-xl font-bold text-gray-900">
+                  <h1 className="text-xl font-bold glassy-text-primary">
                     {jobData.job_title.name}
                   </h1>
                 </Link>
@@ -275,7 +275,7 @@ const CareerGoal = () => {
                   {jobData.job_type}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-gray-600 mb-3">
+              <div className="flex items-center gap-2 glassy-text-secondary mb-3">
                 <LuBuilding2 className="w-4 h-4" />
                 <span className="font-medium">{jobData.company_id.name}</span>
                 <span className="text-gray-400">•</span>
@@ -283,14 +283,14 @@ const CareerGoal = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm glassy-text-secondary">
                   <BiMapPin className="w-4 h-4" />
                   <span>
                     {jobData.work_location.city.name},{" "}
                     {jobData.work_location.state.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm glassy-text-secondary">
                   <span>{formatSalary(jobData.salary_range)}</span>
                 </div>
               </div>
@@ -303,7 +303,7 @@ const CareerGoal = () => {
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-lg font-semibold glassy-text-primary">
                 Screening Questions
               </h2>
               <p className="text-sm glassy-text-secondary">
@@ -327,7 +327,7 @@ const CareerGoal = () => {
           </div>
 
           <div className="mb-8">
-            <h3 className="text-lg font-medium text-gray-900 mb-6">
+            <h3 className="text-lg font-medium glassy-text-primary mb-6">
               {currentQ.question}
             </h3>
 

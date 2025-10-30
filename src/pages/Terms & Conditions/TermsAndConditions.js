@@ -96,7 +96,7 @@ const TermsAndConditions = () => {
             <div className='p-4 md:p-6 flex items-center justify-center min-h-screen'>
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading terms and conditions...</p>
+                    <p className="glassy-text-secondary">Loading terms and conditions...</p>
                 </div>
             </div>
         );
@@ -111,7 +111,7 @@ const TermsAndConditions = () => {
                 <div className="w-80 glassy-card border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-6">
                     <div className="flex items-center gap-2 mb-6">
                         <div className="w-1 h-6 bg-blue-600 rounded-full"></div>
-                        <h2 className="text-lg font-bold text-gray-900">TABLE OF CONTENTS</h2>
+                        <h2 className="text-lg font-bold glassy-text-primary">TABLE OF CONTENTS</h2>
                     </div>
                     <ul className="space-y-1">
                         {termsData?.tableOfContents?.map((item, index) => {
@@ -140,7 +140,7 @@ const TermsAndConditions = () => {
                 <div className='flex-1 space-y-6'>
                     {/* Breadcrumb */}
                     <nav className='flex items-center space-x-2 text-sm'>
-                        <span className='text-gray-600 font-medium'>Settings</span>
+                        <span className='glassy-text-secondary font-medium'>Settings</span>
                         <LuChevronRight className="text-gray-400" size={16} />
                         <span className='text-blue-600 font-semibold'>Terms And Conditions</span>
                     </nav>
@@ -177,11 +177,11 @@ const TermsAndConditions = () => {
                                             {item.display_order}
                                         </div>
                                         <div className="flex-1">
-                                            <h2 className="text-xl font-bold text-gray-900 mb-3">
+                                            <h2 className="text-xl font-bold glassy-text-primary mb-3">
                                                 {item.title}
                                             </h2>
                                             <div
-                                                className="prose prose-sm text-gray-600 leading-relaxed space-y-3"
+                                                className="prose prose-sm glassy-text-secondary leading-relaxed space-y-3"
                                                 dangerouslySetInnerHTML={{ __html: item.content }}
                                             />
                                         </div>
@@ -215,7 +215,7 @@ const TermsAndConditions = () => {
             <div className='block md:hidden'>
                 {/* Breadcrumb */}
                 <nav className='flex items-center space-x-2 mb-4 text-sm'>
-                    <span className='text-gray-600 font-medium'>Settings</span>
+                    <span className='glassy-text-secondary font-medium'>Settings</span>
                     <LuChevronRight className="text-gray-400" size={14} />
                     <span className='text-blue-600 font-semibold'>Terms & Conditions</span>
                 </nav>
@@ -249,12 +249,12 @@ const TermsAndConditions = () => {
                                     }
                                     className={`
                                         w-full text-left p-4 font-semibold text-sm flex items-center gap-3 transition-colors
-                                        ${isExpanded ? 'bg-blue-50 text-blue-700' : 'glassy-card text-gray-800'}
+                                        ${isExpanded ? 'bg-blue-50 text-blue-700' : 'glassy-card glassy-text-primary'}
                                     `}
                                 >
                                     <div className={`
                                         flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold
-                                        ${isExpanded ? 'bg-blue-600 glassy-text-primary' : 'bg-gray-100 text-gray-600'}
+                                        ${isExpanded ? 'bg-blue-600 glassy-text-primary' : 'bg-gray-100 glassy-text-secondary'}
                                     `}>
                                         {item.display_order}
                                     </div>

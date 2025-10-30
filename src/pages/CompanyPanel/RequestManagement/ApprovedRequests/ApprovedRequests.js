@@ -21,7 +21,7 @@ const StatusBadge = ({ status }) => {
       case 'rejected':
         return 'bg-red-100 text-red-800 border border-[#FFEBEB]';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 glassy-text-primary';
     }
   };
 
@@ -173,7 +173,7 @@ const ApprovedRequests = () => {
                   Not Verified
                 </span>
               )}
-              <h3 className="font-semibold text-xl text-gray-800">
+              <h3 className="font-semibold text-xl glassy-text-primary">
                 {user?.first_name} {user?.last_name}
               </h3>
             </div>
@@ -190,7 +190,7 @@ const ApprovedRequests = () => {
 
             {assignedTo && (
               <div className="mt-6 border-t pt-4">
-                <h4 className="font-semibold text-md text-gray-800 mb-2">Assigned To</h4>
+                <h4 className="font-semibold text-md glassy-text-primary mb-2">Assigned To</h4>
                 <div className="flex items-center space-x-4">
                   <img
                     src={assignedTo.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
@@ -211,7 +211,7 @@ const ApprovedRequests = () => {
           </div>
           {selectedRequest?.is_verified && selectedRequest?.verifier_id && (
             <div className="mt-4 border-t pt-4">
-              <h4 className="font-semibold text-md text-gray-800 mb-2">Verified By</h4>
+              <h4 className="font-semibold text-md glassy-text-primary mb-2">Verified By</h4>
               <div className="flex items-center space-x-4">
                 <img
                   src={selectedRequest.verifier_id.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
@@ -233,7 +233,7 @@ const ApprovedRequests = () => {
           )}
           <div className="glassy-card p-6 rounded-lg shadow-lg">
             {model && (
-              <h3 className="font-semibold text-xl text-gray-800 capitalize">
+              <h3 className="font-semibold text-xl glassy-text-primary capitalize">
                 {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
               </h3>
             )}
@@ -294,7 +294,7 @@ const ApprovedRequests = () => {
         </div>
         <div className="space-y-6">
           <div className="glassy-card p-6 rounded-lg shadow-lg">
-            <h3 className="font-semibold text-xl text-gray-800">Attached File(s)</h3>
+            <h3 className="font-semibold text-xl glassy-text-primary">Attached File(s)</h3>
             {selectedRequest.attach_file && selectedRequest.attach_file.length > 0 ? (
               <div className="space-y-4 mt-4">
                 {selectedRequest.attach_file.map((file, index) => (

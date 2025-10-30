@@ -11,6 +11,7 @@ import ProfileImageProvider from './components/context/profileImageContext';
 import { ThemeProvider } from './context/ThemeContext';
 
 import "react-medium-image-zoom/dist/styles.css";
+import { GlobalKeysProvider } from './context/GlobalKeysContext';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -22,7 +23,9 @@ root.render(
           <PersistGate loading={null} persistor={persistor}>
             <ProfileImageProvider>
               <ThemeProvider>
-                <App />
+                <GlobalKeysProvider>
+                  <App />
+                </GlobalKeysProvider>
               </ThemeProvider>
             </ProfileImageProvider>
           </PersistGate>

@@ -40,7 +40,7 @@ const MessageInput = ({
             case 'pdf':
                 return <BiFile className="w-5 h-5 text-red-600" />;
             default:
-                return <BiFile className="w-5 h-5 text-gray-600" />;
+                return <BiFile className="w-5 h-5 glassy-text-secondary" />;
         }
     };
 
@@ -67,7 +67,7 @@ const MessageInput = ({
                                 <p className="text-xs font-medium text-blue-700">
                                     Replying to {replyingTo.sender_id === contacts?.connectionUserId ? contacts?.first_name : 'You'}
                                 </p>
-                                <p className="text-sm text-gray-600 truncate max-w-xs">
+                                <p className="text-sm glassy-text-secondary truncate max-w-xs">
                                     {getReplyText()}
                                 </p>
                             </div>

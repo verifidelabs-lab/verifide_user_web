@@ -170,7 +170,7 @@ const Verification = ({ headline }) => {
       case 'verified':
         return { text: 'Verified', color: 'bg-green-100 text-green-600' };
       case 'unverified':
-        return { text: 'Unverified', color: 'bg-gray-100 text-gray-600' };
+        return { text: 'Unverified', color: 'bg-gray-100 glassy-text-secondary' };
       case 'pending':
         return { text: 'Pending', color: 'bg-orange-100 text-orange-600' };
       case 'under review':
@@ -180,7 +180,7 @@ const Verification = ({ headline }) => {
       case 'required':
         return { text: 'Required', color: 'bg-red-100 text-red-600' };
       default:
-        return { text: status, color: 'bg-gray-100 text-gray-600' };
+        return { text: status, color: 'bg-gray-100 glassy-text-secondary' };
     }
   }
 
@@ -574,7 +574,7 @@ const Verification = ({ headline }) => {
       <div className='p-4   space-y-3'>
        
         <nav className="flex items-center gap-2 text-sm">
-          <span className="text-gray-600">Home</span>
+          <span className="glassy-text-secondary">Home</span>
           <span className="text-gray-400">›</span>
           <span className="font-medium text-blue-600">All Category</span>
         </nav>
@@ -872,7 +872,7 @@ const Verification = ({ headline }) => {
                  a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
                   {currentQuestionIndex + 1}/{totalQuestions}
                 </div>
               </div>
@@ -907,7 +907,7 @@ const Verification = ({ headline }) => {
                  a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
                   {timeLeft}s
                 </div>
               </div>

@@ -103,7 +103,7 @@ const AddProject = ({
                     />
 
                     <div className="space-y-3">
-                        <p className="text-sm text-gray-600 font-medium">
+                        <p className="text-sm glassy-text-secondary font-medium">
                             Project Type
                             <span className='text-sky-500 ml-1 text-xs font-normal'>(Optional)</span>
                         </p>
@@ -249,7 +249,7 @@ const AddProject = ({
 
                     <div className="space-y-3">
                         <div>
-                            <p className="text-sm text-gray-600 font-medium mb-2">
+                            <p className="text-sm glassy-text-secondary font-medium mb-2">
                                 Project Link or Media
                             </p>
                             <div className="flex gap-5 items-center">

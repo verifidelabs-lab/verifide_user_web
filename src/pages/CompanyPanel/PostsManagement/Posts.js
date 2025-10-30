@@ -53,6 +53,7 @@ import { getCookie } from "../../../components/utils/cookieHandler";
 import NoDataFound from "../../../components/ui/No Data/NoDataFound";
 import Button from "../../../components/ui/Button/Button";
 import { BaseUrl } from "../../../components/hooks/axiosProvider";
+import { useGlobalKeys } from "../../../context/GlobalKeysContext";
 
 const useIO = ({ onIntersect, rootMargin = "120px", threshold = 0.1 }) => {
   const observerRef = useRef(null);
@@ -87,7 +88,20 @@ const Posts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postId } = useParams();
-  const isCompany = getCookie("ACTIVE_MODE")
+  const {
+    token,
+    role,
+    activeMode,
+    isAssignedUser,
+    isCompany,
+    isInstitution,
+    isUser,
+    updateToken,
+    updateRole,
+    updateActiveMode,
+    updateIsAssignedUser,
+    clearAll,
+  } = useGlobalKeys();
   console.log("Post ID:", postId); // 👉 "68e4ecced9a37663be3f8576"
   const dropdownRef = useRef(null);
   const userSelector = useSelector((state) => state.user);
@@ -159,7 +173,8 @@ const Posts = () => {
 
       try {
         const getPostId = postId || "";
-        const isCompanyTab = isCompany === "company" ? "self" : tabActive
+        console.log("this is the post", isCompany)
+        const isCompanyTab = isCompany || isInstitution ? "self" : tabActive
         const res = await dispatch(
           getPostOnHome({ page, size: 10, type: isCompanyTab, post_id: getPostId })
         ).unwrap();
@@ -691,12 +706,12 @@ const Posts = () => {
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
           <div className="flex justify-between items-center gap-2 mb-2 text-sm">
             <nav className="flex items-center gap-2 text-sm">
-              <span className="text-gray-600">Home</span>
+              <span className="glassy-text-secondary">Home</span>
               <span className="text-gray-400">›</span>
               <span className="font-medium text-blue-600">Highlights</span>
             </nav>
             {
-              isCompany && isCompany !== "company" && <FilterDropdown
+              !isCompany() || !isInstitution() && <FilterDropdown
                 tabs={tabs}
                 tabActive={tabActive}
                 setTabActive={setTabActive}
@@ -798,7 +813,7 @@ const Posts = () => {
                             {post.userData?.first_name || post?.userData?.name}{" "}
                             {post.userData?.last_name}
                           </h3>
-                          <p className="md:text-sm text-xs text-gray-600">
+                          <p className="md:text-sm text-xs glassy-text-secondary">
                             {post.userData?.headline ||
                               (post.userData?.user_path === "Users"
                                 ? "user"
@@ -824,26 +839,26 @@ const Posts = () => {
                         )}
                         <div className="relative ml-2">
                           <button
-                            className="p-2 transition-colors rounded hover:bg-gray-50"
+                            className="p-2 transition-colors rounded  "
                             onClick={(e) => handleOptionsClick(post._id, e)}
                             aria-haspopup="menu"
                             aria-expanded={showOptionsDropdown === post._id}
                             title="More options"
                           >
                             {loadingId === post._id ? (
-                              <div className="w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+                              <div className="w-6 h-6 border-2  glassy-text-primary   rounded-full  " />
                             ) : (
-                              <PiDotsThreeOutlineVerticalFill className="w-6 h-6 text-gray-600" />
+                              <PiDotsThreeOutlineVerticalFill className="w-6 h-6 glassy-text-primary" />
                             )}
                           </button>
                           {showOptionsDropdown === post._id && (
                             <div
                               role="menu"
-                              className="absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
+                              className="absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1  "
                             >
                               <button
                                 onClick={() => handleCopyLink(post)}
-                                className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left border-b border-gray-200"
+                                className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary  w-full text-left  border-gray-200"
                                 role="menuitem"
                               >
                                 <IoCopyOutline size={18} /> Copy link
@@ -855,7 +870,7 @@ const Posts = () => {
                               ) : (
                                 <button
                                   onClick={() => handleReportPost(post._id)}
-                                  className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left"
+                                  className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary  w-full text-left"
                                   role="menuitem"
                                 >
                                   <BsExclamationCircle size={18} /> Report
@@ -866,7 +881,7 @@ const Posts = () => {
                                   onClick={() =>
                                     handleDeleteButtonClick(post._id)
                                   }
-                                  className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-50 w-full text-left border-t border-gray-200"
+                                  className="flex items-center gap-2 px-4 py-2 text-sm text-red-600  w-full text-left  border-gray-200"
                                   role="menuitem"
                                 >
                                   <AiOutlineDelete size={18} /> Delete
@@ -1023,7 +1038,7 @@ const Posts = () => {
               {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className="animate-pulse bg-gray-100 p-6 rounded-xl h-36"
+                  className="animate-pulse glassy-card p-6 rounded-xl h-36"
                 />
               ))}
             </div>

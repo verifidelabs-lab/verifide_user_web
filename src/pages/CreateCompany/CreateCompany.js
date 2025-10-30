@@ -60,7 +60,7 @@ const CreateCompany = () => {
     <div className="bg-gray-50 min-h-screen flex flex-col items-center py-10">
       {/* Title */}
       <h1 className="text-2xl font-semibold mb-2">Create a verified Page</h1>
-      <p className="text-gray-600 mb-8 text-center max-w-lg">
+      <p className="glassy-text-secondary mb-8 text-center max-w-lg">
         Connect with clients, employees, and the verified community. To get
         started, choose a page type.
       </p>

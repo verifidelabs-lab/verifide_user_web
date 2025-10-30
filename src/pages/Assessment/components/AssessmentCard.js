@@ -59,20 +59,20 @@ const CandidateCard = ({ candidate }) => {
       </div>
       <div className="flex items-center space-x-4 mb-4">
         <div className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-          <CiLock className="w-4 h-4 text-gray-600" />
-          <span className="text-gray-600">{candidate.timeLimit}</span>
+          <CiLock className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{candidate.timeLimit}</span>
         </div>
         <div className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-          <FiFileText className="w-4 h-4 text-gray-600" />
-          <span className="text-gray-600">{candidate.questions}</span>
+          <FiFileText className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{candidate.questions}</span>
         </div>
         <div className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
-          <FaChartArea className="w-4 h-4 text-gray-600" />
-          <span className="text-gray-600">{candidate.level}</span>
+          <FaChartArea className="w-4 h-4 glassy-text-secondary" />
+          <span className="glassy-text-secondary">{candidate.level}</span>
         </div>
       </div>
 
-      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+      <p className="glassy-text-secondary text-sm leading-relaxed mb-4">
         {candidate.description}
       </p>
       <div className="mb-6">

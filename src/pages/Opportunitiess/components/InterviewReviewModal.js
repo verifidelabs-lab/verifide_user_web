@@ -35,10 +35,10 @@ const InterviewReviewModal = ({
       buttonLabel={status==="rejected_in_interview" ? "Reject" : "Approve"}
     >
       <div className="border-b pb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Candidate Info: {selectInterviewId?.user_id?.first_name} {selectInterviewId?.user_id?.last_name}</h2>
+        <h2 className="text-xl font-semibold glassy-text-primary">Candidate Info: {selectInterviewId?.user_id?.first_name} {selectInterviewId?.user_id?.last_name}</h2>
         <div className="border-b pb-4 flex items-start gap-4">
           <div className="flex-1">
-            <p className="text-sm text-gray-600">{selectInterviewId?.user_id?.headline}</p>
+            <p className="text-sm glassy-text-secondary">{selectInterviewId?.user_id?.headline}</p>
             {selectInterviewId?.user_id?.topSkills?.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
                 {selectInterviewId.user_id.topSkills.map((skill) => (
@@ -96,7 +96,7 @@ const InterviewReviewModal = ({
 
 
         <div className="mt-6">
-          <label className="block text-sm font-medium text-gray-800 mb-3">Duration</label>
+          <label className="block text-sm font-medium glassy-text-primary mb-3">Duration</label>
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2">
               <button
@@ -129,7 +129,7 @@ const InterviewReviewModal = ({
                 +
               </button>
 
-              <span className="text-sm text-gray-600">hr</span>
+              <span className="text-sm glassy-text-secondary">hr</span>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -162,7 +162,7 @@ const InterviewReviewModal = ({
                 +
               </button>
 
-              <span className="text-sm text-gray-600">min</span>
+              <span className="text-sm glassy-text-secondary">min</span>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@ const InterviewReviewModal = ({
       </div>
 
       <div className="mt-3">
-        <label className="block text-sm font-medium text-gray-900">Interview Conducted By</label>
+        <label className="block text-sm font-medium glassy-text-primary">Interview Conducted By</label>
         <input
           type="text"
           value={interviewer}
@@ -181,7 +181,7 @@ const InterviewReviewModal = ({
       </div>
 
       <div className="mt-3">
-        <label className="block text-sm font-medium text-gray-900">Rate the Candidate</label>
+        <label className="block text-sm font-medium glassy-text-primary">Rate the Candidate</label>
         <div className="flex items-center gap-1 mt-1">
           {[...Array(5)].map((_, index) => {
             const ratingValue = index + 1;
@@ -210,7 +210,7 @@ const InterviewReviewModal = ({
       </div>
 
       <div className="mt-3">
-        <label className="block text-sm font-medium text-gray-900">Recommendation</label>
+        <label className="block text-sm font-medium glassy-text-primary">Recommendation</label>
         <select
           value={recommendationLevel}
           onChange={(e) => setRecommendationLevel(e.target.value)}
@@ -226,7 +226,7 @@ const InterviewReviewModal = ({
       </div>
 
       <div className="mt-3">
-        <label className="block text-sm font-medium text-gray-900">Interview Status</label>
+        <label className="block text-sm font-medium glassy-text-primary">Interview Status</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
@@ -239,7 +239,7 @@ const InterviewReviewModal = ({
       </div>
 
       <div className="mt-3">
-        <label htmlFor="remarks" className="block text-sm font-medium text-gray-900 mb-1">
+        <label htmlFor="remarks" className="block text-sm font-medium glassy-text-primary mb-1">
           Interviewer Feedback
         </label>
         <textarea

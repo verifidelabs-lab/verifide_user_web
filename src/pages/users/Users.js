@@ -176,7 +176,7 @@ const Users = () => {
               <button
                 type="button"
                 onClick={() => setKeyWord("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:glassy-text-secondary"
               >
                 <IoClose size={18} />
               </button>
@@ -197,7 +197,7 @@ const Users = () => {
         ${
           activeTab === tab.key
             ? "glassy-card text-[#2563EB] shadow-md"
-            : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+            : "glassy-text-secondary hover:bg-gray-100 hover:glassy-text-primary"
         }`}
             >
               <span>{tab.label}</span>
@@ -239,7 +239,7 @@ const Users = () => {
             {activeTab === "companies" && "🏢"}
             {activeTab === "institutions" && "🎓"}
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          <h3 className="text-xl font-semibold glassy-text-primary mb-2">
             No {tabConfig.find((t) => t.key === activeTab)?.label.toLowerCase()}{" "}
             found
           </h3>

@@ -1137,7 +1137,7 @@ const Profile = ({ profileData }) => {
         <div className="flex flex-col md:flex-row w-full mx-auto gap-4">
           <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
             <nav className="flex justify-start items-center gap-2 mb-2 text-sm" >
-              <span className="text-gray-600">Home</span>
+              <span className="glassy-text-secondary">Home</span>
               <span className="text-gray-400">›</span>
               <span className="font-medium text-blue-600">Profile</span>
             </nav>

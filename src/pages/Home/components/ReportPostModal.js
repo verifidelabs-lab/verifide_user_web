@@ -23,14 +23,14 @@ export default function ReportPostModal({
   const [customReason, setCustomReason] = useState('');
 
   const reasons = [
-    { id: REPORT_REASONS_ENUM.MISGUIDE, label: 'Misguide', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.NUDITY, label: 'Nudity', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.SCAM, label: 'Scam', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.ILLEGAL, label: 'Illegal', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.SUICIDE_OR_SELF_INJURY, label: 'Suicide or self-injury', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.VIOLENCE, label: 'Violence', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.HATE_SPEECH, label: 'Hate speech', color: 'bg-gray-200 text-gray-800' },
-    { id: REPORT_REASONS_ENUM.SOMETHING_ELSE, label: 'Something else', color: 'bg-gray-200 text-gray-800' }
+    { id: REPORT_REASONS_ENUM.MISGUIDE, label: 'Misguide', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.NUDITY, label: 'Nudity', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.SCAM, label: 'Scam', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.ILLEGAL, label: 'Illegal', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.SUICIDE_OR_SELF_INJURY, label: 'Suicide or self-injury', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.VIOLENCE, label: 'Violence', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.HATE_SPEECH, label: 'Hate speech', color: 'bg-gray-200 glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.SOMETHING_ELSE, label: 'Something else', color: 'bg-gray-200 glassy-text-primary' }
   ];
 
   const handleReasonClick = (reasonId) => {
@@ -69,7 +69,7 @@ export default function ReportPostModal({
         <div className="glassy-card rounded-xl max-w-xl w-full p-8 relative">
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            className="absolute top-4 right-4 text-gray-400 hover:glassy-text-secondary transition-colors"
           >
             <RxCross2 size={24} />
           </button>
@@ -85,7 +85,7 @@ export default function ReportPostModal({
               Thank you for submitting a report
             </h2>
 
-            <p className="text-gray-600 leading-relaxed">
+            <p className="glassy-text-secondary leading-relaxed">
               Your report has been submitted. Our team will review it shortly.
             </p>
           </div>
@@ -99,7 +99,7 @@ export default function ReportPostModal({
       <div className="glassy-card rounded-xl max-w-2xl w-full p-6 relative">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:glassy-text-secondary transition-colors"
         >
           <RxCross2 size={24} />
         </button>
@@ -124,7 +124,7 @@ export default function ReportPostModal({
         {selectedReason === REPORT_REASONS_ENUM.SOMETHING_ELSE && (
           <div className="mb-8">
             <h3 className="text-lg font-medium glassy-text-primary mb-2">Reason</h3>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="glassy-text-secondary text-sm mb-4">
               Please let us know the reason for reporting this post.
             </p>
             <textarea

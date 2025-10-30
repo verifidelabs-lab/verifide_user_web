@@ -13,7 +13,7 @@ import courseReducer from './course/courseSlice'
 import companyCourseReducer from './CompanySlices/courseSlice'
 import companiesReducer from './CompanySlices/companiesSlice'
 import userCompaniesReducer from './slices/companiesSlice'
-// import instituteReducer from './slices/instituteSlice'
+import instituteReducer from './slices/instituteSlice'
 import industryReducer from './Industry Slice/industrySlice'
 import assessmentReducer from './assessments/assessmentSlice'
 import companyAuth from './CompanySlices/CompanyAuth'
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
   companies: companiesReducer,
   userCompanies: userCompaniesReducer,
   companyAuth: companyAuth,
-  // institute: instituteReducer,
+  institute: instituteReducer,
   industry: industryReducer,
   educations: educationReducer,
   work: workReducer,

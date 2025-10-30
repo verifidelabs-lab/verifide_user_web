@@ -426,7 +426,7 @@ const StudentAssessment = () => {
 
     return (
       <div className="flex items-center justify-between p-4">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm glassy-text-secondary">
           Showing {(currentPage - 1) * POSTS_PER_PAGE + 1} to{' '}
           {Math.min(currentPage * POSTS_PER_PAGE, totalPosts)} of {totalPosts} assessments
         </div>
@@ -503,7 +503,7 @@ const StudentAssessment = () => {
             onClick={() => handleTabChange(item.value)}
             className={`px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeSection === item.value
               ? 'bg-[#2563EB1A] text-blue-500 shadow'
-              : 'text-gray-600 hover:glassy-text-primary'
+              : 'glassy-text-secondary hover:glassy-text-primary'
               }`}
           >
             {item.label}

@@ -46,6 +46,7 @@ export const updateFrameStatus = createApiThunkPrivate('updateFrameStatus', '/us
 
 export const switchAccount = createApiThunkPrivate('switchAccount', '/user/auth/switch-account', 'POST')
 export const switchAccountCompany = createApiThunkPrivate('switchAccountCompany', '/user/auth/switch-to-company', 'POST')
+export const switchAccountInstitution = createApiThunkPrivate('switchAccountInstitution', '/user/auth/switch-to-instution', 'POST')
 
 export const fetchLoginCredentials = createApiThunkPublic('loginCredentials', '/user/auth/login-credentials', 'POST')
 export const registerWithGoogle = createApiThunkPublic('registerWithGoogle', '/user/auth/register-with-google', 'POST')
@@ -77,7 +78,7 @@ const authSlice = createSlice({
         createExtraReducersForThunk(builder, fetchLoginCredentials, 'loginData')
         createExtraReducersForThunk(builder, companyRegister, 'companyRegisterData')
         createExtraReducersForThunk(builder, instituteProfile, 'instituteProfileData')
-        
+
 
 
 

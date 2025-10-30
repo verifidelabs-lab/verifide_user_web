@@ -117,10 +117,10 @@ const CompanyDetails = () => {
       <div className="pt-16 pb-6 px-6">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">
+            <h1 className="text-2xl font-bold glassy-text-primary">
               {agencyData?.name}
             </h1>
-            <p className="text-gray-600 text-sm mt-1">
+            <p className="glassy-text-secondary text-sm mt-1">
               {agencyData?.description}
             </p>
 
@@ -178,7 +178,7 @@ const CompanyDetails = () => {
     <div className="mt-6 space-y-8">
       {/* Overview */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Overview</h2>
+        <h2 className="text-lg font-semibold glassy-text-primary mb-2">Overview</h2>
         <p className="text-gray-700 text-sm leading-relaxed">
           {agencyData?.description}
         </p>
@@ -245,7 +245,7 @@ const CompanyDetails = () => {
 
       {/* Specialties */}
       <div>
-        <h3 className="text-sm font-medium text-gray-900 mb-2">Specialties</h3>
+        <h3 className="text-sm font-medium glassy-text-primary mb-2">Specialties</h3>
         <div className="flex flex-wrap gap-2">
           {agencyData?.specialties?.map((s, i) => (
             <span

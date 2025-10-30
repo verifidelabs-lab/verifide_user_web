@@ -261,7 +261,7 @@ const CourseCategory = () => {
         <div className="p-6">
           <div className="flex justify-between place-items-center">
             <div>
-              <h1 className="md:text-3xl text-sm font-bold text-gray-900 mb-2">
+              <h1 className="md:text-3xl text-sm font-bold glassy-text-primary mb-2">
                 Course Category Management
               </h1>
             </div>
@@ -411,25 +411,25 @@ const CourseCategory = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Category Name
                 </label>
-                <p className="text-gray-900">{viewData.name || 'N/A'}</p>
+                <p className="glassy-text-primary">{viewData.name || 'N/A'}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Status
                 </label>
-                <p className="text-gray-900">{viewData.isDisable ? 'Disabled' : 'Enabled'}</p>
+                <p className="glassy-text-primary">{viewData.isDisable ? 'Disabled' : 'Enabled'}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Created At
                 </label>
-                <p className="text-gray-900">{formatDate(viewData.createdAt)}</p>
+                <p className="glassy-text-primary">{formatDate(viewData.createdAt)}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Last Updated
                 </label>
-                <p className="text-gray-900">{formatDate(viewData.updatedAt)}</p>
+                <p className="glassy-text-primary">{formatDate(viewData.updatedAt)}</p>
               </div>
             </div>
 
@@ -437,7 +437,7 @@ const CourseCategory = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description
               </label>
-              <p className="text-gray-900 whitespace-pre-line">{viewData.description || 'N/A'}</p>
+              <p className="glassy-text-primary whitespace-pre-line">{viewData.description || 'N/A'}</p>
             </div>
           </div>
         )}

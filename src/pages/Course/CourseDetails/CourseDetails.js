@@ -297,7 +297,7 @@ const CourseDetailPage = () => {
       <div className="min-h-screen glassy-card flex items-center justify-center">
         <div className="text-center max-w-md mx-auto p-6">
           <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Error Loading Course</h2>
+          <h2 className="text-2xl font-bold glassy-text-primary mb-4">Error Loading Course</h2>
           <p className="glassy-text-secondary mb-6">{error}</p>
           <button
             onClick={fetchDataById}
@@ -598,7 +598,7 @@ const CourseDetailPage = () => {
                           className="glassy-card bg-opacity-90 hover:bg-opacity-100 rounded-full p-6 transition-all shadow-lg transform hover:scale-105"
                           aria-label="Play video"
                         >
-                          <BiPlay className="w-12 h-12 text-gray-800 ml-1" />
+                          <BiPlay className="w-12 h-12 glassy-text-primary ml-1" />
                         </button>
                       </div>
 
@@ -903,7 +903,7 @@ Add New Assessment'>Click here to start assessment</p>
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
                   {assessmentState.currentQuestionIndex + 1}/{totalQuestions}
                 </div>
               </div>
@@ -935,7 +935,7 @@ Add New Assessment'>Click here to start assessment</p>
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center text-xs font-semibold glassy-text-primary">
                   {assessmentState.timeLeft}s
                 </div>
               </div>
@@ -1083,7 +1083,7 @@ Add New Assessment'>Click here to start assessment</p>
             <div className="mt-8 space-y-6">
               {assessmentState.result.answers.map((ans, idx) => (
                 <div key={idx} className="p-4 border rounded-lg shadow-sm glassy-card">
-                  <p className="font-semibold text-gray-800">
+                  <p className="font-semibold glassy-text-primary">
                     Q{idx + 1}: {ans.question}
                   </p>
                   <ul className="mt-2 space-y-1">

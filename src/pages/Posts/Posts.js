@@ -174,7 +174,7 @@ const Posts = ({ profileData }) => {
     return (
       <div className="flex items-center justify-between p-4 glassy-card rounded-lg border border-gray-200 mt-4">
 
-        <div className="text-sm text-gray-600">
+        <div className="text-sm glassy-text-secondary">
           Showing {(currentPage - 1) * postsPerPage + 1} to{' '}
           {Math.min(currentPage * postsPerPage, totalPosts)} of {totalPosts} posts
         </div>
@@ -307,7 +307,7 @@ const Posts = ({ profileData }) => {
                   {profileUser.address?.state?.name && `${profileUser.address.state.name}, `}
                   {profileUser.address?.country?.name}
                 </div>
-                <div className="text-gray-600">
+                <div className="glassy-text-secondary">
                   {profileUser.gender && `${profileUser.gender} • `}
                   {profileUser.birth_date && `Born ${formatBirthDate(profileUser.birth_date)}`}
                 </div>
@@ -340,7 +340,7 @@ const Posts = ({ profileData }) => {
                     <span className="text-blue-500 text-lg">✓</span>
                   )}
                 </div>
-                <div className="text-sm text-gray-600">{profileUser.headline}</div>
+                <div className="text-sm glassy-text-secondary">{profileUser.headline}</div>
               </div>
             </div>
 
@@ -359,7 +359,7 @@ const Posts = ({ profileData }) => {
                 {profileUser.address?.state?.name && `${profileUser.address.state.name}, `}
                 {profileUser.address?.country?.name}
               </div>
-              <div className="text-gray-600">
+              <div className="glassy-text-secondary">
                 {profileUser.gender && `${profileUser.gender} • `}
                 {profileUser.birth_date && `Born ${formatBirthDate(profileUser.birth_date)}`}
               </div>
@@ -439,7 +439,7 @@ const Posts = ({ profileData }) => {
                         </span>
                       </div>
 
-                      <p className="text-gray-800 text-sm">{comment.text}</p>
+                      <p className="glassy-text-primary text-sm">{comment.text}</p>
 
                       <div className="flex items-center space-x-4 mt-1 text-xs glassy-text-secondary">
                         <button className="hover:text-blue-600">
@@ -464,7 +464,7 @@ const Posts = ({ profileData }) => {
             <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
               <button
                 onClick={() => setViewModalOpen(false)}
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl z-10 glassy-card rounded-full p-1"
+                className="absolute top-4 right-4 glassy-text-secondary hover:glassy-text-primary text-2xl z-10 glassy-card rounded-full p-1"
               >
                 <FaTimes />
               </button>

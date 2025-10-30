@@ -105,7 +105,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             <h2 className="text-xl font-bold">Buy Course</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-400 hover:text-gray-600 bg-gray-200 rounded-full cursor-pointer p-1"
+              className="text-gray-400 hover:glassy-text-secondary bg-gray-200 rounded-full cursor-pointer p-1"
             >
               <RxCross2 className="w-6 h-6" />
             </button>
@@ -122,7 +122,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
               </div>
               <div className="flex flex-col flex-1 justify-between">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-sm font-medium text-gray-800">4.6</span>
+                  <span className="text-sm font-medium glassy-text-primary">4.6</span>
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <BiStar key={i} className="w-4 h-4 text-yellow-500 fill-current" />
@@ -193,7 +193,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
 
                   <button
                     onClick={() => setShowAddCardModal(true)}
-                    className="flex items-center justify-center gap-2 text-gray-600 text-sm mt-3"
+                    className="flex items-center justify-center gap-2 glassy-text-secondary text-sm mt-3"
                   >
                     <BiPlus className="w-4 h-4 bg-[#715EFE1A] text-blue-600 rounded-full" />
                     Add New Card
@@ -248,7 +248,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
 
                   <button
                     onClick={() => setShowAddUpiModal(true)}
-                    className="flex items-center justify-center gap-2 text-gray-600 text-sm mt-3"
+                    className="flex items-center justify-center gap-2 glassy-text-secondary text-sm mt-3"
                   >
                     <BiPlus className="w-4 h-4 bg-[#715EFE1A] text-blue-600 rounded-full" />
                     Add New UPI
@@ -265,7 +265,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                   <img src='/Img/bank.png' alt='Net Banking' className="w-6 h-6" />
                   <span className="text-sm font-medium">Net Banking</span>
                 </div>
-                <BiChevronRight className="w-6 h-6 text-gray-800" />
+                <BiChevronRight className="w-6 h-6 glassy-text-primary" />
               </button>
             </div>
           </div>
@@ -291,7 +291,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             <div className="flex justify-between items-center mb-4">
               <div>
                 <div className="font-bold text-lg">₹1149.00</div>
-                <div className="text-sm text-gray-600">Bill will be Send on email</div>
+                <div className="text-sm glassy-text-secondary">Bill will be Send on email</div>
               </div>
               <button
                 className="bg-blue-600 glassy-text-primary px-8 py-3 rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"

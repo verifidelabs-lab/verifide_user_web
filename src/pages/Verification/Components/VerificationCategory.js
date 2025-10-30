@@ -478,10 +478,10 @@ const VerificationCategory = ({ profileData }) => {
     <div className="min-h-screen    p-4">
       <div className="w-full mx-auto">
         <nav className="flex items-center py-4 text-sm">
-          <span className="text-gray-600 hover:glassy-text-primary">Home</span>
+          <span className="glassy-text-secondary hover:glassy-text-primary">Home</span>
           <BiChevronRight className="w-4 h-4 text-gray-400 mx-2" />
           <span
-            className="text-gray-600 hover:glassy-text-primary"
+            className="glassy-text-secondary hover:glassy-text-primary"
             onClick={() => window.history.back()}
           >
             {formattedTab(tab)}
@@ -497,7 +497,7 @@ const VerificationCategory = ({ profileData }) => {
 
       <div className="w-full px-4 sm:px-6 lg:px-8 p-4 glassy-card rounded-lg ">
         <div className="flex items-center mb-8">
-          <FaGraduationCap className="w-6 h-6 text-gray-600 mr-3" />
+          <FaGraduationCap className="w-6 h-6 glassy-text-secondary mr-3" />
           <h1 className="text-2xl font-semibold glassy-text-primary capitalize">
             {type || "Verification"}
           </h1>

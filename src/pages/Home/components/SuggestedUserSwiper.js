@@ -52,7 +52,7 @@ const SuggestedUsersSwiper = ({
     <div className="rounded-2xl p-6 mb-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-gray-900">People you may know</h3>
+        <h3 className="text-xl font-bold glassy-text-primary">People you may know</h3>
         <button
           onClick={onExploreMore}
           className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50"
@@ -146,11 +146,11 @@ const SuggestedUsersSwiper = ({
                     )}
                   </div>
 
-                  <h4 className="font-semibold text-gray-900 text-sm mb-1 capitalize"
+                  <h4 className="font-semibold glassy-text-primary text-sm mb-1 capitalize"
                     onClick={() => (handleUserProfile(user))}>
                     {user.username || ""}
                   </h4>
-                  <p className="text-xs text-gray-600 mb-4 line-clamp-2 flex-grow">
+                  <p className="text-xs glassy-text-secondary mb-4 line-clamp-2 flex-grow">
                     {user.headline || "No headline provided"}
                   </p>
 

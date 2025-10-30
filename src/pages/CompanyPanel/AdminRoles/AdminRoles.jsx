@@ -125,14 +125,14 @@ const AdminRoles = () => {
 
 
   return (
-    <div className="glassy-card p-6 min-h-screen">
+    <div className=" p-6 min-h-screen">
       <div className="flex flex-col md:flex-row w-full mx-auto gap-6">
         {/* Left Section */}
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6">
           {/* Admin Roles Section */}
           <div className="glassy-card p-6 rounded-2xl shadow-md border border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Admin Roles</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-xl font-bold glassy-text-primary mb-2">Admin Roles</h2>
+            <p className="glassy-text-secondary mb-6">
               {/* You can add only members who work in the company. */}
             </p>
             {!isAssignedUser && <div className="relative mb-5">
@@ -142,13 +142,13 @@ const AdminRoles = () => {
                 value={searchKeyword}
                 onChange={handleChange}
                 placeholder="Search users..."
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm transition"
+                className="w-full pl-12 pr-4 py-3 rounded-xl  glassy-input-notification focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm text-sm transition"
               />
               <button
                 onClick={handleAssignUser}
                 disabled={!selectedUser}
                 className={`absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 rounded-lg text-sm font-medium glassy-text-primary transition-colors
-                  ${selectedUser ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
+                  ${selectedUser ? " glassy-button  " : "glassy-button cursor-not-allowed"}`}
               >
                 Add Admin
               </button>
@@ -175,7 +175,7 @@ const AdminRoles = () => {
                           className="w-8 h-8 rounded-full object-cover"
                         />
                         <div className="flex flex-col">
-                          <span className="text-gray-900 font-medium text-sm">
+                          <span className="glassy-text-primary font-medium text-sm">
                             {user.first_name} {user.last_name}
                           </span>
                           <span className="glassy-text-secondary text-xs">{user.email}</span>
@@ -203,10 +203,10 @@ const AdminRoles = () => {
                         className="w-10 h-10 rounded-full object-cover"
                       />
                       <div>
-                        <h3 className="font-semibold text-gray-900 text-sm">
+                        <h3 className="font-semibold glassy-text-primary text-sm">
                           {user.first_name} {user.last_name}
                         </h3>
-                        <p className="text-gray-600 text-xs">{user.email}</p>
+                        <p className="glassy-text-secondary text-xs">{user.email}</p>
                       </div>
                     </div>
                     {!isAssignedUser && <button

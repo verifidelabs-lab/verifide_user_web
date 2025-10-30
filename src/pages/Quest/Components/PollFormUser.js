@@ -182,7 +182,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
       <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
         <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
-            <h2 className="text-xl font-medium text-gray-800">Survey</h2>
+            <h2 className="text-xl font-medium glassy-text-primary">Survey</h2>
             <button
               onClick={onClose}
               className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
@@ -191,7 +191,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
             </button>
           </div>
           <div className="p-6 text-center">
-            <p className="text-gray-600">No survey questions available.</p>
+            <p className="glassy-text-secondary">No survey questions available.</p>
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
     <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
-          <h2 className="text-xl font-medium text-gray-800 capitalize">{formStructure.title}</h2>
+          <h2 className="text-xl font-medium glassy-text-primary capitalize">{formStructure.title}</h2>
           <button
             onClick={onClose}
             className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
@@ -216,13 +216,13 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
               <div className="bg-blue-100 text-blue-800 p-4 rounded-full inline-block mb-4">
                 <BiSend className="text-3xl" onClick={onClose} />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-2">Response submitted successfully!</h3>
-              <p className="text-gray-600">Thank you for completing the form.</p>
+              <h3 className="text-xl font-medium glassy-text-primary mb-2">Response submitted successfully!</h3>
+              <p className="glassy-text-secondary">Thank you for completing the form.</p>
             </div>
           ) : (
             <>
               <div className="mb-6">
-                <p className="text-gray-600">{formStructure.description}</p>
+                <p className="glassy-text-secondary">{formStructure.description}</p>
                 {formStructure.pages.length > 1 && (
                   <div className="text-sm glassy-text-secondary mt-2">
                     Page {currentPage + 1} of {formStructure.pages.length}
@@ -234,7 +234,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
                 {formStructure.pages[currentPage].questions.map((question, index) => (
                   <div key={question.id} className="mb-8">
                     <div className="flex items-start mb-2">
-                      <h3 className="text-lg font-medium text-gray-800 flex-1 capitalize">
+                      <h3 className="text-lg font-medium glassy-text-primary flex-1 capitalize">
                         {question.title}
                         {question.required && <span className="text-red-500 ml-1">*</span>}
                       </h3>

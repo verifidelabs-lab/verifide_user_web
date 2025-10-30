@@ -29,22 +29,21 @@ import CompanyDetails from "./pages/CompanyDetails";
 import PublicLayout from "./components/Layout/PublicLayout/PublicLayout";
 import CompanyInstituteView from "./pages/ProfileView/CompanyInstituteView";
 import { ThemeContext } from "./context/ThemeContext";
+import { ROLE_CODES } from "./context/GlobalKeysContext";
 
 const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
-// PrivateRoute for user panel
+ 
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const userToken = getCookie("VERIFIED_TOKEN");
-  const companyToken = getCookie("COMPANY_TOKEN");
   const location = useLocation();
 
-  // 🚫 If company is logged in, block access to user routes
-  if (companyToken) {
-    return <Navigate to="/company" replace />;
-  }
+  const userToken = getCookie("VERIFIED_TOKEN");
+  const token = getCookie("TOKEN");
+  const role = getCookie("ROLE");
 
-  // 🚫 If no user token, go to login
-  if (!userToken) {
+  // 🚫 If no tokens at all → go to login
+  if (!userToken && !token) {
     return (
       <Navigate
         to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
@@ -53,14 +52,36 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     );
   }
 
-  // ✅ If user logged in
-  return <Component {...rest} />;
+  // 🏫 If institution logged in and has token
+  if (role === ROLE_CODES.institution && token) {
+    return <Navigate to="/institution" replace />;
+  }
+
+  // 🏢 If company logged in and has token
+  if (role === ROLE_CODES.company && token) {
+    return <Navigate to="/company" replace />;
+  }
+
+  // 👤 If user logged in (only VERIFIED_TOKEN)
+  if (userToken) {
+    return <Component {...rest} />;
+  }
+
+  // 🚫 Default (fallback)
+  return (
+    <Navigate
+      to={`/login?redirect=${encodeURIComponent(location.pathname)}`}
+      replace
+    />
+  );
 };
+
+
 
 // CompanyPrivateRoute for company panel
 const CompanyPrivateRoute = ({ component: Component, ...rest }) => {
   const isUserAuthenticated = getCookie("VERIFIED_TOKEN");
-  const isCompanyAuthenticated = getCookie("COMPANY_TOKEN");
+  const isCompanyAuthenticated = getCookie("TOKEN");
   const location = useLocation();
 
   if (!isUserAuthenticated) return <Navigate to="/login" replace />;
@@ -85,11 +106,11 @@ const PublicRoute = ({ children, allowCompanyLogin = false }) => {
   return children;
 };
 const App = () => {
-const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
-useEffect(() => {
-  document.documentElement.setAttribute("data-theme", theme);
-}, [theme]);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   return (
     <div className="glassy-app">
@@ -205,14 +226,17 @@ useEffect(() => {
             path="/company/*"
             element={<CompanyPrivateRoute component={CompanyLayout} />}
           />
-
+          <Route
+            path="/institution/*"
+            element={<CompanyPrivateRoute component={CompanyLayout} />}
+          />
           {/* 404 */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
 
       <Toaster position="top-center" richColors closeButton />
-   </div>
+    </div>
   );
 };
 

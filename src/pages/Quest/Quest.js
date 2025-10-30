@@ -40,8 +40,9 @@ import CustomInput from "../../components/ui/Input/CustomInput";
 import { FiMoreVertical } from "react-icons/fi";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Modal2 from "../../components/ui/Modal/Modal2";
+import { useGlobalKeys } from "../../context/GlobalKeysContext";
 
-const EmptyState = ({ activeTab, onCreateQuest, accessMode, IsCompany }) => (
+const EmptyState = ({ activeTab, onCreateQuest, accessMode, isCompany, isInstitution, }) => (
   <div className="flex flex-col items-center justify-center mt-12 py-16 glassy-card rounded-2xl shadow-sm border border-gray-200">
     <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-6 rounded-full mb-6">
       <BiTrophy className="h-10 w-10 text-blue-600" />
@@ -54,7 +55,7 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode, IsCompany }) => (
         ? "Start by creating your first Quest to engage your community."
         : `You don't have any ${activeTab.toLowerCase()} quests right now.`}
     </p>
-    {accessMode === "6" || IsCompany === "company" && (
+    {(accessMode === "6" || isCompany() || isInstitution()) && (
       <button
         onClick={onCreateQuest}
         className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 glassy-text-primary px-6
@@ -71,7 +72,21 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode, IsCompany }) => (
 const ShortsClone = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const IsCompany = getCookie("ACTIVE_MODE")
+  const {
+    token,
+    role,
+    activeMode,
+    isAssignedUser,
+    isCompany,
+    isInstitution,
+    isUser,
+    updateToken,
+    updateRole,
+    updateActiveMode,
+    updateIsAssignedUser,
+    clearAll,
+  } = useGlobalKeys();
+  console.log("this is thsdkjflskdjflskdjflskdjflskdjf", isCompany())
   const selector = useSelector((state) => state.global);
   const quests = selector?.getQuestListData?.data?.data?.list || [];
   const [feedbackData, setFeedbackData] = useState(null);
@@ -163,24 +178,31 @@ const ShortsClone = () => {
   ];
 
   const handleCreateQuest = () => {
-    const companyRole = getCookie("COMPANY_ROLE")
-    console.log("This is te company role ", companyRole)
-    if (companyRole && companyRole === "3" && IsCompany === "company") {
+    if (isCompany()) {
       navigate(`/company/quest/create-your-quest`);
+    } else if (isInstitution()) {
+      navigate(`/institution/quest/create-your-quest`);
+    } else if (isUser()) {
+      navigate(`/user/quest/create-your-quest`);
     } else {
+      // fallback to user just in case
       navigate(`/user/quest/create-your-quest`);
     }
   };
 
   const handleEditQuest = (id) => {
-    if (getCookie("COMPANY_TOKEN") && IsCompany === "company") {
+
+
+    if (isCompany()) {
       navigate(`/company/quest/create-your-quest/${id}`);
-
+    } else if (isInstitution()) {
+      navigate(`/institution/quest/create-your-quest/${id}`);
+    } else if (isUser()) {
+      navigate(`/user/quest/create-your-quest/${id}`);
     } else {
-
+      // fallback
       navigate(`/user/quest/create-your-quest/${id}`);
     }
-
   };
 
   const handleDelete = async (id) => {
@@ -331,7 +353,7 @@ const ShortsClone = () => {
         </div>
 
 
-        {accessMode === "6" || IsCompany === "company" && (
+        {(accessMode === "6" || isCompany() || isInstitution()) && (
           <button
             onClick={handleCreateQuest}
             className="mt-4 md:mt-0 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 glassy-text-primary px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-all shadow-md hover:shadow-lg"
@@ -340,6 +362,7 @@ const ShortsClone = () => {
             New Quest
           </button>
         )}
+
       </div>
 
       <div className="flex md:flex-row flex-col justify-between items-center">
@@ -381,8 +404,8 @@ const ShortsClone = () => {
               onDelete={handleDelete}
               onVote={handleVote}
               accessMode={accessMode}
-              IsCompany={IsCompany}
-
+              isCompany={isCompany}       // ✅ pass function
+              isInstitution={isInstitution} // optional
               data-aos="fade-up"
               data-aos-delay={index * 80}
               isLoading2={isLoading2}
@@ -395,7 +418,8 @@ const ShortsClone = () => {
             activeTab={activeTab}
             onCreateQuest={handleCreateQuest}
             accessMode={accessMode}
-            IsCompany={IsCompany}
+            isCompany={isCompany}       // ✅ pass function
+            isInstitution={isInstitution} // optional
             data-aos="zoom-in"
           />
         )
@@ -462,7 +486,7 @@ const ShortsClone = () => {
         {engagementData && (
           <div className="max-h-[28rem] overflow-y-auto px-1">
             <div className="mb-4 flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm glassy-text-secondary">
                 Total Engagements:{" "}
                 <span className="font-semibold text-indigo-600">
                   {engagementData.engagement_count}
@@ -629,20 +653,20 @@ const ShortsClone = () => {
 
                 </div>
                 <button className="p-1 hover:bg-gray-200 rounded">
-                  <FiMoreVertical className="w-5 h-5 text-gray-600" />
+                  <FiMoreVertical className="w-5 h-5 glassy-text-secondary" />
                 </button>
               </div> */}
 
               <div className="flex justify-center items-center space-x-6 mt-4">
 
                 <button
-                  className={`pb-2 ${activeTab3 === 'Question' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'}`}
+                  className={`pb-2 ${activeTab3 === 'Question' ? 'text-purple-600 border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
                   onClick={() => setActiveTab3('Question')}
                 >
                   Question
                 </button>
                 <button
-                  className={`pb-2 ${activeTab3 === 'Individual' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600'}`}
+                  className={`pb-2 ${activeTab3 === 'Individual' ? 'text-purple-600 border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
                   onClick={() => setActiveTab3('Individual')}
                 >
                   Individual
@@ -670,7 +694,7 @@ const ShortsClone = () => {
                   >
                     <BiChevronLeft className="w-4 h-4" />
                   </button>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm glassy-text-secondary">
                     {currentQuestion + 1} of {totalQuestions}
                   </span>
                   <button
@@ -713,7 +737,7 @@ const ShortsClone = () => {
                                 {option}
                               </span>
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm glassy-text-secondary">
                               <span className="font-bold text-purple-600">{selectedCount}</span> ({percentage.toFixed(0)}%)
                             </div>
                           </div>
@@ -744,7 +768,7 @@ const ShortsClone = () => {
                     >
                       <BiChevronLeftCircle className="w-4 h-4" />
                     </button>
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm glassy-text-secondary">
                       {currentQuestion + 1} of {totalQuestions}
                     </span>
                     <button
@@ -757,10 +781,10 @@ const ShortsClone = () => {
                   </div>
                   {/* <div className="flex items-center space-x-2">
                     <button className="p-2 hover:bg-gray-200 rounded">
-                      <Printer className="w-4 h-4 text-gray-600" />
+                      <Printer className="w-4 h-4 glassy-text-secondary" />
                     </button>
                     <button className="p-2 hover:bg-gray-200 rounded">
-                      <Trash2 className="w-4 h-4 text-gray-600" />
+                      <Trash2 className="w-4 h-4 glassy-text-secondary" />
                     </button>
                   </div> */}
                 </div>

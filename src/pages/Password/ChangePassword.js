@@ -71,8 +71,8 @@ const ChangePassword = () => {
             <div className="w-full max-w-2xl glassy-card rounded-2xl shadow-sm transition-all duration-500 hover:shadow-purple-300 ">
                 <div className="p-8 animate-fade-in">
                     <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-gray-800">Change Password</h2>
-                        <p className="text-gray-600 mt-2">Secure your account with a new password</p>
+                        <h2 className="text-3xl font-bold glassy-text-primary">Change Password</h2>
+                        <p className="glassy-text-secondary mt-2">Secure your account with a new password</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">

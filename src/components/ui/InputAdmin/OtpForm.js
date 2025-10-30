@@ -102,7 +102,7 @@ const OtpForm = ({
                     <div className="flex justify-center items-center gap-2 text-sm mt-4">
                         {!isResendDisabled ? (
                             <>
-                                <span className="text-gray-600">Didn't receive the code?</span>
+                                <span className="glassy-text-secondary">Didn't receive the code?</span>
                                 <button
                                     type="button"
                                     onClick={handleResend}
@@ -112,7 +112,7 @@ const OtpForm = ({
                                 </button>
                             </>
                         ) : (
-                            <span className="text-gray-600">Resend OTP in {timer}sec</span>
+                            <span className="glassy-text-secondary">Resend OTP in {timer}sec</span>
                         )}
                     </div>
                 <Button></Button>

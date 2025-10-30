@@ -10,7 +10,7 @@ const ActivityList = () => {
             <div className="md:p-4 p-2 ">
 
                 <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
-                    <span className="text-gray-600">Home</span>
+                    <span className="glassy-text-secondary">Home</span>
                     <span className="text-gray-400">›</span>
                     <span className="font-medium text-blue-600">Activity</span>
                 </nav>
@@ -105,7 +105,7 @@ const ActivityList = () => {
 
                                 <div className="flex items-start gap-4 mb-4">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-xs b text-gray-600 px-2 py-1 rounded  font-medium">
+                                        <span className="text-xs b glassy-text-secondary px-2 py-1 rounded  font-medium">
                                             COURSE
                                         </span>
                                         <span className="text-xs bg-[#EAF1FF] text-[#6B6B6B] px-2 py-1 rounded-full  font-medium">
@@ -122,7 +122,7 @@ const ActivityList = () => {
                                         </div>
                                         <h3 className="text-[20px] font-semibold glassy-text-primary">UI/UX Design for Beginners</h3>
                                     </div>
-                                    <p className="text-gray-600 ml-11">
+                                    <p className="glassy-text-secondary ml-11">
                                         Learn how to confidently develop custom & profitable Responsive WordPress Themes and Websites with no prior experience.
                                     </p>
                                 </div>

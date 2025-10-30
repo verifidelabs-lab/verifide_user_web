@@ -148,7 +148,7 @@ const CustomImageVideoUpload = ({
       <div
         className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-300 ease-in-out
           ${isLoading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer'}
-          ${isDragging ? 'border-blue-500 bg-blue-50 scale-105' : 'border-gray-300 bg-gray-50'}`}
+          ${isDragging ? 'border-blue-500 bg-blue-50 scale-105' : 'border-gray-300 glassy-input'}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={isLoading ? undefined : handleDrop}
@@ -166,7 +166,7 @@ const CustomImageVideoUpload = ({
 
         {totalFiles === 0 ? (
           <div className="flex flex-col items-center justify-center space-y-3">
-            <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
+            <div className="w-14 h-14  rounded-full flex items-center justify-center">
               {isLoading ? (
                 <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
               ) : (
@@ -175,7 +175,7 @@ const CustomImageVideoUpload = ({
                 </svg>
               )}
             </div>
-            <p className="text-gray-700">
+            <p className="glassy-text-secondary">
               {isLoading ? 'Uploading...' : 'Drag & drop files here '}
             </p>
             <p className="text-xs glassy-text-secondary">Supports images & videos, up to {maxSizeMB}MB each</p>
@@ -186,7 +186,7 @@ const CustomImageVideoUpload = ({
             {/* Video preview (if any) */}
             {files.video && (
               <div className="mb-4">
-                <h3 className="text-sm font-medium text-gray-700 mb-2 text-left">Video</h3>
+                <h3 className="text-sm font-medium glassy-text-secondary mb-2 text-left">Video</h3>
                 <div className="relative group border rounded-lg overflow-hidden shadow-md">
                   <button
                     onClick={(e) => { e.stopPropagation(); removeFile(files.video, 'video'); }}
@@ -229,7 +229,7 @@ const CustomImageVideoUpload = ({
             
             {files.images.length > 0 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2 text-left">
+                <h3 className="text-sm font-medium glassy-text-secondary mb-2 text-left">
                   Images ({files.images.length}/{maxFiles})
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">

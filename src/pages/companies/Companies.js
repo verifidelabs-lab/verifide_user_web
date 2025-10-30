@@ -803,7 +803,7 @@ const Companies = () => {
       <Loader loading={isLoading} />
       <div className="p-3">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-gray-900">Companies</h2>
+          <h2 className="text-2xl font-semibold glassy-text-primary">Companies</h2>
           {entryType.value === "Master Entries" && (
             <Button
               icon={<PiPlus className="w-5 h-5" />}
@@ -1057,7 +1057,7 @@ const Companies = () => {
             />
 
             <div className="border-t border-gray-200 pt-4">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Headquarters
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1133,7 +1133,7 @@ const Companies = () => {
 
             <div className=" pt-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="text-lg font-medium glassy-text-primary">
                   Specialties
                 </h3>
                 <Button
@@ -1309,7 +1309,7 @@ const Companies = () => {
                   <span className="text-sm font-medium">Not Verified</span>
                 </div>
               )}
-              <div className="text-center text-sm text-gray-600 space-y-1 mt-1">
+              <div className="text-center text-sm glassy-text-secondary space-y-1 mt-1">
                 {companyDetails?.data?.verified_at && (
                   <p>
                     <span className="font-medium text-gray-700">
@@ -1337,7 +1337,7 @@ const Companies = () => {
                 <p className="text-sm font-medium glassy-text-secondary">
                   Company Name
                 </p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.name || "N/A"}
                 </p>
               </div>
@@ -1345,7 +1345,7 @@ const Companies = () => {
                 <p className="text-sm font-medium glassy-text-secondary">
                   Display Name
                 </p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.display_name || "N/A"}
                 </p>
               </div>
@@ -1356,7 +1356,7 @@ const Companies = () => {
                 <p className="text-sm font-medium glassy-text-secondary">
                   Phone Number
                 </p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.country_code?.dial_code
                     ? `${companyDetails?.data?.country_code.dial_code} `
                     : ""}
@@ -1367,7 +1367,7 @@ const Companies = () => {
                 <p className="text-sm font-medium glassy-text-secondary">
                   Company Type
                 </p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.company_type || "N/A"}
                 </p>
               </div>
@@ -1375,7 +1375,7 @@ const Companies = () => {
 
             <div>
               <p className="text-sm font-medium glassy-text-secondary">Description</p>
-              <p className="mt-1 text-sm text-gray-900">
+              <p className="mt-1 text-sm glassy-text-primary">
                 {companyDetails?.data?.description || "N/A"}
               </p>
             </div>
@@ -1383,7 +1383,7 @@ const Companies = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium glassy-text-secondary">Website</p>
-                <p className="mt-1 text-sm text-gray-900 line-clamp-2">
+                <p className="mt-1 text-sm glassy-text-primary line-clamp-2">
                   {companyDetails?.data?.website_url ? (
                     <a
                       href={companyDetails?.data?.website_url}
@@ -1400,7 +1400,7 @@ const Companies = () => {
               </div>
               <div>
                 <p className="text-sm font-medium glassy-text-secondary">LinkedIn</p>
-                <p className="mt-1 text-sm text-gray-900 line-clamp-2">
+                <p className="mt-1 text-sm glassy-text-primary line-clamp-2">
                   {companyDetails?.data?.linkedin_page_url ? (
                     <a
                       href={companyDetails?.data?.linkedin_page_url}
@@ -1418,13 +1418,13 @@ const Companies = () => {
             </div>
 
             <div className="border-t border-gray-200 pt-4">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
+              <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Headquarters
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium glassy-text-secondary">Address</p>
-                  <p className="mt-1 text-sm text-gray-900">
+                  <p className="mt-1 text-sm glassy-text-primary">
                     {[
                       companyDetails?.data?.headquarters?.address_line_1,
                       companyDetails?.data?.headquarters?.address_line_2,
@@ -1445,7 +1445,7 @@ const Companies = () => {
                 <p className="text-sm font-medium glassy-text-secondary">
                   Founded Year
                 </p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.founded_year || "N/A"}
                 </p>
               </div>
@@ -1453,7 +1453,7 @@ const Companies = () => {
                 <p className="text-sm font-medium glassy-text-secondary">
                   Company Size
                 </p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.company_size || "N/A"}
                 </p>
               </div>
@@ -1461,7 +1461,7 @@ const Companies = () => {
 
             <div>
               <p className="text-sm font-medium glassy-text-secondary">Specialties</p>
-              <p className="mt-1 text-sm text-gray-900">
+              <p className="mt-1 text-sm glassy-text-primary">
                 {companyDetails?.data?.specialties?.length
                   ? companyDetails.data.specialties.join(", ")
                   : "N/A"}
@@ -1470,7 +1470,7 @@ const Companies = () => {
             <div className="grid grid-cols-2">
               <div>
                 <p className="text-sm font-medium glassy-text-secondary">Employee</p>
-                <p className="mt-1 text-sm text-gray-900">
+                <p className="mt-1 text-sm glassy-text-primary">
                   {companyDetails?.data?.employee_count ?? "N/A"}
                 </p>
               </div>

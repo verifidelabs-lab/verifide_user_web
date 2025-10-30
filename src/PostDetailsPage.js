@@ -72,7 +72,7 @@ const PostDetailsPage = () => {
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
             onClick={() => navigate(-1)}
-            className="text-gray-600 hover:glassy-text-primary"
+            className="glassy-text-secondary hover:glassy-text-primary"
           >
             ← Back
           </button>
@@ -137,15 +137,15 @@ const PostDetailsPage = () => {
 
           {/* Actions */}
           <div className="p-4 border-t border-gray-100 flex justify-around">
-            <button className="flex items-center space-x-1 text-gray-600">
+            <button className="flex items-center space-x-1 glassy-text-secondary">
               {postData.isLiked ? <BiSolidHeart className="text-red-500" /> : <BiHeart />}
               <span>Like ({postData.like_count || 0})</span>
             </button>
-            <button className="flex items-center space-x-1 text-gray-600">
+            <button className="flex items-center space-x-1 glassy-text-secondary">
               <LuMessageCircle />
               <span>Comment ({postData.comments || 0})</span>
             </button>
-            <button className="flex items-center space-x-1 text-gray-600">
+            <button className="flex items-center space-x-1 glassy-text-secondary">
               <BsSend />
               <span>Share ({postData.share_count || 0})</span>
             </button>

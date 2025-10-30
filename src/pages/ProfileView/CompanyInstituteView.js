@@ -163,14 +163,14 @@ const CompanyInstituteView = () => {
       <div>
         <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
           <span
-            className="text-gray-600 cursor-pointer"
+            className="glassy-text-secondary cursor-pointer"
             onClick={() => navigate(`/user/feed`)}
           >
             Home
           </span>
           <span className="text-gray-400">›</span>
           <span
-            className="text-gray-600 cursor-pointer"
+            className="glassy-text-secondary cursor-pointer"
             onClick={() => navigate(`/user/suggested-users?tab=${data?.type}`)}
           >
             Suggested Profiles
@@ -220,7 +220,7 @@ const CompanyInstituteView = () => {
           <div className="flex-1">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+                <h1 className="text-2xl md:text-3xl font-bold glassy-text-primary">
                   {info?.display_name || info?.name || "Unnamed Organization"}
                 </h1>
                 {info?.is_verified && (
@@ -251,7 +251,7 @@ const CompanyInstituteView = () => {
             )}
 
             {/* Quick Stats */}
-            <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-600">
+            <div className="flex flex-wrap gap-4 mt-4 text-sm glassy-text-secondary">
               {info?.country_code?.name && (
                 <span className="flex items-center gap-1">
                   <span className="text-lg">{info.country_code?.emoji}</span>
@@ -286,7 +286,7 @@ const CompanyInstituteView = () => {
           {/* Description */}
           {info?.description && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-800 capitalize mb-2">
+              <h2 className="text-lg font-semibold glassy-text-primary capitalize mb-2">
                 About
               </h2>
               <p className="text-gray-700 leading-relaxed">
@@ -325,7 +325,7 @@ const CompanyInstituteView = () => {
                   <p className="text-sm glassy-text-secondary">Phone</p>
                   <a
                     href={`tel:${info.phone_no}`}
-                    className="text-gray-800 hover:text-blue-600"
+                    className="glassy-text-primary hover:text-blue-600"
                   >
                     {info.phone_no}
                   </a>
@@ -342,7 +342,7 @@ const CompanyInstituteView = () => {
                   <p className="text-sm glassy-text-secondary">Email</p>
                   <a
                     href={`mailto:${info.email}`}
-                    className="text-gray-800 hover:text-blue-600"
+                    className="glassy-text-primary hover:text-blue-600"
                   >
                     {info.email}
                   </a>
@@ -379,7 +379,7 @@ const CompanyInstituteView = () => {
                 </div>
                 <p className="text-sm font-medium text-gray-700">Followers</p>
               </div>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-2xl font-bold glassy-text-primary">
                 {info?.follower_count?.toLocaleString() || 0}
               </p>
             </div>
@@ -391,7 +391,7 @@ const CompanyInstituteView = () => {
                 </div>
                 <p className="text-sm font-medium text-gray-700">Employees</p>
               </div>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-2xl font-bold glassy-text-primary">
                 {info?.employee_count?.toLocaleString() || 0}
               </p>
             </div>
@@ -409,7 +409,7 @@ const CompanyInstituteView = () => {
                   {isInstitute ? "Founded" : "Company Type"}
                 </p>
               </div>
-              <p className="text-2xl font-bold text-gray-800">
+              <p className="text-2xl font-bold glassy-text-primary">
                 {isInstitute
                   ? info?.founded_year
                     ? new Date(info.founded_year).getFullYear()
@@ -421,7 +421,7 @@ const CompanyInstituteView = () => {
 
           {/* Tags */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-800 capitalize mb-3">
+            <h2 className="text-lg font-semibold glassy-text-primary capitalize mb-3">
               {isInstitute ? "Specialties" : "Industries"}
             </h2>
             <div className="flex flex-wrap gap-2">

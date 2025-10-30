@@ -34,7 +34,7 @@ const Modal2 = ({
         <div className="w-[100vw] max-w-6xl sm:max-w-md md:max-w-6xl lg:max-w-6xl xl:max-w-6xl flex flex-col overflow-hidden">
 
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <h2 className={`text-lg font-semibold text-gray-800 capitalize capitalize ${titleClassName}`}>{title}</h2>
+            <h2 className={`text-lg font-semibold glassy-text-primary capitalize capitalize ${titleClassName}`}>{title}</h2>
             <Button variant="zinc" rounded="full" icon={<BiLeftArrowAlt />} onClick={onClose}>
               Back
             </Button>

@@ -140,7 +140,7 @@ const CustomVideoUpload = ({
                 <BiPaperclip className="w-8 h-8 text-gray-400 mb-2" />
               )}
 
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-sm glassy-text-secondary text-center">
                 {uploading ? 'Uploading...' : (
                   <>
                     <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
