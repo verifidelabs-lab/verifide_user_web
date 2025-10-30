@@ -214,25 +214,17 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
         {/* Content */}
         <div className="flex-1">
           {/* Title + Date */}
-          {/* <div className="flex flex-col sm:flex-row sm:justify-between">
-            <h3 className="text-sm font-semibold glassy-text-primary mb-1 sm:mb-0">
-              {cleanTitle}
-            </h3>
-            <span className="text-xs text-gray-500">
-              {formatDate(notification.createdAt)}
-            </span>
-          </div> */}
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-semibold glassy-text-primary">
               {cleanTitle}
             </h3>
-            <span className="text-xs text-gray-500 italic">
+            <span className="text-xs italic glassy-text-secondary">
               {formatDate(notification.createdAt)}
             </span>
           </div>
 
           {/* Job Info */}
-          <div className="mt-2 space-y-1 text-xs glassy-text-primary">
+          <div className="mt-2 space-y-1 text-xs glassy-text-secondary">
             {event && (
               <p className="flex items-center gap-1">
                 <span className="glassy-text-primary font-medium">
@@ -370,13 +362,13 @@ const NotificationHeader = ({
           {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm font-medium">
             <span
-              className="glassy-text-primary hover:text-[var(--accent-color)] cursor-pointer transition-colors"
+              className="glassy-text-secondary hover:glassy-text-primary-dark cursor-pointer"
               onClick={() => navigate("/user/feed")}
             >
               Home
             </span>
             <span className="glassy-text-secondary">›</span>
-            <span className="glassy-text-secondary">Notifications</span>
+            <span className="glassy-text-primary">Notifications</span>
           </nav>
 
           {/* Search + Filter + Mark All */}
@@ -474,13 +466,13 @@ const NotificationHeader = ({
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm mb-2">
           <span
-            className="glassy-text-primary hover:glassy-text-primary-dark cursor-pointer"
+            className="glassy-text-secondary hover:glassy-text-primary-dark cursor-pointer"
             onClick={() => navigate("/user/feed")}
           >
             Home
           </span>
           <span className="glassy-text-secondary">›</span>
-          <span className="glassy-text-secondary">Notifications</span>
+          <span className="glassy-text-primary">Notifications</span>
         </nav>
 
         {/* Search + Filter */}
@@ -502,7 +494,7 @@ const NotificationHeader = ({
               className="w-full flex items-center justify-center space-x-2 px-3 py-2 glassy-button text-sm hover:scale-105"
               onClick={() => setShowFilters(!showFilters)}
             >
-              <BiFilterAlt className="w-4 h-4" />
+              <BiFilterAlt className="w-4 h-4 glassy-text-primary" />
               <span>Filter</span>
             </button>
 
@@ -536,7 +528,7 @@ const NotificationHeader = ({
             All Notifications
           </h1>
           <div className="flex justify-between w-full sm:w-auto items-center gap-2">
-            <span className="text-sm glassy-text-secondary flex items-center">
+            <span className="text-sm glassy-text-primary flex items-center">
               <CustomToggle handleClick={() => setIsToggle((prev) => !prev)} isToggle={isToggle} />
               Unread
             </span>
@@ -643,13 +635,13 @@ const NotificationInterface = () => {
         setIsToggle={setIsToggle}
       />
 
-      <div className="w-full mx-auto shadow-sm glassy-card">
+      <div className="w-full mx-auto shadow-sm mt-2">
         {loading ? (
           <div className="flex justify-center items-center p-8">
-            <div className="animate-spin rounded-full h-8 w-8 -2 lue-500"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 glassy-text-secondary"></div>
           </div>
         ) : notifications.length === 0 ? (
-          <div className="text-center p-8 glassy-text-secondary">
+          <div className="text-center p-8 glassy-text-secondary glassy-card" >
             No notifications found
           </div>
         ) : (
@@ -664,7 +656,7 @@ const NotificationInterface = () => {
         )}
 
         {!loading && notifyData?.total > size && (
-          <div className="flex justify-between items-center p-4 glassy-card border-t border-[var(--border-color)]">
+          <div className="flex justify-between items-center p-4  border-t border-[var(--border-color)]">
             {/* Previous Button */}
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}

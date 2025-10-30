@@ -145,6 +145,7 @@ const UserProfileCard = ({
           alt={displayData.title}
           // onError={(e) => (e.currentTarget.src = displayData.errorImage)}
           onError={(e) => {
+            e.currentTarget.onerror = null;
             e.target.src =
               "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png";
           }}
@@ -174,7 +175,7 @@ const UserProfileCard = ({
                 <></>
               ) : (
                 <>
-                  <p className="text-lg font-bold text-blue-600">
+                  <p className="text-lg font-bold glassy-text-primary">
                     {stat.value}
                   </p>
                   <p className="text-xs glassy-text-secondary">{stat.label}</p>
@@ -186,7 +187,7 @@ const UserProfileCard = ({
 
         <div className="flex gap-3 mt-5">
           <button
-            className={`flex-1 py-2 px-4 rounded-lg text-sm font-semibold ${
+            className={`flex-1 py-2 px-4 rounded-lg text-sm glassy-button font-semibold ${
               displayData.isConnected
                 ? "bg-green-500 glassy-text-primary cursor-default"
                 : "bg-blue-600 glassy-text-primary hover:bg-blue-700"
@@ -197,7 +198,7 @@ const UserProfileCard = ({
             {isLoading ? "Connecting..." : displayData.buttons[0]}
           </button>
           <button
-            className="flex-1 py-2 px-4 rounded-lg text-sm font-semibold border border-gray-300 hover:bg-gray-100"
+            className="flex-1 py-2 px-4 rounded-lg text-sm font-semibold border glassy-text-secondary "
             onClick={() => handleView(user)}
           >
             {displayData.buttons[1]}

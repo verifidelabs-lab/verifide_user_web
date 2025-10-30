@@ -135,7 +135,7 @@ const CertificateCard = ({
                 {/* 👉 Copy Credential ID */}
                 {certificateUrlOrNumber && (
                     <button
-                        className="mt-3 w-full md:text-sm text-xs flex justify-between items-center border border-gray-300 rounded-lg py-2 px-4  transition-all duration-300 ease-in-out glassy-card"
+                        className="mt-3 w-full md:text-sm text-xs flex justify-between items-center border border-gray-300 rounded-lg py-2 px-4  transition-all duration-300 ease-in-out glassy-button"
                         onClick={() => {
                             if (navigator.clipboard && window.isSecureContext) {
                                 navigator.clipboard.writeText(certificateUrlOrNumber)
@@ -144,7 +144,7 @@ const CertificateCard = ({
                             }
                         }}
                     >
-                        <span className="truncate glassy-text-secondary hover:glassy-text-primary">
+                        <span className="truncate glassy-text-primary hover:glassy-text-primary">
                             {certificateUrlOrNumber ? certificateUrlOrNumber.split('-').slice(0, 2).join('-') : ""}
                         </span>
                         <BiCopy className="ml-2" />

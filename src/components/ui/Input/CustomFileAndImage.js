@@ -92,7 +92,7 @@ const EnhancedFileInput = React.forwardRef(({
 
     const fileExtension = url.split('.').pop()?.toLowerCase();
     if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExtension)) {
-      return <BiImage className="w-5 h-5 text-blue-500" />;
+      return <BiImage className="w-5 h-5 glassy-text-primary" />;
     } else if (fileExtension === 'pdf') {
       return <BiFile className="w-5 h-5 text-red-500" />;
     }
@@ -116,8 +116,7 @@ const EnhancedFileInput = React.forwardRef(({
 
   return (
     <div className={`w-full ${className}`}>
-      {/* Label */}
-      <label className="block text-sm font-medium glassy-text-primary mb-1">
+      <label className="block text-base glassy-text-primary font-medium mb-2">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
@@ -140,7 +139,7 @@ const EnhancedFileInput = React.forwardRef(({
               ref={fileInputRef}
               type="file"
               onChange={handleInputChange}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer glassy-input"
               accept={accept}
               disabled={uploading}
             />
@@ -149,14 +148,16 @@ const EnhancedFileInput = React.forwardRef(({
               {uploading ? (
                 <AiOutlineLoading3Quarters className="w-8 h-8 text-blue-500 animate-spin mb-2" />
               ) : (
-                <BiPaperclip className="w-8 h-8 text-gray-400 mb-2" />
+                <BiPaperclip className="w-8 h-8 glassy-text-secondary mb-2" />
               )}
 
               <p className="text-sm glassy-text-secondary text-center">
                 {uploading ? 'Uploading...' : (
-                  <span className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
-                    Click to upload
-                  </span>
+                  <>
+                    <span className="font-medium glassy-text-secondary hover:text-blue-500 cursor-pointer">
+                      Click to upload
+                    </span>
+                  </>
                 )}
               </p>
               <p className="text-xs glassy-text-secondary mt-1">

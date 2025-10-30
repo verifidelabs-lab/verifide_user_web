@@ -25,7 +25,7 @@ import { BaseUrl } from "../../components/hooks/axiosProvider";
 // import Loader from '../Loader/Loader';
 
 const StatsCard = ({ icon, value, label }) => (
-  <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+  <div className="flex flex-col items-center p-4 glassy-card rounded-lg">
     <div className="text-2xl font-bold glassy-text-primary">{value}</div>
     <div className="text-sm glassy-text-secondary">{label}</div>
   </div>
@@ -71,24 +71,24 @@ const ProfileCard = ({ formData, handleResumeDownload }) => {
           )}
         </div>
         {profile?.headline && (
-          <p className="text-sm text-gray-700 font-medium mt-1">
+          <p className="text-sm glassy-text-primary font-medium mt-1">
             {profile?.headline}
           </p>
         )}
         {profile?.address?.city?.name && (
-          <p className="text-sm glassy-text-secondary mt-1">
+          <p className="text-sm glassy-text-primary mt-1">
             {profile?.address?.city?.name || "N/A"},{" "}
             {profile?.address?.state?.name || "N/A"}
           </p>
         )}
         <div className="flex flex-wrap gap-2 mt-3">
           {profile?.frame_status !== "none" && (
-            <button className="border border-gray-300 text-sm px-3 py-1 text-blue-600 rounded-md hover:bg-gray-100 font-medium">
+            <button className="border  text-sm px-3 py-1  rounded-md glassy-button font-medium">
               {frameStatusChange(profile?.frame_status)}
             </button>
           )}
           <button
-            className="border border-gray-300 text-sm px-3 py-1 rounded-md hover:bg-gray-100 font-medium flex items-center gap-1"
+            className="border  text-sm px-3 py-1 rounded-md glassy-button font-medium flex items-center gap-1"
             onClick={() => handleResumeDownload(profile)}
           >
             Profile URL <MdOutlineContentCopy />
@@ -169,20 +169,19 @@ const UsersProfile = ({ currentUserId }) => {
         <div>
           <nav className="flex justify-start items-center gap-2 md:mb-2 text-sm mx-4">
             <span
-              className="glassy-text-secondary cursor-pointer"
+              className="glassy-text-primary cursor-pointer"
               onClick={() => navigate(`/user/feed`)}
             >
               Home
             </span>
-            <span className="text-gray-400">›</span>
+            <span className="glassy-text-primary">›</span>
             <span
-              className="glassy-text-secondary cursor-pointer"
+              className="glassy-text-primary cursor-pointer"
               onClick={() => navigate(`/user/suggested-users?tab=user`)}
             >
-
               Suggested Profiles
             </span>
-            <span className="text-gray-400">›</span>
+            <span className="glassy-text-primary">›</span>
             <span className="font-medium text-blue-600 cursor-pointer">
               Profile Preview
             </span>
@@ -213,7 +212,7 @@ const UsersProfile = ({ currentUserId }) => {
                               data-aos-delay="400"
                             >
                               <Button
-                                className="w-full"
+                                className="w-full glassy-button"
                                 variant={
                                   formData?.userConnection
                                     ? "connected"
@@ -328,14 +327,14 @@ const UsersProfile = ({ currentUserId }) => {
                     <h2 className="text-xl font-bold glassy-text-primary mb-4">
                       About
                     </h2>
-                    <p className="glassy-text-secondary leading-relaxed">
+                    <p className="glassy-text-primary leading-relaxed">
                       {formData?.personalInfo?.summary}
                     </p>
                   </div>
                 )}
 
                 {formData?.personalInfo && (
-                  <div className="glassy-card rounded-xl shadow-sm p-4 border border-gray-200">
+                  <div className="glassy-card rounded-xl shadow-sm p-4 border ">
                     <div className="grid grid-cols-3 gap-2">
                       <StatsCard
                         icon={<BsEye className="w-5 h-5" />}
@@ -384,13 +383,32 @@ const UsersProfile = ({ currentUserId }) => {
                                   {exp.profileName || ""}
                                 </p>
                                 {exp.start_date && (
+                                  // <p className="glassy-text-primary mb-2">
+                                  //   {convertTimestampToDate(exp.start_date)} -{" "}
+                                  //   {convertTimestampToDate(exp.end_date)}
+                                  // </p>
                                   <p className="glassy-text-secondary mb-2">
-                                    {convertTimestampToDate(exp.start_date)} -{" "}
-                                    {convertTimestampToDate(exp.end_date)}
+                                    {exp.start_date
+                                      ? new Date(
+                                          exp.start_date
+                                        ).toLocaleDateString("en-US", {
+                                          month: "short",
+                                          year: "numeric",
+                                        })
+                                      : "Start Date"}{" "}
+                                    -{" "}
+                                    {exp.end_date
+                                      ? new Date(
+                                          exp.end_date
+                                        ).toLocaleDateString("en-US", {
+                                          month: "short",
+                                          year: "numeric",
+                                        })
+                                      : "Present"}
                                   </p>
                                 )}
                                 {exp.grade && (
-                                  <p className="glassy-text-secondary">
+                                  <p className="glassy-text-primary">
                                     Grade: {exp.grade}
                                   </p>
                                 )}
@@ -446,7 +464,7 @@ const UsersProfile = ({ currentUserId }) => {
                                 <h3 className="font-bold glassy-text-primary text-lg">
                                   {edu.institution || "Unspecified institution"}
                                 </h3>
-                                <p className="glassy-text-secondary text-sm">
+                                <p className="glassy-text-primary text-sm">
                                   {edu.degree || "No degree specified"}
                                 </p>
                                 <p className="glassy-text-secondary text-sm flex items-center gap-1 mt-1">
@@ -457,7 +475,7 @@ const UsersProfile = ({ currentUserId }) => {
                             </div>
                           </div>
                           {edu?.skills_acquired?.map((e) => (
-                            <span className="bg-gray-50 rounded-full px-2 py-0.5 border text-[10px] mr-1">
+                            <span className="text-xl font-bold glassy-text-secondary rounded-full px-2 py-0.5 border text-[10px] mr-1">
                               {e?.name}
                             </span>
                           ))}
@@ -467,7 +485,7 @@ const UsersProfile = ({ currentUserId }) => {
                     </div>
                   ) : (
                     <>
-                      <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
+                      <div className="px-6 py-5 text-center border-2  border-dashed rounded-lg glassy-card  transition-colors duration-300">
                         <div className="flex items-center justify-center mx-auto mb-4">
                           <img
                             src={`/Img/Profile/Frame.png`}
@@ -485,8 +503,8 @@ const UsersProfile = ({ currentUserId }) => {
                     </>
                   )}
                 </div>
-                <div className="glassy-card p-2 rounded-md border border-[#D3D3D3]">
-                  <h2 className="capitalize text-base font-medium py-2">
+                <div className="glassy-card p-6 rounded-md border border-[#D3D3D3]">
+                  <h2 className="text-xl font-bold glassy-text-primary mb-6 ">
                     projects
                   </h2>
                   {formData?.projects.length > 0 ? (
@@ -528,8 +546,8 @@ const UsersProfile = ({ currentUserId }) => {
                     </div>
                   )}
                 </div>
-                <div className="glassy-card p-2 rounded-md border border-[#D3D3D3]">
-                  <h2 className="capitalize text-base font-medium py-2">
+                <div className="glassy-card p-6 rounded-md border border-[#D3D3D3]">
+                  <h2 className="capitalize text-base glassy-text-primary font-medium py-2">
                     Certifications
                   </h2>
                   {formData?.certifications.length > 0 ? (
