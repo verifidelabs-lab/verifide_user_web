@@ -28,7 +28,7 @@ const AssessmentTimer = ({ initialTime, onTimeUp }) => {
       <div className="relative w-16 h-16">
         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
           <path
-            className="text-gray-200"
+            className="glassy-text-secondary"
             strokeWidth="4"
             fill="none"
             stroke="currentColor"

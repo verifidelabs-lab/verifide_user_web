@@ -930,7 +930,7 @@ console.log("this is the addModalState",addModalState)
   const renderStep3 = () => (
     <div className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-4">
+        <label className="block text-sm font-medium glassy-text-primary mb-4">
           Screening Questions <span className="text-red-500">*</span>
         </label>
         <p className="text-sm glassy-text-secondary mb-4">
@@ -987,7 +987,7 @@ console.log("this is the addModalState",addModalState)
               </div>
 
               <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Question Type
                 </label>
                 <select
@@ -1009,7 +1009,7 @@ console.log("this is the addModalState",addModalState)
 
               {question.question_type === "theoretical" ? (
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium glassy-text-primary mb-1">
                     Expected Answer (Optional)
                   </label>
                   <textarea
@@ -1029,7 +1029,7 @@ console.log("this is the addModalState",addModalState)
               ) : (
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium glassy-text-primary">
                       Options <span className="text-red-500">*</span>
                     </label>
                     {optionsError && (
@@ -1108,7 +1108,7 @@ console.log("this is the addModalState",addModalState)
               )}
 
               <div className="mt-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Time Limit (minutes) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -1161,7 +1161,7 @@ console.log("this is the addModalState",addModalState)
             <div className="flex justify-between items-center mb-8">
               <button
                 onClick={() => navigate(-1)}
-                className="p-1 rounded hover:bg-gray-100"
+                className="p-1 rounded hover:glassy-card"
               >
                 <BiArrowBack size={32} />
               </button>
@@ -1181,7 +1181,7 @@ console.log("this is the addModalState",addModalState)
               {currentStep > 1 && (
                 <button
                   onClick={prevStep}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                  className="px-4 py-2 glassy-card glassy-text-primary rounded-md hover:glassy-card"
                 >
                   Back
                 </button>
@@ -1190,7 +1190,7 @@ console.log("this is the addModalState",addModalState)
               {currentStep < 3 ? (
                 <button
                   onClick={nextStep}
-                  className="px-4 py-2 bg-blue-500 glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
+                  className="px-4 py-2 glassy-card0 glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
                 >
                   Next
                 </button>
@@ -1199,7 +1199,7 @@ console.log("this is the addModalState",addModalState)
                   <Button
                     onClick={handleSubmit}
                     loading={submitting}
-                    className="px-4 py-2 bg-green-500 glassy-text-primary rounded-md hover:bg-green-600 ml-auto"
+                    className="px-4 py-2 glassy-card glassy-text-primary rounded-md hover:bg-green-600 ml-auto"
                   >
                     {id ? "Update Job" : "Post Job"}
                   </Button>

@@ -4,7 +4,7 @@ const ForageCertificate = () => {
         <>
             <div className="max-w-4xl mx-auto glassy-card border-2 border-gray-300 rounded-lg shadow-lg p-8 font-sans mt-40">
                 {/* Header */}
-                <img src='/logo.png' alt="" className="pb-5" />
+                <img src='/Frame 1000004906.png' alt="" className="pb-5" />
                 <div className="max-w-3xl glassy-card pt-8">
                     {/* Name */}
                     <h1 className="text-5xl font-bold glassy-text-primary">Jane Smith</h1>
@@ -15,11 +15,11 @@ const ForageCertificate = () => {
                     </h2>
 
                     {/* Certificate of Completion */}
-                    <p className="text-gray-700 mt-6 font-medium text-2xl leading-relaxed">Certificate of Completion</p>
-                    <p className="text-gray-700 mt-1 font-medium text-xl">June 20th, 2019</p>
+                    <p className="glassy-text-primary mt-6 font-medium text-2xl leading-relaxed">Certificate of Completion</p>
+                    <p className="glassy-text-primary mt-1 font-medium text-xl">June 20th, 2019</p>
 
                     {/* Program Description */}
-                    <div className="mt-6 text-sm text-gray-700 leading-relaxed">
+                    <div className="mt-6 text-sm glassy-text-primary leading-relaxed">
                         <p className="text-lg">
                             Over the period of May 2019 to June 2019, Jane Smith has completed practical tasks in:
                         </p>

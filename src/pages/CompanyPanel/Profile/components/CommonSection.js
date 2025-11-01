@@ -42,7 +42,7 @@ const CommonSection = ({
                   <p className="glassy-text-secondary">{record.institution}</p>
                   <p className="text-sm glassy-text-secondary">{record.duration}</p>
                 </div>
-                <button className="text-gray-400 hover:glassy-text-secondary">
+                <button className="glassy-text-secondary hover:glassy-text-secondary">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>

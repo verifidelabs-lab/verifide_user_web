@@ -28,7 +28,7 @@ export default function MediaCarousel({ post }) {
     const renderVideoSlide = () => {
         if (videoError) {
             return (
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-700 text-lg font-semibold">
+                <div className="w-full h-full flex items-center justify-center glassy-card glassy-text-primary text-lg font-semibold">
                     This video is not supported.
                 </div>
             );

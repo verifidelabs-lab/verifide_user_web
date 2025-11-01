@@ -80,7 +80,7 @@ const CompanyDetails = () => {
   const Header = () => (
     <div className="max-w-5xl mx-auto glassy-card rounded-2xl shadow-md overflow-hidden">
       {/* Banner */}
-      <div className="relative h-52 bg-gray-100">
+      <div className="relative h-52 glassy-card">
         <img
           src={
             agencyData?.banner ||
@@ -142,7 +142,7 @@ const CompanyDetails = () => {
           </div>
 
           {agencyData?.isVerified && (
-            <div className="flex items-center text-green-600 bg-green-50 px-2 py-1 rounded-md text-sm font-medium shadow-sm">
+            <div className="flex items-center text-green-600 glassy-card px-2 py-1 rounded-md text-sm font-medium shadow-sm">
               <CheckCircle size={16} className="mr-1" />
               Verified Company
             </div>
@@ -179,7 +179,7 @@ const CompanyDetails = () => {
       {/* Overview */}
       <div>
         <h2 className="text-lg font-semibold glassy-text-primary mb-2">Overview</h2>
-        <p className="text-gray-700 text-sm leading-relaxed">
+        <p className="glassy-text-primary text-sm leading-relaxed">
           {agencyData?.description}
         </p>
       </div>
@@ -189,7 +189,7 @@ const CompanyDetails = () => {
         <div className="space-y-4">
           {agencyData?.website && (
             <div className="flex items-center gap-2 text-blue-600 break-all">
-              <Globe size={16} className="text-gray-400" />
+              <Globe size={16} className="glassy-text-secondary" />
               <a
                 href={agencyData?.website}
                 target="_blank"
@@ -201,18 +201,18 @@ const CompanyDetails = () => {
           )}
 
           <div className="flex items-center gap-2">
-            <Phone size={16} className="text-gray-400" />
+            <Phone size={16} className="glassy-text-secondary" />
             <span>{agencyData?.phone}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <Mail size={16} className="text-gray-400" />
+            <Mail size={16} className="glassy-text-secondary" />
             <span>{agencyData?.email}</span>
           </div>
 
           {agencyData?.linkedin && (
             <div className="flex items-center gap-2">
-              <Linkedin size={16} className="text-gray-400" />
+              <Linkedin size={16} className="glassy-text-secondary" />
               <a
                 href={agencyData?.linkedin}
                 target="_blank"
@@ -227,17 +227,17 @@ const CompanyDetails = () => {
 
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <Building size={16} className="text-gray-400" />
+            <Building size={16} className="glassy-text-secondary" />
             <span>{agencyData?.industry}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <Users size={16} className="text-gray-400" />
+            <Users size={16} className="glassy-text-secondary" />
             <span>{agencyData?.companySize}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <Calendar size={16} className="text-gray-400" />
+            <Calendar size={16} className="glassy-text-secondary" />
             <span>Founded {agencyData?.founded}</span>
           </div>
         </div>
@@ -250,7 +250,7 @@ const CompanyDetails = () => {
           {agencyData?.specialties?.map((s, i) => (
             <span
               key={i}
-              className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs border border-gray-200"
+              className="px-3 py-1 glassy-card glassy-text-primary rounded-full text-xs border border-gray-200"
             >
               {s}
             </span>
@@ -261,7 +261,7 @@ const CompanyDetails = () => {
   );
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8">
+    <div className="glassy-card min-h-screen py-8">
       {loading ? (
         <div className="text-center py-20 glassy-text-secondary">Loading...</div>
       ) : (

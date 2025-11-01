@@ -432,7 +432,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen glassy-card">
       <div className="flex flex-col md:flex-row">
         <div className="md:block hidden">
           <div className="gradient-background flex gap-x-10 items-center justify-center ">
@@ -521,7 +521,7 @@ const SignUp = () => {
           >
             <div className="text-center mb-4">
               <img
-                src="/headerlogo-D3k-kYIk 2.png"
+                src="/Frame 1000004906.png"
                 alt="logo"
                 className="mx-auto max-w-56 h-10 my-2"
               />
@@ -614,7 +614,7 @@ const SignUp = () => {
 
                   <div className="flex justify-center items-center">
                     <Button
-                      variant="zinc"
+                      variant="primary"
                       type="submit"
                       className="w-full mb-4"
                       disabled={
@@ -634,8 +634,8 @@ const SignUp = () => {
                         disabled={isResendDisabled || isSubmitting}
                         className={`font-medium ${
                           isResendDisabled || isSubmitting
-                            ? "text-gray-400 cursor-not-allowed"
-                            : "text-purple-600 hover:text-purple-800"
+                            ? "glassy-text-secondary cursor-not-allowed"
+                            : "glassy-text-primary hover:text-purple-800"
                         }`}
                       >
                         {isSubmitting ? "Sending..." : "Resend"}

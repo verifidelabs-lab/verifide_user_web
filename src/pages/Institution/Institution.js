@@ -227,7 +227,7 @@ const Institution = () => {
         <div className="flex gap-2" key={`actions-${Institute._id}`}>
           <button
             onClick={() => handleAddFromUser(Institute)}
-            className="p-2 text-sm bg-blue-500 glassy-text-primary rounded hover:bg-blue-600"
+            className="p-2 text-sm glassy-card0 glassy-text-primary rounded hover:bg-blue-600"
           >
             <CiCircleCheck size={18} />
           </button>
@@ -928,7 +928,7 @@ const Institution = () => {
                 value={formData?.logo_url}
                 name="logo_url"
                 onChange={(e) => handleChange("logo_url", e)}
-                placeholder="https://example.com/logo.png"
+                placeholder="https://example.com/Frame 1000004906.png"
               />
 
               <CustomInput
@@ -1297,7 +1297,7 @@ const Institution = () => {
           </div>
 
           {/* Verified At, Email, Username */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm glassy-text-primary">
             {viewData?.verified_at && (
               <div>
                 <span className="font-medium">Verified At:</span>{" "}
@@ -1319,7 +1319,7 @@ const Institution = () => {
 
           {/* Description */}
           {viewData?.description && (
-            <p className="text-gray-700 text-sm">{viewData?.description}</p>
+            <p className="glassy-text-primary text-sm">{viewData?.description}</p>
           )}
 
           {/* Website & LinkedIn */}
@@ -1347,7 +1347,7 @@ const Institution = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm glassy-text-primary">
             <div>
               <span className="font-medium">Email:</span>{" "}
               {viewData?.email || "N/A"}
@@ -1360,7 +1360,7 @@ const Institution = () => {
 
           {/* Address */}
           {viewData?.address && (
-            <div className="text-sm text-gray-700 space-y-1">
+            <div className="text-sm glassy-text-primary space-y-1">
               <p className="font-medium">Address:</p>
               <p>
                 {viewData?.address.address_line_1},{" "}
@@ -1375,7 +1375,7 @@ const Institution = () => {
 
           {/* Country Info */}
           {viewData?.country_code && (
-            <div className="text-sm text-gray-700">
+            <div className="text-sm glassy-text-primary">
               <span className="font-medium">Country:</span>{" "}
               {viewData?.country_code.emoji} {viewData?.country_code.name}
             </div>
@@ -1383,14 +1383,14 @@ const Institution = () => {
 
           {/* Founded Year */}
           {viewData?.founded_year && (
-            <div className="text-sm text-gray-700">
+            <div className="text-sm glassy-text-primary">
               <span className="font-medium">Founded:</span>{" "}
               {new Date(viewData?.founded_year).getFullYear()}
             </div>
           )}
           {viewData?.specialties?.length > 0 && (
             <div>
-              <p className="font-medium text-sm text-gray-700">Specialties:</p>
+              <p className="font-medium text-sm glassy-text-primary">Specialties:</p>
               <ul className="list-disc list-inside text-sm glassy-text-secondary">
                 {viewData.specialties.map((item, idx) => (
                   <li key={idx}>{item}</li>
@@ -1440,7 +1440,7 @@ const Institution = () => {
               variant="secondary"
               onClick={() => setIsPasswordModalOpen(false)}
               disabled={isSubmitting}
-              className="flex-1 py-3 transition-all duration-200 hover:bg-gray-100"
+              className="flex-1 py-3 transition-all duration-200 hover:glassy-card"
             >
               Cancel
             </Button>

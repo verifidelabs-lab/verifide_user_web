@@ -57,7 +57,7 @@ const CreateCompany = () => {
   }
   const { formData,  handleChange } = useFormHandler(initialFormData)
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col items-center py-10">
+    <div className="glassy-card min-h-screen flex flex-col items-center py-10">
       {/* Title */}
       <h1 className="text-2xl font-semibold mb-2">Create a verified Page</h1>
       <p className="glassy-text-secondary mb-8 text-center max-w-lg">

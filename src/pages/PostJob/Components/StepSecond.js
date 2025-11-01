@@ -65,7 +65,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                 /> */}
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium glassy-text-primary mb-2">
                         Job Description <span className='text-red-500'>*</span>
                     </label>
                     <textarea
@@ -112,7 +112,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                         {selectedSkills.map((skill, index) => (
                             <span
                                 key={index}
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm glassy-card text-blue-800"
                             >
                                 {skill.label}
                                 <button

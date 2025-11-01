@@ -7,7 +7,11 @@ import HeaderJson from "./Header.json";
 import {
   getCookie,
   clearCompanySession,
+  setCookie,
 } from "../../utils/cookieHandler";
+import { switchAccount } from "../../../redux/slices/authSlice";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
 
 const ROLES = {
   SUPER_ADMIN: 1,
@@ -26,6 +30,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
   const dropdownRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const userRole = Number(getCookie("ROLE"));
 
@@ -51,8 +56,12 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
 
     if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
       roleSpecificItems = [
-        { name: "Students", path: "/students" },
-        { name: "Courses", path: "/courses" },
+        // { name: "Students", path: "/students" },
+        {
+          "name": "Assessment",
+          "path": "/assessment"
+        }
+        // { name: "Courses", path: "/courses" },
       ];
     }
 
@@ -64,10 +73,10 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
   const profileData = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
     ? adminProfileData
     : [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
-    ? companiesProfileData
-    : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-    ? instituteProfileData
-    : {};
+      ? companiesProfileData
+      : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+        ? instituteProfileData
+        : {};
 
   const getDefaultName = () => {
     switch (userRole) {
@@ -90,9 +99,34 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
 
   const handleRemoveCookie = () => {
     clearCompanySession();
-    navigate("/user/feed");
+    navigate("/user/feed")
+    window.location.reload();
   };
-
+  const switchAccountFunction2 = async (selectedMode) => {
+    // setIsLoading(true);
+    // setUserType(selectedMode);
+    try {
+      const res = await dispatch(switchAccount({ accessMode: selectedMode })).unwrap();
+      if (res) {
+        setCookie('VERIFIED_TOKEN', res?.data?.token);
+        setCookie('ACCESS_MODE', res?.data?.user?.accessMode);
+        handleRemoveCookie()
+        // setAccessLabel(selectedMode === "6" ? "Recruiter" : "User");
+        // Close dropdowns after selection
+        // setModeDropdown(false);
+        // setIsDropdownOpen(false);
+        // Reload after a short delay to ensure state updates
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      }
+      toast.success(res?.message);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      // setIsLoading(false);
+    }
+  };
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -128,11 +162,10 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                 key={idx}
                 to={fullPath}
                 onClick={() => item.path === "/" && scrollToTop()}
-                className={`lg:text-[16px] md:text-[14px] transition duration-200 pb-1 ${
-                  isActive
-                    ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                    : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                }`}
+                className={`lg:text-[16px] md:text-[14px] transition duration-200 pb-1 ${isActive
+                  ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                  : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  }`}
               >
                 {item.name}
               </Link>
@@ -181,13 +214,13 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                   Profile
                 </Link>
                 <button
-                  onClick={handleRemoveCookie}
+                  onClick={()=>switchAccountFunction2("STUDENT")}
                   className="block w-full text-left px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
                 >
                   Switch to User
                 </button>
                 <button
-                  onClick={handleRemoveCookie}
+                  onClick={()=>switchAccountFunction2("STUDENT")}
                   className="block w-full text-left px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
                 >
                   Logout
@@ -200,7 +233,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-2xl text-gray-700 md:hidden focus:outline-none"
+          className="text-2xl glassy-text-primary md:hidden focus:outline-none"
         >
           {isMobileMenuOpen ? <BiX /> : <BiMenu />}
         </button>
@@ -216,11 +249,10 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
               <Link
                 key={idx}
                 to={fullPath}
-                className={`block px-3 py-2 text-[16px] transition duration-200 ${
-                  isActive
-                    ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                    : "font-medium glassy-text-primary hover:border-b-2 hover:border-blue-600 hover:text-blue-600"
-                }`}
+                className={`block px-3 py-2 text-[16px] transition duration-200 ${isActive
+                  ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                  : "font-medium glassy-text-primary hover:border-b-2 hover:border-blue-600 hover:text-blue-600"
+                  }`}
               >
                 {item.name}
               </Link>
@@ -233,4 +265,3 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
 };
 
 export default Header;
-  

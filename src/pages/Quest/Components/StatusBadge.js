@@ -4,7 +4,7 @@ const SurveyButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="text-xs bg-blue-100 text-blue-700 hover:bg-blue-200 px-2.5 py-1 rounded-full font-medium transition-colors"
+      className="text-xs glassy-card text-blue-700 hover:bg-blue-200 px-2.5 py-1 rounded-full font-medium transition-colors"
     >
       Take Survey
     </button>
@@ -13,9 +13,9 @@ const SurveyButton = ({ onClick }) => {
 
 const StatusBadge = ({ status }) => {
   const statusConfig = {
-    Ongoing: { color: "bg-green-500 glassy-text-primary", icon: <BiRun className="text-xs" /> },
-    Upcoming: { color: "bg-blue-500 glassy-text-primary", icon: <BiCalendar className="text-xs" /> },
-    Ended: { color: "bg-gray-500 glassy-text-primary", icon: <BiMedal className="text-xs" /> },
+    Ongoing: { color: "glassy-card glassy-text-primary", icon: <BiRun className="text-xs" /> },
+    Upcoming: { color: "glassy-card0 glassy-text-primary", icon: <BiCalendar className="text-xs" /> },
+    Ended: { color: "glassy-card0 glassy-text-primary", icon: <BiMedal className="text-xs" /> },
   };
 
   const config = statusConfig[status] || statusConfig.Ongoing;

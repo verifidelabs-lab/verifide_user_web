@@ -58,15 +58,15 @@ const CandidateCard = ({ candidate }) => {
         </div>
       </div>
       <div className="flex items-center space-x-4 mb-4">
-        <div className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+        <div className="flex items-center text-xs space-x-1 glassy-card border border-gray-200 rounded-full px-3 py-1.5">
           <CiLock className="w-4 h-4 glassy-text-secondary" />
           <span className="glassy-text-secondary">{candidate.timeLimit}</span>
         </div>
-        <div className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+        <div className="flex items-center text-xs space-x-1 glassy-card border border-gray-200 rounded-full px-3 py-1.5">
           <FiFileText className="w-4 h-4 glassy-text-secondary" />
           <span className="glassy-text-secondary">{candidate.questions}</span>
         </div>
-        <div className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+        <div className="flex items-center text-xs space-x-1 glassy-card border border-gray-200 rounded-full px-3 py-1.5">
           <FaChartArea className="w-4 h-4 glassy-text-secondary" />
           <span className="glassy-text-secondary">{candidate.level}</span>
         </div>
@@ -80,14 +80,14 @@ const CandidateCard = ({ candidate }) => {
           {visibleSkills.map((skill, index) => (
             <span
               key={index}
-              className="px-3 py-1.5 bg-gray-50 text-gray-700 text-xs font-medium rounded-full border border-gray-200"
+              className="px-3 py-1.5 glassy-card glassy-text-primary text-xs font-medium rounded-full border border-gray-200"
             >
               {skill}
             </span>
           ))}
           {remainingCount > 0 && !expandedSkills && (
             <span
-              className="px-3 py-1.5 bg-gray-50 text-gray-700 text-xs font-medium rounded-full border border-gray-200 cursor-pointer hover:bg-gray-100"
+              className="px-3 py-1.5 glassy-card glassy-text-primary text-xs font-medium rounded-full border border-gray-200 cursor-pointer hover:glassy-card"
               onClick={toggleSkills}
             >
               +{remainingCount}
@@ -95,7 +95,7 @@ const CandidateCard = ({ candidate }) => {
           )}
           {expandedSkills && candidate.skills.length > MAX_VISIBLE_SKILLS && (
             <span
-              className="px-3 py-1.5 bg-gray-50 text-gray-700 text-xs font-medium rounded-full border border-gray-200 cursor-pointer hover:bg-gray-100"
+              className="px-3 py-1.5 glassy-card glassy-text-primary text-xs font-medium rounded-full border border-gray-200 cursor-pointer hover:glassy-card"
               onClick={toggleSkills}
             >
               Show less
@@ -104,7 +104,7 @@ const CandidateCard = ({ candidate }) => {
         </div>
       </div>
       <div className="flex space-x-3">
-        <button className="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2.5 px-4 rounded-xl border border-blue-200 transition-colors flex items-center justify-center space-x-2">
+        <button className="flex-1 glassy-card hover:glassy-card text-blue-600 font-medium py-2.5 px-4 rounded-xl border border-blue-200 transition-colors flex items-center justify-center space-x-2">
           <CiEdit size={16} />
           <span>Edit</span>
         </button>

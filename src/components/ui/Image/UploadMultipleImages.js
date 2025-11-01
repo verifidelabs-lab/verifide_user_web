@@ -58,7 +58,7 @@ const UploadMultipleImages = ({
       {label && (
         <label
           htmlFor={id}
-          className={`block text-sm font-medium text-gray-700 relative ${labelClassName}`}
+          className={`block text-sm font-medium glassy-text-primary relative ${labelClassName}`}
         >
           {label} (Max {maxFiles})
           {required && <LuAsterisk className="inline text-red-500 ml-1" size={12} />}
@@ -79,7 +79,7 @@ const UploadMultipleImages = ({
                 <button
                   type="button"
                   onClick={() => removeFile(index)}
-                  className="absolute top-1 right-1 glassy-card text-gray-700 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-gray-200 hover:bg-gray-100"
+                  className="absolute top-1 right-1 glassy-card glassy-text-primary rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-gray-200 hover:glassy-card"
                 >
                   <FaTimes size={14} />
                 </button>
@@ -92,7 +92,7 @@ const UploadMultipleImages = ({
       {/* Dropzone - only show if we haven't reached max files */}
       {files.length < maxFiles && (
         <div
-          className={`relative border-2 border-dashed bg-gray-50 border-gray-300 text-gray-700 rounded-md shadow-sm p-6 focus:outline-none cursor-pointer flex items-center justify-center ${errorMessage ? 'border-red-500' : 'hover:border-gray-400'
+          className={`relative border-2 border-dashed glassy-card border-gray-300 glassy-text-primary rounded-md shadow-sm p-6 focus:outline-none cursor-pointer flex items-center justify-center ${errorMessage ? 'border-red-500' : 'hover:border-gray-400'
             } ${isDisabled ? 'cursor-not-allowed opacity-50' : ''}`}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
@@ -129,7 +129,7 @@ const UploadMultipleImages = ({
               <path d="M19 22v-6"></path>
               <path d="M22 19l-3 -3l-3 3"></path>
             </svg>
-            <span className="block text-gray-700 mt-2 text-sm">
+            <span className="block glassy-text-primary mt-2 text-sm">
               Drag & Drop or Click to Upload ({files.length}/{maxFiles})
             </span>
             <span className="block glassy-text-secondary text-xs mt-1">

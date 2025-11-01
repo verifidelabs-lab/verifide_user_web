@@ -47,7 +47,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
                         <p className="text-xs font-medium glassy-text-secondary">Selected Options:</p>
                         <ul className="list-disc pl-5">
                             {selectedOptions.map((option, i) => (
-                                <li key={i} className="text-sm text-gray-700">{option}</li>
+                                <li key={i} className="text-sm glassy-text-primary">{option}</li>
                             ))}
                         </ul>
                     </div>

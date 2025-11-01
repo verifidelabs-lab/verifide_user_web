@@ -8,7 +8,7 @@ const ExpEduCard = ({ title, company, duration, location, logo }) => {
         <img
           src={logo}
           alt="logo"
-          className="object-contain"
+          className="object-contain glassy-text-primary"
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = '/Img/Profile/Frame (1).png';
@@ -188,7 +188,7 @@ export const SkillsCard2 = ({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {title && (
         <div className="tracking-wide text-[12px] font-medium glassy-text-secondary mb-2">
           {title}
@@ -200,7 +200,7 @@ export const SkillsCard2 = ({
           No skills available
         </div>
       ) : (
-        <div className="flex flex-wrap justify-start items-center gap-2">
+        <div className="flex flex-wrap justify-start items-center gap-2 ">
           {visibleSkills.map((skill, index) => {
             const isSkillSelected = checkIfSkillSelected(skill);
 

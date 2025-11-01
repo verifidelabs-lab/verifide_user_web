@@ -260,7 +260,7 @@ const PostDetails = () => {
     const renderVideoSlide = () => {
       if (videoError) {
         return (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-700 text-lg font-semibold">
+          <div className="w-full h-full flex items-center justify-center glassy-card glassy-text-primary text-lg font-semibold">
             This video is not supported.
           </div>
         );
@@ -399,7 +399,7 @@ const PostDetails = () => {
             />
             <button
               type="submit"
-              className="bg-blue-500 glassy-text-primary px-4 py-2 rounded-full hover:bg-blue-600"
+              className="glassy-card0 glassy-text-primary px-4 py-2 rounded-full hover:bg-blue-600"
             >
               Post
             </button>
@@ -453,7 +453,7 @@ const PostDetails = () => {
                     />
                     <button
                       type="submit"
-                      className="bg-blue-500 glassy-text-primary px-3 py-1 rounded-full text-sm hover:bg-blue-600"
+                      className="glassy-card0 glassy-text-primary px-3 py-1 rounded-full text-sm hover:bg-blue-600"
                     >
                       Post
                     </button>
@@ -489,10 +489,10 @@ const PostDetails = () => {
   };
 
   const PostDetailsView = () => {
-    if (!postData) return <div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading...</div>;
+    if (!postData) return <div className="min-h-screen glassy-card flex items-center justify-center">Loading...</div>;
 
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen glassy-card">
         {accessMode !== '6' && (
           <header className="glassy-card border-b border-gray-200 sticky top-0 z-40">
             <div className="max-w-6xl mx-auto px-4">
@@ -517,20 +517,20 @@ const PostDetails = () => {
                     <div className="absolute right-0 mt-2 w-48 glassy-card rounded-md shadow-lg z-10 py-1 border border-gray-200">
                       <button
                         onClick={handleCopyLink}
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                        className="flex items-center px-4 py-2 text-sm glassy-text-primary hover:glassy-card w-full text-left"
                       >
                         <IoCopyOutline className="mr-2" size={18} /> Copy Link
                       </button>
                       <button
                         onClick={handleReportPost}
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                        className="flex items-center px-4 py-2 text-sm glassy-text-primary hover:glassy-card w-full text-left"
                       >
                         <BsExclamationCircle className="mr-2" size={18} /> Report
                       </button>
                       {postData?.isSelfPost && (
                         <button
                           onClick={handleDeleteButtonClick}
-                          className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left border-t border-gray-200"
+                          className="flex items-center px-4 py-2 text-sm text-red-600 hover:glassy-card w-full text-left border-t border-gray-200"
                         >
                           <AiOutlineDelete className="mr-2" size={18} /> Delete
                         </button>
@@ -568,7 +568,7 @@ const PostDetails = () => {
                     </h3>
                     {postData.isConnected && (
                       <>
-                        <span className="text-gray-400">•</span>
+                        <span className="glassy-text-secondary">•</span>
                         <span className="text-sm glassy-text-secondary">Connected</span>
                       </>
                     )}
@@ -638,7 +638,7 @@ const PostDetails = () => {
               <div className="flex items-center justify-around">
                 <button
                   onClick={handleLike}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 ${(localLikes[postId] ?? postData.like_count > 0) ? 'text-red-600' : 'glassy-text-secondary'}`}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:glassy-card ${(localLikes[postId] ?? postData.like_count > 0) ? 'text-red-600' : 'glassy-text-secondary'}`}
                 >
                   {(localLikes[postId] ?? postData.like_count > 0) ? (
                     <BiSolidHeart className="w-5 h-5" />
@@ -649,21 +649,21 @@ const PostDetails = () => {
                 </button>
                 <button
                   onClick={toggleComments}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 ${showComments ? 'text-blue-600' : 'glassy-text-secondary'}`}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded hover:glassy-card ${showComments ? 'text-blue-600' : 'glassy-text-secondary'}`}
                 >
                   <LuMessageCircle className="w-5 h-5" />
                   <span>Comment</span>
                 </button>
                 <button
                   // onClick={handleShareClick}
-                  className="flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 glassy-text-secondary"
+                  className="flex items-center space-x-2 px-4 py-2 rounded hover:glassy-card glassy-text-secondary"
                 >
                   <LuRepeat2 className="w-5 h-5" />
                   <span>Repost</span>
                 </button>
                 <button
                   onClick={handleShareClick}
-                  className="flex items-center space-x-2 px-4 py-2 rounded hover:bg-gray-50 glassy-text-secondary"
+                  className="flex items-center space-x-2 px-4 py-2 rounded hover:glassy-card glassy-text-secondary"
                 >
                   <BsSend className="w-5 h-5" />
                   <span>Send</span>
@@ -716,7 +716,7 @@ const PostDetails = () => {
         type="danger"
       />
       {postData ? <PostDetailsView /> : (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen glassy-card flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
         </div>
       )}

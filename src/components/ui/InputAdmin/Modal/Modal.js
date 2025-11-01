@@ -27,7 +27,7 @@ const Modal = ({
             >
                 <div className="flex items-center justify-between px-4 py-3 ">
                     <h2 className={`text-lg font-semibold glassy-text-primary ${titleClassName}`}>{title}</h2>
-                    <Button variant="zinc" rounded="full" icon={<BiLeftArrowAlt />} onClick={onClose} className="glassy-button">
+                    <Button variant="primary" rounded="full" icon={<BiLeftArrowAlt />} onClick={onClose} className="glassy-button">
                         Back
                     </Button>
                 </div>

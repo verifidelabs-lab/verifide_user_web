@@ -296,7 +296,7 @@ const ForgotPassword = () => {
       >
         <div className="text-center mb-6">
           <img
-            src="/headerlogo-D3k-kYIk 2.png"
+            src="/Frame 1000004906.png"
             alt="logo"
             className="mx-auto w-40 h-8 sm:w-48 sm:h-10 my-2"
           />
@@ -361,7 +361,7 @@ const ForgotPassword = () => {
       >
         <div className="text-center mb-6">
           <img
-            src="/headerlogo-D3k-kYIk 2.png"
+            src="/Frame 1000004906.png"
             alt="logo"
             className="mx-auto w-40 h-8 sm:w-48 sm:h-10 my-2"
           />
@@ -377,7 +377,7 @@ const ForgotPassword = () => {
         </div>
         <form onSubmit={handleSubmitOTP} className="space-y-6">
           <div>
-            <label className="block text-sm sm:text-base font-medium text-gray-700 mb-3">
+            <label className="block text-sm sm:text-base font-medium glassy-text-primary mb-3">
               Verification Code
             </label>
             <div className="flex justify-between space-x-2 sm:space-x-3">
@@ -452,7 +452,7 @@ const ForgotPassword = () => {
       >
         <div className="text-center mb-6">
           <img
-            src="/headerlogo-D3k-kYIk 2.png"
+            src="/Frame 1000004906.png"
             alt="logo"
             className="mx-auto w-40 h-8 sm:w-48 sm:h-10 my-2"
           />
@@ -493,7 +493,7 @@ const ForgotPassword = () => {
             className="w-full h-11 sm:h-12"
           />
 
-          <div className="text-xs sm:text-sm glassy-text-secondary bg-gray-50 p-3 rounded-lg mt-5">
+          <div className="text-xs sm:text-sm glassy-text-secondary glassy-card p-3 rounded-lg mt-5">
             <p className="font-medium mb-1">Password must contain:</p>
             <ul className="grid grid-cols-2 gap-1">
               <li
@@ -571,7 +571,7 @@ const ForgotPassword = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen glassy-card">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
         <div className="gradient-background h-full relative hidden lg:block overflow-hidden">
           {step === 2 && (

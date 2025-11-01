@@ -37,7 +37,7 @@ const AlertModal = ({
        
 
         <div className='space-y-2 text-center mb-5'>
-          <h2 className='md:text-lg text-sm text-whitefont-bold'>{title}</h2>
+          <h2 className='md:text-lg text-sm text-whitefont-bold glassy-text-primary'>{title}</h2>
           <p className='text-[#212121CC]/80 md:text-sm text-xs'>{description}</p>
         </div>
 

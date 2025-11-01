@@ -65,14 +65,14 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                 /> */}
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium glassy-text-primary mb-2">
                         Job Description <span className='text-red-500'>*</span>
                     </label>
                     <textarea
                         value={formData.job_description}
                         onChange={(e) => handleInputChange('job_description', e.target.value)}
                         rows={6}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                        className="w-full px-3 py-2 border glassy-input border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                         placeholder="Describe the job role and what you're looking for in a candidate..."
                     />
                     <p className="text-xs glassy-text-secondary mt-1">
@@ -112,7 +112,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                         {selectedSkills.map((skill, index) => (
                             <span
                                 key={index}
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm glassy-card text-blue-800"
                             >
                                 {skill.label}
                                 <button

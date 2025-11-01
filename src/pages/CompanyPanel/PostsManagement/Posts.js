@@ -707,7 +707,7 @@ const Posts = () => {
           <div className="flex justify-between items-center gap-2 mb-2 text-sm">
             <nav className="flex items-center gap-2 text-sm">
               <span className="glassy-text-secondary">Home</span>
-              <span className="text-gray-400">›</span>
+              <span className="glassy-text-secondary">›</span>
               <span className="font-medium text-blue-600">Highlights</span>
             </nav>
             {
@@ -809,7 +809,7 @@ const Posts = () => {
                         )}
 
                         <div className="text-left">
-                          <h3 className="md:text-lg text-md font-semibold glassy-text-primary capitalize hover:text-gray-700">
+                          <h3 className="md:text-lg text-md font-semibold glassy-text-primary capitalize hover:glassy-text-primary">
                             {post.userData?.first_name || post?.userData?.name}{" "}
                             {post.userData?.last_name}
                           </h3>
@@ -898,7 +898,7 @@ const Posts = () => {
                       </p>
                     ) : null}
                     {post?.content ? (
-                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm text-gray-700 text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
+                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm glassy-text-primary text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                         {isExpanded
                           ? post?.content
                           : post?.content?.slice(0, 200)}
@@ -1005,7 +1005,7 @@ const Posts = () => {
                     </div>
 
                     <div className="mt-1">
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs glassy-text-secondary">
                         Posted on {convertTimestampToDate2(post?.updatedAt)}
                       </span>
                     </div>

@@ -735,7 +735,7 @@ const Courses = () => {
                   onChange={(e) => setFormData({ ...formData, is_assessment: e.target.checked })}
                   className="h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
                 />
-                <span className="text-sm font-medium text-gray-700">Is Assessment Course</span>
+                <span className="text-sm font-medium glassy-text-primary">Is Assessment Course</span>
               </label>
             </div>
           </div>
@@ -757,7 +757,7 @@ const Courses = () => {
               </div>
 
               {formData[field]?.length === 0 && (
-                <p className="text-sm text-gray-400 italic mb-2">No entries yet.</p>
+                <p className="text-sm glassy-text-secondary italic mb-2">No entries yet.</p>
               )}
 
               <div className="space-y-3">
@@ -980,19 +980,19 @@ const Courses = () => {
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Course Name
                 </label>
                 <p className="glassy-text-primary">{viewData.name}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Title
                 </label>
                 <p className="glassy-text-primary">{viewData.title}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Category
                 </label>
                 <p className="glassy-text-primary">
@@ -1000,19 +1000,19 @@ const Courses = () => {
                 </p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Status
                 </label>
                 <p className="glassy-text-primary">{viewData.isDisable ? 'Disabled' : 'Enabled'}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Language
                 </label>
                 <p className="glassy-text-primary">{viewData.language}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Proficiency Level
                 </label>
                 <p className="glassy-text-primary">
@@ -1020,19 +1020,19 @@ const Courses = () => {
                 </p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Duration
                 </label>
                 <p className="glassy-text-primary">{viewData.duration}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Minimum Experience
                 </label>
                 <p className="glassy-text-primary">{viewData.min_experience || 'N/A'}</p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Amount
                 </label>
                 <p className="glassy-text-primary">
@@ -1040,20 +1040,20 @@ const Courses = () => {
                 </p>
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   Created At
                 </label>
                 <p className="glassy-text-primary">{formatDate(viewData.createdAt)}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <label className="block text-sm font-medium glassy-text-primary mb-1">Category</label>
                 <p>{categories.find(c => c._id === viewData.category_id)?.name || 'N/A'}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Industries</label>
+                <label className="block text-sm font-medium glassy-text-primary mb-1">Industries</label>
                 <div className="flex flex-wrap gap-2">
                   {viewData.industries_ids?.map(id => (
-                    <span key={id} className="px-2 py-1 bg-gray-100 rounded-md text-sm">
+                    <span key={id} className="px-2 py-1 glassy-card rounded-md text-sm">
                       {industries.find(i => i._id === id)?.name || id}
                     </span>
                   ))}
@@ -1062,7 +1062,7 @@ const Courses = () => {
             </div>
 
             <div>
-              <label className="block text-sm text-gray-700 mb-1 font-semibold">
+              <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                 Description
               </label>
               <p className="glassy-text-primary whitespace-pre-line">{viewData.description}</p>
@@ -1076,7 +1076,7 @@ const Courses = () => {
               { field: 'skill_ids', label: 'Skills', data: skills }
             ].map(({ field, label, data }) => (
               <div key={field} className="mt-4">
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   {label}
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -1084,7 +1084,7 @@ const Courses = () => {
                     viewData[field].map(id => {
                       const item = data.find(item => item._id === id);
                       return item ? (
-                        <span key={id} className="px-3 py-1 bg-gray-100 rounded-full text-sm">
+                        <span key={id} className="px-3 py-1 glassy-card rounded-full text-sm">
                           {item.name}
                         </span>
                       ) : null;
@@ -1102,7 +1102,7 @@ const Courses = () => {
               { field: 'prerequisites', label: 'Prerequisites' }
             ].map(({ field, label }) => (
               <div key={field} className="mt-4">
-                <label className="block text-sm text-gray-700 mb-1 font-semibold">
+                <label className="block text-sm glassy-text-primary mb-1 font-semibold">
                   {label}
                 </label>
                 {viewData[field]?.length > 0 ? (
@@ -1119,7 +1119,7 @@ const Courses = () => {
 
             {/* Display modules */}
             <div className="mt-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium glassy-text-primary mb-2">
                 Modules
               </label>
               {viewData.modules?.length > 0 ? (

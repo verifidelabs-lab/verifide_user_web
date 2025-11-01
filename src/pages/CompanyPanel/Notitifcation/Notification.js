@@ -88,7 +88,7 @@ const getIconForType = (type) => {
     case 'employment-verification':
     case 'project-verification':
     case 'certificate-verification':
-      return { Icon: CiLock, color: 'bg-blue-500' };
+      return { Icon: CiLock, color: 'glassy-card0' };
     case 'skill-updates':
     case 'course-progress':
     case 'assessments-progress':
@@ -390,8 +390,8 @@ const NotificationInterface = () => {
                 d="M9.75 9.75h.008v.008H9.75V9.75zm4.5 0h.008v.008h-.008V9.75zm-6.364 6.364a8.25 8.25 0 1111.677 0M15.75 15.75a3 3 0 00-4.242 0"
               />
             </svg>
-            <h2 className="text-lg font-semibold text-gray-700 mb-1">No Notifications</h2>
-            <p className="text-sm text-gray-400">
+            <h2 className="text-lg font-semibold glassy-text-primary mb-1">No Notifications</h2>
+            <p className="text-sm glassy-text-secondary">
               You're all caught up! We'll let you know when something new arrives.
             </p>
           </div>

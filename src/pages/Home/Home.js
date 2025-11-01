@@ -689,7 +689,7 @@ const Home = () => {
           <div className="flex justify-between items-center gap-2 mb-2 text-sm">
             <nav className="flex items-center gap-2 text-sm">
               <span className="glassy-text-secondary">Home</span>
-              <span className="text-gray-400">›</span>
+              <span className="glassy-text-secondary">›</span>
               <span className="font-medium text-blue-600">Highlights</span>
             </nav>
             <FilterDropdown
@@ -814,7 +814,7 @@ const Home = () => {
                         )}
                         <div className="relative ml-2">
                           <button
-                            className="p-2 transition-colors rounded hover:bg-gray-50"
+                            className="p-2 transition-colors rounded hover:glassy-card"
                             onClick={(e) => handleOptionsClick(post._id, e)}
                             aria-haspopup="menu"
                             aria-expanded={showOptionsDropdown === post._id}
@@ -829,11 +829,11 @@ const Home = () => {
                           {showOptionsDropdown === post._id && (
                             <div
                               role="menu"
-                              className="absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
+                              className="!absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1 border border-[#0000001A]"
                             >
                               <button
                                 onClick={() => handleCopyLink(post)}
-                                className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left border-b border-gray-200"
+                                className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:glassy-card w-full text-left  border-gray-200"
                                 role="menuitem"
                               >
                                 <IoCopyOutline size={18} /> Copy link
@@ -845,7 +845,7 @@ const Home = () => {
                               ) : (
                                 <button
                                   onClick={() => handleReportPost(post._id)}
-                                  className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:bg-gray-50 w-full text-left"
+                                  className="flex items-center gap-2 px-4 py-2 text-sm glassy-text-primary hover:glassy-card w-full text-left"
                                   role="menuitem"
                                 >
                                   <BsExclamationCircle size={18} /> Report
@@ -856,7 +856,7 @@ const Home = () => {
                                   onClick={() =>
                                     handleDeleteButtonClick(post._id)
                                   }
-                                  className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-50 w-full text-left border-t border-gray-200"
+                                  className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:glassy-card w-full text-left border-t border-gray-200"
                                   role="menuitem"
                                 >
                                   <AiOutlineDelete size={18} /> Delete
@@ -982,7 +982,7 @@ const Home = () => {
                     </div>
 
                     <div className="mt-1">
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs glassy-text-secondary">
                         Posted on {convertTimestampToDate2(post?.updatedAt)}
                       </span>
                     </div>

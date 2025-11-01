@@ -21,7 +21,7 @@ const StatusBadge = ({ status }) => {
       case 'rejected':
         return 'bg-red-100 text-red-800 border border-[#FFEBEB]';
       default:
-        return 'bg-gray-100 glassy-text-primary';
+        return 'glassy-card glassy-text-primary';
     }
   };
 
@@ -165,7 +165,7 @@ const ApprovedRequests = () => {
                 className="w-24 h-24 rounded-full border-4 border-gray-200 mb-2"
               />
               {selectedRequest?.is_verified ? (
-                <span className="absolute top-0 right-0 bg-green-500 glassy-text-primary text-xs font-semibold px-2 py-0.5 rounded-full">
+                <span className="absolute top-0 right-0 glassy-card glassy-text-primary text-xs font-semibold px-2 py-0.5 rounded-full">
                   Verified
                 </span>
               ) : (
@@ -177,7 +177,7 @@ const ApprovedRequests = () => {
                 {user?.first_name} {user?.last_name}
               </h3>
             </div>
-            <div className="mt-6 space-y-3 text-gray-700 text-sm">
+            <div className="mt-6 space-y-3 glassy-text-primary text-sm">
               {user?.email && <p><span className="font-semibold">Email:</span> {user.email}</p>}
               {user?.phone_number && <p><span className="font-semibold">Phone:</span> {user.phone_number}</p>}
               {selectedRequest?.verification_category && <p><span className="font-semibold">Verification Category:</span> {selectedRequest.verification_category}</p>}
@@ -237,7 +237,7 @@ const ApprovedRequests = () => {
                 {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
               </h3>
             )}
-            <div className="space-y-4 mt-4 text-sm text-gray-700">
+            <div className="space-y-4 mt-4 text-sm glassy-text-primary">
               {model === "UserAdditionalCertifications" && (
                 <>
                   {doc?.name && <p><span className="font-semibold">Document Name:</span> {doc.name}</p>}
@@ -349,7 +349,7 @@ const ApprovedRequests = () => {
       <div className="p-6">
         <div className='flex justify-between'>
           <div className='w-full'>
-            <h2 className="text-2xl font-semibold">Approved Requests</h2>
+            <h2 className="text-2xl font-semibold glassy-text-primary">Approved Requests</h2>
           </div>
           <div className='flex justify-end'>
             <FilterSelect

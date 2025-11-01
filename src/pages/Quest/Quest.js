@@ -47,7 +47,7 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode, isCompany, isInstitu
     <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-6 rounded-full mb-6">
       <BiTrophy className="h-10 w-10 text-blue-600" />
     </div>
-    <p className="text-xl font-bold mb-2 text-gray-800">
+    <p className="text-xl font-bold mb-2 glassy-text-primary">
       No {activeTab !== "all" ? activeTab : ""} Quests Found
     </p>
     <p className="text-sm glassy-text-secondary mb-6 text-center max-w-md">
@@ -86,7 +86,7 @@ const ShortsClone = () => {
     updateIsAssignedUser,
     clearAll,
   } = useGlobalKeys();
-  console.log("this is thsdkjflskdjflskdjflskdjflskdjf", isCompany())
+  console.log("this is thsdkjflskdjflskdjflskdjflskdjf", isCompany(), isInstitution())
   const selector = useSelector((state) => state.global);
   const quests = selector?.getQuestListData?.data?.data?.list || [];
   const [feedbackData, setFeedbackData] = useState(null);
@@ -181,9 +181,8 @@ const ShortsClone = () => {
     if (isCompany()) {
       navigate(`/company/quest/create-your-quest`);
     } else if (isInstitution()) {
+      console.log("this is workindsdf")
       navigate(`/institution/quest/create-your-quest`);
-    } else if (isUser()) {
-      navigate(`/user/quest/create-your-quest`);
     } else {
       // fallback to user just in case
       navigate(`/user/quest/create-your-quest`);
@@ -388,7 +387,7 @@ const ShortsClone = () => {
 
       {loading && (
         <div className="flex justify-center items-center py-20" data-aos="fade-in">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 -2 lue-500"></div>
         </div>
       )}
 
@@ -485,7 +484,7 @@ const ShortsClone = () => {
       >
         {engagementData && (
           <div className="max-h-[28rem] overflow-y-auto px-1">
-            <div className="mb-4 flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+            <div className="mb-4 flex items-center justify-between glassy-card p-3 rounded-lg">
               <p className="text-sm glassy-text-secondary">
                 Total Engagements:{" "}
                 <span className="font-semibold text-indigo-600">
@@ -519,7 +518,7 @@ const ShortsClone = () => {
         onClose={() => setFeedbackDataModal(false)}
         isActionButton={false}
       >
-        <div className="f">
+        <div className="">
           <div className="w-full max-h-[90vh] overflow-hidden">
             <div className="overflow-y-auto">
               {!feedbackData?.feedbackModules || feedbackData?.feedbackModules.length === 0 ? (
@@ -532,9 +531,9 @@ const ShortsClone = () => {
                     const moduleReports = feedbackData.feedbackReports?.[idx] || [];
 
                     return (
-                      <div key={idx} className="space-y-4 border-b pb-4">
+                      <div key={idx} className="space-y-4  pb-4">
 
-                        <h2 className="text-lg font-semibold text-gray-800 capitalize">
+                        <h2 className="text-lg font-semibold glassy-text-primary capitalize">
                           {mod.title || "Untitled"}
                         </h2>
 
@@ -543,14 +542,14 @@ const ShortsClone = () => {
                             {moduleReports.map((report, reportIdx) => (
                               <div
                                 key={reportIdx}
-                                className="border rounded-lg bg-gray-50 space-y-3 p-3"
+                                className="border rounded-lg glassy-card space-y-3 p-3"
                               >
                                 <div className="flex items-start justify-between">
-                                  <p className="text-sm text-gray-700">
+                                  <p className="text-sm glassy-text-primary">
                                     <span className="font-medium">Remarks:</span>{" "}
                                     {report.remarks || "No remarks provided"}
                                   </p>
-                                  <span className="text-xs text-gray-400 bg-gray-200 px-2 py-1 rounded">
+                                  <span className="text-xs glassy-text-secondary glassy-card px-2 py-1 rounded">
                                     #{reportIdx + 1}
                                   </span>
                                 </div>
@@ -558,7 +557,7 @@ const ShortsClone = () => {
                                 {/* Images */}
                                 {report.images?.length > 0 ? (
                                   <div>
-                                    <p className="text-sm font-medium text-gray-700 mb-2">
+                                    <p className="text-sm font-medium glassy-text-primary mb-2">
                                       Images:
                                     </p>
                                     <div className="flex flex-wrap gap-2">
@@ -579,7 +578,7 @@ const ShortsClone = () => {
                                             className="absolute inset-0 flex items-center justify-center glassy-card bg-opacity-0 hover:bg-opacity-50 transition-all opacity-0 hover:opacity-100"
                                             title="View image in full size"
                                           >
-                                            <span className="glassy-text-primary text-xs bg-blue-500 rounded px-2 py-1">
+                                            <span className="glassy-text-primary text-xs glassy-card0 rounded px-2 py-1">
                                               View
                                             </span>
                                           </a>
@@ -588,7 +587,7 @@ const ShortsClone = () => {
                                     </div>
                                   </div>
                                 ) : (
-                                  <div className="flex items-center text-gray-400 text-sm gap-1">
+                                  <div className="flex items-center glassy-text-secondary text-sm gap-1">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
                                       className="h-4 w-4"
@@ -642,17 +641,17 @@ const ShortsClone = () => {
       <Modal2 isOpen={surveyDataModal} onClose={() => setSurveyDataModal(false)} title={`Survey Modal`}
         isActionButton={false}>
 
-        <div className=" bg-gray-50 min-h-screen">
+        <div className="   min-h-screen">
           {/* Header */}
-          <div className="glassy-card ">
+          <div className="  ">
 
-            <div className="p-4 bg-purple-50 border-b border-gray-200">
+            <div className="p-4   border-gray-200">
               {/* <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <h2 className="text-lg font-medium">{surveyData?.engagement_count} responses</h2>
 
                 </div>
-                <button className="p-1 hover:bg-gray-200 rounded">
+                <button className="p-1 hover:glassy-card rounded">
                   <FiMoreVertical className="w-5 h-5 glassy-text-secondary" />
                 </button>
               </div> */}
@@ -660,13 +659,13 @@ const ShortsClone = () => {
               <div className="flex justify-center items-center space-x-6 mt-4">
 
                 <button
-                  className={`pb-2 ${activeTab3 === 'Question' ? 'text-purple-600 border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
+                  className={`pb-2 ${activeTab3 === 'Question' ? 'glassy-text-primary  border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
                   onClick={() => setActiveTab3('Question')}
                 >
                   Question
                 </button>
                 <button
-                  className={`pb-2 ${activeTab3 === 'Individual' ? 'text-purple-600 border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
+                  className={`pb-2 ${activeTab3 === 'Individual' ? 'glassy-text-primary  border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
                   onClick={() => setActiveTab3('Individual')}
                 >
                   Individual
@@ -675,7 +674,7 @@ const ShortsClone = () => {
 
               <div className="flex items-center justify-between mt-4">
                 <select
-                  className="border border-gray-300 rounded px-3 py-2 glassy-card"
+                  className="border border-gray-300 rounded px-3 py-2 glassy-card glassy-text-primary"
                   value={currentQuestion}
                   onChange={(e) => setCurrentQuestion(parseInt(e.target.value))}
                 >
@@ -690,17 +689,17 @@ const ShortsClone = () => {
                   <button
                     onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
                     disabled={currentQuestion === 0}
-                    className="p-2 hover:bg-gray-200 rounded disabled:opacity-50"
+                    className="p-2 rounded disabled:opacity-50 glassy-text-primary"
                   >
                     <BiChevronLeft className="w-4 h-4" />
                   </button>
-                  <span className="text-sm glassy-text-secondary">
+                  <span className="text-sm glassy-text-primary">
                     {currentQuestion + 1} of {totalQuestions}
                   </span>
                   <button
                     onClick={() => setCurrentQuestion(Math.min(totalQuestions - 1, currentQuestion + 1))}
                     disabled={currentQuestion === totalQuestions - 1}
-                    className="p-2 hover:bg-gray-200 rounded disabled:opacity-50"
+                    className="p-2  rounded disabled:opacity-50 glassy-text-primary"
                   >
                     <BiChevronRight className="w-4 h-4" />
                   </button>
@@ -711,14 +710,14 @@ const ShortsClone = () => {
 
           {activeTab3 === 'Question' && (
             <div className="p-6">
-              <div className="border border-gray-200 rounded-lg p-6">
-                <h3 className="text-lg font-medium mb-4">{currentPoll?.title}</h3>
+              <div className=" glassy-card rounded-lg p-6">
+                <h3 className="text-lg font-medium mb-4 glassy-text-primary">{currentPoll?.title}</h3>
                 <p className="glassy-text-secondary mb-4">{currentPoll?.description}</p>
 
                 {/* Display options based on question type */}
                 {currentPoll.type === 'short-answer' ? (
-                  <div className="bg-gray-50 p-3 rounded border">
-                    <p className="text-gray-400 italic">This is a short-answer question. Individual responses are shown in the "Individual" tab.</p>
+                  <div className="glassy-card p-3 rounded border">
+                    <p className="glassy-text-secondary italic">This is a short-answer question. Individual responses are shown in the "Individual" tab.</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -733,12 +732,12 @@ const ShortsClone = () => {
                           <div className="absolute top-0 left-0 h-full bg-purple-200 rounded-lg" style={{ width: `${percentage}%` }}></div>
                           <div className="relative z-10 w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 glassy-card">
                             <div className="flex items-center space-x-2">
-                              <span className={`text-sm font-medium ${isSelected ? 'text-purple-800' : 'text-gray-700'}`}>
+                              <span className={`text-sm font-medium ${isSelected ? 'text-purple-800' : 'glassy-text-primary'}`}>
                                 {option}
                               </span>
                             </div>
                             <div className="text-sm glassy-text-secondary">
-                              <span className="font-bold text-purple-600">{selectedCount}</span> ({percentage.toFixed(0)}%)
+                              <span className="font-bold glassy-text-primary">{selectedCount}</span> ({percentage.toFixed(0)}%)
                             </div>
                           </div>
                         </div>
@@ -757,33 +756,33 @@ const ShortsClone = () => {
           )}
 
           {activeTab3 === 'Individual' && (
-            <div className="glassy-card border-x border-b border-gray-200 rounded-b-lg">
-              <div className="p-4 border-b border-gray-200">
+            <div className="glassy-card   rounded-b-lg">
+              <div className="p-4  border-gray-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <button
                       onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
                       disabled={currentQuestion === 0}
-                      className="p-2 hover:bg-gray-200 rounded disabled:opacity-50"
+                      className="p-2   rounded disabled:opacity-50 glassy-text-primary"
                     >
                       <BiChevronLeftCircle className="w-4 h-4" />
                     </button>
-                    <span className="text-sm glassy-text-secondary">
+                    <span className="text-sm glassy-text-primary">
                       {currentQuestion + 1} of {totalQuestions}
                     </span>
                     <button
                       onClick={() => setCurrentQuestion(Math.min(totalQuestions - 1, currentQuestion + 1))}
                       disabled={currentQuestion === totalQuestions - 1}
-                      className="p-2 hover:bg-gray-200 rounded disabled:opacity-50"
+                      className="p-2 hover:glassy-card rounded disabled:opacity-50 glassy-text-primary"
                     >
                       <BiChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                   {/* <div className="flex items-center space-x-2">
-                    <button className="p-2 hover:bg-gray-200 rounded">
+                    <button className="p-2 hover:glassy-card rounded">
                       <Printer className="w-4 h-4 glassy-text-secondary" />
                     </button>
-                    <button className="p-2 hover:bg-gray-200 rounded">
+                    <button className="p-2 hover:glassy-card rounded">
                       <Trash2 className="w-4 h-4 glassy-text-secondary" />
                     </button>
                   </div> */}
@@ -799,8 +798,8 @@ const ShortsClone = () => {
                   <p className="text-purple-100 mt-1">Form description</p>
                 </div>
 
-                <div className="border border-gray-200 rounded-lg p-6">
-                  <h3 className="text-lg font-medium mb-4">{currentPoll?.title}</h3>
+                <div className=" glassy-card rounded-lg p-6">
+                  <h3 className="text-lg font-medium mb-4 glassy-text-primary">{currentPoll?.title}</h3>
 
                   {/* Show responses for current question */}
                   <div className="space-y-4">
@@ -815,7 +814,7 @@ const ShortsClone = () => {
                               e.target.src = `https://ui-avatars.com/api/?name=${response.user.first_name}+${response.user.last_name}&background=6366f1&color=fff`;
                             }}
                           />
-                          <span className="text-sm font-medium text-gray-700">
+                          <span className="text-sm font-medium glassy-text-primary">
                             {response.user.first_name} {response.user.last_name}
                           </span>
                           <span className="text-xs glassy-text-secondary">
@@ -824,8 +823,8 @@ const ShortsClone = () => {
                         </div>
 
                         {currentPoll.type === 'short-answer' ? (
-                          <div className="bg-gray-50 p-3 rounded border">
-                            <p className="text-gray-800">{response.answer[0] || 'No response'}</p>
+                          <div className="glassy-card p-3 rounded border">
+                            <p className="glassy-text-primary">{response.answer[0] || 'No response'}</p>
                           </div>
                         ) : (
                           <div className="space-y-2">
@@ -835,9 +834,9 @@ const ShortsClone = () => {
                                   type={currentPoll.type === 'multi-choice' ? 'radio' : 'checkbox'}
                                   checked={response.answer.includes(option)}
                                   readOnly
-                                  className="form-radio text-purple-600"
+                                  className="form-radio glassy-text-primary"
                                 />
-                                <span className="text-gray-700">{option}</span>
+                                <span className="glassy-text-primary">{option}</span>
                               </label>
                             ))}
                             {currentPoll.type === 'checkbox' && (

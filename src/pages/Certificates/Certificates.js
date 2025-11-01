@@ -16,16 +16,16 @@ const LinkedInCertificate = ({
       {/* Watermark */}
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
         <img
-          src="/logo.png"
+          src="/Frame 1000004906.png"
           alt="Watermark"
           className="w-40 sm:w-60 md:w-80 lg:w-96 h-auto object-contain"
         />
       </div>
 
       {/* Header */}
-      <div className="bg-blue-500 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 flex justify-center items-center border-b border-gray-200 relative z-10">
+      <div className="glassy-card0 px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 flex justify-center items-center border-b border-gray-200 relative z-10">
         <div className="flex items-center space-x-2">
-          <img src="/logo.png" alt="logo" className="w-8 h-8 sm:w-10 sm:h-10" />
+          <img src="/Frame 1000004906.png" alt="logo" className="w-8 h-8 sm:w-10 sm:h-10" />
           <span className="glassy-text-primary text-lg sm:text-xl md:text-2xl font-semibold">
             Learning
           </span>

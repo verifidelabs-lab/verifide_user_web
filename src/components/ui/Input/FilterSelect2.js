@@ -173,6 +173,8 @@ const FilterSelect2 = ({
   required = false,
   isCreatable = false,
   onCreateOption,
+  isClearable
+
 }) => {
   const [isInternalLoading, setInternalLoading] = useState(false);
   const [isDark, setIsDark] = useState(false);
@@ -204,8 +206,8 @@ const FilterSelect2 = ({
       borderColor: error
         ? "#ef4444"
         : state.isFocused
-        ? "var(--bg-button-hover)"
-        : "var(--border-color)",
+          ? "var(--bg-button-hover)"
+          : "var(--border-color)",
       borderRadius: "10px",
       minHeight: "40px",
       boxShadow: "none",
@@ -346,6 +348,8 @@ const FilterSelect2 = ({
         isLoading={isLoading || isInternalLoading}
         loadingMessage={() => "Loading..."}
         closeMenuOnSelect={!isMulti}
+        isClearable={isClearable}
+
       />
 
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

@@ -115,7 +115,7 @@ const CustomVideoUpload = ({
         {!value ?
           <div
             className={`relative border-2 border-dashed rounded-lg transition-colors
-            ${dragActive ? 'border-blue-400 bg-blue-50' :
+            ${dragActive ? 'border-blue-400 glassy-card' :
                 error ? 'border-red-300' : 'border-gray-300'}
             ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 '}
           `}

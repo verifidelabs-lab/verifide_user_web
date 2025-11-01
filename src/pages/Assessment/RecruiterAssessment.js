@@ -85,7 +85,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
   return (
     <div className="glassy-card rounded-xl shadow-sm border border-gray-200 p-4 mx-auto w-full">
       <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3 w-full">
+        {/* <div className="flex items-center space-x-3 w-full">
           <img
             src={assessment.action_by.profile_picture_url}
             alt={`${assessment.action_by.first_name} ${assessment.action_by.last_name}`}
@@ -100,10 +100,10 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
               {moment(assessment.updatedAt).format("DD MM YYYY")}
             </p>
           </div>
-        </div>
+        </div> */}
         {assessment.material_url && (
           <button
-            className="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-800 font-medium py-2.5 px-4 rounded-xl border border-blue-200 transition-colors flex items-center justify-center space-x-2 W-24 gap-2"
+            className="flex-1  hover:bg-blue-200 text-blue-800 font-medium py-2.5 px-4 rounded-xl border border-blue-200 transition-colors flex items-center justify-center space-x-2 W-24 gap-2"
             onClick={() => window.open(assessment.material_url, '_blank')}
           >
             Guide<PiDownloadBold size={23} />
@@ -119,7 +119,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
             {assessment.passing_score}% Passing Score
           </p>
           {assessment.assessmentTaken > 0 && (
-            <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            <span className="px-3 py-1 rounded-full text-xs font-medium  text-green-800">
               {assessment.assessmentTaken} Taken
             </span>
           )}
@@ -128,21 +128,21 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
 
 
       <div className="flex flex-wrap gap-2 mb-4">
-        <span className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+        <span className="flex items-center text-xs space-x-1  border border-gray-200 rounded-full px-3 py-1.5 glassy-card">
           <HiOutlineClipboardList className="w-4 h-4 glassy-text-secondary" />
           <span className="glassy-text-secondary">{assessment.no_of_questions} Questions</span>
         </span>
-        <span className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+        <span className="flex items-center text-xs space-x-1  border border-gray-200 rounded-full px-3 py-1.5 glassy-card">
           <GoClock className="w-4 h-4 glassy-text-secondary" />
           <span className="glassy-text-secondary">{assessment.time_limit} mins</span>
         </span>
-        <span className="flex items-center text-xs space-x-1 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5">
+        <span className="flex items-center text-xs space-x-1  border border-gray-200 rounded-full px-3 py-1.5 glassy-card">
           <BsBarChartLine className="w-4 h-4 glassy-text-secondary" />
           <span className="glassy-text-secondary">{assessment.level_id?.name || 'N/A'}</span>
         </span>
       </div>
       <div className=''>
-        <p className="text-[#6B6B6B] text-[14px] font-[400] line-clamp-2">
+        <p className="glassy-text-secondary text-[14px] font-[400] line-clamp-2">
           {assessment.description}
         </p>
       </div>
@@ -152,14 +152,14 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
           {visibleSkills.map((skill, index) => (
             <span
               key={skill._id || index}
-              className="px-3 py-1 bg-gray-50 text-gray-700 text-xs font-medium rounded-full border border-gray-200"
+              className="px-3 py-1  glassy-text-secondary glassy-card text-xs font-medium rounded-full border border-gray-200"
             >
               {skill.name}
             </span>
           ))}
           {remainingCount > 0 && !expandedSkills && (
             <button
-              className="px-3 py-1 bg-gray-50 text-gray-700 text-xs font-medium rounded-full border border-gray-200 hover:bg-gray-100"
+              className="px-3 py-1  glassy-text-secondary text-xs font-medium rounded-full border border-gray-200 hover:glassy-card"
               onClick={toggleSkills}
             >
               +{remainingCount}
@@ -167,7 +167,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
           )}
           {expandedSkills && remainingCount > 0 && (
             <button
-              className="px-3 py-1 bg-gray-50 text-gray-700 text-xs font-medium rounded-full border border-gray-200 hover:bg-gray-100"
+              className="px-3 py-1  glassy-text-secondary text-xs font-medium rounded-full border border-gray-200 hover:glassy-card"
               onClick={toggleSkills}
             >
               Show less
@@ -179,7 +179,7 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
       <div className="flex flex-col sm:flex-row gap-3 pt-4">
         <div className="flex space-x-3">
           <button
-            className="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2.5 px-4 rounded-xl border border-blue-200 transition-colors flex items-center justify-center space-x-2"
+            className="flex-1 glassy-card hover: text-blue-600 font-medium py-2.5 px-4 rounded-xl border border-blue-200 transition-colors flex items-center justify-center space-x-2"
             onClick={() => onEdit(assessment)}
           >
             <BiEdit size={16} />
@@ -196,10 +196,10 @@ const AssessmentCard = ({ assessment, onEdit, onDelete, onStatusChange }) => {
         <div className='flex space-x-3 justify-between'>
           <button
             onClick={() => onStatusChange(assessment)}
-            className={`flex items-center justify-center px-4 py-2.5 rounded-xl border transition-colors ${assessment.isDisable ? 'bg-gray-100 border-gray-200 hover:bg-gray-200' : 'bg-green-100 border-green-200 hover:bg-green-200'}`}
+            className={`flex items-center justify-center px-4 py-2.5 rounded-xl  transition-colors ${assessment.isDisable ? '  border-red-200  ' : ' border-green-200 '}`}
           >
             {assessment.isDisable ? (
-              <PiToggleLeft className="w-6 h-6 glassy-text-secondary" />
+              <PiToggleLeft className="w-6 h-6 text-red-500" />
             ) : (
               <PiToggleRight className="w-6 h-6 text-green-600" />
             )}
@@ -270,7 +270,7 @@ const RecruiterAssessment = () => {
   const [isDeleteModal, setIsDeleteModal] = useState(false);
 
   // Data states
-  const [skills ] = useState([]);
+  const [skills] = useState([]);
   const [levels] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
   const [modalData, setModalData] = useState({
@@ -477,7 +477,7 @@ const RecruiterAssessment = () => {
           value: course._id,
           label: course.name
         } : null,
-        skill_ids: res.data.skill_ids.map(skillId => {
+        skill_ids: res?.data.skill_ids.map(skillId => {
           const skill = skills.find(s => s._id === skillId) ||
             course?.skill_ids?.find(s => s._id === skillId);
           return {
@@ -813,7 +813,7 @@ const RecruiterAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded glassy-text-secondary hover:glassy-card hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronLeft size={18} />
           </button>
@@ -831,7 +831,7 @@ const RecruiterAssessment = () => {
                 onClick={() => handlePageChange(item)}
                 className={`w-8 h-8 rounded flex items-center justify-center transition ${currentPage === item
                   ? 'bg-blue-600 glassy-text-primary'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  : 'glassy-text-secondary hover:glassy-card'
                   }`}
               >
                 {item}
@@ -841,7 +841,7 @@ const RecruiterAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded glassy-text-secondary hover:glassy-card hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronRight size={18} />
           </button>
@@ -893,25 +893,25 @@ const RecruiterAssessment = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen px-4 lg:px-6 md:py-6 py-2">
+    <div className=" min-h-screen px-4 lg:px-6 md:py-6 py-2">
       <div className="w-full mx-auto">
         <div className="flex flex-col lg:flex-row justify-between items-center gap-4 mb-6">
           <h1 className="text-2xl font-bold glassy-text-primary">Assessments</h1>
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <form onSubmit={handleSearch} className="relative w-full sm:w-80">
-              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search assessments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full"
+                className="pl-10 pr-10 py-2 glassy-input-notification border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full"
               />
               {searchTerm && (
                 <button
                   type="button"
                   onClick={handleClearSearch}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:glassy-text-secondary"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary hover:glassy-text-secondary"
                 >
                   <IoClose size={18} />
                 </button>
@@ -955,7 +955,7 @@ const RecruiterAssessment = () => {
           </>
         ) : (
           <div className="glassy-card rounded-xl shadow-sm border border-gray-200 p-8 text-center">
-            <HiOutlineClipboardList className="mx-auto w-12 h-12 text-gray-400 mb-4" />
+            <HiOutlineClipboardList className="mx-auto w-12 h-12 glassy-text-secondary mb-4" />
             <h3 className="text-lg font-medium glassy-text-primary mb-2">No assessments found</h3>
             <p className="glassy-text-secondary mb-6">
               {searchTerm ?
@@ -1150,7 +1150,7 @@ const RecruiterAssessment = () => {
               {formData.questions.length > 0 ? (
                 <div className="space-y-4">
                   {formData.questions.map((question, index) => (
-                    <div key={index} className="p-4 border rounded-lg bg-gray-50">
+                    <div key={index} className="p-4 border rounded-lg ">
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="font-medium">{index + 1}. {question.question}</p>
@@ -1183,8 +1183,8 @@ const RecruiterAssessment = () => {
                 </div>
               ) : (
                 <div className="text-center py-8 glassy-text-secondary">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                    <PiPlus className="w-8 h-8 text-gray-400" />
+                  <div className="w-16 h-16 mx-auto mb-4 glassy-card rounded-full flex items-center justify-center">
+                    <PiPlus className="w-8 h-8 glassy-text-secondary" />
                   </div>
                   <p>No questions added yet</p>
                   <p className="text-sm">Add questions for this assessment</p>
@@ -1232,9 +1232,9 @@ const RecruiterAssessment = () => {
             />
           </div>
 
-          <div className="space-y-4 p-4 bg-gray-50 rounded-lg border">
+          <div className="space-y-4 p-4  rounded-lg border">
             <h3 className="text-lg font-semibold glassy-text-primary flex items-center gap-2">
-              <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+              <span className="w-2 h-2 glassy-card0 rounded-full"></span>
               Answer Options
             </h3>
 
@@ -1253,7 +1253,7 @@ const RecruiterAssessment = () => {
                 </div>
                 <button
                   type="button"
-                  className='bg-blue-500 glassy-text-primary w-8 h-8 flex justify-center items-center rounded-full hover:bg-blue-600 transition-colors'
+                  className='glassy-card0 glassy-text-primary w-8 h-8 flex justify-center items-center rounded-full hover:bg-blue-600 transition-colors'
                   onClick={addOption}
                 >
                   <PiPlus className="w-4 h-4" />
@@ -1263,7 +1263,7 @@ const RecruiterAssessment = () => {
 
             {questionFormData.options.length > 0 ? (
               <div className="space-y-3">
-                <div className="text-sm font-medium text-gray-700">
+                <div className="text-sm font-medium glassy-text-secondary">
                   Options ({questionFormData.options.length})
                   <span className="glassy-text-secondary ml-2">
                     {questionFormData.question_type?.value === 'single_choice'
@@ -1277,7 +1277,7 @@ const RecruiterAssessment = () => {
                     <div
                       key={idx}
                       className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${questionFormData.correct_options.includes(opt)
-                        ? 'bg-green-50 border-green-200'
+                        ? ' border-green-200'
                         : 'glassy-card border-gray-200 hover:border-gray-300'
                         }`}
                     >
@@ -1293,7 +1293,7 @@ const RecruiterAssessment = () => {
                           {idx + 1}. {opt}
                         </span>
                         {questionFormData.correct_options.includes(opt) && (
-                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full">
+                          <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-green-700  rounded-full">
                             <PiCheck className="w-3 h-3" />
                             Correct
                           </span>
@@ -1312,8 +1312,8 @@ const RecruiterAssessment = () => {
               </div>
             ) : (
               <div className="text-center py-8 glassy-text-secondary">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                  <PiPlus className="w-8 h-8 text-gray-400" />
+                <div className="w-16 h-16 mx-auto mb-4 glassy-card rounded-full flex items-center justify-center">
+                  <PiPlus className="w-8 h-8 glassy-text-secondary" />
                 </div>
                 <p>No options added yet</p>
                 <p className="text-sm">Add options for this question above</p>

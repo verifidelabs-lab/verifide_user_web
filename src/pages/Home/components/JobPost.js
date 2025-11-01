@@ -41,12 +41,12 @@ const JobPost = ({ job }) => {
           </h3>
           <div className="flex flex-wrap gap-2 mt-2">
             {job.job_type && (
-              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
+              <span className="px-3 py-1 glassy-card text-blue-700 text-xs font-medium rounded-full">
                 {job.job_type}
               </span>
             )}
             {job.job_location && (
-              <span className="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">
+              <span className="px-3 py-1 glassy-card text-green-700 text-xs font-medium rounded-full">
                 {job.job_location}
               </span>
             )}

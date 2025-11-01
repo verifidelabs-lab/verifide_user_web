@@ -1,18 +1,19 @@
 import axios from "axios";
 import { getCookie, removeCookie } from "../utils/cookieHandler";
 import { CiNoWaitingSign } from "react-icons/ci";
+import { toast } from "sonner";
 
 const isLive = false;
 // const isLive = true;
 // export const BaseUrl = "https://verifide.xyz/"
-export const BaseUrl = "https://dev-verifide.verifide.xyz/";
-// export const BaseUrl = "http://localhost:3000/";
+// export const BaseUrl = "https://dev-verifide.verifide.xyz/";
+export const BaseUrl = "http://localhost:3000/";
 export const apiUrl = isLive
   ? `${BaseUrl}api/v1/`
-  : "http://192.168.43.208:5004/api/v1/";
+  : "http://192.168.1.63:5004/api/v1/";
 export const socketApiUrl = isLive
   ? `${BaseUrl}socket`
-  : "http://192.168.43.208:5004/socket";
+  : "http://192.168.1.63:5004/socket";
 
 const axiosPublic = axios.create({
   baseURL: apiUrl,
@@ -50,7 +51,15 @@ const authRequestInterceptor = (config) => {
     removeCookie("TOKEN");
     removeCookie("ACTIVE_MODE");
     removeCookie("ASSIGNED_USER");
+       toast.error("Session expired! Please log in again.");
+
+    // Redirect to login page after a short delay
+    setTimeout(() => {
+      window.location.href = "/login"; // adjust path if needed
+    }, 1000);
+    
     return Promise.reject(new Error("No authentication token found"));
+
   }
 
   return config;

@@ -41,7 +41,7 @@ const AuthLayout = ({ children }) => {
       )}
       {children}
       {/* <div className="absolute bottom-0 left-[calc(50%-100px)] w-[200px]">
-        <button className="flex items-center justify-center w-full gap-2 px-6 py-3 text-sm font-medium glassy-text-primary transition-colors glassy-card rounded-full hover:bg-gray-800">
+        <button className="flex items-center justify-center w-full gap-2 px-6 py-3 text-sm font-medium glassy-text-primary transition-colors glassy-card rounded-full hover:glassy-card">
           Choose Goals
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -52,7 +52,7 @@ const AuthLayout = ({ children }) => {
             <div
               key={i}
               onClick={() => setActiveSlide(i === 0 ? 0 : 1)}
-              className={`w-3 h-3 rounded-full cursor-pointer ${activeSlide === (i === 0 ? 0 : 1) ? "bg-blue-600" : "bg-gray-300"
+              className={`w-3 h-3 rounded-full cursor-pointer ${activeSlide === (i === 0 ? 0 : 1) ? "bg-blue-600" : "glassy-card"
                 }`}
             ></div>
           ))}

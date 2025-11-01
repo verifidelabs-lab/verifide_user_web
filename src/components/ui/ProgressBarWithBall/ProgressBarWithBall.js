@@ -7,7 +7,7 @@ const ProgressBarWithBall = () => {
     <div className='p-10 h-full flex items-center'>
       <div className="flex flex-col items-center h-[37rem] w-2 mb-4 relative">
         
-        <div className="relative flex-1 w-full bg-gray-200 rounded-full overflow-hidden">
+        <div className="relative flex-1 w-full glassy-card rounded-full overflow-hidden">
           
           <div
             className="absolute top-0 w-full bg-blue-600 transition-all duration-300"

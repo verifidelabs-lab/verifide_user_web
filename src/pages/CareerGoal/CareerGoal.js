@@ -215,7 +215,7 @@ const CareerGoal = () => {
 
   if (showSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center p-4">
+      <div className="min-h-screen   flex items-center justify-center p-4">
         <div className="glassy-card rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <BiCheckCircle className="w-12 h-12 text-green-600" />
@@ -243,7 +243,7 @@ const CareerGoal = () => {
   const currentAnswer = answers[currentQuestion] || {};
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+    <div className="min-h-screen   p-4">
       <div className="max-w-4xl mx-auto">
         {/* Job Information Card */}
         <div className="glassy-card rounded-2xl shadow-lg mb-6 p-6">
@@ -271,14 +271,14 @@ const CareerGoal = () => {
                     {jobData.job_title.name}
                   </h1>
                 </Link>
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                <span className="px-3 py-1 glassy-card text-blue-800 text-sm font-medium rounded-full">
                   {jobData.job_type}
                 </span>
               </div>
               <div className="flex items-center gap-2 glassy-text-secondary mb-3">
                 <LuBuilding2 className="w-4 h-4" />
                 <span className="font-medium">{jobData.company_id.name}</span>
-                <span className="text-gray-400">•</span>
+                <span className="glassy-text-secondary">•</span>
                 <span>{jobData.industry_id.name}</span>
               </div>
 
@@ -315,8 +315,8 @@ const CareerGoal = () => {
             <div
               className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
                 timeLeft <= 30
-                  ? "bg-red-100 text-red-700"
-                  : "bg-blue-100 text-blue-700"
+                  ? "glassy-card text-red-700"
+                  : "glassy-card text-blue-700"
               }`}
             >
               <CiLock className="w-4 h-4" />
@@ -336,9 +336,9 @@ const CareerGoal = () => {
                 {currentQ.options.map((option, index) => (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50 ${
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:glassy-card hover:glassy-card ${
                       currentAnswer.selected_options?.includes(option)
-                        ? "border-blue-500 bg-blue-50"
+                        ? "border-blue-500 glassy-card"
                         : "border-gray-200"
                     }`}
                     onClick={() => handleSingleChoiceSelect(option)}
@@ -353,7 +353,7 @@ const CareerGoal = () => {
                         }
                         onChange={() => {}}
                       />
-                      <label className="ml-3 text-gray-700 cursor-pointer">
+                      <label className="ml-3 glassy-text-primary cursor-pointer">
                         {option}
                       </label>
                     </div>
@@ -367,9 +367,9 @@ const CareerGoal = () => {
                 {currentQ.options.map((option, index) => (
                   <div
                     key={index}
-                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50 ${
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all hover:border-blue-300 hover:glassy-card ${
                       currentAnswer.selected_options?.includes(option)
-                        ? "border-blue-500 bg-blue-50"
+                        ? "border-blue-500 glassy-card"
                         : "border-gray-200"
                     }`}
                     onClick={() => handleMultiChoiceSelect(option)}
@@ -384,7 +384,7 @@ const CareerGoal = () => {
                         }
                         onChange={() => {}}
                       />
-                      <label className="ml-3 text-gray-700 cursor-pointer">
+                      <label className="ml-3 glassy-text-primary cursor-pointer">
                         {option}
                       </label>
                     </div>

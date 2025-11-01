@@ -170,17 +170,17 @@ const Verification = ({ headline }) => {
       case 'verified':
         return { text: 'Verified', color: 'bg-green-100 text-green-600' };
       case 'unverified':
-        return { text: 'Unverified', color: 'bg-gray-100 glassy-text-secondary' };
+        return { text: 'Unverified', color: 'glassy-card glassy-text-secondary' };
       case 'pending':
         return { text: 'Pending', color: 'bg-orange-100 text-orange-600' };
       case 'under review':
         return { text: 'Under Review', color: 'bg-yellow-100 text-yellow-600' };
       case 'partial verified':
-        return { text: 'Partial verified', color: 'bg-blue-100 text-blue-600' };
+        return { text: 'Partial verified', color: 'glassy-card text-blue-600' };
       case 'required':
         return { text: 'Required', color: 'bg-red-100 text-red-600' };
       default:
-        return { text: status, color: 'bg-gray-100 glassy-text-secondary' };
+        return { text: status, color: 'glassy-card glassy-text-secondary' };
     }
   }
 
@@ -575,7 +575,7 @@ const Verification = ({ headline }) => {
        
         <nav className="flex items-center gap-2 text-sm">
           <span className="glassy-text-secondary">Home</span>
-          <span className="text-gray-400">›</span>
+          <span className="glassy-text-secondary">›</span>
           <span className="font-medium text-blue-600">All Category</span>
         </nav>
         <div className='glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300'>
@@ -626,7 +626,7 @@ const Verification = ({ headline }) => {
                   </span>
                 )}
                 {activeTab === tab.label && (
-                  <span className="absolute left-0 -bottom-[1px] w-full h-[2px] bg-blue-500 rounded"></span>
+                  <span className="absolute left-0 -bottom-[1px] w-full h-[2px] glassy-card rounded"></span>
                 )}
               </button>
             ))}
@@ -642,7 +642,7 @@ const Verification = ({ headline }) => {
                   key={tab.name}
                   className={`px-4 py-2 text-sm rounded-md transition-all ${activeTab === tab.key
                     ? 'glassy-card text-[#2563EB] border-b-2 border-[#2563EB] font-semibold shadow-sm'
-                    : 'glassy-text-secondary font-medium'
+                    : 'glassy-text-primary font-medium'
                     }`}
                   onClick={() => handleTabChange(tab.key)}
                 >
@@ -806,7 +806,7 @@ const Verification = ({ headline }) => {
           {assessmentData.length > 0 ? assessmentData.map((ele) => (
             <div
               key={ele._id}
-              className='border rounded-lg p-2 my-2 cursor-pointer hover:bg-gray-100 transition'
+              className='border rounded-lg p-2 my-2 cursor-pointer hover:glassy-card transition'
 
             >
               <p className='font-semibold'>{ele?.title}</p>
@@ -852,7 +852,7 @@ const Verification = ({ headline }) => {
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
-                    className="text-gray-200"
+                    className="glassy-text-secondary"
                     strokeWidth="4"
                     fill="none"
                     stroke="currentColor"
@@ -882,7 +882,7 @@ const Verification = ({ headline }) => {
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
-                    className="text-gray-200"
+                    className="glassy-text-secondary"
                     strokeWidth="4"
                     fill="none"
                     stroke="currentColor"
@@ -935,8 +935,8 @@ const Verification = ({ headline }) => {
                     key={index}
                     className={`p-4 border rounded-xl cursor-pointer transition duration-300 ease-in-out 
                 ${isSelected
-                        ? 'border-blue-500 bg-blue-50 shadow-sm'
-                        : 'border-gray-200 hover:bg-gray-50'
+                        ? 'border-blue-500 glassy-card shadow-sm'
+                        : 'border-gray-200 hover:glassy-card'
                       }`}
                     onClick={() => {
                       if (currentQuestion.question_type === 'multi_choice') {
@@ -957,7 +957,7 @@ const Verification = ({ headline }) => {
                         checked={isSelected}
                         readOnly
                       />
-                      <label className="ml-3 block text-gray-700 text-sm font-medium">
+                      <label className="ml-3 block glassy-text-primary text-sm font-medium">
                         {String.fromCharCode(65 + index)}. {option}
                       </label>
                     </div>

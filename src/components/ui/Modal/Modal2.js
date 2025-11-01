@@ -23,19 +23,15 @@ const Modal2 = ({
       />
 
       <div
-        className={`fixed z-50 glassy-card rounded-lg top-0 shadow-xl transition-all duration-300 ease-in-out
-          transform -translate-x-1/2 -translate-y-1/2
-          ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
-        style={{
-          top: '50%',
-          left: '50%',
-        }}
+        className={`fixed z-50 bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+          }`}
+        style={{ top: '50%', left: '50%' }}
       >
         <div className="w-[100vw] max-w-6xl sm:max-w-md md:max-w-6xl lg:max-w-6xl xl:max-w-6xl flex flex-col overflow-hidden">
 
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
             <h2 className={`text-lg font-semibold glassy-text-primary capitalize capitalize ${titleClassName}`}>{title}</h2>
-            <Button variant="zinc" rounded="full" icon={<BiLeftArrowAlt />} onClick={onClose}>
+            <Button variant="primary"  rounded="full" icon={<BiLeftArrowAlt />} onClick={onClose}>
               Back
             </Button>
           </div>
@@ -50,7 +46,7 @@ const Modal2 = ({
           <div className="flex justify-end items-end gap-3 p-6">
             <Button variant="outline" onClick={onClose}>Cancel</Button>
             <Button onClick={handleSubmit} loading={loading}>
-             {loading ? "Please wait" : buttonLabel || "Submit"}
+              {loading ? "Please wait" : buttonLabel || "Submit"}
             </Button>
           </div>
         )}

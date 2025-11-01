@@ -312,7 +312,7 @@ const InstituteType = () => {
                             variant="secondary"
                             onClick={handleCloseModal}
                             disabled={isSubmitting}
-                            className="flex-1 py-3 transition-all duration-200 hover:bg-gray-100"
+                            className="flex-1 py-3 transition-all duration-200 hover:glassy-card"
                         >
                             Cancel
                         </Button>
@@ -378,13 +378,13 @@ const InstituteType = () => {
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium glassy-text-primary mb-1">
                                     Name
                                 </label>
                                 <p className="glassy-text-primary">{modalData.data.name}</p>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium glassy-text-primary mb-1">
                                     Display Name
                                 </label>
                                 <p className="glassy-text-primary">{modalData.data.display_name}</p>
@@ -394,7 +394,7 @@ const InstituteType = () => {
 
                         {modalData.data.description && (
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium glassy-text-primary mb-1">
                                     Description
                                 </label>
                                 <p>{modalData.data.description || "N/A"}</p>

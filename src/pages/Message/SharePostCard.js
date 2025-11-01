@@ -8,7 +8,7 @@ const SharedPostCard = ({ sharedData, isOwn }) => {
   // console.log("vide:---------",video_url)
 
   return (
-    <div className={`border rounded-lg overflow-hidden shadow-sm max-w-sm ${isOwn ? 'glassy-card' : 'bg-gray-50'}`}>
+    <div className={`border rounded-lg overflow-hidden shadow-sm max-w-sm ${isOwn ? 'glassy-card' : 'glassy-card'}`}>
  
       {video_url ? (
         <div className="relative w-full h-40 glassy-card">
@@ -72,7 +72,7 @@ const SharedPostCard = ({ sharedData, isOwn }) => {
             {tags.slice(0, 3).map((tag, index) => (
               <span
                 key={index}
-                className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full"
+                className="text-xs px-2 py-1 glassy-card text-blue-800 rounded-full"
               >
                 #{tag}
               </span>

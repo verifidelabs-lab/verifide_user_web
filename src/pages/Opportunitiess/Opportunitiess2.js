@@ -325,7 +325,7 @@ const Opportunitiess2 = () => {
               (opt) => opt.value === searchFelids?.industry_id
             )}
             onChange={(selected) => handleSelectChange("industry_id", selected)}
-            isClearable={false}
+            isClearable={true}
           />
           {/* Select filters */}
           <FilterSelect2
@@ -336,7 +336,7 @@ const Opportunitiess2 = () => {
               (opt) => opt.value === searchFelids?.company_id
             )}
             onChange={(selected) => handleSelectChange("company_id", selected)}
-            isClearable={false}
+            isClearable={true}
           />
 
           <FilterSelect2
@@ -348,7 +348,7 @@ const Opportunitiess2 = () => {
               (opt) => opt.value === searchFelids?.job_title
             )}
             onChange={(selected) => handleSelectChange("job_title", selected)}
-            isClearable={false}
+            isClearable={true}
           />
           <FilterSelect2
             name={"timePeriod"}
@@ -361,7 +361,7 @@ const Opportunitiess2 = () => {
               { label: "This Week", value: "This Week" },
             ]}
             onChange={(value) => handleSelectChange("timePeriod", value)}
-            isClearable={false}
+            isClearable={true}
           />
           <FilterSelect2
             label="Skills"
@@ -373,7 +373,7 @@ const Opportunitiess2 = () => {
             )}
             onChange={(selected) => handleSelectChange("required_skills", selected)}
             isMulti
-            isClearable={false}
+            isClearable={true}
           />
 
         </div>
@@ -386,7 +386,7 @@ const Opportunitiess2 = () => {
           } `}
       >
         <div className="flex-1 min-w-[200px] mb-4">
-          <input
+          {/* <input
             type="text"
             placeholder="Search jobs..."
             value={searchFelids.job_title || ""}
@@ -397,7 +397,7 @@ const Opportunitiess2 = () => {
               }))
             }
             className="glassy-input"
-          />
+          /> */}
         </div>
         <div className="flex flex-wrap lg:items-center justify-between mb-6  lg:space-y-0">
           <div className="flex flex-col lg:flex-row xl:flex-row flex-wrap gap-3 sm:flex-row items-end sm:justify-between  space-y-4 sm:space-y-0">
@@ -412,7 +412,7 @@ const Opportunitiess2 = () => {
                   }}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none
         ${activeTab === tab
-                      ? "bg-blue-50 text-blue-600 shadow-sm"
+                      ? "glassy-card text-blue-600 shadow-sm"
                       : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
                     }`}
                 >
@@ -466,9 +466,9 @@ const Opportunitiess2 = () => {
       </div>
 
       {selectedJob && (
-        <div className="fixed right-0 top-0 h-screen xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] w-full glassy-card rounded-2xl p-6 overflow-y-auto mt-10">
+        <div className="!sticky right-0 top-0 h-screen xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] w-full glassy-card rounded-2xl p-6 overflow-y-auto mt-10">
           <div className="mb-4">
-            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
+            <span className="inline-block glassy-card text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
               Selected Job
             </span>
           </div>
@@ -521,10 +521,10 @@ const Opportunitiess2 = () => {
 
           {/* Job Type / Location / Pay */}
           <div className="flex flex-wrap gap-2 mb-4">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card0/20 text-blue-400">
               {selectedJob.job_type?.replace("-", " ") || "Full-time"}
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card/20 text-green-400">
               {selectedJob.job_location === "on-site" ? "On-site" : "Remote"}
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400">
@@ -574,7 +574,7 @@ const Opportunitiess2 = () => {
                 {selectedJob.required_skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-500/20 glassy-text-secondary"
+                    className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card0/20 glassy-text-secondary"
                   >
                     {skill.name || skill}
                   </span>
@@ -586,7 +586,7 @@ const Opportunitiess2 = () => {
           {/* Application Status */}
           {selectedJob.isApplied && (
             // <div className="mb-4">
-            //   <strong className="text-gray-700">Application Status:</strong>
+            //   <strong className="glassy-text-primary">Application Status:</strong>
             //   <span
             //     className={`ml-2 ${
             //       selectedJob.jobApplication?.status === "applied"
@@ -697,7 +697,7 @@ const Opportunitiess2 = () => {
           <div className="bg-white w-[90%] max-h-[90vh] overflow-y-auto rounded-2xl p-4 relative">
             <button
               onClick={() => setSelectedJob(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              className="absolute top-3 right-3 glassy-text-primary hover:glassy-text-primary"
             >
               <IoClose size={24} />
             </button>
@@ -729,7 +729,7 @@ const Opportunitiess2 = () => {
               </h2>
 
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-0.5 rounded">
+                <span className="glassy-card text-blue-800 text-xs px-2.5 py-0.5 rounded">
                   {selectedJob.job_type?.replace("-", " ") || "Full-time"}
                 </span>
                 <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded">
@@ -740,9 +740,9 @@ const Opportunitiess2 = () => {
               </div>
 
               {/* ✅ Job Description */}
-              <div className="text-sm text-gray-700">
+              <div className="text-sm glassy-text-primary">
                 <p className="font-medium mb-1">Job Description:</p>
-                <p className="bg-gray-50 p-2 rounded-lg border border-gray-100 whitespace-pre-line">
+                <p className="glassy-card p-2 rounded-lg border border-gray-100 whitespace-pre-line">
                   {selectedJob.job_description || "No description provided."}
                 </p>
               </div>
@@ -750,14 +750,14 @@ const Opportunitiess2 = () => {
               {/* ✅ Required Skills */}
               {selectedJob.required_skills?.length > 0 && (
                 <div className="mt-4">
-                  <strong className="text-gray-700 block mb-2">
+                  <strong className="glassy-text-primary block mb-2">
                     Required Skills:
                   </strong>
                   <div className="flex flex-wrap gap-2">
                     {selectedJob.required_skills.map((skill, index) => (
                       <span
                         key={index}
-                        className="bg-gray-100 glassy-text-primary text-xs px-2.5 py-0.5 rounded"
+                        className="glassy-card glassy-text-primary text-xs px-2.5 py-0.5 rounded"
                       >
                         {skill.name || skill}
                       </span>
@@ -769,7 +769,7 @@ const Opportunitiess2 = () => {
               {/* ✅ Application Status */}
               {selectedJob.isApplied && (
                 <div className="mt-4">
-                  <strong className="text-gray-700">Application Status:</strong>
+                  <strong className="glassy-text-primary">Application Status:</strong>
                   <span
                     className={`ml-2 ${
                       selectedJob.jobApplication?.status === "applied"
@@ -790,12 +790,12 @@ const Opportunitiess2 = () => {
 
               {/* ✅ Interview Details */}
               {selectedJob?.isSchedule && selectedJob?.interviewDetails && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+                <div className="mt-4 p-4 glassy-card rounded-lg border border-gray-200 shadow-sm">
                   <h3 className="text-lg font-semibold glassy-text-primary capitalize mb-3">
                     📅 Interview Details
                   </h3>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm glassy-text-primary">
                     <div>
                       <span className="font-medium">Interview Date:</span>
                       <div className="glassy-text-secondary">
@@ -832,7 +832,7 @@ const Opportunitiess2 = () => {
               )}
 
               {/* ✅ Posted Date */}
-              <div className="text-sm text-gray-500 mt-4">
+              <div className="text-sm glassy-text-primary mt-4">
                 Posted on:{" "}
                 {new Date(selectedJob.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",

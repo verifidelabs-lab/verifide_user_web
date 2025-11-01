@@ -55,13 +55,13 @@ const UserCertificate = () => {
     const certificateUrlOrNumber = data.credential_id;
 
     return (
-        <div className="max-w-4xl mx-auto p-8 bg-gray-50">
+        <div className="max-w-4xl mx-auto p-8 glassy-card">
 
             <nav className="glassy-card shadow-md py-3 px-6 flex justify-between items-center">
                 <div className="flex items-center">
                     <div className="flex items-center gap-3">
                         <img
-                            src="/logo.png"
+                            src="/Frame 1000004906.png"
                             alt="logo"
                             className="md:h-8 h-6 md:w-full w-28  transition-transform duration-300 hover:scale-105"
                         />
@@ -74,13 +74,13 @@ const UserCertificate = () => {
                         <>
                             <ul className='flex justify-start items-center gap-6 font-semibold text-sm'>
                                 <li >
-                                    <Link to={`/user/feed`} className='hover:text-blue-500 bg-gray-50 rounded-full transition-all duration-300 hover:scale-100'>Home</Link>
+                                    <Link to={`/user/feed`} className='hover:text-blue-500 glassy-card rounded-full transition-all duration-300 hover:scale-100'>Home</Link>
                                 </li>
                                 <li className='md:block hidden'>
-                                    <Link to={`/user/profile`} className='hover:text-blue-500 bg-gray-50 rounded-full transition-all duration-300 hover:scale-100'>Profile</Link>
+                                    <Link to={`/user/profile`} className='hover:text-blue-500 glassy-card rounded-full transition-all duration-300 hover:scale-100'>Profile</Link>
                                 </li>
                                 <li className='md:block hidden'>
-                                    <Link to={`/user/connections`} className='hover:text-blue-500 bg-gray-50 rounded-full transition-all duration-300 hover:scale-100'>Connections</Link>
+                                    <Link to={`/user/connections`} className='hover:text-blue-500 glassy-card rounded-full transition-all duration-300 hover:scale-100'>Connections</Link>
                                 </li>
                             </ul>
                             <div className='flex justify-start gap-2 items-center'>
@@ -100,13 +100,13 @@ const UserCertificate = () => {
             <div className="relative border border-gray-200 rounded-xl overflow-hidden glassy-card">
                 {/* Watermark */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-                    <img src="/logo.png" alt="Watermark" className="w-96 h-96 object-contain" />
+                    <img src="/Frame 1000004906.png" alt="Watermark" className="w-96 h-96 object-contain" />
                 </div>
 
                 {/* Header */}
                 <div className="bg-blue-400 px-8 py-6 flex justify-center border-b border-gray-200 relative z-10">
                     <div className="flex items-center space-x-2">
-                        <img src="/logo.png" alt="logo" className="" />
+                        <img src="/Frame 1000004906.png" alt="logo" className="" />
                         <span className="glassy-text-primary text-2xl font-semibold">Learning</span>
                     </div>
                 </div>
@@ -134,7 +134,7 @@ const UserCertificate = () => {
 
                     {/* Date */}
                     <div className="text-center mb-8">
-                        <p className="text-gray-700 text-lg font-medium">
+                        <p className="glassy-text-primary text-lg font-medium">
                             Awarded on {convertTimestampToDate(date)}
                         </p>
                     </div>
@@ -142,10 +142,10 @@ const UserCertificate = () => {
                     {/* Skills */}
                     {skills?.length > 0 && (
                         <div className="text-center mb-10">
-                            <h3 className="text-gray-700 mb-4 text-base font-semibold">Top Skills Covered</h3>
+                            <h3 className="glassy-text-primary mb-4 text-base font-semibold">Top Skills Covered</h3>
                             <div className="flex justify-center flex-wrap gap-3">
                                 {skills.slice(0, 3).map((skill, i) => (
-                                    <span key={i} className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
+                                    <span key={i} className="px-3 py-1 glassy-card text-blue-700 text-sm rounded-full">
                                         {skill.name}
                                     </span>
                                 ))}

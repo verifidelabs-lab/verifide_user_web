@@ -166,7 +166,7 @@ const CertificateCard = ({
                                             disabled={isDeleting}
                                             className={`flex items-center gap-1 transition-all duration-200 ${isDeleting ? 'text-blue-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800 hover:scale-105'}`}
                                         >
-                                            <span className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'bg-blue-100' : 'hover:bg-blue-100'}`}>
+                                            <span className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'glassy-card' : 'hover:glassy-card'}`}>
                                                 <FaRegEdit />
                                             </span>
                                             Edit
@@ -188,7 +188,7 @@ const CertificateCard = ({
                                 ) : (
                                     <div className='pt-2 flex justify-end'>
                                         <span
-                                            className="inline-block text-blue-700 font-semibold px-3 py-1 rounded-md border border-transparent hover:border-blue-500 hover:bg-blue-50 hover:text-blue-800 cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md"
+                                            className="inline-block text-blue-700 font-semibold px-3 py-1 rounded-md border border-transparent hover:border-blue-500 hover:glassy-card hover:text-blue-800 cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md"
                                             onClick={() => sharePost(record)}
                                         >
                                             ✨ Share your achievement

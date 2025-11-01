@@ -91,9 +91,9 @@ const MessageText2 = ({ msg }) => {
 
         if (loading) {
             return (
-                <div className="mt-3 p-4 bg-gray-100 rounded-lg animate-pulse">
-                    <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                <div className="mt-3 p-4 glassy-card rounded-lg animate-pulse">
+                    <div className="h-4 glassy-card rounded w-3/4 mb-2"></div>
+                    <div className="h-3 glassy-card rounded w-1/2"></div>
                 </div>
             );
         }
@@ -149,7 +149,7 @@ const MessageText2 = ({ msg }) => {
         if (url.toLowerCase().endsWith('.pdf')) {
             return (
                 <a href={url} target="_blank" rel="noopener noreferrer" className="block mt-3">
-                    <div className="p-4 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300">
+                    <div className="p-4 glassy-card hover:glassy-card rounded-lg border border-gray-300">
                         <div className="flex items-center gap-3">
                             <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
                                 <span className="glassy-text-primary font-bold text-lg">PDF</span>
@@ -168,7 +168,7 @@ const MessageText2 = ({ msg }) => {
         if (preview) {
             return (
                 <a href={url} target="_blank" rel="noopener noreferrer" className="block mt-3">
-                    <div className="border rounded-lg overflow-hidden glassy-card hover:bg-gray-50 transition-colors">
+                    <div className="border rounded-lg overflow-hidden glassy-card hover:glassy-card transition-colors">
                         {preview.image && (
                             <img
                                 src={preview.image}
@@ -202,7 +202,7 @@ const MessageText2 = ({ msg }) => {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg mt-3"
+                className="block p-4 glassy-card hover:glassy-card rounded-lg mt-3"
             >
                 <div className="flex items-center gap-3">
                     <img

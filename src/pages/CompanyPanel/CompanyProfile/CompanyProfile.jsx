@@ -863,7 +863,7 @@ const CompanyProfile = ({
   );
 
   const AboutTab = () => (
-    <div className="mt-6 space-y-6 text-gray-700">
+    <div className="mt-6 space-y-6 glassy-text-primary">
       <h2 className="text-2xl font-bold glassy-text-primary">
         About {agencyData?.name}
       </h2>
@@ -961,7 +961,7 @@ const CompanyProfile = ({
                         : ""}
                     </div>
                   </div>
-                  <div className="ml-auto glassy-text-primary hover:text-gray-700 cursor-pointer">
+                  <div className="ml-auto glassy-text-primary hover:glassy-text-primary cursor-pointer">
                     <span className="text-sm">•••</span>
                   </div>
                 </div>
@@ -969,8 +969,8 @@ const CompanyProfile = ({
                 {/* Post content */}
                 {post?.title && post?.content && (
                   <div>
-                    <h3 className="text-gray-700 text-base">{post?.title}</h3>
-                    <p className="text-gray-700 text-base">{post?.content}</p>
+                    <h3 className="glassy-text-primary text-base">{post?.title}</h3>
+                    <p className="glassy-text-primary text-base">{post?.content}</p>
                   </div>
                 )}
                 {/* Media: image or video */}
@@ -1022,7 +1022,7 @@ const CompanyProfile = ({
                     {post?.tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="px-2 py-1 bg-gray-100 rounded-lg text-xs glassy-text-secondary"
+                        className="px-2 py-1 glassy-card rounded-lg text-xs glassy-text-secondary"
                       >
                         #{tag}
                       </span>
@@ -1034,7 +1034,7 @@ const CompanyProfile = ({
           </div>
 
           <div className="text-center mt-8">
-            <button className="px-5 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+            <button className="px-5 py-2 rounded-lg glassy-card hover:glassy-card glassy-text-primary font-medium">
               <Link
                 to={
                   isCompany === "company"
@@ -1054,12 +1054,12 @@ const CompanyProfile = ({
   const JobsTab = ({ jobs }) => {
     console.log("this is the jobs", jobs);
     return (
-      <div className="bg-gray-50 min-h-screen p-6">
+      <div className="glassy-card min-h-screen p-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold glassy-text-primary">Opening Jobs</h1>
-            <button className="w-10 h-10 glassy-card hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm">
+            <button className="w-10 h-10 glassy-card hover:glassy-card border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm">
               <Link
                 to={
                   isCompany === "company"
@@ -1067,9 +1067,9 @@ const CompanyProfile = ({
                     : "/institution/post-job"
                 }
 
-                className="w-10 h-10 glassy-card hover:bg-gray-100 border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm"
+                className="w-10 h-10 glassy-card hover:glassy-card border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm"
               >
-                <Plus size={24} className="text-gray-700" />
+                <Plus size={24} className="glassy-text-primary" />
               </Link>
             </button>
           </div>
@@ -1113,7 +1113,7 @@ const CompanyProfile = ({
 
                     {/* Status Badge and Bookmark */}
                     <div className="flex items-center gap-3">
-                      <button className="glassy-text-primary hover:text-gray-700 transition-colors">
+                      <button className="glassy-text-primary hover:glassy-text-primary transition-colors">
                         <Bookmark size={20} />
                       </button>
                     </div>
@@ -1133,7 +1133,7 @@ const CompanyProfile = ({
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                  <p className="glassy-text-primary text-sm leading-relaxed mb-4">
                     {job?.job_description}
                   </p>
 
@@ -1155,7 +1155,7 @@ const CompanyProfile = ({
                     {job?.required_skills?.map((skill, index) => (
                       <span
                         key={skill?._id || index}
-                        className="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm rounded-lg border border-gray-200"
+                        className="px-3 py-1.5 glassy-card glassy-text-primary text-sm rounded-lg border border-gray-200"
                       >
                         {skill?.name}
                       </span>

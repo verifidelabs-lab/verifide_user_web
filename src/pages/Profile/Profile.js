@@ -1138,18 +1138,24 @@ const Profile = ({ profileData }) => {
           <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
             <nav className="flex justify-start items-center gap-2 mb-2 text-sm" >
               <span className="glassy-text-secondary">Home</span>
-              <span className="text-gray-400">›</span>
+              <span className="glassy-text-secondary">›</span>
               <span className="font-medium text-blue-600">Profile</span>
             </nav>
 
-            <div className="flex flex-col gap-6 lg:flex-row mx-auto">
+            <div className="flex flex-col gap-6 lg:flex-row mx-auto" style={{ background: "/logo.png" }}>
               <div className="w-full mx-auto space-y-4 overflow-y-auto">
-                <div className="overflow-hidden glassy-card border border-gray-200 rounded-lg" >
+                <div className="overflow-hidden glassy-card border border-gray-200 rounded-lg" style={{
+                  backgroundImage: 'url("/Group.png")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat'
+                }}
+                >
                   <div className="p-4">
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between" >
+                    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between"  >
                       <ProfileCardData data={profileInfo} setFrameStatus={setFrameStatus} frameStatus={frameStatus} handleSelection={handleSelection} />
-                      <div className="lg:text-right border border-[#dddddda8] p-2 rounded-lg relative group">
-                        <div className="flex items-center justify-between mb-3">
+                      <div className="lg:text-right border   p-2 rounded-lg border-[rgba(255, 255, 255, 0.1)] relative group">
+                        <div className="flex items-center justify-between mb-3 ">
                           <h3 className="xl:text-lg lg:text-base font-semibold glassy-text-primary">
                             Badges Earned
                           </h3>
@@ -1164,7 +1170,7 @@ const Profile = ({ profileData }) => {
                           ))}
                         </div>
                         <div
-                          className="fixed md:right-[20%] right-[6%] z-10 mt-2 w-96 rounded-md glassy-text-primary p-4 shadow-lg border border-[#D3D3D3] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"   >
+                          className=" glassy-card-header md:right-[20%] right-[6%] z-10 mt-2 w-96 rounded-md glassy-text-primary p-4 shadow-lg border border-[#D3D3D3] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"   >
                           <h4 className="text-start text-[#FFFFFF] font-semibold mb-2">How it works?</h4>
                           <ul className='text-[#FFFFFF] text-start font-normal text-sm'>
                             <li>🚀 Complete Deliveries: Get 1 badge for every 10 on-time deliveries</li>
@@ -1329,13 +1335,13 @@ const Profile = ({ profileData }) => {
                               ref={prevRef}
                               className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
-                              <BiChevronLeft className="w-6 h-6 text-gray-700" />
+                              <BiChevronLeft className="w-6 h-6 glassy-text-primary" />
                             </button>
                             <button
                               ref={nextRef}
                               className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
-                              <BiChevronRight className="w-6 h-6 text-gray-700" />
+                              <BiChevronRight className="w-6 h-6 glassy-text-primary" />
                             </button>
 
                           </div>
@@ -1415,13 +1421,13 @@ const Profile = ({ profileData }) => {
                               ref={prevRef2}
                               className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
-                              <BiChevronLeft className="w-6 h-6 text-gray-700" />
+                              <BiChevronLeft className="w-6 h-6 glassy-text-primary" />
                             </button>
                             <button
                               ref={nextRef2}
                               className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow hover:bg-gray-100"
                             >
-                              <BiChevronRight className="w-6 h-6 text-gray-700" />
+                              <BiChevronRight className="w-6 h-6 glassy-text-primary" />
                             </button>
                           </div>
                         ) : (

@@ -22,7 +22,7 @@ const PersonalInformation = () => {
         </div>
 
         <div className="mt-6">
-          <label className="block mb-2 text-sm font-medium text-gray-700">Professional Bio *</label>
+          <label className="block mb-2 text-sm font-medium glassy-text-primary">Professional Bio *</label>
           <textarea
             className="w-full h-32 p-3 border border-gray-300 rounded-lg"
             placeholder="Write a short professional biography"

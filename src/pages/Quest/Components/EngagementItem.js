@@ -47,18 +47,18 @@ const EngagementItem = ({ engagement, navigate }) => {
       {engagement.remarks && (
         <div className="mt-4">
           <div
-            className="flex items-center text-gray-700 mb-2 cursor-pointer select-none"
+            className="flex items-center glassy-text-primary mb-2 cursor-pointer select-none"
             onClick={() => setExpanded(!expanded)}
           >
             <BiMessageDetail className="mr-2 text-indigo-500" />
             <span className="text-sm font-medium">Remarks</span>
             <BiChevronRight
-              className={`ml-1 transform transition-transform ${expanded ? "rotate-90 text-indigo-500" : "text-gray-400"
+              className={`ml-1 transform transition-transform ${expanded ? "rotate-90 text-indigo-500" : "glassy-text-secondary"
                 }`}
             />
           </div>
           {expanded && (
-            <p className="text-gray-700 bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-sm leading-relaxed">
+            <p className="glassy-text-primary bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-sm leading-relaxed">
               {engagement.remarks}
             </p>
           )}

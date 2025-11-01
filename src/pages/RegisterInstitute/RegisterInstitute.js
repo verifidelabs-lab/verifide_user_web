@@ -675,13 +675,13 @@ const RegisterInstitute = () => {
   return (
     <>
       <div className="h-screen">
-        {/* <header className="glassy-card fixed top-0 w-full z-50 shadow">
+        {/* <header className=" fixed top-0 w-full z-50 shadow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex-shrink-0 flex items-center">
                 <img
                   className="h-8 w-auto"
-                  src="/logo.png"
+                  src="/Frame 1000004906.png"
                   alt="Logo"
                 />
               </div>
@@ -697,11 +697,11 @@ const RegisterInstitute = () => {
           </div>
         </header> */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="glassy-card  overflow-hidden">
+          <div className="  overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
               <button
                 onClick={handleBack} title='go back'
-                className="text-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-gray-700 transition-colors"
+                className="text-sm px-3 py-1 glassy-card hover:glassy-card rounded glassy-text-primary transition-colors"
               >
                 <TbArrowBack size={20} />
               </button>
@@ -933,7 +933,7 @@ const RegisterInstitute = () => {
                     value={formData?.logo_url}
                     name="logo_url"
                     onChange={(e) => handleChange("logo_url", e)}
-                    placeholder="https://example.com/logo.png"
+                    placeholder="https://example.com/Frame 1000004906.png"
                   />
                 </div>
               </div>

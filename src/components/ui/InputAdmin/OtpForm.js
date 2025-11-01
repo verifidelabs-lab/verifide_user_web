@@ -70,7 +70,7 @@ const OtpForm = ({
                     <h2 className="text-center text-2xl font-semibold glassy-text-primary">{title}</h2>
 
                     <div className="flex justify-center mb-4">
-                        <img src="/logo.png" alt="logo" className="h-16 w-auto" />
+                        <img src="/Frame 1000004906.png" alt="logo" className="h-16 w-auto" />
                     </div>
 
                     <div className="pl-10 ">

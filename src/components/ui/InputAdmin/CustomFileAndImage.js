@@ -126,9 +126,9 @@ const EnhancedFileInput = ({
         {!value ?
           <div
             className={`relative border-2 border-dashed rounded-lg transition-colors
-            ${dragActive ? 'border-blue-400 bg-blue-50' :
+            ${dragActive ? 'border-blue-400 glassy-card' :
                 error ? 'border-red-300' : 'border-gray-300'}
-            ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:bg-blue-50'}
+            ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:glassy-card'}
           `}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
@@ -148,7 +148,7 @@ const EnhancedFileInput = ({
               {uploading ? (
                 <AiOutlineLoading3Quarters className="w-8 h-8 text-blue-500 animate-spin mb-2" />
               ) : (
-                <BiPaperclip className="w-8 h-8 text-gray-400 mb-2" />
+                <BiPaperclip className="w-8 h-8 glassy-text-secondary mb-2" />
               )}
 
               <p className="text-sm glassy-text-secondary text-center">
@@ -160,14 +160,14 @@ const EnhancedFileInput = ({
                   </>
                 )}
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs glassy-text-secondary mt-1">
                 {supportedFormats} (max {maxSize}MB)
               </p>
             </div>
           </div>
 
           : (
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+            <div className="flex items-center justify-between p-3 glassy-card rounded-lg border">
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 {getFileIcon(value)}
                 <div className="flex-1 min-w-0">
@@ -184,7 +184,7 @@ const EnhancedFileInput = ({
                 <button
                   type="button"
                   onClick={() => openFile(value)}
-                  className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
+                  className="p-1.5 text-blue-600 hover:text-blue-800 hover:glassy-card rounded transition-colors"
                   title="View file"
                 >
                   <BiDownload className="w-4 h-4" />

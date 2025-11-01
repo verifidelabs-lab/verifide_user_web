@@ -119,7 +119,7 @@ const OrbitalMenu = () => {
       <div className="flex items-center justify-center w-full">
         <div className="relative lg:w-[700px] md:h-[700px] ">
       
-          <div className="absolute left-[calc(50%-70px)] top-[calc(50%-70px)] w-[140px] h-[140px] rounded-full glassy-card shadow-2xl flex items-center justify-center z-10">
+          <div className="absolute left-[calc(50%-70px)] top-[calc(50%-70px)] w-[140px] h-[140px] rounded-full   shadow-2xl flex items-center justify-center z-10">
             <div className="w-[130px] h-[130px] rounded-full flex items-center justify-center">
               <div className="">
                 <img src='/profile.png' alt='' className='rounded-full' />
@@ -139,7 +139,7 @@ const OrbitalMenu = () => {
                 animationDelay: '0s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-inner_120s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-inner_120s_linear_infinite]">
                 Full Stack Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -156,7 +156,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-40s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-inner_120s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-inner_120s_linear_infinite]">
                 Backend Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -173,7 +173,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-80s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-inner_120s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-inner_120s_linear_infinite]">
                 Frontend Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -194,7 +194,7 @@ const OrbitalMenu = () => {
                 animationDelay: '0s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-middle_80s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-middle_80s_linear_infinite]">
                 AI Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -212,7 +212,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-26.67s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-middle_80s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-middle_80s_linear_infinite]">
                 ML Engineer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -230,7 +230,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-53.33s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-middle_80s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-middle_80s_linear_infinite]">
                 DevOps Engineer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -242,7 +242,7 @@ const OrbitalMenu = () => {
           {/* Outer Circle - Largest size, fastest speed */}
           <div className="absolute left-[calc(50%-320px)] top-[calc(50%-320px)] w-[640px] h-[640px] border-2 border-dashed border-white/50 rounded-full">
             <div
-              className="absolute w-[90px] h-[90px] rounded-full glassy-card/95 backdrop-blur-sm shadow-xl flex items-center justify-center cursor-pointer hover:scale-110 transition-transform animate-[orbit-outer_40s_linear_infinite] group"
+              className="absolute w-[90px] h-[90px] rounded-full glassy-card/100 backdrop-blur-sm shadow-xl flex items-center justify-center cursor-pointer hover:scale-110 transition-transform animate-[orbit-outer_40s_linear_infinite] group"
               onClick={() => handleMenuClick('data')}
               style={{
                 left: 'calc(50% - 45px)',
@@ -251,7 +251,7 @@ const OrbitalMenu = () => {
                 animationDelay: '0s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-outer_40s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-outer_40s_linear_infinite]">
                 Data Scientist
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -260,7 +260,8 @@ const OrbitalMenu = () => {
             </div>
 
             <div
-              className="absolute w-[90px] h-[90px] rounded-full bg-[#F3E3FF] border border-[#9910FF94]/50 shadow-xl flex items-center justify-center cursor-pointer hover:scale-110 transition-transform animate-[orbit-outer_40s_linear_infinite] group"
+                        className="absolute w-[90px] h-[90px] rounded-full glassy-card/95 backdrop-blur-sm shadow-xl flex items-center justify-center cursor-pointer hover:scale-110 transition-transform animate-[orbit-outer_40s_linear_infinite] group"
+
               onClick={() => handleMenuClick('product')}
               style={{
                 left: 'calc(50% - 45px)',
@@ -287,7 +288,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-26.67s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-outer_40s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-outer_40s_linear_infinite]">
                 QA Engineer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -301,25 +302,25 @@ const OrbitalMenu = () => {
               className="absolute inset-0 z-30 flex items-center justify-center w-full h-full rounded-full glassy-card/95 backdrop-blur-sm"
               onClick={() => setMenuOpen(false)}
             >
-              <div className="max-w-sm p-8 text-center">
-                <div className="w-[80px] h-[80px] rounded-full bg-gradient-to-t from-[#2563EB] to-[#FFFFFF] mx-auto mb-6 flex items-center justify-center shadow-xl">
-                  <div className="text-xs font-medium glassy-text-primary">
+              <div className="max-w-sm p-8 text-center glassy-card">
+                <div className="w-[80px] h-[80px] rounded-full   mx-auto mb-6 flex items-center justify-center shadow-xl">
+                  <div className="text-md font-medium glassy-text-primary">
                     {activeMenu?.toUpperCase()}
                   </div>
                 </div>
                 <h2 className="mb-4 text-2xl font-bold glassy-text-primary">
                   {menuItems[activeMenu]?.title}
                 </h2>
-                <ul className="space-y-2 text-sm glassy-text-secondary border border-blue-500">
+                <ul className="space-y-2 text-sm glassy-text-secondary ">
                   {menuItems[activeMenu]?.items.map((item, index) => (
-                    <li key={index} className="py-1 border-b border-gray-200 last:border-b-0">
+                    <li key={index} className="py-1   last:border-b-0">
                       {item}
                     </li>
                   ))}
                 </ul>
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="px-6 py-2 mt-6 text-sm glassy-text-primary transition-colors bg-gray-800 rounded-full hover:bg-gray-700"
+                  className="px-6 py-2 mt-6 text-sm glassy-text-primary glassy-button transition-colors   rounded-full hover:glassy-card"
                 >
                   Close
                 </button>

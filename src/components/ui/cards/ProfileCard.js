@@ -20,7 +20,7 @@ const ProfileCard = ({ data }) => {
               alt="profile"
             />
           ) : (
-            <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center overflow-hidden">
+            <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-center overflow-hidden">
               <img
                 src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
                 alt="dummy logo"
@@ -46,7 +46,7 @@ const ProfileCard = ({ data }) => {
         {/* Right Arrow */}
         <div>
           <BsChevronRight
-            className="text-gray-400 hover:glassy-text-primary cursor-pointer"
+            className="glassy-text-secondary hover:glassy-text-primary cursor-pointer"
             onClick={() => navigate(`/user/profile`)}
           />
         </div>

@@ -328,8 +328,8 @@ const VerificationCategory = ({ profileData }) => {
     const statusClasses = {
       requested: "bg-[#EAF1FF] text-blue-500",
       rejected: "bg-red-50 text-red-500",
-      pending: "bg-blue-50 text-blue-500",
-      approved: "bg-green-50 text-green-600",
+      pending: "glassy-card text-blue-500",
+      approved: "glassy-card text-green-600",
     };
 
     return (
@@ -403,7 +403,7 @@ const VerificationCategory = ({ profileData }) => {
 
       <div className="flex justify-end space-x-2">
         <Button
-          variant="zinc"
+          variant="primary"
           type="button"
           onClick={() => setActiveOption(null)}
           className="glassy-button hover:scale-105 transition-transform duration-200"
@@ -455,7 +455,7 @@ const VerificationCategory = ({ profileData }) => {
       {tab !== "pendingRequest" && (
         <div className="flex justify-end space-x-2">
           <Button
-            variant="zinc"
+            variant="primary"
             type="button"
             onClick={() => setActiveOption(null)}
             className="glassy-button hover:scale-105 transition-transform duration-200"
@@ -479,14 +479,14 @@ const VerificationCategory = ({ profileData }) => {
       <div className="w-full mx-auto">
         <nav className="flex items-center py-4 text-sm">
           <span className="glassy-text-secondary hover:glassy-text-primary">Home</span>
-          <BiChevronRight className="w-4 h-4 text-gray-400 mx-2" />
+          <BiChevronRight className="w-4 h-4 glassy-text-secondary mx-2" />
           <span
             className="glassy-text-secondary hover:glassy-text-primary"
             onClick={() => window.history.back()}
           >
             {formattedTab(tab)}
           </span>
-          <BiChevronRight className="w-4 h-4 text-gray-400 mx-2" />
+          <BiChevronRight className="w-4 h-4 glassy-text-secondary mx-2" />
           <span className="text-blue-600 font-medium">
             {type
               ? `${type.charAt(0).toUpperCase() + type.slice(1)} Verification`
@@ -519,7 +519,7 @@ const VerificationCategory = ({ profileData }) => {
                         {item?.verificationHistory?.length > 0 && (
                           <button
                             onClick={() => toggleHistory(item._id)}
-                            className="w-6 h-6 rounded-md border border-green-400 flex justify-center items-center hover:bg-green-50 transition-colors"
+                            className="w-6 h-6 rounded-md border border-green-400 flex justify-center items-center hover:glassy-card transition-colors"
                             aria-label="View verification history"
                           >
                             <GoHistory className="text-green-700" size={14} />

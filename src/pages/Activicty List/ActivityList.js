@@ -11,7 +11,7 @@ const ActivityList = () => {
 
                 <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
                     <span className="glassy-text-secondary">Home</span>
-                    <span className="text-gray-400">›</span>
+                    <span className="glassy-text-secondary">›</span>
                     <span className="font-medium text-blue-600">Activity</span>
                 </nav>
                 <div>
@@ -24,7 +24,7 @@ const ActivityList = () => {
                         </div>
 
                         <div className="flex items-center justify-between mb-8 relative">
-                            <div className="absolute top-9 left-6 right-0 h-0.5 bg-gray-200">
+                            <div className="absolute top-9 left-6 right-0 h-0.5 glassy-card">
                                 <div className="h-full glassy-text-primary w-1/4"></div>
                             </div>
                             <div className="flex flex-col items-center relative z-10">
@@ -49,7 +49,7 @@ const ActivityList = () => {
                                 <div className="text-center">
                                     <div className="text-base font-medium text-[#6B6B6B]">05 Project</div>
                                 </div>
-                                <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mb-2">
+                                <div className="w-6 h-6 glassy-card rounded-full flex items-center justify-center mb-2">
 
                                 </div>
                             </div>
@@ -57,7 +57,7 @@ const ActivityList = () => {
                                 <div className="text-center">
                                     <div className="text-base font-medium text-[#6B6B6B]">01 Internship</div>
                                 </div>
-                                <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mb-2">
+                                <div className="w-6 h-6 glassy-card rounded-full flex items-center justify-center mb-2">
 
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ const ActivityList = () => {
                                 <div className="text-center">
                                     <div className="text-base font-medium text-[#6B6B6B]">Job/Opportunity</div>
                                 </div>
-                                <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mb-2">
+                                <div className="w-6 h-6 glassy-card rounded-full flex items-center justify-center mb-2">
 
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ const ActivityList = () => {
                                 <div className="text-center">
                                     <div className="text-base font-medium text-[#6B6B6B]">30 Days</div>
                                 </div>
-                                <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center mb-2">
+                                <div className="w-6 h-6 glassy-card rounded-full flex items-center justify-center mb-2">
 
                                 </div>
                             </div>
@@ -99,8 +99,8 @@ const ActivityList = () => {
                         <div className="glassy-card rounded-lg border border-gray-200  relative">
 
                             <div className='glassy-card p-3 border-b'>
-                                <button className="absolute top-6 right-6 p-1 hover:bg-gray-100 rounded">
-                                    <BiChevronUp className="w-5 h-5 text-gray-400" />
+                                <button className="absolute top-6 right-6 p-1 hover:glassy-card rounded">
+                                    <BiChevronUp className="w-5 h-5 glassy-text-secondary" />
                                 </button>
 
                                 <div className="flex items-start gap-4 mb-4">
@@ -117,7 +117,7 @@ const ActivityList = () => {
 
                                 <div className="mb-4">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center glassy-text-primary font-bold">
+                                        <div className="w-8 h-8 glassy-card0 rounded-full flex items-center justify-center glassy-text-primary font-bold">
                                             1
                                         </div>
                                         <h3 className="text-[20px] font-semibold glassy-text-primary">UI/UX Design for Beginners</h3>
@@ -141,31 +141,31 @@ const ActivityList = () => {
                             </div>
 
                             <div className=" bg-[#F9FBFF] pl-12">
-                                <h4 className="text-sm font-medium text-gray-700 my-3 uppercase tracking-wide">CHAPTERS:</h4>
+                                <h4 className="text-sm font-medium glassy-text-primary my-3 uppercase tracking-wide">CHAPTERS:</h4>
                                 <div className="space-y-1">
                                     <div className="flex items-center gap-3 p-2  ">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <div className="w-8 h-8 glassy-card0 rounded-full flex items-center justify-center">
                                             <BiBook className="w-4 h-4 glassy-text-primary" />
                                         </div>
                                         <span className="font-medium text-[18px] glassy-text-primary">Introduction to UI/UX</span>
                                     </div>
 
                                     <div className="flex items-center gap-3 p-2 ">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <div className="w-8 h-8 glassy-card0 rounded-full flex items-center justify-center">
                                             <BiBook className="w-4 h-4 glassy-text-primary" />
                                         </div>
                                         <span className="font-medium text-[18px] glassy-text-primary">Design Thinking Process</span>
                                     </div>
 
                                     <div className="flex items-center gap-3 p-2 ">
-                                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <div className="w-8 h-8 glassy-card0 rounded-full flex items-center justify-center">
                                             <BiBook className="w-4 h-4 glassy-text-primary" />
                                         </div>
                                         <span className="font-medium text-[18px] glassy-text-primary">Wireframing Basics</span>
                                     </div>
                                 </div>
                                 <div className='flex justify-end p-2'>
-                                    <Button variant='outline'>Start Now</Button>
+                                    <Button variant='primary'>Start Now</Button>
                                 </div>
                             </div>
                         </div>

@@ -98,7 +98,7 @@ const FileUpload = ({
         className={`
       relative border border-dashed rounded-xl p-5 text-center transition-all duration-300 cursor-pointer
       ${isDragging ? 'border-blue-400 bg-[#F6F8FA] scale-105' :
-            file ? 'border-green-300 bg-green-50' :
+            file ? 'border-green-300 glassy-card' :
               error ? 'border-red-300 bg-red-50' :
                 'border-gray-300 bg-card  '}
       ${isUploading ? 'pointer-events-none opacity-70' : ''}
@@ -147,7 +147,7 @@ const FileUpload = ({
           </div>
         ) : (
           <div className="space-y-4">
-            <div className={`rounded-full p-4 mx-auto w-16 h-16 flex items-center justify-center ${isDragging ? "bg-blue-100" : "bg-card"}`}>
+            <div className={`rounded-full p-4 mx-auto w-16 h-16 flex items-center justify-center ${isDragging ? "glassy-card" : "bg-card"}`}>
               <BiUpload className={`h-8 w-8 ${isDragging ? "text-blue-500" : "text-secondary"}`} />
             </div>
             <p className={`glassy-text-primary font-semibold ${isDragging ? "text-blue-600" : ""}`}>

@@ -675,7 +675,7 @@ const CreatePost = () => {
                     <button
                       type="button"
                       onClick={handleAddPollOption}
-                      className="text-sm text-blue-600 hover:text-blue-800 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+                      className="text-sm text-blue-600 hover:text-blue-800 font-medium disabled:glassy-text-secondary disabled:cursor-not-allowed"
                       disabled={postData.poll.options.length >= 10}
                     >
                       + Add Option

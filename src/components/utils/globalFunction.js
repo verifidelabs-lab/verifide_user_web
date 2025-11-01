@@ -745,7 +745,7 @@ export const MediaPreview = ({ url, type, onRemove }) => {
                 </video>
             )}
             {type === 'pdf' && (
-                <div className="flex items-center p-2 bg-gray-100 rounded-lg">
+                <div className="flex items-center p-2 glassy-card rounded-lg">
                     <span className="mr-2">📄</span>
                     <span className="truncate">{url}</span>
                 </div>

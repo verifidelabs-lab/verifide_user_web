@@ -341,7 +341,7 @@ const PostsManagement = () => {
             <h3 className="text-lg font-semibold mb-3">Reports</h3>
             <div className="overflow-x-auto">
               <table className="min-w-full glassy-card border border-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="glassy-card">
                   <tr>
                     <th className="px-4 py-2 text-left font-semibold">User</th>
                     <th className="px-4 py-2 text-left font-semibold">Type</th>

@@ -78,7 +78,7 @@ const ChangePassword = () => {
                     <form onSubmit={handleSubmit} className="space-y-5">
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+                            <label className="block text-sm font-medium glassy-text-primary mb-1">Current Password</label>
                             <CustomInput
                                 type="password"
                                 className={`w-full h-10 ${errors.currentPassword ? 'border-red-500' : ''}`}
@@ -92,7 +92,7 @@ const ChangePassword = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                            <label className="block text-sm font-medium glassy-text-primary mb-1">New Password</label>
                             <CustomInput
                                 type="password"
                                 className={`w-full h-10 ${errors.newPassword ? 'border-red-500' : ''}`}
@@ -107,7 +107,7 @@ const ChangePassword = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                            <label className="block text-sm font-medium glassy-text-primary mb-1">Confirm Password</label>
                             <CustomInput
                                 type="password"
                                 className={`w-full h-10 ${errors.confirmPassword ? 'border-red-500' : ''}`}

@@ -561,7 +561,7 @@ const CreatePost = () => {
                                 key={type}
                                 onClick={() => handlePostTypeChange(type)}
                                 className={`relative flex items-center px-3 py-2 text-sm font-medium transition-all duration-200 ease-in-out rounded-md
-                                        ${postData.post_type === type ? "text-blue-600 " : "glassy-text-secondary hover:text-gray-700 hover:bg-gray-100"
+                                        ${postData.post_type === type ? "text-blue-600 " : "glassy-text-secondary hover:glassy-text-primary hover:glassy-card"
                                     }`}
                             >
                                 {label}
@@ -574,7 +574,7 @@ const CreatePost = () => {
 
                     <form className=' space-y-6' onSubmit={handleSubmit}>
                         <div className="space-y-2">
-                            <label className="block text-sm font-semibold text-gray-700">
+                            <label className="block text-sm font-semibold glassy-text-primary">
                                 Post Title <span className="text-red-500">*</span>
                             </label>
                             <CustomInput
@@ -597,7 +597,7 @@ const CreatePost = () => {
                         {(postData.post_type === 'text' || postData?.post_type === 'poll' || postData?.post_type === 'link' || postData?.post_type === 'image-video') && (
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center">
-                                    <label className="block text-sm font-semibold text-gray-700">
+                                    <label className="block text-sm font-semibold glassy-text-primary">
                                         Content <span className="text-red-500">*</span>
                                     </label>
                                 </div>
@@ -624,7 +624,7 @@ const CreatePost = () => {
 
                         {postData.post_type === "image-video" && (
                             <div className="space-y-3">
-                                <label className="block text-sm font-semibold text-gray-700">
+                                <label className="block text-sm font-semibold glassy-text-primary">
                                     Upload Media <span className="text-red-500">*</span>
                                 </label>
                                 <div className="border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-400 transition-colors">
@@ -648,7 +648,7 @@ const CreatePost = () => {
 
                         {postData.post_type === 'link' && (
                             <div className="space-y-3">
-                                <label className="block text-sm font-semibold text-gray-700">
+                                <label className="block text-sm font-semibold glassy-text-primary">
                                     Link URL <span className="text-red-500">*</span>
                                 </label>
                                 <CustomInput
@@ -680,7 +680,7 @@ const CreatePost = () => {
                         {postData.post_type === 'poll' && (
                             <div className="space-y-4">
                                 <div className="space-y-3">
-                                    <label className="block text-sm font-semibold text-gray-700">
+                                    <label className="block text-sm font-semibold glassy-text-primary">
                                         Poll Duration (Days) <span className="text-red-500">*</span>
                                     </label>
                                     <CustomInput
@@ -699,13 +699,13 @@ const CreatePost = () => {
 
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center">
-                                        <label className="block text-sm font-semibold text-gray-700">
+                                        <label className="block text-sm font-semibold glassy-text-primary">
                                             Poll Options <span className="text-red-500">*</span>
                                         </label>
                                         <button
                                             type="button"
                                             onClick={handleAddPollOption}
-                                            className="text-sm text-blue-600 hover:text-blue-800 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+                                            className="text-sm text-blue-600 hover:text-blue-800 font-medium disabled:glassy-text-secondary disabled:cursor-not-allowed"
                                             disabled={postData.poll.options.length >= 10}
                                         >
                                             + Add Option
@@ -747,7 +747,7 @@ const CreatePost = () => {
                         )}
 
                         <div className="space-y-3">
-                            <label className="block text-sm font-semibold text-gray-700">
+                            <label className="block text-sm font-semibold glassy-text-primary">
                                 Tags
                             </label>
                             <div className="flex gap-2">
@@ -770,7 +770,7 @@ const CreatePost = () => {
                                 <button
                                     type="button"
                                     onClick={handleAddTag}
-                                    className="bg-blue-500 glassy-text-primary px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="glassy-card0 glassy-text-primary px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                                     disabled={postData.tags.length >= 10 || !postData.tagInput.trim()}
                                 >
                                     Add

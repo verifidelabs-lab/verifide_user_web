@@ -5,7 +5,7 @@ import Button from '../../../components/Atoms/Button/Button'
 const ProfileCardData = () => {
   return (
     <div className="flex items-center space-x-4">
-      <div className="flex-shrink-0 w-32 h-32 overflow-hidden bg-gray-200 rounded-lg">
+      <div className="flex-shrink-0 w-32 h-32 overflow-hidden glassy-card rounded-lg">
         <img
           src="https://plus.unsplash.com/premium_photo-1670071482460-5c08776521fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
           alt="Profile"
@@ -16,7 +16,7 @@ const ProfileCardData = () => {
         <div className="flex items-center space-x-2">
           <img src="/Img/GroupMain.png" alt="group" />
           <h1 className="text-2xl font-bold glassy-text-primary">Sarah Joe</h1>
-          <div className="flex items-center justify-center w-5 h-5 bg-blue-500 rounded-full">
+          <div className="flex items-center justify-center w-5 h-5 glassy-card0 rounded-full">
             <svg className="w-3 h-3 glassy-text-primary" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -26,7 +26,7 @@ const ProfileCardData = () => {
             </svg>
           </div>
         </div>
-        <p className="mt-1 text-lg text-gray-700">Management Executive at Zara</p>
+        <p className="mt-1 text-lg glassy-text-primary">Management Executive at Zara</p>
         <p className="text-sm glassy-text-secondary">Jaipur, Rajasthan</p>
         <div className="flex items-center mt-4 space-x-3">
     

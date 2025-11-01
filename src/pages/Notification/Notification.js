@@ -35,7 +35,7 @@ const getIconForType = (type) => {
     case "employment-verification":
     case "project-verification":
     case "certificate-verification":
-      return { Icon: CiLock, color: "bg-blue-500" };
+      return { Icon: CiLock, color: "glassy-card0" };
     case "skill-updates":
     case "course-progress":
     case "assessments-progress":
@@ -92,7 +92,7 @@ const parseNotificationTitle = (title) => {
 //   return (
 //     <div
 //       className={`flex items-start justify-between p-4  border-gray-100 ${
-//         !notification.isRead ? "bg-blue-50" : "glassy-card"
+//         !notification.isRead ? "glassy-card" : "glassy-card"
 //       }`}
 //     >
 //       <div className="flex items-start space-x-3">
@@ -110,7 +110,7 @@ const parseNotificationTitle = (title) => {
 //               {[type, event, company].filter(Boolean).join(" | ")}
 //             </div>
 //           )}
-//           <div className="flex items-center text-xs text-gray-400">
+//           <div className="flex items-center text-xs glassy-text-secondary">
 //             <CiLock className="w-3 h-3 mr-1" />
 //             {formatDate(notification.createdAt)}
 //           </div>
@@ -146,7 +146,7 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
   return (
     //  <div
     //   className={`flex items-start justify-between p-4  border-gray-200 ${
-    //     !notification.isRead ? "bg-blue-50" : "bg-white"
+    //     !notification.isRead ? "glassy-card" : "bg-white"
     //   }`}
     // >
     //   <div className="flex items-start space-x-3 w-full">
@@ -162,13 +162,13 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
     //         <h3 className="text-sm font-semibold glassy-text-primary">
     //           {cleanTitle}
     //         </h3>
-    //         <span className="text-xs text-gray-500">
+    //         <span className="text-xs glassy-text-primary">
     //           {formatDate(notification.createdAt)}
     //         </span>
     //       </div>
 
     //       {/* Job Info */}
-    //       <div className="flex flex-wrap gap-4 text-xs text-gray-700 mt-1">
+    //       <div className="flex flex-wrap gap-4 text-xs glassy-text-primary mt-1">
     //         {event && (
     //           <span>
     //             <strong className="glassy-text-primary">Job Position:</strong> {event}
@@ -194,7 +194,7 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
     //   {/* Button */}
     //   <button
     //     onClick={handleActionClick}
-    //     className="ml-4 px-3 py-1 text-blue-600 bg-blue-100 hover:bg-blue-200 text-sm font-medium rounded"
+    //     className="ml-4 px-3 py-1 text-blue-600 glassy-card hover:bg-blue-200 text-sm font-medium rounded"
     //   >
     //     {notification.meta?.buttonText || "View"}
     //   </button>
@@ -291,13 +291,13 @@ const NotificationHeader = ({
     //   <div className="flex md:flex-row flex-col items-center justify-between mb-4">
     //     <nav className="flex items-center space-x-2 text-sm">
     //       <span className="text-blue-600 hover:text-blue-800 cursor-pointer" onClick={() => navigate('/user/feed')}>Home</span>
-    //       <span className="text-gray-400">›</span>
+    //       <span className="glassy-text-secondary">›</span>
     //       <span className="glassy-text-secondary">Notifications</span>
     //     </nav>
 
     //     <div className="flex items-center space-x-4">
     //       <form onSubmit={handleSearch} className="relative">
-    //         <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+    //         <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-4 h-4" />
     //         <input
     //           type="text"
     //           placeholder="Search..."
@@ -310,7 +310,7 @@ const NotificationHeader = ({
     //       <div className="relative">
     //         <button
     //           type="button"
-    //           className="flex items-center space-x-2 px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50"
+    //           className="flex items-center space-x-2 px-3 py-2 border border-gray-300 rounded-md text-sm hover:glassy-card"
     //           onClick={() => setShowFilters(!showFilters)}
     //         >
     //           <BiFilterAlt className="w-4 h-4" />

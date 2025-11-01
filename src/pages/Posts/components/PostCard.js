@@ -81,7 +81,7 @@ const LinkPreview = ({ post }) => {
     };
 
     return (
-        <div className="border border-gray-200 rounded-lg p-3 mt-3 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => window.open(post.link, '_blank')}>
+        <div className="border border-gray-200 rounded-lg p-3 mt-3 cursor-pointer hover:glassy-card transition-colors" onClick={() => window.open(post.link, '_blank')}>
 
             <div className="">
                 <div className="flex items-center mt-2">
@@ -90,7 +90,7 @@ const LinkPreview = ({ post }) => {
                 </div>
             </div>
             {post.thumbnail && (
-                <div className="ml-3  bg-gray-200 max-h-96 rounded overflow-hidden flex-shrink-0">
+                <div className="ml-3  glassy-card max-h-96 rounded overflow-hidden flex-shrink-0">
                     <img src={post.thumbnail} alt="Link thumbnail" className="w-full max-h-[400px] object-contain" />
                 </div>
             )}
@@ -118,7 +118,7 @@ const PollComponent = ({ poll }) => {
                     return (
                         <div
                             key={index}
-                            className={`relative cursor-not-allowed p-2 rounded border ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:bg-gray-50'}`}
+                            className={`relative cursor-not-allowed p-2 rounded border ${isSelected ? 'border-blue-500 glassy-card' : 'border-gray-200 hover:glassy-card'}`}
                         // onClick={() => handleVote(index)}
                         >
                             <div className="flex justify-between items-center">
@@ -183,7 +183,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                             }}
                         />
                     ) : (
-                        <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center glassy-text-primary text-lg font-semibold">
+                        <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-center glassy-text-primary text-lg font-semibold">
                             {profileData?.first_name?.charAt(0).toUpperCase() || "U"}
                         </div>
                     )}
@@ -196,14 +196,14 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                             )}
                         </p>
                         <p className="text-xs glassy-text-secondary">{profileData?.headline}</p>
-                        <p className="text-xs text-gray-400">{formatDate(post.createdAt)} • <span className={`${post.isDisable ? 'text-red-500' : 'text-green-500'}`}>{post.isDisable ? 'Disabled' : 'Active'}</span></p>
+                        <p className="text-xs glassy-text-secondary">{formatDate(post.createdAt)} • <span className={`${post.isDisable ? 'text-red-500' : 'text-green-500'}`}>{post.isDisable ? 'Disabled' : 'Active'}</span></p>
                     </div>
                 </div>
                 {!isViewMode && (
                     <div className="relative">
                         <button
                             onClick={() => setShowActions(!showActions)}
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                            className="p-2 hover:glassy-card rounded-full transition-colors"
                         >
                             <FiMoreHorizontal size={20} />
                         </button>
@@ -211,14 +211,14 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                             <div className="absolute right-0 top-10 glassy-card border border-gray-200 rounded-lg shadow-lg py-2 z-10 min-w-[120px]">
                                 <button
                                     onClick={() => { onView(post); setShowActions(false) }}
-                                    className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100 w-full text-left"
+                                    className="flex items-center space-x-2 px-4 py-2 text-sm hover:glassy-card w-full text-left"
                                 >
                                     <FiEye size={16} />
                                     <span>View</span>
                                 </button>
                                 <button
                                     onClick={() => { onDelete(post._id); setShowActions(false) }}
-                                    className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100 w-full text-left text-red-600"
+                                    className="flex items-center space-x-2 px-4 py-2 text-sm hover:glassy-card w-full text-left text-red-600"
                                 >
                                     <FiTrash2 size={16} />
                                     <span>Delete</span>
@@ -358,7 +358,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                 {post.tags && post.tags.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1">
                         {post.tags.map((tag, index) => (
-                            <span key={index} className="text-blue-600 text-xs bg-blue-50 px-2 py-1 rounded-full">
+                            <span key={index} className="text-blue-600 text-xs glassy-card px-2 py-1 rounded-full">
                                 #{tag}
                             </span>
                         ))}
@@ -386,7 +386,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                 <div className="flex justify-around border-t border-gray-100 py-2">
                     <button
                         onClick={handleLike}
-                        className={`flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50`}
+                        className={`flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:glassy-card`}
                     >
 
                         <span className={isLiked ? 'text-blue-600 font-medium' : ''}>
@@ -395,13 +395,13 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                     </button>
                     <button
                         onClick={() => handleComment(post)}
-                        className="flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
+                        className="flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:glassy-card"
                     >
                         <BiComment />
                         <span>Comment</span>
                     </button>
                     <button
-                        className="flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:bg-gray-50"
+                        className="flex items-center justify-center gap-3 text-sm glassy-text-secondary hover:text-blue-600 transition-colors px-4 py-1 rounded-lg hover:glassy-card"
                         onClick={() => onShare(post)}
                     >
                         {post?.share_count}
@@ -410,7 +410,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                 </div>
 
 
-                <div className="px-4 py-2 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+                <div className="px-4 py-2 border-t border-gray-100 flex items-center justify-between glassy-card">
                     <span className="text-xs glassy-text-secondary">
                         Post Status: <span className={post.isDisable ? 'text-red-500 font-medium' : 'text-green-500 font-medium'}>{post.isDisable ? 'Disabled' : 'Active'}</span>
                     </span>
@@ -418,7 +418,7 @@ const PostCard = ({ post, onDelete, onToggleStatus, onView, profileData, isViewM
                     <button
                         onClick={() => onToggleStatus(post)}
                         className={`flex items-center justify-center px-3 py-1.5 rounded-xl border transition-colors ${post.isDisable
-                            ? 'bg-gray-100 border-gray-200 hover:bg-gray-200 text-gray-700'
+                            ? 'glassy-card border-gray-200 hover:glassy-card glassy-text-primary'
                             : 'bg-green-100 border-green-200 hover:bg-green-200 text-green-700'
                             } text-xs font-medium`}
                     >

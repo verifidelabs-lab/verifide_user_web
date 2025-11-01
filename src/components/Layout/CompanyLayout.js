@@ -32,6 +32,8 @@ import Users from '../../pages/users/Users';
 import UsersProfile from '../../pages/ProfileView/UsersProfile';
 import Connections from '../../pages/Connections/Connections';
 import CompanyInstituteView from '../../pages/ProfileView/CompanyInstituteView';
+import Index from '../../pages/Assessment';
+import Recommended from '../../pages/Course/Recommended/Recommended';
 
 const PageNotFound = lazy(() => import('../Not found/PageNotFound'));
 
@@ -58,7 +60,7 @@ function CompanyLayout() {
   const instituteProfileData = useSelector(
     (state) => state.companyAuth?.instituteProfileData?.data?.data || {}
   );
-
+  console.log("this is the companiespfsdkjlsdklskdfjlskdjf;aoierowieurowieuroweir", companiesProfileData, instituteProfileData)
   const playAndShowNotification = ({ title, message, body, redirectUrl }) => {
     if (isNotificationDisabledRef.current) {
       console.log("Notification sound is in cool down.");
@@ -110,9 +112,9 @@ function CompanyLayout() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (userRole === ROLES.COMPANIES || userRole === ROLES.COMPANIES_ADMIN) {
+      if (userRole == ROLES.COMPANIES || userRole == ROLES.COMPANIES_ADMIN) {
         await dispatch(companiesProfile())
-      } else if (userRole === ROLES.INSTITUTIONS || userRole === ROLES.INSTITUTIONS_ADMIN) {
+      } else if (userRole == ROLES.INSTITUTIONS || userRole == ROLES.INSTITUTIONS_ADMIN) {
         await dispatch(instituteProfile())
       }
     };
@@ -162,7 +164,7 @@ function CompanyLayout() {
     <div className=" min-h-screen flex flex-col ">
       <Header companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
-        {location.pathname !== "/company/opportunities" && location.pathname !== "/institution/opportunities" && <div
+        {location.pathname !== "/company/opportunities" && location.pathname !== "/institution/opportunities" && location.pathname !== "/institution/course/recommended" && <div
           className={`transition-all duration-300 ${navbarOpen ? 'md:w-72 w-full' : 'w-0 md:w-20'
             }`}
         >
@@ -173,7 +175,7 @@ function CompanyLayout() {
             <Routes>
               {(
                 <>
-                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
+                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} role={userRole}/>} />
                   <Route path={`/admin-role`} element={<AdminRoles />} />
                   <Route path="profile" element={<CompanyProfile companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />
@@ -186,11 +188,14 @@ function CompanyLayout() {
                   <Route path={`posts-manage`} element={<Posts companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   <Route path={`create-post`} element={<CreatePost />} />
                   <Route path={`notification`} element={<NotificationInterface />} />
-                  <Route path="quest" element={<Quest profileData={companiesProfileData} />} />
-                  <Route path="quest/create-your-quest/:id?" element={<CreateQuest />} />
+                  <Route path="/quest" element={<Quest profileData={companiesProfileData} />} />
+                  <Route path="/quest/create-your-quest/:id?" element={<CreateQuest />} />
                   <Route path="/connections" element={<Connections profileData={companiesProfileData} />} />
                   <Route path="/view-details/:name/:id" element={<CompanyInstituteView />} />
                   <Route path="/profile/:first_name/*" element={<UsersProfile currentUserId={companiesProfileData._id || null} />} />
+                  <Route path="/assessment/:token?" element={<Index />} />
+                  <Route path="/course/recommended" element={<Recommended />} />
+
                 </>
               )}
               <Route path="*" element={<PageNotFound />} />

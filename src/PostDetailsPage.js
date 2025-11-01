@@ -66,7 +66,7 @@ const PostDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen glassy-card">
       {/* Header */}
       <header className="glassy-card border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -99,8 +99,8 @@ const PostDetailsPage = () => {
 
           {/* Post content */}
           <div className="p-4">
-            <h2 className="font-semibold text-lg mb-2">{postData.title || "Untitled Post"}</h2>
-            <p className="whitespace-pre-line text-gray-700">{postData.content || "No content available"}</p>
+            <h2 className="font-semibold text-lg mb-2 glassy-text-primary">{postData.title || "Untitled Post"}</h2>
+            <p className="whitespace-pre-line glassy-text-primary">{postData.content || "No content available"}</p>
           </div>
 
           {/* Media */}

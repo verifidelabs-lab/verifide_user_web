@@ -87,7 +87,7 @@ const PersonalInformation = ({
               <button
                 type="button"
                 onClick={handleToggle}
-                className="p-2 glassy-text-secondary hover:text-gray-700 transition-colors"
+                className="p-2 glassy-text-secondary hover:glassy-text-primary transition-colors"
                 aria-label={isExtended ? "Collapse form" : "Expand form"}
               >
                 {isExtended ? (
@@ -99,7 +99,7 @@ const PersonalInformation = ({
             </div>
           ) : (
             <Button
-              variant="zinc"
+              variant="primary"
               rounded="full"
               icon={<BiLeftArrowAlt />}
               onClick={() => setIsExtended((prev) => !prev)}

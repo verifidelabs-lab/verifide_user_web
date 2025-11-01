@@ -153,7 +153,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               </button>
               <button
                 onClick={handleCrop}
-                className="px-4 py-2 bg-blue-500 glassy-text-primary rounded-md flex items-center justify-center"
+                className="px-4 py-2 glassy-card0 glassy-text-primary rounded-md flex items-center justify-center"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -173,10 +173,10 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
         </div>
       )}
 
-      <div className="relative group justify-start items-start flex-shrink-0 xl:w-[120px] xl:h-[120px] lg:w-24 lg:h-24 md:w-20 md:h-20 border overflow-hidden bg-gray-200 rounded-2xl cursor-pointer" onClick={handleProfileClick}>
+      <div className="relative group justify-start items-start flex-shrink-0 xl:w-[120px] xl:h-[120px] lg:w-24 lg:h-24 md:w-20 md:h-20 border overflow-hidden glassy-card rounded-2xl cursor-pointer" onClick={handleProfileClick}>
         <div className="w-full h-full">
           {imageError || !data?.personalInfo?.profile_picture_url ? (
-            <div className="object-cover md:w-full md:h-full w-[100px] h-[100px] md:rounded-md rounded-full flex items-center justify-center bg-gray-300">
+            <div className="object-cover md:w-full md:h-full w-[100px] h-[100px] md:rounded-md rounded-full flex items-center justify-center glassy-card">
               <span className="text-2xl font-bold glassy-text-secondary">
                 <img src='/0684456b-aa2b-4631-86f7-93ceaf33303c.png' alt='dummy logo' />
               </span>
@@ -237,9 +237,9 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
 
         <div className="flex items-center mt-2.5 space-x-3">
           <OpenToWorkSelect options={frameStatusOptions} value={frameStatus} onSelect={handleSelection} />
-          <Button icon={<BiDownload />} variant='outline' size='sm'
-            className="glassy-card border border-[#8C8C8C4F]/30 text-sm text-primary"
-            tooltip={`Create Resume / profile`}
+          <Button icon={<BiDownload />}   size='sm'
+            className="text-sm text-primary"
+            // tooltip={`Create Resume / profile`}
             onClick={() => {
               // handleResumeDownload();
               setOpenResumeSelection(true);

@@ -168,7 +168,7 @@ const UserDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen glassy-card">
       {/* Server-side rendering meta tags (will be replaced by JavaScript) */}
       <noscript>
         <meta
@@ -195,7 +195,7 @@ const UserDetails = () => {
       </noscript>
 
       <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div className="glassy-card rounded-lg shadow overflow-hidden">
+        <div className=" rounded-lg shadow overflow-hidden">
           <div className="h-48 bg-gradient-to-r from-blue-500 to-blue-700"></div>
 
           <div className="px-6 pb-6 relative">
@@ -220,7 +220,7 @@ const UserDetails = () => {
                 <h1 className="text-2xl font-bold glassy-text-primary">
                   {personalInfo?.first_name} {personalInfo?.last_name}
                 </h1>
-                <p className="text-gray-700">{personalInfo?.headline}</p>
+                <p className="glassy-text-primary">{personalInfo?.headline}</p>
                 <p className="glassy-text-secondary text-sm mt-1">
                   {personalInfo?.address?.city?.name}{" "}
                   {personalInfo?.address?.state?.name}{" "}
@@ -258,14 +258,14 @@ const UserDetails = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* About Section */}
             {personalInfo.summary && (
-              <div className="glassy-card rounded-lg shadow p-6">
+              <div className=" rounded-lg shadow p-6">
                 <h2 className="text-xl font-bold glassy-text-primary mb-4">About</h2>
-                <p className="text-gray-700">{personalInfo.summary}</p>
+                <p className="glassy-text-primary">{personalInfo.summary}</p>
               </div>
             )}
 
             {/* Experience Section */}
-            <div className="glassy-card rounded-lg shadow p-6">
+            <div className=" rounded-lg shadow p-6">
               <h2 className="text-xl font-bold glassy-text-primary mb-4">
                 Experience
               </h2>
@@ -273,7 +273,7 @@ const UserDetails = () => {
                 <div key={index} className="mb-6 last:mb-0">
                   <div className="flex">
                     <div className="mr-4 flex-shrink-0">
-                      <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 glassy-card rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6 glassy-text-secondary"
@@ -294,7 +294,7 @@ const UserDetails = () => {
                       <h3 className="font-semibold glassy-text-primary">
                         {exp.profileName}
                       </h3>
-                      <p className="text-gray-700">{exp.companyName}</p>
+                      <p className="glassy-text-primary">{exp.companyName}</p>
                       <p className="glassy-text-secondary text-sm">
                         {formatDate(exp.start_date)} -{" "}
                         {formatDate(exp.end_date)}
@@ -303,7 +303,7 @@ const UserDetails = () => {
                         {exp.industryName}
                       </p>
                       {exp.description && (
-                        <p className="text-gray-700 mt-2">{exp.description}</p>
+                        <p className="glassy-text-primary mt-2">{exp.description}</p>
                       )}
                       {exp.skills_acquired &&
                         exp.skills_acquired.length > 0 && (
@@ -311,7 +311,7 @@ const UserDetails = () => {
                             {exp.skills_acquired.map((skill) => (
                               <span
                                 key={skill._id}
-                                className="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full"
+                                className="glassy-card glassy-text-primary text-xs px-2.5 py-1 rounded-full"
                               >
                                 {skill.name}
                               </span>
@@ -325,7 +325,7 @@ const UserDetails = () => {
             </div>
 
             {/* Education Section */}
-            <div className="glassy-card rounded-lg shadow p-6">
+            <div className=" rounded-lg shadow p-6">
               <h2 className="text-xl font-bold glassy-text-primary mb-4">
                 Education
               </h2>
@@ -333,7 +333,7 @@ const UserDetails = () => {
                 <div key={index} className="mb-6 last:mb-0">
                   <div className="flex">
                     <div className="mr-4 flex-shrink-0">
-                      <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 glassy-card rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6 glassy-text-secondary"
@@ -366,7 +366,7 @@ const UserDetails = () => {
                       <h3 className="font-semibold glassy-text-primary">
                         {edu.institution}
                       </h3>
-                      <p className="text-gray-700">
+                      <p className="glassy-text-primary">
                         {edu.degree} - {edu.field_of_studies}
                       </p>
                       <p className="glassy-text-secondary text-sm">
@@ -374,7 +374,7 @@ const UserDetails = () => {
                         {formatDate(edu.end_date)}
                       </p>
                       {edu.description && (
-                        <p className="text-gray-700 mt-2">{edu.description}</p>
+                        <p className="glassy-text-primary mt-2">{edu.description}</p>
                       )}
                       {edu.skills_acquired &&
                         edu.skills_acquired.length > 0 && (
@@ -382,7 +382,7 @@ const UserDetails = () => {
                             {edu.skills_acquired.map((skill) => (
                               <span
                                 key={skill._id}
-                                className="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full"
+                                className="glassy-card glassy-text-primary text-xs px-2.5 py-1 rounded-full"
                               >
                                 {skill.name}
                               </span>
@@ -396,7 +396,7 @@ const UserDetails = () => {
             </div>
 
             {/* Projects Section */}
-            <div className="glassy-card rounded-lg shadow p-6">
+            <div className=" rounded-lg shadow p-6">
               <h2 className="text-xl font-bold glassy-text-primary mb-4">Projects</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {projects.map((project, index) => (
@@ -427,11 +427,11 @@ const UserDetails = () => {
                         {formatDate(project.start_date)} -{" "}
                         {formatDate(project.end_date)}
                       </p>
-                      <p className="text-gray-700 text-sm mt-2 line-clamp-3">
+                      <p className="glassy-text-primary text-sm mt-2 line-clamp-3">
                         {project.description}
                       </p>
                       {project.company && (
-                        <p className="text-gray-700 text-sm mt-2">
+                        <p className="glassy-text-primary text-sm mt-2">
                           <span className="font-medium">Company:</span>{" "}
                           {project.company}
                         </p>
@@ -464,7 +464,7 @@ const UserDetails = () => {
             </div>
 
             {/* Certifications Section */}
-            <div className="glassy-card rounded-lg shadow p-6">
+            <div className=" rounded-lg shadow p-6">
               <h2 className="text-xl font-bold glassy-text-primary mb-4">
                 {" "}
                 Certifications
@@ -473,7 +473,7 @@ const UserDetails = () => {
                 <div key={index} className="mb-6 last:mb-0">
                   <div className="flex">
                     <div className="mr-4 flex-shrink-0">
-                      <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 glassy-card rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6 glassy-text-secondary"
@@ -494,7 +494,7 @@ const UserDetails = () => {
                       <h3 className="font-semibold glassy-text-primary">
                         {cert.name}
                       </h3>
-                      <p className="text-gray-700">
+                      <p className="glassy-text-primary">
                         {cert.issuing_organization}
                       </p>
                       <p className="glassy-text-secondary text-sm">
@@ -521,7 +521,7 @@ const UserDetails = () => {
                             {cert.skills_acquired.map((skill) => (
                               <span
                                 key={skill._id}
-                                className="bg-gray-100 text-gray-700 text-xs px-2.5 py-1 rounded-full"
+                                className="glassy-card glassy-text-primary text-xs px-2.5 py-1 rounded-full"
                               >
                                 {skill.name}
                               </span>

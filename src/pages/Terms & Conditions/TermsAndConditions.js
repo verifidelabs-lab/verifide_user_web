@@ -138,7 +138,7 @@ const TermsAndConditions = () => {
                 //                         }
                 //                         ${
                 //                           !isActive && !isPast
-                //                             ? "hover:bg-gray-50 hover:text-blue-600"
+                //                             ? "hover:glassy-card hover:text-blue-600"
                 //                             : ""
                 //                         }
                 //                     `}

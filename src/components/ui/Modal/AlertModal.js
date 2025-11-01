@@ -24,13 +24,17 @@ const AlertModal = ({
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 glassy-card bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50 p-4'>
+    <div
+      className={`fixed z-50 bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      style={{ top: '50%', left: '50%' }}
+    >
       <div className='glassy-card p-6 md:p-8 rounded-lg w-full lg:w-[500px] shadow-lg'>
 
 
         <div className='space-y-2 text-center mb-5'>
           <h2 className='md:text-lg text-sm glassy-text-primary font-bold'>{title}</h2>
-          <p className='text-[#212121CC]/80 md:text-sm text-xs'>{description}</p>
+          <p className='glassy-text-secondary md:text-sm text-xs'>{description}</p>
         </div>
 
         {isReason && (

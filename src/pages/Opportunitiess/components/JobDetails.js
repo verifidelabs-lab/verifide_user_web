@@ -13,7 +13,7 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
             setIsViewDetails(false);
             setViewDetails(false);
           }}
-          className="glassy-text-secondary hover:text-gray-700"
+          className="glassy-text-secondary hover:glassy-text-primary"
         >
           ✕
         </button>
@@ -64,7 +64,7 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
           </div>
         </div>
 
-        <div className="bg-blue-50 p-3 rounded-lg">
+        <div className="glassy-card p-3 rounded-lg">
           <p className="text-sm font-medium glassy-text-secondary mb-1">Salary Range</p>
           <p className="font-medium">{data?.salary_range}</p>
         </div>
@@ -86,7 +86,7 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
               {data.required_skills.map((skill) => (
                 <span
                   key={skill._id}
-                  className="px-3 py-1 bg-gray-100 text-xs glassy-text-primary rounded-full"
+                  className="px-3 py-1 glassy-card text-xs glassy-text-primary rounded-full"
                 >
                   {skill.name}
                 </span>

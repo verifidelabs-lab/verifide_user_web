@@ -34,20 +34,20 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const [accessLabel, setAccessLabel] = useState(
     showName === "6" ? "Recruiter" : "STUDENT"
   );
-   const {
-      token,
-      role,
-      activeMode,
-      isAssignedUser,
-      isCompany,
-      isInstitution,
-      isUser,
-      updateToken,
-      updateRole,
-      updateActiveMode,
-      updateIsAssignedUser,
-      clearAll,
-    } = useGlobalKeys();
+  const {
+    token,
+    role,
+    activeMode,
+    isAssignedUser,
+    isCompany,
+    isInstitution,
+    isUser,
+    updateToken,
+    updateRole,
+    updateActiveMode,
+    updateIsAssignedUser,
+    clearAll,
+  } = useGlobalKeys();
   const navigate = useNavigate();
   const { profileImage } = useProfileImage();
   const imageToDisplay =
@@ -79,7 +79,30 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
-
+  const switchAccountFunction2 = async (selectedMode) => {
+    setIsLoading(true);
+    setUserType(selectedMode);
+    try {
+      const res = await dispatch(switchAccount({ accessMode: selectedMode })).unwrap();
+      if (res) {
+        setCookie('VERIFIED_TOKEN', res?.data?.token);
+        setCookie('ACCESS_MODE', res?.data?.user?.accessMode);
+        setAccessLabel(selectedMode === "6" ? "Recruiter" : "User");
+        // Close dropdowns after selection
+        setModeDropdown(false);
+        setIsDropdownOpen(false);
+        // Reload after a short delay to ensure state updates
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      }
+      toast.success(res?.message);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   // const switchAccountFunction = async (prefillEmail) => {
   //   setIsLoading(true);
   //   try {
@@ -249,11 +272,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-2xl text-gray-700 md:hidden focus:outline-none"
+            className="text-2xl glassy-text-primary md:hidden focus:outline-none"
           >
             {isMobileMenuOpen ? <BiX /> : <BiMenu />}
           </button>
-          {location.pathname === "/user/terms-and-conditions" && (
+          {/* {location.pathname === "/user/terms-and-conditions" && (
             <div className="flex items-center gap-3 w-72">
               <img
                 src="/Frame 1000004906.png"
@@ -261,7 +284,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 className="h-8 transition-transform duration-300 hover:scale-105"
               />
             </div>
-          )}
+          )} */}
           <nav className="hidden lg:flex lg:gap-14 md:gap-3 2xl:ps-0 xl:ps-8 md:ps-10 lg:ps-0 flex-1">
             {HeaderJson?.headerItems?.map((item, index) => {
               const isActive = location.pathname === item?.path;
@@ -335,7 +358,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     className="w-8 h-8 rounded-full object-cover"
                   />
                 ) : (
-                  <span className="w-8 h-8 rounded-full border flex justify-center items-center bg-gray-300 text-zinc-600 overflow-hidden">
+                  <span className="w-8 h-8 rounded-full border flex justify-center items-center glassy-card text-zinc-600 overflow-hidden">
                     <img
                       src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
                       alt="dummy logo"
@@ -376,7 +399,20 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Change Password
                   </Link>
-
+                  <button
+                    className={`text-xs px-3 py-1 rounded ${accessLabel === "Recruiter"
+                      ? "bg-blue-600 text-white"
+                      : "glassy-card glassy-text-primary hover:glassy-card"
+                      }`}
+                    onClick={() => {
+                      if (accessLabel !== "User") {
+                        switchAccountFunction2("STUDENT");
+                      }
+                    }}
+                  // disabled={accessLabel === "Recruiter"}
+                  >
+                    Recruiter
+                  </button>
                   {/* Companies Dropdown */}
                   <div className="border-t border-[var(--border-color)]">
                     <button
@@ -410,7 +446,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                   }}
                                 />
                               ) : (
-                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 glassy-text-secondary text-xs font-semibold">
+                                <div className="w-6 h-6 flex items-center justify-center rounded-full glassy-card glassy-text-secondary text-xs font-semibold">
                                   {company.name?.charAt(0)?.toUpperCase() || "C"}
                                 </div>
                               )}
@@ -439,7 +475,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
                   {/* <Link
                     to="/user/create-institute"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm glassy-text-primary hover:glassy-card"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     Create Institution
@@ -488,7 +524,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                 />
                               ) : (
 
-                                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 glassy-text-secondary text-xs font-semibold">
+                                <div className="w-6 h-6 flex items-center justify-center rounded-full glassy-card glassy-text-secondary text-xs font-semibold">
 
                                   {company.name?.charAt(0)?.toUpperCase() ||
                                     "C"}
@@ -504,7 +540,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                           </p>
                         )}
 
-                        {!institutionsList?.data?.list?.length && (
+                        {institutionsList?.data?.list?.length < 5 && (
                           <Link
                             to="/user/create-institute"
                             className="block   py-2 text-sm glassy-text-primary rounded-lg transition-colors"
@@ -547,7 +583,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 to={item?.path}
                 className={`block px-3 py-2 text-base transition duration-200 ${isActive
                   ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                  : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                   }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

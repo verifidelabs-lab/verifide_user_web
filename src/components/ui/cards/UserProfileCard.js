@@ -189,7 +189,7 @@ const UserProfileCard = ({
           <button
             className={`flex-1 py-2 px-4 rounded-lg text-sm glassy-button font-semibold ${
               displayData.isConnected
-                ? "bg-green-500 glassy-text-primary cursor-default"
+                ? "glassy-card glassy-text-primary cursor-default"
                 : "bg-blue-600 glassy-text-primary hover:bg-blue-700"
             }`}
             onClick={() => !displayData.isConnected && handleFollowClick(user)}

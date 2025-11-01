@@ -139,7 +139,7 @@ const OrbitalMenu = () => {
                 animationDelay: '0s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-inner_120s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-inner_120s_linear_infinite]">
                 Full Stack Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -156,7 +156,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-40s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-inner_120s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-inner_120s_linear_infinite]">
                 Backend Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -173,7 +173,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-80s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-inner_120s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-inner_120s_linear_infinite]">
                 Frontend Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -194,7 +194,7 @@ const OrbitalMenu = () => {
                 animationDelay: '0s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-middle_80s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-middle_80s_linear_infinite]">
                 AI Developer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -212,7 +212,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-26.67s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-middle_80s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-middle_80s_linear_infinite]">
                 ML Engineer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -230,7 +230,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-53.33s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-middle_80s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-middle_80s_linear_infinite]">
                 DevOps Engineer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -251,7 +251,7 @@ const OrbitalMenu = () => {
                 animationDelay: '0s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-outer_40s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-outer_40s_linear_infinite]">
                 Data Scientist
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -287,7 +287,7 @@ const OrbitalMenu = () => {
                 animationDelay: '-26.67s'
               }}
             >
-              <div className="text-center text-xs font-medium text-gray-700 animate-[counter-orbit-outer_40s_linear_infinite]">
+              <div className="text-center text-xs font-medium glassy-text-primary animate-[counter-orbit-outer_40s_linear_infinite]">
                 QA Engineer
               </div>
               <div className="absolute w-[160px] left-[calc(50%-80px)] top-[-50px] glassy-card/90 glassy-text-primary rounded-lg text-center text-xs py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
@@ -319,7 +319,7 @@ const OrbitalMenu = () => {
                 </ul>
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="px-6 py-2 mt-6 text-sm glassy-text-primary transition-colors bg-gray-800 rounded-full hover:bg-gray-700"
+                  className="px-6 py-2 mt-6 text-sm glassy-text-primary transition-colors glassy-card rounded-full hover:glassy-card"
                 >
                   Close
                 </button>

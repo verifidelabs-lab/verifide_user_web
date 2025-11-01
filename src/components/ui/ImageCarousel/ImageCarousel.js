@@ -34,7 +34,7 @@ export const ImageCarousel = ({ images = [], currentIndex = 0, onIndexChange = (
   if (images.length === 0 || errorIndices.length === images.length) {
     return (
       <div className="relative">
-        <div className="overflow-hidden bg-gray-100 rounded-lg aspect-video flex items-center justify-center">
+        <div className="overflow-hidden glassy-card rounded-lg aspect-video flex items-center justify-center">
           <img
             src={defaultImage}
             alt="Default content"
@@ -47,7 +47,7 @@ export const ImageCarousel = ({ images = [], currentIndex = 0, onIndexChange = (
 
   return (
     <div className="relative" {...handlers}>
-      <div className="overflow-hidden bg-gray-100 rounded-lg aspect-video">
+      <div className="overflow-hidden glassy-card rounded-lg aspect-video">
         <img
           src={currentImage}
           alt="Post content"
@@ -61,7 +61,7 @@ export const ImageCarousel = ({ images = [], currentIndex = 0, onIndexChange = (
             <button
               key={index}
               onClick={() => onIndexChange(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'bg-blue-500' : 'bg-gray-300'}`}
+              className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'glassy-card0' : 'glassy-card'}`}
             />
           ))}
         </div>
@@ -75,7 +75,7 @@ export const ImageCarousel = ({ images = [], currentIndex = 0, onIndexChange = (
 // export const ImageCarousel = ({ images, currentIndex, onIndexChange }) => {
 //   return (
 //     <div className="relative">
-//       <div className="overflow-hidden bg-gray-100 rounded-lg aspect-video">
+//       <div className="overflow-hidden glassy-card rounded-lg aspect-video">
 //         <img
 //           src={images[currentIndex]}
 //           alt="Post content"
@@ -88,7 +88,7 @@ export const ImageCarousel = ({ images = [], currentIndex = 0, onIndexChange = (
 //             <button
 //               key={index}
 //               onClick={() => onIndexChange(index)}
-//               className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'bg-blue-500' : 'bg-gray-300'}`}
+//               className={`w-2 h-2 rounded-full transition-colors ${index === currentIndex ? 'glassy-card0' : 'glassy-card'}`}
 //             />
 //           ))}
 //         </div>

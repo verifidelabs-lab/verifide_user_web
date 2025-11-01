@@ -393,7 +393,7 @@ const CommentSection = ({ postId, type, size, page, setPosts, showComments, setS
                             />
                             <button
                               disabled={!replyText.trim() || loading}
-                              className="p-2 glassy-text-primary glassy-button rounded-lg hover:bg-blue-50 disabled:opacity-50"
+                              className="p-2 glassy-text-primary glassy-button rounded-lg hover:glassy-card disabled:opacity-50"
                               type="submit"
                             >
                               <FiSend size={18} />

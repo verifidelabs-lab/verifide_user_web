@@ -102,7 +102,7 @@ const EmailVerificationModal = ({
                     <h2 className="text-xl font-semibold glassy-text-primary">Preview the mail</h2>
                     <button
                         onClick={onClose}
-                        className="glassy-text-secondary hover:text-gray-700"
+                        className="glassy-text-secondary hover:glassy-text-primary"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -115,14 +115,14 @@ const EmailVerificationModal = ({
                     <div className="space-y-4">
                     
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
+                            <label className="block text-sm font-medium glassy-text-primary mb-1">From</label>
                             <div className="grid grid-cols-2">
                                 <CustomInput
                                     type="email"
                                     value={fromEmail}
                                     onChange={(e) => setFromEmail(e.target.value)}
                                     disabled={!isCustomFrom}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:glassy-card"
                                     required
                                 />
                                 <label className="ml-2 flex items-center">
@@ -132,12 +132,12 @@ const EmailVerificationModal = ({
                                         onChange={() => setIsCustomFrom(!isCustomFrom)}
                                         className="mr-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                     />
-                                    <span className="text-sm text-gray-700">Custom email</span>
+                                    <span className="text-sm glassy-text-primary">Custom email</span>
                                 </label>
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                            <label className="block text-sm font-medium glassy-text-primary mb-1">Subject</label>
                             <CustomInput
                                 type="text"
                                 value={subject}
@@ -149,7 +149,7 @@ const EmailVerificationModal = ({
 
                         {/* Email Body Editor */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email Body</label>
+                            <label className="block text-sm font-medium glassy-text-primary mb-1">Email Body</label>
                             <ReactQuill
                                 value={letterContent}
                                 onChange={setLetterContent}
@@ -173,7 +173,7 @@ const EmailVerificationModal = ({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                            className="px-4 py-2 text-sm font-medium glassy-text-primary glassy-card hover:glassy-card rounded-md transition-colors"
                         >
                             Cancel
                         </button>

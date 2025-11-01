@@ -125,10 +125,10 @@ const EnhancedFileInput = React.forwardRef(({
         {!value ? (
           <div
             className={`relative border-2 rounded-xl transition-colors
-          ${dragActive ? 'border-blue-400 bg-blue-50/30' :
+          ${dragActive ? 'border-blue-400 glassy-card/30' :
                 error ? 'border-red-500 bg-black/10' :
                   'border-[var(--border-color)] bg-black/5'}
-          ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:bg-blue-50/20'}
+          ${uploading ? 'opacity-50 pointer-events-none' : 'hover:border-blue-400 hover:glassy-card/20'}
         `}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
@@ -183,7 +183,7 @@ const EnhancedFileInput = React.forwardRef(({
               <button
                 type="button"
                 onClick={() => openFile(value)}
-                className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition-colors"
+                className="p-1.5 text-blue-600 hover:text-blue-800 hover:glassy-card rounded transition-colors"
                 title="View file"
               >
                 <BiDownload className="w-4 h-4" />

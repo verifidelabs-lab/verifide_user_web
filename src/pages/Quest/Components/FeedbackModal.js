@@ -283,7 +283,7 @@ const renderFeedbackForm = () => {
     <div className="p-3">
       {/* Remarks Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium glassy-text-primary mb-2">
           Your Remarks *
         </label>
         <input
@@ -297,13 +297,13 @@ const renderFeedbackForm = () => {
 
       {/* Image Upload */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium glassy-text-primary mb-2">
           Upload Images (Max 5)
         </label>
         <div className="flex items-center space-x-3">
           <button
             onClick={triggerFileSelect}
-            className="flex items-center px-4 py-2 bg-blue-100 text-blue-700 border border-blue-300 rounded-lg hover:bg-blue-200 transition"
+            className="flex items-center px-4 py-2 glassy-card text-blue-700 border border-blue-300 rounded-lg hover:bg-blue-200 transition"
           >
             <HiOutlineCloudUpload className="text-lg mr-2" />
             Upload Images
@@ -363,7 +363,7 @@ const renderPreviousFeedback = () => {
         <h3 className="text-lg font-semibold glassy-text-primary">Previous Feedback</h3>
         <button
           onClick={() => setShowPreviousFeedback(false)}
-          className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+          className="glassy-text-secondary hover:glassy-text-primary p-1 rounded-full hover:glassy-card"
         >
           <RxCross2 className="text-xl" />
         </button>
@@ -380,7 +380,7 @@ const renderPreviousFeedback = () => {
               
               <div className="space-y-3">
                 {moduleFeedback.map((feedback, fbIndex) => (
-                  <div key={fbIndex} className="bg-gray-50 p-3 rounded border border-gray-200 relative">
+                  <div key={fbIndex} className="glassy-card p-3 rounded border border-gray-200 relative">
                     <button
                       onClick={() => removeFeedback(feedback._id)}
                       className="absolute top-2 right-2 text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition-colors"
@@ -390,7 +390,7 @@ const renderPreviousFeedback = () => {
                     </button>
                     
                     <div className="flex justify-between items-start mb-2 pr-6">
-                      <span className="text-sm font-medium text-gray-700">Feedback #{fbIndex + 1}</span>
+                      <span className="text-sm font-medium glassy-text-primary">Feedback #{fbIndex + 1}</span>
                       <span className="text-xs glassy-text-secondary">
                         {new Date(feedback.createdAt).toLocaleDateString()}
                       </span>
@@ -451,14 +451,14 @@ const renderPreviousFeedback = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowPreviousFeedback(!showPreviousFeedback)}
-              className="flex items-center text-blue-600 hover:text-blue-800 bg-blue-100 px-3 py-1.5 rounded-lg text-sm font-medium"
+              className="flex items-center text-blue-600 hover:text-blue-800 glassy-card px-3 py-1.5 rounded-lg text-sm font-medium"
             >
               <BiHistory className="mr-1" />
               {showPreviousFeedback ? 'Hide' : 'Show'} Previous Feedback
             </button>
             <button
               onClick={onClose}
-              className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors"
+              className="glassy-text-secondary hover:glassy-text-primary p-1 rounded-full hover:glassy-card transition-colors"
             >
               <RxCross2 className="text-2xl" />
             </button>
@@ -466,8 +466,8 @@ const renderPreviousFeedback = () => {
         </div>
 
         <div className="flex flex-1 overflow-hidden">
-           <div className="w-64 border-r border-gray-200 bg-gray-50 p-4 overflow-y-auto">
-            <h3 className="font-medium text-gray-700 mb-3 px-2">Feedback Modules</h3>
+           <div className="w-64 border-r border-gray-200 glassy-card p-4 overflow-y-auto">
+            <h3 className="font-medium glassy-text-primary mb-3 px-2">Feedback Modules</h3>
             <div className="space-y-2">
               {feedbackModules.map((module, index) => {
                 const isActive = index === activeModuleIndex;
@@ -481,8 +481,8 @@ const renderPreviousFeedback = () => {
                     }}
                     className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
                       isActive
-                        ? 'bg-blue-100 border-2 border-blue-300 text-blue-800 shadow-sm'
-                        : 'glassy-card border border-gray-200 hover:bg-gray-50'
+                        ? 'glassy-card border-2 border-blue-300 text-blue-800 shadow-sm'
+                        : 'glassy-card border border-gray-200 hover:glassy-card'
                     }`}
                   >
                     <div className="font-medium text-sm">{module.title}</div>
@@ -510,7 +510,7 @@ const renderPreviousFeedback = () => {
                     {activeModuleIndex > 0 && (
                       <button title="Previous Module"
                         onClick={() => setActiveModuleIndex(prev => prev - 1)}
-                        className="flex items-center text-blue-600 hover:text-blue-800 font-medium py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 transition-colors"
+                        className="flex items-center text-blue-600 hover:text-blue-800 font-medium py-2 px-4 glassy-card rounded hover:bg-blue-200 transition-colors"
                       >
                         <FaChevronLeft className="mr-1" />Prev
                       </button>
@@ -518,7 +518,7 @@ const renderPreviousFeedback = () => {
                     {activeModuleIndex < feedbackModules.length - 1 && (
                       <button title="Next Module"
                         onClick={() => setActiveModuleIndex(prev => prev + 1)}
-                        className="flex items-center text-blue-600 hover:text-blue-800 font-medium py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 transition-colors"
+                        className="flex items-center text-blue-600 hover:text-blue-800 font-medium py-2 px-4 glassy-card rounded hover:bg-blue-200 transition-colors"
                       >
                       Next <FaChevronRight className="ml-1" />
                       </button>
@@ -532,7 +532,7 @@ const renderPreviousFeedback = () => {
                 <div className="flex justify-between mt-6">
                   <button
                     onClick={onClose}
-                    className="glassy-text-secondary hover:glassy-text-primary font-medium py-2.5 px-6 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                    className="glassy-text-secondary hover:glassy-text-primary font-medium py-2.5 px-6 rounded-lg border border-gray-300 hover:glassy-card transition-colors"
                   >
                     Cancel
                   </button>
@@ -542,7 +542,7 @@ const renderPreviousFeedback = () => {
                       <button
                         onClick={handleSaveAndNext}
                         disabled={loading}
-                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 glassy-text-primary font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
+                        className="bg-blue-600 hover:bg-blue-700 disabled:glassy-card glassy-text-primary font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
                       >
                         {loading ? (
                           <>
@@ -559,7 +559,7 @@ const renderPreviousFeedback = () => {
                       <button
                         onClick={handleSubmitAll}
                         disabled={loading}
-                        className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 glassy-text-primary font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
+                        className="bg-green-600 hover:bg-green-700 disabled:glassy-card glassy-text-primary font-medium py-2.5 px-8 rounded-lg flex items-center transition-colors shadow-md hover:shadow-lg"
                       >
                         {loading ? (
                           <>

@@ -15,7 +15,7 @@ const MediaPreview = ({ url, type, onRemove }) => {
           />
           <button
             onClick={onRemove}
-            className="absolute -top-2 -right-2 glassy-card rounded-full p-1 shadow-md hover:bg-gray-100"
+            className="absolute -top-2 -right-2 glassy-card rounded-full p-1 shadow-md hover:glassy-card"
           >
             <FiX className="w-4 h-4 glassy-text-secondary" />
           </button>
@@ -28,18 +28,18 @@ const MediaPreview = ({ url, type, onRemove }) => {
           </video>
           <button
             onClick={onRemove}
-            className="absolute -top-2 -right-2 glassy-card rounded-full p-1 shadow-md hover:bg-gray-100"
+            className="absolute -top-2 -right-2 glassy-card rounded-full p-1 shadow-md hover:glassy-card"
           >
             <FiX className="w-4 h-4 glassy-text-secondary" />
           </button>
         </div>
       )}
       {type === 'pdf' && (
-        <div className="flex items-center justify-between bg-gray-100 p-2 rounded-lg">
-          <span className="text-sm text-gray-700 truncate">{url}</span>
+        <div className="flex items-center justify-between glassy-card p-2 rounded-lg">
+          <span className="text-sm glassy-text-primary truncate">{url}</span>
           <button
             onClick={onRemove}
-            className="ml-2 glassy-text-secondary hover:text-gray-700"
+            className="ml-2 glassy-text-secondary hover:glassy-text-primary"
           >
             <FiX className="w-4 h-4" />
           </button>

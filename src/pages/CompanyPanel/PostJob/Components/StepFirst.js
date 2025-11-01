@@ -95,9 +95,12 @@ const StepFirst = ({
               name="industry_id"
               placeholder="Select Industry"
               options={allIndustry}
-              selectedOption={getSelectedOption(
-                allIndustry,
-                formData?.industry_id
+              // selectedOption={getSelectedOption(
+              //   allIndustry,
+              //   formData?.industry_id
+              // )}
+              selectedOption={allIndustry.find(
+                (opt) => opt.value === formData.industry_id
               )}
               onChange={(selected) =>
                 handleSelectChange("industry_id", selected)
@@ -207,18 +210,18 @@ const StepFirst = ({
           {!(
             formData.job_type === "internship" || formData.pay_type === "unpaid"
           ) && (
-            <CustomInput
-              label="Salary Range"
-              placeholder="e.g. ₹30,000 - ₹50,000"
-              value={formData.salary_range}
-              onChange={(e) =>
-                handleInputChange("salary_range", e.target.value)
-              }
-              required
-              error={errors?.salary_range}
-              className="h-10 w-full"
-            />
-          )}
+              <CustomInput
+                label="Salary Range"
+                placeholder="e.g. ₹30,000 - ₹50,000"
+                value={formData.salary_range}
+                onChange={(e) =>
+                  handleInputChange("salary_range", e.target.value)
+                }
+                required
+                error={errors?.salary_range}
+                className="h-10 w-full"
+              />
+            )}
 
           <CustomDateInput
             label="Job Start Date"

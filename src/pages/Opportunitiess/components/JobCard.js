@@ -109,7 +109,7 @@ const JobCard = ({
                       {job?.user_id?.headline}
                     </p>
                     {job?.createdAt && (
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs glassy-text-secondary">
                         {moment(job.createdAt).format("DD-MM-YYYY")}
                       </p>
                     )}
@@ -131,7 +131,7 @@ const JobCard = ({
             </div>
 
             {job?.total_applicants ? (
-              <p className="px-3 py-1 text-xs font-medium rounded-full bg-green-50 text-green-700 border border-green-600">
+              <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
                 {job?.total_applicants || "0"} Applied
               </p>
             ) : null}
@@ -142,7 +142,7 @@ const JobCard = ({
               </div>
             )}
             {job?.status === "selected_in_interview" && (
-              <div className="px-3 py-1 text-xs font-medium rounded-full bg-green-50 text-green-700 border border-green-600">
+              <div className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
                 Selected
               </div>
             )}
@@ -154,14 +154,14 @@ const JobCard = ({
                 <strong>Job Title:</strong> {job?.job_details?.job_title}
               </p>
             ) : (
-              <div className="flex flex-wrap gap-2 text-xs text-gray-700">
-                <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
+              <div className="flex flex-wrap gap-2 text-xs glassy-text-primary">
+                <span className="px-3 py-1 glassy-card rounded-full capitalize">
                   {job?.job_location}
                 </span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
+                <span className="px-3 py-1 glassy-card rounded-full capitalize">
                   ✓ {job?.job_type}
                 </span>
-                <span className="px-3 py-1 bg-gray-100 rounded-full capitalize">
+                <span className="px-3 py-1 glassy-card rounded-full capitalize">
                   {job?.salary_range}{" "}
                   {job?.pay_type === "unpaid"
                     ? "unpaid"
@@ -174,9 +174,9 @@ const JobCard = ({
             {/* <div
               className={`flex flex-col gap-1 text-sm p-3 rounded-md ${
                 job?.createdAt
-                  ? "bg-green-50 border border-green-200" // Apply green if createdAt is present
+                  ? "glassy-card border border-green-200" // Apply green if createdAt is present
                   : dateInRange
-                  ? "bg-green-50 border border-green-200" // Apply green if date is in range
+                  ? "glassy-card border border-green-200" // Apply green if date is in range
                   : "bg-red-50 border border-red-200" // Apply red if not in range
               }`}
             >
@@ -237,9 +237,9 @@ const JobCard = ({
                 job?.status === "rejected"
                   ? "bg-red-50 border border-red-200"
                   : job?.createdAt
-                  ? "bg-green-50 border border-green-200"
+                  ? "glassy-card border border-green-200"
                   : dateInRange
-                  ? "bg-green-50 border border-green-200"
+                  ? "glassy-card border border-green-200"
                   : "bg-red-50 border border-red-200"
               }`}
             >
@@ -326,7 +326,7 @@ const JobCard = ({
             {/* <div className="mb-4">
               {job?.job_description || job?.user_id?.summary ? (
                 <div
-                  className={`relative bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-700 leading-relaxed ${
+                  className={`relative glassy-card border border-gray-200 rounded-lg p-3 text-sm glassy-text-primary leading-relaxed ${
                     showAllSkills
                       ? "max-h-64 overflow-y-auto"
                       : "max-h-32 overflow-hidden"
@@ -358,7 +358,7 @@ const JobCard = ({
                   )}
                 </div>
               ) : (
-                <p className="text-gray-500 text-sm">
+                <p className="glassy-text-primary text-sm">
                   No description or summary provided.
                 </p>
               )}
@@ -366,7 +366,7 @@ const JobCard = ({
             <div className="mb-4">
               {job?.job_description || job?.user_id?.summary ? (
                 <div
-                  className={`relative bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm text-gray-700 leading-relaxed`}
+                  className={`relative glassy-card border border-gray-200 rounded-lg p-3 text-sm glassy-text-primary leading-relaxed`}
                 >
                   <span className="whitespace-pre-line">
                     {showAllSkills
@@ -394,7 +394,7 @@ const JobCard = ({
                   )}
                 </div>
               ) : (
-                <p className="text-gray-500 text-sm">
+                <p className="glassy-text-primary text-sm">
                   No description or summary provided.
                 </p>
               )}
@@ -408,7 +408,7 @@ const JobCard = ({
             )}
             {job?.user_id?.topSkills?.length > 0 && (
               <div className="flex flex-col gap-1 mt-2">
-                <div className="flex items-center gap-2 text-xs text-gray-700">
+                <div className="flex items-center gap-2 text-xs glassy-text-primary">
                   <span className="font-medium">Top Skills:</span>
                   <div className="flex flex-wrap gap-2">
                     {(showAllSkills
@@ -419,7 +419,7 @@ const JobCard = ({
                       .map((skill) => (
                         <span
                           key={skill._id}
-                          className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full capitalize"
+                          className="px-3 py-1 glassy-card text-blue-700 rounded-full capitalize"
                         >
                           {skill.name}
                         </span>
@@ -429,7 +429,7 @@ const JobCard = ({
                       <button
                         onClick={() => setShowAllSkills(!showAllSkills)}
                         className="bg-[#FAFAFA] px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
-             hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 
+             hover:glassy-card transition-colors duration-200 focus:outline-none focus:ring-2 
              focus:ring-[#6390F1] focus:ring-opacity-50"
                       >
                         +{remainingCount}
@@ -504,7 +504,7 @@ const JobCard = ({
                   Comment
                 </Button>
                 <span
-                  className="bg-blue-300 text-blue-700 hover:bg-blue-500 hover:glassy-text-primary cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
+                  className="bg-blue-300 text-blue-700 hover:glassy-card0 hover:glassy-text-primary cursor-pointer flex justify-center items-center rounded-full w-10 h-10"
                   onClick={() => handleMessage(job)}
                 >
                   <MdMessage />
@@ -529,7 +529,7 @@ const JobCard = ({
                   Edit
                 </Button>
                 <Button
-                  variant="zinc"
+                  variant="primary"
                   onClick={() => onAction("view_details", job)}
                   size="sm"
                   className="min-w-20 h-8"
@@ -538,7 +538,7 @@ const JobCard = ({
                 </Button>
                 {/* {activeTab === "open" && (
                   <span
-                    className="hover:bg-gray-300 text-whitecursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
+                    className="hover:glassy-card text-whitecursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
                     onClick={() => handleCloseJob(job)}
                   >
                     <BsThreeDotsVertical />
@@ -547,7 +547,7 @@ const JobCard = ({
                 {activeTab === "open" && (
                   <div className="relative">
                     <span
-                      className="hover:bg-gray-300 text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
+                      className="hover:glassy-card text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
                       onClick={() =>
                         setShowOptionsDropdown(!showOptionsDropdown)
                       }
@@ -558,7 +558,7 @@ const JobCard = ({
                     {showOptionsDropdown && (
                       <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                         <button
-                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 text-sm"
+                          className="w-full text-left px-4 py-2 hover:glassy-card flex items-center gap-2 text-sm"
                           onClick={() => {
                             handleCloseJob(job);
                             setShowOptionsDropdown(false);
@@ -567,7 +567,7 @@ const JobCard = ({
                           <MdClose className="w-4 h-4" /> Close Job
                         </button>
                         <button
-                          className="w-full text-left px-4 py-2 hover:bg-gray-100 flex items-center gap-2 text-sm"
+                          className="w-full text-left px-4 py-2 hover:glassy-card flex items-center gap-2 text-sm"
                           onClick={() => {
                             handleCopyLink(job);
                             setShowOptionsDropdown(false);

@@ -335,7 +335,7 @@ const CourseCategory = () => {
               variant="secondary"
               onClick={handleCloseModal}
               disabled={isSubmitting}
-              className="flex-1 py-3 transition-all duration-200 hover:bg-gray-100"
+              className="flex-1 py-3 transition-all duration-200 hover:glassy-card"
             >
               Cancel
             </Button>
@@ -408,25 +408,25 @@ const CourseCategory = () => {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Category Name
                 </label>
                 <p className="glassy-text-primary">{viewData.name || 'N/A'}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Status
                 </label>
                 <p className="glassy-text-primary">{viewData.isDisable ? 'Disabled' : 'Enabled'}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Created At
                 </label>
                 <p className="glassy-text-primary">{formatDate(viewData.createdAt)}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Last Updated
                 </label>
                 <p className="glassy-text-primary">{formatDate(viewData.updatedAt)}</p>
@@ -434,7 +434,7 @@ const CourseCategory = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium glassy-text-primary mb-1">
                 Description
               </label>
               <p className="glassy-text-primary whitespace-pre-line">{viewData.description || 'N/A'}</p>

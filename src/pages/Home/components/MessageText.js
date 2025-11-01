@@ -59,7 +59,7 @@ const MessageText = ({ msg }) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg"
+        className="block p-4 glassy-card hover:glassy-card rounded-lg"
       >
         <div className="flex items-center gap-3">
           <img

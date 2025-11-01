@@ -176,7 +176,7 @@ const Users = () => {
               <button
                 type="button"
                 onClick={() => setKeyWord("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 glassy-button hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 glassy-button hover:glassy-text-secondary"
               >
                 <IoClose size={18} />
               </button>
@@ -197,7 +197,7 @@ const Users = () => {
         ${
           activeTab === tab.key
             ? " glassy-text-primary shadow-md"
-            : "glassy-text-secondary  hover:text-gray-800"
+            : "glassy-text-secondary  hover:glassy-text-primary"
         }`}
             >
               <span>{tab.label}</span>

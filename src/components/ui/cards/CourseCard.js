@@ -23,7 +23,7 @@ const CourseCard = ({
                     {tags.map((tag, index) => (
                         <span
                             key={index}
-                            className="glassy-card/80 text-xs px-1.5 py-0.5 rounded font-medium text-gray-700"
+                            className="glassy-card/80 text-xs px-1.5 py-0.5 rounded font-medium glassy-text-primary"
                         >
                             {tag}
                         </span>

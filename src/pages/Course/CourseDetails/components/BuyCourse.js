@@ -105,7 +105,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             <h2 className="text-xl font-bold">Buy Course</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-gray-400 hover:glassy-text-secondary bg-gray-200 rounded-full cursor-pointer p-1"
+              className="glassy-text-secondary hover:glassy-text-secondary glassy-card rounded-full cursor-pointer p-1"
             >
               <RxCross2 className="w-6 h-6" />
             </button>
@@ -134,9 +134,9 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                   Certified Life Coach Training (Beginner to Advanced)
                 </h3>
                 <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Communication</span>
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Negotiation</span>
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">10+</span>
+                  <span className="glassy-card glassy-text-primary px-2 py-1 rounded text-xs">Communication</span>
+                  <span className="glassy-card glassy-text-primary px-2 py-1 rounded text-xs">Negotiation</span>
+                  <span className="glassy-card glassy-text-primary px-2 py-1 rounded text-xs">10+</span>
                 </div>
                 <div className="text-blue-600  text-lg font-semibold border border-blue-500 p-2 rounded-md w-28 flex items-center justify-center">₹1149.00</div>
               </div>
@@ -175,7 +175,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={(e) => handleRemoveCard(card.id, e)}
-                          className="text-gray-400 hover:text-red-500"
+                          className="glassy-text-secondary hover:text-red-500"
                         >
                           <BiTrash className="w-4 h-4" />
                         </button>
@@ -230,7 +230,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={(e) => handleRemoveUpi(option.id, e)}
-                          className="text-gray-400 hover:text-red-500"
+                          className="glassy-text-secondary hover:text-red-500"
                         >
                           <BiTrash className="w-4 h-4" />
                         </button>
@@ -260,7 +260,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             {/* More Payment Options */}
             <div>
               <div className="font-medium mb-3">More Payment Options</div>
-              <button className="flex items-center justify-between w-full p-3 border rounded-lg hover:bg-gray-50">
+              <button className="flex items-center justify-between w-full p-3 border rounded-lg hover:glassy-card">
                 <div className="flex items-center gap-3">
                   <img src='/Img/bank.png' alt='Net Banking' className="w-6 h-6" />
                   <span className="text-sm font-medium">Net Banking</span>
@@ -287,7 +287,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
           </div>
 
           {/* Footer */}
-          <div className="p-6 border-t bg-gray-50">
+          <div className="p-6 border-t glassy-card">
             <div className="flex justify-between items-center mb-4">
               <div>
                 <div className="font-bold text-lg">₹1149.00</div>
@@ -316,7 +316,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             </div>
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
+                <label className="block text-sm font-medium glassy-text-primary mb-1">Cardholder Name</label>
                 <input
                   type="text"
                   value={newCard.name}
@@ -326,7 +326,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                <label className="block text-sm font-medium glassy-text-primary mb-1">Card Number</label>
                 <input
                   type="text"
                   value={newCard.number}
@@ -337,7 +337,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                  <label className="block text-sm font-medium glassy-text-primary mb-1">Expiry Date</label>
                   <input
                     type="text"
                     value={newCard.expiry}
@@ -347,7 +347,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                  <label className="block text-sm font-medium glassy-text-primary mb-1">CVV</label>
                   <input
                     type="text"
                     value={newCard.cvv}
@@ -361,7 +361,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             <div className="p-4 border-t flex justify-end gap-3">
               <button
                 onClick={() => setShowAddCardModal(false)}
-                className="px-4 py-2 border rounded hover:bg-gray-50"
+                className="px-4 py-2 border rounded hover:glassy-card"
               >
                 Cancel
               </button>
@@ -389,7 +389,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             </div>
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">UPI App Name</label>
+                <label className="block text-sm font-medium glassy-text-primary mb-1">UPI App Name</label>
                 <input
                   type="text"
                   value={newUpi.name}
@@ -399,7 +399,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">UPI ID</label>
+                <label className="block text-sm font-medium glassy-text-primary mb-1">UPI ID</label>
                 <input
                   type="text"
                   value={newUpi.upiId}
@@ -412,7 +412,7 @@ const BuyCoursePopup = ({ isOpen, setIsOpen }) => {
             <div className="p-4 border-t flex justify-end gap-3">
               <button
                 onClick={() => setShowAddUpiModal(false)}
-                className="px-4 py-2 border rounded hover:bg-gray-50"
+                className="px-4 py-2 border rounded hover:glassy-card"
               >
                 Cancel
               </button>

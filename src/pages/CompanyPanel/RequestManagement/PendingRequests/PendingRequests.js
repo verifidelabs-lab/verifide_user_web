@@ -26,15 +26,15 @@ const StatusBadge = ({ status }) => {
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case 'approved':
-        return 'bg-green-100 text-green-800 border border-[#089D291A]/10';
+        return 'glassy-card text-green-800 border border-[#089D291A]/10';
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800 border border-[#FFECB0]';
+        return 'bglassy-card text-yellow-800 border border-[#FFECB0]';
       case 'rejected':
-        return 'bg-red-100 text-red-800 border border-[#FFEBEB]';
+        return 'glassy-cardtext-red-800 border border-[#FFEBEB]';
       case 'assigned':
-        return 'bg-[#CFF4FC] text-blue-800 border border-[#BBF3FF]';
+        return 'glassy-card text-blue-800 border border-[#BBF3FF]';
       default:
-        return 'bg-gray-100 glassy-text-primary';
+        return 'glassy-card glassy-text-primary';
     }
   };
 
@@ -255,9 +255,9 @@ const PendingRequests = () => {
     };
 
     return (
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6 glassy-card">
         <div className="space-y-6">
-          <div className="bg-black p-6 rounded-lg shadow-lg max-w-xl mx-auto">
+          <div className=" p-6 rounded-lg shadow-lg max-w-xl mx-auto">
             <div className="flex flex-col items-center">
               <img
                 src={user?.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
@@ -273,7 +273,7 @@ const PendingRequests = () => {
               </h3>
             </div>
 
-            <div className="mt-6 space-y-3 text-gray-700 text-sm">
+            <div className="mt-6 space-y-3 glassy-text-primary text-sm">
               {user?.email && <p><span className="font-semibold">Email:</span> {user.email}</p>}
               {user?.phone_number && <p><span className="font-semibold">Phone:</span> {user.phone_number}</p>}
               {selectedRequest?.verification_category && <p><span className="font-semibold">Verification Category:</span> {selectedRequest.verification_category}</p>}
@@ -305,13 +305,13 @@ const PendingRequests = () => {
               </div>
             )}
           </div>
-          <div className="bg-black p-6 rounded-lg shadow-lg">
+          <div className=" p-6 rounded-lg shadow-lg">
             {model && (
               <h3 className="font-semibold text-xl glassy-text-primary capitalize">
                 {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
               </h3>
             )}
-            <div className="space-y-4 mt-4 text-sm text-gray-700">
+            <div className="space-y-4 mt-4 text-sm glassy-text-primary">
               {model === "UserAdditionalCertifications" && (
                 <>
                   {doc?.name && <p><span className="font-semibold">Document Name:</span> {doc.name}</p>}
@@ -367,7 +367,7 @@ const PendingRequests = () => {
           </div>
         </div>
         <div className="space-y-6">
-          <div className="bg-black p-6 rounded-lg shadow-lg">
+          <div className=" p-6 rounded-lg shadow-lg">
             <h3 className="font-semibold text-xl glassy-text-primary">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
             {selectedRequest.attach_file && selectedRequest.attach_file.length >= 0 ? (
               <div className="space-y-4 mt-4">
@@ -404,18 +404,18 @@ const PendingRequests = () => {
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <h3 className="font-semibold text-lg">User Information</h3>
+          <h3 className="font-semibold text-lg glassy-text-primary">User Information</h3>
           <div className="space-y-2">
-            <p><span className="font-semibold">Name:</span> {selectedRequest.user_id.first_name} {selectedRequest.user_id.last_name}</p>
-            <p><span className="font-semibold">Email:</span> {selectedRequest.user_id.email}</p>
+            <p className='glassy-text-primary'><span className="font-semibold">Name:</span> {selectedRequest.user_id.first_name} {selectedRequest.user_id.last_name}</p>
+            <p className='glassy-text-primary'><span className="font-semibold">Email:</span> {selectedRequest.user_id.email}</p>
           </div>
         </div>
 
         <div className="space-y-4">
-          <h3 className="font-semibold text-lg">Document Information</h3>
+          <h3 className="font-semibold text-lg glassy-text-primary">Document Information</h3>
           <div className="space-y-2">
-            <p><span className="font-semibold">Type:</span> {selectedRequest.document_model}</p>
-            <p><span className="font-semibold">Current Status:</span> <StatusBadge status={selectedRequest.status} /></p>
+            <p className='glassy-text-primary'><span className="font-semibold glassy-text-primary">Type:</span> {selectedRequest.document_model}</p>
+            <p className='glassy-text-primary'><span className="font-semibold glassy-text-primary">Current Status:</span> <StatusBadge status={selectedRequest.status} /></p>
           </div>
         </div>
       </div>
@@ -454,7 +454,7 @@ const PendingRequests = () => {
           variant="secondary"
           onClick={() => setModalOpen(false)}
           disabled={isSubmitting}
-          className="flex-1 py-3 transition-all duration-200 hover:bg-gray-100"
+          className="flex-1 py-3 transition-all duration-200 hover:glassy-card"
         >
           Cancel
         </Button>
@@ -542,7 +542,7 @@ const PendingRequests = () => {
         {cardRows.map((card) => (
           <div
             key={card.id}
-            className="rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
+            className="rounded-2xl p-5 shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200 glassy-card"
           >
             <div className="flex items-start justify-between">
               {/* Left: Avatar or Icon */}
@@ -555,7 +555,7 @@ const PendingRequests = () => {
                       className="w-12 h-12 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gray-100">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center">
                       <span className="glassy-text-secondary font-semibold text-lg">
                         {card.name.charAt(0)}
                       </span>

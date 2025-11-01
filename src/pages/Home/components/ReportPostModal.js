@@ -23,14 +23,14 @@ export default function ReportPostModal({
   const [customReason, setCustomReason] = useState('');
 
   const reasons = [
-    { id: REPORT_REASONS_ENUM.MISGUIDE, label: 'Misguide', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.NUDITY, label: 'Nudity', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.SCAM, label: 'Scam', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.ILLEGAL, label: 'Illegal', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.SUICIDE_OR_SELF_INJURY, label: 'Suicide or self-injury', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.VIOLENCE, label: 'Violence', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.HATE_SPEECH, label: 'Hate speech', color: 'bg-gray-200 glassy-text-primary' },
-    { id: REPORT_REASONS_ENUM.SOMETHING_ELSE, label: 'Something else', color: 'bg-gray-200 glassy-text-primary' }
+    { id: REPORT_REASONS_ENUM.MISGUIDE, label: 'Misguide', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.NUDITY, label: 'Nudity', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.SCAM, label: 'Scam', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.ILLEGAL, label: 'Illegal', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.SUICIDE_OR_SELF_INJURY, label: 'Suicide or self-injury', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.VIOLENCE, label: 'Violence', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.HATE_SPEECH, label: 'Hate speech', color: 'glassy-card glassy-text-primary' },
+    { id: REPORT_REASONS_ENUM.SOMETHING_ELSE, label: 'Something else', color: 'glassy-card glassy-text-primary' }
   ];
 
   const handleReasonClick = (reasonId) => {
@@ -69,13 +69,13 @@ export default function ReportPostModal({
         <div className="glassy-card rounded-xl max-w-xl w-full p-8 relative">
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 text-gray-400 hover:glassy-text-secondary transition-colors"
+            className="absolute top-4 right-4 glassy-text-secondary hover:glassy-text-secondary transition-colors"
           >
             <RxCross2 size={24} />
           </button>
 
           <div className="text-center">
-            <div className="mx-auto w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+            <div className="mx-auto w-20 h-20 glassy-card rounded-full flex items-center justify-center mb-6">
               <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
                 <RiVerifiedBadgeLine className=" text-blue-600" size={24} />
               </div>
@@ -99,7 +99,7 @@ export default function ReportPostModal({
       <div className="glassy-card rounded-xl max-w-2xl w-full p-6 relative">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-400 hover:glassy-text-secondary transition-colors"
+          className="absolute top-4 right-4 glassy-text-secondary hover:glassy-text-secondary transition-colors"
         >
           <RxCross2 size={24} />
         </button>
@@ -139,7 +139,7 @@ export default function ReportPostModal({
         <div className="flex gap-3 justify-end">
           <button
             onClick={handleCancel}
-            className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+            className="flex-1 px-6 py-3 glassy-card glassy-text-primary rounded-lg font-medium hover:glassy-card transition-colors"
           >
             Cancel
           </button>
@@ -147,7 +147,7 @@ export default function ReportPostModal({
             onClick={handleSubmit}
             disabled={!selectedReason || (selectedReason === REPORT_REASONS_ENUM.SOMETHING_ELSE && !customReason)}
             className={`flex-1 px-6 py-3 rounded-lg font-medium transition-colors ${!selectedReason || (selectedReason === REPORT_REASONS_ENUM.SOMETHING_ELSE && !customReason)
-              ? 'bg-gray-300 glassy-text-secondary cursor-not-allowed'
+              ? 'glassy-card glassy-text-secondary cursor-not-allowed'
               : 'bg-blue-600 glassy-text-primary hover:bg-blue-700'
               }`}
           >

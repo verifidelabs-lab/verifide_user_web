@@ -177,7 +177,7 @@ const CommonSection = ({
                             }`}
                         >
                           <span
-                            className={`relative rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300 ${isDeleting ? 'bg-blue-100' : 'bg-[var(--bg-button)] hover:bg-[var(--bg-button-hover)]'
+                            className={`relative rounded-full w-10 h-10 flex justify-center items-center transition-colors duration-300 ${isDeleting ? 'glassy-card' : 'bg-[var(--bg-button)] hover:bg-[var(--bg-button-hover)]'
                               }`}
                           >
                             <FaRegEdit className="hover:scale-110 transition-transform duration-300" />

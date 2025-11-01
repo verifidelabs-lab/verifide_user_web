@@ -238,7 +238,7 @@ export default CustomInput;
 //     const labelClasses = classNames(
 //         {
 //             'text-[#282828] font-medium text-base leading-5 align-middle mb-2': !isCheckboxOrRadio,
-//             'ml-2 text-sm text-gray-700': isCheckboxOrRadio,
+//             'ml-2 text-sm glassy-text-primary': isCheckboxOrRadio,
 //         },
 //         labelClass
 //     );

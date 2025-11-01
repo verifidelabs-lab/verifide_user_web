@@ -33,11 +33,11 @@ const METRIC_ICONS = {
   },
   profit: {
     icon: <FaDollarSign className="text-[#2BB2FE] text-md w-6 h-6" />,
-    bg: 'bg-blue-100'
+    bg: 'glassy-card'
   },
   default: {
     icon: <FaChartLine className="glassy-text-secondary w-6 h-6" />,
-    bg: 'bg-gray-100'
+    bg: 'glassy-card'
   }
 };
 
@@ -135,7 +135,7 @@ const RevenueDashboard = ({
             return (
               <div
                 key={`metric-${index}`}
-                className={`flex justify-start items-start flex-wrap gap-4 rounded-lg ${onMetricClick ? 'cursor-pointer hover:bg-gray-50 mr-6' : ''
+                className={`flex justify-start items-start flex-wrap gap-4 rounded-lg ${onMetricClick ? 'cursor-pointer hover:glassy-card mr-6' : ''
                   }`}
                 onClick={() => onMetricClick && onMetricClick(metric)}
               >

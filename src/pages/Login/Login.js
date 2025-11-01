@@ -302,11 +302,11 @@ const Login = () => {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className=" ">
       <div className="grid grid-cols-1 md:grid-cols-2">
         <div
-          className="gradient-background h-screen md:block hidden"
-          data-aos="fade-right"
+          className="p-5 h-screen md:block hidden"
+          // data-aos="fade-right"
           data-aos-duration="1000"
           data-aos-easing="ease-out-quart"
         >
@@ -332,11 +332,11 @@ const Login = () => {
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
-                  <h1 className="lg:text-4xl md:text-2xl text-xl font-semibold text-center pt-5 pb-2 instrument-sans">
+                  <h1 className="lg:text-4xl md:text-2xl text-xl font-semibold text-center pt-5 pb-2 instrument-sans glassy-text-primary">
                     Head Start Your CAREER
                   </h1>
 
-                  <p className="text-[#646464] text-base text-center pb-10 font-normal transition-colors duration-300 hover:text-[#444]">
+                  <p className="glassy-text-primary text-base text-center pb-10 font-normal transition-colors duration-300 hover:text-[#444]">
                     Login with open account
                   </p>
 
@@ -365,7 +365,7 @@ const Login = () => {
 
                   <div className="flex items-center w-full my-8">
                     <div className="flex-1 h-px bg-gradient-to-r from-[#64646433] via-[#646464] to-[#64646433]"></div>
-                    <span className="mx-2 text-[#646464] text-base font-medium transition-colors duration-300 hover:text-[#444]">
+                    <span className="mx-2 glassy-text-primary text-base font-medium transition-colors duration-300 hover:text-[#444]">
                       Or
                     </span>
                     <div className="flex-1 h-px bg-gradient-to-r from-[#64646433] via-[#646464] to-[#64646433]"></div>
@@ -384,7 +384,7 @@ const Login = () => {
                       ⚠️
                     </span>
                     {/* The message from the Google login object */}
-                    <p className="text-base text-gray-700 font-medium">
+                    <p className="text-base glassy-text-primary font-medium">
                       {googleLoginObject.message}
                     </p>
                   </div>
@@ -461,7 +461,7 @@ const Login = () => {
                 </div>
 
                 <div className="text-center">
-                  <span className="text-[#646464] text-base font-normal">
+                  <span className="glassy-text-primary text-base font-normal">
                     Don't have an account?
                   </span>{" "}
                   <span className="glassy-text-primary text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">
@@ -507,7 +507,7 @@ const Login = () => {
                     Head Start Your CAREER
                   </h1>
 
-                  <p className="text-[#646464] text-sm text-center pb-10 font-normal transition-colors duration-300 hover:text-[#444] flex items-center justify-center max-w-md">
+                  <p className="glassy-text-primary text-sm text-center pb-10 font-normal transition-colors duration-300 hover:text-[#444] flex items-center justify-center max-w-md">
                     {googleLoginObject.message}
                   </p>
                 </div>
@@ -578,7 +578,7 @@ const Login = () => {
                 </div>
 
                 <div className="text-center">
-                  <span className="text-[#646464] text-base font-normal">
+                  <span className="glassy-text-primary text-base font-normal">
                     Don't have an account?
                   </span>{" "}
                   <span className="glassy-text-primary text-base font-medium hover:underline hover:cursor-pointer transition-all ease-out">

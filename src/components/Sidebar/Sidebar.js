@@ -132,7 +132,7 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
 
       <button
         className={`${navbarOpen ? "hidden" : "flex"
-          } fixed top-4 left-4 p-2 z-40   hover:bg-gray-100 transition-all duration-300 hover:scale-110`}
+          } fixed top-4 left-4 p-2 z-40   hover:glassy-card transition-all duration-300 hover:scale-110`}
         onClick={() => setNavbarOpen(true)}
       >
         <GiHamburgerMenu className="text-xl glassy-text-primary" />
@@ -166,8 +166,8 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                   // if sidebar item has submenu
                   <>
                     <div
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:bg-blue-50 hover:text-blue-600 ${openSubmenu === item.label
-                        ? "bg-blue-50 text-blue-600"
+                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600 ${openSubmenu === item.label
+                        ? "glassy-card text-blue-600"
                         : "glassy-text-primary"
                         }`}
                       onClick={() => toggleSubmenu(item.label)}
@@ -193,7 +193,7 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                             key={childIdx}
                             className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
                               ? "text-blue-600 font-medium"
-                              : "glassy-text-primary hover:bg-gray-100 hover:text-blue-600"
+                              : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                               }`}
                             onClick={() => onClickMenu(child.path)}
                           >
@@ -207,7 +207,7 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                   <div
                     className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
                       ? "text-blue-600"
-                      : "glassy-text-primary hover:bg-gray-100 hover:text-blue-600"
+                      : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                       }`}
                     onClick={() => onClickMenu(item.path)}
                   >

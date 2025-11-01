@@ -101,7 +101,7 @@
 //       {/* Hamburger button */}
 //       <button
 //         className={`${navbarOpen ? "hidden" : "flex"
-//           } fixed top-4 left-4 p-2 z-40 glassy-card hover:bg-gray-100 transition-all duration-300 hover:scale-110`}
+//           } fixed top-4 left-4 p-2 z-40 glassy-card hover:glassy-card transition-all duration-300 hover:scale-110`}
 //         onClick={() => setNavbarOpen(true)}
 //       >
 //         <GiHamburgerMenu className="text-xl glassy-text-primary" />
@@ -123,7 +123,7 @@
 //           <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto glassy-card shadow-sm overflow-hidden">
 //             <div className="flex justify-center items-center gap-2 p-2">
 //               <div>
-//                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
+//                 <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
 //                   <img
 //                     src={
 //                       companiesProfileData?.logo_url
@@ -163,8 +163,8 @@
 //                 {item.children ? (
 //                   <>
 //                     <div
-//                       className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:bg-blue-50 hover:text-blue-600 ${openSubmenu === item.label
-//                         ? "bg-blue-50 text-blue-600"
+//                       className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600 ${openSubmenu === item.label
+//                         ? "glassy-card text-blue-600"
 //                         : "glassy-text-primary"
 //                         }`}
 //                       onClick={() => toggleSubmenu(item.label)}
@@ -191,7 +191,7 @@
 //                             key={childIdx}
 //                             className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
 //                               ? "text-blue-600 font-medium"
-//                               : "glassy-text-primary hover:bg-gray-100 hover:text-blue-600"
+//                               : "glassy-text-primary hover:glassy-card hover:text-blue-600"
 //                               }`}
 //                             onClick={() => onClickMenu(child.path)}
 //                           >
@@ -205,7 +205,7 @@
 //                   <div
 //                     className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
 //                       ? "text-blue-600"
-//                       : "glassy-text-primary hover:bg-gray-100 hover:text-blue-600"
+//                       : "glassy-text-primary hover:glassy-card hover:text-blue-600"
 //                       }`}
 //                     onClick={() => onClickMenu(item.path)}
 //                   >
@@ -368,7 +368,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
       {/* Hamburger Button */}
       <button
         className={`${navbarOpen ? "hidden" : "flex"
-          } fixed top-4 left-4 p-2 z-40 glassy-card hover:bg-gray-100 transition-all duration-300 hover:scale-110`}
+          } fixed top-4 left-4 p-2 z-40 glassy-card hover:glassy-card transition-all duration-300 hover:scale-110`}
         onClick={() => setNavbarOpen(true)}
       >
         <GiHamburgerMenu className="text-xl glassy-text-primary" />
@@ -388,7 +388,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
           <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto glassy-card shadow-sm overflow-hidden">
             <div className="flex justify-center items-center gap-2 p-2">
               <div>
-                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
+                <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
                   <img
                     src={profileData?.logo_url}
                     alt="profile logo"
@@ -428,8 +428,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                 {item.children ? (
                   <>
                     <div
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:bg-blue-50 hover:text-blue-600 ${openSubmenu === item.label
-                        ? "bg-blue-50 text-blue-600"
+                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600 ${openSubmenu === item.label
+                        ? "glassy-card text-blue-600"
                         : "glassy-text-primary"
                         }`}
                       onClick={() => toggleSubmenu(item.label)}
@@ -456,7 +456,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                             key={childIdx}
                             className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
                               ? "text-blue-600 font-medium"
-                              : "glassy-text-primary hover:bg-gray-100 hover:text-blue-600"
+                              : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                               }`}
                             onClick={() => onClickMenu(child.path)}
                           >
@@ -470,7 +470,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                   <div
                     className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
                       ? "text-blue-600"
-                      : "glassy-text-primary hover:bg-gray-100 hover:text-blue-600"
+                      : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                       }`}
                     onClick={() => onClickMenu(item.path)}
                   >

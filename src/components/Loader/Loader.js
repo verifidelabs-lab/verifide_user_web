@@ -30,7 +30,7 @@ const VerifiedLoader = () => {
         
         {/* Verification checkmark animation */}
         <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-          <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center animate-bounce" style={{ animationDelay: '0.3s' }}>
+          <div className="w-6 h-6 glassy-card rounded-full flex items-center justify-center animate-bounce" style={{ animationDelay: '0.3s' }}>
             <svg className="w-3 h-3 glassy-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>

@@ -112,7 +112,7 @@ const AddProject = ({
                         </p>
 
                         <div className="flex flex-wrap gap-4 items-center mt-2">
-                            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+                            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:glassy-card transition-colors">
                                 <input
                                     type="radio"
                                     name="projectType"
@@ -123,7 +123,7 @@ const AddProject = ({
                                 />
                                 <span className="text-sm">Personal</span>
                             </label>
-                            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+                            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:glassy-card transition-colors">
                                 <input
                                     type="radio"
                                     name="projectType"
@@ -134,7 +134,7 @@ const AddProject = ({
                                 />
                                 <span className="text-sm">Company</span>
                             </label>
-                            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+                            <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:glassy-card transition-colors">
                                 <input
                                     type="radio"
                                     name="projectType"
@@ -253,7 +253,7 @@ const AddProject = ({
                                 Project Link or Media
                             </p>
                             <div className="flex gap-5 items-center">
-                                <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+                                <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:glassy-card transition-colors">
                                     <input
 
                                         type="radio"
@@ -265,7 +265,7 @@ const AddProject = ({
                                     />
                                     <span className="text-sm">Project Link</span>
                                 </label>
-                                <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:bg-gray-50 transition-colors">
+                                <label className="flex items-center gap-2 cursor-pointer p-2 rounded-md hover:glassy-card transition-colors">
                                     <input
                                         type="radio"
                                         name="linkType"

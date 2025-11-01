@@ -117,14 +117,14 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-2xl text-gray-700 md:hidden focus:outline-none"
+            className="text-2xl glassy-text-primary md:hidden focus:outline-none"
           >
             {isMobileMenuOpen ? <BiX /> : <BiMenu />}
           </button>
           {location.pathname === "/user/terms-and-conditions" && (
             <div className="flex items-center gap-3 w-72">
               <img
-                src="/logo.png"
+                src="/Frame 1000004906.png"
                 alt="logo"
                 className="h-8 transition-transform duration-300 hover:scale-105"
               />
@@ -147,7 +147,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
                     isActive
                       ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                      : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                      : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                   } pb-1`}
                 >
                   {item?.name}
@@ -189,15 +189,16 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                       alt="user"
                     />
                   )}
-                  <h2>{isUserData.personalInfo?.username}</h2>
+                  <h2 className="glassy-text-primary">{isUserData.personalInfo?.username}</h2>
                 </div>
               </Link>
             </>
           ) : (
-            <Button>
+            <Button variant="primary">
               <Link
                 to={`${BaseUrl}login?redirect=${redirectURL}`}
                 onClick={() => window.localStorage.setItem("postId", id)}
+
               >
                 Sign In
               </Link>
@@ -218,7 +219,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 className={`block px-3 py-2 text-base transition duration-200 ${
                   isActive
                     ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                    : "font-medium text-gray-700 hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                    : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

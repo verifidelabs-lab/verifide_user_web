@@ -120,7 +120,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
                   onChange={() => handleResponseChange(question.id, option)}
                   className="mr-2"
                 />
-                <label htmlFor={`q${question.id}_opt${index}`} className="text-gray-700">
+                <label htmlFor={`q${question.id}_opt${index}`} className="glassy-text-primary">
                   {option}
                 </label>
               </div>
@@ -150,7 +150,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
                     }}
                     className="mr-2"
                   />
-                  <label htmlFor={`q${question.id}_opt${index}`} className="text-gray-700">
+                  <label htmlFor={`q${question.id}_opt${index}`} className="glassy-text-primary">
                     {option}
                   </label>
                 </div>
@@ -185,7 +185,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
             <h2 className="text-xl font-medium glassy-text-primary">Survey</h2>
             <button
               onClick={onClose}
-              className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+              className="glassy-text-secondary hover:glassy-text-primary p-1 rounded-full hover:glassy-card"
             >
               <BiX className="text-2xl" />
             </button>
@@ -204,7 +204,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
           <h2 className="text-xl font-medium glassy-text-primary capitalize">{formStructure.title}</h2>
           <button
             onClick={onClose}
-            className="glassy-text-secondary hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
+            className="glassy-text-secondary hover:glassy-text-primary p-1 rounded-full hover:glassy-card"
           >
             <BiX className="text-2xl" />
           </button>
@@ -213,7 +213,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
         <div className="overflow-y-auto flex-1 p-6">
           {submitted ? (
             <div className="text-center py-8">
-              <div className="bg-blue-100 text-blue-800 p-4 rounded-full inline-block mb-4">
+              <div className="glassy-card text-blue-800 p-4 rounded-full inline-block mb-4">
                 <BiSend className="text-3xl" onClick={onClose} />
               </div>
               <h3 className="text-xl font-medium glassy-text-primary mb-2">Response submitted successfully!</h3>
@@ -251,7 +251,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
                     type="button"
                     onClick={handlePrevious}
                     disabled={currentPage === 0}
-                    className={`flex items-center px-4 py-2 rounded ${currentPage === 0 ? 'text-gray-400' : 'text-blue-600 hover:bg-blue-50'}`}
+                    className={`flex items-center px-4 py-2 rounded ${currentPage === 0 ? 'glassy-text-secondary' : 'text-blue-600 hover:glassy-card'}`}
                   >
                     <BiChevronLeft className="text-xl" /> Previous
                   </button>

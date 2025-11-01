@@ -93,7 +93,7 @@ const Recommended = () => {
             return (
               <button
                 key={index}
-                className={`py-2 px-4 text-sm font-medium ${isActive ? 'text-blue-600 border-b-2 border-blue-600' : 'glassy-text-secondary hover:text-gray-700'}`}
+                className={`py-2 px-4 text-sm font-medium ${isActive ? 'text-blue-600 border-b-2 border-blue-600' : 'glassy-text-secondary hover:glassy-text-primary'}`}
                 onClick={() => handleSectionClick(item)}
               >
                 {item}
@@ -143,7 +143,7 @@ const Recommended = () => {
             <h1 className="text-xl md:text-2xl font-semibold glassy-text-primary">{activeSection} Courses</h1>
             <div className="flex items-end gap-2 md:gap-4 w-full md:w-auto">
               <div className="relative flex-grow md:flex-grow-0">
-                <BiSearchAlt className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <BiSearchAlt className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary" />
                 <input
                   type="text"
                   placeholder="Search..."
@@ -166,7 +166,7 @@ const Recommended = () => {
               <button className="hidden md:block bg-blue-600 glassy-text-primary px-4 py-2 rounded-md hover:bg-blue-700">
                 View All
               </button> */}
-              {/* <button className="text-blue-600 md:hidden block border border-gray-300 rounded-lg hover:bg-gray-50 p-2">
+              {/* <button className="text-blue-600 md:hidden block border border-gray-300 rounded-lg hover:glassy-card p-2">
                 <RiExternalLinkFill size={20} />
               </button> */}
             </div>

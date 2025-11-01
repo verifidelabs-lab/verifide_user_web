@@ -102,9 +102,9 @@ const Resume = () => {
         <div>
           <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
             <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
-            <span className="text-gray-400">›</span>
+            <span className="glassy-text-secondary">›</span>
             <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/profile`)}>Profile</span>
-            <span className="text-gray-400">›</span>
+            <span className="glassy-text-secondary">›</span>
             <span className="font-medium text-blue-600 cursor-pointer">Resume Preview</span>
           </nav>
         </div>
@@ -130,9 +130,9 @@ const Resume = () => {
         <div className="flex justify-between items-center mb-4">
           <nav className="flex justify-start items-center gap-2 text-sm">
             <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/feed`)}>Home</span>
-            <span className="text-gray-400">›</span>
+            <span className="glassy-text-secondary">›</span>
             <span className="glassy-text-secondary cursor-pointer" onClick={() => navigate(`/user/profile`)}>Profile</span>
-            <span className="text-gray-400">›</span>
+            <span className="glassy-text-secondary">›</span>
             <span className="font-medium text-blue-600 cursor-pointer">Resume Preview</span>
           </nav>
           
@@ -160,7 +160,7 @@ const Resume = () => {
         <div className="min-h-screen py-10 flex justify-center">
           <div ref={resumeRef} className="w-[900px] glassy-card shadow-xl grid grid-cols-3 rounded-lg overflow-hidden">
             {/* Left Sidebar */}
-            <div className="bg-gray-800 glassy-text-primary p-6 flex flex-col gap-8">
+            <div className="glassy-card glassy-text-primary p-6 flex flex-col gap-8">
               {/* Profile Image */}
               <div className="flex justify-center">
                 <img
@@ -176,7 +176,7 @@ const Resume = () => {
 
               {/* Contact */}
               <div>
-                <h2 className="text-xl font-semibold mb-3 border-b border-yellow-400 pb-1">
+                <h2 className="text-xl font-semibold mb-3 border-b border-yellow-400 pb-1 glassy-text-primary">
                   Contact Me
                 </h2>
                 <p className="mb-2">📞 +{profileData?.personalInfo?.country_code?.dial_code} {profileData?.personalInfo?.phone_number}</p>
@@ -194,7 +194,7 @@ const Resume = () => {
               {/* Certificates */}
               {Array.isArray(profileData.certifications) && profileData.certifications.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold mb-3 border-b border-yellow-400 pb-1">
+                  <h2 className="text-xl font-semibold mb-3 border-b border-yellow-400 pb-1 glassy-text-primary">
                     Certificate
                   </h2>
                   <ul className="list-disc list-inside space-y-2">
@@ -208,14 +208,14 @@ const Resume = () => {
               {/* Education */}
               {Array.isArray(profileData.educations) && profileData.educations.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold mb-3 border-b border-yellow-400 pb-1">
+                  <h2 className="text-xl font-semibold mb-3 border-b border-yellow-400 pb-1 glassy-text-primary">
                     Education
                   </h2>
                   <ul className="space-y-3">
                     {profileData.educations.map((edu, index) => (
                       <li key={index}>
                         <p className="font-medium text-lg">{capitalizeWords(edu.institution)}</p>
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm glassy-text-secondary">
                           {capitalizeWords(edu.degree)} (
                           {formatDateByMomentTimeZone(edu.start_date, "YYYY")} -{" "}
                           {edu.currently_available
@@ -240,10 +240,10 @@ const Resume = () => {
 
               {/* About */}
               <div>
-                <h2 className="text-3xl font-semibold text-yellow-500 mb-2">
+                <h2 className="text-3xl font-semibold text-yellow-500 mb-2 glassy-text-primary">
                   About Me
                 </h2>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="glassy-text-primary leading-relaxed">
                   {profileData.personalInfo.summary}
                 </p>
               </div>
@@ -251,14 +251,14 @@ const Resume = () => {
               {/* Job Experience */}
               {Array.isArray(profileData.experiences) && profileData.experiences.length > 0 && (
                 <div>
-                  <h2 className="text-3xl font-semibold text-yellow-500 mb-4">
+                  <h2 className="text-3xl font-semibold text-yellow-500 mb-4 glassy-text-primary">
                     Job Experience
                   </h2>
 
                   {profileData.experiences.map((exp, index) => (
                     <div key={index} className="mb-6">
                       {/* Company + Role */}
-                      <p className="font-semibold text-lg">
+                      <p className="font-semibold text-lg glassy-text-secondary">
                         {exp.companyName} — {exp.profileName}
                       </p>
 
@@ -274,7 +274,7 @@ const Resume = () => {
 
                       {/* Description */}
                       {exp.description && (
-                        <p className="text-gray-700 mt-1">{exp.description}</p>
+                        <p className="glassy-text-primary mt-1">{exp.description}</p>
                       )}
                     </div>
                   ))}
@@ -284,10 +284,10 @@ const Resume = () => {
               {/* Skills */}
               {profileData?.topSkills?.data?.length > 0 && (
                 <div>
-                  <h2 className="text-3xl font-semibold text-yellow-500 mb-4">
+                  <h2 className="text-3xl font-semibold text-yellow-500 mb-4 glassy-text-primary">
                     Skills
                   </h2>
-                  <div className="grid grid-cols-2 gap-2 text-gray-700">
+                  <div className="grid grid-cols-2 gap-2 glassy-text-primary">
                     {profileData.topSkills.data.map((skill) => (
                       <span key={skill.skill_id}>✔ {skill.skill_name}</span>
                     ))}

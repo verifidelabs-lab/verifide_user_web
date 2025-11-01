@@ -52,9 +52,9 @@ const Button = ({
 
   const variantStyles = {
     primary: `glassy-button`,
-    secondary: `bg-[#8989894D]/30 glassy-text-primary hover:bg-gray-700 hover:glassy-card focus:ring-gray-500 text-[16px] font-[700]`,
+    secondary: `bg-[#8989894D]/30 glassy-text-primary hover:glassy-card hover:glassy-card focus:ring-gray-500 text-[16px] font-[700]`,
     outline: `border border-[#2563EB] text-[#2563EB] font-[700] bg-transparent  hover:glassy-text-primary hover:text-[#FFFFFF] hover:border-gray-400 focus:ring-gray-300 text-[16px] font-[700]`,
-    ghost: `bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-200 text-[16px] font-[700]`,
+    ghost: `bg-transparent glassy-text-primary hover:glassy-card focus:ring-gray-200 text-[16px] font-[700]`,
     danger: `bg-red-600 text-[#FFFFFF] hover:bg-red-700 focus:ring-red-500 text-[16px] font-[700]`,
     success: `bg-green-600 text-[#FFFFFF] hover:bg-green-700 focus:ring-green-500 text-[16px] font-[700]`,
     warning: `bg-yellow-500 text-[#FFFFFF] hover:bg-yellow-600 focus:ring-yellow-400 text-[16px] font-[700]`,
@@ -145,13 +145,13 @@ const Button = ({
       {showTooltip && (
         <div
           className={`
-            absolute z-50 px-3 py-1.5 text-xs glassy-text-primary min-w-40  bg-gray-800 rounded-md
+            absolute z-50 px-3 py-1.5 text-xs glassy-text-primary min-w-40  glassy-card rounded-md
             -top-10 left-1/2 transform -translate-x-1/2
             transition-all duration-300 opacity-100
           `}
         >
           {tooltip}
-          <div className="absolute w-2 h-2 bg-gray-800 transform rotate-45 -bottom-1 left-1/2 -translate-x-1/2"></div>
+          <div className="absolute w-2 h-2 glassy-card transform rotate-45 -bottom-1 left-1/2 -translate-x-1/2"></div>
         </div>
       )}
     </div>

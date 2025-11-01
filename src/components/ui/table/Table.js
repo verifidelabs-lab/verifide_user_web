@@ -8,7 +8,7 @@ const TableSkeletonLoader = ({ columns, rows }) => (
       <div className="flex">
         {Array.from({ length: columns }).map((_, i) => (
           <div key={i} className="flex-1 p-4">
-            <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="h-4 glassy-card rounded"></div>
           </div>
         ))}
       </div>
@@ -18,7 +18,7 @@ const TableSkeletonLoader = ({ columns, rows }) => (
         <div className="flex">
           {Array.from({ length: columns }).map((_, j) => (
             <div key={j} className="flex-1 p-4">
-              <div className="h-4 bg-gray-100 rounded"></div>
+              <div className="h-4 glassy-card rounded"></div>
             </div>
           ))}
         </div>
@@ -30,7 +30,7 @@ const TableSkeletonLoader = ({ columns, rows }) => (
 const NoData = ({ message = "No Data found", description = "There are no data to display" }) => (
   <div className="flex flex-col items-center justify-center py-12">
     <svg
-      className="w-24 h-24 text-gray-400"
+      className="w-24 h-24 glassy-text-secondary"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -83,8 +83,8 @@ const Table = ({
               onChange={(e) => setKeyword(e.target.value)}
             />
             {
-              keyWord ? <IoClose className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" onClick={handleRemoveSearch} /> : <svg
-                className="absolute right-3 top-2.5 h-4 w-4 text-gray-400"
+              keyWord ? <IoClose className="absolute right-3 top-2.5 h-4 w-4 glassy-text-secondary" onClick={handleRemoveSearch} /> : <svg
+                className="absolute right-3 top-2.5 h-4 w-4 glassy-text-secondary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -139,7 +139,7 @@ const Table = ({
                                     className={`${sortColumn === index &&
                                       sortDirection === "asc"
                                       ? "text-blue-600"
-                                      : "text-gray-400"
+                                      : "glassy-text-secondary"
                                       }`}
                                   />
                                   <IoCaretDownOutline
@@ -147,7 +147,7 @@ const Table = ({
                                     className={`${sortColumn === index &&
                                       sortDirection === "desc"
                                       ? "text-blue-600"
-                                      : "text-gray-400"
+                                      : "glassy-text-secondary"
                                       }`}
                                   />
                                 </div>
@@ -166,13 +166,13 @@ const Table = ({
                       data.map((row, rowIndex) => (
                         <tr
                           key={`row-${rowIndex}`}
-                          className="border-t border-[#edeff1] hover:bg-gray-100"
+                          className="border-t border-[#edeff1] hover:glassy-card"
                         >
                           {row && Array.isArray(row) && row.length > 0 ? (
                             row.map((cell, cellIndex) => (
                               <td
                                 key={`cell-${rowIndex}-${cellIndex}`}
-                                className="px-4 py-4 align-top text-gray-700"
+                                className="px-4 py-4 align-top glassy-text-primary"
                               >
                                 {cell}
                               </td>

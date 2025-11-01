@@ -6,15 +6,26 @@ import { suggestedUser } from '../../../redux/Users/userSlice';
 import { verificationCenterList } from '../../../redux/CompanySlices/courseSlice';
 import { Link } from 'react-router-dom';
 import NoDataFound from '../../../components/ui/No Data/NoDataFound';
+import { getCookie } from '../../../components/utils/cookieHandler';
+import { ROLE_CODES } from '../../../context/GlobalKeysContext';
 
 const CompanyDashboard = ({
   companiesProfileData,
   instituteProfileData,
   searchAppearancesChange = 32.6,
   newFollowersChange = -32.6,
+  role
 }) => {
-  // Determine which profile data to show (company or institution)
-  const profileData = instituteProfileData || companiesProfileData;
+
+
+  // ✅ Determine profile data dynamically based on current userRole
+  const profileData =
+    role == ROLE_CODES.company
+      ? companiesProfileData
+      : role == ROLE_CODES.institution
+        ? instituteProfileData
+        : null;
+  console.log("this is the companiesprofielsdjfsdf", companiesProfileData, role)
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.companyCourse);
   const { getVerificationCenterList: { data } = {} } = selector || {};
@@ -24,6 +35,8 @@ const CompanyDashboard = ({
   const { suggestedUserData: { data: suggestedUsers } = {} } = userSelector || {};
 
   const [activeTab, setActiveTab] = useState('user');
+  const activeMode = getCookie("ACTIVE_MODE"); // 'company' | 'institution' | 'user'
+
 
   useEffect(() => {
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
@@ -77,7 +90,17 @@ const CompanyDashboard = ({
           </div>
         </div>
         <button className={`glassy-button ml-4 flex-shrink-0`}>
-          <Link to={"/company/verification"}>Verify Now</Link>
+          <Link
+            to={`${activeMode === "company"
+              ? "/company"
+              : activeMode === "institution"
+                ? "/institution"
+                : "/user"
+              }/verification`}
+          >
+            Verify Now
+          </Link>
+
         </button>
       </div>
     </div>

@@ -679,7 +679,7 @@ export default function Message({ profileData, socket }) {
             <div className="p-4 border-b border-gray-200 sticky top-0 glassy-card z-10">
               <h1 className="text-xl font-bold glassy-text-primary">Messages</h1>
               <div className="relative mt-2">
-                <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 glassy-text-secondary" />
                 <input
                   type="text"
                   value={searchKeyword}
@@ -705,8 +705,8 @@ export default function Message({ profileData, socket }) {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center h-64">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                    <BiSearch className="w-8 h-8 text-gray-400" />
+                  <div className="w-16 h-16 glassy-card rounded-full flex items-center justify-center mb-4">
+                    <BiSearch className="w-8 h-8 glassy-text-secondary" />
                   </div>
                   <p className="glassy-text-secondary text-center">No conversations found</p>
                 </div>
@@ -732,7 +732,7 @@ export default function Message({ profileData, socket }) {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <button className="p-1 hover:bg-gray-100 rounded-full">
+                <button className="p-1 hover:glassy-card rounded-full">
                   <FiMoreVertical className="w-5 h-5 glassy-text-secondary" onClick={() => handleShowOption()} />
                 </button>
               </div>
@@ -740,11 +740,11 @@ export default function Message({ profileData, socket }) {
               {isMenuShow && (
                 <div className="absolute md:right-0 right-[40px] md:mt-20 mt-16 w-32 glassy-card border border-gray-200 rounded-xl shadow-lg z-50 transform transition-all duration-200 ease-in-out">
                   <ul className="text-xs font-medium divide-y divide-gray-100">
-                    <li className="px-4 py-1.5 cursor-pointer hover:bg-gray-50 hover:text-red-500 flex items-center gap-2 transition-colors duration-150"
+                    <li className="px-4 py-1.5 cursor-pointer hover:glassy-card hover:text-red-500 flex items-center gap-2 transition-colors duration-150"
                       onClick={() => handleUserAction("BLOCK")}>
                       {selectedContact?.isBlocked ? "UnBlock" : "Block"}
                     </li>
-                    <li className="px-4 py-1.5 cursor-pointer hover:bg-gray-50 hover:text-blue-500 flex items-center gap-2 transition-colors duration-150"
+                    <li className="px-4 py-1.5 cursor-pointer hover:glassy-card hover:text-blue-500 flex items-center gap-2 transition-colors duration-150"
                       onClick={() => handleUserAction("CLEAR")}>
                       Clear
                     </li>

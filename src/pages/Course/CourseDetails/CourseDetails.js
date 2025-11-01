@@ -510,9 +510,9 @@ const CourseDetailPage = () => {
 
         <nav className="flex items-center gap-2 text-sm py-3">
           <span className="glassy-text-secondary">Course</span>
-          <span className="text-gray-400">›</span>
+          <span className="glassy-text-secondary">›</span>
           <span className="font-medium glassy-text-secondary">{apiRes.categories?.name || 'Category'}</span>
-          <span className="text-gray-400">›</span>
+          <span className="glassy-text-secondary">›</span>
           <span className="font-medium text-blue-600">{apiRes.name || 'Course'}</span>
         </nav>
 
@@ -640,11 +640,11 @@ const CourseDetailPage = () => {
             <div className="flex flex-wrap items-center gap-6 text-sm mb-6 glassy-card p-4 rounded-lg shadow-sm">
               <div className="flex items-center gap-2">
                 <img
-                  src={apiRes?.organization_logo_url || "/logo.png"}
+                  src={apiRes?.organization_logo_url || "/Frame 1000004906.png"}
                   alt="Organization logo"
                   className="w-5 h-5 rounded-full border"
                   onError={(e) => {
-                    e.target.src = "/logo.png";
+                    e.target.src = "/Frame 1000004906.png";
                   }}
                 />
                 <span className="glassy-text-secondary font-medium">{apiRes?.organization_name || ''}</span>
@@ -681,7 +681,7 @@ const CourseDetailPage = () => {
                     {apiRes?.skills.map((skill, i) => (
                       <span
                         key={i}
-                        className="glassy-card glassy-text-primary px-3 py-2 rounded-full text-sm hover:bg-gray-200 transition-colors cursor-pointer"
+                        className="glassy-card glassy-text-primary px-3 py-2 rounded-full text-sm hover:glassy-card transition-colors cursor-pointer"
                       >
                         {skill?.name}
                       </span>
@@ -776,7 +776,7 @@ const CourseDetailPage = () => {
                         <p className="text-xs glassy-text-secondary mb-1 line-clamp-2">{item.content}</p>
                       )}
                       {item.duration && (
-                        <p className="text-xs text-gray-400">Duration: {item.duration}</p>
+                        <p className="text-xs glassy-text-secondary">Duration: {item.duration}</p>
                       )}
                     </div>
                     <div className="ml-3 flex-shrink-0">
@@ -787,7 +787,7 @@ const CourseDetailPage = () => {
                       ) : (
                         <div className="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center group-hover:border-blue-600 transition-colors">
                           <svg
-                            className="w-3 h-3 text-gray-400 group-hover:text-blue-600 transition-colors"
+                            className="w-3 h-3 glassy-text-secondary group-hover:text-blue-600 transition-colors"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -813,7 +813,7 @@ const CourseDetailPage = () => {
             </div>
             {(apiRes?.is_assessment && apiRes?.assessment_setup && apiRes?.isResumed) && (
               <div className='flex justify-end py-2'>
-                <Button className='' variant='outline' onClick={() => handleAssessment(apiRes)}>Start Assessment</Button>
+                <Button className='' variant='primary' onClick={() => handleAssessment(apiRes)}>Start Assessment</Button>
               </div>
             )}
           </div>
@@ -839,7 +839,7 @@ const CourseDetailPage = () => {
               <h3 className="font-semibold text-lg">{assessment.title}</h3>
               <p className="glassy-text-secondary text-sm">{assessment.description}</p>
               <div className="flex flex-wrap gap-2 mt-2">
-                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                <span className="text-xs glassy-card text-blue-800 px-2 py-1 rounded">
                   Level: {assessment.level_id?.name}
                 </span>
                 <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
@@ -887,7 +887,7 @@ Add New Assessment'>Click here to start assessment</p>
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
-                    className="text-gray-200"
+                    className="glassy-text-secondary"
                     strokeWidth="4"
                     fill="none"
                     stroke="currentColor"
@@ -914,7 +914,7 @@ Add New Assessment'>Click here to start assessment</p>
               <div className="relative w-16 h-16">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
-                    className="text-gray-200"
+                    className="glassy-text-secondary"
                     strokeWidth="4"
                     fill="none"
                     stroke="currentColor"
@@ -961,7 +961,7 @@ Add New Assessment'>Click here to start assessment</p>
                     key={index}
                     className={`p-4 border rounded-xl cursor-pointer transition duration-300 ease-in-out 
                       ${isSelected
-                        ? 'border-blue-500 bg-blue-50 shadow-sm'
+                        ? 'border-blue-500 glassy-card shadow-sm'
                         : 'border-gray-200 hover:glassy-card'
                       }`}
                     onClick={() => handleOptionSelect(option)}

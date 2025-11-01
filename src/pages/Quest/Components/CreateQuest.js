@@ -65,21 +65,21 @@ const CreateQuest = () => {
     return isNaN(date.getTime()) ? null : date;
   };
 
-  // Check access mode on component mount and storage changes
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const newAccessMode = getCookie("ACCESS_MODE");
-      const isCompany = getCookie("ROLE");
-      if (newAccessMode == 5 && isCompany !== "3") {
-        navigate(`/user/quest`);
-      }
-    };
+  // // Check access mode on component mount and storage changes
+  // useEffect(() => {
+  //   const handleStorageChange = () => {
+  //     const newAccessMode = getCookie("ACCESS_MODE");
+  //     const isCompany = getCookie("ROLE");
+  //     if (newAccessMode == 5 && isCompany !== "3"&&isCompany !== "4") {
+  //       navigate(`/user/quest`);
+  //     }
+  //   };
 
-    handleStorageChange();
-    window.addEventListener('storage', handleStorageChange);
+  //   handleStorageChange();
+  //   window.addEventListener('storage', handleStorageChange);
 
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, [navigate]);
+  //   return () => window.removeEventListener('storage', handleStorageChange);
+  // }, [navigate]);
 
   // Fetch quest data for editing
   const fetchByIdData = async () => {

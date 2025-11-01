@@ -36,10 +36,10 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
     console.log("This is the setsdfsdfsdf", job)
     const [imageError, setImageError] = useState(false);
 
-  const isDateInRange = () => {
-    const currentDate = new Date().getTime();
-    return currentDate >= start_date && currentDate <= end_date;
-  };
+    const isDateInRange = () => {
+        const currentDate = new Date().getTime();
+        return currentDate >= start_date && currentDate <= end_date;
+    };
 
 
 
@@ -59,15 +59,15 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
         const status = jobApplication?.status;
         switch (status) {
             case 'applied':
-                return { text: 'Applied', color: 'bg-blue-50 text-blue-600 border-blue-200' };
+                return { text: 'Applied', color: 'glassy-card text-blue-600 border-blue-200' };
             case 'shortlisted':
-                return { text: 'Shortlisted', color: 'bg-green-50 text-green-600 border-green-200' };
+                return { text: 'Shortlisted', color: 'glassy-card text-green-600 border-green-200' };
             case 'selected_in_interview':
-                return { text: 'Selected 🎉', color: 'bg-green-50 text-green-600 border-green-200' };
+                return { text: 'Selected 🎉', color: 'glassy-card text-green-600 border-green-200' };
             case 'rejected':
                 return { text: 'Not Selected', color: 'bg-red-50 text-red-600 border-red-200' };
             default:
-                return { text: 'Applied', color: 'bg-blue-50 text-blue-600 border-blue-200' };
+                return { text: 'Applied', color: 'glassy-card text-blue-600 border-blue-200' };
         }
     };
 
@@ -77,9 +77,9 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
         const status = interviewDetails.status;
         switch (status) {
             case 'scheduled':
-                return { text: 'Interview Scheduled', color: 'bg-purple-50 text-purple-600 border-purple-200' };
+                return { text: 'Interview Scheduled', color: 'bg-purple-50 glassy-text-primary border-purple-200' };
             case 'completed':
-                return { text: 'Interview Completed', color: 'bg-gray-50 glassy-text-secondary border-gray-200' };
+                return { text: 'Interview Completed', color: 'glassy-card glassy-text-secondary border-gray-200' };
             case 'cancelled':
                 return { text: 'Interview Cancelled', color: 'bg-red-50 text-red-600 border-red-200' };
             default:
@@ -108,7 +108,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
     console.log("this is the set", imageError, company_id?.logo_url)
     return (
         <div
-            className={`glassy-card relative ${isSelected ? "border-blue-300 shadow-md" : "border-[var(--border-color)]"} rounded-2xl p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-lg`}
+            className={`glassy-card relative ${isSelected ? "border !border-blue-500 shadow-md" : "border border-blue-700"} rounded-2xl p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-lg`}
         >
             {/* Header Section */}
             <div className="flex items-center space-x-4 min-h-[3rem]">
@@ -121,7 +121,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                         className="md:w-12 md:h-12 w-10 h-10 object-cover rounded-lg"
                     />
                 ) : (
-                    <div className="w-12 h-12 bg-gray-800 flex items-center justify-center glassy-text-primary font-bold text-lg rounded-lg">
+                    <div className="w-12 h-12 glassy-card flex items-center justify-center glassy-text-primary font-bold text-lg rounded-lg">
                         <img
                             src={"/36369.jpg"}
                             alt={"company name"}
@@ -139,7 +139,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                     <p className="glassy-text-secondary text-xs flex items-center gap-1 truncate">
                         <CiCalendar className="w-3 h-3" />
                         <span>Posted {convertTimestampToDate(createdAt)}</span>
-                        {industry_id?.name && <span className="text-gray-400">• {industry_id.name}</span>}
+                        {industry_id?.name && <span className="glassy-text-secondary">• {industry_id.name}</span>}
                     </p>
                 </div>
 
@@ -147,21 +147,21 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                 <div className="flex flex-col gap-1 items-end">
                     {applicationStatus && (
                         <span
-                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${applicationStatus.color} glassy-text-primary`}
+                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap glassy-card ${applicationStatus.color} glassy-text-primary`}
                         >
                             {applicationStatus.text}
                         </span>
                     )}
                     {interviewStatus && (
                         <span
-                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${interviewStatus.color} glassy-text-primary`}
+                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap glassy-card ${interviewStatus.color} glassy-text-primary`}
                         >
                             {interviewStatus.text}
                         </span>
                     )}
                     {recommendationBadge && !applicationStatus && (
                         <span
-                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap ${recommendationBadge.color} glassy-text-primary`}
+                            className={`px-2 py-0.5 rounded-full border text-xs whitespace-nowrap glassy-card ${recommendationBadge.color} glassy-text-primary`}
                         >
                             {recommendationBadge.text}
                         </span>
@@ -170,7 +170,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
             </div>
 
             {/* Application Period */}
-            <div className={`flex flex-col gap-1 text-sm p-3 rounded-md ${dateInRange ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+            <div className={`flex flex-col gap-1 text-sm p-3 rounded-md ${dateInRange ? 'glassy-card border border-green-200' : ' glassy-card border border-red-200'}`}>
                 <div className="flex items-center">
                     <CiCalendar className={`mr-2 w-4 h-4 ${dateInRange ? 'text-green-600' : 'text-red-600'}`} />
                     <span className={`font-medium ${dateInRange ? 'text-green-700' : 'text-red-700'}`}>
@@ -189,11 +189,11 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
             </div>
 
             {/* Job Details */}
-            <div className="flex flex-wrap gap-2 text-sm min-h-[2.5rem]">
+            <div className="flex flex-wrap gap-2 text-sm  ">
                 {[job_type, job_location, pay_type].map((item, idx) => (
                     <span
                         key={idx}
-                        className="bg-[var(--bg-card)] border border-[var(--border-color)] capitalize px-3 py-1 rounded-full whitespace-nowrap glassy-text-primary"
+                        className="bg-[var(--bg-card)]  border border-[var(--border-color)] capitalize px-3 py-1 rounded-full whitespace-nowrap glassy-text-primary"
                     >
                         {item || 'Not specified'}
                     </span>
@@ -234,7 +234,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                         <span>{current_openings || 0} opening{current_openings !== 1 ? 's' : ''}</span>
                     </div>
                     {isSchedule && interviewDetails?.select_date && (
-                        <div className="text-xs text-purple-600 font-medium">
+                        <div className="text-xs glassy-text-primary font-medium">
                             Interview: {moment(interviewDetails.select_date).format('DD MMM YYYY')}
                         </div>
                     )}
@@ -246,14 +246,14 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                         disabled={applyStatus.disabled}
                         onClick={() => !applyStatus.disabled && applyForJob(job)}
                         className={`flex-1 ${applyStatus.disabled ? 'opacity-60 cursor-not-allowed' : ''}`}
-                        variant='outline'
+                        variant='primary'
                     >
                         {applyStatus.reason}
                     </Button>
 
                     <Button
                         size='sm'
-                        variant='zinc'
+                        variant='primary'
                         onClick={() => handleAction(job)}
                         className="flex-1"
                     >

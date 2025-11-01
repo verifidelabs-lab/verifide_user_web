@@ -22,7 +22,7 @@ onPermission
     {showEye && (
       <button
         onClick={onView}
-        className="p-1 glassy-text-primary hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 glassy-text-primary hover:text-blue-600 transition-colors glassy-card border rounded-full"
         title="View"
       >
         <BsEye size={16} title="View" />
@@ -31,7 +31,7 @@ onPermission
     {showEditButton && (
       <button
         onClick={onEdit}
-        className="p-1 text-[#13B156] hover:text-green-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 text-[#13B156] hover:text-green-600 transition-colors glassy-card border rounded-full"
         title="Edit"
       >
         <BiEdit size={16} title="Edit" />
@@ -40,7 +40,7 @@ onPermission
     {showDeleteButton && (
       <button
         onClick={onDelete}
-        className="p-1 text-[#FF0000] hover:text-red-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 text-[#FF0000] hover:text-red-600 transition-colors glassy-card border rounded-full"
         title="Delete"
       >
         <BsTrash2 size={16} title="Delete" />
@@ -49,7 +49,7 @@ onPermission
     {showUpdatePasswordButton && (
       <button
         onClick={onUpdatePassword}
-        className="p-1 text-[#002fff] hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 text-[#002fff] hover:text-blue-600 transition-colors glassy-card border rounded-full"
         title="Update Password"
       >
         <TbPasswordUser size={16} />
@@ -58,7 +58,7 @@ onPermission
     {showAssignButton && (
       <button
         onClick={onAssign}
-        className="p-1 text-[#002fff] hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 text-[#002fff] hover:text-blue-600 transition-colors glassy-card border rounded-full"
         title="Assign"
       >
         <MdOutlineAssignmentInd />
@@ -67,7 +67,7 @@ onPermission
     {showListButton && (
       <button
         onClick={onList}
-        className="p-1 text-[#002fff] hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 text-[#002fff] hover:text-blue-600 transition-colors glassy-card border rounded-full"
         title="List"
       >
         <IoListSharp size={16} />
@@ -76,7 +76,7 @@ onPermission
     {showPermission && (
       <button
         onClick={onPermission}
-        className="p-1 text-[#116311a4] hover:text-blue-600 transition-colors bg-[#F9F9F9] border rounded-full"
+        className="p-1 text-[#116311a4] hover:text-blue-600 transition-colors glassy-card border rounded-full"
         title="List"
       >
         <GrUserAdmin size={16} />

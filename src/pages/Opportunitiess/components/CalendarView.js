@@ -72,7 +72,7 @@ const CalendarView = ({ jobs }) => {
       days.push(
         <div
           key={`empty-${i}`}
-          className="h-24 p-1 border border-gray-200 bg-gray-50"
+          className="h-24 p-1 border border-gray-200 glassy-card"
         ></div>
       );
     }
@@ -88,7 +88,7 @@ const CalendarView = ({ jobs }) => {
         <div
           key={day}
           className={`h-24 p-1 border border-gray-200 ${
-            moment().isSame(date, "day") ? "bg-blue-50" : ""
+            moment().isSame(date, "day") ? "glassy-card" : ""
           }`}
         >
           <div className="flex justify-between">
@@ -105,7 +105,7 @@ const CalendarView = ({ jobs }) => {
             {dayEvents.map((event) => (
               <div
                 key={event.id}
-                className="text-xs p-1 mb-1 bg-blue-100 rounded cursor-pointer hover:bg-blue-200"
+                className="text-xs p-1 mb-1 glassy-card rounded cursor-pointer hover:bg-blue-200"
                 onClick={() => {
                   setSelectedEvent(event);
                   setIsModalOpen(true);
@@ -131,7 +131,7 @@ const CalendarView = ({ jobs }) => {
 
     return (
       <div>
-        <div className="grid grid-cols-7 bg-gray-100 font-medium text-center py-2">
+        <div className="grid grid-cols-7 glassy-card font-medium text-center py-2">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <div key={day}>{day}</div>
           ))}
@@ -159,7 +159,7 @@ const CalendarView = ({ jobs }) => {
         >
           <div
             className={`text-center p-2 font-medium ${
-              moment().isSame(day, "day") ? "bg-blue-100" : ""
+              moment().isSame(day, "day") ? "glassy-card" : ""
             }`}
           >
             <div>{day.format("ddd")}</div>
@@ -175,7 +175,7 @@ const CalendarView = ({ jobs }) => {
             {dayEvents.map((event) => (
               <div
                 key={event.id}
-                className="p-2 mb-2 bg-blue-100 rounded cursor-pointer hover:bg-blue-200"
+                className="p-2 mb-2 glassy-card rounded cursor-pointer hover:bg-blue-200"
                 onClick={() => {
                   setSelectedEvent(event);
                   setIsModalOpen(true);
@@ -211,7 +211,7 @@ const CalendarView = ({ jobs }) => {
             dayEvents.map((event) => (
               <div
                 key={event.id}
-                className="p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"
+                className="p-4 border border-gray-200 rounded-lg cursor-pointer hover:glassy-card"
                 onClick={() => {
                   setSelectedEvent(event);
                   setIsModalOpen(true);
@@ -221,7 +221,7 @@ const CalendarView = ({ jobs }) => {
                   {moment(event.start).format("HH:mm")} -{" "}
                   {moment(event.end).format("HH:mm")}
                 </div>
-                <div className="text-gray-700">{event.title}</div>
+                <div className="glassy-text-primary">{event.title}</div>
                 <div className="text-sm glassy-text-secondary mt-2">
                   Meeting URL: {event.job.interviewDetails.meeting_url}
                 </div>
@@ -251,7 +251,7 @@ const CalendarView = ({ jobs }) => {
               <h2 className="text-xl font-bold">Interview Details</h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="glassy-text-secondary hover:text-gray-700"
+                className="glassy-text-secondary hover:glassy-text-primary"
               >
                 <svg
                   className="w-6 h-6"
@@ -271,7 +271,7 @@ const CalendarView = ({ jobs }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="font-medium text-gray-700 mb-2">
+                <h3 className="font-medium glassy-text-primary mb-2">
                   Candidate Information
                 </h3>
                 <div className="flex items-center mb-4">
@@ -302,7 +302,7 @@ const CalendarView = ({ jobs }) => {
                     {job.user_id.topSkills.slice(0, 5).map((skill) => (
                       <span
                         key={skill._id}
-                        className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                        className="px-2 py-1 glassy-card text-blue-800 text-xs rounded-full"
                       >
                         {skill.name}
                       </span>
@@ -312,7 +312,7 @@ const CalendarView = ({ jobs }) => {
               </div>
 
               <div>
-                <h3 className="font-medium text-gray-700 mb-2">
+                <h3 className="font-medium glassy-text-primary mb-2">
                   Interview Details
                 </h3>
 
@@ -353,10 +353,10 @@ const CalendarView = ({ jobs }) => {
 
                 {job.reviews && job.reviews.length > 0 && (
                   <div>
-                    <h4 className="font-medium text-gray-700 mb-2">Reviews</h4>
+                    <h4 className="font-medium glassy-text-primary mb-2">Reviews</h4>
                     <div className="space-y-2">
                       {job.reviews.map((review, index) => (
-                        <div key={index} className="text-sm p-2 bg-gray-100 rounded">
+                        <div key={index} className="text-sm p-2 glassy-card rounded">
                           <div className="glassy-text-secondary">{moment(review.date).format('MMM D, YYYY')}</div>
                           <div>{review.remarks}</div>
                         </div>
@@ -369,7 +369,7 @@ const CalendarView = ({ jobs }) => {
 
             <div className="mt-6 flex justify-end space-x-3">
               <button
-                className="px-4 py-2 bg-gray-200 glassy-text-primary rounded hover:bg-gray-300"
+                className="px-4 py-2 glassy-card glassy-text-primary rounded hover:glassy-card"
                 onClick={() => setIsModalOpen(false)}
               >
                 Close
@@ -395,7 +395,7 @@ const CalendarView = ({ jobs }) => {
         {/* Calendar Header */}
         <div className="flex flex-wrap items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center space-x-4">
-            <button onClick={prev} className="p-2 rounded hover:bg-gray-100">
+            <button onClick={prev} className="p-2 rounded hover:glassy-card">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -411,7 +411,7 @@ const CalendarView = ({ jobs }) => {
               </svg>
             </button>
 
-            <button onClick={next} className="p-2 rounded hover:bg-gray-100">
+            <button onClick={next} className="p-2 rounded hover:glassy-card">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -443,7 +443,7 @@ const CalendarView = ({ jobs }) => {
 
             <button
               onClick={goToToday}
-              className="ml-4 px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100"
+              className="ml-4 px-3 py-1 text-sm border border-gray-300 rounded hover:glassy-card"
             >
               Today
             </button>
@@ -454,8 +454,8 @@ const CalendarView = ({ jobs }) => {
               onClick={() => setView("day")}
               className={`px-3 py-1 text-sm rounded ${
                 view === "day"
-                  ? "bg-blue-100 text-blue-800"
-                  : "hover:bg-gray-100"
+                  ? "glassy-card text-blue-800"
+                  : "hover:glassy-card"
               }`}
             >
               Day
@@ -464,8 +464,8 @@ const CalendarView = ({ jobs }) => {
               onClick={() => setView("week")}
               className={`px-3 py-1 text-sm rounded ${
                 view === "week"
-                  ? "bg-blue-100 text-blue-800"
-                  : "hover:bg-gray-100"
+                  ? "glassy-card text-blue-800"
+                  : "hover:glassy-card"
               }`}
             >
               Week
@@ -474,8 +474,8 @@ const CalendarView = ({ jobs }) => {
               onClick={() => setView("month")}
               className={`px-3 py-1 text-sm rounded ${
                 view === "month"
-                  ? "bg-blue-100 text-blue-800"
-                  : "hover:bg-gray-100"
+                  ? "glassy-card text-blue-800"
+                  : "hover:glassy-card"
               }`}
             >
               Month

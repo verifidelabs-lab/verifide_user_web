@@ -58,7 +58,6 @@ const PostJob = () => {
   console.log("this is te company prifie data", companiesProfileData);
   console.log("This is the company");
   const workSelector = useSelector((state) => state.work);
-  const industrySelector = useSelector((state) => state.global);
   const countriesSelector = useSelector((state) => state.global);
   const allCompanies = arrayTransform2(
     workSelector?.getAllCompaniesData?.data?.data || []
@@ -67,7 +66,7 @@ const PostJob = () => {
     workSelector?.getAllIndustryData?.data?.data || []
   );
   const allSkills = arrayTransform(
-    industrySelector?.masterSkillsData?.data?.data?.list || []
+    workSelector?.getAllWorkSkillListData?.data?.data || []
   );
   const allProfileRoles = arrayTransform(
     workSelector?.getAllProfileRoleData?.data?.data || []
@@ -112,7 +111,7 @@ const PostJob = () => {
   });
   const [formData, setFormData] = useState({
     company_id: companiesProfileData._id || "",
-    industry_id: "",
+    industry_id: companiesProfileData?.industry && companiesProfileData?.industry[0]._id || "",
     job_type: "",
     job_location: "",
     pay_type: "",
@@ -147,9 +146,10 @@ const PostJob = () => {
     setFormData({
       ...formData,
       company_id: companiesProfileData?._id,
+      industry_id: companiesProfileData?.industry && companiesProfileData?.industry[0]._id || "",
     });
   }, [companiesProfileData?._id]);
-  const [isCreatableIndustry, setIsCreatbleIndustry] = useState(true);
+  const [isCreatableIndustry, setIsCreatbleIndustry] = useState(false);
 
   const { handleLocationSelectChange } = useLocationFormHandlers(
     setFormData,
@@ -157,24 +157,24 @@ const PostJob = () => {
     setErrors
   );
 
-  // Handle access mode changes
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const newAccessMode = getCookie("ACCESS_MODE");
-      const activeMode = getCookie("ACTIVE_MODE");
-      setAccessMode(newAccessMode);
-      if (newAccessMode === 5) {
-        navigate(`/user/opportunitiess`);
-      }
-      // if(activeMode === "company"){
-      //     navigate("/company/opportunities")
-      // }
-    };
+  // // Handle access mode changes
+  // useEffect(() => {
+  //   const handleStorageChange = () => {
+  //     const newAccessMode = getCookie("ACCESS_MODE");
+  //     const activeMode = getCookie("ACTIVE_MODE");
+  //     setAccessMode(newAccessMode);
+  //     if (newAccessMode === 5) {
+  //       navigate(`/user/opportunitiess`);
+  //     }
+  //     // if(activeMode === "company"){
+  //     //     navigate("/company/opportunities")
+  //     // }
+  //   };
 
-    handleStorageChange();
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, [navigate]);
+  //   handleStorageChange();
+  //   window.addEventListener("storage", handleStorageChange);
+  //   return () => window.removeEventListener("storage", handleStorageChange);
+  // }, [navigate]);
   const getSelectedOption = useCallback((options, value) => {
     if (!value) return null;
     const id = value._id ? value._id : value;
@@ -194,6 +194,13 @@ const PostJob = () => {
         created_by_users: companiesProfileData?.created_by_users,
       })
     );
+    dispatch(
+      getAllProfileRole({
+        industry_id: companiesProfileData.industry && companiesProfileData.industry[0]._id,
+        created_by_users: companiesProfileData.industry && companiesProfileData.industry[0].created_by_users || false,
+      })
+    );
+
   }, [dispatch, companiesProfileData?._id]);
   // Populate selected skills from skill IDs
   const populateSelectedSkills = useCallback(
@@ -246,10 +253,10 @@ const PostJob = () => {
         dispatch(
           getAllIndustry({
             company_id: res?.data?.company_id?._id,
-            created_by_users: true,
+            created_by_users: res?.data?.company_id?.created_by_users,
           })
         );
-        // setIsCreatbleIndustry(res?.data?.company_id?.created_by_users);
+        setIsCreatbleIndustry(res?.data?.company_id?.created_by_users);
       }
 
       if (res?.data?.industry_id) {
@@ -260,6 +267,15 @@ const PostJob = () => {
           })
         );
       }
+      if (res?.data?.industry_id) {
+        dispatch(
+          getAllWorkSkillList({
+            profile_role_id: res?.data?.job_title,
+            created_by_users: res?.data?.industry_id?.created_by_users || true,
+          })
+        );
+      }
+
 
       if (
         jobData.screening_questions &&
@@ -522,9 +538,7 @@ const PostJob = () => {
     }));
 
     console.log("field, selectedOption", field, selectedOption);
-    if (field === "company_id") {
-      setIsCreatbleIndustry(true);
-    }
+
 
     switch (field) {
       case "institution_id":
@@ -567,7 +581,7 @@ const PostJob = () => {
           })
         );
         break;
-      case "profile_role_id":
+      case "job_title":
         await dispatch(
           getAllWorkSkillList({
             profile_role_id: value,
@@ -961,7 +975,7 @@ const PostJob = () => {
   const renderStep3 = () => (
     <div className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-4">
+        <label className="block text-sm font-medium glassy-text-primary mb-4">
           Screening Questions <span className="text-red-500">*</span>
         </label>
         <p className="text-sm glassy-text-secondary mb-4">
@@ -1019,7 +1033,7 @@ const PostJob = () => {
               </div>
 
               <div className="mb-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Question Type
                 </label>
                 <select
@@ -1041,7 +1055,7 @@ const PostJob = () => {
 
               {question.question_type === "theoretical" ? (
                 <div className="mb-3">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium glassy-text-primary mb-1">
                     Expected Answer (Optional)
                   </label>
                   <textarea
@@ -1061,7 +1075,7 @@ const PostJob = () => {
               ) : (
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium glassy-text-primary">
                       Options <span className="text-red-500">*</span>
                     </label>
                     {optionsError && (
@@ -1140,7 +1154,7 @@ const PostJob = () => {
               )}
 
               <div className="mt-3">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium glassy-text-primary mb-1">
                   Time Limit (minutes) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -1213,7 +1227,7 @@ const PostJob = () => {
               {currentStep > 1 && (
                 <button
                   onClick={prevStep}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                  className="px-4 py-2 glassy-card glassy-text-primary rounded-md hover:glassy-card"
                 >
                   Back
                 </button>
@@ -1222,7 +1236,7 @@ const PostJob = () => {
               {currentStep < 3 ? (
                 <button
                   onClick={nextStep}
-                  className="px-4 py-2 bg-blue-500 glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
+                  className="px-4 py-2 glassy-card0 glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
                 >
                   Next
                 </button>
@@ -1231,7 +1245,7 @@ const PostJob = () => {
                   <Button
                     onClick={handleSubmit}
                     loading={submitting}
-                    className="px-4 py-2 bg-green-500 glassy-text-primary rounded-md hover:bg-green-600 ml-auto"
+                    className="px-4 py-2 glassy-card glassy-text-primary rounded-md hover:bg-green-600 ml-auto"
                   >
                     {id ? "Update Job" : "Post Job"}
                   </Button>

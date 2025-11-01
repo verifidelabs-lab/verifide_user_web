@@ -55,7 +55,7 @@ const SuggestedUsersSwiper = ({
         <h3 className="text-xl font-bold glassy-text-primary">People you may know</h3>
         <button
           onClick={onExploreMore}
-          className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-50"
+          className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors px-3 py-1.5 rounded-lg hover:glassy-card"
         >
           <span>Explore more</span>
           <svg
@@ -92,7 +92,7 @@ const SuggestedUsersSwiper = ({
 
           return (
             <SwiperSlide key={user._id || index}>
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
+              <div className="glassy-card rounded-xl p-4 border border-gray-200 hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
                 <div className="flex flex-col items-center text-center flex-grow">
                   <div className="relative mb-4">
 
@@ -125,7 +125,7 @@ const SuggestedUsersSwiper = ({
                     </>}
 
                     {user.isConnected && (
-                      <div className="absolute -bottom-1 -right-1 bg-blue-500 rounded-full p-0.5">
+                      <div className="absolute -bottom-1 -right-1 glassy-card0 rounded-full p-0.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-4 w-4 glassy-text-primary"
@@ -158,7 +158,7 @@ const SuggestedUsersSwiper = ({
                     onClick={() => handleConnectUser(user)}
                     disabled={isLoading}
                     className={`px-4 py-2 text-xs font-medium rounded-lg transition-colors w-full flex items-center justify-center ${user.isConnected
-                      ? "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
+                      ? "glassy-card glassy-text-primary hover:glassy-card border border-gray-300"
                       : "bg-blue-600 glassy-text-primary hover:bg-blue-700 shadow-sm"
                       } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >

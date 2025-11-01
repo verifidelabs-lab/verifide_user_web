@@ -86,7 +86,7 @@ const MessageText = ({ msg }) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg"
+        className="block p-4 glassy-card hover:glassy-card rounded-lg"
       >
         <div className="flex items-center gap-3">
           <img
@@ -331,7 +331,7 @@ const Userpost = () => {
         name: ogData.siteName,
         logo: {
           "@type": "ImageObject",
-          url: `${window.location.origin}/logo.png`,
+          url: `${window.location.origin}/Frame 1000004906.png`,
         },
       },
       datePublished: postData.createdAt,
@@ -507,7 +507,7 @@ const Userpost = () => {
         <div className="flex items-center">
           <div className="flex items-center gap-3">
             <img
-              src="/logo.png"
+              src="/Frame 1000004906.png"
               alt="logo"
               className="md:h-8 h-6 md:w-full w-28 transition-transform duration-300 hover:scale-105"
             />
@@ -518,14 +518,14 @@ const Userpost = () => {
             <>
               <ul className='flex justify-start items-center gap-6 font-semibold text-sm'>
                 <li>
-                  <Link to={`/user/feed`} className='hover:text-blue-500 bg-gray-50 rounded-full transition-all duration-300 hover:scale-100'
+                  <Link to={`/user/feed`} className='hover:text-blue-500 glassy-card rounded-full transition-all duration-300 hover:scale-100'
                     onClick={() => { window.localStorage.setItem("postId", id) }}>Home</Link>
                 </li>
                 <li className='md:block hidden'>
-                  <Link to={`/user/profile`} className='hover:text-blue-500 bg-gray-50 rounded-full transition-all duration-300 hover:scale-100'>Profile</Link>
+                  <Link to={`/user/profile`} className='hover:text-blue-500 glassy-card rounded-full transition-all duration-300 hover:scale-100'>Profile</Link>
                 </li>
                 <li className='md:block hidden'>
-                  <Link to={`/user/connections`} className='hover:text-blue-500 bg-gray-50 rounded-full transition-all duration-300 hover:scale-100'>Connections</Link>
+                  <Link to={`/user/connections`} className='hover:text-blue-500 glassy-card rounded-full transition-all duration-300 hover:scale-100'>Connections</Link>
                 </li>
               </ul>
               <div className='flex justify-start gap-2 items-center'>
@@ -621,7 +621,7 @@ const Userpost = () => {
                       {postData.job_id.job_title_details?.name ||
                         "Job Position"}
                     </h2>
-                    <p className="text-lg text-gray-700 font-semibold">
+                    <p className="text-lg glassy-text-primary font-semibold">
                       {postData.job_id.company?.name || "Company Name"}
                     </p>
                     <p className="text-sm glassy-text-secondary">
@@ -630,7 +630,7 @@ const Userpost = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 mb-2">
+                  <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium glassy-card text-blue-800 mb-2">
                     {/* <FaBriefcase className="mr-1" /> */}
                     {postData.job_id.job_type}
                   </div>
@@ -643,7 +643,7 @@ const Userpost = () => {
               {/* Job Details Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
-                  {/* <FaMapMarkerAlt className="text-gray-400" /> */}
+                  {/* <FaMapMarkerAlt className="glassy-text-secondary" /> */}
                   {/* <span>{(postData.job_id.work_location) || 'Location not specified'}</span> */}
                 </div>
 
@@ -666,14 +666,14 @@ const Userpost = () => {
               {postData.job_id.required_skills &&
                 postData.job_id.required_skills.length > 0 && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">
+                    <h4 className="text-sm font-semibold glassy-text-primary mb-2">
                       Required Skills:
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {postData.job_id.required_skills.map((skill, index) => (
                         <span
                           key={skill._id || index}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border"
+                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium glassy-card glassy-text-primary border"
                         >
                           {skill.name}
                         </span>
@@ -694,7 +694,7 @@ const Userpost = () => {
             {postData.job_id.job_description && (
               <div className="p-6">
                 <h4 className="text-lg font-semibold glassy-text-primary mb-3">Job Description</h4>
-                <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
+                <div className="glassy-text-primary text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                   {postData.job_id.job_description}
                 </div>
               </div>
@@ -726,7 +726,7 @@ const Userpost = () => {
 
         {/* Poll Display */}
         {postData?.post_type === "poll" && postData?.poll && (
-          <div className="mb-4 border border-gray-200 rounded-lg p-4 bg-gray-50">
+          <div className="mb-4 border border-gray-200 rounded-lg p-4 glassy-card">
             <div className="flex items-center gap-2 mb-3 text-blue-600">
               <FaChartBar />
               <span className="font-medium">Poll</span>
@@ -746,7 +746,7 @@ const Userpost = () => {
                     <span className="text-sm font-medium">{option.text}</span>
                     <span className="text-xs glassy-text-secondary">{percentage}%</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div className="w-full glassy-card rounded-full h-2.5">
                     <div
                       className="bg-blue-600 h-2.5 rounded-full"
                       style={{ width: `${percentage}%` }}
@@ -841,7 +841,7 @@ const Userpost = () => {
                       className="w-8 h-8 rounded-full flex-shrink-0"
                     />
                   )}
-                  <div className="bg-gray-100 p-3 rounded-lg flex-1">
+                  <div className="glassy-card p-3 rounded-lg flex-1">
                     <div className="font-semibold text-sm">
                       {comment?.user?.first_name}
                     </div>
@@ -861,7 +861,7 @@ const Userpost = () => {
         <div className="fixed inset-0 glassy-card/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
           <div className="glassy-card w-full max-w-md p-6 rounded-xl shadow-xl flex flex-col items-center space-y-5">
             <img
-              src="/headerlogo-D3k-kYIk 2.png"
+              src="/Frame 1000004906.png"
               alt="App Logo"
               className="w-40 h-auto"
             />
@@ -880,7 +880,7 @@ const Userpost = () => {
               </button>
               <button
                 onClick={() => setShowPopup(false)}
-                className="flex-1 border border-gray-300 hover:border-gray-400 text-gray-700 px-4 py-2.5 rounded-lg font-medium transition duration-300"
+                className="flex-1 border border-gray-300 hover:border-gray-400 glassy-text-primary px-4 py-2.5 rounded-lg font-medium transition duration-300"
               >
                 Not now
               </button>

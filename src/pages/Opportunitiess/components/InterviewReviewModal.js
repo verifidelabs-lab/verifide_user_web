@@ -44,7 +44,7 @@ const InterviewReviewModal = ({
                 {selectInterviewId.user_id.topSkills.map((skill) => (
                   <span
                     key={skill._id}
-                    className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
+                    className="inline-block glassy-card text-blue-800 text-xs px-2 py-1 rounded-full"
                   >
                     {skill.name}
                   </span>
@@ -54,7 +54,7 @@ const InterviewReviewModal = ({
           </div>
         </div>
 
-        <div className="mt-4 space-y-1 text-sm text-gray-700">
+        <div className="mt-4 space-y-1 text-sm glassy-text-primary">
           <p><strong>Position:</strong> {selectInterviewId?.job_details?.job_title || 'N/A'}</p>
           <p>
             <strong>Interview Date:</strong>{' '}
@@ -103,7 +103,7 @@ const InterviewReviewModal = ({
                 type="button"
                 aria-label="Decrease hour"
                 onClick={() => setHour((prev) => Math.max(1, prev - 1))}
-                className="w-8 h-8 flex items-center justify-center text-lg bg-blue-100 rounded-full hover:bg-gray-200 transition"
+                className="w-8 h-8 flex items-center justify-center text-lg glassy-card rounded-full hover:glassy-card transition"
               >
                 &minus;
               </button>
@@ -124,7 +124,7 @@ const InterviewReviewModal = ({
                 type="button"
                 aria-label="Increase hour"
                 onClick={() => setHour((prev) => Math.min(12, prev + 1))}
-                className="w-8 h-8 flex items-center justify-center text-lg bg-blue-100 rounded-full hover:bg-gray-200 transition"
+                className="w-8 h-8 flex items-center justify-center text-lg glassy-card rounded-full hover:glassy-card transition"
               >
                 +
               </button>
@@ -136,7 +136,7 @@ const InterviewReviewModal = ({
                 type="button"
                 aria-label="Decrease minute"
                 onClick={() => setMinute((prev) => Math.max(0, prev - 1))}
-                className="w-8 h-8 flex items-center justify-center text-lg bg-blue-100 rounded-full hover:bg-gray-200 transition"
+                className="w-8 h-8 flex items-center justify-center text-lg glassy-card rounded-full hover:glassy-card transition"
               >
                 &minus;
               </button>
@@ -157,7 +157,7 @@ const InterviewReviewModal = ({
                 type="button"
                 aria-label="Increase minute"
                 onClick={() => setMinute((prev) => Math.min(59, prev + 1))}
-                className="w-8 h-8 flex items-center justify-center text-lg bg-blue-100 rounded-full hover:bg-gray-200 transition"
+                className="w-8 h-8 flex items-center justify-center text-lg glassy-card rounded-full hover:glassy-card transition"
               >
                 +
               </button>

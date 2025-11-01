@@ -182,7 +182,7 @@ const Posts = ({ profileData }) => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 rounded text-gray-700 hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded glassy-text-primary hover:glassy-card disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronLeft size={18} />
           </button>
@@ -200,7 +200,7 @@ const Posts = ({ profileData }) => {
                 onClick={() => handlePageChange(item)}
                 className={`w-8 h-8 rounded flex items-center justify-center transition ${currentPage === item
                   ? 'bg-blue-600 glassy-text-primary'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  : 'glassy-text-primary hover:glassy-card'
                   }`}
               >
                 {item}
@@ -210,7 +210,7 @@ const Posts = ({ profileData }) => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 rounded text-gray-700 hover:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded glassy-text-primary hover:glassy-card disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronRight size={18} />
           </button>
@@ -234,7 +234,7 @@ const Posts = ({ profileData }) => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen glassy-card p-4 md:p-8">
       <div className="w-full mx-auto">
 
         <div className="glassy-card rounded-lg shadow-md p-6">
@@ -378,7 +378,7 @@ const Posts = ({ profileData }) => {
           </div>
           <div className="">
             <div className="relative flex-1 min-w-[250px]">
-              <FiSearch className="absolute left-3 top-3 text-gray-400" />
+              <FiSearch className="absolute left-3 top-3 glassy-text-secondary" />
               <input
                 type="text"
                 placeholder="Search posts or tags..."

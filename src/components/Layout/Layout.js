@@ -302,7 +302,7 @@ function Layout() {
                   accessMode === "6" ? <Opportunitiess /> : <Opportunitiess2 />
                 }
               />{" "}
-              :
+              
               <Route path="/suggested-users" element={<Users />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/assessment/:token?" element={<Index />} />

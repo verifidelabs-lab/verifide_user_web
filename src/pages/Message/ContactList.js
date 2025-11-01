@@ -73,13 +73,13 @@ const ContactItem = React.memo(
                 <span className="ml-2 text-xs text-red-500">(Blocked)</span>
               )}
             </h3>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs glassy-text-primary">
               {convertTimestampToDate(contact.latestMessageTime)}
             </span>
 
             {/* Dots menu toggle */}
             <button
-              className="ml-2 p-1 rounded-full hover:bg-gray-200 glassy-text-primary"
+              className="ml-2 p-1 rounded-full hover:glassy-card glassy-text-primary"
               onClick={(e) => {
                 e.stopPropagation(); // prevent parent onClick
                 setMenuOpen((prev) => !prev);
@@ -97,7 +97,7 @@ const ContactItem = React.memo(
                     onDelete(contact); // Call delete function
                     setMenuOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-t-lg"
+                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:glassy-card rounded-t-lg"
                 >
                   Delete
                 </button>
@@ -107,7 +107,7 @@ const ContactItem = React.memo(
 
           <p
             className={`text-sm truncate mt-1 ${contact?.isBlocked
-                ? "text-gray-400 italic"
+                ? "glassy-text-secondary italic"
                 : "glassy-text-secondary"
               }`}
           >

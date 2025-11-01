@@ -103,7 +103,7 @@ const MessageText = ({ msg, isOwn }) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg"
+        className="block p-4 glassy-card hover:glassy-card rounded-lg"
       >
         <div className="flex items-center gap-3">
           <img
@@ -223,14 +223,14 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
     return (
       <div className={`mb-2 p-2 rounded-lg border-l-2 ${isOwn
-        ? 'bg-gray-600 border-white/40'
-        : 'bg-gray-100 border-gray-300'
+        ? 'glassy-card border-white/40'
+        : 'glassy-card border-gray-300'
         }`}>
         <p className={`text-xs font-medium mb-1 ${isOwn ? 'glassy-text-primary/80' : 'glassy-text-secondary'
           }`}>
           {repliedMessageOwn ? 'You' : 'Them'}
         </p>
-        <p className={`text-xs truncate ${isOwn ? 'glassy-text-primary/90' : 'text-gray-700'
+        <p className={`text-xs truncate ${isOwn ? 'glassy-text-primary/90' : 'glassy-text-primary'
           }`}>
           {getReplyPreviewText()}
         </p>
@@ -424,17 +424,17 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                 key={index}
                 className={`relative p-3 rounded-lg border cursor-pointer transition-all ${hasVoted
                   ? isOwn
-                    ? 'bg-blue-500/20 border-blue-400/50'
-                    : 'bg-blue-50 border-blue-200'
+                    ? 'glassy-card0/20 border-blue-400/50'
+                    : 'glassy-card border-blue-200'
                   : isOwn
                     ? 'glassy-card/10 border-white/20 hover:glassy-card/20'
-                    : ' border-gray-200 hover:bg-gray-100'
+                    : ' border-gray-200 hover:glassy-card'
                   }`}
                 onClick={() => handlePollVote(index)}
               >
                 {/* Progress bar background */}
                 <div
-                  className={`absolute inset-0 rounded-lg transition-all ${isOwn ? 'bg-blue-400/20' : 'bg-blue-100'
+                  className={`absolute inset-0 rounded-lg transition-all ${isOwn ? 'bg-blue-400/20' : 'glassy-card'
                     }`}
                   style={{ width: `${percentage}%` }}
                 />
@@ -545,7 +545,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                   {skills.map((skill) => (
                     <span
                       key={skill._id}
-                      className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
+                      className="px-2 py-1 text-xs glassy-card text-blue-800 rounded-full"
                     >
                       {skill.name}
                     </span>
@@ -624,7 +624,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
 
       case 'pdf':
         return (
-          <div className={`flex items-center space-x-3 p-3 rounded-lg max-w-[280px] ${isOwn ? 'glassy-card/20' : 'bg-gray-100'}`}>
+          <div className={`flex items-center space-x-3 p-3 rounded-lg max-w-[280px] ${isOwn ? 'glassy-card/20' : 'glassy-card'}`}>
 
             <div className="flex-1 min-w-0">
               <p className={`text-sm font-medium truncate ${isOwn ? 'glassy-text-primary' : 'glassy-text-primary'}`}>
@@ -645,7 +645,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
             </div>
             <button
               onClick={() => handleDownload(msg.file_url, getFileName(msg.file_url))}
-              className={`flex-shrink-0 p-2 rounded-full hover:bg-opacity-20 transition-colors ${isOwn ? 'hover:glassy-card/30' : 'hover:bg-gray-300'}`}
+              className={`flex-shrink-0 p-2 rounded-full hover:bg-opacity-20 transition-colors ${isOwn ? 'hover:glassy-card/30' : 'hover:glassy-card'}`}
             >
               <BiDownload className={`w-4 h-4 ${isOwn ? 'glassy-text-primary' : 'glassy-text-secondary'}`} />
             </button>
@@ -708,7 +708,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                   {sharedData.tags.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
-                      className={`inline-flex items-center space-x-1 text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'bg-blue-100 text-blue-800'
+                      className={`inline-flex items-center space-x-1 text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'glassy-card text-blue-800'
                         }`}
                     >
                       <BiTag className="w-3 h-3" />
@@ -716,7 +716,7 @@ const MessageBubble = ({ msg, isOwn, onReply, messages = [], user_id }) => {
                     </span>
                   ))}
                   {sharedData.tags.length > 3 && (
-                    <span className={`text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'bg-gray-100 glassy-text-secondary'}`}>
+                    <span className={`text-xs px-2 py-1 rounded-full ${isOwn ? 'glassy-card/20 glassy-text-primary' : 'glassy-card glassy-text-secondary'}`}>
                       +{sharedData.tags.length - 3} more
                     </span>
                   )}

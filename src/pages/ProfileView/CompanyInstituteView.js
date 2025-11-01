@@ -145,7 +145,7 @@ const CompanyInstituteView = () => {
   if (!data) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] p-6 text-center glassy-card">
-        <IoAlertCircleOutline className="w-16 h-16 text-gray-400 mb-4" />
+        <IoAlertCircleOutline className="w-16 h-16 glassy-text-secondary mb-4" />
         <h2 className="text-2xl font-semibold glassy-text-primary mb-2">
           Organization Not Found
         </h2>
@@ -171,14 +171,14 @@ const CompanyInstituteView = () => {
           >
             Home
           </span>
-          <span className="text-gray-400">›</span>
+          <span className="glassy-text-secondary">›</span>
           <span
             className="glassy-text-secondary cursor-pointer"
             onClick={() => navigate(`/user/suggested-users?tab=${data?.type}`)}
           >
             Suggested Profiles
           </span>
-          <span className="text-gray-400">›</span>
+          <span className="glassy-text-secondary">›</span>
           <span className="font-medium glassy-text-primary cursor-pointer">
             {capitalizeWords(info?.name || data?.type)}
           </span>
@@ -194,7 +194,7 @@ const CompanyInstituteView = () => {
             onError={() => handleImageError('banner')}
           />
         ) : (
-          <div className="flex flex-col items-center text-gray-400">
+          <div className="flex flex-col items-center glassy-text-secondary">
             <MdOutlineImageNotSupported className="w-12 h-12 md:w-16 md:h-16 mb-2" />
             <p className="text-sm">No banner image</p>
           </div>
@@ -214,7 +214,7 @@ const CompanyInstituteView = () => {
                 onError={() => handleImageError("logo")}
               />
             ) : (
-              <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 text-gray-400">
+              <div className="flex flex-col items-center justify-center w-full h-full glassy-card glassy-text-secondary">
                 <BiBuilding className="w-8 h-8 md:w-10 md:h-10" />
               </div>
             )}
@@ -227,7 +227,7 @@ const CompanyInstituteView = () => {
                   {info?.display_name || info?.name || "Unnamed Organization"}
                 </h1>
                 {info?.is_verified && (
-                  <span className="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span className="glassy-card text-blue-700 text-xs px-2.5 py-1 rounded-full flex items-center gap-1">
                     ✔ Verified
                   </span>
                 )}

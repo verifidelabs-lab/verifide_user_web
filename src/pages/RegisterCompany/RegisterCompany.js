@@ -609,7 +609,7 @@ const RegisterCompany = () => {
             <button
               onClick={handleBack}
               title="go back"
-              className="text-sm px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-gray-700 transition-colors"
+              className="text-sm px-3 py-1 glassy-card hover:glassy-card rounded glassy-text-primary transition-colors"
             >
               <TbArrowBack size={20} />
             </button>

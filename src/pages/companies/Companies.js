@@ -329,7 +329,7 @@ const Companies = () => {
           <div className="flex gap-2" key={`actions-${company._id}`}>
             <button
               onClick={() => handleAddFromUser(company)}
-              className="p-2 text-sm bg-blue-500 glassy-text-primary rounded hover:bg-blue-600"
+              className="p-2 text-sm glassy-card0 glassy-text-primary rounded hover:bg-blue-600"
             >
               <CiCircleCheck size={18} />
             </button>
@@ -962,7 +962,7 @@ const Companies = () => {
                 value={formData?.logo_url}
                 name="logo_url"
                 onChange={(e) => handleChange("logo_url", e)}
-                placeholder="https://example.com/logo.png"
+                placeholder="https://example.com/Frame 1000004906.png"
               />
 
               <CustomInput
@@ -1312,7 +1312,7 @@ const Companies = () => {
               <div className="text-center text-sm glassy-text-secondary space-y-1 mt-1">
                 {companyDetails?.data?.verified_at && (
                   <p>
-                    <span className="font-medium text-gray-700">
+                    <span className="font-medium glassy-text-primary">
                       Verified At:
                     </span>{" "}
                     {new Date(companyDetails.data.verified_at).toLocaleString()}
@@ -1320,13 +1320,13 @@ const Companies = () => {
                 )}
                 {companyDetails?.data?.username && (
                   <p>
-                    <span className="font-medium text-gray-700">Username:</span>{" "}
+                    <span className="font-medium glassy-text-primary">Username:</span>{" "}
                     {companyDetails.data.username}
                   </p>
                 )}
                 {companyDetails?.data?.email && (
                   <p>
-                    <span className="font-medium text-gray-700">Email:</span>{" "}
+                    <span className="font-medium glassy-text-primary">Email:</span>{" "}
                     {companyDetails.data.email}
                   </p>
                 )}
@@ -1520,7 +1520,7 @@ const Companies = () => {
               variant="secondary"
               onClick={() => setIsPasswordModalOpen(false)}
               disabled={isSubmitting}
-              className="flex-1 py-3 transition-all duration-200 hover:bg-gray-100"
+              className="flex-1 py-3 transition-all duration-200 hover:glassy-card"
             >
               Cancel
             </Button>

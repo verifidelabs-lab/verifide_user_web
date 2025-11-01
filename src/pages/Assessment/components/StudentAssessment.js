@@ -434,7 +434,7 @@ const StudentAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded glassy-text-primary hover:glassy-card hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronLeft size={18} />
           </button>
@@ -452,7 +452,7 @@ const StudentAssessment = () => {
                 onClick={() => handlePageChange(item)}
                 className={`w-8 h-8 rounded flex items-center justify-center transition ${currentPage === item
                   ? 'bg-blue-600 glassy-text-primary'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  : 'glassy-text-primary hover:glassy-card'
                   }`}
               >
                 {item}
@@ -462,7 +462,7 @@ const StudentAssessment = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 rounded text-gray-700 hover:bg-gray-300 hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
+            className="p-2 rounded glassy-text-primary hover:glassy-card hover:glassy-text-primary disabled:text-gray-300 disabled:cursor-not-allowed"
           >
             <FiChevronRight size={18} />
           </button>
@@ -477,7 +477,7 @@ const StudentAssessment = () => {
         <h1 className="text-2xl font-bold glassy-text-primary">Assessments</h1>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
           <div className="relative w-full sm:w-80">
-            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <BiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary w-5 h-5" />
             <input
               type="text"
               placeholder="Search..."
@@ -488,7 +488,7 @@ const StudentAssessment = () => {
             {search && (
               <IoClose
                 size={18}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 glassy-text-secondary cursor-pointer"
                 onClick={clearSearch}
               />
             )}

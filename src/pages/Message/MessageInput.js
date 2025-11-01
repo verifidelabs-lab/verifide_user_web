@@ -36,7 +36,7 @@ const MessageInput = ({
             case 'image':
                 return <BiImage className="w-5 h-5 text-green-600" />;
             case 'video':
-                return <BiVideo className="w-5 h-5 text-purple-600" />;
+                return <BiVideo className="w-5 h-5 glassy-text-primary" />;
             case 'pdf':
                 return <BiFile className="w-5 h-5 text-red-600" />;
             default:
@@ -62,7 +62,7 @@ const MessageInput = ({
                 <div className="flex items-start justify-between">
                     <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
-                            <div className="w-1 h-8 bg-blue-500 rounded-full"></div>
+                            <div className="w-1 h-8 glassy-card0 rounded-full"></div>
                             <div>
                                 <p className="text-xs font-medium text-blue-700">
                                     Replying to {replyingTo.sender_id === contacts?.connectionUserId ? contacts?.first_name : 'You'}
@@ -75,7 +75,7 @@ const MessageInput = ({
                     </div>
                     <button
                         onClick={cancelReply}
-                        className="p-1 hover:bg-blue-100 rounded-full transition-colors"
+                        className="p-1 hover:glassy-card rounded-full transition-colors"
                     >
                         <BiX className="w-4 h-4 text-blue-500" />
                     </button>
@@ -139,7 +139,7 @@ const MessageInput = ({
                                     </div>
                                     <div className="w-full  rounded-full h-1">
                                         <div
-                                            className="bg-blue-500 h-1 rounded-full transition-all duration-300"
+                                            className="glassy-card0 h-1 rounded-full transition-all duration-300"
                                             style={{ width: `${uploadProgress}%` }}
                                         ></div>
                                     </div>
@@ -176,7 +176,7 @@ const MessageInput = ({
                             <div className="relative">
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="p-2 glassy-text-secondary hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
+                                    className="p-2 glassy-text-secondary hover:glassy-text-primary hover:glassy-card rounded-full transition-colors"
                                     disabled={loading || sendingMessage}
                                 >
                                     <BiPaperclip className="w-5 h-5" />
@@ -214,7 +214,7 @@ const MessageInput = ({
                                 />
                                 <span
                                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                                    className="absolute right-3 top-2.5 glassy-text-secondary cursor-pointer hover:text-gray-700"
+                                    className="absolute right-3 top-2.5 glassy-text-secondary cursor-pointer hover:glassy-text-primary"
                                 >
                                     <FaRegSmile size={20} />
                                 </span>
@@ -230,8 +230,8 @@ const MessageInput = ({
                                 onClick={handleSendMessage}
                                 disabled={(!messageInput.trim() && !mediaPreview.file_url) || sendingMessage || loading}
                                 className={`p-2 rounded-full transition-all duration-200 ${(!messageInput.trim() && !mediaPreview.file_url) || sendingMessage || loading
-                                    ? ' text-gray-400 cursor-not-allowed'
-                                    : 'bg-blue-500 glassy-text-primary hover:bg-blue-600 transform hover:scale-105'
+                                    ? ' glassy-text-secondary cursor-not-allowed'
+                                    : 'glassy-card0 glassy-text-primary hover:bg-blue-600 transform hover:scale-105'
                                     }`}
                             >
                                 {sendingMessage ? (
@@ -262,7 +262,7 @@ const MessageInput = ({
                             {contacts?.isBlockedByYou && onUnblock && (
                                 <button
                                     onClick={onUnblock}
-                                    className="mt-4 px-6 py-2 bg-blue-500 glassy-text-primary rounded-lg hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    className="mt-4 px-6 py-2 glassy-card0 glassy-text-primary rounded-lg hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                 >
                                     Unblock User
                                 </button>

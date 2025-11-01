@@ -40,7 +40,7 @@ const CourseCard = ({ course, handleCourseDetails, onBookmarkToggle }) => {
           alt="course"
           onError={(e) => {
             e.target.style.background = 'linear-gradient(45deg, #f3f4f6, #e5e7eb)';
-            e.target.src = '/logo.png';
+            e.target.src = '/Frame 1000004906.png';
           }}
           className="w-full h-full rounded-lg object-cover group-hover:scale-105 transition-transform duration-300"
         />
@@ -54,7 +54,7 @@ const CourseCard = ({ course, handleCourseDetails, onBookmarkToggle }) => {
               e.stopPropagation();
               onBookmarkToggle?.(course._id);
             }}
-            className="text-gray-700 hover:text-blue-600 transition-colors text-xl"
+            className="glassy-text-primary hover:text-blue-600 transition-colors text-xl"
           >
             {course?.isBookMarked ? <FcBookmark /> : <BiBookmark />}
           </button>

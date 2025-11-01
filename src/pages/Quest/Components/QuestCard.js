@@ -45,17 +45,17 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
             />
           ) : quest.images?.length > 0 ? (
             <img
-              src={quest.images[0] || "/logo.png"}
+              src={quest.images[0] || "/Frame 1000004906.png"}
               alt={quest.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               onError={(e) => {
                 e.target.style.background =
                   "linear-gradient(45deg, #f3f4f6, #e5e7eb)";
-                e.target.src = "/logo.png";
+                e.target.src = "/Frame 1000004906.png";
               }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gradient-to-br from-gray-50 to-gray-100">
+            <div className="w-full h-full flex items-center justify-center glassy-text-secondary bg-gradient-to-br from-gray-50 to-gray-100">
               <BiImage className="text-4xl" />
             </div>
           )}
@@ -90,14 +90,14 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
 
         <div className="p-4">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="font-bold text-lg text-gray-900 line-clamp-1 flex-1 mr-2 capitalize">
+            <h3 className="font-bold text-lg glassy-text-primary line-clamp-1 flex-1 mr-2 capitalize">
               {quest.title}
             </h3>
             <div className="flex justify-between items-center gap-2">
               <QuestTypeBadge type={quest.type} />
             </div>
           </div>
-          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+          <p className="glassy-text-secondary text-sm mb-3 line-clamp-2">
             {quest.description}
           </p>
 
@@ -110,7 +110,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
           </div>
 
           {quest.poll && quest.poll.options?.length > 0 && (
-            <div className="mb-3 bg-gray-50 rounded-lg border border-gray-100 overflow-hidden">
+            <div className="mb-3 glassy-card rounded-lg border border-gray-100 overflow-hidden">
               <div
                 className="flex items-center justify-between p-3 cursor-pointer"
                 onClick={() => setPollExpanded(!pollExpanded)}
@@ -157,9 +157,9 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
                               {percentage}%
                             </span>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="w-full glassy-card rounded-full h-2">
                             <div
-                              className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                              className="glassy-card0 h-2 rounded-full transition-all duration-500"
                               style={{ width: `${percentage}%` }}
                             ></div>
                           </div>
@@ -219,7 +219,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
                     : !quest?.isEngaged && (
                       <button
                         className={`text-xs ${status === "Upcoming"
-                          ? "bg-gray-400 cursor-not-allowed"
+                          ? "glassy-card cursor-not-allowed"
                           : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
                           } glassy-text-primary px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1`}
                         disabled={status === "Upcoming"}
@@ -232,7 +232,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
               )}
 
               {quest.type === "survey-polls" &&
-                accessMode !== "6" && !isCompany() &&
+                accessMode !== "6" && !isCompany() && !isInstitution() &&
                 status === "Ongoing" &&
                 !quest?.isVoted && (
                   <SurveyButton onClick={() => setShowForm(true)} />
@@ -242,7 +242,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
                 <>
                   {(status === "Upcoming" || status === "Ended") && (
                     <button
-                      className="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-1.5 text-blue-500 hover:text-blue-700 hover:glassy-card rounded-lg transition-colors"
                       onClick={() => onEdit(quest._id)}
                       aria-label="Edit"
                     >
