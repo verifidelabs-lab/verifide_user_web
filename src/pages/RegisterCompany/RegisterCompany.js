@@ -371,7 +371,7 @@ const RegisterCompany = () => {
     const newErrors = {};
 
     // Required fields validation
-    if (!formData.username?.trim()) newErrors.username = "Username is required";
+    // if (!formData.username?.trim()) newErrors.username = "Username is required";
     if (!formData.name?.trim()) newErrors.name = "Company name is required";
     if (!formData.display_name?.trim())
       newErrors.display_name = "Display name is required";
@@ -476,7 +476,7 @@ const RegisterCompany = () => {
           : null,
         linkedin_page_url: formData.linkedin_page_url,
         email: formData.email,
-        username: formData.username,
+        username: formData.name,
         // password: " ",
         // confirmPassword: " ",
       };
@@ -622,7 +622,7 @@ const RegisterCompany = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
-            <div>
+            {/* <div>
               <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Account Information
               </h3>
@@ -647,30 +647,9 @@ const RegisterCompany = () => {
                   error={errors.email}
                 />
               </div>
+            </div> */}
 
-              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <PasswordInput
-                  label="Password *"
-                  value={formData?.password}
-                  onChange={(e) => handleChange("password", e)}
-                  name="password"
-                  ref={inputRefs.password}
-                  placeholder="Enter password"
-                  error={errors?.password}
-                />
-                <PasswordInput
-                  label="Confirm Password *"
-                  value={formData?.confirmPassword}
-                  onChange={(e) => handleChange("confirmPassword", e)}
-                  name="confirmPassword"
-                  ref={inputRefs.confirmPassword}
-                  placeholder="Confirm password"
-                  error={errors?.confirmPassword}
-                />
-              </div> */}
-            </div>
-
-            <div className="border-t border-gray-200 pt-6">
+            <div className="">
               <h3 className="text-lg font-medium glassy-text-primary mb-4">
                 Basic Company Information
               </h3>
@@ -721,7 +700,17 @@ const RegisterCompany = () => {
                   error={errors?.country_code}
                 />
               </div>
-
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <CustomInput
+                  label="Email *"
+                  value={formData?.email}
+                  name="email"
+                  ref={inputRefs.email}
+                  onChange={(e) => handleChange("email", e)}
+                  placeholder="Enter email"
+                  error={errors.email}
+                />
+              </div>
               <div className="mt-4">
                 <CustomInput
                   type="textarea"
