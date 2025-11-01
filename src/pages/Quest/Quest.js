@@ -337,7 +337,7 @@ const ShortsClone = () => {
   }
 
   return (
-    <div className="min-h-screen  p-4 md:p-6">
+    <div className="min-h-screen  p-4 md:p-6 overflow-y-auto hide-scrollbar overflow-hidden">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8" data-aos="fade-down">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold glassy-text-primary">

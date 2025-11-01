@@ -38,7 +38,7 @@ const ProfileCard = ({ data }) => {
           <p className="glassy-text-secondary text-sm">
             {data?.headline ? data?.headline.split(' ').slice(0, 3).join(' ') : 'No headline'}
           </p>
-          <p className="glassy-text-secondary/50 text-xs">
+          <p className="glassy-text-secondary  text-xs">
             {`${data?.address?.city?.name ? `${data?.address?.city?.name}, ` : ''}${data?.address?.state?.name || ''}`}
           </p>
         </div>

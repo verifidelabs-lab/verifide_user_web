@@ -260,14 +260,15 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     >
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div className="flex items-center justify-between p-4   relative">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 px-4 py-3">
             <img
               src="/Frame 1000004906.png"
               alt="logo"
-              className="h-8 transition-transform duration-300 hover:scale-105"
+              className="h-8 w-auto max-w-[120px] sm:h-9 md:h-10 lg:h-11 transition-transform duration-300 hover:scale-105 object-contain cursor-pointer"
               onClick={() => navigate(`/user/feed`)}
             />
           </div>
+
         </div>
         <div className="flex items-center gap-4">
           <button

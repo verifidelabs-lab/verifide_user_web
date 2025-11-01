@@ -31,6 +31,7 @@ import RegisterCompany from "../../pages/RegisterCompany/RegisterCompany";
 import RegisterInstitute from "../../pages/RegisterInstitute/RegisterInstitute";
 import Companies from "../../pages/companies/Companies";
 import Institution from "../../pages/Institution/Institution";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Sidebar = lazy(() => import("./../Sidebar/Sidebar"));
 const Header = lazy(() => import("../Header/Header"));
@@ -186,9 +187,9 @@ function Layout() {
     dispatch(getProfile());
   }, [dispatch]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1500) {
+      if (window.innerWidth < 1000) {
         setNavbarOpen(false);
       } else {
         setNavbarOpen(true);
@@ -236,17 +237,28 @@ function Layout() {
         setUserType={setUserType}
         playAndShowNotification={playAndShowNotification}
       />
-
+      {/* Sidebar Toggle Button for Mobile */}
+      {!navbarOpen && window.innerWidth <= 1000 && (
+        <button
+          className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
+          onClick={() => setNavbarOpen(true)}
+        >
+          <GiHamburgerMenu className="text-xl glassy-text-primary" />
+        </button>
+      )}
       {/* Sidebar + Content stacked below header */}
-      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
-        {/* Sidebar (below header in mobile, side-by-side in desktop if you want) */}
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-0 md:p-5">
+        {/* Sidebar */}
         {(location.pathname !== '/app/opportunities' &&
           location.pathname !== '/user/terms-and-conditions' &&
-          location.pathname !== '/user/course/recommended') && 
-          location.pathname !== '/user/opportunitiess'&& (
+          location.pathname !== '/user/course/recommended' &&
+          location.pathname !== '/user/opportunitiess') && (
             <div
-              className={`transition-all duration-300 ${navbarOpen ? 'md:w-72 w-full' : 'w-0 md:w-20'
-                }`}
+              className={`
+        fixed md:relative top-0 left-0 h-screen md:h-auto z-50
+        transition-transform duration-300 ease-in-out
+        ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
+      `}
             >
               <Sidebar
                 openLogout={openLogout}
@@ -257,7 +269,10 @@ function Layout() {
               />
             </div>
           )}
-        <main className='flex-1 overflow-auto custom-scrollbar  '>
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">
+
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />
@@ -302,7 +317,7 @@ function Layout() {
                   accessMode === "6" ? <Opportunitiess /> : <Opportunitiess2 />
                 }
               />{" "}
-              
+
               <Route path="/suggested-users" element={<Users />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/assessment/:token?" element={<Index />} />
