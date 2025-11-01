@@ -53,7 +53,7 @@ const Button = ({
   const variantStyles = {
     primary: `glassy-button`,
     secondary: `bg-[#8989894D]/30 glassy-text-primary hover:glassy-card hover:glassy-card focus:ring-gray-500 text-[16px] font-[700]`,
-    outline: `border border-[#2563EB] text-[#2563EB] font-[700] bg-transparent  hover:glassy-text-primary hover:text-[#FFFFFF] hover:border-gray-400 focus:ring-gray-300 text-[16px] font-[700]`,
+    outline: `border border-[#2563EB] glassy-text-primary font-[700] bg-transparent  hover:glassy-text-primary hover:text-[#FFFFFF] hover:border-gray-400 focus:ring-gray-300 text-[16px] font-[700]`,
     ghost: `bg-transparent glassy-text-primary hover:glassy-card focus:ring-gray-200 text-[16px] font-[700]`,
     danger: `bg-red-600 text-[#FFFFFF] hover:bg-red-700 focus:ring-red-500 text-[16px] font-[700]`,
     success: `bg-green-600 text-[#FFFFFF] hover:bg-green-700 focus:ring-green-500 text-[16px] font-[700]`,

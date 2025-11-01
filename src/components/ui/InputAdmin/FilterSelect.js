@@ -83,7 +83,7 @@ const FilterSelect = ({
   return (
     <div className={`w-full ${containerClassName}`}>
       {label && (
-        <label className={`block text-sm glassy-text-secondary font-medium mb-2 ${labelClassName}`}>
+        <label className={`block text-sm glassy-text-primary font-medium mb-2 ${labelClassName}`}>
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>

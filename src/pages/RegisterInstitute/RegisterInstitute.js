@@ -1,31 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { PiPlus, PiX } from 'react-icons/pi';
-import { arrayTransform, uploadImageDirectly } from '../../components/utils/globalFunction';
-import { useDispatch, useSelector } from 'react-redux';
-import { cities, countries, state } from '../../redux/Global Slice/cscSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { PiPlus, PiX } from "react-icons/pi";
+import {
+  arrayTransform,
+  uploadImageDirectly,
+} from "../../components/utils/globalFunction";
+import { useDispatch, useSelector } from "react-redux";
+import { cities, countries, state } from "../../redux/Global Slice/cscSlice";
+import { useCallback, useEffect, useState } from "react";
 import {
   institutionTypePublic,
   institutionDegreePublic,
   institutionsRegister,
-  institutionsRegisterVerifyOtp
-} from '../../redux/slices/authSlice';
-import { toast } from 'sonner';
-import { setCookie } from '../../components/utils/cookieHandler';
-import { useNavigate } from 'react-router-dom';
-import OTPVerificationPopup from '../RegisterCompany/components/OTPVerificationPopup';
-import CreatableSelect from 'react-select/creatable';
-import classNames from 'classnames';
+  institutionsRegisterVerifyOtp,
+} from "../../redux/slices/authSlice";
+import { toast } from "sonner";
+import { setCookie } from "../../components/utils/cookieHandler";
+import { useNavigate } from "react-router-dom";
+import OTPVerificationPopup from "../RegisterCompany/components/OTPVerificationPopup";
+import CreatableSelect from "react-select/creatable";
+import classNames from "classnames";
 import { TbArrowBack } from "react-icons/tb";
-import CustomInput from '../../components/ui/InputAdmin/CustomInput';
-import PasswordInput from '../../components/ui/InputAdmin/PasswordInput';
-import FilterSelect from '../../components/ui/InputAdmin/FilterSelect';
-import useFormHandler from '../../components/hooks/useFormHandler';
-import Button from '../../components/ui/Button/Button';
-import Input from '../../components/ui/InputAdmin/Input';
-import { createInstitution, getInstitutionsList } from '../../redux/slices/instituteSlice';
-import EnhancedFileInput from '../../components/ui/Input/CustomFileAndImage';
+import CustomInput from "../../components/ui/InputAdmin/CustomInput";
+import PasswordInput from "../../components/ui/InputAdmin/PasswordInput";
+import FilterSelect from "../../components/ui/InputAdmin/FilterSelect";
+import useFormHandler from "../../components/hooks/useFormHandler";
+import Button from "../../components/ui/Button/Button";
+import Input from "../../components/ui/InputAdmin/Input";
+import {
+  createInstitution,
+  getInstitutionsList,
+} from "../../redux/slices/instituteSlice";
+import EnhancedFileInput from "../../components/ui/Input/CustomFileAndImage";
 
 const initialFormData = {
   username: "",
@@ -70,28 +76,28 @@ const initialFormData = {
   linkedin_page_url: "",
 };
 
-
 const FilterSelectAdd = ({
-  label = 'Filter By',
+  label = "Filter By",
   options = [],
   selectedOption,
   onChange,
   isMulti = false,
-  containerClassName = '',
-  selectClassName = '',
-  labelClassName = '',
-  placeholder = 'Select...',
+  containerClassName = "",
+  selectClassName = "",
+  labelClassName = "",
+  placeholder = "Select...",
   error = false,
   enableCustomInput = false,
   onAddCustomOption,
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const selectClasses = classNames(
-    'h-[50px] opacity-100 rounded-[10px] border w-full',
+    "h-[50px] opacity-100 rounded-[10px] border w-full glassy-input",
     {
-      'border-gray-300': !error,
-      'border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500': error,
+      "border-gray-300": !error,
+      "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
+        error,
     },
     selectClassName
   );
@@ -99,35 +105,35 @@ const FilterSelectAdd = ({
   const customStyles = {
     control: (base, state) => ({
       ...base,
-      borderRadius: '10px',
-      borderColor: error ? '#f87171' : '#d1d5db',
-      minHeight: '52px',
+      borderRadius: "10px",
+      borderColor: error ? "#f87171" : "#d1d5db",
+      minHeight: "52px",
       opacity: 1,
-      boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none',
-      '&:hover': {
-        borderColor: error ? '#f87171' : '#9ca3af',
+      boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
+      "&:hover": {
+        borderColor: error ? "#f87171" : "#9ca3af",
       },
     }),
     placeholder: (base) => ({
       ...base,
-      color: '#000000',
+      color: "#000000",
       opacity: 0.5,
     }),
     multiValue: (base) => ({
       ...base,
-      backgroundColor: '#e5e7eb',
-      borderRadius: '4px',
+      backgroundColor: "#e5e7eb",
+      borderRadius: "4px",
     }),
     multiValueLabel: (base) => ({
       ...base,
-      color: '#374151',
+      color: "#374151",
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: '#6b7280',
-      ':hover': {
-        backgroundColor: '#f87171',
-        color: 'white',
+      color: "#6b7280",
+      ":hover": {
+        backgroundColor: "#f87171",
+        color: "white",
       },
     }),
   };
@@ -145,7 +151,9 @@ const FilterSelectAdd = ({
 
   return (
     <div className={`w-full ${containerClassName}`}>
-      <label className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}>
+      <label
+        className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}
+      >
         {label}
       </label>
 
@@ -166,19 +174,18 @@ const FilterSelectAdd = ({
         noOptionsMessage={({ inputValue }) =>
           enableCustomInput && inputValue
             ? `No match found. Press Enter to add "${inputValue}"`
-            : 'No options'
+            : "No options"
         }
       />
     </div>
   );
 };
 
-
 const RegisterInstitute = () => {
   const { formData, handleChange, setFormData, errors, setErrors } =
     useFormHandler(initialFormData);
   const dispatch = useDispatch();
-  const cscSelector = useSelector(state => state.global)
+  const cscSelector = useSelector((state) => state.global);
   const stateList = arrayTransform(cscSelector?.stateData?.data?.data || []);
   const cityList = arrayTransform(cscSelector?.citiesData?.data?.data || []);
   const countriesList = arrayTransform(
@@ -193,48 +200,51 @@ const RegisterInstitute = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [verificationError, setVerificationError] = useState('');
-  const [institutionRedisToken, setInstitutionRedisToken] = useState('');
+  const [verificationError, setVerificationError] = useState("");
+  const [institutionRedisToken, setInstitutionRedisToken] = useState("");
   const [customDegrees, setCustomDegrees] = useState([]);
 
   const institutionTypeOptions = institutionTypes?.map((item) => ({
     value: item?._id,
-    label: item?.name
+    label: item?.name,
   }));
 
   const degreeOptions = [
     { value: "other", label: "Other (Add new)" },
     ...(degrees?.map((item) => ({
       value: item?._id,
-      label: item?.name
-    })) || [])
+      label: item?.name,
+    })) || []),
   ];
 
-
   const getInstitutionTypes = () => {
-    dispatch(institutionTypePublic()).then((res) => {
-      if (res) {
-        setInstitutionTypes(res?.payload?.data?.list || []);
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    dispatch(institutionTypePublic())
+      .then((res) => {
+        if (res) {
+          setInstitutionTypes(res?.payload?.data?.list || []);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getDegrees = () => {
-    dispatch(institutionDegreePublic()).then((res) => {
-      if (res) {
-        setDegrees(res?.payload?.data?.list || []);
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    dispatch(institutionDegreePublic())
+      .then((res) => {
+        if (res) {
+          setDegrees(res?.payload?.data?.list || []);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
     dispatch(countries());
     getInstitutionTypes();
-    getInstitutionsList()
+    getInstitutionsList();
     getDegrees();
   }, []);
 
@@ -331,28 +341,37 @@ const RegisterInstitute = () => {
   };
 
   const handleDegreeChange = (selectedOptions) => {
-    const otherOption = selectedOptions?.find(option => option.value === "other");
+    const otherOption = selectedOptions?.find(
+      (option) => option.value === "other"
+    );
     if (otherOption) {
       setShowCustomDegreeInput(true);
-      const filteredOptions = selectedOptions.filter(option => option.value !== "other");
-      setFormData(prev => ({
+      const filteredOptions = selectedOptions.filter(
+        (option) => option.value !== "other"
+      );
+      setFormData((prev) => ({
         ...prev,
-        degree_ids: filteredOptions.map(option => option.value)
+        degree_ids: filteredOptions.map((option) => option.value),
       }));
     } else {
       setShowCustomDegreeInput(false);
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        degree_ids: selectedOptions ? selectedOptions.map(option => option.value) : []
+        degree_ids: selectedOptions
+          ? selectedOptions.map((option) => option.value)
+          : [],
       }));
     }
   };
 
   const handleAddCustomDegree = (degreeName) => {
-    setCustomDegrees(prev => [...prev, { value: degreeName, label: degreeName }]);
-    setFormData(prev => ({
+    setCustomDegrees((prev) => [
       ...prev,
-      degree_ids: [...prev.degree_ids, degreeName]
+      { value: degreeName, label: degreeName },
+    ]);
+    setFormData((prev) => ({
+      ...prev,
+      degree_ids: [...prev.degree_ids, degreeName],
     }));
   };
 
@@ -506,8 +525,8 @@ const RegisterInstitute = () => {
         address: formData.address,
         founded_year: formData.founded_year
           ? Math.floor(
-            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-          )
+              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+            )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -517,7 +536,7 @@ const RegisterInstitute = () => {
           : null,
         linkedin_page_url: formData.linkedin_page_url,
         email: formData.email,
-        username: formData.username,
+        username: formData.name,
         // password: formData.password,
         // confirmPassword: formData.confirmPassword,
       };
@@ -532,7 +551,7 @@ const RegisterInstitute = () => {
       //   setInstitutionRedisToken(res.data.redisToken);
       //   setShowOtpPopup(true);
       //   toast.success("Registration successful! Please verify your OTP.");
-      // } else 
+      // } else
       {
         const apiPayload = {
           page: 1,
@@ -575,23 +594,25 @@ const RegisterInstitute = () => {
     }
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleVerifyOtp = async (otp) => {
     setIsVerifying(true);
-    setVerificationError('');
+    setVerificationError("");
     try {
       const payload = {
         token: institutionRedisToken,
-        otp: otp
+        otp: otp,
       };
-      const res = await dispatch(institutionsRegisterVerifyOtp(payload)).unwrap();
+      const res = await dispatch(
+        institutionsRegisterVerifyOtp(payload)
+      ).unwrap();
 
       if (!res?.error) {
-        setCookie('VERIFIED_ADMIN_TOKEN', JSON.stringify(res?.data?.token));
-        setCookie('USER_ROLE', res?.data?.accessMode);
-        setCookie('SIDE_BAR', res?.data?.accessMode);
-        toast.success(res?.message || 'Login successful');
+        setCookie("VERIFIED_ADMIN_TOKEN", JSON.stringify(res?.data?.token));
+        setCookie("USER_ROLE", res?.data?.accessMode);
+        setCookie("SIDE_BAR", res?.data?.accessMode);
+        toast.success(res?.message || "Login successful");
         navigate(getDashboardPath(res?.data?.accessMode));
       } else {
         setVerificationError(res?.message || "Verification failed");
@@ -602,13 +623,15 @@ const RegisterInstitute = () => {
       setFormData(initialFormData);
     } catch (error) {
       console.error("Verification error:", error);
-      setVerificationError(error?.message || "An error occurred during verification");
+      setVerificationError(
+        error?.message || "An error occurred during verification"
+      );
     } finally {
       setIsVerifying(false);
     }
   };
   const handleBack = () => {
-    navigate('/login-selection');
+    navigate("/login-selection");
   };
   const handleFileUpload = useCallback(
     async (file, fileType) => {
@@ -700,17 +723,22 @@ const RegisterInstitute = () => {
           <div className="  overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
               <button
-                onClick={handleBack} title='go back'
+                onClick={handleBack}
+                title="go back"
                 className="text-sm px-3 py-1 glassy-card hover:glassy-card rounded glassy-text-primary transition-colors"
               >
                 <TbArrowBack size={20} />
               </button>
-              <h2 className="text-2xl font-bold glassy-text-primary">Register Your Institution</h2>
-              <p className="mt-1 text-sm glassy-text-secondary">Fill in your institution details to create an account</p>
+              <h2 className="text-2xl font-bold glassy-text-primary">
+                Register Your Institution
+              </h2>
+              <p className="mt-1 text-sm glassy-text-secondary">
+                Fill in your institution details to create an account
+              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="px-6 py-6 space-y-6">
-              <div>
+              {/* <div>
                 <h3 className="text-lg font-medium glassy-text-primary mb-4">Account Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <CustomInput
@@ -731,7 +759,7 @@ const RegisterInstitute = () => {
                   />
                 </div>
 
-                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <PasswordInput
                     label="Password *"
                     value={formData?.password}
@@ -748,11 +776,13 @@ const RegisterInstitute = () => {
                     placeholder="Confirm password"
                     error={errors?.confirmPassword}
                   />
-                </div> */}
-              </div>
+                </div> 
+              </div> */}
 
-              <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium glassy-text-primary mb-4">Basic Institution Information</h3>
+              <div>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">
+                  Basic Institution Information
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <CustomInput
                     label="Institution Name *"
@@ -787,14 +817,24 @@ const RegisterInstitute = () => {
                     label="Country Code"
                     options={countriesList || []}
                     selectedOption={countriesList?.find(
-                      (opt) => opt.short_name === formData?.country_code?.short_name
+                      (opt) =>
+                        opt.short_name === formData?.country_code?.short_name
                     )}
                     onChange={(country) =>
                       handleCountryChange("country_code", country)
                     }
                   />
                 </div>
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <CustomInput
+                    label="Email *"
+                    value={formData?.email}
+                    name="email"
+                    onChange={(e) => handleChange("email", e)}
+                    placeholder="Enter email"
+                    error={errors.email}
+                  />
+                </div>
                 <div className="mt-4">
                   <CustomInput
                     type="textarea"
@@ -809,7 +849,9 @@ const RegisterInstitute = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium glassy-text-primary mb-4">Institution Details</h3>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">
+                  Institution Details
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <FilterSelect
@@ -825,7 +867,9 @@ const RegisterInstitute = () => {
                       }
                     />
                     {errors.institution_type_id && (
-                      <p className="mt-1 text-sm text-red-600">{errors.institution_type_id}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.institution_type_id}
+                      </p>
                     )}
                   </div>
 
@@ -835,19 +879,21 @@ const RegisterInstitute = () => {
                       label="Degrees Offered *"
                       options={degreeOptions || []}
                       selectedOption={[
-                        ...(degreeOptions.filter(opt =>
+                        ...(degreeOptions.filter((opt) =>
                           formData?.degree_ids?.includes(opt.value)
                         ) || []),
-                        ...customDegrees.filter(degree =>
+                        ...customDegrees.filter((degree) =>
                           formData?.degree_ids?.includes(degree.value)
-                        )
+                        ),
                       ]}
                       onChange={handleDegreeChange}
                       enableCustomInput={true}
                       onAddCustomOption={handleAddCustomDegree}
                     />
                     {errors.degree_ids && (
-                      <p className="mt-1 text-sm text-red-600">{errors.degree_ids}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.degree_ids}
+                      </p>
                     )}
 
                     {showCustomDegreeInput && (
@@ -939,7 +985,9 @@ const RegisterInstitute = () => {
               </div>
 
               <div className="border-t border-gray-200 pt-6">
-                <h3 className="text-lg font-medium glassy-text-primary mb-4">Address</h3>
+                <h3 className="text-lg font-medium glassy-text-primary mb-4">
+                  Address
+                </h3>
                 <div className="grid grid-cols-1 gap-4">
                   <CustomInput
                     label="Address Line 1"
@@ -979,8 +1027,7 @@ const RegisterInstitute = () => {
                     label="State"
                     options={stateList}
                     selectedOption={stateList?.find(
-                      (opt) =>
-                        opt.state_code === formData?.address?.state?.code
+                      (opt) => opt.state_code === formData?.address?.state?.code
                     )}
                     onChange={(state) => handleAddressChange("state", state)}
                     placeholder="Select State"
@@ -1014,12 +1061,14 @@ const RegisterInstitute = () => {
               {/* Specialties */}
               <div className="border-t border-gray-200 pt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium glassy-text-primary">Specialties</h3>
+                  <h3 className="text-lg font-medium glassy-text-primary">
+                    Specialties
+                  </h3>
                   <Button
                     type="button"
                     variant=""
                     size="sm"
-                    className='glassy-button'
+                    className="glassy-button"
                     icon={<PiPlus />}
                     onClick={addSpecialty}
                     disabled={formData?.specialties?.some(
@@ -1064,11 +1113,11 @@ const RegisterInstitute = () => {
               <div className="border-t border-gray-200 pt-6">
                 <Button
                   type="submit"
-                  variant='primary'
+                  variant="primary"
                   className="w-full  py-3"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Registering...' : 'Register Institution'}
+                  {isSubmitting ? "Registering..." : "Register Institution"}
                 </Button>
               </div>
             </form>
