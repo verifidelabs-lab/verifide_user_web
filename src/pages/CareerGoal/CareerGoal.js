@@ -202,7 +202,7 @@ const CareerGoal = () => {
 
   if (screeningQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen  flex items-center justify-center p-4">
         <div className="glassy-card rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="animate-spin w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
           <p className="text-lg glassy-text-secondary">
@@ -229,7 +229,7 @@ const CareerGoal = () => {
               : "Your screening answers have been successfully submitted."}
           </p>
           <button
-            className="w-full bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold py-3 px-6 rounded-lg transition-colors"
+            className="w-full glassy-button hover:bg-blue-700 glassy-text-primary font-semibold py-3 px-6 rounded-lg transition-colors"
             onClick={() => navigate(`/user/opportunitiess/`)}
           >
             Back to Your Opportunities
