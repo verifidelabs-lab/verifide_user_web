@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
-import classNames from 'classnames';
+import React, { useEffect, useState } from "react";
+import Select from "react-select";
+import classNames from "classnames";
 
 const FilterSelect = ({
-  label = 'Filter By',
+  label = "Filter By",
   options = [],
   selectedOption,
   onChange,
   isMulti = false,
-  containerClassName = '',
-  selectClassName = '',
-  labelClassName = '',
-  placeholder = 'Select...',
+  containerClassName = "",
+  selectClassName = "",
+  labelClassName = "",
+  placeholder = "Select...",
   error = false,
   required = false,
 }) => {
@@ -44,8 +44,8 @@ const FilterSelect = ({
       borderColor: error
         ? "#ef4444"
         : state.isFocused
-          ? "var(--bg-button-hover)"
-          : "var(--border-color)",
+        ? "var(--bg-button-hover)"
+        : "var(--border-color)",
       borderRadius: "10px",
       minHeight: "40px",
       boxShadow: "none",
@@ -157,12 +157,25 @@ const FilterSelect = ({
   return (
     <div className={`w-full ${containerClassName}`}>
       {label && (
-        <label className={`block text-sm glassy-text-primary font-medium mb-2 ${labelClassName}`}>
+        <label
+          className={`block text-sm glassy-text-primary font-medium mb-2 ${labelClassName}`}
+        >
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
 
+      {/* <Select
+        isMulti={isMulti}
+        options={Array.isArray(options) ? options : []}
+        value={selectedOption}
+        onChange={onChange}
+        className={selectClasses}
+        classNamePrefix="react-select"
+        placeholder={placeholder}
+        isSearchable
+        styles={customStyles}
+      /> */}
       <Select
         isMulti={isMulti}
         options={Array.isArray(options) ? options : []}
@@ -173,6 +186,9 @@ const FilterSelect = ({
         placeholder={placeholder}
         isSearchable
         styles={customStyles}
+        menuPortalTarget={document.body} // 👈 this line fixes invisible menus
+        menuPosition="fixed"
+        menuShouldScrollIntoView={false}
       />
     </div>
   );

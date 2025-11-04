@@ -115,8 +115,6 @@
 //     }
 //   };
 
-
-
 //   const SelectComponent = isCreatable ? "" : Select;
 
 //   return (
@@ -173,8 +171,7 @@ const FilterSelect2 = ({
   required = false,
   isCreatable = false,
   onCreateOption,
-  isClearable
-
+  isClearable,
 }) => {
   const [isInternalLoading, setInternalLoading] = useState(false);
   const [isDark, setIsDark] = useState(false);
@@ -182,7 +179,8 @@ const FilterSelect2 = ({
   useEffect(() => {
     // detect dark theme dynamically
     const observer = new MutationObserver(() => {
-      const isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
+      const isDarkTheme =
+        document.documentElement.getAttribute("data-theme") === "dark";
       setIsDark(isDarkTheme);
     });
     observer.observe(document.documentElement, { attributes: true });
@@ -206,8 +204,8 @@ const FilterSelect2 = ({
       borderColor: error
         ? "#ef4444"
         : state.isFocused
-          ? "var(--bg-button-hover)"
-          : "var(--border-color)",
+        ? "var(--bg-button-hover)"
+        : "var(--border-color)",
       borderRadius: "10px",
       minHeight: "40px",
       boxShadow: "none",
@@ -217,7 +215,10 @@ const FilterSelect2 = ({
         borderColor: "var(--bg-button-hover)",
       },
     }),
-
+    input: (base) => ({
+      ...base,
+      color: isDark ? "#FFFFFF" : "var(--text-primary)",
+    }),
     menu: (base) => ({
       ...base,
       backgroundColor: "var(--bg-modal)",
@@ -272,9 +273,7 @@ const FilterSelect2 = ({
 
     multiValue: (base) => ({
       ...base,
-      backgroundColor: isDark
-        ? "rgba(255,255,255,0.1)"
-        : "rgba(0,0,0,0.05)",
+      backgroundColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)",
       borderRadius: "20px",
       border: "1px solid var(--border-color)",
       padding: "2px 6px",
@@ -349,7 +348,6 @@ const FilterSelect2 = ({
         loadingMessage={() => "Loading..."}
         closeMenuOnSelect={!isMulti}
         isClearable={isClearable}
-
       />
 
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

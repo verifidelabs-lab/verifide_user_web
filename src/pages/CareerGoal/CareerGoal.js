@@ -249,7 +249,7 @@ const CareerGoal = () => {
         <div className="glassy-card rounded-2xl shadow-lg mb-6 p-6">
           <div className="flex items-start gap-4">
             <Link
-              to={`/user/view-details/companies/${jobData?.company_id?._id}`}
+              to={`/user/view-details/companies/${jobData?.company_id}`}
             >
               <img
                 src={jobData?.company_id?.logo_url}
