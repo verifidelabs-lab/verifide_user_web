@@ -291,10 +291,30 @@ const Opportunitiess2 = () => {
       console.warn("Unknown mode, cannot navigate");
     }
   };
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
-    <div className="flex w-full min-h-screen">
-      <div className="fixed left-0 top-0 h-screen w-80 md:w-72 lg:w-80 xl:w-96 glassy-card shadow-xl z-50 overflow-y-auto p-6 pt-10 hide-scrollbar">
+    <div className="flex w-full min-h-screen relative">
+      {/* Sidebar / Filters */}
+      <div
+        className={`
+    ${isMobile ? "!fixed" : ""}  /* 👈 fixed only on mobile */
+    top-0 left-0 h-screen w-72 sm:w-80 
+    glassy-card shadow-xl z-50 overflow-y-auto 
+    p-6 pt-10 hide-scrollbar
+    transition-transform duration-300 ease-in-out
+    ${isMobile ? (isFilterOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
+  `}
+      >
+
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold glassy-text-primary tracking-wide">
@@ -353,6 +373,7 @@ const Opportunitiess2 = () => {
             </div>
           </div>
 
+          {/* Select Filters */}
           <FilterSelect2
             label="Industry"
             name={"industry_id"}
@@ -363,7 +384,6 @@ const Opportunitiess2 = () => {
             onChange={(selected) => handleSelectChange("industry_id", selected)}
             isClearable={true}
           />
-          {/* Select filters */}
           <FilterSelect2
             name={"company_id"}
             label="Company Name"
@@ -374,7 +394,6 @@ const Opportunitiess2 = () => {
             onChange={(selected) => handleSelectChange("company_id", selected)}
             isClearable={true}
           />
-
           <FilterSelect2
             label="Role"
             options={allProfileRoleList}
@@ -404,23 +423,32 @@ const Opportunitiess2 = () => {
             selectedOption={allSkillsList?.find(
               (opt) => opt.value === searchFelids?.required_skills
             )}
-            onChange={(selected) =>
-              handleSelectChange("required_skills", selected)
-            }
+            onChange={(selected) => handleSelectChange("required_skills", selected)}
             isMulti
             isClearable={true}
           />
         </div>
       </div>
 
+      {/* Overlay for mobile */}
+      {isMobile && isFilterOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          onClick={() => setIsFilterOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
       <div
-        className={` hide-scrollbar p-4 sm:p-6 ${
-          !selectedJob
-            ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
-            : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
-        } `}
+        className={`  p-4 sm:p-6 w-full transition-all duration-300
+      ${!selectedJob ? "xl:w-full" : "xl:w-[75%] lg:w-[70%] md:w-[60%]"}`}
       >
-        <div className="flex-1 min-w-[200px] mb-4">
+        {/* Filter Toggle Button (Mobile Only) */}
+       
+        <div className="flex-1   mb-4">
+          {/* Your job listing content here */}
+
+
           {/* <input
             type="text"
             placeholder="Search jobs..."
@@ -446,11 +474,10 @@ const Opportunitiess2 = () => {
                     setPageNo(1);
                   }}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none
-        ${
-          activeTab === tab
-            ? "glassy-card text-blue-600 shadow-sm"
-            : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
-        }`}
+        ${activeTab === tab
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
+                    }`}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
@@ -458,6 +485,15 @@ const Opportunitiess2 = () => {
             </div>
           </div>
           {/* Search Input */}
+           {isMobile && (
+          <button
+            className="mb-3 glassy-button px-4 py-2 text-sm"
+            onClick={() => setIsFilterOpen(true)}
+          >
+            Open Filters
+          </button>
+        )}
+
         </div>
 
         {/* <div className="h-full">
@@ -617,7 +653,7 @@ const Opportunitiess2 = () => {
             <strong className="glassy-text-primary block mb-2">
               Job Description:
             </strong>
-            <p className="glassy-text-secondary text-sm leading-relaxed whitespace-pre-line rounded-lg p-4 border border-[var(--border-color)] bg-[var(--bg-card)]">
+            <p className="glassy-text-secondary text-sm leading-relaxed break-words break-all  whitespace-pre-line rounded-lg p-4 border border-[var(--border-color)] bg-[var(--bg-card)]">
               {selectedJob.job_description || "No description provided."}
             </p>
           </div>
@@ -666,29 +702,28 @@ const Opportunitiess2 = () => {
                 Application Status:
               </strong>
               <span
-                className={`ml-2 ${
-                  selectedJob.jobApplication?.status === "applied"
-                    ? "text-blue-600"
-                    : selectedJob.jobApplication?.status === "rejected"
+                className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
+                  ? "text-blue-600"
+                  : selectedJob.jobApplication?.status === "rejected"
                     ? "text-red-600"
                     : selectedJob.jobApplication?.status ===
                       "selected_in_interview"
-                    ? "text-green-600"
-                    : selectedJob.jobApplication?.passed
-                    ? "text-green-600"
-                    : "text-yellow-600"
-                }`}
+                      ? "text-green-600"
+                      : selectedJob.jobApplication?.passed
+                        ? "text-green-600"
+                        : "text-yellow-600"
+                  }`}
               >
                 {selectedJob.jobApplication?.status === "applied"
                   ? "Applied"
                   : selectedJob.jobApplication?.status === "rejected"
-                  ? "Not Selected"
-                  : selectedJob.jobApplication?.status ===
-                    "selected_in_interview"
-                  ? "🎉 Selected"
-                  : selectedJob.jobApplication?.passed
-                  ? "Accepted"
-                  : "Under Review"}
+                    ? "Not Selected"
+                    : selectedJob.jobApplication?.status ===
+                      "selected_in_interview"
+                      ? "🎉 Selected"
+                      : selectedJob.jobApplication?.passed
+                        ? "Accepted"
+                        : "Under Review"}
               </span>
             </div>
           )}
@@ -759,9 +794,8 @@ const Opportunitiess2 = () => {
               size="sm"
               disabled={applyStatus.disabled}
               onClick={() => !applyStatus.disabled && applyForJob(selectedJob)}
-              className={`w-full ${
-                applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+              className={`w-full ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+                }`}
               variant="primary"
             >
               {applyStatus.reason}
@@ -828,10 +862,13 @@ const Opportunitiess2 = () => {
               {/* Job Description */}
               <div className="text-sm glassy-text-primary mb-4">
                 <p className="font-medium mb-1">Job Description:</p>
-                <p className="glassy-text-secondary p-3 rounded-lg border border-gray-100 whitespace-pre-line">
+                <p
+                  className="glassy-text-secondary p-3 rounded-lg border border-gray-100 whitespace-pre-line break-words break-all overflow-hidden text-ellipsis"
+                >
                   {selectedJob.job_description || "No description provided."}
                 </p>
               </div>
+
 
               {/* Required Skills */}
               {selectedJob.required_skills?.length > 0 && (
@@ -859,19 +896,18 @@ const Opportunitiess2 = () => {
                     Application Status:
                   </strong>
                   <span
-                    className={`ml-2 ${
-                      selectedJob.jobApplication?.status === "applied"
-                        ? "text-blue-600"
-                        : selectedJob.jobApplication?.passed
+                    className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
+                      ? "text-blue-600"
+                      : selectedJob.jobApplication?.passed
                         ? "text-green-600"
                         : "text-yellow-600"
-                    }`}
+                      }`}
                   >
                     {selectedJob.jobApplication?.status === "applied"
                       ? "Applied"
                       : selectedJob.jobApplication?.passed
-                      ? "Accepted"
-                      : "Under Review"}
+                        ? "Accepted"
+                        : "Under Review"}
                   </span>
                 </div>
               )}
@@ -942,11 +978,10 @@ const Opportunitiess2 = () => {
                 onClick={() =>
                   !applyStatus.disabled && applyForJob(selectedJob)
                 }
-                className={`w-full ${
-                  applyStatus.disabled
-                    ? "opacity-60 cursor-not-allowed"
-                    : "glassy-button"
-                }`}
+                className={`w-full ${applyStatus.disabled
+                  ? "opacity-60 cursor-not-allowed"
+                  : "glassy-button"
+                  }`}
                 variant="primary"
               >
                 {applyStatus.reason}

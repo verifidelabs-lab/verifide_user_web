@@ -22,6 +22,8 @@ import {
   jobsCreate,
   jobsSingleDocument,
   jobsUpdate,
+  masterSkills,
+  profileRoles,
   state,
   updateMasterIndustryData,
   updateMasterSkillData,
@@ -65,12 +67,19 @@ const PostJob = () => {
   const allIndustry = arrayTransform(
     workSelector?.getAllIndustryData?.data?.data || []
   );
+
   const allSkills = arrayTransform(
-    workSelector?.getAllWorkSkillListData?.data?.data || []
+    countriesSelector?.masterSkillsData?.data?.data?.list || []
   );
   const allProfileRoles = arrayTransform(
-    workSelector?.getAllProfileRoleData?.data?.data || []
+    countriesSelector?.profileRolesData?.data?.data?.list || []
   );
+  // const allSkills = arrayTransform(
+  //   workSelector?.getAllWorkSkillListData?.data?.data || []
+  // );
+  // const allProfileRoles = arrayTransform(
+  //   workSelector?.getAllProfileRoleData?.data?.data || []
+  // );
   console.log("this is the prifiles roles", allProfileRoles);
   const countryList = arrayTransform(
     countriesSelector?.countriesData?.data?.data || []
@@ -194,14 +203,19 @@ const PostJob = () => {
         created_by_users: companiesProfileData?.created_by_users,
       })
     );
-    dispatch(
-      getAllProfileRole({
-        industry_id: companiesProfileData.industry && companiesProfileData.industry[0]._id,
-        created_by_users: companiesProfileData.industry && companiesProfileData.industry[0].created_by_users || false,
-      })
-    );
+    // dispatch(
+    //   getAllProfileRole({
+    //     industry_id: companiesProfileData.industry && companiesProfileData.industry[0]._id,
+    //     created_by_users: companiesProfileData.industry && companiesProfileData.industry[0].created_by_users || false,
+    //   })
+    // );
+
 
   }, [dispatch, companiesProfileData?._id]);
+  useEffect(() => {
+    dispatch(masterSkills());
+    dispatch(profileRoles());
+  }, [dispatch]);
   // Populate selected skills from skill IDs
   const populateSelectedSkills = useCallback(
     (skillIds) => {
@@ -239,7 +253,7 @@ const PostJob = () => {
       setFormData({
         ...jobData,
         address: addressData,
-        company_id: res?.data?.company_id?._id,
+        // company_id: res?.data?.company_id?._id,
         industry_id: res?.data?.industry_id?._id,
         start_date: res?.data?.start_date
           ? new Date(res.data.start_date).toISOString().split("T")[0]
@@ -249,32 +263,32 @@ const PostJob = () => {
           : "",
       });
 
-      if (res?.data?.company_id) {
-        dispatch(
-          getAllIndustry({
-            company_id: res?.data?.company_id?._id,
-            created_by_users: res?.data?.company_id?.created_by_users,
-          })
-        );
-        setIsCreatbleIndustry(res?.data?.company_id?.created_by_users);
-      }
+      // if (res?.data?.company_id) {
+      //   dispatch(
+      //     getAllIndustry({
+      //       company_id: res?.data?.company_id?._id,
+      //       created_by_users: res?.data?.company_id?.created_by_users,
+      //     })
+      //   );
+      //   setIsCreatbleIndustry(res?.data?.company_id?.created_by_users);
+      // }
 
-      if (res?.data?.industry_id) {
-        dispatch(
-          getAllProfileRole({
-            industry_id: res?.data?.industry_id?._id,
-            created_by_users: res?.data?.industry_id?.created_by_users,
-          })
-        );
-      }
-      if (res?.data?.industry_id) {
-        dispatch(
-          getAllWorkSkillList({
-            profile_role_id: res?.data?.job_title,
-            created_by_users: res?.data?.industry_id?.created_by_users || true,
-          })
-        );
-      }
+      // if (res?.data?.industry_id) {
+      //   dispatch(
+      //     getAllProfileRole({
+      //       industry_id: res?.data?.industry_id?._id,
+      //       created_by_users: res?.data?.industry_id?.created_by_users,
+      //     })
+      //   );
+      // }
+      // if (res?.data?.industry_id) {
+      //   dispatch(
+      //     getAllWorkSkillList({
+      //       profile_role_id: res?.data?.job_title,
+      //       created_by_users: res?.data?.industry_id?.created_by_users || true,
+      //     })
+      //   );
+      // }
 
 
       if (
@@ -573,22 +587,22 @@ const PostJob = () => {
           })
         );
         break;
-      case "industry_id":
-        await dispatch(
-          getAllProfileRole({
-            industry_id: value,
-            created_by_users: selectedOption?.created_by_users,
-          })
-        );
-        break;
-      case "job_title":
-        await dispatch(
-          getAllWorkSkillList({
-            profile_role_id: value,
-            created_by_users: selectedOption?.created_by_users,
-          })
-        );
-        break;
+      // case "industry_id":
+      //   await dispatch(
+      //     getAllProfileRole({
+      //       industry_id: value,
+      //       created_by_users: selectedOption?.created_by_users,
+      //     })
+      //   );
+      //   break;
+      // case "job_title":
+      //   await dispatch(
+      //     getAllWorkSkillList({
+      //       profile_role_id: value,
+      //       created_by_users: selectedOption?.created_by_users,
+      //     })
+      //   );
+      //   break;
       default:
         break;
     }

@@ -149,7 +149,7 @@ const handleSubmit = async (e) => {
         >
           <Form onSubmit={handleSubmit}>
             <div
-              className="leading-relaxed tracking-wider"
+              className="leading-relaxed break-words break-all  tracking-wider"
               data-aos="fade-up"
               data-aos-delay="100"
             >

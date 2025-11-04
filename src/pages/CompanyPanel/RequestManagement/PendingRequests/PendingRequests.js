@@ -568,7 +568,7 @@ const PendingRequests = () => {
                   <h3 className="font-semibold glassy-text-primary mb-1 text-sm">
                     {card.name}
                   </h3>
-                  <p className="text-sm glassy-text-secondary leading-relaxed">
+                  <p className="text-sm glassy-text-secondary leading-relaxed break-words break-all ">
                     Updated: {card.updatedAt}
                   </p>
 

@@ -57,10 +57,10 @@ const CustomInput = React.forwardRef(
       "glassy-input transition-all duration-200 ease-in-out",
       {
         "w-full": fullWidth && !isCheckboxOrRadio,
-        "h-4 w-4 text-primary-600 focus:ring-primary-500": isCheckboxOrRadio,
+        "h-4 w-4 text-primary-600 focus:": isCheckboxOrRadio,
         "min-h-[100px] py-2": isTextarea,
-        "ring-1 ring-primary-500 border-primary-500": isFocused && !error,
-        "border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500":
+        "ring-1  border-primary-500": isFocused && !error,
+        "border-red-300 text-red-900 placeholder-red-300 focus: focus:border-red-500":
           error,
       },
       inputClass,

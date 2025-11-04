@@ -58,7 +58,7 @@ const EngagementItem = ({ engagement, navigate }) => {
             />
           </div>
           {expanded && (
-            <p className="glassy-text-primary bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-sm leading-relaxed">
+            <p className="glassy-text-primary bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-sm leading-relaxed break-words break-all ">
               {engagement.remarks}
             </p>
           )}

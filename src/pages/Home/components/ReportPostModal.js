@@ -85,7 +85,7 @@ export default function ReportPostModal({
               Thank you for submitting a report
             </h2>
 
-            <p className="glassy-text-secondary leading-relaxed">
+            <p className="glassy-text-secondary leading-relaxed break-words break-all ">
               Your report has been submitted. Our team will review it shortly.
             </p>
           </div>

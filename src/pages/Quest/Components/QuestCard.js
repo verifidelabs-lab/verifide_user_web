@@ -62,7 +62,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
           <StatusBadge status={status} />
           <EngagementBadge count={quest.engagement_count} />
           {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/50 to-transparent"></div> */}
-          <div className="absolute bottom-3 left-3 flex items-center glassy-text-primary">
+          <div className="!absolute glassy-card bottom-3 left-3 flex items-center glassy-text-primary p-1">
             {quest?.user_id?.profile_picture_url ? (
               <>
                 <img
@@ -200,7 +200,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
           )}
 
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-            {accessMode === "6" || isCompany() || isInstitution() && (
+            {(accessMode === "6" || isCompany() || isInstitution()) && (
               <button
                 className="text-xs glassy-text-secondary hover:text-blue-600 transition-colors flex items-center"
                 onClick={() => onViewEngagement(quest)}
@@ -212,7 +212,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
             <div className="flex items-center gap-2">
               {(quest.type === "sign-up" || quest.type === "feedbacks") && (
                 <>
-                  {accessMode === "6" || isCompany() || isInstitution() ||
+                  {(accessMode === "6" || isCompany() || isInstitution()) ||
                     status === "Ended" ||
                     quest?.isFullyFeedback
                     ? null
@@ -232,13 +232,13 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
               )}
 
               {quest.type === "survey-polls" &&
-                accessMode !== "6" && !isCompany() && !isInstitution() &&
+                (accessMode !== "6" && !isCompany() && !isInstitution()) &&
                 status === "Ongoing" &&
                 !quest?.isVoted && (
                   <SurveyButton onClick={() => setShowForm(true)} />
                 )}
 
-              {accessMode === "6" || isCompany() || isInstitution() && (
+              {(accessMode === "6" || isCompany() || isInstitution()) && (
                 <>
                   {(status === "Upcoming" || status === "Ended") && (
                     <button
@@ -263,7 +263,7 @@ const QuestCard = ({ quest, onEngage, onViewEngagement, onEdit, onDelete, onVote
           </div>
         </div>
         {/* {status === "Ended" && (
-          <div className="absolute inset-0 z-40 glassy-card/30 flex items-center justify-center pointer-events-none rounded-xl">
+          <div className="!absolute inset-0 z-40 glassy-card flex items-center justify-center pointer-events-none rounded-xl">
             <img
               src="/endpreview.png"
               alt="Ended"

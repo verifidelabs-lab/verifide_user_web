@@ -5,9 +5,9 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
   const data = modalState?.data;
 
   return (
-    <div className=" glassy-card rounded-xl">
+    <div className=" hide-scrollbar rounded-xl">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium">Job Details</h2>
+        <h2 className="text-lg font-medium glassy-text-primary">Job Details</h2>
         <button
           onClick={() => {
             setIsViewDetails(false);
@@ -48,25 +48,25 @@ const JobDetails = ({ modalState, setIsViewDetails, setViewDetails }) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <p className="text-sm font-medium glassy-text-secondary">Job Type</p>
-            <p className="text-sm capitalize">{data?.job_type?.replace('-', ' ')}</p>
+            <p className="text-sm capitalize glassy-text-primary">{data?.job_type?.replace('-', ' ')}</p>
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium glassy-text-secondary">Location</p>
-            <p className="text-sm capitalize">{data?.job_location}</p>
+            <p className="text-sm capitalize glassy-text-primary">{data?.job_location}</p>
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium glassy-text-secondary">Pay Type</p>
-            <p className="text-sm capitalize">{data?.pay_type}</p>
+            <p className="text-sm capitalize glassy-text-primary">{data?.pay_type}</p>
           </div>
           <div className="space-y-1">
             <p className="text-sm font-medium glassy-text-secondary">Status</p>
-            <p className="text-sm capitalize">{data?.status}</p>
+            <p className="text-sm capitalize glassy-text-primary">{data?.status}</p>
           </div>
         </div>
 
         <div className="glassy-card p-3 rounded-lg">
           <p className="text-sm font-medium glassy-text-secondary mb-1">Salary Range</p>
-          <p className="font-medium">{data?.salary_range}</p>
+          <p className="font-medium glassy-text-primary">{data?.salary_range}</p>
         </div>
 
         {/* <div>

@@ -198,7 +198,7 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
     );
   }
   return (
-    <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="!fixed inset-0 glassy-card backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h2 className="text-xl font-medium glassy-text-primary capitalize">{formStructure.title}</h2>

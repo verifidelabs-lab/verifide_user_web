@@ -214,7 +214,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                         ? `${work_location.city.name}, ${work_location.state.name}`
                         : 'Location not specified'}
                 </p>
-                <p className="glassy-text-secondary text-sm font-normal line-clamp-3 leading-relaxed">
+                <p className="glassy-text-secondary text-sm font-normal line-clamp-3 leading-relaxed break-words break-all ">
                     {job_description || 'Job description not available.'}
                 </p>
             </div>

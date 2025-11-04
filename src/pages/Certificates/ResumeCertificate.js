@@ -243,7 +243,7 @@ const Resume = () => {
                 <h2 className="text-3xl font-semibold text-yellow-500 mb-2 glassy-text-primary">
                   About Me
                 </h2>
-                <p className="glassy-text-primary leading-relaxed">
+                <p className="glassy-text-primary leading-relaxed break-words break-all ">
                   {profileData.personalInfo.summary}
                 </p>
               </div>

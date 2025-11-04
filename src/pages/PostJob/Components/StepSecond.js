@@ -37,9 +37,9 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
 
                     }}
                     isClearable={true}
-                    isDisabled={!formData?.industry_id}
+                    // isDisabled={!formData?.industry_id}
                     disabledTooltip='Please select first Industry'
-                    isCreatedByUser={isCreatableIndustry ? true : false}
+                    isCreatedByUser={true}
 
                 />
                 {/* <FilterSelect

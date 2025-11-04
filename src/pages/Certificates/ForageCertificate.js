@@ -15,11 +15,11 @@ const ForageCertificate = () => {
                     </h2>
 
                     {/* Certificate of Completion */}
-                    <p className="glassy-text-primary mt-6 font-medium text-2xl leading-relaxed">Certificate of Completion</p>
+                    <p className="glassy-text-primary mt-6 font-medium text-2xl leading-relaxed break-words break-all ">Certificate of Completion</p>
                     <p className="glassy-text-primary mt-1 font-medium text-xl">June 20th, 2019</p>
 
                     {/* Program Description */}
-                    <div className="mt-6 text-sm glassy-text-primary leading-relaxed">
+                    <div className="mt-6 text-sm glassy-text-primary leading-relaxed break-words break-all ">
                         <p className="text-lg">
                             Over the period of May 2019 to June 2019, Jane Smith has completed practical tasks in:
                         </p>

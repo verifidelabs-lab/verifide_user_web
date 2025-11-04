@@ -3,50 +3,57 @@ import { BsChevronRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useProfileImage } from '../../context/profileImageContext';
 
-const ProfileCard = ({ data }) => {
+const ProfileCard = ({ data = {} }) => {
   const { profileImage } = useProfileImage();
-  const imageToDisplay = profileImage || data?.profile_picture_url || '';
   const navigate = useNavigate();
 
+  // Determine image to display
+  const imageToDisplay =
+    profileImage || data?.profile_picture_url || '/0684456b-aa2b-4631-86f7-93ceaf33303c.png';
+
+  // Safe property access
+  const username = data?.username || 'Unnamed User';
+  const headline = data?.headline || 'No headline';
+  const locationText = [
+    data?.address?.city?.name,
+    data?.address?.state?.name,
+  ].filter(Boolean).join(', ');
+
+  // Function to truncate text based on length
+  const truncateText = (text, maxLength) =>
+    text.length > maxLength ? text.slice(0, maxLength) + '…' : text;
+
   return (
-    <div className="bg-glassy-card space-y-3 p-4">
-      <div className="flex flex-col md:flex-row items-center w-full mx-auto gap-4">
+    <div className="bg-glassy-card p-4 sm:p-5 rounded-xl shadow-md w-full">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 w-full">
         {/* Profile Image */}
-        <div>
-          {imageToDisplay ? (
-            <img
-              src={imageToDisplay}
-              className="w-12 h-12 rounded-full object-cover border border-[rgba(255,255,255,0.1)]"
-              alt="profile"
-            />
-          ) : (
-            <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-center overflow-hidden">
-              <img
-                src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
-                alt="dummy logo"
-                className="w-8 h-8 object-contain opacity-70"
-              />
-            </div>
-          )}
+        <div className="flex-shrink-0">
+          <img
+            src={imageToDisplay}
+            alt="profile"
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border border-[rgba(255,255,255,0.1)]"
+          />
         </div>
 
         {/* Profile Text */}
-        <div className="flex-1 space-y-1">
-          <h3 className="glassy-text-primary text-base font-semibold">
-            {data?.username || 'Unnamed User'}
+        <div className="flex-1 text-center sm:text-left space-y-1 min-w-0">
+          <h3 className="glassy-text-primary text-sm sm:text-base font-semibold truncate">
+            {truncateText(username, 20)}
           </h3>
-          <p className="glassy-text-secondary text-sm">
-            {data?.headline ? data?.headline.split(' ').slice(0, 3).join(' ') : 'No headline'}
+          <p className="glassy-text-secondary text-xs sm:text-sm truncate">
+            {truncateText(headline, 30)}
           </p>
-          <p className="glassy-text-secondary  text-xs">
-            {`${data?.address?.city?.name ? `${data?.address?.city?.name}, ` : ''}${data?.address?.state?.name || ''}`}
-          </p>
+          {locationText && (
+            <p className="glassy-text-secondary text-xs sm:text-sm truncate">
+              {truncateText(locationText, 25)}
+            </p>
+          )}
         </div>
 
         {/* Right Arrow */}
-        <div>
+        <div className="flex-shrink-0 mt-2 sm:mt-0">
           <BsChevronRight
-            className="glassy-text-secondary hover:glassy-text-primary cursor-pointer"
+            className="glassy-text-secondary hover:glassy-text-primary cursor-pointer text-lg sm:text-xl"
             onClick={() => navigate(`/user/profile`)}
           />
         </div>

@@ -135,7 +135,7 @@ const CommonSection = ({
                       </div>
                     </div>
 
-                    <div className="mb-2 text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300">
+                    <div className="mb-2 text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300 break-words break-all " >
                       {record.description || record?.profile_role_id?.name}
                     </div>
 

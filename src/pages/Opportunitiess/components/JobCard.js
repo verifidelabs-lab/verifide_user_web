@@ -150,7 +150,7 @@ const JobCard = ({
 
           <div className="flex flex-col space-y-2 mt-3">
             {job?.user_id ? (
-              <p className="text-sm">
+              <p className="text-sm glassy-text-primary">
                 <strong>Job Title:</strong> {job?.job_details?.job_title}
               </p>
             ) : (
@@ -166,8 +166,8 @@ const JobCard = ({
                   {job?.pay_type === "unpaid"
                     ? "unpaid"
                     : job?.pay_type === "monthly"
-                    ? "Monthly"
-                    : "LPA"}
+                      ? "Monthly"
+                      : "LPA"}
                 </span>
               </div>
             )}
@@ -233,55 +233,51 @@ const JobCard = ({
               )}
             </div> */}
             <div
-              className={`flex flex-col gap-1 text-sm p-3 rounded-md ${
-                job?.status === "rejected"
-                  ? "bg-red-50 border border-red-200"
-                  : job?.createdAt
+              className={`flex flex-col gap-1 text-sm p-3 rounded-md ${job?.status === "rejected"
+                ? "bg-red-50 border border-red-200"
+                : job?.createdAt
                   ? "glassy-card border border-green-200"
                   : dateInRange
-                  ? "glassy-card border border-green-200"
-                  : "bg-red-50 border border-red-200"
-              }`}
+                    ? "glassy-card border border-green-200"
+                    : "bg-red-50 border border-red-200"
+                }`}
             >
               <div className="flex items-center">
                 <CiCalendar
-                  className={`mr-2 w-4 h-4 ${
-                    job?.status === "rejected"
-                      ? "text-red-600"
-                      : job?.createdAt
+                  className={`mr-2 w-4 h-4 ${job?.status === "rejected"
+                    ? "text-red-600"
+                    : job?.createdAt
                       ? "text-green-600"
                       : dateInRange
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }`}
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
                 />
                 <span
-                  className={`font-medium ${
-                    job?.status === "rejected"
-                      ? "text-red-700"
-                      : job?.createdAt
+                  className={`font-medium ${job?.status === "rejected"
+                    ? "text-red-700"
+                    : job?.createdAt
                       ? "text-green-700"
                       : dateInRange
-                      ? "text-green-700"
-                      : "text-red-700"
-                  }`}
+                        ? "text-green-700"
+                        : "text-red-700"
+                    }`}
                 >
                   {job?.status === "rejected"
                     ? "Rejected On:"
                     : job?.start_date && job?.end_date
-                    ? "Application Period:"
-                    : "Shortlisted On:"}
+                      ? "Application Period:"
+                      : "Shortlisted On:"}
                 </span>
               </div>
 
               <div
-                className={`flex justify-between text-xs ${
-                  job?.status === "rejected"
-                    ? "text-red-600"
-                    : job?.createdAt || dateInRange
+                className={`flex justify-between text-xs ${job?.status === "rejected"
+                  ? "text-red-600"
+                  : job?.createdAt || dateInRange
                     ? "text-green-600"
                     : "text-red-600"
-                }`}
+                  }`}
               >
                 {job?.status === "rejected" && job?.reviews?.length > 0 ? (
                   <span>
@@ -326,7 +322,7 @@ const JobCard = ({
             {/* <div className="mb-4">
               {job?.job_description || job?.user_id?.summary ? (
                 <div
-                  className={`relative glassy-card border border-gray-200 rounded-lg p-3 text-sm glassy-text-primary leading-relaxed ${
+                  className={`relative glassy-card border border-gray-200 rounded-lg p-3 text-sm glassy-text-primary leading-relaxed break-words break-all  ${
                     showAllSkills
                       ? "max-h-64 overflow-y-auto"
                       : "max-h-32 overflow-hidden"
@@ -366,27 +362,26 @@ const JobCard = ({
             <div className="mb-4">
               {job?.job_description || job?.user_id?.summary ? (
                 <div
-                  className={`relative glassy-card border border-gray-200 rounded-lg p-3 text-sm glassy-text-primary leading-relaxed`}
+                  className={`relative glassy-card border border-gray-200 rounded-lg p-3 text-sm glassy-text-primary leading-relaxed
+      flex flex-col justify-between min-h-[180px] md:min-h-[200px] lg:min-h-[220px]
+      transition-all duration-300`}
                 >
-                  <span className="whitespace-pre-line">
-                    {showAllSkills
-                      ? job?.job_description || job?.user_id?.summary
-                      : `${(
-                          job?.job_description || job?.user_id?.summary
-                        )?.slice(0, 250)}${
-                          (job?.job_description || job?.user_id?.summary)
-                            ?.length > 250
-                            ? "..."
-                            : ""
-                        }`}
-                  </span>
+                  {/* Scrollable content area */}
+                  <div
+                    className={`flex-1 overflow-y-auto pr-1 custom-scrollbar break-words break-all  ${showAllSkills ? "max-h-[400px]" : "max-h-[150px]"
+                      }`}
+                  >
+                    <span className="whitespace-pre-line block">
+                      {job?.job_description || job?.user_id?.summary}
+                    </span>
+                  </div>
 
-                  {(job?.job_description || job?.user_id?.summary)?.length >
-                    250 && (
+                  {/* See More / Less button */}
+                  {(job?.job_description || job?.user_id?.summary)?.length > 250 && (
                     <div className="mt-2 text-right">
                       <button
                         onClick={() => setShowAllSkills(!showAllSkills)}
-                        className="text-blue-600 text-sm font-medium hover:underline focus:outline-none"
+                        className="text-blue-500 hover:text-blue-600 text-sm font-medium hover:underline focus:outline-none"
                       >
                         {showAllSkills ? "See less ▲" : "See more ▼"}
                       </button>
@@ -394,11 +389,13 @@ const JobCard = ({
                   )}
                 </div>
               ) : (
-                <p className="glassy-text-primary text-sm">
+                <p className="glassy-text-primary text-sm min-h-[180px] flex items-center justify-center glassy-card border border-gray-200 rounded-lg p-3">
                   No description or summary provided.
                 </p>
               )}
             </div>
+
+
 
             {!job?.user_id && job?.company_id?.headquarters?.address_line_1 && (
               <div className="flex text-sm glassy-text-secondary">
@@ -458,10 +455,10 @@ const JobCard = ({
                     {!job?.isSchedule
                       ? "Schedule interview"
                       : `${formatDateByMomentTimeZone(
-                          job?.interviewDetails?.select_date
-                        )} ${convertTimestampToTime(
-                          job?.interviewDetails?.select_time
-                        )}`}
+                        job?.interviewDetails?.select_date
+                      )} ${convertTimestampToTime(
+                        job?.interviewDetails?.select_time
+                      )}`}
                   </Button>
                 ) : (
                   ""
@@ -482,7 +479,7 @@ const JobCard = ({
                 )}
 
                 {activeTab === "schedule-interviews" ||
-                activeTab === "shortlisted" ? (
+                  activeTab === "shortlisted" ? (
                   <Button
                     variant="danger"
                     size="sm"
@@ -547,7 +544,7 @@ const JobCard = ({
                 {activeTab === "open" && (
                   <div className="relative">
                     <span
-                      className="hover:glassy-card text-black cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
+                      className="hover:glassy-card glassy-text-primary cursor-pointer flex justify-center items-center hover:rounded-full w-10 h-10"
                       onClick={() =>
                         setShowOptionsDropdown(!showOptionsDropdown)
                       }

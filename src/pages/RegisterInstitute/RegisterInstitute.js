@@ -525,8 +525,8 @@ const RegisterInstitute = () => {
         address: formData.address,
         founded_year: formData.founded_year
           ? Math.floor(
-              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-            )
+            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+          )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -697,7 +697,7 @@ const RegisterInstitute = () => {
   };
   return (
     <>
-      <div className="h-screen">
+      <div className="h-screen ">
         {/* <header className=" fixed top-0 w-full z-50 shadow">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
@@ -719,8 +719,8 @@ const RegisterInstitute = () => {
             </div>
           </div>
         </header> */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="  overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 ">
+          <div className="glassy-card  overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
               <button
                 onClick={handleBack}
@@ -804,14 +804,6 @@ const RegisterInstitute = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <CustomInput
-                    label="Phone Number *"
-                    value={formData?.phone_no}
-                    name="phone_no"
-                    onChange={(e) => handleChange("phone_no", e)}
-                    placeholder="Enter phone number"
-                    error={errors?.phone_no}
-                  />
 
                   <FilterSelect
                     label="Country Code"
@@ -824,6 +816,15 @@ const RegisterInstitute = () => {
                       handleCountryChange("country_code", country)
                     }
                   />
+                  <CustomInput
+                    label="Phone Number *"
+                    value={formData?.phone_no}
+                    name="phone_no"
+                    onChange={(e) => handleChange("phone_no", e)}
+                    placeholder="Enter phone number"
+                    error={errors?.phone_no}
+                  />
+
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <CustomInput

@@ -328,7 +328,7 @@ const Login = () => {
                 className="w-full max-w-md px-4 sm:px-0"
               >
                 <div
-                  className="leading-relaxed tracking-wider"
+                  className="leading-relaxed break-words break-all  tracking-wider"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
@@ -499,7 +499,7 @@ const Login = () => {
                 className="w-full max-w-md px-4 sm:px-0"
               >
                 <div
-                  className="leading-relaxed tracking-wider"
+                  className="leading-relaxed break-words break-all  tracking-wider"
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >

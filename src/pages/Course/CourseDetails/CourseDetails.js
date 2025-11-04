@@ -691,7 +691,7 @@ const CourseDetailPage = () => {
               )}
 
               <h3 className="font-bold text-lg mb-3 glassy-text-primary">About this course</h3>
-              <p className="glassy-text-secondary mb-4 leading-relaxed">
+              <p className="glassy-text-secondary mb-4 leading-relaxed break-words break-all ">
                 {apiRes.description || 'Course description not available.'}
               </p>
 
@@ -702,7 +702,7 @@ const CourseDetailPage = () => {
                     {apiRes.what_you_will_learn.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <FaCheck className="text-green-500 mt-1 flex-shrink-0" size={12} />
-                        <span className="glassy-text-secondary text-sm leading-relaxed">{item}</span>
+                        <span className="glassy-text-secondary text-sm leading-relaxed break-words break-all ">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -716,7 +716,7 @@ const CourseDetailPage = () => {
                     {apiRes.prerequisites.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <span className="text-blue-500 mt-1 font-bold">•</span>
-                        <span className="glassy-text-secondary text-sm leading-relaxed">{item}</span>
+                        <span className="glassy-text-secondary text-sm leading-relaxed break-words break-all ">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -730,7 +730,7 @@ const CourseDetailPage = () => {
                     {apiRes.target_audience.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <BiUser className="text-blue-500 mt-1 flex-shrink-0" size={14} />
-                        <span className="glassy-text-secondary text-sm leading-relaxed">{item}</span>
+                        <span className="glassy-text-secondary text-sm leading-relaxed break-words break-all ">{item}</span>
                       </li>
                     ))}
                   </ul>

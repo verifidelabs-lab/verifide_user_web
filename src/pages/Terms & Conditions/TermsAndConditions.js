@@ -185,7 +185,7 @@ const TermsAndConditions = () => {
           <div className="bg-gradient-to-br from-blue-600 to-blue-700 glassy-card glassy-text-primary p-10 rounded-2xl shadow-lg">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-3xl font-bold mb-4">{termsData?.title}</h1>
-              <p className="text-blue-50 text-base leading-relaxed">
+              <p className="text-blue-50 text-base leading-relaxed break-words break-all ">
                 {termsData?.description}
               </p>
               <div className="mt-6 inline-flex items-center gap-2 glassy-card/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
@@ -228,7 +228,7 @@ const TermsAndConditions = () => {
                         {item.title}
                       </h2>
                       <div
-                        className="prose prose-sm glassy-text-primary leading-relaxed space-y-3"
+                        className="prose prose-sm glassy-text-primary leading-relaxed break-words break-all  space-y-3"
                         dangerouslySetInnerHTML={{ __html: item.content }}
                       />
                     </div>
@@ -262,7 +262,7 @@ const TermsAndConditions = () => {
                         {item.title}
                       </h2>
                       <div
-                        className="prose prose-sm glassy-text-secondary leading-relaxed space-y-3"
+                        className="prose prose-sm glassy-text-secondary leading-relaxed break-words break-all  space-y-3"
                         dangerouslySetInnerHTML={{ __html: item.content }}
                       />
                     </div>
@@ -321,7 +321,7 @@ const TermsAndConditions = () => {
           <h1 className="text-xl font-bold  text-center mb-2">
             {termsData?.title}
           </h1>
-          <p className="text-sm glassy-text-secondary text-center leading-relaxed">
+          <p className="text-sm glassy-text-secondary text-center leading-relaxed break-words break-all ">
             {termsData?.description}
           </p>
         </div>
@@ -389,7 +389,7 @@ const TermsAndConditions = () => {
                                     }
                                 `}
                 >
-                  <div className="p-4 text-sm  glassy-text-secondary border-t border-gray-100 leading-relaxed">
+                  <div className="p-4 text-sm  glassy-text-secondary border-t border-gray-100 leading-relaxed break-words break-all ">
                     <div
                       className="prose prose-sm "
                       dangerouslySetInnerHTML={{ __html: item.content }}
@@ -419,7 +419,7 @@ const TermsAndConditions = () => {
               <h3 className="font-semibold text-amber-900 text-sm mb-1">
                 Important Notice
               </h3>
-              <p className="text-xs text-amber-800 leading-relaxed">
+              <p className="text-xs text-amber-800 leading-relaxed break-words break-all ">
                 By continuing to use our services, you acknowledge that you have
                 read and agree to these Terms and Conditions.
               </p>

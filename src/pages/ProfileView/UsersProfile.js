@@ -327,7 +327,7 @@ const UsersProfile = ({ currentUserId }) => {
                     <h2 className="text-xl font-bold glassy-text-primary mb-4">
                       About
                     </h2>
-                    <p className="glassy-text-primary leading-relaxed">
+                    <p className="glassy-text-primary leading-relaxed break-words break-all ">
                       {formData?.personalInfo?.summary}
                     </p>
                   </div>

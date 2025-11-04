@@ -911,7 +911,7 @@ const CompanyProfile = ({
 
   const PostsTab = ({ posts }) => {
     return (
-      <div className="glassy-card min-h-screen py-8 px-4">
+      <div className="  min-h-screen py-8 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-7">
             <h2 className="text-2xl font-bold glassy-text-primary">Page posts</h2>
@@ -1054,7 +1054,7 @@ const CompanyProfile = ({
   const JobsTab = ({ jobs }) => {
     console.log("this is the jobs", jobs);
     return (
-      <div className="glassy-card min-h-screen p-6">
+      <div className="  min-h-screen p-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
@@ -1133,7 +1133,7 @@ const CompanyProfile = ({
                   </div>
 
                   {/* Description */}
-                  <p className="glassy-text-primary text-sm leading-relaxed mb-4">
+                  <p className="glassy-text-primary text-sm leading-relaxed break-words break-all  mb-4">
                     {job?.job_description}
                   </p>
 
@@ -1350,7 +1350,7 @@ const CompanyProfile = ({
               <h1 className="font-bold glassy-text-primary mb-2">
                 {agencyData.name}
               </h1>
-              <p className="glassy-text-secondary text-sm mb-3 leading-relaxed">
+              <p className="glassy-text-secondary text-sm mb-3 leading-relaxed break-words break-all ">
                 {agencyData?.description}
               </p>
               <div className="flex items-center gap-3 text-xs glassy-text-secondary">

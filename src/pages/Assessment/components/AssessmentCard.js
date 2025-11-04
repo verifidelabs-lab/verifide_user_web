@@ -72,7 +72,7 @@ const CandidateCard = ({ candidate }) => {
         </div>
       </div>
 
-      <p className="glassy-text-secondary text-sm leading-relaxed mb-4">
+      <p className="text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300 break-words break-all">
         {candidate.description}
       </p>
       <div className="mb-6">
@@ -126,32 +126,33 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
   //     [id]: !prev[id],
   //   }));
   // };
-const renderStatusButton = (passed, attempt_number, max_attempts) => {
-  const isDisabled = passed || attempt_number >= max_attempts;
-  const buttonText = isDisabled ? "Start" : attempt_number ? "Resume" : "Start";
+  const renderStatusButton = (passed, attempt_number, max_attempts) => {
+    const isDisabled = passed || attempt_number >= max_attempts;
+    const buttonText = isDisabled ? "Start" : attempt_number ? "Resume" : "Start";
 
-  return (
-    <div className="flex justify-between pt-3 mt-auto gap-6">
-      <Button
-        variant="outline"
-        className={`w-44 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
-        disabled={isDisabled}
-        onClick={() => handleStartAssessment(assessment)}
-      >
-        {buttonText}
-      </Button>
-
-      {assessment.assessment_id?.material_url && (
-        <button
-          className="flex-1 gap-2 flex items-center justify-center px-4 py-2.5 rounded-md border border-[var(--border-color)] glassy-card glassy-text-primary hover:glassy-text-secondary transition-all duration-200"
-          onClick={() => window.open(assessment.assessment_id?.material_url, '_blank')}
+    return (
+      <div className="flex justify-between pt-3 mt-auto gap-6">
+        <Button
+          variant="outline"
+          className={`w-44 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={isDisabled}
+          onClick={() => handleStartAssessment(assessment)}
         >
-          Guide <PiDownloadBold size={23} />
-        </button>
-      )}
-    </div>
-  );
-};
+          {buttonText}
+        </Button>
+
+        {assessment.assessment_id?.material_url && isDisabled && (
+          <button
+            className={`flex-1 gap-2 flex items-center justify-center px-4 py-2.5 rounded-md border border-[var(--border-color)] glassy-card glassy-text-primary hover:glassy-text-secondary transition-all duration-200 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+            onClick={() => window.open(assessment.assessment_id?.material_url, '_blank')}
+            disabled={isDisabled}
+          >
+            Guide <PiDownloadBold size={23} />
+          </button>
+        )}
+      </div>
+    );
+  };
 
 
   const assessmentId = assessment.assessment_id?._id;
@@ -168,7 +169,7 @@ const renderStatusButton = (passed, attempt_number, max_attempts) => {
       {/* Top Section */}
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-3">
-          {assessment.assessment_id?.action_by?.profile_picture_url ||
+          {/* {assessment.assessment_id?.action_by?.profile_picture_url ||
             assessment.assessment_id?.action_by?.logo_url ? (
             <img
               src={
@@ -191,12 +192,12 @@ const renderStatusButton = (passed, attempt_number, max_attempts) => {
               alt="Default"
               className="w-14 h-14 object-cover rounded-full border border-[var(--border-color)]"
             />
-          )}
+          )} */}
 
           <div>
             <h3 className="font-semibold text-[16px] glassy-text-primary">
-              {assessment.assessment_id?.action_by?.name ||
-                `${assessment.assessment_id?.action_by?.first_name} ${assessment.assessment_id?.action_by?.last_name}`}
+              {assessment.assessment_id.title}
+
             </h3>
 
             <p className="text-sm glassy-text-secondary flex items-center gap-1">
@@ -243,34 +244,36 @@ const renderStatusButton = (passed, attempt_number, max_attempts) => {
 
       {/* Title + Passing Score */}
       <div className="flex justify-between w-full">
-        <h4 className="font-semibold text-[16px] glassy-text-primary truncate">
-          {assessment.assessment_id.title}
-        </h4>
+        {/* <h4 className="font-semibold text-[16px] glassy-text-primary truncate">
+
+        </h4> */}
+
+
         <p className="glassy-text-secondary font-medium text-[14px]">
           {assessment.assessment_id.passing_score}% Passing Score
         </p>
       </div>
       {/* Info Pills */}
       <div className="flex items-center flex-wrap gap-3">
-        <div className="flex items-center text-xs gap-1 glassy-card border border-[var(--border-color)] rounded-full px-2.5 py-1">
-          <GoClock className="w-4 h-4 glassy-text-secondary" />
-          <span className="glassy-text-secondary">{assessment.assessment_id.time_limit} Min</span>
+        <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1">
+          <GoClock className="w-4 h-4 glassy-text-primary" />
+          <span className="glassy-text-primary">{assessment.assessment_id.time_limit} Min</span>
         </div>
 
-        <div className="flex items-center text-xs gap-1 glassy-card border border-[var(--border-color)] rounded-full px-2.5 py-1">
-          <HiOutlineClipboardList className="w-4 h-4 glassy-text-secondary" />
-          <span className="glassy-text-secondary">{assessment.assessment_id.no_of_questions} Quiz’s</span>
+        <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1">
+          <HiOutlineClipboardList className="w-4 h-4 glassy-text-primary" />
+          <span className="glassy-text-primary">{assessment.assessment_id.no_of_questions} Quiz’s</span>
         </div>
 
-        <div className="flex items-center text-xs gap-1 glassy-card border border-[var(--border-color)] rounded-full px-2.5 py-1 capitalize">
-          <BsBarChartLine className="w-4 h-4 glassy-text-secondary" />
-          <span className="glassy-text-secondary">{assessment.assessment_id?.level_id?.name}</span>
+        <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1 capitalize">
+          <BsBarChartLine className="w-4 h-4 glassy-text-primary" />
+          <span className="glassy-text-primary">{assessment.assessment_id?.level_id?.name}</span>
         </div>
       </div>
 
 
       {/* Description */}
-      <p className="text-[14px] font-normal leading-relaxed glassy-text-secondary">
+      <p className="text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300 break-words break-all">
         {assessment.assessment_id.description}
       </p>
 
@@ -278,7 +281,10 @@ const renderStatusButton = (passed, attempt_number, max_attempts) => {
       <div>
         <SkillsCard2 skills={visibleSkills} limit={2} />
       </div>
-
+      <p className="text-sm glassy-text-primary font-bold flex items-center gap-1">
+        CreatedBy: {assessment.assessment_id?.action_by?.name ||
+          `${assessment.assessment_id?.action_by?.first_name} ${assessment.assessment_id?.action_by?.last_name}`}
+      </p>
       {/* CTA Button */}
       {renderStatusButton(
         assessment.passed,

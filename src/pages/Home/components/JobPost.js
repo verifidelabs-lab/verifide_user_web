@@ -64,9 +64,8 @@ const JobPost = ({ job }) => {
             size="sm"
             disabled={applyStatus.disabled}
             onClick={() => !applyStatus.disabled && handleApply()}
-            className={`flex-1 glassy-button ${
-              applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-            }`}
+            className={`flex-1 glassy-button ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+              }`}
           >
             {applyStatus.reason}
           </Button>
@@ -94,14 +93,18 @@ const JobPost = ({ job }) => {
 
       {/* Description */}
       <div className="mt-4">
-        <p className="glassy-text-primary leading-relaxed whitespace-pre-line p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <p
+          className="glassy-text-primary leading-relaxed break-words break-all  whitespace-pre-line break-words break-all 
+               p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] 
+               overflow-hidden text-ellipsis"
+        >
           {isExpanded ? content : content.slice(0, 200)}
           {content.length > 200 && (
             <>
               {!isExpanded && "..."}
               <button
                 onClick={handleSeeMore}
-                className="ml-2 md:text-sm text-xs glassy-text-primary hover:underline"
+                className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
               >
                 {isExpanded ? "See less" : "See more"}
               </button>
@@ -109,6 +112,7 @@ const JobPost = ({ job }) => {
           )}
         </p>
       </div>
+
 
       {/* Required Skills */}
       {job.required_skills?.length > 0 && (

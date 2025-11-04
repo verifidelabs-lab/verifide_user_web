@@ -584,7 +584,7 @@ const PostDetails = () => {
             </div>
 
             <div className="px-4 py-2">
-              <div className="glassy-text-primary whitespace-pre-line leading-relaxed">
+              <div className="glassy-text-primary whitespace-pre-line leading-relaxed break-words break-all ">
                 {expandedPost
                   ? postData.content
                   : postData.content.length > 200

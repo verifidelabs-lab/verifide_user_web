@@ -854,7 +854,7 @@ const Posts = () => {
                           {showOptionsDropdown === post._id && (
                             <div
                               role="menu"
-                              className="absolute right-0 mt-3 w-40 glassy-card rounded-md shadow-lg z-20 py-1  "
+                              className="!absolute right-0 mt-3 w-40 glassy-card-header rounded-md shadow-lg z-20 py-1  "
                             >
                               <button
                                 onClick={() => handleCopyLink(post)}
@@ -893,12 +893,12 @@ const Posts = () => {
                       </div>
                     </div>
                     {post?.title ? (
-                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm">
+                      <p className="mb-3 leading-relaxed break-words break-all  glassy-text-primary md:text-base font-normal text-sm">
                         {isExpanded ? post?.title : post?.title}
                       </p>
                     ) : null}
                     {post?.content ? (
-                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm glassy-text-primary text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
+                      <p className="mb-3 leading-relaxed break-words break-all  glassy-text-primary md:text-base font-normal text-sm glassy-text-primary text-sm leading-relaxed break-words break-all  whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                         {isExpanded
                           ? post?.content
                           : post?.content?.slice(0, 200)}

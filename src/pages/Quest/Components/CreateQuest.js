@@ -244,6 +244,9 @@ const CreateQuest = () => {
           if (!question.title.trim()) {
             newErrors[`surveyQuestion-${index}`] = "Question title is required";
           }
+           if (!question.title.trim().length>=100) {
+            newErrors[`surveyQuestion-${index}`] = "Question length can not be greater than 100 character Long";
+          }
 
           if (question.type !== "short-answer" && (!question.options || question.options.length === 0)) {
             newErrors[`surveyOptions-${index}`] = "Options are required for this question type";
@@ -302,7 +305,7 @@ const CreateQuest = () => {
       return false;
     }
   };
-
+ console.log("thisiserror",errors)
   // Handle file uploads
   const handleFileUpload = useCallback(async (file, fileType) => {
     if (!file) {

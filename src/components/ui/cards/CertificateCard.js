@@ -166,7 +166,7 @@ const CertificateCard = ({
                                             disabled={isDeleting}
                                             className={`flex items-center gap-1 transition-all duration-200 ${isDeleting ? 'text-blue-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800 hover:scale-105'}`}
                                         >
-                                            <span className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'glassy-card' : 'hover:glassy-card'}`}>
+                                            <span className={` w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'glassy-card' : 'hover:glassy-card'}`}>
                                                 <FaRegEdit />
                                             </span>
                                             Edit
@@ -178,7 +178,7 @@ const CertificateCard = ({
                                             disabled={isDeleting}
                                             className={`flex items-center gap-1 ml-2 transition-all duration-200 ${isDeleting ? 'text-red-400 cursor-not-allowed' : 'text-red-600 hover:text-red-800 hover:scale-105'}`}
                                         >
-                                            <span className={`bg-[#E6EEFF] w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? 'bg-red-100' : 'hover:bg-red-100'}`}>
+                                            <span className={` w-10 h-10 rounded-full flex justify-center items-center ${isDeleting ? '' : ' '}`}>
                                                 <RiDeleteBin6Line />
                                             </span>
                                             {isDeleting ? 'Deleting...' : 'Delete'}

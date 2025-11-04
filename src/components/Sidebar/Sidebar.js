@@ -102,6 +102,7 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
           ${navbarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
+
         {/* Optional Close Button */}
         {isMobile && (
           <button
@@ -111,7 +112,6 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
             ✕
           </button>
         )}
-
         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
           <ProfileCard data={personalInfo} />
 

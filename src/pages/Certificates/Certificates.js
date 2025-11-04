@@ -37,7 +37,7 @@ const LinkedInCertificate = ({
 
         {/* Certificate Heading */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10">
-          <h1 className="glassy-text-primary text-lg sm:text-xl md:text-xl lg:text-2xl font-semibold leading-relaxed max-w-2xl mx-auto">
+          <h1 className="glassy-text-primary text-lg sm:text-xl md:text-xl lg:text-2xl font-semibold leading-relaxed break-words break-all  max-w-2xl mx-auto">
             Verified {certificateName} <br /> Professional Certificate
           </h1>
           <p className="glassy-text-secondary mt-3 text-xs sm:text-sm md:text-base italic">
@@ -47,7 +47,7 @@ const LinkedInCertificate = ({
 
         {/* Certificate Name */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10">
-          <h2 className="glassy-text-primary text-xl sm:text-xl md:text-xl lg:text-2xl font-bold leading-relaxed max-w-2xl mx-auto">
+          <h2 className="glassy-text-primary text-xl sm:text-xl md:text-xl lg:text-2xl font-bold leading-relaxed break-words break-all  max-w-2xl mx-auto">
             {certificateName}
           </h2>
           <p className="glassy-text-secondary mt-2 text-xs sm:text-sm md:text-base">

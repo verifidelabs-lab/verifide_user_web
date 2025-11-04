@@ -5,7 +5,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
     const renderAnswer = () => {
 
         if (!correctOptions && !selectedOptions) {
-            return <p className="text-sm glassy-text-secondary">No answer provided</p>;
+            return <p className="text-sm glassy-text-primary">No answer provided</p>;
         }
 
 
@@ -13,14 +13,14 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
             return (
                 <div className="space-y-2">
                     <div>
-                        <p className="text-xs font-medium glassy-text-secondary"> Answer:</p>
-                        <p className="text-sm   py-1.5 rounded">
+                        <p className="text-xs font-medium glassy-text-primary"> Answer:</p>
+                        <p className="text-sm   py-1.5 rounded glassy-text-primary">
                             {correctOptions?.[0] || "Not specified"}
                         </p>
                     </div>
  <div>
-                        <p className="text-xs font-medium glassy-text-secondary"> Selected Answer:</p>
-                        <p className="text-sm   py-1.5 rounded">
+                        <p className="text-xs font-medium glassy-text-primary"> Selected Answer:</p>
+                        <p className="text-sm   py-1.5 rounded glassy-text-primary">
                             {selectedOptions?.[0] || "Not specified"}
                         </p>
                     </div>
@@ -34,7 +34,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
             <div className="space-y-2">
                 {correctOptions && (
                     <div>
-                        <p className="text-xs font-medium glassy-text-secondary">Correct Options:</p>
+                        <p className="text-xs font-medium glassy-text-primary">Correct Options:</p>
                         <ul className="list-disc pl-5">
                             {correctOptions.map((option, i) => (
                                 <li key={i} className="text-sm text-green-600">{option}</li>
@@ -44,7 +44,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
                 )}
                 {selectedOptions && (
                     <div>
-                        <p className="text-xs font-medium glassy-text-secondary">Selected Options:</p>
+                        <p className="text-xs font-medium glassy-text-primary">Selected Options:</p>
                         <ul className="list-disc pl-5">
                             {selectedOptions.map((option, i) => (
                                 <li key={i} className="text-sm glassy-text-primary">{option}</li>
@@ -58,7 +58,7 @@ const AnswerCard = ({ question, correctOptions, selectedOptions, questionType, i
 
     return (
         <div className="glassy-card rounded-xl border  space-y-2 mb-4 last:mb-0">
-            <p className="text-sm font-medium glassy-text-primary bg-[#F2F2F7] p-3">
+            <p className="text-sm font-medium glassy-text-primary  p-3">
                 {index + 1}. {question}
             </p>
             <div className="mt-2 p-3">{renderAnswer()}</div>

@@ -290,8 +290,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
     updateIsAssignedUser,
     clearAll,
   } = useGlobalKeys();
-    const userRole = Number(getCookie("ROLE"));
-  
+  const userRole = Number(getCookie("ROLE"));
+
   const ROLES = {
     SUPER_ADMIN: 1,
     ADMIN: 2,
@@ -368,21 +368,28 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
       {/* Hamburger Button */}
       <button
         className={`${navbarOpen ? "hidden" : "flex"
-          } fixed top-4 left-4 p-2 z-40 glassy-card hover:glassy-card transition-all duration-300 hover:scale-110`}
+          } fixed top-10 left-4 p-2 z-40 glassy-card hover:glassy-card transition-all duration-300 hover:scale-110`}
         onClick={() => setNavbarOpen(true)}
       >
         <GiHamburgerMenu className="text-xl glassy-text-primary" />
       </button>
-
+      {/* Optional Close Button */}
+      {isMobile && (
+        <button
+          className="absolute top-4 right-4 text-xl p-1 hover:scale-110 glassy-text-primary"
+          onClick={handleCloseSidebar}
+        >
+          ✕
+        </button>
+      )}
       {/* Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-screen w-72 flex-col glassy-card shadow-xl z-50 transform transition-all duration-300 ease-in-out ${navbarOpen
-          ? isClosing
-            ? "-translate-x-full"
-            : "translate-x-0"
-          : "-translate-x-full"
-          }`}
+        className={`fixed left-0 top-0 h-screen w-72 flex-col glassy-card shadow-xl z-50 transform transition-transform duration-300 ease-in-out
+          ${navbarOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
       >
+
+
         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
           {/* Profile Header */}
           <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto glassy-card shadow-sm overflow-hidden">
@@ -455,7 +462,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                           <div
                             key={childIdx}
                             className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
-                              ? "text-blue-600 font-medium"
+                              ? "text-blue-600 font-medium glassy-button"
                               : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                               }`}
                             onClick={() => onClickMenu(child.path)}
@@ -469,14 +476,14 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                 ) : (
                   <div
                     className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
-                      ? "text-blue-600"
+                      ? "text-blue-600 glassy-button !rounded"
                       : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                       }`}
                     onClick={() => onClickMenu(item.path)}
                   >
                     <item.icon
                       className={`text-lg rounded-full transition-colors duration-300 ${location.pathname === item.path
-                        ? "text-blue-500"
+                        ? "glassy-text-primary"
                         : "glassy-text-primary"
                         } ${hasUnread ? "animate-[pulse2_2s_infinite]" : ""}`}
                     />

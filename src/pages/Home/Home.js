@@ -868,13 +868,13 @@ const Home = () => {
                       </div>
                     </div>
                     {post?.title && (
-                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm">
+                      <p className="mb-3 leading-relaxed break-words break-all  glassy-text-primary md:text-base font-normal text-sm">
                         {isExpanded ? post?.title : post?.title}
                       </p>
                     )}
 
                     {post?.content && (
-                      <p className="mb-3 leading-relaxed glassy-text-primary md:text-base font-normal text-sm">
+                      <p className="mb-3 leading-relaxed break-words break-all  glassy-text-primary md:text-base font-normal text-sm">
                         {isExpanded ? post?.content : post?.content?.slice(0, 200)}
                         {post?.content?.length > 200 && (
                           <>

@@ -248,7 +248,7 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
           </div>
 
           {/* Message */}
-          <p className="text-xs glassy-text-secondary mt-2 leading-relaxed">
+          <p className="text-xs glassy-text-secondary mt-2 leading-relaxed break-words break-all ">
             {notification.message}
           </p>
         </div>

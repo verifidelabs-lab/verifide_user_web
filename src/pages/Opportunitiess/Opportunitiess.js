@@ -550,7 +550,7 @@ const Opportunities = () => {
           <div className="flex items-center space-x-3 mb-6">
             <BiLeftArrow
               onClick={() => handleBack()}
-              className="cursor-pointer"
+              className="cursor-pointer glassy-text-primary"
             />
             {isDetailsData?.user_id?.profile_picture_url ? (
               <img
@@ -660,10 +660,10 @@ const Opportunities = () => {
         <div className="w-full">
           <BiArrowBack
             onClick={() => handleBack()}
-            className="cursor-pointer mb-4"
+            className="cursor-pointer mb-4 glassy-text-primary"
           />
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-medium">
+            <h2 className="text-lg font-medium glassy-text-primary">
               {modalState?.data?.job_title?.name}
               {/* (
               {modalState?.data?.total_applicants}) */}
@@ -1014,7 +1014,7 @@ const Opportunities = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-3 glassy-card h-[90vh] p-2 overflow-hidden ">
+    <div className="flex flex-col md:flex-row justify-between gap-3   h-[90vh] p-2 overflow-hidden ">
       <div className="hidden md:block xl:w-[15%] lg:w-[20%] md:w-[25%]">
         <div className="glassy-card h-full rounded-lg shadow-sm p-4">
           <div className="sticky top-4">
@@ -1328,7 +1328,7 @@ const Opportunities = () => {
       </div>
 
       {(selectedJob || viewDetails) && (
-        <div className="hidden md:block xl:w-[25%] lg:w-[30%] md:w-[40%] glassy-card rounded-xl border-l border-gray-200 p-6 overflow-y-auto mt-10">
+        <div className="hidden md:block xl:w-[25%] lg:w-[30%] md:w-[40%] glassy-card rounded-xl border-l border-gray-200 p-6 overflow-y-auto mt-10 hide-scrollbar">
           <RightSideContent />
         </div>
       )}

@@ -138,6 +138,7 @@ const PollForm = ({ questions, setQuestions, errors }) => {
                 onDelete={() => deleteQuestion(question.id)}
                 onDuplicate={() => duplicateQuestion(question)}
                 onResponseChange={(value) => handleResponseChange(question.id, value)}
+                errors={errors}
               />
             ))}
 

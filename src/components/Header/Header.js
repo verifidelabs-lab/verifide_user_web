@@ -271,12 +271,12 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
         </div>
         <div className="flex items-center gap-4">
-          <button
+          {/* <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-2xl glassy-text-primary md:hidden focus:outline-none"
           >
             {isMobileMenuOpen ? <BiX /> : <BiMenu />}
-          </button>
+          </button> */}
           {/* {location.pathname === "/user/terms-and-conditions" && (
             <div className="flex items-center gap-3 w-72">
               <img
@@ -400,7 +400,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   >
                     Change Password
                   </Link>
-                  <button
+                  {/* <button
                     className={`text-xs px-3 py-1 rounded ${accessLabel === "Recruiter"
                       ? "bg-blue-600 text-white"
                       : "glassy-card glassy-text-primary hover:glassy-card"
@@ -413,7 +413,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   // disabled={accessLabel === "Recruiter"}
                   >
                     Recruiter
-                  </button>
+                  </button> */}
                   {/* Companies Dropdown */}
                   <div className="border-t border-[var(--border-color)]">
                     <button
@@ -567,6 +567,27 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   </button>
                 </div>
               )}
+              {isMobileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-52 min-w-[200px] glassy-card-header rounded-2xl border-[var(--border-color)] shadow-xl z-50 overflow-hidden transition-all duration-200 ease-out">
+
+                  {HeaderJson?.headerItems?.map((item, index) => {
+                    const isActive = location.pathname === item?.path;
+                    return (
+                      <Link
+                        key={index}
+                        to={item?.path}
+                        className={`block px-3 py-2 text-base transition duration-200 ${isActive
+                          ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                          : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                          }`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item?.name}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
 
             </div>
           </div>
@@ -574,26 +595,6 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden px-4 pb-3 space-y-2 glassy-card border-t border-gray-200">
-          {HeaderJson?.headerItems?.map((item, index) => {
-            const isActive = location.pathname === item?.path;
-            return (
-              <Link
-                key={index}
-                to={item?.path}
-                className={`block px-3 py-2 text-base transition duration-200 ${isActive
-                  ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                  : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                  }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item?.name}
-              </Link>
-            );
-          })}
-        </div>
-      )}
 
       {/* Modal (unchanged) */}
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title={`Create `}>

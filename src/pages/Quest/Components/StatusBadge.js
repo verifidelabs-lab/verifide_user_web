@@ -21,7 +21,7 @@ const StatusBadge = ({ status }) => {
   const config = statusConfig[status] || statusConfig.Ongoing;
 
   return (
-    <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold ${config.color} flex items-center gap-1 shadow-md z-10`}>
+    <div className={`!absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold ${config.color} flex items-center gap-1 shadow-md z-10`}>
       {config.icon}
       <span>{status}</span>
     </div>
@@ -29,7 +29,7 @@ const StatusBadge = ({ status }) => {
 };
 
 const EngagementBadge = ({ count }) => (
-  <div className="absolute top-4 left-4 glassy-card/80 glassy-text-primary px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-sm z-10 flex items-center gap-1">
+  <div className="!absolute top-4 left-4 glassy-card  glassy-text-primary px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-sm z-10 flex items-center gap-1">
     <BiUser className="text-xs" />
     <span>{count} Engaged</span>
   </div>

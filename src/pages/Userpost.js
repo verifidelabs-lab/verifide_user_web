@@ -694,7 +694,7 @@ const Userpost = () => {
             {postData.job_id.job_description && (
               <div className="p-6">
                 <h4 className="text-lg font-semibold glassy-text-primary mb-3">Job Description</h4>
-                <div className="glassy-text-primary text-sm leading-relaxed whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
+                <div className="glassy-text-primary text-sm leading-relaxed break-words break-all  whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                   {postData.job_id.job_description}
                 </div>
               </div>

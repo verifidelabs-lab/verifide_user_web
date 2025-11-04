@@ -200,7 +200,7 @@ export const SkillsCard2 = ({
           No skills available
         </div>
       ) : (
-        <div className="flex flex-wrap justify-start items-center gap-2 ">
+        <div className="flex flex-wrap justify-start items-center gap-2 py-2">
           {visibleSkills.map((skill, index) => {
             const isSkillSelected = checkIfSkillSelected(skill);
 

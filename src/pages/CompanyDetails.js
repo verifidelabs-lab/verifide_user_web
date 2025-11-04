@@ -179,7 +179,7 @@ const CompanyDetails = () => {
       {/* Overview */}
       <div>
         <h2 className="text-lg font-semibold glassy-text-primary mb-2">Overview</h2>
-        <p className="glassy-text-primary text-sm leading-relaxed">
+        <p className="glassy-text-primary text-sm leading-relaxed break-words break-all ">
           {agencyData?.description}
         </p>
       </div>

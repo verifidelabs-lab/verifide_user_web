@@ -232,7 +232,7 @@ const PostsManagement = () => {
 
             {modalData.data.content && (
               <div className="relative z-10 mb-6">
-                <p className="text-base leading-relaxed whitespace-pre-line font-medium">
+                <p className="text-base leading-relaxed break-words break-all  whitespace-pre-line font-medium">
                   {modalData.data.content}
                 </p>
               </div>

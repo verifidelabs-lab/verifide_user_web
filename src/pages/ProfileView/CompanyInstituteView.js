@@ -293,7 +293,7 @@ const CompanyInstituteView = () => {
               <h2 className="text-lg font-semibold glassy-text-primary capitalize mb-2">
                 About
               </h2>
-              <p className="glassy-text-secondary leading-relaxed">
+              <p className="glassy-text-secondary leading-relaxed break-words break-all ">
                 {info.description}
               </p>
             </div>

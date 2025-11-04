@@ -34,6 +34,7 @@ import Connections from '../../pages/Connections/Connections';
 import CompanyInstituteView from '../../pages/ProfileView/CompanyInstituteView';
 import Index from '../../pages/Assessment';
 import Recommended from '../../pages/Course/Recommended/Recommended';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 const PageNotFound = lazy(() => import('../Not found/PageNotFound'));
 
@@ -159,23 +160,65 @@ function CompanyLayout() {
   }, []);
 
   const location = useLocation()
-
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1000) {
+        setNavbarOpen(false);
+      } else {
+        setNavbarOpen(true);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
-    <div className=" min-h-screen flex flex-col ">
-      <Header companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />
-      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
-        {location.pathname !== "/company/opportunities" && location.pathname !== "/institution/opportunities" && location.pathname !== "/institution/course/recommended" && <div
-          className={`transition-all duration-300 ${navbarOpen ? 'md:w-72 w-full' : 'w-0 md:w-20'
-            }`}
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <Header
+        companiesProfileData={companiesProfileData}
+        instituteProfileData={instituteProfileData}
+      />
+      {!navbarOpen && window.innerWidth <= 1000 && (
+        <button
+          className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
+          onClick={() => setNavbarOpen(true)}
         >
-          <CompanySidebar navbarOpen={navbarOpen} setNavbarOpen={setNavbarOpen} companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />
-        </div>}
-        <main className='flex-1 overflow-auto custom-scrollbar  '>
+          <GiHamburgerMenu className="text-xl glassy-text-primary" />
+        </button>
+      )}
+      {/* Sidebar + Main Content */}
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
+        {/* Sidebar */}
+        {location.pathname !== "/company/opportunities" && location.pathname !== "/institution/opportunities" && location.pathname !== "/institution/course/recommended" &&
+          <div
+            className={`
+        transition-all duration-300
+        ${navbarOpen ? "md:w-72 w-full" : "w-0 md:w-20"}
+        fixed md:relative top-0 left-0 h-screen md:h-auto z-50
+      `}
+          >
+            <CompanySidebar
+              navbarOpen={navbarOpen}
+              setNavbarOpen={setNavbarOpen}
+              companiesProfileData={companiesProfileData}
+              instituteProfileData={instituteProfileData}
+            />
+          </div>}
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">
+          {/* Your main content goes here */}
+
+
+
           <Suspense fallback={<Loader />}>
             <Routes>
               {(
                 <>
-                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} role={userRole}/>} />
+                  <Route path={`/`} element={<CompanyDashboard companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} role={userRole} />} />
                   <Route path={`/admin-role`} element={<AdminRoles />} />
                   <Route path="profile" element={<CompanyProfile companiesProfileData={companiesProfileData} instituteProfileData={instituteProfileData} />} />
                   <Route path="/message/:id?/:isConnected?" element={<Message profileData={companiesProfileData} socket={socket} />} />

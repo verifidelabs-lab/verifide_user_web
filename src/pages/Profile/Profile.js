@@ -35,7 +35,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import { BiChevronLeft, BiChevronRight, BiDownload } from 'react-icons/bi';
+import { Briefcase, Diamond, FileText, GraduationCap, Settings } from 'lucide-react';
+import OpenToWorkSelect from '../../components/ui/Button/ButtonWithIcon';
+import ResumeViewSelection from './components/ResumeViewSelection';
 
 
 const validationRules = {
@@ -232,46 +235,46 @@ const useValidation = () => {
 };
 
 
-const initialFormState = {
-  institution_id: "",
-  name: "",
-  resume_url: "",
-  media_url: "",
-  description: "",
-  degree_id: "",
-  field_of_studies: "",
-  start_date: "",
-  end_date: "",
-  currently_available: false,
-  duration: "",
-  skills_acquired: [],
-  company_id: "",
-  industries_id: "",
-  profile_role_id: "",
-  first_name: "",
-  last_name: "",
-  address: {
-    address_line_1: "",
-    address_line_2: "",
-    country: { name: "", dial_code: "", short_name: "", emoji: "" },
-    state: { name: "", code: "" },
-    city: { name: "" },
-    pin_code: ""
-  },
-  gender: "",
-  birth_date: "",
-  headline: "",
-  summary: "",
-  issuing_organization: "",
-  issue_date: "",
-  credential_id: "",
-  credential_url: "",
-  profile_picture_url: "",
-  username: "",
-  file_url: ""
-};
 
 const Profile = ({ profileData }) => {
+  const initialFormState = useMemo(() => ({
+    institution_id: "",
+    name: "",
+    resume_url: "",
+    media_url: "",
+    description: "",
+    degree_id: "",
+    field_of_studies: "",
+    start_date: "",
+    end_date: "",
+    currently_available: false,
+    duration: "",
+    skills_acquired: [],
+    company_id: "",
+    industries_id: "",
+    profile_role_id: "",
+    first_name: "",
+    last_name: "",
+    address: {
+      address_line_1: "",
+      address_line_2: "",
+      country: { name: "", dial_code: "", short_name: "", emoji: "" },
+      state: { name: "", code: "" },
+      city: { name: "" },
+      pin_code: ""
+    },
+    gender: "",
+    birth_date: "",
+    headline: "",
+    summary: "",
+    issuing_organization: "",
+    issue_date: "",
+    credential_id: "",
+    credential_url: "",
+    profile_picture_url: "",
+    username: "",
+    file_url: ""
+  }), []);
   const dispatch = useDispatch();
   const { validateForm } = useValidation();
   const selector = useSelector(state => state.educations);
@@ -1109,6 +1112,13 @@ const Profile = ({ profileData }) => {
     }
   }
 
+  const frameStatusOptions = [
+    'open_for_job',
+    'open_for_internship',
+    'open_for_project',
+    // 'none',
+  ];
+  const [openResumeSelection, setOpenResumeSelection] = useState(false);
 
 
   return (
@@ -1144,7 +1154,7 @@ const Profile = ({ profileData }) => {
 
             <div className="flex flex-col gap-6 lg:flex-row mx-auto" style={{ background: "/logo.png" }}>
               <div className="w-full mx-auto space-y-4 overflow-y-auto">
-                <div className="overflow-hidden glassy-card border border-gray-200 rounded-lg" style={{
+                {/* <div className="overflow-hidden glassy-card border border-gray-200 rounded-lg" style={{
                   backgroundImage: 'url("/Group.png")',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -1255,7 +1265,79 @@ const Profile = ({ profileData }) => {
                       </div>
                     </div>
                   </div>
+                </div> */}
+                <div className="glassy-card p-4 flex flex-col md:flex-row items-start justify-center gap-6 w-full overflow-x-hidden">
+                  {/* Left Card */}
+                  <div
+                    className="relative rounded-3xl p-6 w-full md:w-96 text-white overflow-hidden flex-shrink-0"
+                    style={{
+                      backgroundImage: 'url("/Group.png")',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  >
+                    <ProfileCardData
+                      data={profileInfo}
+                      setFrameStatus={setFrameStatus}
+                      frameStatus={frameStatus}
+                      handleSelection={handleSelection}
+                    />
+                  </div>
+
+                  {/* Right Card */}
+                  <div className="glassy-card rounded-3xl p-6 md:p-8 flex-1 text-white w-full min-w-0">
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-2 sm:gap-0">
+                      <div>
+                        <h1 className="text-2xl md:text-3xl font-semibold mb-1 break-words">
+                          {`${profileInfo?.personalInfo?.first_name || ''} ${profileInfo?.personalInfo?.last_name || ''}`}
+                        </h1>
+                        <p className="glassy-text-secondary text-sm md:text-base break-words">
+                          {profileInfo?.personalInfo?.headline || 'Management Executive at Zara'} |{' '}
+                          {profileInfo?.personalInfo?.address?.city?.name || 'N/A'},{' '}
+                          {profileInfo?.personalInfo?.address?.state?.name || 'N/A'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {profileInfo?.topSkills?.data?.length > 0 ? (
+                        <SkillTag skills={profileInfo?.topSkills?.data} limit={3} />
+                      ) : (
+                        <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
+                          🚀 No skills added yet. Verify your education and update your skills to showcase your expertise!
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex flex-wrap gap-3 mb-4">
+                      <OpenToWorkSelect options={frameStatusOptions} value={frameStatus} onSelect={handleSelection} />
+                      <Button
+                        icon={<BiDownload />}
+                        size="sm"
+                        className="text-sm text-primary"
+                        onClick={() => setOpenResumeSelection(true)}
+                      >
+                        Resume
+                      </Button>
+                    </div>
+
+                    {/* Last Updated */}
+                    <p className="text-sm text-gray-500">Last updated on 12 June, 2024</p>
+                  </div>
+
+                  {/* Resume Modal */}
+                  <ResumeViewSelection
+                    isOpen={openResumeSelection}
+                    onClose={() => setOpenResumeSelection(false)}
+                    title="Select Your Preview"
+                    userData={{ userId: profileInfo._id, username: profileInfo.personalInfo.username }}
+                  />
                 </div>
+
                 <div >
 
                   <PersonalInformation formData={formData} handleChange={handleChange} countryList={transformedData.countryList}

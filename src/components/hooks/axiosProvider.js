@@ -3,11 +3,11 @@ import { getCookie, removeCookie } from "../utils/cookieHandler";
 import { CiNoWaitingSign } from "react-icons/ci";
 import { toast } from "sonner";
 
-const isLive = false;
-// const isLive = true;
+// const isLive = false;
+const isLive = true;
 // export const BaseUrl = "https://verifide.xyz/"
-// export const BaseUrl = "https://dev-verifide.verifide.xyz/";
-export const BaseUrl = "http://localhost:3000/";
+export const BaseUrl = "https://dev-verifide.verifide.xyz/";
+// export const BaseUrl = "http://localhost:3000/";
 export const apiUrl = isLive
   ? `${BaseUrl}api/v1/`
   : "http://192.168.1.63:5004/api/v1/";

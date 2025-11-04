@@ -115,7 +115,7 @@ const UserCertificate = () => {
                 <div className="px-12 py-10 relative z-10">
                     {/* Title */}
                     <div className="text-center mb-10">
-                        <h1 className="text-2xl font-semibold glassy-text-primary leading-relaxed max-w-2xl mx-auto">
+                        <h1 className="text-2xl font-semibold glassy-text-primary leading-relaxed break-words break-all  max-w-2xl mx-auto">
                             Verifide Learning {certificateName} <br /> Professional Certificate
                         </h1>
                         <p className="mt-3 glassy-text-secondary text-sm italic">
@@ -126,7 +126,7 @@ const UserCertificate = () => {
 
                     {/* Certificate Name */}
                     <div className="text-center mb-10">
-                        <h2 className="text-3xl font-bold text-blue-700 leading-relaxed max-w-2xl mx-auto">
+                        <h2 className="text-3xl font-bold text-blue-700 leading-relaxed break-words break-all  max-w-2xl mx-auto">
                             {certificateName}
                         </h2>
                         <p className="mt-2 glassy-text-secondary text-sm">Issued by {issueBy}</p>
