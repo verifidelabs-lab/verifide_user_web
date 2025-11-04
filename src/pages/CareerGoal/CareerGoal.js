@@ -202,7 +202,7 @@ const CareerGoal = () => {
 
   if (screeningQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen  flex items-center justify-center p-4">
         <div className="glassy-card rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="animate-spin w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
           <p className="text-lg glassy-text-secondary">
@@ -249,7 +249,7 @@ const CareerGoal = () => {
         <div className="glassy-card rounded-2xl shadow-lg mb-6 p-6">
           <div className="flex items-start gap-4">
             <Link
-              to={`/user/view-details/companies/${jobData?.company_id?._id}`}
+              to={`/user/view-details/companies/${jobData?.company_id}`}
             >
               <img
                 src={jobData?.company_id?.logo_url}

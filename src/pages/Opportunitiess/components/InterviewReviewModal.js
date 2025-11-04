@@ -117,7 +117,7 @@ const InterviewReviewModal = ({
                   const val = Math.min(12, Math.max(1, parseInt(e.target.value) || 1));
                   setHour(val);
                 }}
-                className="w-10 h-8 text-center text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+                className="w-10 h-8 text-center text-sm border glassy-input-notification rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
               />
 
               <button
@@ -150,7 +150,7 @@ const InterviewReviewModal = ({
                   const val = Math.min(59, Math.max(0, parseInt(e.target.value) || 0));
                   setMinute(val);
                 }}
-                className="w-10 h-8 text-center text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
+                className="w-10 h-8 text-center text-sm border glassy-input-notification rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-sm"
               />
 
               <button
@@ -176,7 +176,7 @@ const InterviewReviewModal = ({
           value={interviewer}
           onChange={(e) => setInterviewer(e.target.value)}
           placeholder="Jane Smith (Senior Frontend Engineer)"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1 focus:ring-2 focus:ring-blue-500"
+          className="w-full border glassy-input rounded-md px-3 py-2 mt-1 focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -214,7 +214,7 @@ const InterviewReviewModal = ({
         <select
           value={recommendationLevel}
           onChange={(e) => setRecommendationLevel(e.target.value)}
-          className="w-full px-4 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-transparent"
+          className="w-full px-4 py-1.5 border glassy-input rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-transparent"
         >
           <option value="">Select a recommendation</option>
           <option value="strong_yes">Strong Yes</option>
@@ -230,7 +230,7 @@ const InterviewReviewModal = ({
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="w-full px-4 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-transparent"
+          className="w-full px-4 py-1.5 border glassy-input rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-transparent"
         >
           <option value="">Select status</option>
           <option value="selected_in_interview">Approved</option>
@@ -245,7 +245,7 @@ const InterviewReviewModal = ({
         <textarea
           id="remarks"
           rows="4"
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-4 py-2 border glassy-input rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           placeholder="Provide detailed feedback on the candidate’s performance..."
           value={remarks}
           onChange={(e) => setRemarks(e.target.value)}

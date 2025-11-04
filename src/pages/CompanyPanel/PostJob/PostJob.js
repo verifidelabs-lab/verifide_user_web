@@ -1012,12 +1012,12 @@ const PostJob = () => {
             <div
               key={qIndex}
               className={`mb-6 p-4 border rounded-lg ${questionError || optionsError || correctError
-                ? "border-red-300 bg-red-50"
-                : "border-gray-200"
+                ? "border-red-300 glassy-card"
+                : "border-gray-200 glassy-card"
                 }`}
             >
               <div className="flex justify-between items-center mb-3">
-                <h3 className="font-medium">
+                <h3 className="font-medium glassy-text-primary">
                   Question {qIndex + 1} <span className="text-red-500">*</span>
                 </h3>
                 <button
@@ -1040,7 +1040,7 @@ const PostJob = () => {
                     )
                   }
                   placeholder="Enter your question"
-                  className="w-full h-10"
+                  className="w-full h-10 glassy-text-primary"
                   error={questionError}
                   required
                 />
@@ -1059,7 +1059,7 @@ const PostJob = () => {
                       e.target.value
                     )
                   }
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border glassy-text-primary glassy-input rounded-md"
                 >
                   <option value="single_choice">Single Choice</option>
                   <option value="multi_choice">Multiple Choice</option>
@@ -1082,7 +1082,7 @@ const PostJob = () => {
                       )
                     }
                     rows={3}
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border glassy-input rounded-md"
                     placeholder="Describe what you're looking for in an answer (optional)"
                   />
                 </div>
@@ -1182,7 +1182,7 @@ const PostJob = () => {
                     )
                   }
                   min="1"
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border glassy-input rounded-md"
                   required
                 />
               </div>
