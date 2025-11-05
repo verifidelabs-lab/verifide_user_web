@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
-import { BiCalendar } from 'react-icons/bi';
-import { BsTrash2Fill } from 'react-icons/bs';
-import { CiEdit, CiLock } from 'react-icons/ci';
-import { FaChartArea } from 'react-icons/fa';
-import { FiFileText } from 'react-icons/fi';
-import { CiCalendarDate } from 'react-icons/ci';
+import React, { useState } from "react";
+import { BiCalendar } from "react-icons/bi";
+import { BsTrash2Fill } from "react-icons/bs";
+import { CiEdit, CiLock } from "react-icons/ci";
+import { FaChartArea, FaSyncAlt, FaTimesCircle } from "react-icons/fa";
+import { FiFileText } from "react-icons/fi";
+import { CiCalendarDate } from "react-icons/ci";
 import { HiOutlineClipboardList } from "react-icons/hi";
-import { GoClock } from 'react-icons/go';
-import { BsBarChartLine } from 'react-icons/bs';
-import { formatDateByMomentTimeZone } from '../../../components/utils/globalFunction';
-import Button from '../../../components/ui/Button/Button';
-import { PiDownloadBold } from 'react-icons/pi';
-import { SkillsCard2 } from '../../../components/ui/cards/Card';
+import { GoClock } from "react-icons/go";
+import { BsBarChartLine } from "react-icons/bs";
+import { formatDateByMomentTimeZone } from "../../../components/utils/globalFunction";
+import Button from "../../../components/ui/Button/Button";
+import { PiDownloadBold } from "react-icons/pi";
+import { SkillsCard2 } from "../../../components/ui/cards/Card";
 const MAX_VISIBLE_SKILLS = 8;
 
 const CandidateCard = ({ candidate }) => {
   const [expandedSkills, setExpandedSkills] = useState(false);
   const toggleSkills = () => {
-    setExpandedSkills(prev => !prev);
+    setExpandedSkills((prev) => !prev);
   };
 
-  const visibleSkills = expandedSkills ? candidate.skills : candidate.skills.slice(0, MAX_VISIBLE_SKILLS);
+  const visibleSkills = expandedSkills
+    ? candidate.skills
+    : candidate.skills.slice(0, MAX_VISIBLE_SKILLS);
   const remainingCount = candidate.skills.length - MAX_VISIBLE_SKILLS;
 
   return (
@@ -127,8 +129,14 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
   //   }));
   // };
   const renderStatusButton = (passed, attempt_number, max_attempts) => {
+    // const isDisabled = passed || attempt_number >= max_attempts;
     const isDisabled = passed || attempt_number >= max_attempts;
-    const buttonText = isDisabled ? "Start" : attempt_number ? "Resume" : "Start";
+
+    const buttonText = isDisabled
+      ? "Start"
+      : attempt_number
+      ? "Resume"
+      : "Start";
 
     return (
       <div className="flex justify-between pt-3 mt-auto gap-6">
@@ -143,8 +151,12 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
 
         {assessment.assessment_id?.material_url && isDisabled && (
           <button
-            className={`flex-1 gap-2 flex items-center justify-center px-4 py-2.5 rounded-md border border-[var(--border-color)] glassy-card glassy-text-primary hover:glassy-text-secondary transition-all duration-200 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
-            onClick={() => window.open(assessment.assessment_id?.material_url, '_blank')}
+            className={`flex-1 gap-2 flex items-center justify-center px-4 py-2.5 rounded-md border border-[var(--border-color)] glassy-card glassy-text-primary hover:glassy-text-secondary transition-all duration-200 ${
+              isDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={() =>
+              window.open(assessment.assessment_id?.material_url, "_blank")
+            }
             disabled={isDisabled}
           >
             Guide <PiDownloadBold size={23} />
@@ -154,11 +166,12 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
     );
   };
 
-
   const assessmentId = assessment.assessment_id?._id;
   const skill_ids = assessment.assessment_id?.skill_ids || [];
   const isExpanded = expandedSkills[assessmentId];
-  const visibleSkills = isExpanded ? skill_ids : skill_ids.slice(0, MAX_VISIBLE_SKILLS);
+  const visibleSkills = isExpanded
+    ? skill_ids
+    : skill_ids.slice(0, MAX_VISIBLE_SKILLS);
   // const remainingCount = skill_ids.length - MAX_VISIBLE_SKILLS;
 
   return (
@@ -197,21 +210,23 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
           <div>
             <h3 className="font-semibold text-[16px] glassy-text-primary">
               {assessment.assessment_id.title}
-
             </h3>
 
             <p className="text-sm glassy-text-secondary flex items-center gap-1">
-              <CiCalendarDate className="text-[var(--accent-color)]" size={16} />
+              <CiCalendarDate
+                className="text-[var(--accent-color)]"
+                size={16}
+              />
               {formatDateByMomentTimeZone(
                 assessment.assessment_id.updatedAt,
-                'D MMM YYYY'
+                "D MMM YYYY"
               )}
             </p>
           </div>
         </div>
 
         {/* Status Section */}
-        {assessment.passed ? (
+        {/* {assessment.passed ? (
           <div className="flex items-center justify-center">
             <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
               <img src="/Img/assVerified.png" alt="Passed" className="h-7 w-7" />
@@ -238,6 +253,43 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
             <div className="absolute inset-0 flex items-center justify-center text-[11px] font-medium glassy-text-primary z-20 rounded-full">
               {assessment.total_score} of {assessment.assessment_id.no_of_questions}
             </div>
+          </div> 
+        )}*/}
+        {assessment.passed ? (
+          // ✅ Case 1: Passed
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
+              <img
+                src="/Img/assVerified.png"
+                alt="Passed"
+                className="h-7 w-7"
+              />
+              <span className="font-medium text-[15px] glassy-text-primary">
+                Passed
+              </span>
+            </div>
+          </div>
+        ) : assessment.attempt_number <
+          assessment.assessment_id.max_attempts ? (
+          // ⚙️ Case 2: Show Attempt ratio (1 / 2, etc.)
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
+              <FaSyncAlt className="text-amber-500 text-lg animate-spin-slow" />
+              <span className="font-medium text-[14px] glassy-text-primary">
+                Attempt {assessment.attempt_number} /{" "}
+                {assessment.assessment_id.max_attempts}
+              </span>
+            </div>
+          </div>
+        ) : (
+          // ❌ Case 3: Failed (exceeded max attempts)
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
+              <FaTimesCircle className="text-red-500 text-lg" />
+              <span className="font-medium text-[15px] text-red-700">
+                Failed
+              </span>
+            </div>
           </div>
         )}
       </div>
@@ -248,7 +300,6 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
 
         </h4> */}
 
-
         <p className="glassy-text-secondary font-medium text-[14px]">
           {assessment.assessment_id.passing_score}% Passing Score
         </p>
@@ -257,20 +308,25 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
       <div className="flex items-center flex-wrap gap-3">
         <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1">
           <GoClock className="w-4 h-4 glassy-text-primary" />
-          <span className="glassy-text-primary">{assessment.assessment_id.time_limit} Min</span>
+          <span className="glassy-text-primary">
+            {assessment.assessment_id.time_limit} Min
+          </span>
         </div>
 
         <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1">
           <HiOutlineClipboardList className="w-4 h-4 glassy-text-primary" />
-          <span className="glassy-text-primary">{assessment.assessment_id.no_of_questions} Quiz’s</span>
+          <span className="glassy-text-primary">
+            {assessment.assessment_id.no_of_questions} Quiz’s
+          </span>
         </div>
 
         <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1 capitalize">
           <BsBarChartLine className="w-4 h-4 glassy-text-primary" />
-          <span className="glassy-text-primary">{assessment.assessment_id?.level_id?.name}</span>
+          <span className="glassy-text-primary">
+            {assessment.assessment_id?.level_id?.name}
+          </span>
         </div>
       </div>
-
 
       {/* Description */}
       <p className="text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300 break-words break-all">
@@ -282,7 +338,8 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
         <SkillsCard2 skills={visibleSkills} limit={2} />
       </div>
       <p className="text-sm glassy-text-primary font-bold flex items-center gap-1">
-        CreatedBy: {assessment.assessment_id?.action_by?.name ||
+        CreatedBy:{" "}
+        {assessment.assessment_id?.action_by?.name ||
           `${assessment.assessment_id?.action_by?.first_name} ${assessment.assessment_id?.action_by?.last_name}`}
       </p>
       {/* CTA Button */}
@@ -292,7 +349,6 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
         assessment.assessment_id.max_attempts
       )}
     </div>
-
   );
 };
 

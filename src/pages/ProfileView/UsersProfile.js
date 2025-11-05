@@ -11,7 +11,9 @@ import {
   formatDateRange,
   getDuration,
 } from "../../components/utils/globalFunction";
-import ExpEduCard from "../../components/ui/cards/Card";
+// import ExpEduCard from "../../components/ui/cards/Card";
+import ExpEduCard, { SkillsCard2 } from "../../components/ui/cards/Card";
+
 import Button from "../../components/ui/Button/Button";
 import { RiUserAddFill } from "react-icons/ri";
 import { toast } from "sonner";
@@ -299,7 +301,7 @@ const UsersProfile = ({ currentUserId }) => {
                         <h2 className="md:mb-1 lg:mb-2 lg:text-lg md:text-[14px] font-semibold glassy-text-primary">
                           Top Skills
                         </h2>
-                        <div className="flex flex-wrap gap-2">
+                        {/* <div className="flex flex-wrap gap-2">
                           {formData?.topSkills?.data?.length > 0 ? (
                             formData?.topSkills?.data?.map((item, index) => (
                               <SkillTag
@@ -308,6 +310,27 @@ const UsersProfile = ({ currentUserId }) => {
                                 variant={item.variant}
                               />
                             ))
+                          ) : (
+                            <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
+                              🚀 No skills added yet. Verify your education and
+                              update your skills to showcase your expertise!
+                            </p>
+                          )}
+                        </div> */}
+                        <div className="mt-3">
+                          {Array.isArray(formData?.topSkills?.data) &&
+                          formData.topSkills.data.some(
+                            (item) => item?.skill_name
+                          ) ? (
+                            <SkillsCard2
+                              skills={formData.topSkills.data
+                                .filter((item) => item?.skill_name)
+                                .map((skill) => ({
+                                  label: skill.skill_name,
+                                  value: skill.skill_id || skill.skill_name,
+                                }))}
+                              limit={4}
+                            />
                           ) : (
                             <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
                               🚀 No skills added yet. Verify your education and
@@ -438,8 +461,126 @@ const UsersProfile = ({ currentUserId }) => {
                     </>
                   )}
                 </div>
-
                 <div className="glassy-card rounded-lg p-6 border border-[#D3D3D3]">
+                  <h2 className="text-xl font-bold glassy-text-primary mb-6">
+                    Education
+                  </h2>
+
+                  {/* Local duration formatter */}
+                  {(() => {
+                    const formatEducationDuration = (start, end) => {
+                      if (!start) return "Duration not available";
+
+                      const startDate = new Date(start);
+                      const startStr = startDate.toLocaleDateString("en-US", {
+                        month: "short",
+                        year: "numeric",
+                      });
+
+                      if (!end) return `${startStr} – Present`;
+
+                      const endDate = new Date(end);
+                      const endStr = endDate.toLocaleDateString("en-US", {
+                        month: "short",
+                        year: "numeric",
+                      });
+
+                      const diffMonths =
+                        (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+                        (endDate.getMonth() - startDate.getMonth());
+
+                      const durationStr =
+                        diffMonths > 0
+                          ? ` (${diffMonths} month${diffMonths > 1 ? "s" : ""})`
+                          : "";
+
+                      return `${startStr} – ${endStr}${durationStr}`;
+                    };
+
+                    return (
+                      <>
+                        {formData?.educations?.length > 0 ? (
+                          <div>
+                            {formData.educations.map((edu, index) => (
+                              <div
+                                key={index}
+                                className="mb-6 pb-6 border-b border-[#C3D6FF] last:border-b-0 last:pb-0 last:mb-0"
+                              >
+                                <div className="flex justify-between items-start pb-2">
+                                  <div className="flex justify-start items-start gap-2">
+                                    <img
+                                      src={
+                                        edu?.logo_url ||
+                                        "/Img/Profile/Frame.png"
+                                      }
+                                      alt="logo"
+                                      onError={(e) =>
+                                        (e.target.src =
+                                          "/Img/Profile/Frame.png")
+                                      }
+                                      className="w-10 h-10 rounded-full"
+                                    />
+                                    <div>
+                                      <h3 className="font-bold glassy-text-primary text-lg">
+                                        {edu?.institution ||
+                                          "Unspecified Institution"}
+                                      </h3>
+                                      <p className="glassy-text-primary text-sm">
+                                        {edu?.degree || "No degree specified"}
+                                      </p>
+                                      <p className="glassy-text-secondary text-sm flex items-center gap-1 mt-1">
+                                        <BsCalendarEvent size={12} />
+                                        {formatEducationDuration(
+                                          edu?.start_date,
+                                          edu?.end_date
+                                        )}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Skills Acquired Section */}
+                                {edu?.skills_acquired?.length > 0 && (
+                                  <div className="mt-3 pl-12">
+                                    <SkillsCard2
+                                      title="Skills Acquired"
+                                      skills={edu.skills_acquired.map(
+                                        (skill) => ({
+                                          label: skill?.name,
+                                          value: skill?._id || skill?.name,
+                                        })
+                                      )}
+                                      limit={6}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="px-6 py-5 text-center border-2 border-dashed rounded-lg glassy-card transition-colors duration-300">
+                            <div className="flex items-center justify-center mx-auto mb-4">
+                              <img
+                                src={`/Img/Profile/Frame.png`}
+                                alt=""
+                                className="hover:scale-110 transition-transform duration-300"
+                              />
+                            </div>
+                            <h3 className="mb-2 text-[20px] font-semibold glassy-text-primary">
+                              No Education Records
+                            </h3>
+                            <p className="text-sm glassy-text-secondary">
+                              Add your education history to enhance your
+                              profile.
+                            </p>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+
+                {/* <div className="glassy-card rounded-lg p-6 border border-[#D3D3D3]">
                   <h2 className="text-xl font-bold glassy-text-primary mb-6">
                     Education
                   </h2>
@@ -462,24 +603,28 @@ const UsersProfile = ({ currentUserId }) => {
                               />
                               <div>
                                 <h3 className="font-bold glassy-text-primary text-lg">
-                                  {edu.institution || "Unspecified institution"}
+                                  {edu?.institution || "Unspecified institution"}
                                 </h3>
                                 <p className="glassy-text-primary text-sm">
-                                  {edu.degree || "No degree specified"}
+                                  {edu?.degree || "No degree specified"}
                                 </p>
                                 <p className="glassy-text-secondary text-sm flex items-center gap-1 mt-1">
                                   <BsCalendarEvent size={12} />{" "}
-                                  {getDuration(edu.start_date, edu.end_date)}
+                                  {getDuration(edu?.start_date, edu?.end_date)}
                                 </p>
                               </div>
                             </div>
                           </div>
-                          {edu?.skills_acquired?.map((e) => (
-                            <span className="text-xl font-bold glassy-text-secondary rounded-full px-2 py-0.5 border text-[10px] mr-1">
-                              {e?.name}
-                            </span>
-                          ))}
-                          {/* <SkillsCard skills={edu?.skills_acquired} /> */}
+                          {edu?.skills_acquired?.length > 0 && (
+                            <SkillsCard2
+                              title="Skills Acquired"
+                              skills={edu?.skills_acquired.map((skill) => ({
+                                label: skill?.name,
+                                value: skill?._id || skill?.name,
+                              }))}
+                              limit={6}
+                            />
+                          )}
                         </div>
                       ))}
                     </div>
@@ -502,7 +647,7 @@ const UsersProfile = ({ currentUserId }) => {
                       </div>
                     </>
                   )}
-                </div>
+                </div> */}
                 <div className="glassy-card p-6 rounded-md border border-[#D3D3D3]">
                   <h2 className="text-xl font-bold glassy-text-primary mb-6 ">
                     projects

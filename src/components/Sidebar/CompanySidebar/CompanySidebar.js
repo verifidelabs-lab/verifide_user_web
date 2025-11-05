@@ -399,7 +399,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = isInstitution()
                         ? "/institutionlogo.png"
-                        : "/companylogo.png";
+                        : "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
                     }}
                   />
                 </div>

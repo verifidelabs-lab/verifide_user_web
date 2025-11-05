@@ -785,7 +785,7 @@ export default function Message({ profileData, socket }) {
         <div className="flex h-full">
 
           {/* Left Sidebar: Conversations */}
-          <div className="w-1/3  flex flex-col">
+          <div className="w-1/3  flex flex-col glassy-card">
             <div className="p-4  ">
               <h1 className="text-xl font-bold glassy-text-primary">Messages</h1>
               <div className="relative mt-3">
