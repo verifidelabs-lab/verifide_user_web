@@ -412,7 +412,8 @@ textarea:focus {
   min-height: 100vh;
   background: url('/public/theme background.svg') no-repeat center center;
   background-size: cover;
-  background-attachment: fixed; /* Make background fixed */
+  background-attachment: fixed;
+  /* Make background fixed */
   transition: all 0.4s ease;
 }
 
@@ -478,7 +479,7 @@ textarea:focus {
   color: #ffffff;
   border: none;
   padding: 0.5rem 1.2rem;
-  border-radius: 9999px;
+  /* border-radius: 9999px; */
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -584,4 +585,104 @@ textarea:focus {
 .glassy-select option {
   background-color: var(--bg-card);
   color: var(--text-primary);
+}
+
+
+/* ---------- Autofill Fix (Light + Dark Themes) ---------- */
+.glassy-input:-webkit-autofill,
+.glassy-input:-webkit-autofill:hover,
+.glassy-input:-webkit-autofill:focus,
+textarea.glassy-input:-webkit-autofill,
+select.glassy-input:-webkit-autofill {
+  /* Preserve glassy background look */
+  background-color: var(--bg-card) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-card) inset !important;
+  box-shadow: 0 0 0px 1000px var(--bg-card) inset !important;
+
+  /* Text should match your theme */
+  -webkit-text-fill-color: var(--text-primary) !important;
+
+  /* Smooth transition to avoid flash */
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* Optional: make autofill blend with blur & border */
+[data-theme="dark"] .glassy-input:-webkit-autofill,
+[data-theme="dark"] textarea.glassy-input:-webkit-autofill,
+[data-theme="dark"] select.glassy-input:-webkit-autofill {
+  background-color: var(--bg-card) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-card) inset !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+/* ---------- Browser Calendar (Date/Time Inputs) ---------- */
+.glassy-input[type="date"],
+.glassy-input[type="datetime-local"],
+.glassy-input[type="time"],
+.glassy-input[type="month"],
+.glassy-input[type="week"] {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* When focused */
+.glassy-input[type="date"]:focus,
+.glassy-input[type="datetime-local"]:focus,
+.glassy-input[type="time"]:focus,
+.glassy-input[type="month"]:focus,
+.glassy-input[type="week"]:focus {
+  outline: none;
+  border-color: var(--bg-button-hover);
+  box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.15);
+}
+
+/* ---------- Calendar Icon Styling (for Chrome, Edge, Safari) ---------- */
+.glassy-input[type="date"]::-webkit-calendar-picker-indicator,
+.glassy-input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+.glassy-input[type="time"]::-webkit-calendar-picker-indicator,
+.glassy-input[type="month"]::-webkit-calendar-picker-indicator,
+.glassy-input[type="week"]::-webkit-calendar-picker-indicator {
+  background-color: transparent;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hover & focus glow for icon */
+.glassy-input[type="date"]::-webkit-calendar-picker-indicator:hover,
+.glassy-input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover,
+.glassy-input[type="time"]::-webkit-calendar-picker-indicator:hover,
+.glassy-input[type="month"]::-webkit-calendar-picker-indicator:hover,
+.glassy-input[type="week"]::-webkit-calendar-picker-indicator:hover {
+  background-color: rgba(33, 122, 255, 0.1);
+  opacity: 1;
+}
+
+/* ---------- Dark Theme Alignment ---------- */
+[data-theme="dark"] .glassy-input[type="date"],
+[data-theme="dark"] .glassy-input[type="datetime-local"],
+[data-theme="dark"] .glassy-input[type="time"],
+[data-theme="dark"] .glassy-input[type="month"],
+[data-theme="dark"] .glassy-input[type="week"] {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .glassy-input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] .glassy-input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] .glassy-input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] .glassy-input[type="month"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] .glassy-input[type="week"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.8;
 }

@@ -207,7 +207,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         searchFields: "name",
         keyWord: "",
         query: JSON.stringify({
-          created_by_users: entryType.value === "User Entries",
+          created_by_users: false,
         }),
       };
       try {
@@ -233,7 +233,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
         // searchFields: "name",
         keyWord: "",
         query: JSON.stringify({
-          created_by_users: true,
+          created_by_users: false,
         }),
       };
       try {

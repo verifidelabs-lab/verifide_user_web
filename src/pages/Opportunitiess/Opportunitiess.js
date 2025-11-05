@@ -1044,8 +1044,8 @@ const Opportunities = () => {
 
       <div
         className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${!selectedJob
-            ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
-            : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
+          ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
+          : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
           } `}
       >
         <div className="flex justify-between md:flex-row flex-col mb-6 space-y-4 lg:space-y-0">
@@ -1054,7 +1054,8 @@ const Opportunities = () => {
           </h1>
           <div className="flex  items-center gap-3">
             <div className="relative" ref={filterDropdownRef}>
-              <button
+
+              {/* <button
                 onClick={() => setShowFilterDropdown(!showFilterDropdown)}
                 className="flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:glassy-card focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full sm:w-auto"
               >
@@ -1065,10 +1066,11 @@ const Opportunities = () => {
                     {getActiveFiltersCount()}
                   </span>
                 )}
-              </button>
+              </button> */}
+
 
               {showFilterDropdown && (
-                <div className="absolute md:right-0 left-4 mt-2 w-48 glassy-card rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="!absolute md:right-0 left-4 mt-2 w-48 glassy-card rounded-lg shadow-lg border border-gray-200 z-50">
                   <div className="p-4">
                     <h3 className="text-sm font-medium glassy-text-primary mb-3">
                       Filter Settings
@@ -1141,6 +1143,19 @@ const Opportunities = () => {
             >
               Post a Job
             </Button>
+            <button
+              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+              className="relative p-2 border border-gray-300 rounded-lg hover:glassy-card focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            >
+              <TbAdjustmentsHorizontal className="w-5 h-5 glassy-text-secondary" />
+
+              {getActiveFiltersCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-blue-600 glassy-text-primary text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {getActiveFiltersCount()}
+                </span>
+              )}
+            </button>
+
           </div>
         </div>
 
@@ -1151,8 +1166,8 @@ const Opportunities = () => {
                 <button
                   onClick={() => handleActiveTab("open")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "open"
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "glassy-text-secondary hover:glassy-text-primary"
+                    ? "glassy-card text-blue-600 shadow-sm"
+                    : "glassy-text-secondary hover:glassy-text-primary"
                     }`}
                 >
                   Open Jobs
@@ -1160,8 +1175,8 @@ const Opportunities = () => {
                 <button
                   onClick={() => handleActiveTab("shortlisted")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "shortlisted"
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "glassy-text-secondary hover:glassy-text-primary"
+                    ? "glassy-card text-blue-600 shadow-sm"
+                    : "glassy-text-secondary hover:glassy-text-primary"
                     }`}
                 >
                   Shortlisted
@@ -1169,8 +1184,8 @@ const Opportunities = () => {
                 <button
                   onClick={() => handleActiveTab("schedule-interviews")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "schedule-interviews"
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "glassy-text-secondary hover:glassy-text-primary"
+                    ? "glassy-card text-blue-600 shadow-sm"
+                    : "glassy-text-secondary hover:glassy-text-primary"
                     }`}
                 >
                   Schedules Interviews
@@ -1178,8 +1193,8 @@ const Opportunities = () => {
                 <button
                   onClick={() => handleActiveTab("closed")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "closed"
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "glassy-text-secondary hover:glassy-text-primary"
+                    ? "glassy-card text-blue-600 shadow-sm"
+                    : "glassy-text-secondary hover:glassy-text-primary"
                     }`}
                 >
                   Closed Jobs
@@ -1187,8 +1202,8 @@ const Opportunities = () => {
                 <button
                   onClick={() => handleActiveTab("rejected")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "rejected"
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "glassy-text-secondary hover:glassy-text-primary"
+                    ? "glassy-card text-blue-600 shadow-sm"
+                    : "glassy-text-secondary hover:glassy-text-primary"
                     }`}
                 >
                   Rejected Interviews
@@ -1196,8 +1211,8 @@ const Opportunities = () => {
                 <button
                   onClick={() => handleActiveTab("selected_in_interview")}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "selected_in_interview"
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "glassy-text-secondary hover:glassy-text-primary"
+                    ? "glassy-card text-blue-600 shadow-sm"
+                    : "glassy-text-secondary hover:glassy-text-primary"
                     }`}
                 >
                   Ready to Join
@@ -1282,8 +1297,8 @@ const Opportunities = () => {
         <div className="h-full ">
           <div
             className={`grid w-full ${!viewDetails
-                ? "2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1"
-                : "xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
+              ? "2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1"
+              : "xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
               } items-center gap-2`}
           >
             {isLoading ? (

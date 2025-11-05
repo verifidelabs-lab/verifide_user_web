@@ -8,6 +8,7 @@ import { notificationsList, notificationsMarkAllRead, notificationsMarkAsRead } 
 import { getCookie } from '../../../components/utils/cookieHandler';
 import CustomToggle from '../../../components/ui/Toggle/CustomToggle';
 import { FiChevronDown } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const ROLE_BASED_NOTIFICATION_TYPES = {
   Admin: {
@@ -109,12 +110,17 @@ const formatDate = (dateString) => {
   });
 };
 
-const NotificationItem = ({ notification, onMarkAsRead }) => {
+const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
   const { Icon, color } = getIconForType(notification.type);
 
+
   const handleActionClick = () => {
+    const redirectPath = notification?.redirectPath;
+    if (redirectPath) console.log("Redirect Path:", redirectPath);
     if (!notification.isRead) {
-      onMarkAsRead(notification._id);
+      onMarkAsRead(notification._id, notification?.redirectPath);
+    } else if (notification?.redirectPath) {
+      navigate(notification?.redirectPath);
     }
   };
 
@@ -274,6 +280,7 @@ const NotificationHeader = ({
 
 const NotificationInterface = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const selector = useSelector(state => state.companies);
   const notifyData = selector?.notificationsData?.data?.data;
 
@@ -324,15 +331,18 @@ const NotificationInterface = () => {
       setLoading(false);
     }
   };
-
-  const markAsRead = async (notificationId) => {
+ const markAsRead = async (notificationId, redirectPath = "") => {
     try {
       await dispatch(notificationsMarkAsRead({ _id: notificationId }));
-      fetchNotifications();
+      if (redirectPath) {
+        navigate(redirectPath);
+      }
+      fetchNotifications(); // Refresh the list
     } catch (error) {
-      console.error('Error marking notification as read:', error);
+      console.error("Error marking notification as read:", error);
     }
   };
+
 
   const markAllAsRead = async () => {
     try {
@@ -401,6 +411,8 @@ const NotificationInterface = () => {
               key={notification._id}
               notification={notification}
               onMarkAsRead={markAsRead}
+              navigate={navigate}
+
             />
           ))
         )}

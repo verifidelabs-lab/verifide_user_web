@@ -133,8 +133,8 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
     return (
       <div className="flex justify-between pt-3 mt-auto gap-6">
         <Button
-          variant="outline"
-          className={`w-44 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+          variant="primary"
+          className={`w-44  rounded-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={isDisabled}
           onClick={() => handleStartAssessment(assessment)}
         >

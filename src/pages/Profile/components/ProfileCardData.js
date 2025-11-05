@@ -223,7 +223,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
             <h2 className="font-semibold text-lg">
               {`${data?.personalInfo?.first_name || ''} ${data?.personalInfo?.last_name || ''}`}
             </h2>
-            <p className="text-sm text-white/80">{data?.personalInfo?.headline || 'Student | Saudi Arabia'} | {data.personalInfo.address.city.name}, {data.personalInfo.address.state?.name || 'N/A'}</p>
+            <p className="text-sm text-white/80">{data?.personalInfo?.headline || 'Student | Saudi Arabia'} | {data?.personalInfo?.address?.city?.name}, {data?.personalInfo?.address?.state?.name || 'N/A'}</p>
 
           </div>
         </div>
@@ -272,7 +272,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
       {/* Skills */}
       <div className="relative flex items-center justify-between mt-4">
         <div className="flex items-baseline gap-2">
-          <span className="text-5xl font-bold">{data?.topSkills?.data?.length  || 16}</span>
+          <span className="text-5xl font-bold">{data?.topSkills?.data?.length  || 0}</span>
           <span className="text-lg text-white/70">Skills</span>
         </div>
 

@@ -186,13 +186,16 @@ function Layout() {
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
-
+const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1000) {
         setNavbarOpen(false);
+          setIsMobile(window.innerWidth < 1000);
       } else {
         setNavbarOpen(true);
+          setIsMobile(false);
+
       }
     };
     handleResize();
@@ -201,7 +204,14 @@ function Layout() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const restrictedPaths = [
+    '/app/opportunities',
+    '/user/terms-and-conditions',
+    '/user/course/recommended',
+    '/user/opportunitiess',
+  ];
 
+  const isRestrictedPath = restrictedPaths.includes(location.pathname);
   useEffect(() => {
     const handleStorageChange = () => {
       setAccessMode(getCookie("ACCESS_MODE"));
@@ -249,26 +259,23 @@ function Layout() {
       {/* Sidebar + Content stacked below header */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-0 md:p-5">
         {/* Sidebar */}
-        {(location.pathname !== '/app/opportunities' &&
-          location.pathname !== '/user/terms-and-conditions' &&
-          location.pathname !== '/user/course/recommended' &&
-          location.pathname !== '/user/opportunitiess') && (
-            <div
-              className={`
+        {(!isRestrictedPath || isMobile) && (
+          <div
+            className={`
         fixed md:relative top-0 left-0 h-screen md:h-auto z-50
         transition-transform duration-300 ease-in-out
         ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
       `}
-            >
-              <Sidebar
-                openLogout={openLogout}
-                setNavbarOpen={setNavbarOpen}
-                navbarOpen={navbarOpen}
-                profileData={profileData?.getProfileData?.data?.data}
-                unreadCounts={unreadCounts}
-              />
-            </div>
-          )}
+          >
+            <Sidebar
+              openLogout={openLogout}
+              setNavbarOpen={setNavbarOpen}
+              navbarOpen={navbarOpen}
+              profileData={profileData?.getProfileData?.data?.data}
+              unreadCounts={unreadCounts}
+            />
+          </div>
+        )}
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">

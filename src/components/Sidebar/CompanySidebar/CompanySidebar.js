@@ -249,6 +249,7 @@ import { BsChevronRight } from "react-icons/bs";
 import { FaSignsPost } from "react-icons/fa6";
 import { getCookie } from "../../utils/cookieHandler";
 import { useGlobalKeys } from "../../../context/GlobalKeysContext";
+import { MdEmojiEvents, MdWork } from "react-icons/md";
 
 const pulseAnimation = `
   @keyframes pulse2 {
@@ -319,6 +320,8 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
     { icon: FaSignsPost, label: "Page Posts", path: `${basePath}/posts-manage` },
     { icon: BiMessageDetail, label: "Inbox", path: `${basePath}/message` },
     { icon: PiSealCheckLight, label: "Verification", path: `${basePath}/verification` },
+    { icon: MdWork, label: "Opportunities", path: `${basePath}/opportunities` },
+    { icon: MdEmojiEvents, label: "Quest", path: `${basePath}/quest` },
     {
       icon: isInstitution() ? FaUniversity : FaRegBuilding,
       label: isInstitution() ? "Institute Profile" : "Company Profile",
@@ -365,14 +368,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
         />
       )}
 
-      {/* Hamburger Button */}
-      <button
-        className={`${navbarOpen ? "hidden" : "flex"
-          } fixed top-10 left-4 p-2 z-40 glassy-card hover:glassy-card transition-all duration-300 hover:scale-110`}
-        onClick={() => setNavbarOpen(true)}
-      >
-        <GiHamburgerMenu className="text-xl glassy-text-primary" />
-      </button>
+
       {/* Optional Close Button */}
       {isMobile && (
         <button
@@ -390,12 +386,12 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
       >
 
 
-        <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
+        <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2 ">
           {/* Profile Header */}
-          <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto glassy-card shadow-sm overflow-hidden">
-            <div className="flex justify-center items-center gap-2 p-2">
+          <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto glassy-card shadow-sm overflow-hidden mb-5">
+            <div className="flex justify-around items-center gap-2 p-2 ">
               <div>
-                <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-center text-lg overflow-hidden font-semibold text-zinc-600">
+                <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-around text-lg overflow-hidden font-semibold text-zinc-600">
                   <img
                     src={profileData?.logo_url}
                     alt="profile logo"
@@ -427,6 +423,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
 
           {/* Sidebar Menu */}
           {sidebarData.map((item, idx) => {
+            const isMobileHiddenLabel = ["Courses", "Opportunities", "Assessment", "Quest"].includes(item.label);
             const hasUnread =
               item.label === "Notifications" && unreadCounts?.notifications > 0;
 
@@ -435,7 +432,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                 {item.children ? (
                   <>
                     <div
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600 ${openSubmenu === item.label
+                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600  ${isMobileHiddenLabel ? "lg:hidden block" : ""} ${openSubmenu === item.label
                         ? "glassy-card text-blue-600"
                         : "glassy-text-primary"
                         }`}

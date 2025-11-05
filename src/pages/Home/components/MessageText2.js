@@ -155,7 +155,7 @@ const MessageText2 = ({ msg }) => {
                                 <span className="glassy-text-primary font-bold text-lg">PDF</span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h4 className="font-medium truncate">{preview?.title || 'PDF Document'}</h4>
+                                <h4 className="font-medium truncate glassy-text-primary">{preview?.title || 'PDF Document'}</h4>
                                 <p className="text-sm glassy-text-secondary truncate">Click to view PDF document</p>
                             </div>
                         </div>
@@ -180,7 +180,7 @@ const MessageText2 = ({ msg }) => {
                             />
                         )}
                         <div className="p-3">
-                            <h4 className="font-medium text-sm mb-1 line-clamp-2">{preview.title}</h4>
+                            <h4 className="font-medium text-sm mb-1 line-clamp-2 glassy-text-primary">{preview.title}</h4>
                             <p className="text-xs glassy-text-secondary line-clamp-2">{preview.description}</p>
                             <div className="flex items-center mt-2">
                                 <img

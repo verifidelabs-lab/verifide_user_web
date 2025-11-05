@@ -8,6 +8,7 @@ import { getCookie, clearCompanySession, setCookie } from "../../utils/cookieHan
 import { switchAccount } from "../../../redux/slices/authSlice";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const ROLES = {
   SUPER_ADMIN: 1,
@@ -20,7 +21,7 @@ const ROLES = {
   INSTITUTIONS_ADMIN: 8,
 };
 
-const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }) => {
+const Header = ({ adminProfileData, companiesProfileData, instituteProfileData, navbarOpen, setNavbarOpen, }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef();
@@ -112,7 +113,15 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
   return (
     <header className="w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16   shadow-md relative z-50">
       {/* Logo */}
+      <button
+        className={`${navbarOpen ? "hidden" : "flex"
+          }     z-40   transition-all duration-300 hover:scale-110`}
+        onClick={() => setNavbarOpen(true)}
+      >
+        <GiHamburgerMenu className="text-xl glassy-text-primary" />
+      </button>
       <div className="flex items-center gap-3 px-4 py-3">
+        {/* Hamburger Button */}
         <img
           src="/Frame 1000004906.png"
           alt="logo"
@@ -144,12 +153,12 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
 
       {/* Right Icons */}
       <div className="flex items-center gap-4">
-        <button
+        {/* <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-2xl glassy-text-primary md:hidden focus:outline-none"
         >
           {isMobileMenuOpen ? <BiX /> : <BiMenu />}
-        </button>
+        </button> */}
         {/* Notifications */}
         <div
           onClick={() => navigate(`${basePath}/notification`)}
@@ -209,7 +218,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData }
                 Switch to User
               </button>
               <button
-                onClick={handleRemoveCookie}
+                onClick={()=>switchAccountFunction("STUDENT")}
                 className="block w-full text-left px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
               >
                 Logout

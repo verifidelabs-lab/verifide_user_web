@@ -107,7 +107,7 @@ const CompanyDashboard = ({
   );
 
   return (
-    <div className="p-6 min-h-screen ">
+    <div className="md:p-0 lg:p-6 min-h-screen ">
       <div className="flex flex-col md:flex-row w-full mx-auto gap-6">
         {/* Left Section */}
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6">

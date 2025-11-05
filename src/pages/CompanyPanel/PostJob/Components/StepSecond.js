@@ -16,7 +16,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
     return (
         <div>
             <div className="space-y-6">
-                <FilterSelect
+                {/* <FilterSelect
                     label="Job Title"
                     name="job_title"
                     placeholder="Select Position"
@@ -39,13 +39,14 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                     isClearable={true}
                     isDisabled={!formData?.industry_id}
                     disabledTooltip='Please select first Industry'
-                    isCreatedByUser={isCreatableIndustry ? true : false}
+                    isCreatedByUser={true}
 
-                />
-                {/* <FilterSelect
+                /> */}
+                <FilterSelect
                     label="Job Title"
                     className="w-full h-10"
                     placeholder="e.g. Frontend Developer (React.js)"
+                     name="job_title"
                     onChange={(selected) => handleSelectChange('job_title', selected)}
                     selectedOption={allProfileRoles.find(opt => opt.value === formData?.job_title)}
                     options={allProfileRoles || []}
@@ -54,15 +55,15 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                     onCreateOption={(inputValue, field) => {
                         setAddModalState({
                             isOpen: true,
-                            type: 'Profile Role',
+                            type: 'profile-roles',
                             field: field
                         });
                         setInputField((prev) => ({ ...prev, name: inputValue }))
 
                     }}
                     isClearable={true}
-                    isCreatedByUser={isCreatableIndustry ? true : false}
-                /> */}
+                    isCreatedByUser={true}
+                />
 
                 <div>
                     <label className="block text-sm font-medium glassy-text-primary mb-2">

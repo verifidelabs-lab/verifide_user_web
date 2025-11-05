@@ -160,45 +160,54 @@ function CompanyLayout() {
   }, []);
 
   const location = useLocation()
+
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1000) {
-        setNavbarOpen(false);
-      } else {
-        setNavbarOpen(true);
-      }
+      const mobile = window.innerWidth < 1000;
+      setIsMobile(mobile);
+      setNavbarOpen(!mobile); // close on mobile, open on desktop initially
     };
+
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+  const restrictedPaths = [
+    "/company/opportunities",
+    "/institution/opportunities",
+    "/institution/course/recommended",
+  ];
+
+  const isRestrictedPath = restrictedPaths.includes(location.pathname);
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <Header
+        navbarOpen={navbarOpen}
+        setNavbarOpen={setNavbarOpen}
         companiesProfileData={companiesProfileData}
         instituteProfileData={instituteProfileData}
       />
-      {!navbarOpen && window.innerWidth <= 1000 && (
+      {/* {!navbarOpen && window.innerWidth <= 1000 && (
         <button
           className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
           onClick={() => setNavbarOpen(true)}
         >
           <GiHamburgerMenu className="text-xl glassy-text-primary" />
         </button>
-      )}
+      )} */}
       {/* Sidebar + Main Content */}
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
         {/* Sidebar */}
-        {location.pathname !== "/company/opportunities" && location.pathname !== "/institution/opportunities" && location.pathname !== "/institution/course/recommended" &&
+        {(!isRestrictedPath || isMobile) && (
           <div
             className={`
-        transition-all duration-300
-        ${navbarOpen ? "md:w-72 w-full" : "w-0 md:w-20"}
-        fixed md:relative top-0 left-0 h-screen md:h-auto z-50
-      `}
+      transition-all duration-300
+      ${navbarOpen ? "md:w-72 w-full" : "w-0 md:w-20"}
+      fixed md:relative top-0 left-0 h-screen md:h-auto z-50
+    `}
           >
             <CompanySidebar
               navbarOpen={navbarOpen}
@@ -206,7 +215,8 @@ function CompanyLayout() {
               companiesProfileData={companiesProfileData}
               instituteProfileData={instituteProfileData}
             />
-          </div>}
+          </div>
+        )}
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">

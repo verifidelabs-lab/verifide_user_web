@@ -22,6 +22,7 @@ import FilterSelect2 from "../../components/ui/Input/FilterSelect2";
 import { CiLocationOn } from "react-icons/ci";
 import Button from "../../components/ui/Button/Button";
 import { getCookie } from "../../components/utils/cookieHandler";
+import { FiFilter } from "react-icons/fi";
 
 const Opportunitiess2 = () => {
   const param = useParams();
@@ -57,7 +58,7 @@ const Opportunitiess2 = () => {
     if (foundJob) {
       setSelectedJob(foundJob); // directly set the found item
     }
-  }, [param?.id, data]);
+  }, [param?.id]);
   const isDateInRange = () => {
     if (!selectedJob?.start_date || !selectedJob?.end_date) return false;
     const currentDate = new Date().getTime();
@@ -444,7 +445,7 @@ const Opportunitiess2 = () => {
       ${!selectedJob ? "xl:w-full" : "xl:w-[75%] lg:w-[70%] md:w-[60%]"}`}
       >
         {/* Filter Toggle Button (Mobile Only) */}
-       
+
         <div className="flex-1   mb-4">
           {/* Your job listing content here */}
 
@@ -462,8 +463,9 @@ const Opportunitiess2 = () => {
             className="glassy-input"
           /> */}
         </div>
-        <div className="flex flex-wrap lg:items-center justify-between mb-6  lg:space-y-0">
-          <div className="flex flex-col lg:flex-row xl:flex-row flex-wrap gap-3 sm:flex-row items-end sm:justify-between  space-y-4 sm:space-y-0">
+        <div className="flex flex-wrap items-center justify-between mb-6 gap-3 lg:gap-0">
+          {/* Tabs Section */}
+          <div className="flex flex-wrap items-center gap-3">
             <div className="flex space-x-1 p-1 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] w-full sm:w-auto">
               {["all", "applied", "closed"].map((tab) => (
                 <button
@@ -474,7 +476,7 @@ const Opportunitiess2 = () => {
                     setPageNo(1);
                   }}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none
-        ${activeTab === tab
+            ${activeTab === tab
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
                     }`}
@@ -484,16 +486,17 @@ const Opportunitiess2 = () => {
               ))}
             </div>
           </div>
-          {/* Search Input */}
-           {isMobile && (
-          <button
-            className="mb-3 glassy-button px-4 py-2 text-sm"
-            onClick={() => setIsFilterOpen(true)}
-          >
-            Open Filters
-          </button>
-        )}
 
+          {/* Filter Icon (for Mobile) */}
+          {isMobile && (
+            <button
+              className="glassy-card p-2 rounded-full border border-[var(--border-color)] hover:shadow-md transition-all duration-200"
+              onClick={() => setIsFilterOpen(true)}
+              aria-label="Open Filters"
+            >
+              <FiFilter className="text-[var(--text-primary)] text-lg hover:glassy-text-primary" />
+            </button>
+          )}
         </div>
 
         {/* <div className="h-full">

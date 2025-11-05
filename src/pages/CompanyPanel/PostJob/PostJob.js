@@ -8,7 +8,6 @@ import {
   getAllWorkSkillList,
   updateCompanyData,
   updateIndustryData,
-  updateProfileRoleData,
 } from "../../../redux/work/workSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,6 +26,7 @@ import {
   state,
   updateMasterIndustryData,
   updateMasterSkillData,
+  updateProfileRoleData,
 } from "../../../redux/Global Slice/cscSlice";
 import { toast } from "sonner";
 import Button from "../../../components/ui/Button/Button";
@@ -477,6 +477,7 @@ const PostJob = () => {
       let type = "";
       let updateAction = null;
       let selectField = addModalState.field;
+      console.log("this is the thpe", addModalState)
       switch (addModalState.type) {
         case "industries":
           type = "industries";
@@ -1241,7 +1242,7 @@ const PostJob = () => {
               {currentStep > 1 && (
                 <button
                   onClick={prevStep}
-                  className="px-4 py-2 glassy-card glassy-text-primary rounded-md hover:glassy-card"
+                  className="px-4 py-2 glassy-card glassy-text-primary glassy-button rounded-md hover:glassy-card"
                 >
                   Back
                 </button>
@@ -1250,7 +1251,7 @@ const PostJob = () => {
               {currentStep < 3 ? (
                 <button
                   onClick={nextStep}
-                  className="px-4 py-2 glassy-card0 glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
+                  className="px-4 py-2 glassy-card0 glassy-button glassy-text-primary rounded-md hover:bg-blue-600 ml-auto"
                 >
                   Next
                 </button>

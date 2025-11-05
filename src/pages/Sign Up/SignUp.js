@@ -228,15 +228,16 @@ const SignUp = () => {
       // } else {
       //   navigate(redirectUrl);
       // }
-      if (!res?.data?.user?.first_education_added) {
-        navigate(
-          `/education-details?redirect=${encodeURIComponent(redirectUrl)}`
-        );
-      } else if (!res?.data?.user?.first_experience_added) {
-        navigate(
-          `/experience-details?redirect=${encodeURIComponent(redirectUrl)}`
-        );
-      } else {
+      //   if (!res?.data?.user?.first_education_added) {
+      //   navigate(
+      //     `/education-details?redirect=${encodeURIComponent(redirectUrl)}`
+      //   );
+      // } else if (!res?.data?.user?.first_experience_added) {
+      //   navigate(
+      //     `/experience-details?redirect=${encodeURIComponent(redirectUrl)}`
+      //   );
+      // } else
+      {
         navigate(redirectUrl);
       }
 
@@ -345,8 +346,8 @@ const SignUp = () => {
     } catch (error) {
       toast.error(
         error?.message ||
-          error ||
-          "Failed to resend verification code. Please try again."
+        error ||
+        "Failed to resend verification code. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -512,20 +513,20 @@ const SignUp = () => {
                 ))}
             </div>
           </div> */}
-           <div
-          className="hidden md:block w-full h-screen"
-          data-aos-duration="1000"
-          data-aos-easing="ease-out-quart"
-        >
-         <img
-            src="/sign-otp-img.png"
-            alt="Login illustration"
-            className="w-full h-full object-cover"
-          />
+          <div
+            className="hidden md:block w-full h-screen"
+            data-aos-duration="1000"
+            data-aos-easing="ease-out-quart"
+          >
+            <img
+              src="/sign-otp-img.png"
+              alt="Login illustration"
+              className="w-full h-full object-cover"
+            />
 
-        </div>
+          </div>
 
-          
+
         </div>
 
         <div className="w-full md:w-1/2 flex items-center justify-center p-6">
@@ -598,9 +599,10 @@ const SignUp = () => {
                   </p>
                 </div>
 
-                <form onSubmit={handleOtpSubmit}>
+                <form onSubmit={handleOtpSubmit} className="w-full">
+                  {/* ✅ OTP Inputs */}
                   <div
-                    className="flex justify-center mb-4"
+                    className="flex justify-center flex-wrap gap-2 mb-4 px-2 sm:px-4"
                     onPaste={handlePaste}
                   >
                     {Array.from({ length: 6 }).map((_, index) => (
@@ -615,42 +617,38 @@ const SignUp = () => {
                         onChange={(e) => handleOtpChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
                         disabled={isSubmitting}
-                        className={`w-12 h-12 mx-1 text-center text-xl glassy-card border-2 rounded-lg focus:ring-2 focus:ring-blue-300/30 outline-none transition-all duration-200 ${
-                          otpError
-                            ? "border-red-500 focus:border-red-500"
-                            : "border-blue-500 focus:border-purple-300"
-                        } ${
-                          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className={`w-10 h-10 sm:w-12 sm:h-12 text-center text-lg sm:text-xl glassy-card border-2 rounded-lg focus:ring-2 focus:ring-blue-300/30 outline-none transition-all duration-200 ${otpError
+                          ? "border-red-500 focus:border-red-500"
+                          : "border-blue-500 focus:border-purple-300"
+                          } ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                       />
                     ))}
                   </div>
 
+                  {/* ✅ Verify Button */}
                   <div className="flex justify-center items-center">
                     <Button
                       variant="primary"
                       type="submit"
-                      className="w-full mb-4"
-                      disabled={
-                        isSubmitting || otp.some((digit) => digit === "")
-                      }
+                      className="w-full mb-4 sm:w-auto px-6"
+                      disabled={isSubmitting || otp.some((digit) => digit === "")}
                     >
                       {isSubmitting ? "Verifying..." : "Verify Email"}
                     </Button>
                   </div>
 
+                  {/* ✅ Resend Section */}
                   <div className="text-center mb-4">
                     <p className="glassy-text-secondary text-sm">
-                      Didn't receive the code?{" "}
+                      Didn’t receive the code?{" "}
                       <button
                         type="button"
                         onClick={handleResend}
                         disabled={isResendDisabled || isSubmitting}
-                        className={`font-medium ${
-                          isResendDisabled || isSubmitting
-                            ? "glassy-text-secondary cursor-not-allowed"
-                            : "glassy-text-primary hover:text-purple-800"
-                        }`}
+                        className={`font-medium ${isResendDisabled || isSubmitting
+                          ? "glassy-text-secondary cursor-not-allowed"
+                          : "glassy-text-primary hover:text-purple-800"
+                          }`}
                       >
                         {isSubmitting ? "Sending..." : "Resend"}
                         {isResendDisabled &&
@@ -660,17 +658,19 @@ const SignUp = () => {
                     </p>
                   </div>
 
+                  {/* ✅ Back to Registration */}
                   <div className="text-center">
                     <button
                       type="button"
                       onClick={handleBackToRegistration}
                       disabled={isSubmitting}
-                      className="text-lg glassy-text-secondary hover:glassy-text-primary disabled:opacity-50 font-semibold"
+                      className="text-base sm:text-lg glassy-text-secondary hover:glassy-text-primary disabled:opacity-50 font-semibold"
                     >
                       ← Back to registration
                     </button>
                   </div>
                 </form>
+
               </div>
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
