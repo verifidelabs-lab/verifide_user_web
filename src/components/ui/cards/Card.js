@@ -190,7 +190,7 @@ export const SkillsCard2 = ({
   return (
     <div className="w-full ">
       {title && (
-        <div className="tracking-wide text-[12px] font-medium glassy-text-secondary mb-2">
+        <div className="tracking-wide text-[12px] font-medium glassy-text-primary mb-2">
           {title}
         </div>
       )}

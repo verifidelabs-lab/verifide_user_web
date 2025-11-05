@@ -59,7 +59,6 @@ const CompanyProfile = ({
   companiesProfileData,
   instituteProfileData,
 }) => {
-
   const ROLES = {
     SUPER_ADMIN: 1,
     ADMIN: 2,
@@ -116,9 +115,10 @@ const CompanyProfile = ({
         employee_count: "",
         linkedin_page_url: "",
       };
-    } else if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+    } else if (
+      [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+    ) {
       return {
-
         name: "",
         display_name: "",
         email: "",
@@ -129,7 +129,7 @@ const CompanyProfile = ({
           name: "",
           dial_code: "",
           short_name: "",
-          emoji: ""
+          emoji: "",
         },
         phone_no: "",
         institution_type_id: "",
@@ -153,18 +153,13 @@ const CompanyProfile = ({
 
           pin_code: "",
         },
-      }
+      };
     }
 
     return {};
   };
-  const {
-    formData,
-    setFormData,
-    handleChange,
-    errors,
-    setErrors,
-  } = useFormHandler(getInitialFormData());
+  const { formData, setFormData, handleChange, errors, setErrors } =
+    useFormHandler(getInitialFormData());
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [institutionTypes, setInstitutionTypes] = useState([]);
   const [activeTab, setActiveTab] = useState("Home");
@@ -196,19 +191,17 @@ const CompanyProfile = ({
   const profileData = [ROLES.SUPER_ADMIN, ROLES.ADMIN].includes(userRole)
     ? adminProfileData
     : [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
-      ? companiesProfileData
-      : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-        ? instituteProfileData
-        : {};
-
+    ? companiesProfileData
+    : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+    ? instituteProfileData
+    : {};
 
   const institutionTypeOptions = institutionTypes?.map((item) => ({
     value: item?._id,
-    label: item?.name
+    label: item?.name,
   }));
 
   const fetchData = () => {
-
     if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
       dispatch(companiesProfile());
     }
@@ -217,9 +210,7 @@ const CompanyProfile = ({
     }
   };
   const navigate = useNavigate();
-  const {
-    isCompany,
-  } = useGlobalKeys();
+  const { isCompany } = useGlobalKeys();
   const validateProfileForm = () => {
     const newErrors = {};
 
@@ -350,12 +341,16 @@ const CompanyProfile = ({
           company_type: dataToUse.company_type,
           headquarters: dataToUse.headquarters,
           founded_year: dataToUse.founded_year
-            ? Math.floor(new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000)
+            ? Math.floor(
+                new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
+              )
             : null,
           specialties: (dataToUse.specialties || [])
             .map((s) => String(s || "").trim())
             .filter((s) => s !== ""),
-          employee_count: dataToUse.employee_count ? Number(dataToUse.employee_count) : null,
+          employee_count: dataToUse.employee_count
+            ? Number(dataToUse.employee_count)
+            : null,
           linkedin_page_url: dataToUse.linkedin_page_url,
           email: dataToUse.email,
         };
@@ -379,17 +374,21 @@ const CompanyProfile = ({
           phone_no: dataToUse.phone_no,
           address: dataToUse.address,
           founded_year: dataToUse.founded_year
-            ? Math.floor(new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000)
+            ? Math.floor(
+                new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
+              )
             : null,
           specialties: (dataToUse.specialties || [])
             .map((s) => String(s || "").trim())
             .filter((s) => s !== ""),
-          employee_count: dataToUse.employee_count ? Number(dataToUse.employee_count) : null,
+          employee_count: dataToUse.employee_count
+            ? Number(dataToUse.employee_count)
+            : null,
           linkedin_page_url: dataToUse.linkedin_page_url,
           email: dataToUse.email,
         };
 
-        res = await dispatch(updateProfileInstitutions(apiPayload))
+        res = await dispatch(updateProfileInstitutions(apiPayload));
         // dispatch(setInstitutionsProfileData(apiPayload));
       }
 
@@ -510,40 +509,41 @@ const CompanyProfile = ({
           </div>
 
           {/* Industry Multi-Select */}
-          {isCompany && <div className="md:col-span-2">
-            <FilterSelect
-              label="Industry Name"
-              name="industry *"
-              placeholder="Select Industry"
-              options={allIndustry || []}
-              selectedOption={
-                formData.industry && formData.industry.length > 0
-                  ? allIndustry.find(
-                    (opt) => opt.value === formData.industry[0]?._id
-                  )
-                  : null
-              }
-              onChange={(selected) => {
-                if (selected) {
-                  handleChange("industry", {
-                    target: {
-                      value: [{ _id: selected.value, name: selected.label }],
-                    },
-                  });
-                } else {
-                  handleChange("industry", { target: { value: [] } });
+          {isCompany && (
+            <div className="md:col-span-2">
+              <FilterSelect
+                label="Industry Name"
+                name="industry *"
+                placeholder="Select Industry"
+                options={allIndustry || []}
+                selectedOption={
+                  formData.industry && formData.industry.length > 0
+                    ? allIndustry.find(
+                        (opt) => opt.value === formData.industry[0]?._id
+                      )
+                    : null
                 }
-              }}
-              error={errors.industry}
-              required
-              isClearable
-            />
+                onChange={(selected) => {
+                  if (selected) {
+                    handleChange("industry", {
+                      target: {
+                        value: [{ _id: selected.value, name: selected.label }],
+                      },
+                    });
+                  } else {
+                    handleChange("industry", { target: { value: [] } });
+                  }
+                }}
+                error={errors.industry}
+                required
+                isClearable
+              />
 
-            {errors.industry && (
-              <p className="mt-1 text-sm text-red-600">{errors.industry}</p>
-            )}
-          </div>}
-
+              {errors.industry && (
+                <p className="mt-1 text-sm text-red-600">{errors.industry}</p>
+              )}
+            </div>
+          )}
 
           {/* Conditional Section: Company Type */}
           {isCompany && (
@@ -628,26 +628,21 @@ const CompanyProfile = ({
                 value={formData?.linkedin_page_url}
                 name="linkedin_page_url"
                 type="url"
-
-                onChange={(e) => handleChange("linkedin_page_url", e.target.value)}
+                onChange={(e) =>
+                  handleChange("linkedin_page_url", e.target.value)
+                }
                 placeholder="https://linkedin.com/company/example"
                 error={errors.linkedin_page_url}
               />
             </div>
 
             {/* Website + LinkedIn */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-
-
-            </div>
-
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"></div>
           </div>
         )}
       </div>
     );
   };
-
 
   const handleImageClick = (fieldName = "logo_url") => {
     const inputId = `imageUpload-${fieldName}`;
@@ -715,22 +710,49 @@ const CompanyProfile = ({
   const EditableField = ({ value, multiline = false, className = "" }) => {
     return (
       <div className={`group relative ${className}`}>
-        <div className={multiline ? "whitespace-pre-wrap glassy-text-secondary" : "glassy-text-secondary"}>{value}</div>
+        <div
+          className={
+            multiline
+              ? "whitespace-pre-wrap glassy-text-secondary"
+              : "glassy-text-secondary"
+          }
+        >
+          {value}
+        </div>
       </div>
     );
   };
 
+  // const Navigation = () => (
+  //   <div className="mt-6">
+  //     <nav className="flex border-b border-gray-200">
+  //       {["Home", "About", "Posts", "Jobs", "People"].map((tab) => (
+  //         <button
+  //           key={tab}
+  //           onClick={() => setActiveTab(tab)}
+  //           className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
+  //             ? "text-blue-600 border-b-2 border-blue-600"
+  //             : "glassy-text-secondary hover:text-blue-600"
+  //             }`}
+  //         >
+  //           {tab}
+  //         </button>
+  //       ))}
+  //     </nav>
+  //   </div>
+  // );
   const Navigation = () => (
     <div className="mt-6">
-      <nav className="flex border-b border-gray-200">
+      <nav className="flex border-b border-[var(--border-color)] overflow-x-auto">
         {["Home", "About", "Posts", "Jobs", "People"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
-              ? "text-blue-600 border-b-2 border-blue-600"
-              : "glassy-text-secondary hover:text-blue-600"
-              }`}
+            className={`py-3 px-4 text-sm font-medium transition-colors whitespace-nowrap ${
+              activeTab === tab
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "glassy-text-secondary hover:text-blue-600"
+            }`}
           >
             {tab}
           </button>
@@ -741,9 +763,7 @@ const CompanyProfile = ({
   const isInstitution =
     userRole === ROLES.INSTITUTIONS || userRole === ROLES.INSTITUTIONS_ADMIN;
 
-
   const HomeTab = () => (
-
     <div className="mt-6 space-y-8">
       <div className="space-y-4">
         <h2 className="text-xl font-medium glassy-text-primary flex items-center gap-2">
@@ -798,41 +818,53 @@ const CompanyProfile = ({
               </div>
             </div>
 
-            {!isInstitution && <div className="flex items-start gap-3">
-              <CheckCircle className="text-green-400 mt-1" size={16} />
-              <div>
-                <div className="glassy-text-primary text-xs mb-1">Verified since</div>
-                <EditableField
-                  value={agencyData.verifiedSince}
-                  field="verifiedSince"
-                />
+            {!isInstitution && (
+              <div className="flex items-start gap-3">
+                <CheckCircle className="text-green-400 mt-1" size={16} />
+                <div>
+                  <div className="glassy-text-primary text-xs mb-1">
+                    Verified since
+                  </div>
+                  <EditableField
+                    value={agencyData.verifiedSince}
+                    field="verifiedSince"
+                  />
+                </div>
               </div>
-            </div>}
+            )}
           </div>
 
           <div className="space-y-4">
-            {!isInstitution && <div className="flex items-start gap-3">
-              <Building className="glassy-text-primary mt-1" size={16} />
-              <div>
-                <div className="glassy-text-primary text-xs mb-1">Industry</div>
-                <EditableField
-                  value={agencyData.industry}
-                  field="industry"
-                  className="capitalize"
-                />
+            {!isInstitution && (
+              <div className="flex items-start gap-3">
+                <Building className="glassy-text-primary mt-1" size={16} />
+                <div>
+                  <div className="glassy-text-primary text-xs mb-1">
+                    Industry
+                  </div>
+                  <EditableField
+                    value={agencyData.industry}
+                    field="industry"
+                    className="capitalize"
+                  />
+                </div>
               </div>
-            </div>}
+            )}
 
-            {!isInstitution && <div className="flex items-start gap-3">
-              <Users className="glassy-text-primary mt-1" size={16} />
-              <div>
-                <div className="glassy-text-primary text-xs mb-1">Company size</div>
-                <EditableField
-                  value={agencyData.companySize}
-                  field="companySize"
-                />
+            {!isInstitution && (
+              <div className="flex items-start gap-3">
+                <Users className="glassy-text-primary mt-1" size={16} />
+                <div>
+                  <div className="glassy-text-primary text-xs mb-1">
+                    Company size
+                  </div>
+                  <EditableField
+                    value={agencyData.companySize}
+                    field="companySize"
+                  />
+                </div>
               </div>
-            </div>}
+            )}
 
             <div className="flex items-start gap-3">
               <Calendar className="glassy-text-primary mt-1" size={16} />
@@ -847,7 +879,9 @@ const CompanyProfile = ({
 
       {/* Specialties in a new row spanning full width, minimal margin */}
       <div>
-        <h3 className="text-sm font-medium glassy-text-primary mb-2">Specialties</h3>
+        <h3 className="text-sm font-medium glassy-text-primary mb-2">
+          Specialties
+        </h3>
         <div className="flex flex-wrap gap-2">
           {agencyData?.specialties?.map((s, i) => (
             <span
@@ -914,7 +948,9 @@ const CompanyProfile = ({
       <div className="  min-h-screen py-8 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-7">
-            <h2 className="text-2xl font-bold glassy-text-primary">Page posts</h2>
+            <h2 className="text-2xl font-bold glassy-text-primary">
+              Page posts
+            </h2>
             <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
               <Link
                 to={
@@ -969,8 +1005,12 @@ const CompanyProfile = ({
                 {/* Post content */}
                 {post?.title && post?.content && (
                   <div>
-                    <h3 className="glassy-text-primary text-base">{post?.title}</h3>
-                    <p className="glassy-text-primary text-base">{post?.content}</p>
+                    <h3 className="glassy-text-primary text-base">
+                      {post?.title}
+                    </h3>
+                    <p className="glassy-text-primary text-base">
+                      {post?.content}
+                    </p>
                   </div>
                 )}
                 {/* Media: image or video */}
@@ -1058,7 +1098,9 @@ const CompanyProfile = ({
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold glassy-text-primary">Opening Jobs</h1>
+            <h1 className="text-3xl font-bold glassy-text-primary">
+              Opening Jobs
+            </h1>
             <button className="w-10 h-10 glassy-card hover:glassy-card border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm">
               <Link
                 to={
@@ -1066,7 +1108,6 @@ const CompanyProfile = ({
                     ? "/company/post-job"
                     : "/institution/post-job"
                 }
-
                 className="w-10 h-10 glassy-card hover:glassy-card border border-gray-300 rounded-lg flex items-center justify-center transition-colors shadow-sm"
               >
                 <Plus size={24} className="glassy-text-primary" />
@@ -1093,8 +1134,9 @@ const CompanyProfile = ({
                             alt="Company Logo"
                             className="w-12 h-12 rounded-full object-cover border border-gray-200"
                             onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.src = "/companylogo.png"; // fallback image
+                              e.currentTarget.onerror = null; // prevent infinite loop
+                              e.currentTarget.src =
+                                "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"; // fallback to dummy
                             }}
                           />
                         ) : null}
@@ -1170,7 +1212,6 @@ const CompanyProfile = ({
   };
 
   const PeopleTab = ({ people, setPeople }) => {
-
     const handleConnect = async (data) => {
       if (!data?.user_path) {
         navigate(
@@ -1183,8 +1224,8 @@ const CompanyProfile = ({
           data?.user_path === "Companies"
             ? "companies"
             : data?.user_path === "Institutions"
-              ? "institutions"
-              : "users";
+            ? "institutions"
+            : "users";
 
         navigate(
           isCompany
@@ -1194,18 +1235,14 @@ const CompanyProfile = ({
       }
     };
 
-
     return (
       <div className="  text-white min-h-screen">
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Our Team</h2>
-
           </div>
 
-
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
             {assignedUsers && assignedUsers.length > 0 ? (
               assignedUsers.map((user) => (
                 <div
@@ -1226,8 +1263,6 @@ const CompanyProfile = ({
                   </h3>
 
                   <p className="glassy-text-secondary text-sm">{user.email}</p>
-
-
                 </div>
               ))
             ) : (
@@ -1379,8 +1414,6 @@ const CompanyProfile = ({
     />
   );
 
-
-
   const handleProfileUpdate = () => {
     setIsProfileModalOpen(true);
   };
@@ -1460,15 +1493,16 @@ const CompanyProfile = ({
     }
   };
 
-
   const getInstitutionTypes = () => {
-    dispatch(institutionTypePublic()).then((res) => {
-      if (res) {
-        setInstitutionTypes(res?.payload?.data?.list || []);
-      }
-    }).catch((err) => {
-      console.log(err);
-    });
+    dispatch(institutionTypePublic())
+      .then((res) => {
+        if (res) {
+          setInstitutionTypes(res?.payload?.data?.list || []);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   useEffect(() => {
     const fetchJobs = async () => {
@@ -1559,7 +1593,6 @@ const CompanyProfile = ({
       .catch((err) => console.error("❌ Error fetching posts:", err));
   }, [dispatch]);
   useEffect(() => {
-
     setAgencyData({
       name: profileData?.display_name || profileData?.name || "N/A",
       tagline: "", // no tagline in API, keep empty or default
@@ -1597,10 +1630,12 @@ const CompanyProfile = ({
           ? `${profileData.employee_count} Employees`
           : "N/A",
       specialties:
-        profileData?.specialties?.length > 0 ? profileData.specialties : ["N/A"],
+        profileData?.specialties?.length > 0
+          ? profileData.specialties
+          : ["N/A"],
       logo: profileData?.logo_url || "",
       banner_image_url: profileData?.banner_image_url || "",
-      institution_type_id: profileData?.institution_type_id?._id
+      institution_type_id: profileData?.institution_type_id?._id,
     });
     setFormData((prev) => ({
       ...prev,
@@ -1636,10 +1671,8 @@ const CompanyProfile = ({
       headquarters: profileData?.headquarters || "",
       industry: profileData?.industry || [],
       institution_type_id: profileData?.institution_type_id?._id,
-      degree_ids: profileData.degree_ids
-
+      degree_ids: profileData.degree_ids,
     }));
-
   }, [profileData]);
   useEffect(() => {
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
@@ -1648,9 +1681,7 @@ const CompanyProfile = ({
     dispatch(companyIndustries());
   }, [profileData?._id]);
   useEffect(() => {
-
     getInstitutionTypes();
-
   }, []);
   return (
     <div className="   p-6">

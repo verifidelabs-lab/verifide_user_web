@@ -1,7 +1,7 @@
-import React from 'react';
-import { BsChevronRight } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
-import { useProfileImage } from '../../context/profileImageContext';
+import React from "react";
+import { BsChevronRight } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import { useProfileImage } from "../../context/profileImageContext";
 
 const ProfileCard = ({ data = {} }) => {
   const { profileImage } = useProfileImage();
@@ -9,19 +9,20 @@ const ProfileCard = ({ data = {} }) => {
 
   // Determine image to display
   const imageToDisplay =
-    profileImage || data?.profile_picture_url || '/0684456b-aa2b-4631-86f7-93ceaf33303c.png';
+    profileImage ||
+    data?.profile_picture_url ||
+    "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
 
   // Safe property access
-  const username = data?.username || 'Unnamed User';
-  const headline = data?.headline || 'No headline';
-  const locationText = [
-    data?.address?.city?.name,
-    data?.address?.state?.name,
-  ].filter(Boolean).join(', ');
+  const username = data?.username || "Unnamed User";
+  const headline = data?.headline || "No headline";
+  const locationText = [data?.address?.city?.name, data?.address?.state?.name]
+    .filter(Boolean)
+    .join(", ");
 
   // Function to truncate text based on length
   const truncateText = (text, maxLength) =>
-    text.length > maxLength ? text.slice(0, maxLength) + '…' : text;
+    text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
 
   return (
     <div className="bg-glassy-card p-4 sm:p-5 rounded-xl shadow-md w-full">
@@ -32,6 +33,10 @@ const ProfileCard = ({ data = {} }) => {
             src={imageToDisplay}
             alt="profile"
             className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border border-[rgba(255,255,255,0.1)]"
+            onError={(e) => {
+              e.currentTarget.onerror = null; // prevent infinite loop
+              e.currentTarget.src = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"; // fallback to dummy
+            }}
           />
         </div>
 

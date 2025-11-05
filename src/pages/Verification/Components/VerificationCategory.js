@@ -269,20 +269,20 @@ const VerificationCategory = ({ profileData }) => {
       const payload =
         institutionForm.institute_id === ""
           ? {
-            type: DOCUMENT_MODELS[type],
-            document_id: data?._id,
-            attach_file: [formData.image_url],
-            verification_type: "third-person",
-            third_person_name: institutionForm.name,
-            third_person_email: institutionForm.email
-          }
+              type: DOCUMENT_MODELS[type],
+              document_id: data?._id,
+              attach_file: [formData.image_url],
+              verification_type: "third-person",
+              third_person_name: institutionForm.name,
+              third_person_email: institutionForm.email,
+            }
           : {
-            assigned_to: institutionForm.institute_id,
-            verification_type: "assigned",
-            type: DOCUMENT_MODELS[type],
-            document_id: data?._id,
-            attach_file: [formData.image_url],
-          };
+              assigned_to: institutionForm.institute_id,
+              verification_type: "assigned",
+              type: DOCUMENT_MODELS[type],
+              document_id: data?._id,
+              attach_file: [formData.image_url],
+            };
 
       setLoading(true);
 
@@ -334,14 +334,15 @@ const VerificationCategory = ({ profileData }) => {
 
     return (
       <span
-        className={`text-sm px-2 py-1 rounded-full border capitalize ${statusClasses[status] || statusClasses.pending
-          }`}
+        className={`text-sm px-2 py-1 rounded-full border capitalize ${
+          statusClasses[status] || statusClasses.pending
+        }`}
       >
         {status === "pending"
           ? "UnVerified"
           : status === "approved"
-            ? "Verified"
-            : status}
+          ? "Verified"
+          : status}
       </span>
     );
   };
@@ -401,16 +402,18 @@ const VerificationCategory = ({ profileData }) => {
         maxSize={MAX_FILE_SIZE}
       />
 
-      <div className="flex justify-end space-x-2">
+      <div className="flex flex-col sm:flex-row sm:justify-end sm:space-x-2 space-y-2 sm:space-y-0 w-full mt-4">
+        {/* Cancel Button */}
         <Button
           variant="primary"
           type="button"
           onClick={() => setActiveOption(null)}
-          className="glassy-button hover:scale-105 transition-transform duration-200"
-
+          className="glassy-button hover:scale-105 transition-transform duration-200 w-full sm:w-auto"
         >
           Cancel
         </Button>
+
+        {/* Preview Button */}
         <Button
           variant="warning"
           type="button"
@@ -420,12 +423,16 @@ const VerificationCategory = ({ profileData }) => {
             !institutionForm?.name &&
             !formData?.image_url
           }
+          className="w-full sm:w-auto"
         >
           Preview
         </Button>
-        <Button type="submit" loading={loading}
-          className="glassy-button hover:scale-105 transition-transform duration-200"
 
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          loading={loading}
+          className="glassy-button hover:scale-105 transition-transform duration-200 w-full sm:w-auto"
         >
           Submit Request
         </Button>
@@ -459,13 +466,13 @@ const VerificationCategory = ({ profileData }) => {
             type="button"
             onClick={() => setActiveOption(null)}
             className="glassy-button hover:scale-105 transition-transform duration-200"
-
           >
             Cancel
           </Button>
-          <Button type="submit" loading={loading}
+          <Button
+            type="submit"
+            loading={loading}
             className="glassy-button hover:scale-105 transition-transform duration-200"
-
           >
             Submit
           </Button>
@@ -478,7 +485,9 @@ const VerificationCategory = ({ profileData }) => {
     <div className="min-h-screen    p-4">
       <div className="w-full mx-auto">
         <nav className="flex items-center py-4 text-sm">
-          <span className="glassy-text-secondary hover:glassy-text-primary">Home</span>
+          <span className="glassy-text-secondary hover:glassy-text-primary">
+            Home
+          </span>
           <BiChevronRight className="w-4 h-4 glassy-text-secondary mx-2" />
           <span
             className="glassy-text-secondary hover:glassy-text-primary"
@@ -560,19 +569,24 @@ const VerificationCategory = ({ profileData }) => {
                       <div className="flex flex-col justify-end items-end gap-3">
                         {renderStatusBadge(item.status)}
 
-                        {item.status === "rejected" && item?.rejection_reason && (
-                          <div className="mt-3 text-sm text-red-600 bg-red-50 border border-red-300 p-2 rounded-xl max-w-lg">
-                            <strong>Rejection Reason:</strong> {item.rejection_reason}
-                          </div>
-                        )}
+                        {item.status === "rejected" &&
+                          item?.rejection_reason && (
+                            <div className="mt-3 text-sm text-red-600 bg-red-50 border border-red-300 p-2 rounded-xl max-w-lg">
+                              <strong>Rejection Reason:</strong>{" "}
+                              {item.rejection_reason}
+                            </div>
+                          )}
 
-                        {(item?.status === "rejected" || item?.status === "pending") &&
+                        {(item?.status === "rejected" ||
+                          item?.status === "pending") &&
                           tab !== "pendingRequest" && (
                             <button
                               className="glassy-button"
                               onClick={() => handleVerifyNow(item._id)}
                             >
-                              {selectedItemId === item._id ? "Back" : "Verify Now"}
+                              {selectedItemId === item._id
+                                ? "Back"
+                                : "Verify Now"}
                             </button>
                           )}
                       </div>
@@ -580,10 +594,12 @@ const VerificationCategory = ({ profileData }) => {
                   </div>
                 </div>
 
-
                 <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${expandedHistoryId === item._id ? "max-h-[2000px]" : "max-h-0"
-                    }`}
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    expandedHistoryId === item._id
+                      ? "max-h-[2000px]"
+                      : "max-h-0"
+                  }`}
                 >
                   <div className="space-y-4 my-4 p-2">
                     {item?.verificationHistory?.map((history) => (
@@ -594,19 +610,22 @@ const VerificationCategory = ({ profileData }) => {
                         {/* Header with Status and Date */}
                         <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                           <span
-                            className={`px-3 py-1 rounded-full text-xs font-semibold ${history.status === "approved"
-                              ? "bg-green-100 text-green-700"
-                              : history.status === "pending"
+                            className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                              history.status === "approved"
+                                ? "bg-green-100 text-green-700"
+                                : history.status === "pending"
                                 ? "bg-yellow-100 text-yellow-700"
                                 : "bg-red-100 text-red-700"
-                              }`}
+                            }`}
                           >
-                            {history.status.charAt(0).toUpperCase() + history.status.slice(1)}
+                            {history.status.charAt(0).toUpperCase() +
+                              history.status.slice(1)}
                           </span>
 
                           {history.verified_at && (
                             <span className="text-sm glassy-text-secondary">
-                              Verified on: {convertTimestampToDate(history.verified_at)}
+                              Verified on:{" "}
+                              {convertTimestampToDate(history.verified_at)}
                             </span>
                           )}
                         </div>
@@ -619,7 +638,9 @@ const VerificationCategory = ({ profileData }) => {
                           {history.is_verified_by_third_person ? (
                             <p>
                               Third-party verifier -{" "}
-                              <span className="font-medium">{history.third_person_name}</span>{" "}
+                              <span className="font-medium">
+                                {history.third_person_name}
+                              </span>{" "}
                               ({history.third_person_email})
                             </p>
                           ) : (
@@ -630,94 +651,100 @@ const VerificationCategory = ({ profileData }) => {
                         {/* Rejection Reason */}
                         {history.rejection_reason && (
                           <div className="mt-3 p-2 bg-red-50 border-l-4 border-red-400 text-red-700 rounded">
-                            <p className="text-sm font-semibold">Rejection Reason:</p>
-                            <p className="text-sm">{history.rejection_reason}</p>
+                            <p className="text-sm font-semibold">
+                              Rejection Reason:
+                            </p>
+                            <p className="text-sm">
+                              {history.rejection_reason}
+                            </p>
                           </div>
                         )}
 
                         {/* Attachments */}
-                        {history.attach_file && history.attach_file.length > 0 && (
-                          <div className="mt-4">
-                            <h4 className="text-sm font-semibold glassy-text-primary mb-2">
-                              Attachments:
-                            </h4>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                              {history.attach_file.map((file, fileIndex) => {
-                                const isImage = /\.(jpeg|jpg|png|gif|webp)$/i.test(file);
-                                const isPDF = /\.pdf$/i.test(file);
+                        {history.attach_file &&
+                          history.attach_file.length > 0 && (
+                            <div className="mt-4">
+                              <h4 className="text-sm font-semibold glassy-text-primary mb-2">
+                                Attachments:
+                              </h4>
+                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                {history.attach_file.map((file, fileIndex) => {
+                                  const isImage =
+                                    /\.(jpeg|jpg|png|gif|webp)$/i.test(file);
+                                  const isPDF = /\.pdf$/i.test(file);
 
-                                return (
-                                  <a
-                                    key={fileIndex}
-                                    href={file}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="glassy-card block border rounded-lg overflow-hidden hover:shadow-md transition"
-                                  >
-                                    {isImage ? (
-                                      <img
-                                        src={file}
-                                        alt={`Attachment ${fileIndex + 1}`}
-                                        className="w-full h-24 object-cover"
-                                      />
-                                    ) : isPDF ? (
-                                      <div className="flex flex-col items-center justify-center p-3 h-24 text-center">
-                                        <svg
-                                          className="w-8 h-8 text-red-500"
-                                          fill="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
-                                        </svg>
-                                        <p className="mt-1 text-xs glassy-text-secondary truncate">
-                                          PDF Document
-                                        </p>
-                                      </div>
-                                    ) : (
-                                      <div className="flex flex-col items-center justify-center p-3 h-24 text-center">
-                                        <svg
-                                          className="w-8 h-8 glassy-text-secondary"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                                          ></path>
-                                        </svg>
-                                        <p className="mt-1 text-xs glassy-text-secondary truncate">
-                                          Attachment
-                                        </p>
-                                      </div>
-                                    )}
-                                  </a>
-                                );
-                              })}
+                                  return (
+                                    <a
+                                      key={fileIndex}
+                                      href={file}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="glassy-card block border rounded-lg overflow-hidden hover:shadow-md transition"
+                                    >
+                                      {isImage ? (
+                                        <img
+                                          src={file}
+                                          alt={`Attachment ${fileIndex + 1}`}
+                                          className="w-full h-24 object-cover"
+                                        />
+                                      ) : isPDF ? (
+                                        <div className="flex flex-col items-center justify-center p-3 h-24 text-center">
+                                          <svg
+                                            className="w-8 h-8 text-red-500"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                          >
+                                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                                          </svg>
+                                          <p className="mt-1 text-xs glassy-text-secondary truncate">
+                                            PDF Document
+                                          </p>
+                                        </div>
+                                      ) : (
+                                        <div className="flex flex-col items-center justify-center p-3 h-24 text-center">
+                                          <svg
+                                            className="w-8 h-8 glassy-text-secondary"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                          >
+                                            <path
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              strokeWidth="2"
+                                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                                            ></path>
+                                          </svg>
+                                          <p className="mt-1 text-xs glassy-text-secondary truncate">
+                                            Attachment
+                                          </p>
+                                        </div>
+                                      )}
+                                    </a>
+                                  );
+                                })}
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
                       </div>
                     ))}
                   </div>
                 </div>
 
-
-
-                <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
-                    }`}
+                {/* <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
+                  }`}
                 >
                   <div className="space-y-2 my-4 p-4">
 
-                    {/* ---------- Institution / Company Verification ---------- */}
                     {(item?.company_id || item?.institution_id) && (
                       <div className="glassy-card border border-blue-200 rounded-lg">
                         <div
                           className="flex justify-between items-center p-3 cursor-pointer  transition-colors rounded-lg"
-                          onClick={() => handleOptionClick("institution", item._id, item)}
+                          onClick={() =>
+                            handleOptionClick("institution", item._id, item)
+                          }
                         >
                           <div className="flex justify-start items-center gap-3">
                             <span className="w-12 h-12 rounded-full flex justify-center items-center glassy-card">
@@ -726,7 +753,8 @@ const VerificationCategory = ({ profileData }) => {
 
                             <div>
                               <p className="glassy-text-primary md:text-xl text-lg font-semibold">
-                                Verification by {item?.company_id ? "Company" : "Institute"}
+                                Verification by{" "}
+                                {item?.company_id ? "Company" : "Institute"}
                               </p>
                               <p className="glassy-text-secondary md:text-sm text-xs font-normal">
                                 Request verification from authorized institution
@@ -734,25 +762,28 @@ const VerificationCategory = ({ profileData }) => {
                             </div>
                           </div>
                           <IoChevronDownOutline
-                            className={`transition-transform duration-300 ${activeOption === "institution" && selectedItemId2 === item._id
-                              ? "transform rotate-180"
-                              : ""
-                              }`}
+                            className={`transition-transform duration-300 ${
+                              activeOption === "institution" &&
+                              selectedItemId2 === item._id
+                                ? "transform rotate-180"
+                                : ""
+                            }`}
                           />
                         </div>
 
                         <div
-                          className={`transition-all duration-300 ease-in-out overflow-hidden ${activeOption === "institution" && selectedItemId2 === item._id
-                            ? "max-h-screen overflow-y-auto"
-                            : "max-h-0"
-                            }`}
+                          className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                            activeOption === "institution" &&
+                            selectedItemId2 === item._id
+                              ? "max-h-screen overflow-y-auto"
+                              : "max-h-0"
+                          }`}
                         >
                           {renderInstitutionForm(item)}
                         </div>
                       </div>
                     )}
 
-                    {/* ---------- Document Upload Verification ---------- */}
                     <div className="glassy-card border border-blue-200 rounded-lg">
                       <div
                         className="flex justify-between items-center p-3 cursor-pointer  transition-colors rounded-lg"
@@ -768,30 +799,142 @@ const VerificationCategory = ({ profileData }) => {
                               Verification by Document Upload
                             </p>
                             <p className="glassy-text-secondary md:text-sm text-xs font-normal">
-                              Upload certificates, diplomas, or other documents as proof
+                              Upload certificates, diplomas, or other documents
+                              as proof
                             </p>
                           </div>
                         </div>
                         <IoChevronDownOutline
-                          className={`transition-transform duration-300 ${activeOption === "document" && selectedItemId2 === item._id
-                            ? "transform rotate-180"
-                            : ""
-                            }`}
+                          className={`transition-transform duration-300 ${
+                            activeOption === "document" &&
+                            selectedItemId2 === item._id
+                              ? "transform rotate-180"
+                              : ""
+                          }`}
                         />
                       </div>
 
                       <div
-                        className={`transition-all duration-300 ease-in-out overflow-hidden ${activeOption === "document" && selectedItemId2 === item._id
-                          ? "max-h-[500px]"
-                          : "max-h-0"
+                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                          activeOption === "document" &&
+                          selectedItemId2 === item._id
+                            ? "max-h-[500px]"
+                            : "max-h-0"
+                        }`}
+                      >
+                        {renderDocumentForm(item)}
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
+                  }`}
+                >
+                  <div className="space-y-3 my-4 p-3 sm:p-4">
+                    {/* ---------- Institution / Company Verification ---------- */}
+                    {(item?.company_id || item?.institution_id) && (
+                      <div className="glassy-card border border-blue-200 rounded-lg">
+                        <div
+                          className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 cursor-pointer transition-colors rounded-lg"
+                          onClick={() =>
+                            handleOptionClick("institution", item._id, item)
+                          }
+                        >
+                          {/* Left Section */}
+                          <div className="flex flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+                            <span className="min-w-[3rem] min-h-[3rem] w-12 h-12 rounded-full flex justify-center items-center glassy-card shrink-0">
+                              <PiGraduationCapThin className="glassy-text-primary text-xl sm:text-2xl" />
+                            </span>
+
+                            <div className="flex flex-col gap-1 w-full">
+                              <p className="glassy-text-primary text-base sm:text-lg md:text-xl font-semibold leading-tight break-words">
+                                Verification by{" "}
+                                {item?.company_id ? "Company" : "Institute"}
+                              </p>
+                              <p className="glassy-text-secondary text-xs sm:text-sm font-normal leading-snug break-words">
+                                Request verification from authorized institution
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Down Arrow */}
+                          <div className="flex justify-end sm:justify-center items-center w-full sm:w-auto">
+                            <IoChevronDownOutline
+                              className={`transition-transform duration-300 text-lg sm:text-2xl ${
+                                activeOption === "institution" &&
+                                selectedItemId2 === item._id
+                                  ? "transform rotate-180"
+                                  : ""
+                              }`}
+                            />
+                          </div>
+                        </div>
+
+                        <div
+                          className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                            activeOption === "institution" &&
+                            selectedItemId2 === item._id
+                              ? "max-h-screen overflow-y-auto"
+                              : "max-h-0"
                           }`}
+                        >
+                          {renderInstitutionForm(item)}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ---------- Document Upload Verification ---------- */}
+                    <div className="glassy-card border border-blue-200 rounded-lg">
+                      <div
+                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 cursor-pointer transition-colors rounded-lg"
+                        onClick={() => handleOptionClick("document", item._id)}
+                      >
+                        {/* Left Section */}
+                        <div className="flex flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+                          <span className="min-w-[3rem] min-h-[3rem] w-12 h-12 rounded-full flex justify-center items-center glassy-card shrink-0">
+                            <FaUpload className="glassy-text-primary text-xl sm:text-2xl" />
+                          </span>
+
+                          <div className="flex flex-col gap-1 w-full">
+                            <p className="glassy-text-primary text-base sm:text-lg md:text-xl font-semibold leading-tight break-words">
+                              Verification by Document Upload
+                            </p>
+                            <p className="glassy-text-secondary text-xs sm:text-sm font-normal leading-snug break-words">
+                              Upload certificates, diplomas, or other documents
+                              as proof
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Down Arrow */}
+                        <div className="flex justify-end sm:justify-center items-center w-full sm:w-auto">
+                          <IoChevronDownOutline
+                            className={`transition-transform duration-300 text-lg sm:text-2xl ${
+                              activeOption === "document" &&
+                              selectedItemId2 === item._id
+                                ? "transform rotate-180"
+                                : ""
+                            }`}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Expandable Section */}
+                      <div
+                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                          activeOption === "document" &&
+                          selectedItemId2 === item._id
+                            ? "max-h-[600px]"
+                            : "max-h-0"
+                        }`}
                       >
                         {renderDocumentForm(item)}
                       </div>
                     </div>
                   </div>
                 </div>
-
               </li>
             ))
           ) : (

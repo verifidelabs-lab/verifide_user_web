@@ -292,9 +292,7 @@ const Opportunities = () => {
   };
 
   const handlePostJob = () => {
-
     const accessMode = Number(getCookie("ACCESS_MODE")); // make sure it's a number
-
 
     if (isCompany()) {
       navigate(`/company/post-job`);
@@ -583,9 +581,10 @@ const Opportunities = () => {
               </h1>
               <p className="text-xs glassy-text-secondary">
                 {isDetailsData?.status
-                  ? `${isDetailsData.status.charAt(0).toUpperCase() +
-                  isDetailsData.status.slice(1)
-                  }`
+                  ? `${
+                      isDetailsData.status.charAt(0).toUpperCase() +
+                      isDetailsData.status.slice(1)
+                    }`
                   : "Status not available"}
               </p>
             </div>
@@ -629,7 +628,7 @@ const Opportunities = () => {
           </div>
 
           {Array.isArray(isDetailsData?.answers) &&
-            isDetailsData.answers.length > 0 ? (
+          isDetailsData.answers.length > 0 ? (
             isDetailsData.answers.map((answer, index) => (
               <AnswerCard
                 key={answer._id || index}
@@ -642,7 +641,9 @@ const Opportunities = () => {
             ))
           ) : (
             <div className="glassy-card rounded-lg p-4 text-center">
-              <p className="text-sm glassy-text-secondary">No answers available</p>
+              <p className="text-sm glassy-text-secondary">
+                No answers available
+              </p>
             </div>
           )}
         </div>
@@ -735,21 +736,21 @@ const Opportunities = () => {
                       <span
                         className={
                           applicant?.skillsMatchPercentage &&
-                            applicant?.answersMatchPercentage
+                          applicant?.answersMatchPercentage
                             ? (() => {
-                              const overallPercentage =
-                                (applicant.skillsMatchPercentage +
-                                  applicant.answersMatchPercentage) /
-                                2;
+                                const overallPercentage =
+                                  (applicant.skillsMatchPercentage +
+                                    applicant.answersMatchPercentage) /
+                                  2;
 
-                              if (overallPercentage >= 80) {
-                                return "text-green-600 font-semibold";
-                              } else if (overallPercentage >= 50) {
-                                return "text-yellow-500 font-semibold";
-                              } else {
-                                return "text-red-600 font-semibold";
-                              }
-                            })()
+                                if (overallPercentage >= 80) {
+                                  return "text-green-600 font-semibold";
+                                } else if (overallPercentage >= 50) {
+                                  return "text-yellow-500 font-semibold";
+                                } else {
+                                  return "text-red-600 font-semibold";
+                                }
+                              })()
                             : "glassy-text-secondary font-semibold" // In case either of the values is not available
                         }
                       >
@@ -786,8 +787,10 @@ const Opportunities = () => {
           ) : (
             <>
               <div className="min-h-[30vh] flex justify-center flex-col items-center border rounded-md">
-                <PiCodesandboxLogoLight size={26} />
-                <strong className="text-">No Applicant available</strong>
+                <PiCodesandboxLogoLight size={26} className="glassy-text-primary" />
+                <strong className="glassy-text-secondary">
+                  No Applicant available
+                </strong>
               </div>
             </>
           )}
@@ -1026,10 +1029,11 @@ const Opportunities = () => {
                   <li
                     key={tab.id}
                     className={`xl:text-base lg:text-sm md:text-sm font-medium p-2 xl:w-52 lg:w-40 md:w-40 flex justify-start items-center gap-2 capitalize cursor-pointer transition-all duration-200
-                ${isActive
-                        ? "glassy-card text-blue-600  border-blue-500 rounded-lg"
-                        : "glassy-text-secondary hover:text-blue-600 hover:glassy-card rounded-lg"
-                      }`}
+                ${
+                  isActive
+                    ? "glassy-card text-blue-600  border-blue-500 rounded-lg"
+                    : "glassy-text-secondary hover:text-blue-600 hover:glassy-card rounded-lg"
+                }`}
                     onClick={() => handleTabClick(tab.id)}
                   >
                     <span className="text-lg">{tab.icon}</span>
@@ -1043,10 +1047,11 @@ const Opportunities = () => {
       </div>
 
       <div
-        className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${!selectedJob
+        className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${
+          !selectedJob
             ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
             : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
-          } `}
+        } `}
       >
         <div className="flex justify-between md:flex-row flex-col mb-6 space-y-4 lg:space-y-0">
           <h1 className="text-2xl font-bold glassy-text-primary md:text-start text-center">
@@ -1094,7 +1099,9 @@ const Opportunities = () => {
                           onChange={() => handleFilterChange("industry")}
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm glassy-text-primary">Industry</span>
+                        <span className="text-sm glassy-text-primary">
+                          Industry
+                        </span>
                       </label>
 
                       <label className="flex items-center space-x-3 cursor-pointer">
@@ -1104,7 +1111,9 @@ const Opportunities = () => {
                           onChange={() => handleFilterChange("role")}
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm glassy-text-primary">Role</span>
+                        <span className="text-sm glassy-text-primary">
+                          Role
+                        </span>
                       </label>
 
                       <label className="flex items-center space-x-3 cursor-pointer">
@@ -1114,7 +1123,9 @@ const Opportunities = () => {
                           onChange={() => handleFilterChange("skill")}
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm glassy-text-primary">Skills</span>
+                        <span className="text-sm glassy-text-primary">
+                          Skills
+                        </span>
                       </label>
 
                       <label className="flex items-center space-x-3 cursor-pointer">
@@ -1150,55 +1161,61 @@ const Opportunities = () => {
               <div className="inline-flex space-x-1 p-1 rounded-full glassy-card border border-gray-200 w-max">
                 <button
                   onClick={() => handleActiveTab("open")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "open"
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "open"
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  }`}
                 >
                   Open Jobs
                 </button>
                 <button
                   onClick={() => handleActiveTab("shortlisted")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "shortlisted"
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "shortlisted"
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  }`}
                 >
                   Shortlisted
                 </button>
                 <button
                   onClick={() => handleActiveTab("schedule-interviews")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "schedule-interviews"
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "schedule-interviews"
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  }`}
                 >
                   Schedules Interviews
                 </button>
                 <button
                   onClick={() => handleActiveTab("closed")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "closed"
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "closed"
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  }`}
                 >
                   Closed Jobs
                 </button>
                 <button
                   onClick={() => handleActiveTab("rejected")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "rejected"
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "rejected"
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  }`}
                 >
                   Rejected Interviews
                 </button>
                 <button
                   onClick={() => handleActiveTab("selected_in_interview")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "selected_in_interview"
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "selected_in_interview"
                       ? "glassy-card text-blue-600 shadow-sm"
                       : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  }`}
                 >
                   Ready to Join
                 </button>
@@ -1281,10 +1298,11 @@ const Opportunities = () => {
 
         <div className="h-full ">
           <div
-            className={`grid w-full ${!viewDetails
+            className={`grid w-full ${
+              !viewDetails
                 ? "2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1"
                 : "xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
-              } items-center gap-2`}
+            } items-center gap-2`}
           >
             {isLoading ? (
               Array.from({ length: 3 }).map((_, idx) => (
@@ -1426,7 +1444,7 @@ const Opportunities = () => {
                             <span
                               className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
                                 selectedApplication?.interviewDetails?.status ??
-                                "pending"
+                                  "pending"
                               )}`}
                             >
                               {selectedApplication?.interviewDetails?.status ??
@@ -1444,9 +1462,9 @@ const Opportunities = () => {
                                 {selectedApplication?.interviewDetails
                                   ?.select_date
                                   ? convertTimestampToDate(
-                                    selectedApplication.interviewDetails
-                                      .select_date
-                                  )
+                                      selectedApplication.interviewDetails
+                                        .select_date
+                                    )
                                   : "N/A"}
                               </p>
                             </div>
@@ -1531,94 +1549,95 @@ const Opportunities = () => {
 
                       {selectedApplication?.status ===
                         "selected_in_interview" && (
-                          <div className="glassy-card border border-gray-200 rounded-xl p-6 shadow-md">
-                            <div className="flex items-center mb-4">
-                              <h3 className="text-xl font-semibold glassy-text-primary">
-                                Interview Feedback
-                              </h3>
+                        <div className="glassy-card border border-gray-200 rounded-xl p-6 shadow-md">
+                          <div className="flex items-center mb-4">
+                            <h3 className="text-xl font-semibold glassy-text-primary">
+                              Interview Feedback
+                            </h3>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Rating */}
+                            <div>
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
+                                Rating
+                              </p>
+                              <div className="flex items-center">
+                                <span className="text-lg font-semibold glassy-text-primary">
+                                  {selectedApplication?.feedback?.rating ??
+                                    "N/A"}
+                                </span>
+                                {selectedApplication?.feedback?.rating && (
+                                  <span className="ml-2 text-sm glassy-text-secondary">
+                                    ({selectedApplication.feedback.rating}/5)
+                                  </span>
+                                )}
+                              </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              {/* Rating */}
-                              <div>
-                                <p className="text-sm font-medium glassy-text-secondary mb-1">
-                                  Rating
-                                </p>
-                                <div className="flex items-center">
-                                  <span className="text-lg font-semibold glassy-text-primary">
-                                    {selectedApplication?.feedback?.rating ??
-                                      "N/A"}
-                                  </span>
-                                  {selectedApplication?.feedback?.rating && (
-                                    <span className="ml-2 text-sm glassy-text-secondary">
-                                      ({selectedApplication.feedback.rating}/5)
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
+                            {/* Duration */}
+                            <div>
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
+                                Duration
+                              </p>
+                              <p className="glassy-text-primary">
+                                {selectedApplication?.feedback?.duration
+                                  ? `${selectedApplication.feedback.duration} minutes`
+                                  : "N/A"}
+                              </p>
+                            </div>
 
-                              {/* Duration */}
-                              <div>
-                                <p className="text-sm font-medium glassy-text-secondary mb-1">
-                                  Duration
-                                </p>
-                                <p className="glassy-text-primary">
-                                  {selectedApplication?.feedback?.duration
-                                    ? `${selectedApplication.feedback.duration} minutes`
-                                    : "N/A"}
-                                </p>
-                              </div>
+                            {/* Interviewer */}
+                            <div>
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
+                                Interviewer
+                              </p>
+                              <p className="glassy-text-primary">
+                                {selectedApplication?.feedback?.interviewer ||
+                                  "N/A"}
+                              </p>
+                            </div>
 
-                              {/* Interviewer */}
-                              <div>
-                                <p className="text-sm font-medium glassy-text-secondary mb-1">
-                                  Interviewer
-                                </p>
-                                <p className="glassy-text-primary">
-                                  {selectedApplication?.feedback?.interviewer ||
-                                    "N/A"}
-                                </p>
-                              </div>
-
-                              {/* Recommendation */}
-                              <div>
-                                <p className="text-sm font-medium glassy-text-secondary mb-1">
-                                  Recommendation
-                                </p>
-                                <span
-                                  className={`px-3 py-1 rounded-full text-xs font-semibold border 
-            ${selectedApplication?.feedback?.recommendation === "strong_yes"
-                                      ? "bg-green-100 text-green-700 border-green-300"
-                                      : selectedApplication?.feedback?.recommendation === "yes"
-                                        ? "glassy-card text-blue-700 border-blue-300"
-                                        : selectedApplication?.feedback?.recommendation === "no"
-                                          ? "bg-red-100 text-red-700 border-red-300"
-                                          : "glassy-card glassy-text-secondary border-gray-300"
-                                    }`}
-                                >
-                                  {selectedApplication?.feedback?.recommendation
-                                    ? selectedApplication.feedback.recommendation
+                            {/* Recommendation */}
+                            <div>
+                              <p className="text-sm font-medium glassy-text-secondary mb-1">
+                                Recommendation
+                              </p>
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs font-semibold border 
+            ${
+              selectedApplication?.feedback?.recommendation === "strong_yes"
+                ? "bg-green-100 text-green-700 border-green-300"
+                : selectedApplication?.feedback?.recommendation === "yes"
+                ? "glassy-card text-blue-700 border-blue-300"
+                : selectedApplication?.feedback?.recommendation === "no"
+                ? "bg-red-100 text-red-700 border-red-300"
+                : "glassy-card glassy-text-secondary border-gray-300"
+            }`}
+                              >
+                                {selectedApplication?.feedback?.recommendation
+                                  ? selectedApplication.feedback.recommendation
                                       .replace("_", " ")
                                       .toUpperCase()
-                                    : "N/A"}
-                                </span>
-                              </div>
-                            </div>
-
-                            {/* Remarks */}
-                            <div className="mt-6">
-                              <p className="text-sm font-medium glassy-text-secondary mb-2">
-                                Remarks
-                              </p>
-                              <div className="glassy-card p-3 rounded-lg border">
-                                <p className="glassy-text-primary text-sm">
-                                  {selectedApplication?.feedback?.remarks ||
-                                    "No remarks provided"}
-                                </p>
-                              </div>
+                                  : "N/A"}
+                              </span>
                             </div>
                           </div>
-                        )}
+
+                          {/* Remarks */}
+                          <div className="mt-6">
+                            <p className="text-sm font-medium glassy-text-secondary mb-2">
+                              Remarks
+                            </p>
+                            <div className="glassy-card p-3 rounded-lg border">
+                              <p className="glassy-text-primary text-sm">
+                                {selectedApplication?.feedback?.remarks ||
+                                  "No remarks provided"}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ) : (
