@@ -2,7 +2,7 @@ import React from 'react';
 
 const Form = ({ onSubmit, title, children, error, formLayoutClassName = "" }) => {
   return (
-    <div className={`flex justify-center h-screen items-center glassy-card/20  glassy-card  ${formLayoutClassName}`} >
+    <div className={`flex justify-center h-screen items-center glassy-card  ${formLayoutClassName}`} >
       <div class=" p-[44px_26px] rounded-[10px]   opacity-100 min-w-  gap-[10px]">
 
         <div className="mb-4">

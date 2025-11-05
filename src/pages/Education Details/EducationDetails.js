@@ -640,7 +640,7 @@ const EducationDetails = () => {
       <div className="min-h-screen glassy-card">
         <div className="flex flex-col md:flex-row">
           <div className="md:block hidden">
-            <div className="gradient-background flex gap-x-10 items-center justify-center h-screen ">
+            {/* <div className="gradient-background flex gap-x-10 items-center justify-center h-screen ">
               {courses
                 .filter((course) => course.id === 1)
                 .map((course) => (
@@ -713,7 +713,20 @@ const EducationDetails = () => {
                     />
                   ))}
               </div>
-            </div>
+            </div> */}
+             <div
+          className="hidden md:block w-full h-screen"
+          data-aos-duration="1000"
+          data-aos-easing="ease-out-quart"
+        >
+          <img
+            src="/edu-details-img.png"
+            alt="Login illustration"
+            className="w-full h-full object-cover"
+          />
+
+        </div>
+
           </div>
 
           <div className="w-full md:w-1/2 flex items-center justify-center p-6">

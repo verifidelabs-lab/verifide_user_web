@@ -429,7 +429,7 @@ const ForgotPassword = () => {
             </span>
             <Link
               // to="/login"
-              to={`/login?redirect=${encodeURIComponent(redirectUrl)}`} 
+              to={`/login?redirect=${encodeURIComponent(redirectUrl)}`}
               className="text-blue-600 text-sm sm:text-base font-medium hover:underline transition-colors"
             >
               Login
@@ -497,49 +497,43 @@ const ForgotPassword = () => {
             <p className="font-medium mb-1">Password must contain:</p>
             <ul className="grid grid-cols-2 gap-1">
               <li
-                className={`flex items-center ${
-                  formData.password.length >= 8 ? "text-green-600" : ""
-                }`}
+                className={`flex items-center ${formData.password.length >= 8 ? "text-green-600" : ""
+                  }`}
               >
                 <span className="mr-1">•</span> 8+ characters
               </li>
               <li
-                className={`flex items-center ${
-                  /[a-z]/.test(formData.password) ? "text-green-600" : ""
-                }`}
+                className={`flex items-center ${/[a-z]/.test(formData.password) ? "text-green-600" : ""
+                  }`}
               >
                 <span className="mr-1">•</span> Lowercase letter
               </li>
               <li
-                className={`flex items-center ${
-                  /[A-Z]/.test(formData.password) ? "text-green-600" : ""
-                }`}
+                className={`flex items-center ${/[A-Z]/.test(formData.password) ? "text-green-600" : ""
+                  }`}
               >
                 <span className="mr-1">•</span> Uppercase letter
               </li>
               <li
-                className={`flex items-center ${
-                  /[0-9]/.test(formData.password) ? "text-green-600" : ""
-                }`}
+                className={`flex items-center ${/[0-9]/.test(formData.password) ? "text-green-600" : ""
+                  }`}
               >
                 <span className="mr-1">•</span> Number
               </li>
               <li
-                className={`flex items-center ${
-                  /[!@#$%^&*(),.?":{}|<>]/.test(formData.password)
+                className={`flex items-center ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)
                     ? "text-green-600"
                     : ""
-                }`}
+                  }`}
               >
                 <span className="mr-1">•</span> Special character
               </li>
               <li
-                className={`flex items-center ${
-                  formData.password &&
-                  formData.password === formData.confirmPassword
+                className={`flex items-center ${formData.password &&
+                    formData.password === formData.confirmPassword
                     ? "text-green-600"
                     : ""
-                }`}
+                  }`}
               >
                 <span className="mr-1">•</span> Passwords match
               </li>
@@ -571,9 +565,9 @@ const ForgotPassword = () => {
   );
 
   return (
-    <div className="min-h-screen glassy-card">
+    <div className="min-h-screen  ">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <div className="gradient-background h-full relative hidden lg:block overflow-hidden">
+        {/* <div className="gradient-background h-full relative hidden lg:block overflow-hidden">
           {step === 2 && (
             <div className="h-full relative">
               {teamMembers.map((member, index) => (
@@ -586,12 +580,24 @@ const ForgotPassword = () => {
                 />
               ))}
 
-              {/* Animated decorative elements */}
               <div className="absolute top-1/4 right-1/4 w-32 h-32 glassy-card bg-opacity-10 rounded-full blur-xl animate-pulse"></div>
               <div className="absolute bottom-1/3 left-1/4 w-24 h-24 glassy-card bg-opacity-5 rounded-full blur-lg animate-pulse delay-300"></div>
             </div>
           )}
+        </div> */}
+        <div
+          className="hidden md:block w-full h-screen"
+          data-aos-duration="1000"
+          data-aos-easing="ease-out-quart"
+        >
+          <img
+            src="/forgot-pass.png"
+            alt="Login illustration"
+            className="w-full h-full object-cover"
+          />
+
         </div>
+
         <div className="flex items-center justify-center p-0 sm:p-4 lg:p-8 transition-all duration-300">
           {step === 1 && renderStepOne()}
           {step === 2 && renderStepTwo()}

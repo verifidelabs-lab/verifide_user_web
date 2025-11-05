@@ -304,7 +304,7 @@ const Login = () => {
   return (
     <div className=" ">
       <div className="grid grid-cols-1 md:grid-cols-2">
-        <div
+        {/* <div
           className="p-5 h-screen md:block hidden"
           // data-aos="fade-right"
           data-aos-duration="1000"
@@ -312,11 +312,22 @@ const Login = () => {
         >
           <div className="md:block hidden">
             <OrbitalMenu />
-          </div>
+          </div> */}
+        <div
+          className="hidden md:block w-full h-screen"
+          data-aos-duration="1000"
+          data-aos-easing="ease-out-quart"
+        >
+          <img
+            src="/Login-img.png"
+            alt="Login illustration"
+            className="w-full h-full object-cover"
+          />
+
         </div>
 
         <div
-          className="flex items-center justify-center h-screen glassy-card"
+          className="flex items-center justify-center h-screen  "
           data-aos="fade-left"
           data-aos-duration="1000"
           data-aos-easing="ease-out-quart"
@@ -378,17 +389,17 @@ const Login = () => {
                   "disabled_user",
                   "server_error",
                 ].includes(googleLoginObject.event) && (
-                  <div className="flex items-center space-x-3 p-4 bg-yellow-50 rounded-lg shadow-sm mt-4">
-                    {/* Warning symbol icon */}
-                    <span role="img" aria-label="warning" className="text-2xl">
-                      ⚠️
-                    </span>
-                    {/* The message from the Google login object */}
-                    <p className="text-base glassy-text-primary font-medium">
-                      {googleLoginObject.message}
-                    </p>
-                  </div>
-                )}
+                    <div className="flex items-center space-x-3 p-4 bg-yellow-50 rounded-lg shadow-sm mt-4">
+                      {/* Warning symbol icon */}
+                      <span role="img" aria-label="warning" className="text-2xl">
+                        ⚠️
+                      </span>
+                      {/* The message from the Google login object */}
+                      <p className="text-base glassy-text-primary font-medium">
+                        {googleLoginObject.message}
+                      </p>
+                    </div>
+                  )}
 
                 <div data-aos="fade-up" data-aos-delay="200">
                   <CustomInput
