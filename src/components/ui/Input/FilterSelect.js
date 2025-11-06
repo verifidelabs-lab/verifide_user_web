@@ -219,6 +219,15 @@ const FilterSelect = React.forwardRef(
             isClearable={isClearable}
             closeMenuOnSelect={!isMulti}
             isDisabled={isDisabled}
+            filterOption={(option, inputValue) => {
+              // Convert whatever the label is into a string safely
+              const labelText =
+                typeof option.label === "string"
+                  ? option.label
+                  : option.label?.toString?.() || "";
+
+              return labelText.toLowerCase().includes(inputValue.toLowerCase());
+            }}
           />
         </div>
 

@@ -229,7 +229,7 @@ const CareerGoal = () => {
               : "Your screening answers have been successfully submitted."}
           </p>
           <button
-            className="w-full glassy-button hover:bg-blue-700 glassy-text-primary font-semibold py-3 px-6 rounded-lg transition-colors"
+            className="w-full bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold py-3 px-6 rounded-lg transition-colors"
             onClick={() => navigate(`/user/opportunitiess/`)}
           >
             Back to Your Opportunities
@@ -249,7 +249,7 @@ const CareerGoal = () => {
         <div className="glassy-card rounded-2xl shadow-lg mb-6 p-6">
           <div className="flex items-start gap-4">
             <Link
-              to={`/user/view-details/companies/${jobData?.company_id}`}
+              to={`/user/view-details/companies/${jobData?.company_id?._id}`}
             >
               <img
                 src={jobData?.company_id?.logo_url}
@@ -396,7 +396,7 @@ const CareerGoal = () => {
             {currentQ.question_type === "theoretical" && (
               <div>
                 <textarea
-                  className="w-full h-40 p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                  className="w-full h-40 p-4 border-2 border-gray-200 glassy-input rounded-lg focus:border-blue-500 focus:outline-none resize-none"
                   placeholder="Type your detailed answer here..."
                   value={currentAnswer.selected_options?.[0] || ""}
                   onChange={handleTextAnswerChange}
