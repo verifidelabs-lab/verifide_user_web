@@ -49,7 +49,7 @@ const ShareModal = ({ post, onClose, userData, hanleCopyLink }) => {
 
 
   return (
-    <div className="fixed inset-0 glassy-modal/90 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 glassy-modal/90 backdrop-blur flex items-center justify-center p-4 z-50">
       <div className="glassy-card rounded-xl w-full max-w-2xl h-[600px] flex flex-col shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between p-4  border-gray-200">
           <h2 className="text-lg font-semibold glassy-text-primary capitalize">Share with</h2>
