@@ -39,6 +39,7 @@ import { BiChevronLeft, BiChevronRight, BiDownload } from 'react-icons/bi';
 import { Briefcase, Diamond, FileText, GraduationCap, Settings } from 'lucide-react';
 import OpenToWorkSelect from '../../components/ui/Button/ButtonWithIcon';
 import ResumeViewSelection from './components/ResumeViewSelection';
+import { useNavigate } from 'react-router-dom';
 
 
 const validationRules = {
@@ -1119,7 +1120,7 @@ const Profile = ({ profileData }) => {
     // 'none',
   ];
   const [openResumeSelection, setOpenResumeSelection] = useState(false);
-
+  const navigate = useNavigate()
 
   return (
     <>
@@ -1302,14 +1303,42 @@ const Profile = ({ profileData }) => {
                     </div>
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {profileInfo?.topSkills?.data?.length > 0 ? (
-                        <SkillTag skills={profileInfo?.topSkills?.data} limit={3} />
-                      ) : (
-                        <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
-                          🚀 No skills added yet. Verify your education and update your skills to showcase your expertise!
-                        </p>
+                    <div className="flex flex-col gap-4 mb-6">
+                      {/* Verified Skills */}
+                      {profileInfo?.topSkills?.data?.length > 0 && (
+                        <div>
+                          <h3 className="text-sm font-semibold text-green-700 mb-2 flex items-center gap-1">
+                            ✅ Verified Skills
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
+                            <SkillTag skills={profileInfo?.topSkills?.data} limit={5} />
+                          </div>
+                        </div>
                       )}
+
+                      {/* Unverified Skills */}
+                      {profileInfo?.unVerifiedSkills?.data?.length > 0 && (
+                        <div >
+                          <h3
+                            className="text-sm font-semibold text-yellow-700 mb-2 flex items-center gap-1 cursor-pointer hover:underline"
+                            onClick={() => navigate("/user/verification")}
+                          >
+                            ⚠️ Unverified Skills
+                          </h3>
+
+                          <div className="flex flex-wrap gap-2 opacity-80">
+                            <SkillTag skills={profileInfo?.unVerifiedSkills?.data} limit={5} />
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Empty state */}
+                      {!profileInfo?.topSkills?.data?.length &&
+                        !profileInfo?.unVerifiedSkills?.data?.length && (
+                          <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
+                            🚀 No skills added yet. Verify your education and update your skills to showcase your expertise!
+                          </p>
+                        )}
                     </div>
 
                     {/* Buttons */}
