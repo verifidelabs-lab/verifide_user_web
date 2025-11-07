@@ -367,88 +367,108 @@ const RegisterCompany = () => {
     }));
   };
 
-  const validateForm = () => {
-    const newErrors = {};
+  
 
-    // Required fields validation
-    // if (!formData.username?.trim()) newErrors.username = "Username is required";
-    if (!formData.name?.trim()) newErrors.name = "Company name is required";
-    if (!formData.display_name?.trim())
-      newErrors.display_name = "Display name is required";
-    if (!formData.phone_no?.trim())
-      newErrors.phone_no = "Phone number is required";
-    if (!formData.country?.trim()) newErrors.country = "country is required";
-    if (!formData.country?.trim()) newErrors.country = "country is required";
-    if (!formData.email?.trim()) newErrors.email = "Email is required";
+const validateForm = () => {
+  const newErrors = {};
 
-    // Email format validation
-    if (
-      formData.email?.trim() &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-    ) {
-      newErrors.email = "Please enter a valid email address";
+  // Required fields validation
+  if (!formData.name?.trim()) newErrors.name = "Company name is required";
+  if (!formData.display_name?.trim())
+    newErrors.display_name = "Display name is required";
+  if (!formData.phone_no?.trim())
+    newErrors.phone_no = "Phone number is required";
+  // if (!formData.country?.trim()) newErrors.country = "Country is required";
+  if (!formData.company_type?.trim())
+    newErrors.company_type = "Company type is required";
+  if (!formData.company_size?.trim())
+    newErrors.company_size = "Company size is required";
+  if (!formData.email?.trim()) newErrors.email = "Email is required";
+
+  // Email format validation
+  if (
+    formData.email?.trim() &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+  ) {
+    newErrors.email = "Please enter a valid email address";
+  }
+
+  // Industry validation
+  if (!Array.isArray(formData.industry) || formData.industry.length === 0) {
+    newErrors.industry = "At least one industry is required";
+  }
+
+  // Specialty validation
+  const specialtyErrors = [];
+  formData.specialties?.forEach((specialty, index) => {
+    if (specialty && String(specialty).trim() === "") {
+      specialtyErrors[index] = "Specialty cannot be empty";
     }
-    // Industry validation
-    if (!Array.isArray(formData.industry) || formData.industry.length === 0) {
-      newErrors.industry = "At least one industry is required";
-    }
+  });
+  if (specialtyErrors.some((error) => error)) {
+    newErrors.specialties = specialtyErrors;
+  }
 
-    // Specialty validation
-    const specialtyErrors = [];
-    formData.specialties.forEach((specialty, index) => {
-      if (specialty && String(specialty).trim() === "") {
-        specialtyErrors[index] = "Specialty cannot be empty";
-      }
-    });
-    if (specialtyErrors.some((error) => error)) {
-      newErrors.specialties = specialtyErrors;
-    }
+  // Year validation
+  if (
+    formData.founded_year &&
+    (isNaN(formData.founded_year) ||
+      formData.founded_year < 1800 ||
+      formData.founded_year > new Date().getFullYear())
+  ) {
+    newErrors.founded_year =
+      "Please enter a valid year between 1800 and current year";
+  }
 
-    // Year validation
-    if (
-      formData.founded_year &&
-      (isNaN(formData.founded_year) ||
-        formData.founded_year < 1800 ||
-        formData.founded_year > new Date().getFullYear())
-    ) {
-      newErrors.founded_year =
-        "Please enter a valid year between 1800 and current year";
-    }
+  // Employee count validation
+  if (
+    formData.employee_count &&
+    (isNaN(formData.employee_count) || formData.employee_count < 0)
+  ) {
+    newErrors.employee_count = "Please enter a valid positive number";
+  }
 
-    // Employee count validation
-    if (
-      formData.employee_count &&
-      (isNaN(formData.employee_count) || formData.employee_count < 0)
-    ) {
-      newErrors.employee_count = "Please enter a valid positive number";
-    }
+  // General URL (must start with http or https)
+  const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+  const linkedInRegex = /^https?:\/\/(www\.)?linkedin\.com\/.*$/i;
 
-    // General URL (must start with http or https)
-    const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+  if (formData.website_url && !urlRegex.test(formData.website_url.trim())) {
+    newErrors.website_url =
+      "Please enter a valid URL starting with http:// or https://";
+  }
 
-    // LinkedIn specific URL
-    const linkedInRegex = /^https?:\/\/(www\.)?linkedin\.com\/.*$/i;
+  if (
+    formData.linkedin_page_url &&
+    !linkedInRegex.test(formData.linkedin_page_url.trim())
+  ) {
+    newErrors.linkedin_page_url =
+      "Please enter a valid LinkedIn URL (e.g. https://www.linkedin.com/...)";
+  }
 
-    if (formData.website_url && !urlRegex.test(formData.website_url.trim())) {
-      newErrors.website_url =
-        "Please enter a valid URL starting with http:// or https://";
-    }
+  setErrors({ ...newErrors });
 
-    if (
-      formData.linkedin_page_url &&
-      !linkedInRegex.test(formData.linkedin_page_url.trim())
-    ) {
-      newErrors.linkedin_page_url =
-        "Please enter a valid LinkedIn URL (e.g. https://www.linkedin.com/...)";
-    }
-    setErrors({ ...newErrors });
-    return newErrors;
-  };
+  // 🚨 Show toast for the first error
+  const errorKeys = Object.keys(newErrors);
+  if (errorKeys.length > 0) {
+    const firstErrorKey = errorKeys[0];
+    const firstErrorMessage = Array.isArray(newErrors[firstErrorKey])
+      ? newErrors[firstErrorKey][0]
+      : newErrors[firstErrorKey];
+
+    toast.error(firstErrorMessage || "Please fill all required fields");
+  }
+
+  return newErrors;
+};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
+    const errors = validateForm(); // run validation first
+    if (Object.keys(errors).length > 0) {
+      // If there are validation errors, don't proceed
       return;
     }
+
     setIsSubmitting(true);
     try {
       const createPayload = {
@@ -517,7 +537,7 @@ const RegisterCompany = () => {
   };
 
   const inputRefs = {
-    username: useRef(null),
+    // username: useRef(null),
     email: useRef(null),
     // password: useRef(null),
     // confirmPassword: useRef(null),
@@ -525,21 +545,32 @@ const RegisterCompany = () => {
     display_name: useRef(null),
     phone_no: useRef(null),
     industry: useRef(null),
+    company_size: useRef(null),
+    company_type: useRef(null),
   };
 
-  // scroll to first error field
-  useEffect(() => {
-    if (errors && Object.keys(errors).length > 0) {
-      const firstErrorKey = Object.keys(errors)[0];
-      if (inputRefs[firstErrorKey]?.current) {
-        inputRefs[firstErrorKey].current.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-        inputRefs[firstErrorKey].current.focus?.();
+ useEffect(() => {
+  if (!errors || Object.keys(errors).length === 0) return;
+
+  const firstErrorKey = Object.keys(errors)[0];
+  const ref = inputRefs[firstErrorKey]?.current;
+
+  if (ref) {
+    // Smoothly scroll into view
+    ref.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+
+    // Small delay before focus to ensure DOM is ready
+    setTimeout(() => {
+      if (typeof ref.focus === "function") {
+        ref.focus();
       }
-    }
-  }, [errors]);
+    }, 300);
+  }
+}, [errors]);
+
 
   const handleBack = () => {
     navigate("/user/feed");
@@ -701,7 +732,7 @@ const RegisterCompany = () => {
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <CustomInput
+                 <CustomInput
                   label="Email *"
                   value={formData?.email}
                   name="email"
@@ -784,6 +815,9 @@ const RegisterCompany = () => {
                       target: { value: selected?.value || "" },
                     })
                   }
+                  error={errors.company_type}
+                  ref={inputRefs.company_type}
+                  required
                 />
               </div>
 
@@ -795,8 +829,15 @@ const RegisterCompany = () => {
                     (opt) => opt.value === formData?.company_size
                   )}
                   name="company_size"
-                  onChange={handleCompanySizeChange}
+                  onChange={(selected) =>
+                    handleChange("company_size", {
+                      target: { value: selected?.value || "" },
+                    })
+                  }
                   placeholder="Select company size"
+                  error={errors.company_size}
+                  ref={inputRefs.company_size}
+                  required
                 />
 
                 <CustomInput
