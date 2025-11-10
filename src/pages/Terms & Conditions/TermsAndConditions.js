@@ -3,6 +3,7 @@ import { LuChevronRight } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { termsAndConditions } from "../../redux/Users/userSlice";
 import { FaChevronRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 // Static fallback data
 const staticTermsData = {
@@ -73,6 +74,7 @@ const TermsAndConditions = () => {
   const apiTermsData = selector?.termsAndConditionsData?.data?.data;
   const [activeSection, setActiveSection] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Use API data if available, otherwise use static data
   const termsData =
@@ -172,13 +174,35 @@ const TermsAndConditions = () => {
 
         {/* Main Content */}
         <div className="flex-1 space-y-6">
+         
           {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-sm">
-            <span className="glassy-text-primary font-medium">Settings</span>
+          <nav className="flex items-center justify-between space-x-2 text-sm">
+           <div className="flex items-center">
+             <span className="glassy-text-primary font-medium">Settings</span>
             <LuChevronRight className="glassy-text-secondary" size={16} />
             <span className="text-blue-600 font-semibold">
               Terms And Conditions
             </span>
+           </div>
+             <button
+            onClick={() => navigate("/user/feed")}
+            className="inline-flex items-center gap-2 px-4 py-2 mb-3 text-sm font-medium rounded-lg glassy-button transition-colors"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Back to Feed
+          </button>
           </nav>
 
           {/* Header Card */}

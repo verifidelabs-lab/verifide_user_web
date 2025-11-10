@@ -211,7 +211,7 @@ const StepFirst = ({
             formData.job_type === "internship" || formData.pay_type === "unpaid"
           ) && (
               <CustomInput
-                label="Salary Range"
+                label="Salary Range (Monthly)"
                 placeholder="e.g. ₹30,000 - ₹50,000"
                 value={formData.salary_range}
                 onChange={(e) =>
@@ -224,7 +224,7 @@ const StepFirst = ({
             )}
 
           <CustomDateInput
-            label="Job Start Date"
+            label="Application Opens On"
             value={formData?.start_date}
             onChange={(e) => handleInputChange("start_date", e.target.value)}
             required
@@ -233,7 +233,7 @@ const StepFirst = ({
           />
 
           <CustomDateInput
-            label="Job End Date"
+            label="Application Closes On"
             value={formData?.end_date}
             onChange={(e) => handleInputChange("end_date", e.target.value)}
             required

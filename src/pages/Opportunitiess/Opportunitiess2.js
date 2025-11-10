@@ -56,7 +56,10 @@ const Opportunitiess2 = () => {
           value?.jobApplication?._id === param?.id ||
           value?._id === param?.id
       );
-      console.log("chck user=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", foundJob)
+      console.log(
+        "chck user=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+        foundJob
+      );
       if (foundJob) {
         setSelectedJob(foundJob); // directly set the found item
       }
@@ -140,6 +143,7 @@ const Opportunitiess2 = () => {
           filters.required_skills = searchFelids.required_skills;
         if (searchFelids?.job_type?.length > 0)
           filters.job_type = searchFelids.job_type; // <-- new
+        // ✅ Add job_id only if param?.id exists
 
         const apiPayload = {
           page: pageNo,
@@ -149,7 +153,9 @@ const Opportunitiess2 = () => {
           toDate: searchFelids?.toDate || "",
           searchFields: searchFelids?.job_title || "",
         };
-
+        if (param?.id) {
+          apiPayload.job_id = param.id;
+        }
         await dispatch(userJobs(apiPayload));
         setIsLoading(false);
       };
@@ -202,7 +208,7 @@ const Opportunitiess2 = () => {
 
   const handleAction = (data) => {
     setSelectedJob(data);
-    console.log("data:---->>>", data)
+    console.log("data:---->>>", data);
   };
   function applyForJob(data) {
     navigate(`/user/career-goal/${data?._id}`);
@@ -318,7 +324,6 @@ const Opportunitiess2 = () => {
     ${isMobile ? (isFilterOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
   `} data-tour='opportunity-filter'
       >
-
         {/* Header */}
         <div className="flex items-center justify-between mb-6" data-tour='opportunity-filter'>
           <h2 className="text-lg font-semibold glassy-text-primary tracking-wide">
@@ -427,7 +432,9 @@ const Opportunitiess2 = () => {
             selectedOption={allSkillsList?.find(
               (opt) => opt.value === searchFelids?.required_skills
             )}
-            onChange={(selected) => handleSelectChange("required_skills", selected)}
+            onChange={(selected) =>
+              handleSelectChange("required_skills", selected)
+            }
             isMulti
             isClearable={true}
           />
@@ -451,7 +458,6 @@ const Opportunitiess2 = () => {
 
         <div className="flex-1   mb-4">
           {/* Your job listing content here */}
-
 
           {/* <input
             type="text"
@@ -479,10 +485,11 @@ const Opportunitiess2 = () => {
                     setPageNo(1);
                   }}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none
-            ${activeTab === tab
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
-                    }`}
+            ${
+              activeTab === tab
+                ? "glassy-card text-blue-600 shadow-sm"
+                : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
+            }`}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
@@ -708,28 +715,29 @@ const Opportunitiess2 = () => {
                 Application Status:
               </strong>
               <span
-                className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
-                  ? "text-blue-600"
-                  : selectedJob.jobApplication?.status === "rejected"
+                className={`ml-2 ${
+                  selectedJob.jobApplication?.status === "applied"
+                    ? "text-blue-600"
+                    : selectedJob.jobApplication?.status === "rejected"
                     ? "text-red-600"
                     : selectedJob.jobApplication?.status ===
                       "selected_in_interview"
-                      ? "text-green-600"
-                      : selectedJob.jobApplication?.passed
-                        ? "text-green-600"
-                        : "text-yellow-600"
-                  }`}
+                    ? "text-green-600"
+                    : selectedJob.jobApplication?.passed
+                    ? "text-green-600"
+                    : "text-yellow-600"
+                }`}
               >
                 {selectedJob.jobApplication?.status === "applied"
                   ? "Applied"
                   : selectedJob.jobApplication?.status === "rejected"
-                    ? "Not Selected"
-                    : selectedJob.jobApplication?.status ===
-                      "selected_in_interview"
-                      ? "🎉 Selected"
-                      : selectedJob.jobApplication?.passed
-                        ? "Accepted"
-                        : "Under Review"}
+                  ? "Not Selected"
+                  : selectedJob.jobApplication?.status ===
+                    "selected_in_interview"
+                  ? "🎉 Selected"
+                  : selectedJob.jobApplication?.passed
+                  ? "Accepted"
+                  : "Under Review"}
               </span>
             </div>
           )}
@@ -800,8 +808,9 @@ const Opportunitiess2 = () => {
               size="sm"
               disabled={applyStatus.disabled}
               onClick={() => !applyStatus.disabled && applyForJob(selectedJob)}
-              className={`w-full ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-                }`}
+              className={`w-full ${
+                applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+              }`}
               variant="primary"
             >
               {applyStatus.reason}
@@ -868,13 +877,10 @@ const Opportunitiess2 = () => {
               {/* Job Description */}
               <div className="text-sm glassy-text-primary mb-4">
                 <p className="font-medium mb-1">Job Description:</p>
-                <p
-                  className="glassy-text-secondary p-3 rounded-lg border border-gray-100 whitespace-pre-line break-words break-all overflow-hidden text-ellipsis"
-                >
+                <p className="glassy-text-secondary p-3 rounded-lg border border-gray-100 whitespace-pre-line break-words break-all overflow-hidden text-ellipsis">
                   {selectedJob.job_description || "No description provided."}
                 </p>
               </div>
-
 
               {/* Required Skills */}
               {selectedJob.required_skills?.length > 0 && (
@@ -902,18 +908,19 @@ const Opportunitiess2 = () => {
                     Application Status:
                   </strong>
                   <span
-                    className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
-                      ? "text-blue-600"
-                      : selectedJob.jobApplication?.passed
+                    className={`ml-2 ${
+                      selectedJob.jobApplication?.status === "applied"
+                        ? "text-blue-600"
+                        : selectedJob.jobApplication?.passed
                         ? "text-green-600"
                         : "text-yellow-600"
-                      }`}
+                    }`}
                   >
                     {selectedJob.jobApplication?.status === "applied"
                       ? "Applied"
                       : selectedJob.jobApplication?.passed
-                        ? "Accepted"
-                        : "Under Review"}
+                      ? "Accepted"
+                      : "Under Review"}
                   </span>
                 </div>
               )}
@@ -984,10 +991,11 @@ const Opportunitiess2 = () => {
                 onClick={() =>
                   !applyStatus.disabled && applyForJob(selectedJob)
                 }
-                className={`w-full ${applyStatus.disabled
-                  ? "opacity-60 cursor-not-allowed"
-                  : "glassy-button"
-                  }`}
+                className={`w-full ${
+                  applyStatus.disabled
+                    ? "opacity-60 cursor-not-allowed"
+                    : "glassy-button"
+                }`}
                 variant="primary"
               >
                 {applyStatus.reason}
