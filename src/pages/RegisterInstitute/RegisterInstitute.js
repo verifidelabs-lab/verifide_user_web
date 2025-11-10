@@ -93,7 +93,7 @@ const FilterSelectAdd = ({
   const [inputValue, setInputValue] = useState("");
 
   const selectClasses = classNames(
-    "h-[50px] opacity-100 rounded-[10px] border w-full glassy-input",
+    "glassy-input-notification w-full rounded-[10px]",
     {
       "border-gray-300": !error,
       "border-red-300 text-red-900 focus:ring-red-500 focus:border-red-500":
@@ -102,35 +102,99 @@ const FilterSelectAdd = ({
     selectClassName
   );
 
+  // const customStyles = {
+  //   // control: (base, state) => ({
+  //   //   ...base,
+  //   //   borderRadius: "10px",
+  //   //   borderColor: error ? "#f87171" : "#d1d5db",
+  //   //   minHeight: "52px",
+  //   //   opacity: 1,
+  //   //   boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
+  //   //   "&:hover": {
+  //   //     borderColor: error ? "#f87171" : "#9ca3af",
+  //   //   },
+  //   // }),
+  //   control: (base, state) => ({
+  //     ...base,
+  //     backgroundColor: "var(--bg-input)",
+  //     borderRadius: "10px",
+  //     border: "1px solid var(--border-color)",
+  //     minHeight: "50px",
+  //     boxShadow: "none",
+  //     color: "var(--text-primary)",
+  //     "&:hover": {
+  //       borderColor: error ? "#f87171" : "var(--border-hover)",
+  //     },
+  //   }),
+
+  //   placeholder: (base) => ({
+  //     ...base,
+  //     color: "#000000",
+  //     opacity: 0.5,
+  //   }),
+  //   multiValue: (base) => ({
+  //     ...base,
+  //     backgroundColor: "#e5e7eb",
+  //     borderRadius: "4px",
+  //   }),
+  //   multiValueLabel: (base) => ({
+  //     ...base,
+  //     color: "#374151",
+  //   }),
+  //   multiValueRemove: (base) => ({
+  //     ...base,
+  //     color: "#6b7280",
+  //     ":hover": {
+  //       backgroundColor: "#f87171",
+  //       color: "white",
+  //     },
+  //   }),
+  // };
   const customStyles = {
     control: (base, state) => ({
       ...base,
+      backgroundColor: "var(--bg-input)", // ✅ ensure same dark tone
       borderRadius: "10px",
-      borderColor: error ? "#f87171" : "#d1d5db",
-      minHeight: "52px",
+      border: "1px solid var(--border-color)",
+      minHeight: "50px",
+      boxShadow: "none",
       opacity: 1,
-      boxShadow: state.isFocused ? "0 0 0 1px #3b82f6" : "none",
+      color: "var(--text-primary)",
       "&:hover": {
-        borderColor: error ? "#f87171" : "#9ca3af",
+        borderColor: error ? "#f87171" : "var(--border-hover)",
       },
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: "var(--bg-card)", // ✅ dropdown background match
+      borderRadius: "10px",
+      color: "var(--text-primary)",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      color: "var(--text-primary)",
     }),
     placeholder: (base) => ({
       ...base,
-      color: "#000000",
+      color: "var(--text-primary)",
       opacity: 0.5,
+    }),
+    input: (base) => ({
+      ...base,
+      color: "var(--text-primary)",
     }),
     multiValue: (base) => ({
       ...base,
-      backgroundColor: "#e5e7eb",
-      borderRadius: "4px",
+      backgroundColor: "var(--bg-card)",
+      borderRadius: "6px",
     }),
     multiValueLabel: (base) => ({
       ...base,
-      color: "#374151",
+      color: "var(--text-primary)",
     }),
     multiValueRemove: (base) => ({
       ...base,
-      color: "#6b7280",
+      color: "var(--text-secondary)",
       ":hover": {
         backgroundColor: "#f87171",
         color: "white",
@@ -152,7 +216,7 @@ const FilterSelectAdd = ({
   return (
     <div className={`w-full ${containerClassName}`}>
       <label
-        className={`block text-sm text-[#00000080]/50 font-medium mb-2 ${labelClassName}`}
+        className={`block text-sm glassy-text-primary font-medium mb-2 ${labelClassName}`}
       >
         {label}
       </label>
@@ -525,8 +589,8 @@ const RegisterInstitute = () => {
         address: formData.address,
         founded_year: formData.founded_year
           ? Math.floor(
-            new Date(`${formData.founded_year}-01-01`).getTime() / 1000
-          )
+              new Date(`${formData.founded_year}-01-01`).getTime() / 1000
+            )
           : null,
         specialties: (formData.specialties || [])
           .map((s) => String(s || "").trim())
@@ -804,7 +868,6 @@ const RegisterInstitute = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-
                   <FilterSelect
                     label="Country Code"
                     options={countriesList || []}
@@ -824,7 +887,6 @@ const RegisterInstitute = () => {
                     placeholder="Enter phone number"
                     error={errors?.phone_no}
                   />
-
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                   <CustomInput
