@@ -1,4 +1,4 @@
- 
+
 
 import React, { useState, useRef } from "react";
 import classNames from "classnames";
@@ -160,7 +160,7 @@ const CustomInput = React.forwardRef(
           </label>
         )}
 
-        <div className="relative">
+        <div className="relative" ref={inputRef}>
           {renderInput()}
 
           {isPassword && (

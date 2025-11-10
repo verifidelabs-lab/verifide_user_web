@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
 import sideBarJson from "../Sidebar/Sidebar.json";
 import Loader from "../../pages/Loader/Loader";
 import { getProfile } from "../../redux/slices/authSlice";
@@ -32,6 +32,9 @@ import RegisterInstitute from "../../pages/RegisterInstitute/RegisterInstitute";
 import Companies from "../../pages/companies/Companies";
 import Institution from "../../pages/Institution/Institution";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Joyride, { EVENTS, STATUS } from "react-joyride";
+import { assessmentTourSteps, coursesTourSteps, dashboardTourSteps, opportunitiesTourSteps } from "../../data/tutorialSteps";
+import { useTour } from "../../context/TourContext";
 
 const Sidebar = lazy(() => import("./../Sidebar/Sidebar"));
 const Header = lazy(() => import("../Header/Header"));
@@ -78,6 +81,7 @@ const Connections = lazy(() => import("../../pages/Connections/Connections"));
 function Layout() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [navbarOpen, setNavbarOpen] = useState(true);
   const [setIsOpen] = useState(false);
   const profileData = useSelector((state) => state.auth);
@@ -186,15 +190,15 @@ function Layout() {
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
-const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1000) {
         setNavbarOpen(false);
-          setIsMobile(window.innerWidth < 1000);
+        setIsMobile(window.innerWidth < 1000);
       } else {
         setNavbarOpen(true);
-          setIsMobile(false);
+        setIsMobile(false);
 
       }
     };
@@ -236,9 +240,51 @@ const [isMobile, setIsMobile] = useState(false);
       }
     }
   }, []);
+  // --- Tour Context ---
+  const { isTourRunning, tourStepIndex, nextStep, setTourStepIndex, stopTour, startTour } = useTour();
+  const [steps, setSteps] = useState(dashboardTourSteps);
+  // --- Joyride Callback ---
+  const handleJoyrideCallback = (data) => {
+    const { status, type, index, step } = data;
 
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      stopTour();
+      return;
+    }
+
+    if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
+      if (step.page && window.location.pathname !== step.page) {
+        navigate(step.page, { replace: true });
+        setTimeout(() => nextStep(), 500); // Wait for page render
+        return;
+      }
+
+      nextStep();
+
+      // Switch to page-specific steps after dashboard tour
+      if (index === dashboardTourSteps.length - 1) {
+        switch (step.page) {
+          case "/user/opportunitiess": setSteps(opportunitiesTourSteps); break;
+          case "/user/course/recommended": setSteps(coursesTourSteps); break;
+          case "/user/assessment": setSteps(assessmentTourSteps); break;
+          default: break;
+        }
+        setTourStepIndex(0);
+      }
+    }
+  };
   return (
     <div className=" min-h-screen flex flex-col ">
+      <Joyride
+        steps={steps}
+        run={isTourRunning}
+        stepIndex={tourStepIndex}
+        continuous
+        showSkipButton
+        showProgress
+        callback={handleJoyrideCallback}
+      />
+
       {/* Full-width Header */}
       <Header
         openLogout={openLogout}

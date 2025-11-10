@@ -18,7 +18,7 @@ const Modal = ({
     <>
       {/* Overlay */}
       <div
-        className={`!fixed inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm" : "bg-transparent pointer-events-none"
+        className={`!absolute inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm" : "bg-transparent pointer-events-none"
           }`}
         onClick={onClose}
       />

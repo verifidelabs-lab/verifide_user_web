@@ -49,14 +49,17 @@ const Opportunitiess2 = () => {
     timePeriod: false,
   });
   useEffect(() => {
-    const foundJob = data?.data?.list?.find(
-      (value) =>
-        value?.interviewDetails?._id === param?.id ||
-        value?.jobApplication?._id === param?.id ||
-        value?._id === param?.id
-    );
-    if (foundJob) {
-      setSelectedJob(foundJob); // directly set the found item
+    if (param?.id) {
+      const foundJob = data?.data?.list?.find(
+        (value) =>
+          value?.interviewDetails?._id === param?.id ||
+          value?.jobApplication?._id === param?.id ||
+          value?._id === param?.id
+      );
+      console.log("chck user=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", foundJob)
+      if (foundJob) {
+        setSelectedJob(foundJob); // directly set the found item
+      }
     }
   }, [param?.id]);
   const isDateInRange = () => {
@@ -199,7 +202,7 @@ const Opportunitiess2 = () => {
 
   const handleAction = (data) => {
     setSelectedJob(data);
-    // console.log("data:---->>>", data)
+    console.log("data:---->>>", data)
   };
   function applyForJob(data) {
     navigate(`/user/career-goal/${data?._id}`);
@@ -808,7 +811,7 @@ const Opportunitiess2 = () => {
       )}
       {/* MOBILE MODAL VIEW */}
       {selectedJob && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center md:hidden">
+        <div className="fixed inset-0   bg-opacity-50 z-50 flex justify-center items-center md:hidden">
           {/* Main Modal Box */}
           <div className="relative glassy-card w-[90%] max-h-[85vh] rounded-2xl shadow-lg flex flex-col overflow-hidden">
             {/* Close Button */}

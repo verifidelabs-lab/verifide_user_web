@@ -100,7 +100,7 @@ const CustomInput = (({
     };
 
     return (
-        <div className={wrapperClasses}  >
+        <div className={wrapperClasses} ref={ref}>
             {!isCheckboxOrRadio && label && (
                 <label htmlFor={props.id} className={labelClasses}>
                     {label}

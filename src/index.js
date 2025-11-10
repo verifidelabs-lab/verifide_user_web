@@ -12,6 +12,7 @@ import { ThemeProvider } from './context/ThemeContext';
 
 import "react-medium-image-zoom/dist/styles.css";
 import { GlobalKeysProvider } from './context/GlobalKeysContext';
+import { TourProvider } from './context/TourContext';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -24,7 +25,10 @@ root.render(
             <ProfileImageProvider>
               <ThemeProvider>
                 <GlobalKeysProvider>
-                  <App />
+                    <TourProvider>
+                       <App />
+                    </TourProvider>
+                 
                 </GlobalKeysProvider>
               </ThemeProvider>
             </ProfileImageProvider>

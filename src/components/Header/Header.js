@@ -21,6 +21,7 @@ import FileUpload from "../ui/Image/ImageUploadWithSelect";
 import { getCompaniesList } from "../../redux/slices/companiesSlice";
 import { getInstitutionsList } from "../../redux/slices/instituteSlice";
 import { useGlobalKeys } from "../../context/GlobalKeysContext";
+import { useTour } from "../../context/TourContext";
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -252,7 +253,12 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     fetchCompaniesList();
     fetchInstitutionsList()
   }, [dispatch, fetchCompaniesList, fetchInstitutionsList]);
+  const { startTour } = useTour();
 
+  // Start the tour automatically when Sidebar mounts
+  useEffect(() => {
+    startTour();
+  }, [startTour]);
   return (
     <header
       className=""
@@ -295,10 +301,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                 <Link
                   key={index}
                   to={item?.path}
+                  data-tour={`header-${item?.name.toLowerCase()}`} // Add tour target
                   onClick={() => {
-                    if (isHome) {
-                      scrollToTop();
-                    }
+                    if (isHome) scrollToTop();
                   }}
                   className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
                     ? "font-semibold glassy-text-primary border-b-2 border-blue-600"

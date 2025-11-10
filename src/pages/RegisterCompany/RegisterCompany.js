@@ -371,7 +371,6 @@ const RegisterCompany = () => {
 
 const validateForm = () => {
   const newErrors = {};
-
   // Required fields validation
   if (!formData.name?.trim()) newErrors.name = "Company name is required";
   if (!formData.display_name?.trim())
@@ -549,27 +548,27 @@ const validateForm = () => {
     company_type: useRef(null),
   };
 
- useEffect(() => {
-  if (!errors || Object.keys(errors).length === 0) return;
+//  useEffect(() => {
+//   if (!errors || Object.keys(errors).length === 0) return;
 
-  const firstErrorKey = Object.keys(errors)[0];
-  const ref = inputRefs[firstErrorKey]?.current;
+//   const firstErrorKey = Object.keys(errors)[0];
+//   const ref = inputRefs[firstErrorKey]?.current;
 
-  if (ref) {
-    // Smoothly scroll into view
-    ref.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
+//   if (ref) {
+//     // Smoothly scroll into view
+//     ref.scrollIntoView({
+//       behavior: "smooth",
+//       block: "center",
+//     });
 
-    // Small delay before focus to ensure DOM is ready
-    setTimeout(() => {
-      if (typeof ref.focus === "function") {
-        ref.focus();
-      }
-    }, 300);
-  }
-}, [errors]);
+//     // Small delay before focus to ensure DOM is ready
+//     setTimeout(() => {
+//       if (typeof ref.focus === "function") {
+//         ref.focus();
+//       }
+//     }, 300);
+//   }
+// }, [errors]);
 
 
   const handleBack = () => {

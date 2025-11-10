@@ -1587,7 +1587,7 @@ const Profile = ({ profileData }) => {
                               pagination={{ clickable: true }}
                               spaceBetween={20}
                               slidesPerView={slidesPerView2}
-                              className="mySwiper md:w-full w-96"
+                              className="mySwiper md:w-full "
                             >
                               {projectData?.map((ele, index) => (
                                 <SwiperSlide key={index}>
@@ -1685,7 +1685,7 @@ const Profile = ({ profileData }) => {
                               pagination={{ clickable: true }}
                               spaceBetween={20}
                               slidesPerView={slidesPerView}
-                              className="mySwiper md:w-full w-96"
+                              className="mySwiper md:w-full  "
                             >
                               {certificationData?.map((ele, index) => (
                                 <SwiperSlide key={index}>

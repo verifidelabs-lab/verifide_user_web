@@ -271,14 +271,14 @@ const Login = () => {
         toast.success(response.message || "Login successful");
         setCookie("VERIFIED_TOKEN", JSON.stringify(response?.data?.token));
         setCookie("ACCESS_MODE", response?.data?.user?.accessMode);
-        if (!response?.data?.user?.first_education_added) {
-          navigate("/education-details");
-        } else if (!response?.data?.user?.first_experience_added) {
-          navigate("/experience-details");
-        } else {
+        // if (!response?.data?.user?.first_education_added) {
+        //   navigate("/education-details");
+        // } else if (!response?.data?.user?.first_experience_added) {
+        //   navigate("/experience-details");
+        // } else {
           // navigate(`/user/feed`);
           navigate(redirectUrl, { replace: true });
-        }
+        // }
       } else {
         toast.error(response?.message || "Please try again later.");
         navigate("/");

@@ -51,7 +51,8 @@ const CertificateCard = ({
     // console.log(record)
 
     return (
-        <div className="glassy-card max-w-full w-full rounded-lg shadow-md border p-4 flex flex-col items-center transition-all duration-300 hover:shadow-lg">
+
+<div className="relative glassy-card w-full max-w-full sm:w-5/6 md:w-4/5 lg:w-3/5 xl:w-2/5 rounded-lg shadow-md border p-4 flex flex-col items-center transition-all duration-300 hover:shadow-lg">
 
             {/* 👉 Certificate Preview */}
             <div className="w-full rounded-lg overflow-hidden ">
