@@ -109,7 +109,8 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
     return (
         <div
             className={`glassy-card relative ${isSelected ? "border !border-blue-500 shadow-md" : "border border-blue-700"} rounded-2xl p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-lg`}
-        >
+
+            data-tour='opportunity-card'>
             {/* Header Section */}
             <div className="flex items-center space-x-4 min-h-[3rem]">
                 {/* Company Logo */}
@@ -256,6 +257,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
                         variant='primary'
                         onClick={() => handleAction(job)}
                         className="flex-1"
+                       data-tour='apply-button'
                     >
                         View Details
                     </Button>

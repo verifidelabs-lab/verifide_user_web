@@ -174,11 +174,13 @@ const Recommended = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 "
+        data-tour='course-list'
         >
           {Array.isArray(courses) && courses.length > 0 ? courses?.map((course, index) => (
             <div
               key={course._id}
               className="animate-floatIn"
+              data-tour='course-card'
               style={{
                 animationDelay: `${index * 0.1}s`,
               }}

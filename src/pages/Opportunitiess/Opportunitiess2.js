@@ -316,11 +316,11 @@ const Opportunitiess2 = () => {
     p-6 pt-10 hide-scrollbar
     transition-transform duration-300 ease-in-out
     ${isMobile ? (isFilterOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
-  `}
+  `} data-tour='opportunity-filter'
       >
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6" data-tour='opportunity-filter'>
           <h2 className="text-lg font-semibold glassy-text-primary tracking-wide">
             Filters
           </h2>

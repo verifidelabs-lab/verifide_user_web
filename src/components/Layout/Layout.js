@@ -33,7 +33,7 @@ import Companies from "../../pages/companies/Companies";
 import Institution from "../../pages/Institution/Institution";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Joyride, { EVENTS, STATUS } from "react-joyride";
-import { assessmentTourSteps, coursesTourSteps, dashboardTourSteps, opportunitiesTourSteps } from "../../data/tutorialSteps";
+import { assessmentTourSteps, coursesTourSteps, dashboardTourSteps, fullTourSteps, opportunitiesTourSteps } from "../../data/tutorialSteps";
 import { useTour } from "../../context/TourContext";
 
 const Sidebar = lazy(() => import("./../Sidebar/Sidebar"));
@@ -240,50 +240,116 @@ function Layout() {
       }
     }
   }, []);
-  // --- Tour Context ---
-  const { isTourRunning, tourStepIndex, nextStep, setTourStepIndex, stopTour, startTour } = useTour();
-  const [steps, setSteps] = useState(dashboardTourSteps);
-  // --- Joyride Callback ---
+  const [steps, setSteps] = useState(fullTourSteps);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [runTour, setRunTour] = useState(true);
+  // Joyride callback
   const handleJoyrideCallback = (data) => {
-    const { status, type, index, step } = data;
+    const { status, type, step, index } = data;
 
+    // End of tour
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      stopTour();
+      setRunTour(false);
       return;
     }
 
     if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
-      if (step.page && window.location.pathname !== step.page) {
+      // If step has a different page, navigate first
+      if (step.page && location.pathname !== step.page) {
         navigate(step.page, { replace: true });
-        setTimeout(() => nextStep(), 500); // Wait for page render
-        return;
+        return; // Wait for location effect to update step
       }
 
-      nextStep();
-
-      // Switch to page-specific steps after dashboard tour
-      if (index === dashboardTourSteps.length - 1) {
-        switch (step.page) {
-          case "/user/opportunitiess": setSteps(opportunitiesTourSteps); break;
-          case "/user/course/recommended": setSteps(coursesTourSteps); break;
-          case "/user/assessment": setSteps(assessmentTourSteps); break;
-          default: break;
-        }
-        setTourStepIndex(0);
-      }
+      // Move to next step
+      setStepIndex((prev) => prev + 1);
     }
   };
+
+  // Watch for location change and continue tour
+  useEffect(() => {
+    if (!runTour) return;
+
+    // Wait a bit to ensure page elements are rendered
+    const timer = setTimeout(() => {
+      if (stepIndex < steps.length) setStepIndex(stepIndex);
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [location.pathname, stepIndex, runTour]);
+
   return (
     <div className=" min-h-screen flex flex-col ">
-      <Joyride
+      {/* <Joyride
         steps={steps}
-        run={isTourRunning}
-        stepIndex={tourStepIndex}
+        run={runTour}
+        stepIndex={stepIndex}
         continuous
         showSkipButton
         showProgress
         callback={handleJoyrideCallback}
-      />
+        disableScrolling
+        scrollToFirstStep
+        tooltipComponent={({
+          step,
+          backProps,
+          primaryProps,
+          closeProps,
+          skipProps,
+          index,
+          size,
+        }) => {
+          return (
+            <div className="custom-tooltip glassy-modal p-4 flex flex-col gap-4 w-80">
+             
+              <div className="flex justify-between items-center">
+                <span className="step-number glassy-text-primary">
+                  Step {index + 1} of {size}
+                </span>
+                <div className="flex gap-2">
+                  <button {...skipProps} className="skip-button  glassy-text-primary  ">
+                    Skip
+                  </button>
+                  <button {...closeProps} className="close-btn glassy-text-primary">
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              
+              {step.title && (
+                <h3 className="tooltip-title glassy-text-primary font-semibold text-lg">
+                  {step.title}
+                </h3>
+              )}
+
+              
+              <p className="tooltip-content glassy-text-primary text-sm">
+                {step.content}
+              </p>
+
+              
+              <div className="flex justify-between mt-2">
+                <button
+                  {...backProps}
+                  className="back-button glassy-button opacity-70 hover:opacity-100"
+                >
+                  Back
+                </button>
+                <button
+                  {...primaryProps}
+                  className="next-button glassy-button"
+                >
+                  {index === size - 1 ? "Finish" : "Next"}
+                </button>
+              </div>
+            </div>
+          );
+        }}
+        styles={{
+          options: { zIndex: 99999 },
+        }}
+      /> */}
+
 
       {/* Full-width Header */}
       <Header

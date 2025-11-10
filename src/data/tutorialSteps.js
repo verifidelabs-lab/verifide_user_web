@@ -1,87 +1,101 @@
+// Dashboard Header Steps
 export const dashboardTourSteps = [
   {
-    target: '[data-tour="header-home"]',
-    title: "🏠 Home",
-    content: "Go to your dashboard feed from here",
+    target: "[data-tour='header-home']",
+    content: "This is your home feed where you see all updates.",
     placement: "bottom",
-    page: "/user/feed",        // <-- add this
+    page: "/user/feed",
   },
   {
-    target: '[data-tour="header-courses"]',
-    title: "📚 Courses",
-    content: "Browse recommended courses to upskill",
+    target: "[data-tour='header-courses']",
+    content: "Check out recommended courses here.",
     placement: "bottom",
-    page: "/user/course/recommended",  // <-- add this
+    page: "/user/course/recommended",
   },
   {
-    target: '[data-tour="header-assessment"]',
-    title: "🎯 Assessment",
-    content: "Take assessments and track your progress",
+    target: "[data-tour='header-assessment']",
+    content: "Take assessments to evaluate your skills.",
     placement: "bottom",
-    page: "/user/assessment",  // <-- add this
+    page: "/user/assessment",
   },
   {
-    target: '[data-tour="header-opportunities"]',
-    title: "💼 Opportunities",
-    content: "Find jobs or internships matching your profile",
+    target: "[data-tour='header-opportunities']",
+    content: "Explore opportunities and jobs here.",
     placement: "bottom",
-    page: "/user/opportunitiess",  // <-- add this
+    page: "/user/opportunitiess",
   },
   {
-    target: '[data-tour="header-quest"]',
-    title: "🧩 Quest",
-    content: "Create or participate in quests",
+    target: "[data-tour='header-quest']",
+    content: "Your quests and challenges appear here.",
     placement: "bottom",
-    page: "/user/quest",  // <-- add this
+    page: "/user/quest",
   },
 ];
 
-
-
+// Opportunities Page Steps
 export const opportunitiesTourSteps = [
   {
-    target: '[data-tour="search-bar"]',
-    content: "Search for jobs using keywords, job titles, company names, or skills.",
-    placement: "bottom",
-    disableBeacon: true,
-    page: "/opportunitiess",
+    target: "[data-tour='opportunity-filter']",
+    content: "Use these filters to find opportunities faster.",
+    placement: "right",
+    page: "/user/opportunitiess",
   },
   {
-    target: '[data-tour="filters"]',
-    content: "Use filters to narrow down your results.",
-    placement: "right",
-    page: "/opportunitiess",
+    target: "[data-tour='opportunity-card']",
+    content: "Click a card to see full details of the opportunity.",
+    placement: "top",
+    page: "/user/opportunitiess",
+  },
+  {
+    target: "[data-tour='apply-button']",
+    content: "Apply to opportunities using this button.",
+    placement: "left",
+    page: "/user/opportunitiess",
   },
 ];
 
+// Courses Page Steps
 export const coursesTourSteps = [
   {
-    target: '[data-tour="course-nav"]',
-    content: "Browse courses by category.",
-    placement: "bottom",
-    disableBeacon: true,
-    page: "/course/recommended",
+    target: "[data-tour='course-list']",
+    content: "Here are your recommended courses.",
+    placement: "right",
+    page: "/user/course/recommended",
   },
   {
-    target: '[data-tour="course-card"]',
-    content: "View detailed course information.",
-    placement: "right",
-    page: "/course/recommended",
+    target: "[data-tour='course-card']",
+    content: "Click a course to see details and enroll.",
+    placement: "top",
+    page: "/user/course/recommended",
+  },
+  {
+    target: "[data-tour='enroll-button']",
+    content: "Enroll in a course using this button.",
+    placement: "left",
+    page: "/user/course/recommended",
   },
 ];
 
+// Assessment Page Steps
 export const assessmentTourSteps = [
   {
-    target: '[data-tour="test-categories"]',
-    content: "Choose from various assessment types.",
-    placement: "bottom",
-    disableBeacon: true,
-    page: "/assessment",
+    target: "[data-tour='assessment-list']",
+    content: "View all available assessments here.",
+    placement: "right",
+    page: "/user/assessment",
   },
   {
-    target: '[data-tour="test-card"]',
-    content: "View each assessment's details.",
-    placement: "right",
-    page: "/assessment",
+    target: "[data-tour='start-assessment']",
+    content: "Click to start an assessment and test your skills.",
+    placement: "top",
+    page: "/user/assessment",
   },
+];
+
+// Full Automated Tour (merge all in order)
+export const fullTourSteps = [
+  ...dashboardTourSteps,
+  // ...coursesTourSteps,
+  ...opportunitiesTourSteps,
+  // ...assessmentTourSteps,
 ];

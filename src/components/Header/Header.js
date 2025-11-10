@@ -22,6 +22,7 @@ import { getCompaniesList } from "../../redux/slices/companiesSlice";
 import { getInstitutionsList } from "../../redux/slices/instituteSlice";
 import { useGlobalKeys } from "../../context/GlobalKeysContext";
 import { useTour } from "../../context/TourContext";
+import { dashboardTourSteps } from "../../data/tutorialSteps";
 
 const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const dispatch = useDispatch();
@@ -253,12 +254,17 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     fetchCompaniesList();
     fetchInstitutionsList()
   }, [dispatch, fetchCompaniesList, fetchInstitutionsList]);
-  const { startTour } = useTour();
+  const { setSteps } = useTour();
 
-  // Start the tour automatically when Sidebar mounts
   useEffect(() => {
-    startTour();
-  }, [startTour]);
+    // Only set header steps (common for all pages)
+    const headerStepsForPage = dashboardTourSteps.filter(
+      step => step.page === location.pathname
+    );
+    setSteps(headerStepsForPage);
+  }, [location.pathname]);
+
+
   return (
     <header
       className=""
@@ -302,9 +308,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   key={index}
                   to={item?.path}
                   data-tour={`header-${item?.name.toLowerCase()}`} // Add tour target
-                  onClick={() => {
-                    if (isHome) scrollToTop();
-                  }}
+                  // onClick={() => {
+                  //   if (isHome) scrollToTop();
+                  // }}
                   className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
                     ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
                     : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
