@@ -37,7 +37,7 @@ const CompanyInstituteView = () => {
   });
   const [followActionLoading, setFollowActionLoading] = useState(false);
   const handleResumeDownload = async (data) => {
-    const url = `${BaseUrl}company-details/${data?._id}`;
+    const url = `${BaseUrl}company-details/${name}/${data?._id}`;
 
     try {
       await navigator.clipboard.writeText(url);

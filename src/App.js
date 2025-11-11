@@ -172,7 +172,7 @@ const App = () => {
             }
           />
           <Route
-            path="/company-details/:id"
+            path="/company-details/:name/:id"
             element={
               <PublicLayout>
                 <CompanyInstituteView />
