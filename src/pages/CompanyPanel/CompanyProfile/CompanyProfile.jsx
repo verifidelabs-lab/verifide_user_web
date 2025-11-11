@@ -350,7 +350,7 @@ const CompanyProfile = ({
             .filter((s) => s !== ""),
           employee_count: dataToUse.employee_count
             ? Number(dataToUse.employee_count)
-            : null,
+            : 0,
           linkedin_page_url: dataToUse.linkedin_page_url,
           email: dataToUse.email,
         };

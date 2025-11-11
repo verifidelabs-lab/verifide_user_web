@@ -17,7 +17,7 @@ const Modal2 = ({
   return (
     <>
       <div
-        className={`fixed inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur-sm" : "bg-transparent pointer-events-none"
+        className={`!absolute inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm" : "bg-transparent pointer-events-none"
           }`}
         onClick={onClose}
       />
@@ -31,7 +31,7 @@ const Modal2 = ({
 
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
             <h2 className={`text-lg font-semibold glassy-text-primary capitalize capitalize ${titleClassName}`}>{title}</h2>
-            <Button variant="primary"  rounded="full" icon={<BiLeftArrowAlt />} onClick={onClose}>
+            <Button variant="primary"  rounded="full glassy-button" icon={<BiLeftArrowAlt />} onClick={onClose}>
               Back
             </Button>
           </div>
