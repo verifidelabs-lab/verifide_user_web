@@ -312,7 +312,7 @@ const Opportunitiess2 = () => {
   }, []);
 
   return (
-    <div className="flex w-full min-h-screen relative">
+    <div className="flex w-full min-h-screen relative" >
       {/* Sidebar / Filters */}
       <div
         className={`
@@ -322,10 +322,10 @@ const Opportunitiess2 = () => {
     p-6 pt-10 hide-scrollbar
     transition-transform duration-300 ease-in-out
     ${isMobile ? (isFilterOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
-  `} data-tour='opportunity-filter'
+  `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6" data-tour='opportunity-filter'>
+        <div className="flex items-center justify-between mb-6"  >
           <h2 className="text-lg font-semibold glassy-text-primary tracking-wide">
             Filters
           </h2>
@@ -338,106 +338,112 @@ const Opportunitiess2 = () => {
         </div>
 
         {/* Filters */}
-        <div className="space-y-5">
+        <div className="space-y-5" >
           {/* Job type checkboxes */}
-          <div>
-            <h3 className="text-sm font-medium glassy-text-primary mb-3">
-              Job Type
-            </h3>
-            <div className="space-y-3">
-              {[
-                { key: "full-time", label: "Full Time" },
-                { key: "part-time", label: "Part Time" },
-                { key: "internship", label: "Internship" },
-                { key: "freelance", label: "Freelance" },
-                { key: "remote", label: "Remote" },
-                { key: "on-site", label: "On-site" },
-              ].map((filter) => (
-                <label
-                  key={filter.key}
-                  className="flex items-center space-x-3 cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={searchFelids?.job_type?.includes(filter.key)}
-                    onChange={() => {
-                      const updatedJobTypes = searchFelids.job_type.includes(
-                        filter.key
-                      )
-                        ? searchFelids.job_type.filter((j) => j !== filter.key)
-                        : [...searchFelids.job_type, filter.key];
+          <div
+            data-tour="opportunity-filter"
+            className="relative inline-block w-full z-10"
+            // style={{ zIndex: 10 }}
+          >
+            <div >
+              <h3 className="text-sm font-medium glassy-text-primary mb-3">
+                Job Type
+              </h3>
+              <div className="space-y-3">
+                {[
+                  { key: "full-time", label: "Full Time" },
+                  { key: "part-time", label: "Part Time" },
+                  { key: "internship", label: "Internship" },
+                  { key: "freelance", label: "Freelance" },
+                  { key: "remote", label: "Remote" },
+                  { key: "on-site", label: "On-site" },
+                ].map((filter) => (
+                  <label
+                    key={filter.key}
+                    className="flex items-center space-x-3 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={searchFelids?.job_type?.includes(filter.key)}
+                      onChange={() => {
+                        const updatedJobTypes = searchFelids.job_type.includes(
+                          filter.key
+                        )
+                          ? searchFelids.job_type.filter((j) => j !== filter.key)
+                          : [...searchFelids.job_type, filter.key];
 
-                      handleSelectChange(
-                        "job_type",
-                        updatedJobTypes.map((v) => ({ value: v }))
-                      );
-                    }}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-sm glassy-text-primary">
-                    {filter.label}
-                  </span>
-                </label>
-              ))}
+                        handleSelectChange(
+                          "job_type",
+                          updatedJobTypes.map((v) => ({ value: v }))
+                        );
+                      }}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <span className="text-sm glassy-text-primary">
+                      {filter.label}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Select Filters */}
-          <FilterSelect2
-            label="Industry"
-            name={"industry_id"}
-            options={allIndustryList}
-            selectedOption={allIndustryList?.find(
-              (opt) => opt.value === searchFelids?.industry_id
-            )}
-            onChange={(selected) => handleSelectChange("industry_id", selected)}
-            isClearable={true}
-          />
-          <FilterSelect2
-            name={"company_id"}
-            label="Company Name"
-            options={allCompaniesList}
-            selectedOption={allCompaniesList?.find(
-              (opt) => opt.value === searchFelids?.company_id
-            )}
-            onChange={(selected) => handleSelectChange("company_id", selected)}
-            isClearable={true}
-          />
-          <FilterSelect2
-            label="Role"
-            options={allProfileRoleList}
-            name={"job_title"}
-            selectedOption={allProfileRoleList?.find(
-              (opt) => opt.value === searchFelids?.job_title
-            )}
-            onChange={(selected) => handleSelectChange("job_title", selected)}
-            isClearable={true}
-          />
-          <FilterSelect2
-            name={"timePeriod"}
-            label="Time Period"
-            options={[
-              { label: "Today", value: "Today" },
-              { label: "Last Week", value: "Last Week" },
-              { label: "This Month", value: "This Month" },
-              { label: "This Week", value: "This Week" },
-            ]}
-            onChange={(value) => handleSelectChange("timePeriod", value)}
-            isClearable={true}
-          />
-          <FilterSelect2
-            label="Skills"
-            options={allSkillsList}
-            name={"required_skills"}
-            selectedOption={allSkillsList?.find(
-              (opt) => opt.value === searchFelids?.required_skills
-            )}
-            onChange={(selected) =>
-              handleSelectChange("required_skills", selected)
-            }
-            isMulti
-            isClearable={true}
-          />
+            {/* Select Filters */}
+            <FilterSelect2
+              label="Industry"
+              name={"industry_id"}
+              options={allIndustryList}
+              selectedOption={allIndustryList?.find(
+                (opt) => opt.value === searchFelids?.industry_id
+              )}
+              onChange={(selected) => handleSelectChange("industry_id", selected)}
+              isClearable={true}
+            />
+            <FilterSelect2
+              name={"company_id"}
+              label="Company Name"
+              options={allCompaniesList}
+              selectedOption={allCompaniesList?.find(
+                (opt) => opt.value === searchFelids?.company_id
+              )}
+              onChange={(selected) => handleSelectChange("company_id", selected)}
+              isClearable={true}
+            />
+            <FilterSelect2
+              label="Role"
+              options={allProfileRoleList}
+              name={"job_title"}
+              selectedOption={allProfileRoleList?.find(
+                (opt) => opt.value === searchFelids?.job_title
+              )}
+              onChange={(selected) => handleSelectChange("job_title", selected)}
+              isClearable={true}
+            />
+            <FilterSelect2
+              name={"timePeriod"}
+              label="Time Period"
+              options={[
+                { label: "Today", value: "Today" },
+                { label: "Last Week", value: "Last Week" },
+                { label: "This Month", value: "This Month" },
+                { label: "This Week", value: "This Week" },
+              ]}
+              onChange={(value) => handleSelectChange("timePeriod", value)}
+              isClearable={true}
+            />
+            <FilterSelect2
+              label="Skills"
+              options={allSkillsList}
+              name={"required_skills"}
+              selectedOption={allSkillsList?.find(
+                (opt) => opt.value === searchFelids?.required_skills
+              )}
+              onChange={(selected) =>
+                handleSelectChange("required_skills", selected)
+              }
+              isMulti
+              isClearable={true}
+            />
+          </div>
         </div>
       </div>
 
@@ -485,11 +491,10 @@ const Opportunitiess2 = () => {
                     setPageNo(1);
                   }}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none
-            ${
-              activeTab === tab
-                ? "glassy-card text-blue-600 shadow-sm"
-                : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
-            }`}
+            ${activeTab === tab
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
+                    }`}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
@@ -715,29 +720,28 @@ const Opportunitiess2 = () => {
                 Application Status:
               </strong>
               <span
-                className={`ml-2 ${
-                  selectedJob.jobApplication?.status === "applied"
+                className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
                     ? "text-blue-600"
                     : selectedJob.jobApplication?.status === "rejected"
-                    ? "text-red-600"
-                    : selectedJob.jobApplication?.status ===
-                      "selected_in_interview"
-                    ? "text-green-600"
-                    : selectedJob.jobApplication?.passed
-                    ? "text-green-600"
-                    : "text-yellow-600"
-                }`}
+                      ? "text-red-600"
+                      : selectedJob.jobApplication?.status ===
+                        "selected_in_interview"
+                        ? "text-green-600"
+                        : selectedJob.jobApplication?.passed
+                          ? "text-green-600"
+                          : "text-yellow-600"
+                  }`}
               >
                 {selectedJob.jobApplication?.status === "applied"
                   ? "Applied"
                   : selectedJob.jobApplication?.status === "rejected"
-                  ? "Not Selected"
-                  : selectedJob.jobApplication?.status ===
-                    "selected_in_interview"
-                  ? "🎉 Selected"
-                  : selectedJob.jobApplication?.passed
-                  ? "Accepted"
-                  : "Under Review"}
+                    ? "Not Selected"
+                    : selectedJob.jobApplication?.status ===
+                      "selected_in_interview"
+                      ? "🎉 Selected"
+                      : selectedJob.jobApplication?.passed
+                        ? "Accepted"
+                        : "Under Review"}
               </span>
             </div>
           )}
@@ -808,9 +812,8 @@ const Opportunitiess2 = () => {
               size="sm"
               disabled={applyStatus.disabled}
               onClick={() => !applyStatus.disabled && applyForJob(selectedJob)}
-              className={`w-full ${
-                applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+              className={`w-full ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+                }`}
               variant="primary"
             >
               {applyStatus.reason}
@@ -908,19 +911,18 @@ const Opportunitiess2 = () => {
                     Application Status:
                   </strong>
                   <span
-                    className={`ml-2 ${
-                      selectedJob.jobApplication?.status === "applied"
+                    className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
                         ? "text-blue-600"
                         : selectedJob.jobApplication?.passed
-                        ? "text-green-600"
-                        : "text-yellow-600"
-                    }`}
+                          ? "text-green-600"
+                          : "text-yellow-600"
+                      }`}
                   >
                     {selectedJob.jobApplication?.status === "applied"
                       ? "Applied"
                       : selectedJob.jobApplication?.passed
-                      ? "Accepted"
-                      : "Under Review"}
+                        ? "Accepted"
+                        : "Under Review"}
                   </span>
                 </div>
               )}
@@ -991,11 +993,10 @@ const Opportunitiess2 = () => {
                 onClick={() =>
                   !applyStatus.disabled && applyForJob(selectedJob)
                 }
-                className={`w-full ${
-                  applyStatus.disabled
+                className={`w-full ${applyStatus.disabled
                     ? "opacity-60 cursor-not-allowed"
                     : "glassy-button"
-                }`}
+                  }`}
                 variant="primary"
               >
                 {applyStatus.reason}

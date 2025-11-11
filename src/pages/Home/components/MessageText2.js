@@ -7,24 +7,34 @@ const isVideoUrl = (u) => /\.(mp4|webm|ogg|mov)$/i.test(u);
 const MessageText2 = ({ msg }) => {
     const parts = useMemo(() => msg?.split(urlRegex) || [], [msg]);
     const urls = useMemo(() => msg?.match(urlRegex) || [], [msg]);
-    const fetchLinkPreview = useCallback(async (url) => {
-        try {
+   const fetchLinkPreview = useCallback(async (url) => {
+  try {
+    const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}`);
 
-            const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}`);
-             if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Error fetching link preview:', error);
-        }
+    if (!response.ok) {
+      console.warn("Link preview request failed:", response.status);
+      throw new Error("Failed to fetch link preview");
+    }
 
-        return {
-            title: new URL(url).hostname,
-            description: '',
-            image: null,
-            url: url
-        };
-    }, []);
+    const text = await response.text();
+    try {
+      const data = JSON.parse(text);
+      return data;
+    } catch (err) {
+      console.warn("Invalid JSON from link preview:", text.slice(0, 100));
+    }
+  } catch (error) {
+    console.error("Error fetching link preview:", error);
+  }
+
+  return {
+    title: new URL(url).hostname,
+    description: "",
+    image: null,
+    url,
+  };
+}, []);
+
 
     const getYouTubeEmbedUrl = (url) => {
         if (!url) return null;
@@ -180,7 +190,7 @@ const MessageText2 = ({ msg }) => {
                             />
                         )}
                         <div className="p-3">
-                            <h4 className="font-medium text-sm mb-1 line-clamp-2 glassy-text-primary">{preview.title}</h4>
+                            <h4 className="font-medium text-sm mb-1 line-clamp-2   text-blue-500">{preview.title}</h4>
                             <p className="text-xs glassy-text-secondary line-clamp-2">{preview.description}</p>
                             <div className="flex items-center mt-2">
                                 <img

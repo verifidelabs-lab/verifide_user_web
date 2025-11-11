@@ -217,14 +217,14 @@ function Layout() {
   ];
 
   // ✅ Use regex match instead of includes
-const isRestrictedPath = restrictedPaths.some((path) => {
-  if (path.includes(':')) {
-    // Convert Express-style :param to regex
-    const regex = new RegExp('^' + path.replace(/:[^/]+/g, '[^/]+') + '$');
-    return regex.test(location.pathname);
-  }
-  return path === location.pathname;
-});
+  const isRestrictedPath = restrictedPaths.some((path) => {
+    if (path.includes(':')) {
+      // Convert Express-style :param to regex
+      const regex = new RegExp('^' + path.replace(/:[^/]+/g, '[^/]+') + '$');
+      return regex.test(location.pathname);
+    }
+    return path === location.pathname;
+  });
   useEffect(() => {
     const handleStorageChange = () => {
       setAccessMode(getCookie("ACCESS_MODE"));
@@ -258,6 +258,7 @@ const isRestrictedPath = restrictedPaths.some((path) => {
 
     // End of tour
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      toast.success("🎉 Tour Completed!");
       setRunTour(false);
       return;
     }
@@ -287,8 +288,8 @@ const isRestrictedPath = restrictedPaths.some((path) => {
   }, [location.pathname, stepIndex, runTour]);
 
   return (
-    <div className=" min-h-screen flex flex-col ">
-      {/* <Joyride
+    <div className=" min-h-screen flex flex-col " id="layout-container">
+      <Joyride
         steps={steps}
         run={runTour}
         stepIndex={stepIndex}
@@ -308,56 +309,63 @@ const isRestrictedPath = restrictedPaths.some((path) => {
           size,
         }) => {
           return (
-            <div className="custom-tooltip glassy-modal p-4 flex flex-col gap-4 w-80">
-             
+            <div className="custom-tooltip glassy-modal  p-4 flex flex-col gap-4 w-80">
+
               <div className="flex justify-between items-center">
                 <span className="step-number glassy-text-primary">
                   Step {index + 1} of {size}
                 </span>
                 <div className="flex gap-2">
-                  <button {...skipProps} className="skip-button  glassy-text-primary  ">
-                    Skip
-                  </button>
+
                   <button {...closeProps} className="close-btn glassy-text-primary">
                     ✕
                   </button>
                 </div>
               </div>
 
-              
+
               {step.title && (
                 <h3 className="tooltip-title glassy-text-primary font-semibold text-lg">
                   {step.title}
                 </h3>
               )}
 
-              
+
               <p className="tooltip-content glassy-text-primary text-sm">
                 {step.content}
               </p>
 
-              
+
               <div className="flex justify-between mt-2">
-                <button
+                <button {...skipProps} className="skip-button  glassy-text-primary  ">
+                  Skip
+                </button>
+                <div className="flex justify-between">
+                  {/* <button
                   {...backProps}
                   className="back-button glassy-button opacity-70 hover:opacity-100"
                 >
                   Back
-                </button>
-                <button
-                  {...primaryProps}
-                  className="next-button glassy-button"
-                >
-                  {index === size - 1 ? "Finish" : "Next"}
-                </button>
+                </button> */}
+                  <button
+                    {...primaryProps}
+                    className="next-button glassy-button"
+                  >
+                    {index === size - 1 ? "Finish" : "Next"}
+                  </button>
+                </div>
               </div>
             </div>
           );
         }}
         styles={{
-          options: { zIndex: 99999 },
+          options: {
+            // zIndex: 10000, // lower but above layout
+            // parentSelector: () => document.querySelector('#layout-container'), // limit to your layout
+          },
         }}
-      /> */}
+      />
+
 
 
       {/* Full-width Header */}

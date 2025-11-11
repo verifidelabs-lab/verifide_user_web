@@ -715,3 +715,62 @@ select.glassy-input:-webkit-autofill {
   filter: invert(1);
   opacity: 0.8;
 }
+
+
+/* -------- Joyride Tooltip Custom Styling -------- */
+.react-joyride__tooltip {
+  background: rgba(30, 30, 30, 0.8) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 16px !important;
+  padding: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  max-width: 300px !important;
+  overflow-wrap: break-word;
+  animation: fadeInUp 0.3s ease forwards;
+  z-index: 99999 !important;
+}
+
+.react-joyride__tooltip h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+  margin-bottom: 6px;
+}
+
+.react-joyride__tooltip p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.react-joyride__tooltip button {
+  border-radius: 10px !important;
+  padding: 6px 12px !important;
+  font-size: 0.85rem !important;
+}
+
+.react-joyride__tooltip .react-joyride__tooltip-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+/* Prevent tooltip from overflowing screen */
+.react-joyride__tooltip--bottom,
+.react-joyride__tooltip--top {
+  max-width: 90vw !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

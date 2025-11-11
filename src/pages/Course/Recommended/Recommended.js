@@ -131,7 +131,7 @@ const Recommended = () => {
         </div>
       </div>
 
-      <div className="w-full flex-1 p-1 md:p-6 mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto">
+      <div className="w-full flex-1 p-1 md:p-6 mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto" >
         <div className="mb-8">
           <div className="hidden md:flex items-center gap-2 text-sm glassy-text-secondary mb-4">
             <span>Course</span>
@@ -173,27 +173,37 @@ const Recommended = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 "
-        data-tour='course-list'
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 relative z-10"
+          data-tour="course-list"
         >
-          {Array.isArray(courses) && courses.length > 0 ? courses?.map((course, index) => (
-            <div
-              key={course._id}
-              className="animate-floatIn"
-              data-tour='course-card'
-              style={{
-                animationDelay: `${index * 0.1}s`,
-              }}
-            >
-              <CourseCard
-                key={course.id}
-                course={course}
-                onBookmarkToggle={handleBookmark}
-                handleCourseDetails={handleCourseDetails}
-              />
+          {Array.isArray(courses) && courses.length > 0 ? (
+            courses.map((course, index) => (
+              <div
+                key={course._id}
+                className="animate-floatIn "
+                // data-tour="course-card"
+                style={{
+                  animationDelay: `${index * 0.1}s`,
+                }}
+              >
+                <CourseCard
+                  course={course}
+                  onBookmarkToggle={handleBookmark}
+                  handleCourseDetails={handleCourseDetails}
+                />
+              </div>
+            ))
+          ) : (
+            // Centered NoDataFound
+            <div className="col-span-full flex justify-center items-center  ">
+              <div className="w-1/3 text-center  p-6 rounded-xl shadow-md">
+                <NoDataFound />
+              </div>
             </div>
-          )) : <NoDataFound />}
+          )}
         </div>
+
         <div>
           {
             userCourseListData?.data?.data?.total > 8 && (

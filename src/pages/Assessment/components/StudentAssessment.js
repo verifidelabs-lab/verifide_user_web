@@ -276,8 +276,8 @@ const StudentAssessment = () => {
           )}
           <div
             className={`px-4 py-2 rounded-lg font-semibold ${resultData?.passed
-                ? 'glassy-card text-green-600'
-                : 'glassy-card text-red-600'
+              ? 'glassy-card text-green-600'
+              : 'glassy-card text-red-600'
               }`}
           >
             {resultData?.passed ? '✅ PASSED' : '❌ FAILED'}
@@ -320,8 +320,8 @@ const StudentAssessment = () => {
                   </div>
                   <div
                     className={`px-2 py-1 rounded text-sm font-semibold ${answer.is_correct
-                        ? 'glassy-card text-green-600'
-                        : 'glassy-card text-red-600'
+                      ? 'glassy-card text-green-600'
+                      : 'glassy-card text-red-600'
                       }`}
                   >
                     {answer.is_correct ? 'Correct' : 'Incorrect'}
@@ -344,10 +344,10 @@ const StudentAssessment = () => {
                       <li
                         key={i}
                         className={`p-2 rounded text-sm ${answer.selected_options.includes(opt)
-                            ? answer.is_correct
-                              ? 'glassy-card text-green-600 font-semibold'
-                              : 'glassy-card text-red-600 font-semibold'
-                            : 'glassy-card glassy-text-secondary'
+                          ? answer.is_correct
+                            ? 'glassy-card text-green-600 font-semibold'
+                            : 'glassy-card text-red-600 font-semibold'
+                          : 'glassy-card glassy-text-secondary'
                           }`}
                       >
                         <span className="font-medium">{String.fromCharCode(65 + i)}.</span> {opt}
@@ -470,9 +470,9 @@ const StudentAssessment = () => {
       </div>
     );
   };
-
   const AssessmentList = () => (
-    <div className="w-full">
+      <div className="w-full relative z-10" >
+      {/* Header + Search */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-4 mb-6">
         <h1 className="text-2xl font-bold glassy-text-primary">Assessments</h1>
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
@@ -496,14 +496,15 @@ const StudentAssessment = () => {
         </div>
       </div>
 
+      {/* Tabs */}
       <div className="flex space-x-1 p-1 rounded-full glassy-card w-fit border border-[#adadad4b] mb-6">
         {TABS.map((item) => (
           <button
             key={item.value}
             onClick={() => handleTabChange(item.value)}
             className={`px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeSection === item.value
-              ? 'bg-[#2563EB1A] text-blue-500 shadow'
-              : 'glassy-text-secondary hover:glassy-text-primary'
+                ? "bg-[#2563EB1A] text-blue-500 shadow"
+                : "glassy-text-secondary hover:glassy-text-primary"
               }`}
           >
             {item.label}
@@ -511,34 +512,46 @@ const StudentAssessment = () => {
         ))}
       </div>
 
+      {/* Pagination */}
       <Pagination />
+      <div  >
+        {/* Assessments Grid */}
+        {isLoading ? (
+          <div className="flex justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {assessments.length ? (
+              assessments.map((assessment) => (
+                <div
+                  key={assessment._id}
+                  data-tour="start-assessment" // 👈 add this for Joyride
+                  className="relative"
+                >
+                  <AssessmentCard
+                    assessment={assessment}
+                    handleStartAssessment={handleStartAssessment}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full flex justify-center items-center h-40">
+                <div className="w-1/3 text-center glassy-card p-6 rounded-xl shadow-md">
+                  <NoDataFound />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
-      {isLoading ? (
-        <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {assessments.length ? (
-            assessments.map((assessment) => (
-              <AssessmentCard
-                key={assessment._id}
-                assessment={assessment}
-                handleStartAssessment={handleStartAssessment}
-              />
-            ))
-          ) : (
-            <div className="col-span-full">
-              <NoDataFound />
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 
+
   const ActiveAssessment = () => (
-    <div className="min-h-screen p-4 glassy-app">
+    <div className="min-h-screen p-4  ">
       <div className="max-w-2xl mx-auto rounded-lg glassy-card shadow-sm">
 
         {/* Top Info */}
@@ -741,15 +754,15 @@ const StudentAssessment = () => {
 
   // Main render logic
   return (
-    <div className="  min-h-screen px-4 lg:px-6 md:py-6 py-2">
-      {showResult ? (
-        <ResultDisplay />
-      ) : !token ? (
-        <AssessmentList />
-      ) : (
-        <ActiveAssessment />
-      )}
-    </div>
+<div className="min-h-screen px-4 lg:px-6 md:py-6 py-2 relative z-0">
+  {showResult ? (
+    <ResultDisplay />
+  ) : !token ? (
+    <AssessmentList />
+  ) : (
+    <ActiveAssessment />
+  )}
+</div>
   );
 };
 

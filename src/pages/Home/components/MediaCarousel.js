@@ -1,17 +1,17 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Navigation, Pagination, Zoom } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { BiZoomIn } from "react-icons/bi";
-import Modal from "../../../components/ui/Modal/Modal";
+import 'swiper/css/navigation';
+import 'swiper/css/zoom';
+import { BiZoomIn, BiX } from "react-icons/bi";
 
 export default function MediaCarousel({ post }) {
   const [zoomOpen, setZoomOpen] = useState(false);
   const [zoomIndex, setZoomIndex] = useState(0);
   const [mediaList, setMediaList] = useState([]);
 
-  // Prepare media array: images + videos
   useEffect(() => {
     const list = [];
     if (post?.thumbnail) list.push({ type: 'image', src: post.thumbnail });
@@ -23,11 +23,6 @@ export default function MediaCarousel({ post }) {
     });
     setMediaList(list);
   }, [post]);
-
-  const handleZoom = (index) => {
-    setZoomIndex(index);
-    setZoomOpen(true);
-  };
 
   const getYouTubeEmbedUrl = (url) => {
     const match = url.match(/(?:youtu\.be\/|youtube\.com.*(?:\?|&)v=)([^&?/]+)/);
@@ -41,13 +36,13 @@ export default function MediaCarousel({ post }) {
         <iframe
           src={embedUrl}
           title="External Video"
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain rounded-lg"
           allow="autoplay; fullscreen"
         />
       ) : (
         <video
           src={media.src}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain rounded-lg"
           controls
           autoPlay
         />
@@ -57,7 +52,7 @@ export default function MediaCarousel({ post }) {
     return (
       <video
         src={media.src}
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain rounded-lg"
         controls
         autoPlay
       />
@@ -68,71 +63,84 @@ export default function MediaCarousel({ post }) {
 
   return (
     <>
-      {/* Carousel */}
-      <div className="w-full relative">
-        <Swiper
-          modules={[Pagination]}
-          pagination={{ clickable: true }}
-          loop={mediaList.length > 1}
-          className="w-full"
-          style={{ aspectRatio: "16/9" }}
-        >
-          {mediaList.map((media, idx) => (
-            <SwiperSlide key={idx} className="flex justify-center items-center">
-              {media.type === 'image' ? (
-                <img
-                  src={media.src}
-                  alt={`Media ${idx}`}
-                  className="w-full h-full object-contain cursor-pointer"
-                  onClick={() => handleZoom(idx)}
-                />
-              ) : (
-                <div
-                  className="relative w-full h-full cursor-pointer"
-                  onClick={() => handleZoom(idx)}
-                >
-                  {renderVideo(media)}
-                  <div className="absolute inset-0 flex items-center justify-center text-3xl glassy-card/40">
-                    <BiZoomIn />
-                  </div>
-                </div>
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-
-      {/* Zoom Modal */}
-      <Modal
-        isOpen={zoomOpen}
-        onClose={() => setZoomOpen(false)}
-        title=""
-        isActionButton={false}
+      {/* Main Carousel */}
+      <Swiper
+        modules={[Pagination]}
+        pagination={{ clickable: true }}
+        loop={mediaList.length > 1}
+        className="w-full rounded-lg overflow-hidden"
+        style={{ aspectRatio: "16/9" }}
       >
-        <Swiper
-          initialSlide={zoomIndex}
-          modules={[Pagination]}
-          pagination={{ clickable: true }}
-          loop={mediaList.length > 1}
-          className="w-full h-[80vh]"
-        >
-          {mediaList.map((media, idx) => (
-            <SwiperSlide key={idx} className="flex justify-center items-center">
-              {media.type === 'image' ? (
-                <img
-                  src={media.src}
-                  alt={`Zoomed Media ${idx}`}
-                  className="w-full h-full max-h-[90vh] object-contain"
-                />
-              ) : (
-                <div className="w-full h-full flex justify-center items-center">
-                  {renderVideo(media)}
+        {mediaList.map((media, idx) => (
+          <SwiperSlide key={idx} className="flex justify-center items-center relative">
+            {media.type === 'image' ? (
+              <img
+                src={media.src}
+                alt={`Media ${idx}`}
+                className=" w-full h-full object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
+                onClick={() => {
+                  setZoomIndex(idx);
+                  setZoomOpen(true);
+                }}
+              />
+            ) : (
+              <div
+                className="relative w-full h-full cursor-pointer"
+                onClick={() => {
+                  setZoomIndex(idx);
+                  setZoomOpen(true);
+                }}
+              >
+                {renderVideo(media)}
+                <div className="absolute inset-0 flex items-center justify-center text-3xl glassy-card/40">
+                  <BiZoomIn />
                 </div>
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Modal>
+              </div>
+            )}
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Fullscreen Lightbox */}
+      {zoomOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn">
+          {/* Close Button */}
+          <button
+            className="absolute top-4 right-4 text-white text-3xl z-50 p-2 hover:bg-white/20 rounded-full transition"
+            onClick={() => setZoomOpen(false)}
+          >
+            <BiX />
+          </button>
+
+          <Swiper
+            initialSlide={zoomIndex}
+            modules={[Navigation, Pagination, Zoom]}
+            pagination={{ clickable: true }}
+            navigation
+            loop={mediaList.length > 1}
+            zoom
+            className="w-full h-full max-w-[90%] max-h-[90%]"
+          >
+            {mediaList.map((media, idx) => (
+              <SwiperSlide key={idx} className="flex justify-center items-center">
+                {media.type === 'image' ? (
+                  <div className="swiper-zoom-container">
+                    <img
+                      src={media.src}
+                      alt={`Zoomed Media ${idx}`}
+                      className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-full h-full flex justify-center items-center">
+                    {renderVideo(media)}
+                  </div>
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
     </>
   );
 }
