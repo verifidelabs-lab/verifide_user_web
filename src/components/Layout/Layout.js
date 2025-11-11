@@ -213,9 +213,18 @@ function Layout() {
     '/user/terms-and-conditions',
     '/user/course/recommended',
     '/user/opportunitiess',
+    "/user/opportunitiess/:id"
   ];
 
-  const isRestrictedPath = restrictedPaths.includes(location.pathname);
+  // ✅ Use regex match instead of includes
+const isRestrictedPath = restrictedPaths.some((path) => {
+  if (path.includes(':')) {
+    // Convert Express-style :param to regex
+    const regex = new RegExp('^' + path.replace(/:[^/]+/g, '[^/]+') + '$');
+    return regex.test(location.pathname);
+  }
+  return path === location.pathname;
+});
   useEffect(() => {
     const handleStorageChange = () => {
       setAccessMode(getCookie("ACCESS_MODE"));

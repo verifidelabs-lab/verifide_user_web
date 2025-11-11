@@ -426,7 +426,7 @@ const Userpost = () => {
           />
           <meta property="og:type" content="website" />
         </Helmet>
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center glassy-card h-screen">
           <div className="glassy-text-secondary">Post not found</div>
         </div>
       </>
@@ -547,7 +547,7 @@ const Userpost = () => {
       </nav> */}
 
       {/* Post Content */}
-      <div className="max-w-2xl mx-auto p-4 min-h-screen">
+      <div className="max-w-2xl mx-auto p-4 min-h-screen glassy-card">
         {/* User Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
@@ -581,7 +581,7 @@ const Userpost = () => {
         </div>
 
         {/* Post Content */}
-        <div className="mb-4">
+        <div className="mb-4 glassy-card">
           {/* <p className="glassy-text-primary whitespace-pre-line">{postData?.content}</p> */}
         </div>
         {postData?.post_type === "link" && postData?.link && (
@@ -591,9 +591,9 @@ const Userpost = () => {
         )}
 
         {postData?.post_type === "jobs" && postData?.job_id && (
-          <div className="mb-6 border border-gray-200 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 overflow-hidden">
+          <div className="mb-6 border  rounded-xl glassy-card overflow-hidden">
             {/* Job Header */}
-            <div className="glassy-card p-6 border-b border-gray-100">
+            <div className="glassy-card p-6 border-b ">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 glassy-card rounded-lg shadow-md flex items-center justify-center overflow-hidden">
@@ -630,7 +630,7 @@ const Userpost = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium glassy-card text-blue-800 mb-2">
+                  <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium glassy-text-primary  mb-2">
                     {/* <FaBriefcase className="mr-1" /> */}
                     {postData.job_id.job_type}
                   </div>
@@ -726,7 +726,7 @@ const Userpost = () => {
 
         {/* Poll Display */}
         {postData?.post_type === "poll" && postData?.poll && (
-          <div className="mb-4 border border-gray-200 rounded-lg p-4 glassy-card">
+          <div className="mb-4 border  rounded-lg p-4 glassy-card">
             <div className="flex items-center gap-2 mb-3 text-blue-600">
               <FaChartBar />
               <span className="font-medium">Poll</span>
@@ -743,7 +743,7 @@ const Userpost = () => {
               return (
                 <div key={index} className="mb-3 last:mb-0">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm font-medium">{option.text}</span>
+                    <span className="text-sm glassy-text-primary font-medium">{option.text}</span>
                     <span className="text-xs glassy-text-secondary">{percentage}%</span>
                   </div>
                   <div className="w-full glassy-card rounded-full h-2.5">
@@ -803,7 +803,7 @@ const Userpost = () => {
             {postData?.tags.map((tag, index) => (
               <span
                 key={index}
-                className="text-blue-500 text-sm hover:underline cursor-pointer"
+                className="glassy-card glassy-text-primary text-sm hover:underline cursor-pointer"
               >
                 #{tag}
               </span>
@@ -822,8 +822,8 @@ const Userpost = () => {
         </div>
 
         {/* Comments Section */}
-        <div className="border-t border-gray-200 pt-4">
-          <h4 className="font-semibold mb-3">Comments</h4>
+        <div className="border-t pt-4">
+          <h4 className="font-semibold glassy-text-primary mb-3">Comments</h4>
           {postData?.commentList && postData?.commentList.length > 0 ? (
             <div className="space-y-4">
               {postData.commentList.slice(0, 4).map((comment) => (
@@ -841,11 +841,11 @@ const Userpost = () => {
                       className="w-8 h-8 rounded-full flex-shrink-0"
                     />
                   )}
-                  <div className="glassy-card p-3 rounded-lg flex-1">
-                    <div className="font-semibold text-sm">
+                  <div className="p-3 rounded-lg flex-1">
+                    <div className="font-semibold glassy-text-primary text-sm">
                       {comment?.user?.first_name}
                     </div>
-                    <div className="text-sm mt-1">{comment.text}</div>
+                    <div className="text-sm mt-1 glassy-text-secondary">{comment.text}</div>
                   </div>
                 </div>
               ))}
