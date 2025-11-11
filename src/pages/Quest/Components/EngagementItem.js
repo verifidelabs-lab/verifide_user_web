@@ -28,16 +28,16 @@ const EngagementItem = ({ engagement, navigate }) => {
           <h4 className="font-semibold glassy-text-primary group-hover:text-indigo-600 transition-colors">
             {engagement.user_id.first_name} {engagement.user_id.last_name}
           </h4>
-          <p className="text-sm glassy-text-secondary">@{engagement.user_id.username}</p>
+          <p className="text-sm glassy-text-primary">@{engagement.user_id.username}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mt-4">
-        <div className="flex items-center glassy-text-secondary">
+        <div className="flex items-center glassy-text-primary">
           <BiEnvelope className="mr-2 text-indigo-500" />
           <span className="truncate">{engagement.email}</span>
         </div>
-        <div className="flex items-center glassy-text-secondary">
+        <div className="flex items-center glassy-text-primary">
           <BiUser className="mr-2 text-indigo-500" />
           <span className="font-medium">ID:</span>
           <span className="ml-1">{engagement.identifier}</span>
@@ -53,19 +53,19 @@ const EngagementItem = ({ engagement, navigate }) => {
             <BiMessageDetail className="mr-2 text-indigo-500" />
             <span className="text-sm font-medium">Remarks</span>
             <BiChevronRight
-              className={`ml-1 transform transition-transform ${expanded ? "rotate-90 text-indigo-500" : "glassy-text-secondary"
+              className={`ml-1 transform transition-transform ${expanded ? "rotate-90 text-indigo-500" : "glassy-text-primary"
                 }`}
             />
           </div>
           {expanded && (
-            <p className="glassy-text-primary bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-sm leading-relaxed break-words break-all ">
+            <p className="glassy-text-primary glassy-card p-3 rounded-lg border border-indigo-100 text-sm leading-relaxed break-words break-all ">
               {engagement.remarks}
             </p>
           )}
         </div>
       )}
 
-      <div className="flex items-center glassy-text-secondary text-xs mt-4">
+      <div className="flex items-center glassy-text-primary text-xs mt-4">
         <BiTime className="mr-1 text-indigo-400" />
         <span>{formatDate(engagement.date)}</span>
       </div>

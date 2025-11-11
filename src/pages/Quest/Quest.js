@@ -42,7 +42,13 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import Modal2 from "../../components/ui/Modal/Modal2";
 import { useGlobalKeys } from "../../context/GlobalKeysContext";
 
-const EmptyState = ({ activeTab, onCreateQuest, accessMode, isCompany, isInstitution, }) => (
+const EmptyState = ({
+  activeTab,
+  onCreateQuest,
+  accessMode,
+  isCompany,
+  isInstitution,
+}) => (
   <div className="flex flex-col items-center justify-center mt-12 py-16 glassy-card rounded-2xl shadow-sm border border-gray-200">
     <div className="bg-gradient-to-r from-blue-100 to-cyan-100 p-6 rounded-full mb-6">
       <BiTrophy className="h-10 w-10 text-blue-600" />
@@ -68,7 +74,6 @@ const EmptyState = ({ activeTab, onCreateQuest, accessMode, isCompany, isInstitu
   </div>
 );
 
-
 const ShortsClone = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -86,7 +91,11 @@ const ShortsClone = () => {
     updateIsAssignedUser,
     clearAll,
   } = useGlobalKeys();
-  console.log("this is thsdkjflskdjflskdjflskdjflskdjf", isCompany(), isInstitution())
+  console.log(
+    "this is thsdkjflskdjflskdjflskdjflskdjf",
+    isCompany(),
+    isInstitution()
+  );
   const selector = useSelector((state) => state.global);
   const quests = selector?.getQuestListData?.data?.data?.list || [];
   const [feedbackData, setFeedbackData] = useState(null);
@@ -99,19 +108,20 @@ const ShortsClone = () => {
   const [engagementData, setEngagementData] = useState(null);
   const [activeTab2, setActiveTab2] = useState();
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
-  const { formData, resetForm, setErrors, handleChange } = useFormHandler({
-    email: "",
-    identifier: "",
-    remarks: "",
-  });
+  const { formData, resetForm, setErrors, handleChange, errors } =
+    useFormHandler({
+      email: "",
+      identifier: "",
+      remarks: "",
+    });
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [activeTab3, setActiveTab3] = useState('Individual');
+  const [activeTab3, setActiveTab3] = useState("Individual");
 
-  const [feedbackDataModal, setFeedbackDataModal] = useState(null)
-  const [surveyData, setSurveyData] = useState(null)
-  const [surveyDataModal, setSurveyDataModal] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [feedbackDataModal, setFeedbackDataModal] = useState(null);
+  const [surveyData, setSurveyData] = useState(null);
+  const [surveyDataModal, setSurveyDataModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     AOS.init({
       duration: 700,
@@ -123,7 +133,14 @@ const ShortsClone = () => {
   const fetchQuest = async () => {
     try {
       setLoading(true);
-      await dispatch(getQuestList({ page: 1, size: 10, type: activeTab, quest_type: activeTab2 }));
+      await dispatch(
+        getQuestList({
+          page: 1,
+          size: 10,
+          type: activeTab,
+          quest_type: activeTab2,
+        })
+      );
     } catch (error) {
       toast.error(error);
     } finally {
@@ -131,9 +148,9 @@ const ShortsClone = () => {
     }
   };
   const fetchFeedBack = async (data) => {
-    if (data?.type === 'sign-up') {
-      setIsModalOpen(true)
-      setQuestData(data)
+    if (data?.type === "sign-up") {
+      setIsModalOpen(true);
+      setQuestData(data);
     } else {
       try {
         setLoading(true);
@@ -149,13 +166,14 @@ const ShortsClone = () => {
         setLoading(false);
       }
     }
-
   };
 
   const handleSubmitFeedback = async (payload) => {
     try {
       await dispatch(submitFeedback(payload));
-      const res = await dispatch(getFeedbackReport({ quest_id: questData?._id }));
+      const res = await dispatch(
+        getFeedbackReport({ quest_id: questData?._id })
+      );
       if (res) {
         setFeedbackData(res.payload.data);
       }
@@ -181,7 +199,7 @@ const ShortsClone = () => {
     if (isCompany()) {
       navigate(`/company/quest/create-your-quest`);
     } else if (isInstitution()) {
-      console.log("this is workindsdf")
+      console.log("this is workindsdf");
       navigate(`/institution/quest/create-your-quest`);
     } else {
       // fallback to user just in case
@@ -190,8 +208,6 @@ const ShortsClone = () => {
   };
 
   const handleEditQuest = (id) => {
-
-
     if (isCompany()) {
       navigate(`/company/quest/create-your-quest/${id}`);
     } else if (isInstitution()) {
@@ -214,38 +230,182 @@ const ShortsClone = () => {
     }
   };
 
+  // const handleSubmit = async () => {
+  //   let newErrors = {};
+
+  //   if (!formData?.userId && !formData?.identifier) {
+  //     newErrors.userId = "Please fill the User ID or Identifier";
+  //   }
+  //   if (formData?.identifier) {
+  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //     if (
+  //       !emailRegex.test(formData.identifier) &&
+  //       formData.identifier.length < 4
+  //     ) {
+  //       newErrors.identifier =
+  //         "Identifier must be a valid email or at least 4 characters long";
+  //     }
+  //   }
+
+  //   if (!formData?.remarks) {
+  //     newErrors.remarks = "Please provide a remark";
+  //   } else if (formData.remarks.length < 5) {
+  //     newErrors.remarks = "Remark must be at least 5 characters long";
+  //   } else if (formData.remarks.length > 100) {
+  //     newErrors.remarks = "Remark cannot exceed 100 characters";
+  //   }
+
+  //   if (Object.keys(newErrors).length > 0) {
+  //     setErrors(newErrors);
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await dispatch(
+  //       userRegisterOnQuest({ ...formData, quest_id: questData?._id })
+  //     ).unwrap();
+
+  //     toast.success(res?.message);
+  //     resetForm();
+  //     setIsModalOpen(false);
+
+  //     if (res) {
+  //       dispatch(
+  //         updateQuestViewCount({
+  //           questId: questData._id,
+  //           engagementCount: questData.engagement_count + 1,
+  //           isEngaged: true,
+  //         })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     toast.error(error);
+  //   }
+  // };
+  // ✅ Corrected handleSubmit Function
+  // const handleSubmit = async () => {
+  //   let newErrors = {};
+  //   console.log("hey budy", formData);
+  //   if (!formData?.email) {
+  //     newErrors.email = "Email is required";
+  //   } else {
+  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //     if (!emailRegex.test(formData.email)) {
+  //       newErrors.email = "Please enter a valid email address";
+  //     }
+  //   }
+  //   // ✅ Validate Email or Identifier
+  //   if (!formData?.email && !formData?.identifier) {
+  //     newErrors.identifier = "Please fill either Email or User Identifier";
+  //   }
+
+  //   // ✅ Email format validation
+  //   if (formData?.email) {
+  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //     if (!emailRegex.test(formData.email)) {
+  //       newErrors.email = "Please enter a valid email address";
+  //     }
+  //   }
+  //   // ✅ Identifier format validation (if not email)
+  //   if (formData?.identifier && formData.identifier.length < 4) {
+  //     newErrors.identifier = "Identifier must be at least 4 characters long";
+  //   }
+
+  //   // ✅ Remarks validation
+  //   if (!formData?.remarks) {
+  //     newErrors.remarks = "Please provide a remark";
+  //   } else if (formData.remarks.length < 5) {
+  //     newErrors.remarks = "Remark must be at least 5 characters long";
+  //   } else if (formData.remarks.length > 100) {
+  //     newErrors.remarks = "Remark cannot exceed 100 characters";
+  //   }
+
+  //   // ✅ Stop if errors exist
+  //   if (Object.keys(newErrors).length > 0) {
+  //     setErrors(newErrors);
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await dispatch(
+  //       userRegisterOnQuest({
+  //         ...formData,
+  //         quest_id: questData?._id,
+  //       })
+  //     ).unwrap();
+
+  //     toast.success(res?.message || "Registered successfully!");
+  //     resetForm();
+  //     setIsModalOpen(false);
+
+  //     // ✅ Update engagement count locally
+  //     if (res) {
+  //       dispatch(
+  //         updateQuestViewCount({
+  //           questId: questData._id,
+  //           engagementCount: (questData.engagement_count || 0) + 1,
+  //           isEngaged: true,
+  //         })
+  //       );
+  //     }
+  //   } catch (error) {
+  //     toast.error(error?.message || "Failed to join quest");
+  //   }
+  // };
   const handleSubmit = async () => {
     let newErrors = {};
+    console.log("👉 Submitting formData:", formData);
 
-    if (!formData?.userId && !formData?.identifier) {
-      newErrors.userId = "Please fill the User ID or Identifier";
-    }
-    if (formData?.identifier) {
+    // ✅ Sanitize input values
+    const email = (formData?.email || "").trim();
+    const identifier = (formData?.identifier || "").trim();
+    const remarks = (formData?.remarks || "").trim();
+
+    // ✅ Email required
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.identifier) && formData.identifier.length < 4) {
-        newErrors.identifier = "Identifier must be a valid email or at least 4 characters long";
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address";
       }
     }
 
-    if (!formData?.remarks) {
+    // ✅ Identifier validation (optional)
+    if (identifier && identifier.length < 4) {
+      newErrors.identifier = "Identifier must be at least 4 characters long";
+    }
+
+    // ✅ Remarks validation
+    if (!remarks) {
       newErrors.remarks = "Please provide a remark";
-    } else if (formData.remarks.length < 5) {
+    } else if (remarks.length < 5) {
       newErrors.remarks = "Remark must be at least 5 characters long";
-    } else if (formData.remarks.length > 100) {
+    } else if (remarks.length > 100) {
       newErrors.remarks = "Remark cannot exceed 100 characters";
     }
 
+    console.log("🧩 Validation Errors:", newErrors);
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      console.log("⛔ Form not submitted due to validation errors");
       return;
     }
 
+    console.log("✅ No validation errors — calling API");
+
     try {
       const res = await dispatch(
-        userRegisterOnQuest({ ...formData, quest_id: questData?._id })
+        userRegisterOnQuest({
+          email,
+          identifier,
+          remarks,
+          quest_id: questData?._id,
+        })
       ).unwrap();
 
-      toast.success(res?.message);
+      toast.success(res?.message || "Registered successfully!");
       resetForm();
       setIsModalOpen(false);
 
@@ -253,34 +413,36 @@ const ShortsClone = () => {
         dispatch(
           updateQuestViewCount({
             questId: questData._id,
-            engagementCount: questData.engagement_count + 1,
-            isEngaged: true
+            engagementCount: (questData.engagement_count || 0) + 1,
+            isEngaged: true,
           })
         );
       }
     } catch (error) {
-      toast.error(error);
+      console.error("❌ API Error:", error);
+      toast.error(error?.message || "Failed to join quest");
     }
   };
-
-
-
 
   const handleViewEngagement = async (data) => {
     try {
       setLoading2(true);
-      if (data?.type === 'feedbacks') {
-        const res = await dispatch(feedbackReport({ quest_id: data?._id })).unwrap()
-        setFeedbackData(res?.data)
-        setFeedbackDataModal(true)
-      } else if (data?.type === 'survey-polls') {
-        const res = await dispatch(surveyPollReport({ quest_id: data?._id })).unwrap()
-        setSurveyData(res?.data)
-        setSurveyDataModal(true)
-      }
-      else {
-
-        const res = await dispatch(engagementList({ quest_id: data?._id })).unwrap();
+      if (data?.type === "feedbacks") {
+        const res = await dispatch(
+          feedbackReport({ quest_id: data?._id })
+        ).unwrap();
+        setFeedbackData(res?.data);
+        setFeedbackDataModal(true);
+      } else if (data?.type === "survey-polls") {
+        const res = await dispatch(
+          surveyPollReport({ quest_id: data?._id })
+        ).unwrap();
+        setSurveyData(res?.data);
+        setSurveyDataModal(true);
+      } else {
+        const res = await dispatch(
+          engagementList({ quest_id: data?._id })
+        ).unwrap();
         setEngagementData(res?.data);
         setQuestData(data);
         setIsEngagementModalOpen(true);
@@ -294,15 +456,15 @@ const ShortsClone = () => {
 
   const handleVote = async (questId, optionIndex) => {
     try {
-      const res = await dispatch(voteOnPoll({ quest_id: questId, option_index: optionIndex })).unwrap();
+      const res = await dispatch(
+        voteOnPoll({ quest_id: questId, option_index: optionIndex })
+      ).unwrap();
       toast.success(res?.message);
       fetchQuest();
     } catch (error) {
       toast.error(error);
     }
-
   };
-
 
   const questTypes = [
     { label: "All", value: "" },
@@ -318,39 +480,44 @@ const ShortsClone = () => {
 
   // Get responses for current question
   const getCurrentQuestionResponses = () => {
-    return surveyData?.surveyPollReports?.map(report => {
-      const answer = report?.answers?.find(ans => ans.survey_index === currentQuestion);
+    return surveyData?.surveyPollReports?.map((report) => {
+      const answer = report?.answers?.find(
+        (ans) => ans.survey_index === currentQuestion
+      );
       return {
         user: report?.user_id,
-        answer: answer ? answer.selected_options : []
+        answer: answer ? answer.selected_options : [],
       };
     });
   };
 
   const responses = getCurrentQuestionResponses();
-  const responseCount = responses?.filter(r => r.answer.length > 0).length;
+  const responseCount = responses?.filter((r) => r.answer.length > 0).length;
   const handleCloseFeedback = () => {
-    setFeedbackDataModal(false)
-    setSurveyData(null)
-    setFeedbackData(null)
-    setSurveyDataModal(false)
-  }
+    setFeedbackDataModal(false);
+    setSurveyData(null);
+    setFeedbackData(null);
+    setSurveyDataModal(false);
+  };
 
   return (
     <div className="min-h-screen  p-4 md:p-6 overflow-y-auto hide-scrollbar overflow-hidden">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8" data-aos="fade-down">
+      <div
+        className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8"
+        data-aos="fade-down"
+      >
         <div>
           <h1 className="text-3xl md:text-4xl font-bold glassy-text-primary">
-            Quest{' '}
+            Quest{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-300">
               Campaigns
             </span>
           </h1>
           <p className="mt-2 glassy-text-secondary font-medium flex items-center">
-            <BiTrophy className="mr-2 text-yellow-400" /> Level up your growth journey with engaging quests
+            <BiTrophy className="mr-2 text-yellow-400" /> Level up your growth
+            journey with engaging quests
           </p>
         </div>
-
 
         {(accessMode === "6" || isCompany() || isInstitution()) && (
           <button
@@ -361,32 +528,42 @@ const ShortsClone = () => {
             New Quest
           </button>
         )}
-
       </div>
 
       <div className="flex md:flex-row flex-col justify-between items-center">
-        <div className="flex gap-2 mb-8 overflow-hidden overflow-x-auto pb-2 scrollbar-hide" data-aos="fade-up" data-aos-delay="100">
+        <div
+          className="flex gap-2 mb-8 overflow-hidden overflow-x-auto pb-2 scrollbar-hide"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
           {tabs.map(({ label, value, icon }) => (
             <button
               key={value}
               onClick={() => setActiveTab(value)}
               className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 whitespace-nowrap flex items-center gap-2
-        ${activeTab === value
-                  ? "bg-gradient-to-r from-blue-500 to-blue-300 glassy-text-primary shadow-md"
-                  : "glassy-card glassy-text-primary hover:bg-[var(--bg-button-hover)] border border-[var(--border-color)]"
-                }`}
+        ${
+          activeTab === value
+            ? "bg-gradient-to-r from-blue-500 to-blue-300 glassy-text-primary shadow-md"
+            : "glassy-card glassy-text-primary hover:bg-[var(--bg-button-hover)] border border-[var(--border-color)]"
+        }`}
             >
               {icon}
               {label}
             </button>
           ))}
         </div>
-        <FilterDropdown tabs={questTypes} tabActive={activeTab2} setTabActive={setActiveTab2} />
+        <FilterDropdown
+          tabs={questTypes}
+          tabActive={activeTab2}
+          setTabActive={setActiveTab2}
+        />
       </div>
 
-
       {loading && (
-        <div className="flex justify-center items-center py-20" data-aos="fade-in">
+        <div
+          className="flex justify-center items-center py-20"
+          data-aos="fade-in"
+        >
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 -2 lue-500"></div>
         </div>
       )}
@@ -403,7 +580,7 @@ const ShortsClone = () => {
               onDelete={handleDelete}
               onVote={handleVote}
               accessMode={accessMode}
-              isCompany={isCompany}       // ✅ pass function
+              isCompany={isCompany} // ✅ pass function
               isInstitution={isInstitution} // optional
               data-aos="fade-up"
               data-aos-delay={index * 80}
@@ -417,7 +594,7 @@ const ShortsClone = () => {
             activeTab={activeTab}
             onCreateQuest={handleCreateQuest}
             accessMode={accessMode}
-            isCompany={isCompany}       // ✅ pass function
+            isCompany={isCompany} // ✅ pass function
             isInstitution={isInstitution} // optional
             data-aos="zoom-in"
           />
@@ -447,8 +624,10 @@ const ShortsClone = () => {
           <CustomInput
             className="w-full  h-10"
             label="Email"
+            required
             placeholder="Enter User email"
             value={formData?.email}
+            error={errors?.email}
             onChange={(e) => handleChange("email", e.target.value)}
           />
           <CustomInput
@@ -458,7 +637,7 @@ const ShortsClone = () => {
             placeholder="Enter user"
             value={formData?.identifier}
             onChange={(e) => handleChange("identifier", e.target.value)}
-          // error={errors.userId}
+            error={errors?.identifier}
           />
           <CustomInput
             type="textarea"
@@ -468,9 +647,8 @@ const ShortsClone = () => {
             value={formData?.remarks}
             onChange={(e) => handleChange("remarks", e.target.value)}
             rows={3}
-          // error={errors.remarks}
+            error={errors?.remarks}
           />
-
         </div>
         {/* } */}
       </Modal>
@@ -485,14 +663,15 @@ const ShortsClone = () => {
         {engagementData && (
           <div className="max-h-[28rem] overflow-y-auto px-1">
             <div className="mb-4 flex items-center justify-between glassy-card p-3 rounded-lg">
-              <p className="text-sm glassy-text-secondary">
+              <p className="text-sm glassy-text-primary">
                 Total Engagements:{" "}
                 <span className="font-semibold text-indigo-600">
                   {engagementData.engagement_count}
                 </span>
               </p>
             </div>
-            {engagementData.engagements && engagementData.engagements.length > 0 ? (
+            {engagementData.engagements &&
+            engagementData.engagements.length > 0 ? (
               <div className="space-y-4">
                 {engagementData.engagements.map((engagement, index) => (
                   <EngagementItem
@@ -505,7 +684,9 @@ const ShortsClone = () => {
             ) : (
               <div className="text-center py-10 glassy-text-secondary">
                 <BiUser className="mx-auto text-5xl mb-3 opacity-50 text-indigo-400" />
-                <p className="font-medium">No engagements found for this quest.</p>
+                <p className="font-medium">
+                  No engagements found for this quest.
+                </p>
               </div>
             )}
           </div>
@@ -521,14 +702,15 @@ const ShortsClone = () => {
         <div className="">
           <div className="w-full max-h-[90vh] overflow-hidden">
             <div className="overflow-y-auto">
-              {!feedbackData?.feedbackModules || feedbackData?.feedbackModules.length === 0 ? (
+              {!feedbackData?.feedbackModules ||
+              feedbackData?.feedbackModules?.length === 0 ? (
                 <div className="glassy-text-secondary text-sm p-4 text-center">
                   No feedback data available.
                 </div>
               ) : (
                 <div className="space-y-6">
-                  {feedbackData.feedbackModules.map((mod, idx) => {
-                    const moduleReports = feedbackData.feedbackReports?.[idx] || [];
+                  {/* {feedbackData?.feedbackModules?.map((mod, idx) => {
+                    const moduleReports = feedbackData?.feedbackReports?.[idx] || [];
 
                     return (
                       <div key={idx} className="space-y-4  pb-4">
@@ -537,9 +719,9 @@ const ShortsClone = () => {
                           {mod.title || "Untitled"}
                         </h2>
 
-                        {moduleReports.length > 0 ? (
+                        {moduleReports?.length > 0 ? (
                           <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
-                            {moduleReports.map((report, reportIdx) => (
+                            {moduleReports?.map((report, reportIdx) => (
                               <div
                                 key={reportIdx}
                                 className="border rounded-lg glassy-card space-y-3 p-3"
@@ -554,7 +736,7 @@ const ShortsClone = () => {
                                   </span>
                                 </div>
 
-                                {/* Images */}
+
                                 {report.images?.length > 0 ? (
                                   <div>
                                     <p className="text-sm font-medium glassy-text-primary mb-2">
@@ -629,6 +811,134 @@ const ShortsClone = () => {
                         )}
                       </div>
                     );
+                  })} */}
+                  {/*                   
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </Modal> */}
+                  {feedbackData?.feedbackModules?.map((mod, idx) => {
+                    // Collect all feedbacks belonging to this module index
+                    const moduleReports = [];
+
+                    feedbackData?.feedbackReports?.forEach((report) => {
+                      report?.feedbacks?.forEach((fb) => {
+                        if (fb?.module_index === idx) {
+                          moduleReports?.push({
+                            user: report?.user_id,
+                            remarks: fb?.remarks,
+                            images: fb?.images,
+                          });
+                        }
+                      });
+                    });
+
+                    return (
+                      <div key={idx} className="space-y-4 pb-4">
+                        <h2 className="text-lg font-semibold glassy-text-primary capitalize">
+                          {mod.title || "Untitled"}{" "}
+                          <span className="text-sm glassy-text-secondary">
+                            ({moduleReports?.length} feedback
+                            {moduleReports?.length !== 1 ? "s" : ""})
+                          </span>
+                        </h2>
+
+                        {moduleReports?.length > 0 ? (
+                          <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+                            {moduleReports?.map((report, reportIdx) => (
+                              <div
+                                key={reportIdx}
+                                className="border rounded-lg glassy-card space-y-3 p-3"
+                              >
+                                {/* User Info */}
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-2">
+                                    <img
+                                      src={report.user?.profile_picture_url}
+                                      alt="user"
+                                      className="w-8 h-8 rounded-full"
+                                    />
+                                    <p className="text-sm glassy-text-primary font-medium">
+                                      {report.user?.first_name}{" "}
+                                      {report.user?.last_name}
+                                    </p>
+                                  </div>
+                                  <span className="text-xs glassy-text-secondary glassy-card px-2 py-1 rounded">
+                                    #{reportIdx + 1}
+                                  </span>
+                                </div>
+
+                                {/* Remarks */}
+                                <p className="text-sm glassy-card">
+                                  <span className="font-medium glassy-text-primary">
+                                    Remarks:
+                                  </span>{" "}
+                                  {report.remarks || "No remarks provided"}
+                                </p>
+
+                                {/* Images */}
+                                {report.images?.length > 0 ? (
+                                  <div>
+                                    <p className="text-sm font-medium glassy-text-primary mb-2">
+                                      Images:
+                                    </p>
+                                    <div className="flex flex-wrap gap-2">
+                                      {report.images.map((img, imgIdx) => (
+                                        <div
+                                          key={imgIdx}
+                                          className="w-24 h-24 relative rounded-lg overflow-hidden border border-gray-300 shadow-sm"
+                                        >
+                                          <img
+                                            src={img}
+                                            alt={`Feedback ${imgIdx + 1}`}
+                                            className="w-full h-full object-cover"
+                                          />
+                                          <a
+                                            href={img}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="absolute inset-0 flex items-center justify-center glassy-card bg-opacity-0 hover:bg-opacity-50 transition-all opacity-0 hover:opacity-100"
+                                            title="View image in full size"
+                                          >
+                                            <span className="glassy-text-primary text-xs glassy-card0 rounded px-2 py-1">
+                                              View
+                                            </span>
+                                          </a>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center glassy-text-secondary text-sm gap-1">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-4 w-4"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                      />
+                                    </svg>
+                                    No images provided
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="p-4 border border-dashed glassy-card rounded-lg text-center glassy-text-secondary">
+                            <p>No feedback reports for this module.</p>
+                          </div>
+                        )}
+                      </div>
+                    );
                   })}
                 </div>
               )}
@@ -637,14 +947,15 @@ const ShortsClone = () => {
         </div>
       </Modal>
 
-
-      <Modal2 isOpen={surveyDataModal} onClose={() => setSurveyDataModal(false)} title={`Survey Modal`}
-        isActionButton={false}>
-
+      <Modal2
+        isOpen={surveyDataModal}
+        onClose={() => setSurveyDataModal(false)}
+        title={`Survey Modal`}
+        isActionButton={false}
+      >
         <div className="   min-h-screen">
           {/* Header */}
           <div className="  ">
-
             <div className="p-4   border-gray-200">
               {/* <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
@@ -657,16 +968,23 @@ const ShortsClone = () => {
               </div> */}
 
               <div className="flex justify-center items-center space-x-6 mt-4">
-
                 <button
-                  className={`pb-2 ${activeTab3 === 'Question' ? 'glassy-text-primary  border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
-                  onClick={() => setActiveTab3('Question')}
+                  className={`pb-2 ${
+                    activeTab3 === "Question"
+                      ? "glassy-text-primary  border-b-2 border-purple-600"
+                      : "glassy-text-secondary"
+                  }`}
+                  onClick={() => setActiveTab3("Question")}
                 >
                   Question
                 </button>
                 <button
-                  className={`pb-2 ${activeTab3 === 'Individual' ? 'glassy-text-primary  border-b-2 border-purple-600' : 'glassy-text-secondary'}`}
-                  onClick={() => setActiveTab3('Individual')}
+                  className={`pb-2 ${
+                    activeTab3 === "Individual"
+                      ? "glassy-text-primary  border-b-2 border-purple-600"
+                      : "glassy-text-secondary"
+                  }`}
+                  onClick={() => setActiveTab3("Individual")}
                 >
                   Individual
                 </button>
@@ -687,7 +1005,9 @@ const ShortsClone = () => {
 
                 <div className="flex items-center space-x-4">
                   <button
-                    onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
+                    onClick={() =>
+                      setCurrentQuestion(Math.max(0, currentQuestion - 1))
+                    }
                     disabled={currentQuestion === 0}
                     className="p-2 rounded disabled:opacity-50 glassy-text-primary"
                   >
@@ -697,7 +1017,11 @@ const ShortsClone = () => {
                     {currentQuestion + 1} of {totalQuestions}
                   </span>
                   <button
-                    onClick={() => setCurrentQuestion(Math.min(totalQuestions - 1, currentQuestion + 1))}
+                    onClick={() =>
+                      setCurrentQuestion(
+                        Math.min(totalQuestions - 1, currentQuestion + 1)
+                      )
+                    }
                     disabled={currentQuestion === totalQuestions - 1}
                     className="p-2  rounded disabled:opacity-50 glassy-text-primary"
                   >
@@ -708,36 +1032,111 @@ const ShortsClone = () => {
             </div>
           </div>
 
-          {activeTab3 === 'Question' && (
+          {activeTab3 === "Question" && (
             <div className="p-6">
               <div className=" glassy-card rounded-lg p-6">
-                <h3 className="text-lg font-medium mb-4 glassy-text-primary">{currentPoll?.title}</h3>
-                <p className="glassy-text-secondary mb-4">{currentPoll?.description}</p>
+                <h3 className="text-lg font-medium mb-4 glassy-text-primary">
+                  {currentPoll?.title}
+                </h3>
+                <p className="glassy-text-secondary mb-4">
+                  {currentPoll?.description}
+                </p>
 
                 {/* Display options based on question type */}
-                {currentPoll.type === 'short-answer' ? (
+                {currentPoll.type === "short-answer" ? (
                   <div className="glassy-card p-3 rounded border">
-                    <p className="glassy-text-secondary italic">This is a short-answer question. Individual responses are shown in the "Individual" tab.</p>
+                    <p className="glassy-text-secondary italic">
+                      This is a short-answer question. Individual responses are
+                      shown in the "Individual" tab.
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {currentPoll.options.map((option, optIdx) => {
                       // Calculate how many responses selected this option
-                      const selectedCount = responses.filter(r => r.answer.includes(option)).length;
-                      const percentage = responseCount > 0 ? (selectedCount / responseCount) * 100 : 0;
+                      const selectedCount = responses.filter((r) =>
+                        r.answer.includes(option)
+                      ).length;
+                      const percentage =
+                        responseCount > 0
+                          ? (selectedCount / responseCount) * 100
+                          : 0;
                       const isSelected = selectedCount > 0;
 
                       return (
-                        <div key={optIdx} className="relative flex items-center">
-                          <div className="absolute top-0 left-0 h-full bg-purple-200 rounded-lg" style={{ width: `${percentage}%` }}></div>
-                          <div className="relative z-10 w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 glassy-card">
+                        // <div
+                        //   key={optIdx}
+                        //   className="relative flex items-center"
+                        // >
+                        //   <div
+                        //     className="absolute top-0 left-0 h-full bg-purple-200 rounded-lg"
+                        //     style={{ width: `${percentage}%` }}
+                        //   ></div>
+                        //   <div className="relative z-10 w-full flex items-center justify-between p-3 rounded-lg border border-gray-200 glassy-card">
+                        //     <div className="flex items-center space-x-2">
+                        //       <span
+                        //         className={`text-sm font-medium ${
+                        //           isSelected
+                        //             ? "text-purple-800"
+                        //             : "glassy-text-primary"
+                        //         }`}
+                        //       >
+                        //         {option}
+                        //       </span>
+                        //     </div>
+                        //     <div className="text-sm glassy-text-secondary">
+                        //       <span className="font-bold glassy-text-primary">
+                        //         {selectedCount}
+                        //       </span>{" "}
+                        //       ({percentage.toFixed(0)}%)
+                        //     </div>
+                        //   </div>
+                        // </div>
+                        <div
+                          key={optIdx}
+                          className="relative flex items-center"
+                        >
+                          {/* Background bar for percentage */}
+                          <div
+                            className={`absolute top-0 left-0 h-full rounded-lg transition-all duration-300 ${
+                              isSelected
+                                ? "bg-blue-600/60" // blue glassy highlight for selected option
+                                : "bg-blue-500/20" // lighter translucent blue for unselected
+                            }`}
+                            style={{ width: `${percentage}%` }}
+                          ></div>
+
+                          {/* Option container */}
+                          <div
+                            className={`relative z-10 w-full flex items-center justify-between p-3 rounded-lg border transition-all duration-200 ${
+                              isSelected
+                                ? "border-blue-400 bg-blue-600/30 glassy-text-primary shadow-md shadow-blue-500/30"
+                                : "border-[var(--border-color)] glassy-card"
+                            }`}
+                          >
                             <div className="flex items-center space-x-2">
-                              <span className={`text-sm font-medium ${isSelected ? 'text-purple-800' : 'glassy-text-primary'}`}>
+                              <span
+                                className={`text-sm font-medium ${
+                                  isSelected
+                                    ? "text-blue-100"
+                                    : "glassy-text-primary"
+                                }`}
+                              >
                                 {option}
                               </span>
                             </div>
+
                             <div className="text-sm glassy-text-secondary">
-                              <span className="font-bold glassy-text-primary">{selectedCount}</span> ({percentage.toFixed(0)}%)
+                              <span
+                                className={`font-bold ${
+                                  isSelected
+                                    ? "text-blue-100"
+                                    : "glassy-text-primary"
+                                }`}
+                              >
+                                {selectedCount}
+                              </span>{" "}
+                              ({percentage.toFixed(0)}%)
                             </div>
                           </div>
                         </div>
@@ -755,13 +1154,15 @@ const ShortsClone = () => {
             </div>
           )}
 
-          {activeTab3 === 'Individual' && (
+          {activeTab3 === "Individual" && (
             <div className="glassy-card   rounded-b-lg">
               <div className="p-4  border-gray-200">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <button
-                      onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
+                      onClick={() =>
+                        setCurrentQuestion(Math.max(0, currentQuestion - 1))
+                      }
                       disabled={currentQuestion === 0}
                       className="p-2   rounded disabled:opacity-50 glassy-text-primary"
                     >
@@ -771,7 +1172,11 @@ const ShortsClone = () => {
                       {currentQuestion + 1} of {totalQuestions}
                     </span>
                     <button
-                      onClick={() => setCurrentQuestion(Math.min(totalQuestions - 1, currentQuestion + 1))}
+                      onClick={() =>
+                        setCurrentQuestion(
+                          Math.min(totalQuestions - 1, currentQuestion + 1)
+                        )
+                      }
                       disabled={currentQuestion === totalQuestions - 1}
                       className="p-2 hover:glassy-card rounded disabled:opacity-50 glassy-text-primary"
                     >
@@ -790,7 +1195,9 @@ const ShortsClone = () => {
               </div>
 
               <div className="p-6">
-                <div className="text-sm glassy-text-secondary mb-2">Responses cannot be edited</div>
+                <div className="text-sm glassy-text-secondary mb-2">
+                  Responses cannot be edited
+                </div>
 
                 {/* Form Title */}
                 <div className="bg-purple-600 glassy-text-primary p-6 rounded-t-lg mb-6">
@@ -799,60 +1206,86 @@ const ShortsClone = () => {
                 </div>
 
                 <div className=" glassy-card rounded-lg p-6">
-                  <h3 className="text-lg font-medium mb-4 glassy-text-primary">{currentPoll?.title}</h3>
+                  <h3 className="text-lg font-medium mb-4 glassy-text-primary">
+                    {currentPoll?.title}
+                  </h3>
 
                   {/* Show responses for current question */}
                   <div className="space-y-4">
-                    {Array.isArray(responses) && responses.map((response, idx) => (
-                      <div key={idx} className="border-l-4 border-orange-400 pl-4">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <img
-                            src={response?.user?.profile_picture_url}
-                            alt={response?.user?.first_name}
-                            className="w-8 h-8 rounded-full"
-                            onError={(e) => {
-                              e.target.src = `https://ui-avatars.com/api/?name=${response.user.first_name}+${response.user.last_name}&background=6366f1&color=fff`;
-                            }}
-                          />
-                          <span className="text-sm font-medium glassy-text-primary">
-                            {response.user.first_name} {response.user.last_name}
-                          </span>
-                          <span className="text-xs glassy-text-secondary">
-                            Submitted {new Date().toLocaleDateString()}
-                          </span>
-                        </div>
+                    {Array.isArray(responses) &&
+                      responses.map((response, idx) => (
+                        <div
+                          key={idx}
+                          className="border-l-4 border-orange-400 pl-4"
+                        >
+                          <div className="flex items-center space-x-3 mb-2">
+                            <img
+                              src={response?.user?.profile_picture_url}
+                              alt={response?.user?.first_name}
+                              className="w-8 h-8 rounded-full"
+                              onError={(e) => {
+                                e.target.src = `https://ui-avatars.com/api/?name=${response.user.first_name}+${response.user.last_name}&background=6366f1&color=fff`;
+                              }}
+                            />
+                            <span className="text-sm font-medium glassy-text-primary">
+                              {response.user.first_name}{" "}
+                              {response.user.last_name}
+                            </span>
+                            <span className="text-xs glassy-text-secondary">
+                              Submitted {new Date().toLocaleDateString()}
+                            </span>
+                          </div>
 
-                        {currentPoll.type === 'short-answer' ? (
-                          <div className="glassy-card p-3 rounded border">
-                            <p className="glassy-text-primary">{response.answer[0] || 'No response'}</p>
-                          </div>
-                        ) : (
-                          <div className="space-y-2">
-                            {currentPoll.options.map((option, optIdx) => (
-                              <label key={optIdx} className="flex items-center space-x-2">
-                                <input
-                                  type={currentPoll.type === 'multi-choice' ? 'radio' : 'checkbox'}
-                                  checked={response.answer.includes(option)}
-                                  readOnly
-                                  className="form-radio glassy-text-primary"
-                                />
-                                <span className="glassy-text-primary">{option}</span>
-                              </label>
-                            ))}
-                            {currentPoll.type === 'checkbox' && (
-                              <label className="flex items-center space-x-2">
-                                <input type="checkbox" disabled className="form-checkbox" />
-                                <span className="glassy-text-secondary">Other...</span>
-                              </label>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                          {currentPoll.type === "short-answer" ? (
+                            <div className="glassy-card p-3 rounded border">
+                              <p className="glassy-text-primary">
+                                {response.answer[0] || "No response"}
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              {currentPoll.options.map((option, optIdx) => (
+                                <label
+                                  key={optIdx}
+                                  className="flex items-center space-x-2"
+                                >
+                                  <input
+                                    type={
+                                      currentPoll.type === "multi-choice"
+                                        ? "radio"
+                                        : "checkbox"
+                                    }
+                                    checked={response.answer.includes(option)}
+                                    readOnly
+                                    className="form-radio glassy-text-primary"
+                                  />
+                                  <span className="glassy-text-primary">
+                                    {option}
+                                  </span>
+                                </label>
+                              ))}
+                              {currentPoll.type === "checkbox" && (
+                                <label className="flex items-center space-x-2">
+                                  <input
+                                    type="checkbox"
+                                    disabled
+                                    className="form-checkbox"
+                                  />
+                                  <span className="glassy-text-secondary">
+                                    Other...
+                                  </span>
+                                </label>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ))}
                   </div>
 
                   <div className="mt-4 pt-4 border-t border-gray-200">
-                    <span className="text-blue-600 text-sm">{responseCount} responses</span>
+                    <span className="text-blue-600 text-sm">
+                      {responseCount} responses
+                    </span>
                   </div>
                 </div>
               </div>
@@ -863,8 +1296,5 @@ const ShortsClone = () => {
     </div>
   );
 };
-
-
-
 
 export default ShortsClone;
