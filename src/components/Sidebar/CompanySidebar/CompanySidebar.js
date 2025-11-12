@@ -428,7 +428,9 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
               item.label === "Notifications" && unreadCounts?.notifications > 0;
 
             return (
-              <div key={idx} className="mb-1">
+              <div key={idx} className={`mb-1 ${
+                  isMobileHiddenLabel ? "lg:hidden block" : ""
+                }`}>
                 {item.children ? (
                   <>
                     <div

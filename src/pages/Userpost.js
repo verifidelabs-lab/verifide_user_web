@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { FaChartBar } from "react-icons/fa";
+import { FaChartBar, FaMapMarkerAlt } from "react-icons/fa";
 import { apiUrl } from "../components/hooks/axiosProvider";
 import Button from "../components/ui/Button/Button";
 import { getCookie } from "../components/utils/cookieHandler";
 import { useDispatch } from "react-redux";
 import { getProfile } from "../redux/slices/authSlice";
 import MediaCarousel from "./Home/components/MediaCarousel";
+import { FaBriefcase } from "react-icons/fa6";
+import { BiLocationPlus } from "react-icons/bi";
 // import { toast } from 'sonner';
 
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
@@ -247,6 +249,10 @@ const Userpost = () => {
       });
     }
   }, [postData, id]); // Depend on postData to re-run when it changes
+  const handleSeeMore = () => setIsExpanded(!isExpanded);
+  const content =
+    postData?.job_id?.job_description || "No description available.";
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -279,7 +285,7 @@ const Userpost = () => {
       minute: "2-digit",
     });
   };
-
+  const handleApply = () => navigate(`/user/opportunitiess/${postData.job_id?._id}`);
   const calculatePercentage = (voteCount, totalVotes) => {
     if (totalVotes === 0) return 0;
     return Math.round((voteCount / totalVotes) * 100);
@@ -593,11 +599,11 @@ const Userpost = () => {
         {postData?.post_type === "jobs" && postData?.job_id && (
           <div className="mb-6 border  rounded-xl glassy-card overflow-hidden">
             {/* Job Header */}
-            <div className="glassy-card p-6 border-b ">
+            <div className="p-6 border-b ">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 glassy-card rounded-lg shadow-md flex items-center justify-center overflow-hidden">
-                    {postData.job_id.company?.logo_url ? (
+                  {/* <div className="w-16 h-16 glassy-card rounded-lg shadow-md flex items-center justify-center overflow-hidden"> */}
+                    {/* {postData.job_id.company?.logo_url ? (
                       <img
                         src={postData.job_id.company.logo_url}
                         alt={postData.job_id.company.name}
@@ -614,52 +620,77 @@ const Userpost = () => {
                         alt="logo"
                         className="w-full h-full object-cover"
                       />
-                    )}
-                  </div>
+                    )} */}
+                  {/* </div> */}
                   <div>
                     <h2 className="text-2xl font-bold glassy-text-primary mb-1">
                       {postData.job_id.job_title_details?.name ||
                         "Job Position"}
                     </h2>
-                    <p className="text-lg glassy-text-primary font-semibold">
+                    {/* <p className="text-lg glassy-text-primary font-semibold">
                       {postData.job_id.company?.name || "Company Name"}
                     </p>
                     <p className="text-sm glassy-text-secondary">
-                      {postData.job_id.industry?.name || 'Industry'}
-                    </p>
+                      {postData.job_id.industry?.name || "Industry"}
+                    </p> */}
                   </div>
                 </div>
-                <div className="text-right">
+                {/* <div className="text-right">
                   <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium glassy-text-primary  mb-2">
-                    {/* <FaBriefcase className="mr-1" /> */}
+                     <FaBriefcase className="mr-1" /> 
                     {postData.job_id.job_type}
                   </div>
                   <p className="text-xs glassy-text-secondary uppercase tracking-wide">
                     {postData.job_id.job_location || 'Remote'}
                   </p>
-                </div>
+                </div> */}
               </div>
-
-              {/* Job Details Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
-                  {/* <FaMapMarkerAlt className="glassy-text-secondary" /> */}
-                  {/* <span>{(postData.job_id.work_location) || 'Location not specified'}</span> */}
-                </div>
-
-                {postData.job_id.salary_range && (
-                  <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
-                    {/* <FaMoneyBillWave className="text-green-500" /> */}
-                    <span>₹{postData.job_id.salary_range}</span>
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {postData.job_id.job_type && (
+                      <span className="px-3 py-1 glassy-card text-blue-700 text-xs font-medium rounded-full">
+                        {postData.job_id.job_type}
+                      </span>
+                    )}
+                    {postData.job_id.job_location && (
+                      <span className="px-3 py-1 glassy-card text-green-700 text-xs font-medium rounded-full">
+                        {postData.job_id.job_location}
+                      </span>
+                    )}
+                    {postData.job_id.pay_type && (
+                      <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-full">
+                        {postData.job_id.pay_type}
+                      </span>
+                    )}
                   </div>
-                )}
-
-                <div className="flex items-center space-x-2 text-sm glassy-text-secondary">
-                  {/* <FaClock className="text-blue-500" /> */}
-                  <span className="capitalize">
-                    {postData.job_id.pay_type || "Payment type not specified"}
-                  </span>
                 </div>
+
+                {/* Apply Button */}
+                <Button
+                  size="sm"
+                  onClick={() => handleApply()}
+                  className="flex-1 glassy-button "
+                >
+                  Apply
+                </Button>
+              </div>
+              {/* Job Details Grid */}
+              {postData.job_id.salary_range && (
+                <div className="mt-4">
+                  <p className="text-sm glassy-text-secondary">Salary Range</p>
+                  <p className="text-lg glassy-text-primary font-bold">
+                    {postData.job_id.salary_range}
+                  </p>
+                </div>
+              )}
+              {/* Location */}
+              <div className="mt-4 mb-2 flex items-center text-sm glassy-text-secondary">
+                <BiLocationPlus className="mr-2 text-lg" />
+                <p>
+                  {postData.job_id.work_location?.city?.name || "—"},{" "}
+                  {postData.job_id.work_location?.state?.name || ""}
+                </p>
               </div>
 
               {/* Required Skills */}
@@ -693,9 +724,31 @@ const Userpost = () => {
             {/* Job Description */}
             {postData.job_id.job_description && (
               <div className="p-6">
-                <h4 className="text-lg font-semibold glassy-text-primary mb-3">Job Description</h4>
-                <div className="glassy-text-primary text-sm leading-relaxed break-words break-all  whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
+                <h4 className="text-lg font-semibold glassy-text-primary mb-3">
+                  Job Description
+                </h4>
+                {/* <div className="glassy-text-primary text-sm leading-relaxed break-words break-all  whitespace-pre-line glassy-card p-4 rounded-lg border border-gray-100">
                   {postData.job_id.job_description}
+                </div> */}
+                <div className="mt-4">
+                  <p
+                    className="glassy-text-primary leading-relaxed break-words break-all  whitespace-pre-line break-words break-all 
+               p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] 
+               overflow-hidden text-ellipsis"
+                  >
+                    {isExpanded ? content : content.slice(0, 200)}
+                    {content.length > 200 && (
+                      <>
+                        {!isExpanded && "..."}
+                        <button
+                          onClick={handleSeeMore}
+                          className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
+                        >
+                          {isExpanded ? "See less" : "See more"}
+                        </button>
+                      </>
+                    )}
+                  </p>
                 </div>
               </div>
             )}
@@ -731,7 +784,8 @@ const Userpost = () => {
               <FaChartBar />
               <span className="font-medium">Poll</span>
               <span className="text-xs glassy-text-secondary ml-auto">
-                {postData.poll.total_votes} votes • {postData.poll.voting_length} days left
+                {postData.poll.total_votes} votes •{" "}
+                {postData.poll.voting_length} days left
               </span>
             </div>
 
@@ -743,8 +797,12 @@ const Userpost = () => {
               return (
                 <div key={index} className="mb-3 last:mb-0">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm glassy-text-primary font-medium">{option.text}</span>
-                    <span className="text-xs glassy-text-secondary">{percentage}%</span>
+                    <span className="text-sm glassy-text-primary font-medium">
+                      {option.text}
+                    </span>
+                    <span className="text-xs glassy-text-secondary">
+                      {percentage}%
+                    </span>
                   </div>
                   <div className="w-full glassy-card rounded-full h-2.5">
                     <div
@@ -753,7 +811,7 @@ const Userpost = () => {
                     ></div>
                   </div>
                   <div className="text-xs glassy-text-secondary mt-1">
-                    {option.vote_count} vote{option.vote_count !== 1 ? 's' : ''}
+                    {option.vote_count} vote{option.vote_count !== 1 ? "s" : ""}
                   </div>
                 </div>
               );
@@ -845,13 +903,17 @@ const Userpost = () => {
                     <div className="font-semibold glassy-text-primary text-sm">
                       {comment?.user?.first_name}
                     </div>
-                    <div className="text-sm mt-1 glassy-text-secondary">{comment.text}</div>
+                    <div className="text-sm mt-1 glassy-text-secondary">
+                      {comment.text}
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="glassy-text-secondary text-center py-4">No comments yet. Be the first to comment!</p>
+            <p className="glassy-text-secondary text-center py-4">
+              No comments yet. Be the first to comment!
+            </p>
           )}
         </div>
       </div>

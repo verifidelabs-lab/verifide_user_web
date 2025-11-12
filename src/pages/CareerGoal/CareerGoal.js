@@ -5,11 +5,12 @@ import {
   applyJobApplication,
   jobScreeningQuestion,
 } from "../../redux/Users/userSlice";
-import { BiCheckCircle, BiChevronRightCircle, BiMapPin } from "react-icons/bi";
+import { BiCheckCircle, BiChevronLeftCircle, BiChevronRightCircle, BiMapPin } from "react-icons/bi";
 import { LuBuilding2 } from "react-icons/lu";
 // import { FaUserSecret } from 'react-icons/fa';
 import { CiLock } from "react-icons/ci";
 import { toast } from "sonner";
+import Button from "../../components/ui/Button/Button";
 
 const CareerGoal = () => {
   const { id } = useParams();
@@ -40,9 +41,9 @@ const CareerGoal = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [timerActive, setTimerActive] = useState(true);
-  const [autoSubmitted, setAutoSubmitted] = useState(false);
+  // const [timeLeft, setTimeLeft] = useState(0);
+  // const [timerActive, setTimerActive] = useState(true);
+  // const [autoSubmitted, setAutoSubmitted] = useState(false);
 
   // Fixed useEffect with proper dependency
   useEffect(() => {
@@ -56,46 +57,46 @@ const CareerGoal = () => {
         }))
       );
 
-      const initialTime = (screeningQuestions[0]?.time_limit || 0) * 60;
-      setTimeLeft(initialTime);
-      setTimerActive(true);
+      // const initialTime = (screeningQuestions[0]?.time_limit || 0) * 60;
+      // setTimeLeft(initialTime);
+      // setTimerActive(true);
     }
   }, [screeningQuestions]); // Added screeningQuestions as dependency
 
-  useEffect(() => {
-    if (!timerActive || timeLeft <= 0) return;
+  // useEffect(() => {
+  //   if (!timerActive || timeLeft <= 0) return;
 
-    const timerId = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timerId);
-          handleTimeExpired();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+  //   const timerId = setInterval(() => {
+  //     setTimeLeft((prev) => {
+  //       if (prev <= 1) {
+  //         clearInterval(timerId);
+  //         handleTimeExpired();
+  //         return 0;
+  //       }
+  //       return prev - 1;
+  //     });
+  //   }, 1000);
 
-    return () => clearInterval(timerId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeLeft, timerActive, currentQuestion, screeningQuestions]); // Added screeningQuestions
+  //   return () => clearInterval(timerId);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [timeLeft, timerActive, currentQuestion, screeningQuestions]); // Added screeningQuestions
 
-  const handleTimeExpired = () => {
-    if (currentQuestion < screeningQuestions.length - 1) {
-      // Auto-move to next question
-      setTimeout(() => {
-        setCurrentQuestion((prev) => prev + 1);
-        const nextQuestionTime =
-          (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
-        setTimeLeft(nextQuestionTime);
-        setTimerActive(true);
-      }, 1000);
-    } else {
-      // Auto-submit when last question time expires
-      setAutoSubmitted(true);
-      handleSubmit(true);
-    }
-  };
+  // const handleTimeExpired = () => {
+  //   if (currentQuestion < screeningQuestions.length - 1) {
+  //     // Auto-move to next question
+  //     setTimeout(() => {
+  //       setCurrentQuestion((prev) => prev + 1);
+  //       const nextQuestionTime =
+  //         (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
+  //       setTimeLeft(nextQuestionTime);
+  // setTimerActive(true);
+  //     }, 1000);
+  //   } else {
+  //     // Auto-submit when last question time expires
+  //     setAutoSubmitted(true);
+  //     handleSubmit(true);
+  //   }
+  // };
 
   const handleSingleChoiceSelect = (option) => {
     const newAnswers = [...answers];
@@ -139,15 +140,20 @@ const CareerGoal = () => {
 
   const handleNext = () => {
     if (currentQuestion < screeningQuestions.length - 1) {
-      setTimerActive(false);
+      // setTimerActive(false);
       setCurrentQuestion(currentQuestion + 1);
       const nextQuestionTime =
         (screeningQuestions[currentQuestion + 1]?.time_limit || 0) * 60;
-      setTimeLeft(nextQuestionTime);
-      setTimerActive(true);
+      // setTimeLeft(nextQuestionTime);
+      // setTimerActive(true);
     }
   };
 
+  const handlePrev = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+    }
+  };
   const handleSubmit = async (isAutoSubmit = false) => {
     // Validation: ensure all questions have at least one answer
     for (let i = 0; i < answers.length; i++) {
@@ -221,12 +227,16 @@ const CareerGoal = () => {
             <BiCheckCircle className="w-12 h-12 text-green-600" />
           </div>
           <h1 className="text-2xl font-bold glassy-text-primary mb-4">
-            {autoSubmitted ? "Time Completed!" : "Thank You!"}
+            {/* {autoSubmitted ? "Time Completed!" : "Thank You!"} */}
+            {"Thank You!"}
           </h1>
           <p className="glassy-text-secondary mb-6">
-            {autoSubmitted
+            {/* {autoSubmitted
               ? "Your screening answers have been automatically submitted due to time completion."
-              : "Your screening answers have been successfully submitted."}
+              : "Your screening answers have been successfully submitted."} */}
+            {/* {autoSubmitted
+              ? "Your screening answers have been automatically submitted due to time completion." */}
+            {"Your screening answers have been successfully submitted."}
           </p>
           <button
             className="w-full bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold py-3 px-6 rounded-lg transition-colors"
@@ -312,7 +322,7 @@ const CareerGoal = () => {
             </div>
 
             {/* Timer */}
-            <div
+            {/* <div
               className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
                 timeLeft <= 30
                   ? "glassy-card text-red-700"
@@ -323,7 +333,7 @@ const CareerGoal = () => {
               <span className="font-mono font-semibold">
                 {formatTime(timeLeft)}
               </span>
-            </div>
+            </div> */}
           </div>
 
           <div className="mb-8">
@@ -408,8 +418,50 @@ const CareerGoal = () => {
               </div>
             )}
           </div>
-
+          {/* <div className="flex justify-start">
+            {currentQuestion > 0 && (
+              <button
+                onClick={handlePrev}
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold rounded-lg transition-all"
+              >
+                prev
+                <BiChevronRightCircle className="w-4 h-4" />
+              </button>
+            )}
+          </div>
           <div className="flex justify-end">
+            {currentQuestion < screeningQuestions.length - 1 ? (
+              <button
+                onClick={handleNext}
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold rounded-lg transition-all"
+              >
+                Next
+                <BiChevronRightCircle className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={() => handleSubmit(false)}
+                disabled={loading}
+                className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 glassy-text-primary font-semibold rounded-lg transition-all"
+              >
+                <BiCheckCircle className="w-4 h-4" />
+                {loading ? "Submitting..." : "Submit"}
+              </button>
+            )}
+          </div> */}
+          <div className="flex justify-between items-center mt-6">
+            {currentQuestion > 0 ? (
+              <button
+                onClick={handlePrev}
+                className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 glassy-text-primary font-semibold rounded-lg transition-all"
+              >
+                <BiChevronLeftCircle className="w-4 h-4" />
+                Prev
+              </button>
+            ) : (
+              <div></div> // keeps layout balanced
+            )}
+
             {currentQuestion < screeningQuestions.length - 1 ? (
               <button
                 onClick={handleNext}
@@ -431,13 +483,13 @@ const CareerGoal = () => {
           </div>
 
           {/* Warning for time */}
-          {timeLeft <= 30 && timeLeft > 0 && (
+          {/* {timeLeft <= 30 && timeLeft > 0 && (
             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-700 text-sm font-medium">
                 ⚠️ Warning: Only {timeLeft} seconds remaining for this question!
               </p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

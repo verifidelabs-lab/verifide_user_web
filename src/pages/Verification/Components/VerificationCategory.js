@@ -134,6 +134,7 @@ const VerificationCategory = ({ profileData }) => {
   const handleVerifyNow = useCallback((itemId) => {
     setSelectedItemId((prev) => (prev === itemId ? null : itemId));
     setActiveOption(null);
+    // toggleHistory(null);
   }, []);
 
   const handleOptionClick = useCallback(
@@ -326,8 +327,9 @@ const VerificationCategory = ({ profileData }) => {
 
   const renderStatusBadge = (status) => {
     const statusClasses = {
-      requested: "bg-[#EAF1FF] text-blue-500",
-      rejected: "bg-red-50 text-red-500",
+      // requested: "bg-[#EAF1FF] text-blue-500",
+      requested: "glassy-card text-blue-500",
+      rejected: "glassy-card text-red-500",
       pending: "glassy-card text-blue-500",
       approved: "glassy-card text-green-600",
     };
@@ -504,31 +506,33 @@ const VerificationCategory = ({ profileData }) => {
         </nav>
       </div>
 
-      <div className="w-full px-4 sm:px-6 lg:px-8 p-4 glassy-card rounded-lg ">
-        <div className="flex items-center mb-8">
-          <FaGraduationCap className="w-6 h-6 glassy-text-secondary mr-3" />
-          <h1 className="text-2xl font-semibold glassy-text-primary capitalize">
+      <div className="w-full px-3 sm:px-5 lg:px-8 p-3 sm:p-4 glassy-card rounded-lg">
+        {/* Header */}
+        <div className="flex items-center mb-6 sm:mb-8">
+          <FaGraduationCap className="w-5 h-5 sm:w-6 sm:h-6 glassy-text-secondary mr-2 sm:mr-3" />
+          <h1 className="text-xl sm:text-2xl font-semibold glassy-text-primary capitalize">
             {type || "Verification"}
           </h1>
         </div>
 
-        <ul className="space-y-4">
+        <ul className="space-y-4 sm:space-y-6">
           {apiRes && apiRes.length > 0 ? (
             apiRes.map((item) => (
               <li
                 key={item._id || item.id}
-                className="border-[#00000030]/20 border rounded-xl"
+                className="border border-[#00000030]/20 rounded-xl overflow-hidden"
               >
-                <div className="glassy-card rounded-lg p-6 transition-all duration-300 hover:shadow-lg">
-                  <div className="flex items-center justify-between">
+                {/* Main Card */}
+                <div className="glassy-card rounded-lg p-4 sm:p-6 transition-all duration-300 hover:shadow-lg">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-6">
+                    {/* Left Side */}
                     <div className="flex-1">
-                      <h3 className="text-lg font-medium glassy-text-primary mb-2 gap-4 flex items-center">
+                      <h3 className="text-base sm:text-lg md:text-xl font-medium glassy-text-primary mb-2 flex items-center gap-3 flex-wrap">
                         {item.degree || item.companyName || item.name}
-
                         {item?.verificationHistory?.length > 0 && (
                           <button
                             onClick={() => toggleHistory(item._id)}
-                            className="w-6 h-6 rounded-md border border-green-400 flex justify-center items-center hover:glassy-card transition-colors"
+                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-md border border-green-400 flex justify-center items-center hover:glassy-card transition-colors"
                             aria-label="View verification history"
                           >
                             <GoHistory className="text-green-700" size={14} />
@@ -536,7 +540,7 @@ const VerificationCategory = ({ profileData }) => {
                         )}
                       </h3>
 
-                      <div className="flex items-center text-sm glassy-text-secondary space-x-4">
+                      <div className="flex flex-wrap items-center text-xs sm:text-sm glassy-text-secondary gap-2 sm:gap-4">
                         <span>
                           {item.institution ||
                             item.profileName ||
@@ -563,15 +567,20 @@ const VerificationCategory = ({ profileData }) => {
                       </div>
                     </div>
 
+                    {/* Right Side */}
                     {item.is_verified ? (
-                      <span>{renderStatusBadge(item?.status)}</span>
+                      <div className="flex justify-end w-full md:w-auto">
+                        {renderStatusBadge(item?.status)}
+                      </div>
                     ) : (
-                      <div className="flex flex-col justify-end items-end gap-3">
-                        {renderStatusBadge(item.status)}
+                      <div className="flex flex-col md:items-end gap-2 md:gap-3 w-full md:w-auto">
+                        <div className="flex justify-end w-full">
+                          {renderStatusBadge(item.status)}
+                        </div>
 
                         {item.status === "rejected" &&
                           item?.rejection_reason && (
-                            <div className="mt-3 text-sm text-red-600 bg-red-50 border border-red-300 p-2 rounded-xl max-w-lg">
+                            <div className="text-xs sm:text-sm text-red-600 glassy-card border border-red-300 p-2 rounded-lg max-w-full sm:max-w-lg">
                               <strong>Rejection Reason:</strong>{" "}
                               {item.rejection_reason}
                             </div>
@@ -580,20 +589,21 @@ const VerificationCategory = ({ profileData }) => {
                         {(item?.status === "rejected" ||
                           item?.status === "pending") &&
                           tab !== "pendingRequest" && (
-                            <button
-                              className="glassy-button"
+                            <Button
+                              className="glassy-button w-auto self-end md:self-end px-4 py-1.5 text-sm"
                               onClick={() => handleVerifyNow(item._id)}
                             >
                               {selectedItemId === item._id
                                 ? "Back"
                                 : "Verify Now"}
-                            </button>
+                            </Button>
                           )}
                       </div>
                     )}
                   </div>
                 </div>
 
+                {/* ---------- Verification History ---------- */}
                 <div
                   className={`transition-all duration-300 ease-in-out overflow-hidden ${
                     expandedHistoryId === item._id
@@ -601,14 +611,14 @@ const VerificationCategory = ({ profileData }) => {
                       : "max-h-0"
                   }`}
                 >
-                  <div className="space-y-4 my-4 p-2">
+                  <div className="space-y-3 sm:space-y-4 my-3 sm:my-4 p-3 sm:p-4">
                     {item?.verificationHistory?.map((history) => (
                       <div
                         key={history._id}
-                        className="glassy-card p-4 transition-all duration-300 hover:shadow-lg"
+                        className="glassy-card p-3 sm:p-4 transition-all duration-300 hover:shadow-lg"
                       >
-                        {/* Header with Status and Date */}
-                        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                        {/* Header */}
+                        <div className="flex flex-wrap justify-between items-center gap-2 mb-3">
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-semibold ${
                               history.status === "approved"
@@ -621,9 +631,8 @@ const VerificationCategory = ({ profileData }) => {
                             {history.status.charAt(0).toUpperCase() +
                               history.status.slice(1)}
                           </span>
-
                           {history.verified_at && (
-                            <span className="text-sm glassy-text-secondary">
+                            <span className="text-xs sm:text-sm glassy-text-secondary">
                               Verified on:{" "}
                               {convertTimestampToDate(history.verified_at)}
                             </span>
@@ -631,7 +640,7 @@ const VerificationCategory = ({ profileData }) => {
                         </div>
 
                         {/* Verification Source */}
-                        <div className="text-sm glassy-text-secondary mb-2">
+                        <div className="text-xs sm:text-sm glassy-text-secondary mb-2">
                           <span className="font-semibold glassy-text-primary">
                             Verification Source:
                           </span>{" "}
@@ -651,112 +660,110 @@ const VerificationCategory = ({ profileData }) => {
                         {/* Rejection Reason */}
                         {history.rejection_reason && (
                           <div className="mt-3 p-2 bg-red-50 border-l-4 border-red-400 text-red-700 rounded">
-                            <p className="text-sm font-semibold">
+                            <p className="text-xs sm:text-sm font-semibold">
                               Rejection Reason:
                             </p>
-                            <p className="text-sm">
+                            <p className="text-xs sm:text-sm">
                               {history.rejection_reason}
                             </p>
                           </div>
                         )}
 
                         {/* Attachments */}
-                        {history.attach_file &&
-                          history.attach_file.length > 0 && (
-                            <div className="mt-4">
-                              <h4 className="text-sm font-semibold glassy-text-primary mb-2">
-                                Attachments:
-                              </h4>
-                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                {history.attach_file.map((file, fileIndex) => {
-                                  const isImage =
-                                    /\.(jpeg|jpg|png|gif|webp)$/i.test(file);
-                                  const isPDF = /\.pdf$/i.test(file);
-
-                                  return (
-                                    <a
-                                      key={fileIndex}
-                                      href={file}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="glassy-card block border rounded-lg overflow-hidden hover:shadow-md transition"
-                                    >
-                                      {isImage ? (
-                                        <img
-                                          src={file}
-                                          alt={`Attachment ${fileIndex + 1}`}
-                                          className="w-full h-24 object-cover"
-                                        />
-                                      ) : isPDF ? (
-                                        <div className="flex flex-col items-center justify-center p-3 h-24 text-center">
-                                          <svg
-                                            className="w-8 h-8 text-red-500"
-                                            fill="currentColor"
-                                            viewBox="0 0 24 24"
-                                          >
-                                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
-                                          </svg>
-                                          <p className="mt-1 text-xs glassy-text-secondary truncate">
-                                            PDF Document
-                                          </p>
-                                        </div>
-                                      ) : (
-                                        <div className="flex flex-col items-center justify-center p-3 h-24 text-center">
-                                          <svg
-                                            className="w-8 h-8 glassy-text-secondary"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                          >
-                                            <path
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              strokeWidth="2"
-                                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                                            ></path>
-                                          </svg>
-                                          <p className="mt-1 text-xs glassy-text-secondary truncate">
-                                            Attachment
-                                          </p>
-                                        </div>
-                                      )}
-                                    </a>
-                                  );
-                                })}
-                              </div>
+                        {history.attach_file?.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="text-sm font-semibold glassy-text-primary mb-2">
+                              Attachments:
+                            </h4>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
+                              {history.attach_file.map((file, idx) => {
+                                const isImage =
+                                  /\.(jpeg|jpg|png|gif|webp)$/i.test(file);
+                                const isPDF = /\.pdf$/i.test(file);
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={file}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="glassy-card border rounded-lg overflow-hidden hover:shadow-md transition"
+                                  >
+                                    {isImage ? (
+                                      <img
+                                        src={file}
+                                        alt={`Attachment ${idx + 1}`}
+                                        className="w-full h-24 sm:h-28 object-cover"
+                                      />
+                                    ) : isPDF ? (
+                                      <div className="flex flex-col items-center justify-center p-3 h-24 sm:h-28 text-center">
+                                        <svg
+                                          className="w-8 h-8 text-red-500"
+                                          fill="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                                        </svg>
+                                        <p className="mt-1 text-xs glassy-text-secondary truncate">
+                                          PDF Document
+                                        </p>
+                                      </div>
+                                    ) : (
+                                      <div className="flex flex-col items-center justify-center p-3 h-24 sm:h-28 text-center">
+                                        <svg
+                                          className="w-8 h-8 glassy-text-secondary"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                                          />
+                                        </svg>
+                                        <p className="mt-1 text-xs glassy-text-secondary truncate">
+                                          Attachment
+                                        </p>
+                                      </div>
+                                    )}
+                                  </a>
+                                );
+                              })}
                             </div>
-                          )}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* <div
+                {/* ---------- Verification Options (Institution / Document Upload) ---------- */}
+                <div
                   className={`transition-all duration-300 ease-in-out overflow-hidden ${
                     selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
                   }`}
                 >
-                  <div className="space-y-2 my-4 p-4">
-
+                  <div className="space-y-3 sm:space-y-4 my-3 sm:my-4 p-3 sm:p-4">
+                    {/* Institution Verification */}
                     {(item?.company_id || item?.institution_id) && (
                       <div className="glassy-card border border-blue-200 rounded-lg">
                         <div
-                          className="flex justify-between items-center p-3 cursor-pointer  transition-colors rounded-lg"
+                          className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 cursor-pointer transition-colors rounded-lg"
                           onClick={() =>
                             handleOptionClick("institution", item._id, item)
                           }
                         >
-                          <div className="flex justify-start items-center gap-3">
-                            <span className="w-12 h-12 rounded-full flex justify-center items-center glassy-card">
-                              <PiGraduationCapThin className="glassy-text-primary text-xl" />
+                          <div className="flex items-center gap-3 w-full sm:w-auto">
+                            <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex justify-center items-center glassy-card">
+                              <PiGraduationCapThin className="glassy-text-primary text-lg sm:text-xl" />
                             </span>
-
                             <div>
-                              <p className="glassy-text-primary md:text-xl text-lg font-semibold">
+                              <p className="glassy-text-primary text-base sm:text-lg font-semibold">
                                 Verification by{" "}
                                 {item?.company_id ? "Company" : "Institute"}
                               </p>
-                              <p className="glassy-text-secondary md:text-sm text-xs font-normal">
+                              <p className="glassy-text-secondary text-xs sm:text-sm font-normal">
                                 Request verification from authorized institution
                               </p>
                             </div>
@@ -770,7 +777,6 @@ const VerificationCategory = ({ profileData }) => {
                             }`}
                           />
                         </div>
-
                         <div
                           className={`transition-all duration-300 ease-in-out overflow-hidden ${
                             activeOption === "institution" &&
@@ -784,21 +790,21 @@ const VerificationCategory = ({ profileData }) => {
                       </div>
                     )}
 
+                    {/* Document Upload */}
                     <div className="glassy-card border border-blue-200 rounded-lg">
                       <div
-                        className="flex justify-between items-center p-3 cursor-pointer  transition-colors rounded-lg"
+                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 cursor-pointer transition-colors rounded-lg"
                         onClick={() => handleOptionClick("document", item._id)}
                       >
-                        <div className="flex justify-start items-center gap-3">
-                          <span className="w-12 h-12 rounded-full flex justify-center items-center glassy-card">
-                            <FaUpload className="glassy-text-primary text-xl" />
+                        <div className="flex items-center gap-3 w-full sm:w-auto">
+                          <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex justify-center items-center glassy-card">
+                            <FaUpload className="glassy-text-primary text-lg sm:text-xl" />
                           </span>
-
                           <div>
-                            <p className="glassy-text-primary md:text-xl text-lg font-semibold">
+                            <p className="glassy-text-primary text-base sm:text-lg font-semibold">
                               Verification by Document Upload
                             </p>
-                            <p className="glassy-text-secondary md:text-sm text-xs font-normal">
+                            <p className="glassy-text-secondary text-xs sm:text-sm font-normal">
                               Upload certificates, diplomas, or other documents
                               as proof
                             </p>
@@ -813,115 +819,6 @@ const VerificationCategory = ({ profileData }) => {
                           }`}
                         />
                       </div>
-
-                      <div
-                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                          activeOption === "document" &&
-                          selectedItemId2 === item._id
-                            ? "max-h-[500px]"
-                            : "max-h-0"
-                        }`}
-                      >
-                        {renderDocumentForm(item)}
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-                <div
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    selectedItemId === item._id ? "max-h-[1000px]" : "max-h-0"
-                  }`}
-                >
-                  <div className="space-y-3 my-4 p-3 sm:p-4">
-                    {/* ---------- Institution / Company Verification ---------- */}
-                    {(item?.company_id || item?.institution_id) && (
-                      <div className="glassy-card border border-blue-200 rounded-lg">
-                        <div
-                          className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 cursor-pointer transition-colors rounded-lg"
-                          onClick={() =>
-                            handleOptionClick("institution", item._id, item)
-                          }
-                        >
-                          {/* Left Section */}
-                          <div className="flex flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
-                            <span className="min-w-[3rem] min-h-[3rem] w-12 h-12 rounded-full flex justify-center items-center glassy-card shrink-0">
-                              <PiGraduationCapThin className="glassy-text-primary text-xl sm:text-2xl" />
-                            </span>
-
-                            <div className="flex flex-col gap-1 w-full">
-                              <p className="glassy-text-primary text-base sm:text-lg md:text-xl font-semibold leading-tight break-words">
-                                Verification by{" "}
-                                {item?.company_id ? "Company" : "Institute"}
-                              </p>
-                              <p className="glassy-text-secondary text-xs sm:text-sm font-normal leading-snug break-words">
-                                Request verification from authorized institution
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Down Arrow */}
-                          <div className="flex justify-end sm:justify-center items-center w-full sm:w-auto">
-                            <IoChevronDownOutline
-                              className={`transition-transform duration-300 text-lg sm:text-2xl ${
-                                activeOption === "institution" &&
-                                selectedItemId2 === item._id
-                                  ? "transform rotate-180"
-                                  : ""
-                              }`}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                            activeOption === "institution" &&
-                            selectedItemId2 === item._id
-                              ? "max-h-screen overflow-y-auto"
-                              : "max-h-0"
-                          }`}
-                        >
-                          {renderInstitutionForm(item)}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* ---------- Document Upload Verification ---------- */}
-                    <div className="glassy-card border border-blue-200 rounded-lg">
-                      <div
-                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-3 cursor-pointer transition-colors rounded-lg"
-                        onClick={() => handleOptionClick("document", item._id)}
-                      >
-                        {/* Left Section */}
-                        <div className="flex flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
-                          <span className="min-w-[3rem] min-h-[3rem] w-12 h-12 rounded-full flex justify-center items-center glassy-card shrink-0">
-                            <FaUpload className="glassy-text-primary text-xl sm:text-2xl" />
-                          </span>
-
-                          <div className="flex flex-col gap-1 w-full">
-                            <p className="glassy-text-primary text-base sm:text-lg md:text-xl font-semibold leading-tight break-words">
-                              Verification by Document Upload
-                            </p>
-                            <p className="glassy-text-secondary text-xs sm:text-sm font-normal leading-snug break-words">
-                              Upload certificates, diplomas, or other documents
-                              as proof
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Down Arrow */}
-                        <div className="flex justify-end sm:justify-center items-center w-full sm:w-auto">
-                          <IoChevronDownOutline
-                            className={`transition-transform duration-300 text-lg sm:text-2xl ${
-                              activeOption === "document" &&
-                              selectedItemId2 === item._id
-                                ? "transform rotate-180"
-                                : ""
-                            }`}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Expandable Section */}
                       <div
                         className={`transition-all duration-300 ease-in-out overflow-hidden ${
                           activeOption === "document" &&
