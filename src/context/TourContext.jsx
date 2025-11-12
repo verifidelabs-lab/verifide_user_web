@@ -1,45 +1,65 @@
-// src/context/TourContext.jsx
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { EVENTS, STATUS } from "react-joyride";
+import { fullTourSteps } from "../data/tutorialSteps";
 
 const TourContext = createContext();
+
 export const useTour = () => useContext(TourContext);
 
 export const TourProvider = ({ children }) => {
-  const [isTourRunning, setIsTourRunning] = useState(false);
-  const [tourStepIndex, setTourStepIndex] = useState(0);
-  const [steps, setSteps] = useState([]); // ✅ store current page tour steps
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const startTour = () => {
-    if (steps.length === 0) return; // don't start if no steps
-    setIsTourRunning(true);
-    setTourStepIndex(0);
-  };
+  const [steps, setSteps] = useState(fullTourSteps);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [runTour, setRunTour] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
-  const stopTour = () => {
-    setIsTourRunning(false);
-    setTourStepIndex(0);
-    setSteps([]); // optional: clear steps when stopped
-  };
+ 
 
-  const nextStep = () => {
-    if (tourStepIndex + 1 >= steps.length) {
-      stopTour(); // stop automatically when last step is done
-    } else {
-      setTourStepIndex((prev) => prev + 1);
+  // Load tour progress from localStorage
+  useEffect(() => {
+    const tourCompleted = localStorage.getItem("tour_completed");
+    if (!tourCompleted) setRunTour(true);
+  }, []);
+
+  // Joyride callback
+  const handleJoyrideCallback = (data) => {
+    const { status, type, step } = data;
+
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      localStorage.setItem("tour_completed", "true");
+      toast.success("🎉 Tour completed!");
+      setRunTour(false);
+      return;
+    }
+
+    if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
+      if (step.page && location.pathname !== step.page) {
+        navigate(step.page, { replace: true });
+        setTimeout(() => setStepIndex((prev) => prev + 1), 800);
+        return;
+      }
+      setStepIndex((prev) => prev + 1);
     }
   };
 
+ 
   return (
     <TourContext.Provider
       value={{
-        isTourRunning,
-        tourStepIndex,
-        steps,        // ✅ expose steps
-        setSteps,     // ✅ allow dynamic step changes
-        setTourStepIndex,
-        startTour,
-        stopTour,
-        nextStep,
+        steps,
+        setSteps,
+        stepIndex,
+        setStepIndex,
+        runTour,
+        setRunTour,
+        handleJoyrideCallback,
+        alertMessage,
+        setAlertMessage,
+       
       }}
     >
       {children}

@@ -6,7 +6,13 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Route, Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import sideBarJson from "../Sidebar/Sidebar.json";
 import Loader from "../../pages/Loader/Loader";
 import { getProfile } from "../../redux/slices/authSlice";
@@ -33,7 +39,13 @@ import Companies from "../../pages/companies/Companies";
 import Institution from "../../pages/Institution/Institution";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Joyride, { EVENTS, STATUS } from "react-joyride";
-import { assessmentTourSteps, coursesTourSteps, dashboardTourSteps, fullTourSteps, opportunitiesTourSteps } from "../../data/tutorialSteps";
+import {
+  assessmentTourSteps,
+  coursesTourSteps,
+  dashboardTourSteps,
+  fullTourSteps,
+  opportunitiesTourSteps,
+} from "../../data/tutorialSteps";
 import { useTour } from "../../context/TourContext";
 
 const Sidebar = lazy(() => import("./../Sidebar/Sidebar"));
@@ -199,7 +211,6 @@ function Layout() {
       } else {
         setNavbarOpen(true);
         setIsMobile(false);
-
       }
     };
     handleResize();
@@ -209,18 +220,18 @@ function Layout() {
     };
   }, []);
   const restrictedPaths = [
-    '/app/opportunities',
-    '/user/terms-and-conditions',
-    '/user/course/recommended',
-    '/user/opportunitiess',
-    "/user/opportunitiess/:id"
+    "/app/opportunities",
+    "/user/terms-and-conditions",
+    "/user/course/recommended",
+    "/user/opportunitiess",
+    "/user/opportunitiess/:id",
   ];
 
   // ✅ Use regex match instead of includes
   const isRestrictedPath = restrictedPaths.some((path) => {
-    if (path.includes(':')) {
+    if (path.includes(":")) {
       // Convert Express-style :param to regex
-      const regex = new RegExp('^' + path.replace(/:[^/]+/g, '[^/]+') + '$');
+      const regex = new RegExp("^" + path.replace(/:[^/]+/g, "[^/]+") + "$");
       return regex.test(location.pathname);
     }
     return path === location.pathname;
@@ -249,124 +260,104 @@ function Layout() {
       }
     }
   }, []);
-  const [steps, setSteps] = useState(fullTourSteps);
-  const [stepIndex, setStepIndex] = useState(0);
-  const [runTour, setRunTour] = useState(true);
-  // Joyride callback
-  const handleJoyrideCallback = (data) => {
-    const { status, type, step, index } = data;
-
-    // End of tour
-    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      toast.success("🎉 Tour Completed!");
-      setRunTour(false);
-      return;
-    }
-
-    if (type === EVENTS.STEP_AFTER || type === EVENTS.TARGET_NOT_FOUND) {
-      // If step has a different page, navigate first
-      if (step.page && location.pathname !== step.page) {
-        navigate(step.page, { replace: true });
-        return; // Wait for location effect to update step
-      }
-
-      // Move to next step
-      setStepIndex((prev) => prev + 1);
-    }
-  };
-
-  // Watch for location change and continue tour
-  useEffect(() => {
-    if (!runTour) return;
-
-    // Wait a bit to ensure page elements are rendered
-    const timer = setTimeout(() => {
-      if (stepIndex < steps.length) setStepIndex(stepIndex);
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, [location.pathname, stepIndex, runTour]);
-
+  const { steps, stepIndex, runTour, handleJoyrideCallback, setStepIndex } =
+    useTour();
   return (
-    <div className=" min-h-screen flex flex-col " id="layout-container">
-      <Joyride
-        steps={steps}
-        run={runTour}
-        stepIndex={stepIndex}
-        continuous
-        showSkipButton
-        showProgress
-        callback={handleJoyrideCallback}
-        disableScrolling
-        scrollToFirstStep
-        tooltipComponent={({
-          step,
-          backProps,
-          primaryProps,
-          closeProps,
-          skipProps,
-          index,
-          size,
-        }) => {
-          return (
-            <div className="custom-tooltip glassy-modal  p-4 flex flex-col gap-4 w-80">
-
-              <div className="flex justify-between items-center">
-                <span className="step-number glassy-text-primary">
-                  Step {index + 1} of {size}
-                </span>
-                <div className="flex gap-2">
-
-                  <button {...closeProps} className="close-btn glassy-text-primary">
-                    ✕
-                  </button>
+    <div className=" min-h-screen flex flex-col relative" id="layout-container">
+      {!isMobile && (
+        <Joyride
+          steps={steps}
+          run={runTour}
+          stepIndex={stepIndex}
+          continuous
+          showSkipButton
+          showProgress
+          callback={handleJoyrideCallback}
+          disableScrolling
+          scrollToFirstStep
+          styles={{
+            options: { overlayColor: "rgba(0,0,0,0.5)", zIndex: 10000 },
+          }}
+          tooltipComponent={({
+            step,
+            backProps,
+            primaryProps,
+            closeProps,
+            skipProps,
+            index,
+            size,
+          }) => {
+            return (
+              <div
+                className="custom-tooltip    inset-0 z-40 transition-all duration-300 ease-in-out hide-scrollbar glassy-card bg-opacity-30 glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm  p-4 flex flex-col gap-4 w-80"
+                style={{
+                  backgroundImage: 'url("/Group.png")',
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="step-number glassy-text-primary">
+                    Step {index + 1} of {size}
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      {...closeProps}
+                      className="close-btn glassy-text-primary"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
-              </div>
 
+                {step.title && (
+                  <h3 className="tooltip-title glassy-text-primary font-semibold text-lg">
+                    {step.title}
+                  </h3>
+                )}
 
-              {step.title && (
-                <h3 className="tooltip-title glassy-text-primary font-semibold text-lg">
-                  {step.title}
-                </h3>
-              )}
+                <p className="tooltip-content glassy-text-primary text-sm">
+                  {step.content}
+                </p>
 
-
-              <p className="tooltip-content glassy-text-primary text-sm">
-                {step.content}
-              </p>
-
-
-              <div className="flex justify-between mt-2">
-                <button {...skipProps} className="skip-button  glassy-text-primary  ">
-                  Skip
-                </button>
-                <div className="flex justify-between">
-                  {/* <button
+                <div className="flex justify-between mt-2">
+                  <button
+                    {...skipProps}
+                    className="skip-button  glassy-text-primary  "
+                  >
+                    Skip
+                  </button>
+                  <div className="flex justify-between">
+                    {/* <button
                   {...backProps}
                   className="back-button glassy-button opacity-70 hover:opacity-100"
                 >
                   Back
                 </button> */}
-                  <button
-                    {...primaryProps}
-                    className="next-button glassy-button"
-                  >
-                    {index === size - 1 ? "Finish" : "Next"}
-                  </button>
+                    <button
+                      {...primaryProps}
+                      className="next-button glassy-button"
+                    >
+                      {index === size - 1 ? "Finish" : "Next"}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        }}
-        styles={{
-          options: {
-            // zIndex: 10000, // lower but above layout
-            // parentSelector: () => document.querySelector('#layout-container'), // limit to your layout
-          },
-        }}
-      />
-
-
+            );
+          }}
+        />
+      )}
+      {runTour && (
+        <div
+          className="fixed inset-0 z-[9999]   cursor-not-allowed pointer-events-auto"
+          onClick={(e) => {
+            e.stopPropagation(); // prevent event bubbling
+            toast.error("⚠ Please complete the tour first!");
+          }}
+          onScroll={(e) => e.preventDefault()}
+        />
+      )}
 
       {/* Full-width Header */}
       <Header
@@ -393,7 +384,9 @@ function Layout() {
             className={`
         fixed md:relative top-0 left-0 h-screen md:h-auto z-50
         transition-transform duration-300 ease-in-out
-        ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
+        ${
+          navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"
+        }
       `}
           >
             <Sidebar
@@ -408,7 +401,6 @@ function Layout() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">
-
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />
@@ -435,7 +427,16 @@ function Layout() {
               />
               <Route path="/notification" element={<NotificationInterface />} />
               <Route path="/activity" element={<ActivityList />} />
-              <Route path="/verification-category" element={<VerificationCategory profileData={profileData?.getProfileData?.data?.data?.personalInfo} />} />
+              <Route
+                path="/verification-category"
+                element={
+                  <VerificationCategory
+                    profileData={
+                      profileData?.getProfileData?.data?.data?.personalInfo
+                    }
+                  />
+                }
+              />
               <Route path="/post-job/:id?" element={<PostJob />} />
               <Route
                 path="/terms-and-conditions"
@@ -453,7 +454,6 @@ function Layout() {
                   accessMode === "6" ? <Opportunitiess /> : <Opportunitiess2 />
                 }
               />{" "}
-
               <Route path="/suggested-users" element={<Users />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/assessment/:token?" element={<Index />} />

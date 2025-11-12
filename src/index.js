@@ -25,10 +25,10 @@ root.render(
             <ProfileImageProvider>
               <ThemeProvider>
                 <GlobalKeysProvider>
-                    <TourProvider>
-                       <App />
-                    </TourProvider>
-                 
+
+                  <App />
+
+
                 </GlobalKeysProvider>
               </ThemeProvider>
             </ProfileImageProvider>

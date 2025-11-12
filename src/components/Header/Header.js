@@ -254,22 +254,75 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
     fetchCompaniesList();
     fetchInstitutionsList()
   }, [dispatch, fetchCompaniesList, fetchInstitutionsList]);
-  const { setSteps } = useTour();
+  const { stepIndex, steps, setAlertMessage } = useTour();
 
+  // Auto-open dropdowns if step targets require it
   useEffect(() => {
-    // Only set header steps (common for all pages)
-    const headerStepsForPage = dashboardTourSteps.filter(
-      step => step.page === location.pathname
-    );
-    setSteps(headerStepsForPage);
-  }, [location.pathname]);
+    if (!steps[stepIndex]) return;
+    const target = steps[stepIndex].target;
 
+    const openProfileDropdown = target.includes("profile-dropdown");
+    const openCompanies = target.includes("companies-dropdown") || target.includes("company-list");
+    const openInstitutions = target.includes("institutions-dropdown") || target.includes("institution-list");
+
+    // Open parent profile dropdown
+    if (openProfileDropdown || openCompanies || openInstitutions) {
+      if (!isDropdownOpen) setIsDropdownOpen(true);
+    }
+
+    // Auto-open companies dropdown
+    if (openCompanies) {
+      const interval = setInterval(() => {
+        const el = document.querySelector("[data-tour='companies-dropdown']");
+        if (el) {
+          setIsCompanyDropdownOpen(true);
+          clearInterval(interval);
+        }
+      }, 100);
+
+      // Safety timeout if element not found
+      setTimeout(() => {
+        const el = document.querySelector("[data-tour='companies-dropdown']");
+        if (!el) {
+          setAlertMessage("⚠ Companies dropdown not found! Make sure your company list is loaded.");
+          clearInterval(interval);
+        }
+      }, 3000);
+    }
+
+    // Auto-open institutions dropdown
+    if (openInstitutions) {
+      const interval = setInterval(() => {
+        const el = document.querySelector("[data-tour='institutions-dropdown']");
+        if (el) {
+          setIsInstitutionDropdownOpen(true);
+          clearInterval(interval);
+        }
+      }, 100);
+
+      setTimeout(() => {
+        const el = document.querySelector("[data-tour='institutions-dropdown']");
+        if (!el) {
+          setAlertMessage("⚠ Institutions dropdown not found! Make sure your institution list is loaded.");
+          clearInterval(interval);
+        }
+      }, 3000);
+    }
+  }, [
+    stepIndex,
+    steps,
+    isDropdownOpen,
+    isCompanyDropdownOpen,
+    isInstitutionDropdownOpen
+  ]);
 
   return (
     <header
       className=""
       ref={topRef}
     >
+      {/* Alert UI for missing step target */}
+
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div className="flex items-center justify-between p-4   relative">
           <div className="flex items-center gap-3 px-4 py-3">
@@ -362,6 +415,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   setIsDropdownOpen((prev) => !prev);
                   setModeDropdown(false);
                 }}
+                data-tour="profile-dropdown"
               >
                 {imageToDisplay ? (
                   <img
@@ -429,7 +483,8 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   <div className="border-t border-[var(--border-color)]">
                     <button
                       onClick={() => setIsCompanyDropdownOpen((prev) => !prev)}
-                      className="w-full flex justify-between items-center px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
+                      className="w-full flex justify-between items-center px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors "
+                      data-tour="companies-dropdown"
                     >
                       Companies
                       <FiChevronDown
@@ -439,7 +494,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     </button>
 
                     {isCompanyDropdownOpen && (
-                      <div className="pl-4 space-y-1 max-h-60 overflow-y-auto">
+                      <div className="pl-4 space-y-1 max-h-60 overflow-y-auto" data-tour="company-list">
                         {companiesData?.data?.list?.length > 0 ? (
                           companiesData.data.list.map((company) => (
                             <Link
@@ -498,7 +553,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                         setIsInstitutionDropdownOpen((prev) => !prev)
                       }
                       className="w-full flex justify-between items-center px-4 py-2 text-sm glassy-text-primary hover:bg-[var(--bg-card)] transition-colors"
-
+                      data-tour="institutions-dropdown"
                     >
                       Institution
                       <FiChevronDown
@@ -509,7 +564,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
                     {/* Expand inline */}
                     {isInstitutionDropdownOpen && (
-                      <div className="pl-4 space-y-1">
+                      <div className="pl-4 space-y-1" data-tour="institution-list">
                         {institutionsList?.data?.list?.length > 0 ? (
                           institutionsList.data.list.map((company) => (
                             <Link

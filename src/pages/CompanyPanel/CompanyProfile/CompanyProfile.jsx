@@ -53,115 +53,90 @@ import classNames from "classnames";
 import JobPost from "../../Home/components/JobPost";
 import NoDataFound from "../../../components/ui/No Data/NoDataFound";
 import { useGlobalKeys } from "../../../context/GlobalKeysContext";
+import { company_type, ROLES } from "../../../utils/utils";
 
 const CompanyProfile = ({
   adminProfileData,
   companiesProfileData,
   instituteProfileData,
 }) => {
-  const ROLES = {
-    SUPER_ADMIN: 1,
-    ADMIN: 2,
-    COMPANIES: 3,
-    COMPANIES_ADMIN: 7,
-    INSTITUTIONS: 4,
-    INSTITUTIONS_ADMIN: 8,
-  };
   const userRole = Number(getCookie("ROLE"));
   const dispatch = useDispatch();
+  const emptyCountryCode = {
+    name: "",
+    dial_code: "",
+    short_name: "",
+    emoji: "",
+  };
+  const emptyState = { name: "", code: "" };
+  const emptyCity = { name: "" };
+
+  const baseForm = {
+    name: "",
+    display_name: "",
+    description: "",
+    website_url: "",
+    logo_url: "",
+    founded_year: "",
+    specialties: [],
+    employee_count: "",
+    linkedin_page_url: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    country_code: { ...emptyCountryCode },
+    phone_no: "",
+  };
+
+  // Company-specific extra fields
+  const companyExtra = {
+    banner_image_url: "",
+    industry: [],
+    company_size: "",
+    company_type: "",
+    headquarters: {
+      address_line_1: "",
+      address_line_2: "",
+      country: { ...emptyCountryCode },
+      state: { ...emptyState },
+      city: { ...emptyCity },
+      pin_code: "",
+    },
+    specialties: [""], // override baseForm specialties for default
+  };
+
+  // Institution-specific extra fields
+  const institutionExtra = {
+    institution_type_id: "",
+    degree_ids: [],
+    address: {
+      address_line_1: "",
+      address_line_2: "",
+      country: { ...emptyCountryCode },
+      state: { ...emptyState },
+      city: { ...emptyCity },
+      pin_code: "",
+    },
+  };
+
   const getInitialFormData = () => {
     if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
-      return {
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        name: "",
-        display_name: "",
-        description: "",
-        website_url: "",
-        logo_url: "",
-        banner_image_url: "",
-        industry: [],
-        country_code: {
-          name: "",
-          dial_code: "",
-          short_name: "",
-          emoji: "",
-        },
-        phone_no: "",
-        company_size: "",
-        company_type: "",
-        headquarters: {
-          address_line_1: "",
-          address_line_2: "",
-          country: {
-            name: "",
-            dial_code: "",
-            short_name: "",
-            emoji: "",
-          },
-          state: {
-            name: "",
-            code: "",
-          },
-          city: {
-            name: "",
-          },
-          pin_code: "",
-        },
-        founded_year: "",
-        specialties: [""],
-        employee_count: "",
-        linkedin_page_url: "",
-      };
-    } else if (
-      [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-    ) {
-      return {
-        name: "",
-        display_name: "",
-        email: "",
-        logo_url: "",
-        website_url: "",
-        description: "",
-        country_code: {
-          name: "",
-          dial_code: "",
-          short_name: "",
-          emoji: "",
-        },
-        phone_no: "",
-        institution_type_id: "",
-        specialties: [],
-        linkedin_page_url: "",
-        founded_year: "",
-        degree_ids: [],
-        address: {
-          address_line_1: "",
-          address_line_2: "",
-          country: {
-            name: "",
-            dial_code: "",
-            short_name: "",
-            emoji: "",
-          },
-          state: {
-            name: "",
-            code: "",
-          },
+      return { ...baseForm, ...companyExtra };
+    }
 
-          pin_code: "",
-        },
-      };
+    if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
+      return { ...baseForm, ...institutionExtra };
     }
 
     return {};
   };
+
   const { formData, setFormData, handleChange, errors, setErrors } =
     useFormHandler(getInitialFormData());
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [institutionTypes, setInstitutionTypes] = useState([]);
+  const [people, setPeople] = useState([]);
   const [activeTab, setActiveTab] = useState("Home");
   const [agencyData, setAgencyData] = useState({});
   const [activeTab1, setActiveTab1] = useState("user");
@@ -278,22 +253,8 @@ const CompanyProfile = ({
       newErrors.employee_count = "Please enter a valid positive number";
     }
 
-    // URL validation
-    // const urlRegex = /^https?:\/\/.+/;
-    // if (formData.website_url && !urlRegex.test(formData.website_url)) {
-    //   newErrors.website_url =
-    //     "Please enter a valid URL starting with http:// or https://";
-    // }
-    // if (
-    //   formData.linkedin_page_url &&
-    //   !urlRegex.test(formData.linkedin_page_url)
-    // ) {
-    //   newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
-    // }
-    // General URL (must start with http or https)
     const urlRegex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
 
-    // LinkedIn specific URL
     const linkedInRegex = /^https?:\/\/(www\.)?linkedin\.com\/.*$/i;
 
     if (formData.website_url && !urlRegex.test(formData.website_url.trim())) {
@@ -315,7 +276,7 @@ const CompanyProfile = ({
     // Merge formData + overrideData (e.g., banner/logo updates)
     const dataToUse = { ...formData, ...(overrideData || {}) };
 
-    // Only validate on full form submit (not banner/logo)
+    // Only validate on full form submit (not banner/logo updates)
     if (!overrideData && !validateProfileForm()) {
       toast.error("Please fix the validation errors");
       return;
@@ -324,71 +285,67 @@ const CompanyProfile = ({
     try {
       setIsLoading(true);
       let res;
+      const formattedSpecialties = (dataToUse.specialties || [])
+        .map((s) => String(s || "").trim())
+        .filter((s) => s !== "");
 
-      // Company update
+      const foundedYearTimestamp = dataToUse.founded_year
+        ? Math.floor(
+            new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
+          )
+        : null;
+
+      const employeeCount = dataToUse.employee_count
+        ? Number(dataToUse.employee_count)
+        : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+        ? null
+        : 0;
+
+      // Common payload for both roles
+      const commonPayload = {
+        name: dataToUse.name,
+        display_name: dataToUse.display_name,
+        description: dataToUse.description,
+        website_url: dataToUse.website_url,
+        logo_url: dataToUse.logo_url,
+        banner_image_url: dataToUse.banner_image_url,
+        country_code: dataToUse.country_code,
+        phone_no: dataToUse.phone_no,
+        founded_year: foundedYearTimestamp,
+        specialties: formattedSpecialties,
+        employee_count: employeeCount,
+        linkedin_page_url: dataToUse.linkedin_page_url,
+        email: dataToUse.email,
+      };
+
       if ([ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)) {
         const apiPayload = {
+          ...commonPayload,
           name: dataToUse.name,
-          display_name: dataToUse.display_name,
-          description: dataToUse.description,
-          website_url: dataToUse.website_url,
-          logo_url: dataToUse.logo_url,
-          banner_image_url: dataToUse.banner_image_url,
+          // password: dataToUse.password,
+          // confirmPassword: dataToUse.confirmPassword,
           industry: dataToUse.industry?.map((ind) => ind._id) || [],
-          country_code: dataToUse.country_code,
-          phone_no: dataToUse.phone_no,
           company_size: dataToUse.company_size,
           company_type: dataToUse.company_type,
           headquarters: dataToUse.headquarters,
-          founded_year: dataToUse.founded_year
-            ? Math.floor(
-                new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
-              )
-            : null,
-          specialties: (dataToUse.specialties || [])
-            .map((s) => String(s || "").trim())
-            .filter((s) => s !== ""),
-          employee_count: dataToUse.employee_count
-            ? Number(dataToUse.employee_count)
-            : 0,
-          linkedin_page_url: dataToUse.linkedin_page_url,
-          email: dataToUse.email,
         };
 
         res = await dispatch(updateProfileCompanies(apiPayload)).unwrap();
         dispatch(setCompaniesProfileData(apiPayload));
       }
 
-      // Institution update
       if ([ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)) {
         const apiPayload = {
+          ...commonPayload,
           name: dataToUse.name,
-          display_name: dataToUse.display_name,
-          description: dataToUse.description,
-          website_url: dataToUse.website_url,
-          logo_url: dataToUse.logo_url,
-          banner_image_url: dataToUse.banner_image_url,
+          // password: dataToUse.password,
+          // confirmPassword: dataToUse.confirmPassword,
           institution_type_id: dataToUse.institution_type_id,
           degree_ids: dataToUse.degree_ids?.map((d) => d._id) || [],
-          country_code: dataToUse.country_code,
-          phone_no: dataToUse.phone_no,
           address: dataToUse.address,
-          founded_year: dataToUse.founded_year
-            ? Math.floor(
-                new Date(`${dataToUse.founded_year}-01-01`).getTime() / 1000
-              )
-            : null,
-          specialties: (dataToUse.specialties || [])
-            .map((s) => String(s || "").trim())
-            .filter((s) => s !== ""),
-          employee_count: dataToUse.employee_count
-            ? Number(dataToUse.employee_count)
-            : null,
-          linkedin_page_url: dataToUse.linkedin_page_url,
-          email: dataToUse.email,
         };
 
-        res = await dispatch(updateProfileInstitutions(apiPayload));
+        res = await dispatch(updateProfileInstitutions(apiPayload)).unwrap();
         // dispatch(setInstitutionsProfileData(apiPayload));
       }
 
@@ -409,23 +366,6 @@ const CompanyProfile = ({
     }
   };
 
-  const company_type = [
-    { value: "public", label: "Public" },
-    { value: "private", label: "Private" },
-    { value: "non-profit", label: "Non-profit" },
-    { value: "government", label: "Government" },
-    { value: "partnership", label: "Partnership" },
-    { value: "sole-proprietorship", label: "Sole Proprietorship" },
-  ];
-  const Company_Sizes = [
-    { value: "1-10", label: "1-10" },
-    { value: "11-50", label: "11-50" },
-    { value: "51-200", label: "51-200" },
-    { value: "201-500", label: "201-500" },
-    { value: "501-1000", label: "501-1000" },
-    { value: "1001-5000", label: "1001-5000" },
-    { value: "5001-10000", label: "5001-10000" },
-  ];
   const handleImageUpload = async (file, fieldName = "logo_url") => {
     if (!file) return;
 
@@ -688,25 +628,6 @@ const CompanyProfile = ({
     }
   }
 
-  const [people, setPeople] = useState([
-    {
-      id: 1,
-      name: "John Smith",
-      position: "Creative Director",
-      bio: "Leading creative vision with 10+ years of experience in digital design and user experience.",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      name: "Sarah Johnson",
-      position: "UX Research Lead",
-      bio: "Passionate about user research and data-driven design decisions that create meaningful experiences.",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c46c?w=400&h=400&fit=crop&crop=face",
-    },
-  ]);
-
   const EditableField = ({ value, multiline = false, className = "" }) => {
     return (
       <div className={`group relative ${className}`}>
@@ -723,24 +644,6 @@ const CompanyProfile = ({
     );
   };
 
-  // const Navigation = () => (
-  //   <div className="mt-6">
-  //     <nav className="flex border-b border-gray-200">
-  //       {["Home", "About", "Posts", "Jobs", "People"].map((tab) => (
-  //         <button
-  //           key={tab}
-  //           onClick={() => setActiveTab(tab)}
-  //           className={`py-3 px-4 text-sm font-medium transition-colors ${activeTab === tab
-  //             ? "text-blue-600 border-b-2 border-blue-600"
-  //             : "glassy-text-secondary hover:text-blue-600"
-  //             }`}
-  //         >
-  //           {tab}
-  //         </button>
-  //       ))}
-  //     </nav>
-  //   </div>
-  // );
   const Navigation = () => (
     <div className="mt-6">
       <nav className="flex border-b border-[var(--border-color)] overflow-x-auto">
@@ -762,6 +665,232 @@ const CompanyProfile = ({
   );
   const isInstitution =
     userRole === ROLES.INSTITUTIONS || userRole === ROLES.INSTITUTIONS_ADMIN;
+
+  const handleProfileUpdate = () => {
+    setIsProfileModalOpen(true);
+  };
+  const updateAgencyData = (field, value) => {
+    setAgencyData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  const renderProfileImage = () => {
+    const imageField = [
+      ROLES.SUPER_ADMIN,
+      ROLES.ADMIN,
+      ROLES.COMPANIES,
+      ROLES.COMPANIES_ADMIN,
+      ROLES.INSTITUTIONS,
+      ROLES.INSTITUTIONS_ADMIN,
+    ].includes(userRole)
+      ? "logo_url"
+      : "logo_url";
+    const imageUrl =
+      formData[imageField] ||
+      adminProfileData?.[imageField] ||
+      profileData?.[imageField] ||
+      instituteProfileData?.[imageField] ||
+      "";
+
+    return (
+      <div className="relative group">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg glassy-card relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
+          {isImageUploading && (
+            <div className="absolute inset-0 glassy-card/50 flex items-center justify-center z-10">
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+          <div className="absolute inset-0 glassy-card/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <FiCamera className="w-6 h-6 glassy-text-primary" />
+          </div>
+          <img
+            src={
+              imageUrl ||
+              "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"
+            }
+            className="w-full h-full object-cover"
+            alt="Profile"
+            onError={(e) => {
+              e.target.src =
+                "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+            }}
+          />
+        </div>
+        <input
+          type="file"
+          id={`imageUpload-${imageField}`}
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e.target.files[0], imageField)}
+          className="hidden"
+        />
+      </div>
+    );
+  };
+  const renderActiveTab = () => {
+    switch (activeTab) {
+      case "Home":
+        return <HomeTab />;
+      case "About":
+        return <AboutTab />;
+      // case 'Posts': return <PostsTab setPosts={setPosts} />;
+      case "Posts":
+        return <PostsTab posts={posts?.data?.list} />;
+      case "Jobs":
+        return <JobsTab jobs={jobs?.data?.list} />;
+      case "People":
+        return <PeopleTab people={people} setPeople={setPeople} />;
+      default:
+        return <HomeTab />;
+    }
+  };
+
+  const getInstitutionTypes = () => {
+    dispatch(institutionTypePublic())
+      .then((res) => {
+        if (res) {
+          setInstitutionTypes(res?.payload?.data?.list || []);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    const fetchJobs = async () => {
+      // ✅ Only send page & size, no extra filters
+      const apiPayload = {
+        page: 1,
+        size: 4,
+        query: JSON.stringify({ type: "open" }),
+      };
+
+      try {
+        const res = await dispatch(jobsList(apiPayload)).unwrap();
+        console.log("✅ Jobs API response:", res);
+
+        // If API returns jobs in `data.list`, adjust this
+      } catch (err) {
+        console.error("❌ Error fetching jobs:", err);
+      } finally {
+      }
+    };
+
+    fetchJobs();
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getPostList({ page: 1, size: 2 }))
+      .unwrap()
+      .then((res) => {
+        console.log("✅ API posts response:", res); // full response
+      })
+      .catch((err) => console.error("❌ Error fetching posts:", err));
+  }, [dispatch]);
+  useEffect(() => {
+    if (!profileData) return;
+
+    const emptyCountryCode = {
+      name: "",
+      dial_code: "",
+      short_name: "",
+      emoji: "",
+    };
+    const emptyState = { name: "", code: "" };
+    const emptyCity = { name: "" };
+    const emptyAddress = {
+      address_line_1: "",
+      address_line_2: "",
+      country: { ...emptyCountryCode },
+      state: { ...emptyState },
+      city: { ...emptyCity },
+      pin_code: "",
+    };
+
+    // Agency / UI-friendly data
+    setAgencyData({
+      name: profileData?.display_name || profileData?.name || "N/A",
+      tagline: "", // default empty
+      overview: profileData?.description || "N/A",
+      description: profileData?.description || "N/A",
+      workDescription: "", // default empty
+      website: profileData?.website_url || "N/A",
+      phone: profileData?.phone_no || "N/A",
+      industry:
+        profileData?.industry?.length > 0
+          ? profileData.industry.map((i) => i?.name || "N/A").join(", ")
+          : "N/A",
+      founded: profileData?.founded_year
+        ? new Date(profileData.founded_year * 1000).getFullYear().toString()
+        : "N/A",
+      companySize: profileData?.company_size || "N/A",
+      companyType: profileData?.company_type || "N/A",
+      headquarters: {
+        address_line_1: profileData?.headquarters?.address_line_1 || "N/A",
+        address_line_2: profileData?.headquarters?.address_line_2 || "N/A",
+        country_name: profileData?.headquarters?.country?.name || "N/A",
+        state_name: profileData?.headquarters?.state?.name || "N/A",
+        city_name: profileData?.headquarters?.city?.name || "N/A",
+        pin_code: profileData?.headquarters?.pin_code || "N/A",
+      },
+      verifiedSince: profileData?.verified_at
+        ? new Date(profileData.verified_at).toLocaleDateString()
+        : "N/A",
+      followers:
+        profileData?.follower_count !== undefined
+          ? `${profileData.follower_count} Followers`
+          : "N/A",
+      employees:
+        profileData?.employee_count !== undefined
+          ? `${profileData.employee_count} Employees`
+          : "N/A",
+      specialties:
+        profileData?.specialties?.length > 0
+          ? profileData.specialties
+          : ["N/A"],
+      logo: profileData?.logo_url || "",
+      banner_image_url: profileData?.banner_image_url || "",
+      institution_type_id: profileData?.institution_type_id?._id || "",
+    });
+
+    // Form state aligned with initial state
+    setFormData((prev) => ({
+      name: profileData?.name || "",
+      display_name: profileData?.display_name || "",
+      email: profileData?.email || "",
+      username: profileData?.username || "",
+      password: "",
+      confirmPassword: "",
+      logo_url: profileData?.logo_url || "",
+      banner_image_url: profileData?.banner_image_url || "",
+      website_url: profileData?.website_url || "",
+      description: profileData?.description || "",
+      country_code: profileData?.country_code || { ...emptyCountryCode },
+      phone_no: profileData?.phone_no || "",
+      company_size: profileData?.company_size || "",
+      company_type: profileData?.company_type || "",
+      specialties: profileData?.specialties || [],
+      founded_year: profileData?.founded_year
+        ? new Date(profileData.founded_year * 1000).getFullYear()
+        : "",
+      employee_count: profileData?.employee_count || "",
+      headquarters: profileData?.headquarters || { ...emptyAddress },
+      industry: profileData?.industry || [],
+      institution_type_id: profileData?.institution_type_id?._id || "",
+      degree_ids: profileData?.degree_ids || [],
+      address: profileData?.address || { ...emptyAddress },
+    }));
+  }, [profileData]);
+
+  useEffect(() => {
+    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
+  }, [dispatch, activeTab1]);
+  useEffect(() => {
+    dispatch(companyIndustries());
+  }, [profileData?._id]);
+  useEffect(() => {
+    getInstitutionTypes();
+  }, []);
 
   const HomeTab = () => (
     <div className="mt-6 space-y-8">
@@ -1300,7 +1429,7 @@ const CompanyProfile = ({
         await handleProfileUpdatee({
           banner_image_url: uploaded.data.imageURL,
         });
-        toast.success("Banner updated successfully");
+        // toast.success("Banner updated successfully");
       }
     };
 
@@ -1382,12 +1511,19 @@ const CompanyProfile = ({
 
             {/* Row 2: Company Details */}
             <div className="mt-3">
-              <h1 className="font-bold glassy-text-primary mb-2">
+              <h1 className="font-bold glassy-text-primary mb-2 text-lg">
                 {agencyData.name}
               </h1>
-              <p className="glassy-text-secondary text-sm mb-3 leading-relaxed break-words break-all ">
+
+              <div
+                className={`mb-3 ${
+                  4
+                    ? "whitespace-pre-wrap glassy-text-secondary"
+                    : "glassy-text-secondary"
+                }`}
+              >
                 {agencyData?.description}
-              </p>
+              </div>
               <div className="flex items-center gap-3 text-xs glassy-text-secondary">
                 <span>{agencyData?.industry}</span>
                 <span>•</span>
@@ -1413,276 +1549,6 @@ const CompanyProfile = ({
       isBannerUploading={isImageUploading}
     />
   );
-
-  const handleProfileUpdate = () => {
-    setIsProfileModalOpen(true);
-  };
-  const updateAgencyData = (field, value) => {
-    setAgencyData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-  const renderProfileImage = () => {
-    const imageField = [
-      ROLES.SUPER_ADMIN,
-      ROLES.ADMIN,
-      ROLES.COMPANIES,
-      ROLES.COMPANIES_ADMIN,
-      ROLES.INSTITUTIONS,
-      ROLES.INSTITUTIONS_ADMIN,
-    ].includes(userRole)
-      ? "logo_url"
-      : "logo_url";
-    const imageUrl =
-      formData[imageField] ||
-      adminProfileData?.[imageField] ||
-      profileData?.[imageField] ||
-      instituteProfileData?.[imageField] ||
-      "";
-
-    return (
-      <div className="relative group">
-        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/80 shadow-lg glassy-card relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105">
-          {isImageUploading && (
-            <div className="absolute inset-0 glassy-card/50 flex items-center justify-center z-10">
-              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            </div>
-          )}
-          <div className="absolute inset-0 glassy-card/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <FiCamera className="w-6 h-6 glassy-text-primary" />
-          </div>
-          <img
-            src={
-              imageUrl ||
-              "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500"
-            }
-            className="w-full h-full object-cover"
-            alt="Profile"
-            onError={(e) => {
-              e.target.src =
-                "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
-            }}
-          />
-        </div>
-        <input
-          type="file"
-          id={`imageUpload-${imageField}`}
-          accept="image/*"
-          onChange={(e) => handleImageUpload(e.target.files[0], imageField)}
-          className="hidden"
-        />
-      </div>
-    );
-  };
-  const renderActiveTab = () => {
-    switch (activeTab) {
-      case "Home":
-        return <HomeTab />;
-      case "About":
-        return <AboutTab />;
-      // case 'Posts': return <PostsTab setPosts={setPosts} />;
-      case "Posts":
-        return <PostsTab posts={posts?.data?.list} />;
-      case "Jobs":
-        return <JobsTab jobs={jobs?.data?.list} />;
-      case "People":
-        return <PeopleTab people={people} setPeople={setPeople} />;
-      default:
-        return <HomeTab />;
-    }
-  };
-
-  const getInstitutionTypes = () => {
-    dispatch(institutionTypePublic())
-      .then((res) => {
-        if (res) {
-          setInstitutionTypes(res?.payload?.data?.list || []);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    const fetchJobs = async () => {
-      // ✅ Only send page & size, no extra filters
-      const apiPayload = {
-        page: 1,
-        size: 4,
-        query: JSON.stringify({ type: "open" }),
-      };
-
-      try {
-        const res = await dispatch(jobsList(apiPayload)).unwrap();
-        console.log("✅ Jobs API response:", res);
-
-        // If API returns jobs in `data.list`, adjust this
-      } catch (err) {
-        console.error("❌ Error fetching jobs:", err);
-      } finally {
-      }
-    };
-
-    fetchJobs();
-  }, [dispatch]);
-  useEffect(() => {
-    const fetchCompanyProfile = async () => {
-      try {
-        const res = await dispatch(companiesProfile()).unwrap();
-        const data = res?.data;
-
-        if (data) {
-          console.log("This is companyData: " + JSON.stringify(data, null, 2));
-
-          setAgencyData({
-            name: data?.display_name || data?.name || "N/A",
-            tagline: "", // no tagline in API, keep empty or default
-            overview: data?.description || "N/A",
-            description: data?.description || "N/A",
-            workDescription: "", // no workDescription in API
-            website: data?.website_url || "N/A",
-            phone: data?.phone_no || "N/A",
-            industry:
-              data?.industry?.length > 0
-                ? data.industry.map((i) => i?.name || "N/A").join(" , ")
-                : "N/A",
-            founded: data?.founded_year
-              ? new Date(data.founded_year * 1000).getFullYear().toString()
-              : "N/A",
-            companySize: data?.company_size || "N/A",
-            companyType: data?.company_type || "N/A",
-            headquarters: {
-              address_line_1: data?.headquarters?.address_line_1 || "N/A",
-              address_line_2: data?.headquarters?.address_line_2 || "N/A",
-              country_name: data?.headquarters?.country?.name || "N/A",
-              state_name: data?.headquarters?.state?.name || "N/A",
-              city_name: data?.headquarters?.city?.name || "N/A",
-              pin_code: data?.headquarters?.pin_code || "N/A",
-            },
-            verifiedSince: data?.verified_at
-              ? new Date(data.verified_at).toLocaleDateString()
-              : "N/A",
-            followers:
-              data?.follower_count !== undefined
-                ? `${data.follower_count} Followers`
-                : "N/A",
-            employees:
-              data?.employee_count !== undefined
-                ? `${data.employee_count} Employees`
-                : "N/A",
-            specialties:
-              data?.specialties?.length > 0 ? data.specialties : ["N/A"],
-            logo: data?.logo_url || "",
-            banner_image_url: data?.banner_image_url || "",
-          });
-        }
-      } catch (error) {
-        console.error("Failed to fetch company profile:", error);
-      }
-    };
-
-    fetchCompanyProfile();
-  }, [dispatch]);
-  useEffect(() => {
-    dispatch(getPostList({ page: 1, size: 2 }))
-      .unwrap()
-      .then((res) => {
-        console.log("✅ API posts response:", res); // full response
-      })
-      .catch((err) => console.error("❌ Error fetching posts:", err));
-  }, [dispatch]);
-  useEffect(() => {
-    setAgencyData({
-      name: profileData?.display_name || profileData?.name || "N/A",
-      tagline: "", // no tagline in API, keep empty or default
-      overview: profileData?.description || "N/A",
-      description: profileData?.description || "N/A",
-      workDescription: "", // no workDescription in API
-      website: profileData?.website_url || "N/A",
-      phone: profileData?.phone_no || "N/A",
-      industry:
-        profileData?.industry?.length > 0
-          ? profileData.industry.map((i) => i?.name || "N/A").join(" , ")
-          : "N/A",
-      founded: profileData?.founded_year
-        ? new Date(profileData.founded_year * 1000).getFullYear().toString()
-        : "N/A",
-      companySize: profileData?.company_size || "N/A",
-      companyType: profileData?.company_type || "N/A",
-      headquarters: {
-        address_line_1: profileData?.headquarters?.address_line_1 || "N/A",
-        address_line_2: profileData?.headquarters?.address_line_2 || "N/A",
-        country_name: profileData?.headquarters?.country?.name || "N/A",
-        state_name: profileData?.headquarters?.state?.name || "N/A",
-        city_name: profileData?.headquarters?.city?.name || "N/A",
-        pin_code: profileData?.headquarters?.pin_code || "N/A",
-      },
-      verifiedSince: profileData?.verified_at
-        ? new Date(profileData.verified_at).toLocaleDateString()
-        : "N/A",
-      followers:
-        profileData?.follower_count !== undefined
-          ? `${profileData.follower_count} Followers`
-          : "N/A",
-      employees:
-        profileData?.employee_count !== undefined
-          ? `${profileData.employee_count} Employees`
-          : "N/A",
-      specialties:
-        profileData?.specialties?.length > 0
-          ? profileData.specialties
-          : ["N/A"],
-      logo: profileData?.logo_url || "",
-      banner_image_url: profileData?.banner_image_url || "",
-      institution_type_id: profileData?.institution_type_id?._id,
-    });
-    setFormData((prev) => ({
-      ...prev,
-      name: profileData?.name || "",
-      display_name: profileData?.display_name || "",
-      email: profileData?.email || "",
-      logo_url: profileData?.logo_url || "",
-      banner_image_url: profileData?.banner_image_url || "",
-      website_url: profileData?.website_url || "",
-      description: profileData?.description || "",
-      country_code: profileData?.country_code || {
-        name: "",
-        dial_code: "",
-        short_name: "",
-        emoji: "",
-      },
-      address: {
-        address_line_1: profileData?.address?.address_line_1 || "N/A",
-        address_line_2: profileData?.address?.address_line_2 || "N/A",
-        country: profileData?.address?.country || "N/A",
-        state: profileData?.address?.state || "N/A",
-        city: profileData?.address?.city || "N/A",
-        pin_code: profileData?.address?.pin_code || "N/A",
-      },
-      phone_no: profileData?.phone_no || "",
-      company_size: profileData?.company_size || "",
-      company_type: profileData?.company_type || "",
-      specialties: profileData?.specialties || [],
-      founded_year: profileData?.founded_year
-        ? new Date(profileData.founded_year * 1000).getFullYear()
-        : "",
-      employee_count: profileData?.employee_count || "",
-      headquarters: profileData?.headquarters || "",
-      industry: profileData?.industry || [],
-      institution_type_id: profileData?.institution_type_id?._id,
-      degree_ids: profileData.degree_ids,
-    }));
-  }, [profileData]);
-  useEffect(() => {
-    dispatch(suggestedUser({ page: 1, size: 10, type: activeTab1 }));
-  }, [dispatch, activeTab1]);
-  useEffect(() => {
-    dispatch(companyIndustries());
-  }, [profileData?._id]);
-  useEffect(() => {
-    getInstitutionTypes();
-  }, []);
   return (
     <div className="   p-6">
       <div className="flex flex-col md:flex-row gap-6   ">

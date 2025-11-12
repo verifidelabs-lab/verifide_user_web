@@ -30,10 +30,11 @@ import PublicLayout from "./components/Layout/PublicLayout/PublicLayout";
 import CompanyInstituteView from "./pages/ProfileView/CompanyInstituteView";
 import { ThemeContext } from "./context/ThemeContext";
 import { ROLE_CODES } from "./context/GlobalKeysContext";
+import { TourProvider } from "./context/TourContext";
 
 const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
 
- 
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const location = useLocation();
@@ -116,6 +117,7 @@ const App = () => {
     <div className="glassy-app">
       <Router>
         <Routes>
+
           {/* Root redirect */}
           <Route
             path="/"
@@ -190,7 +192,7 @@ const App = () => {
           />
 
           {/* Private User Routes */}
-          <Route path="/user/*" element={<PrivateRoute component={Layout} />} />
+          <Route path="/user/*" element={<TourProvider><PrivateRoute component={Layout} /></TourProvider>} />
           <Route
             path="/education-details"
             element={<PrivateRoute component={EducationDetails} />}
