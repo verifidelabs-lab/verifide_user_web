@@ -48,29 +48,48 @@ const Opportunitiess2 = () => {
     skill: false,
     timePeriod: false,
   });
+  // useEffect(() => {
+  //   if (param?.id) {
+  //     const foundJob = data?.data?.list?.find(
+  //       (value) =>
+  //         value?.interviewDetails?._id === param?.id ||
+  //         value?.jobApplication?._id === param?.id ||
+  //         value?._id === param?.id
+  //     );
+  //     console.log(
+  //       "chck user=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+  //       foundJob
+  //     );
+  //     if (foundJob) {
+  //       setSelectedJob(foundJob); // directly set the found item
+  //     }
+  //   }
+  // }, [param?.id]);
   useEffect(() => {
-    if (param?.id) {
-      const foundJob = data?.data?.list?.find(
-        (value) =>
-          value?.interviewDetails?._id === param?.id ||
-          value?.jobApplication?._id === param?.id ||
-          value?._id === param?.id
-      );
-      console.log(
-        "chck user=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-        foundJob
-      );
-      if (foundJob) {
-        setSelectedJob(foundJob); // directly set the found item
-      }
+    if (!param?.id || !data?.data?.list?.length) return;
+
+    console.log("Searching for param.id:", param?.id);
+    const foundJob = data?.data?.list?.find(
+      (value) =>
+        value?.interviewDetails?._id === param?.id ||
+        value?.jobApplication?._id === param?.id ||
+        value?._id === param?.id
+    );
+
+    if (foundJob) {
+      console.log("✅ Found job:", foundJob);
+      setSelectedJob(foundJob);
+    } else {
+      console.warn("❌ No job found for id:", param?.id);
     }
-  }, [param?.id]);
+  }, [param?.id, data]);
+
   const isDateInRange = () => {
     if (!selectedJob?.start_date || !selectedJob?.end_date) return false;
     const currentDate = new Date().getTime();
     return (
-      currentDate >= selectedJob.start_date &&
-      currentDate <= selectedJob.end_date
+      currentDate >= selectedJob?.start_date &&
+      currentDate <= selectedJob?.end_date
     );
   };
 
@@ -174,6 +193,11 @@ const Opportunitiess2 = () => {
   }, [dispatch]);
 
   const filterDropdownRef = useRef(null);
+  const [isExpandedDesktop, setIsExpandedDesktop] = useState(false);
+  const [isExpandedMobile, setIsExpandedMobile] = useState(false);
+
+  const handleSeeMoreDesktop = () => setIsExpandedDesktop(!isExpandedDesktop);
+  const handleSeeMoreMobile = () => setIsExpandedMobile(!isExpandedMobile);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -312,7 +336,7 @@ const Opportunitiess2 = () => {
   }, []);
 
   return (
-    <div className="flex w-full min-h-screen relative" >
+    <div className="flex w-full min-h-screen relative">
       {/* Sidebar / Filters */}
       <div
         className={`
@@ -321,11 +345,17 @@ const Opportunitiess2 = () => {
     glassy-card shadow-xl z-50 overflow-y-auto 
     p-6 pt-10 hide-scrollbar
     transition-transform duration-300 ease-in-out
-    ${isMobile ? (isFilterOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0"}
+    ${
+      isMobile
+        ? isFilterOpen
+          ? "translate-x-0"
+          : "-translate-x-full"
+        : "translate-x-0"
+    }
   `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6"  >
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold glassy-text-primary tracking-wide">
             Filters
           </h2>
@@ -338,14 +368,14 @@ const Opportunitiess2 = () => {
         </div>
 
         {/* Filters */}
-        <div className="space-y-5" >
+        <div className="space-y-5">
           {/* Job type checkboxes */}
           <div
             data-tour="opportunity-filter"
             className="relative inline-block w-full z-10"
             // style={{ zIndex: 10 }}
           >
-            <div >
+            <div>
               <h3 className="text-sm font-medium glassy-text-primary mb-3">
                 Job Type
               </h3>
@@ -369,7 +399,9 @@ const Opportunitiess2 = () => {
                         const updatedJobTypes = searchFelids.job_type.includes(
                           filter.key
                         )
-                          ? searchFelids.job_type.filter((j) => j !== filter.key)
+                          ? searchFelids.job_type.filter(
+                              (j) => j !== filter.key
+                            )
                           : [...searchFelids.job_type, filter.key];
 
                         handleSelectChange(
@@ -395,7 +427,9 @@ const Opportunitiess2 = () => {
               selectedOption={allIndustryList?.find(
                 (opt) => opt.value === searchFelids?.industry_id
               )}
-              onChange={(selected) => handleSelectChange("industry_id", selected)}
+              onChange={(selected) =>
+                handleSelectChange("industry_id", selected)
+              }
               isClearable={true}
             />
             <FilterSelect2
@@ -405,7 +439,9 @@ const Opportunitiess2 = () => {
               selectedOption={allCompaniesList?.find(
                 (opt) => opt.value === searchFelids?.company_id
               )}
-              onChange={(selected) => handleSelectChange("company_id", selected)}
+              onChange={(selected) =>
+                handleSelectChange("company_id", selected)
+              }
               isClearable={true}
             />
             <FilterSelect2
@@ -491,10 +527,11 @@ const Opportunitiess2 = () => {
                     setPageNo(1);
                   }}
                   className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out flex-1 sm:flex-none
-            ${activeTab === tab
-                      ? "glassy-card text-blue-600 shadow-sm"
-                      : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
-                    }`}
+            ${
+              activeTab === tab
+                ? "glassy-card text-blue-600 shadow-sm"
+                : "text-[var(--text-primary)] hover:glassy-text-primary hover:bg-[var(--bg-button-hover)]"
+            }`}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
@@ -578,7 +615,8 @@ const Opportunitiess2 = () => {
       </div>
 
       {selectedJob && (
-        <div className="!sticky right-0 top-0 h-screen xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] w-full glassy-card rounded-2xl p-6 overflow-y-auto mt-10">
+        // <div className="!sticky right-0 top-0 h-screen xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] w-full glassy-card rounded-2xl p-6 overflow-y-auto mt-10">
+        <div className="hidden md:block !sticky right-0 top-0 h-screen xl:max-w-[445px] lg:max-w-[345px] md:max-w-[300px] w-full glassy-card rounded-2xl p-6 overflow-y-auto mt-10">
           <div className="mb-4">
             <span className="inline-block glassy-card text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
               Selected Job
@@ -586,7 +624,7 @@ const Opportunitiess2 = () => {
           </div>
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center space-x-3">
-              {!selectedJob.company_id?.logo_url || imageError ? (
+              {!selectedJob?.company_id?.logo_url || imageError ? (
                 <div className="w-12 h-12   flex items-center justify-center glassy-text-primary font-bold text-lg rounded-lg">
                   <img
                     src={"/36369.jpg"}
@@ -600,8 +638,8 @@ const Opportunitiess2 = () => {
                 </div>
               ) : (
                 <img
-                  src={selectedJob.company_id.logo_url}
-                  alt={selectedJob.company_id.name}
+                  src={selectedJob?.company_id.logo_url}
+                  alt={selectedJob?.company_id.name}
                   className="w-12 h-12 rounded-lg object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
@@ -611,10 +649,10 @@ const Opportunitiess2 = () => {
               )}
               <div>
                 <h3 className="font-semibold glassy-text-primary">
-                  {selectedJob.company_id?.name}
+                  {selectedJob?.company_id?.name}
                 </h3>
                 <p className="glassy-text-secondary text-sm">
-                  {selectedJob.industry_id?.name}
+                  {selectedJob?.industry_id?.name}
                 </p>
               </div>
             </div>
@@ -628,34 +666,34 @@ const Opportunitiess2 = () => {
 
           {/* Job Title */}
           <h2 className="text-xl font-bold glassy-text-primary mb-2">
-            {selectedJob.job_title?.name || "Job Title"}
+            {selectedJob?.job_title?.name || "Job Title"}
           </h2>
 
           {/* Job Type / Location / Pay */}
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card0/20 text-blue-400">
-              {selectedJob.job_type?.replace("-", " ") || "Full-time"}
+              {selectedJob?.job_type?.replace("-", " ") || "Full-time"}
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card/20 text-green-400">
-              {selectedJob.job_location === "on-site" ? "On-site" : "Remote"}
+              {selectedJob?.job_location === "on-site" ? "On-site" : "Remote"}
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400">
-              {selectedJob.pay_type === "volunteer" ? "Volunteer" : "Paid"}
+              {selectedJob?.pay_type === "volunteer" ? "Volunteer" : "Paid"}
             </span>
           </div>
 
           {/* Salary */}
-          {selectedJob.salary_range && (
+          {selectedJob?.salary_range && (
             <div className="mb-4">
               <strong className="glassy-text-primary">Salary Range:</strong>
               <span className="ml-2 glassy-text-secondary">
-                {selectedJob.salary_range}
+                {selectedJob?.salary_range}
               </span>
             </div>
           )}
 
           {/* Location */}
-          {selectedJob.work_location && (
+          {selectedJob?.work_location && (
             <div className="mb-4">
               <strong className="glassy-text-primary">Location:</strong>
               <p className="glassy-text-secondary text-sm flex items-center gap-2 mt-1">
@@ -671,22 +709,42 @@ const Opportunitiess2 = () => {
             <strong className="glassy-text-primary block mb-2">
               Job Description:
             </strong>
-            <p className="glassy-text-secondary text-sm leading-relaxed break-words break-all  whitespace-pre-line rounded-lg p-4 border border-[var(--border-color)] bg-[var(--bg-card)]">
-              {selectedJob.job_description || "No description provided."}
+            {/* <p className="glassy-text-secondary text-sm leading-relaxed break-words break-all  whitespace-pre-line rounded-lg p-4 border border-[var(--border-color)] bg-[var(--bg-card)]">
+              {selectedJob?.job_description || "No description provided."}
+            </p> */}
+            <p
+              className="glassy-text-primary leading-relaxed break-words break-all whitespace-pre-line
+      p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]
+      overflow-hidden text-ellipsis"
+            >
+              {isExpandedDesktop
+                ? selectedJob?.job_description
+                : selectedJob?.job_description.slice(0, 200)}
+              {selectedJob?.job_description.length > 200 && (
+                <>
+                  {!isExpandedDesktop && "..."}
+                  <button
+                    onClick={() => setIsExpandedDesktop(!isExpandedDesktop)}
+                    className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
+                  >
+                    {isExpandedDesktop ? "See less" : "See more"}
+                  </button>
+                </>
+              )}
             </p>
           </div>
 
           {/* Skills */}
-          {selectedJob.required_skills?.length > 0 && (
+          {selectedJob?.required_skills?.length > 0 && (
             <div className="mb-4">
               <strong className="glassy-text-primary block mb-2">
                 Required Skills:
               </strong>
               <div className="flex flex-wrap gap-2">
-                {selectedJob.required_skills.map((skill, index) => (
+                {selectedJob?.required_skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card0/20 glassy-text-secondary"
+                    className="px-2.5 py-0.5 rounded-full text-xs font-medium glassy-card glassy-text-secondary"
                   >
                     {skill.name || skill}
                   </span>
@@ -696,21 +754,21 @@ const Opportunitiess2 = () => {
           )}
 
           {/* Application Status */}
-          {selectedJob.isApplied && (
+          {selectedJob?.isApplied && (
             // <div className="mb-4">
             //   <strong className="glassy-text-primary">Application Status:</strong>
             //   <span
             //     className={`ml-2 ${
-            //       selectedJob.jobApplication?.status === "applied"
+            //       selectedJob?.jobApplication?.status === "applied"
             //         ? "text-blue-600"
-            //         : selectedJob.jobApplication?.passed
+            //         : selectedJob?.jobApplication?.passed
             //         ? "text-green-600"
             //         : "text-yellow-600"
             //     }`}
             //   >
-            //     {selectedJob.jobApplication?.status === "applied"
+            //     {selectedJob?.jobApplication?.status === "applied"
             //       ? "Applied"
-            //       : selectedJob.jobApplication?.passed
+            //       : selectedJob?.jobApplication?.passed
             //       ? "Accepted"
             //       : "Under Review"}
             //   </span>
@@ -720,28 +778,33 @@ const Opportunitiess2 = () => {
                 Application Status:
               </strong>
               <span
-                className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
+                className={`ml-2 ${
+                  selectedJob?.jobApplication?.status === "applied"
                     ? "text-blue-600"
-                    : selectedJob.jobApplication?.status === "rejected"
-                      ? "text-red-600"
-                      : selectedJob.jobApplication?.status ===
-                        "selected_in_interview"
-                        ? "text-green-600"
-                        : selectedJob.jobApplication?.passed
-                          ? "text-green-600"
-                          : "text-yellow-600"
-                  }`}
-              >
-                {selectedJob.jobApplication?.status === "applied"
-                  ? "Applied"
-                  : selectedJob.jobApplication?.status === "rejected"
-                    ? "Not Selected"
-                    : selectedJob.jobApplication?.status ===
+                    : selectedJob?.jobApplication?.status === "rejected"
+                    ? "text-red-600"
+                    : selectedJob?.jobApplication?.status ===
                       "selected_in_interview"
-                      ? "🎉 Selected"
-                      : selectedJob.jobApplication?.passed
-                        ? "Accepted"
-                        : "Under Review"}
+                    ? "text-green-600"
+                    : selectedJob?.isSchedule && selectedJob?.interviewDetails
+                    ? "text-purple-600"
+                    : selectedJob?.jobApplication?.passed
+                    ? "text-green-600"
+                    : "text-yellow-600"
+                }`}
+              >
+                {selectedJob?.jobApplication?.status === "applied"
+                  ? "Applied"
+                  : selectedJob?.jobApplication?.status === "rejected"
+                  ? "Not Selected"
+                  : selectedJob?.jobApplication?.status ===
+                    "selected_in_interview"
+                  ? "🎉 Selected"
+                  : selectedJob?.isSchedule && selectedJob?.interviewDetails
+                  ? "Scheduled Interview"
+                  : selectedJob?.jobApplication?.passed
+                  ? "Accepted"
+                  : "Under Review"}
               </span>
             </div>
           )}
@@ -762,7 +825,7 @@ const Opportunitiess2 = () => {
                     </span>
                     <div className="glassy-text-secondary">
                       {convertTimestampToDate(
-                        selectedJob.interviewDetails.select_date
+                        selectedJob?.interviewDetails.select_date
                       )}
                     </div>
                   </div>
@@ -773,7 +836,7 @@ const Opportunitiess2 = () => {
                     </span>
                     <div className="glassy-text-secondary">
                       {convertTimestampToDate(
-                        selectedJob.interviewDetails.select_time
+                        selectedJob?.interviewDetails.select_time
                       )}
                     </div>
                   </div>
@@ -784,12 +847,12 @@ const Opportunitiess2 = () => {
                     </span>
                     <div className="text-blue-600 truncate">
                       <a
-                        href={selectedJob.interviewDetails.meeting_url}
+                        href={selectedJob?.interviewDetails.meeting_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
                       >
-                        {selectedJob.interviewDetails.meeting_url}
+                        {selectedJob?.interviewDetails.meeting_url}
                       </a>
                     </div>
                   </div>
@@ -800,7 +863,7 @@ const Opportunitiess2 = () => {
           {/* Posted Date */}
           <div className="text-sm glassy-text-secondary mt-4">
             Posted on:{" "}
-            {new Date(selectedJob.createdAt).toLocaleDateString("en-US", {
+            {new Date(selectedJob?.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -812,8 +875,9 @@ const Opportunitiess2 = () => {
               size="sm"
               disabled={applyStatus.disabled}
               onClick={() => !applyStatus.disabled && applyForJob(selectedJob)}
-              className={`w-full ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-                }`}
+              className={`w-full ${
+                applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+              }`}
               variant="primary"
             >
               {applyStatus.reason}
@@ -823,7 +887,8 @@ const Opportunitiess2 = () => {
       )}
       {/* MOBILE MODAL VIEW */}
       {selectedJob && (
-        <div className="fixed inset-0   bg-opacity-50 z-50 flex justify-center items-center md:hidden">
+        // <div className="fixed inset-0   bg-opacity-50 z-50 flex justify-center items-center md:hidden">
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-center md:hidden">
           {/* Main Modal Box */}
           <div className="relative glassy-card w-[90%] max-h-[85vh] rounded-2xl shadow-lg flex flex-col overflow-hidden">
             {/* Close Button */}
@@ -839,8 +904,8 @@ const Opportunitiess2 = () => {
               {/* Header Section */}
               <div className="flex items-center space-x-3 mb-4">
                 <img
-                  src={selectedJob.company_id?.logo_url || "/36369.jpg"}
-                  alt={selectedJob.company_id?.name}
+                  src={selectedJob?.company_id?.logo_url || "/36369.jpg"}
+                  alt={selectedJob?.company_id?.name}
                   className="w-12 h-12 rounded-lg object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
@@ -849,50 +914,64 @@ const Opportunitiess2 = () => {
                 />
                 <div>
                   <h3 className="font-semibold glassy-text-primary">
-                    {selectedJob.company_id?.name}
+                    {selectedJob?.company_id?.name}
                   </h3>
                   <p className="glassy-text-secondary text-sm">
-                    {selectedJob.industry_id?.name}
+                    {selectedJob?.industry_id?.name}
                   </p>
                 </div>
               </div>
 
               {/* Job Title */}
               <h2 className="text-lg font-bold glassy-text-primary mb-2">
-                {selectedJob.job_title?.name || "Job Title"}
+                {selectedJob?.job_title?.name || "Job Title"}
               </h2>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-0.5 rounded">
-                  {selectedJob.job_type?.replace("-", " ") || "Full-time"}
+                  {selectedJob?.job_type?.replace("-", " ") || "Full-time"}
                 </span>
                 <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded">
-                  {selectedJob.job_location === "on-site"
+                  {selectedJob?.job_location === "on-site"
                     ? "On-site"
                     : "Remote"}
                 </span>
                 <span className="text-xs px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-400">
-                  {selectedJob.pay_type === "volunteer" ? "Volunteer" : "Paid"}
+                  {selectedJob?.pay_type === "volunteer" ? "Volunteer" : "Paid"}
                 </span>
               </div>
 
               {/* Job Description */}
               <div className="text-sm glassy-text-primary mb-4">
                 <p className="font-medium mb-1">Job Description:</p>
-                <p className="glassy-text-secondary p-3 rounded-lg border border-gray-100 whitespace-pre-line break-words break-all overflow-hidden text-ellipsis">
-                  {selectedJob.job_description || "No description provided."}
-                </p>
+                {/* <p className="glassy-text-secondary p-3 rounded-lg border border-gray-100 whitespace-pre-line break-words break-all overflow-hidden text-ellipsis">
+                  {selectedJob?.job_description || "No description provided."}
+                </p> */}
+                {isExpandedMobile
+                  ? selectedJob?.job_description
+                  : selectedJob?.job_description.slice(0, 200)}
+                {selectedJob?.job_description.length > 200 && (
+                  <>
+                    {!isExpandedMobile && "..."}
+                    <button
+                      onClick={() => setIsExpandedMobile(!isExpandedMobile)}
+                      className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
+                    >
+                      {isExpandedMobile ? "See less" : "See more"}
+                    </button>
+                  </>
+                )}
               </div>
 
               {/* Required Skills */}
-              {selectedJob.required_skills?.length > 0 && (
+              {selectedJob?.required_skills?.length > 0 && (
                 <div className="mb-4">
                   <strong className="glassy-text-primary block mb-2">
                     Required Skills:
                   </strong>
                   <div className="flex flex-wrap gap-2">
-                    {selectedJob.required_skills.map((skill, index) => (
+                    {selectedJob?.required_skills.map((skill, index) => (
                       <span
                         key={index}
                         className="glassy-card glassy-text-primary text-xs px-2.5 py-0.5 rounded"
@@ -905,24 +984,40 @@ const Opportunitiess2 = () => {
               )}
 
               {/* Application Status */}
-              {selectedJob.isApplied && (
+              {selectedJob?.isApplied && (
                 <div className="mb-4">
                   <strong className="glassy-text-primary">
                     Application Status:
                   </strong>
                   <span
-                    className={`ml-2 ${selectedJob.jobApplication?.status === "applied"
+                    className={`ml-2 ${
+                      selectedJob?.jobApplication?.status === "applied"
                         ? "text-blue-600"
-                        : selectedJob.jobApplication?.passed
-                          ? "text-green-600"
-                          : "text-yellow-600"
-                      }`}
+                        : selectedJob?.jobApplication?.status === "rejected"
+                        ? "text-red-600"
+                        : selectedJob?.jobApplication?.status ===
+                          "selected_in_interview"
+                        ? "text-green-600"
+                        : selectedJob?.isSchedule &&
+                          selectedJob?.interviewDetails
+                        ? "text-purple-600"
+                        : selectedJob?.jobApplication?.passed
+                        ? "text-green-600"
+                        : "text-yellow-600"
+                    }`}
                   >
-                    {selectedJob.jobApplication?.status === "applied"
+                    {selectedJob?.jobApplication?.status === "applied"
                       ? "Applied"
-                      : selectedJob.jobApplication?.passed
-                        ? "Accepted"
-                        : "Under Review"}
+                      : selectedJob?.jobApplication?.status === "rejected"
+                      ? "Not Selected"
+                      : selectedJob?.jobApplication?.status ===
+                        "selected_in_interview"
+                      ? "🎉 Selected"
+                      : selectedJob?.isSchedule && selectedJob?.interviewDetails
+                      ? "Scheduled Interview"
+                      : selectedJob?.jobApplication?.passed
+                      ? "Accepted"
+                      : "Under Review"}
                   </span>
                 </div>
               )}
@@ -941,7 +1036,7 @@ const Opportunitiess2 = () => {
                       </span>
                       <div className="glassy-text-secondary">
                         {convertTimestampToDate(
-                          selectedJob.interviewDetails.select_date
+                          selectedJob?.interviewDetails.select_date
                         )}
                       </div>
                     </div>
@@ -952,21 +1047,23 @@ const Opportunitiess2 = () => {
                       </span>
                       <div className="glassy-text-secondary">
                         {convertTimestampToDate(
-                          selectedJob.interviewDetails.select_time
+                          selectedJob?.interviewDetails.select_time
                         )}
                       </div>
                     </div>
 
                     <div className="sm:col-span-2">
-                      <span className="font-medium">Meeting Link:</span>
+                      <span className="font-medium glassy-text-primary">
+                        Meeting Link:
+                      </span>
                       <div className="text-blue-600 truncate">
                         <a
-                          href={selectedJob.interviewDetails.meeting_url}
+                          href={selectedJob?.interviewDetails.meeting_url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:underline"
                         >
-                          {selectedJob.interviewDetails.meeting_url}
+                          {selectedJob?.interviewDetails.meeting_url}
                         </a>
                       </div>
                     </div>
@@ -977,7 +1074,7 @@ const Opportunitiess2 = () => {
               {/* Posted Date */}
               <div className="text-sm glassy-text-secondary mt-2">
                 Posted on:{" "}
-                {new Date(selectedJob.createdAt).toLocaleDateString("en-US", {
+                {new Date(selectedJob?.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
@@ -993,10 +1090,11 @@ const Opportunitiess2 = () => {
                 onClick={() =>
                   !applyStatus.disabled && applyForJob(selectedJob)
                 }
-                className={`w-full ${applyStatus.disabled
+                className={`w-full ${
+                  applyStatus.disabled
                     ? "opacity-60 cursor-not-allowed"
                     : "glassy-button"
-                  }`}
+                }`}
                 variant="primary"
               >
                 {applyStatus.reason}
@@ -1019,8 +1117,8 @@ const Opportunitiess2 = () => {
             <div className="pt-6">
               <div className="flex items-center space-x-3 mb-4">
                 <img
-                  src={selectedJob.company_id?.logo_url || "/36369.jpg"}
-                  alt={selectedJob.company_id?.name}
+                  src={selectedJob?.company_id?.logo_url || "/36369.jpg"}
+                  alt={selectedJob?.company_id?.name}
                   className="w-12 h-12 rounded-lg object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
@@ -1029,24 +1127,24 @@ const Opportunitiess2 = () => {
                 />
                 <div>
                   <h3 className="font-semibold glassy-text-primary">
-                    {selectedJob.company_id?.name}
+                    {selectedJob?.company_id?.name}
                   </h3>
                   <p className="glassy-text-secondary text-sm">
-                    {selectedJob.industry_id?.name}
+                    {selectedJob?.industry_id?.name}
                   </p>
                 </div>
               </div>
 
               <h2 className="text-xl font-bold glassy-text-primary mb-2">
-                {selectedJob.job_title?.name || "Job Title"}
+                {selectedJob?.job_title?.name || "Job Title"}
               </h2>
 
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="glassy-card text-blue-800 text-xs px-2.5 py-0.5 rounded">
-                  {selectedJob.job_type?.replace("-", " ") || "Full-time"}
+                  {selectedJob?.job_type?.replace("-", " ") || "Full-time"}
                 </span>
                 <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded">
-                  {selectedJob.job_location === "on-site"
+                  {selectedJob?.job_location === "on-site"
                     ? "On-site"
                     : "Remote"}
                 </span>
@@ -1055,17 +1153,17 @@ const Opportunitiess2 = () => {
               <div className="text-sm glassy-text-primary">
                 <p className="font-medium mb-1">Job Description:</p>
                 <p className="glassy-card p-2 rounded-lg border border-gray-100 whitespace-pre-line">
-                  {selectedJob.job_description || "No description provided."}
+                  {selectedJob?.job_description || "No description provided."}
                 </p>
               </div>
 
-              {selectedJob.required_skills?.length > 0 && (
+              {selectedJob?.required_skills?.length > 0 && (
                 <div className="mt-4">
                   <strong className="glassy-text-primary block mb-2">
                     Required Skills:
                   </strong>
                   <div className="flex flex-wrap gap-2">
-                    {selectedJob.required_skills.map((skill, index) => (
+                    {selectedJob?.required_skills.map((skill, index) => (
                       <span
                         key={index}
                         className="glassy-card glassy-text-primary text-xs px-2.5 py-0.5 rounded"
@@ -1077,23 +1175,23 @@ const Opportunitiess2 = () => {
                 </div>
               )}
 
-              {selectedJob.isApplied && (
+              {selectedJob?.isApplied && (
                 <div className="mt-4">
                   <strong className="glassy-text-primary">
                     Application Status:
                   </strong>
                   <span
                     className={`ml-2 ${
-                      selectedJob.jobApplication?.status === "applied"
+                      selectedJob?.jobApplication?.status === "applied"
                         ? "text-blue-600"
-                        : selectedJob.jobApplication?.passed
+                        : selectedJob?.jobApplication?.passed
                         ? "text-green-600"
                         : "text-yellow-600"
                     }`}
                   >
-                    {selectedJob.jobApplication?.status === "applied"
+                    {selectedJob?.jobApplication?.status === "applied"
                       ? "Applied"
-                      : selectedJob.jobApplication?.passed
+                      : selectedJob?.jobApplication?.passed
                       ? "Accepted"
                       : "Under Review"}
                   </span>
@@ -1111,7 +1209,7 @@ const Opportunitiess2 = () => {
                       <span className="font-medium">Interview Date:</span>
                       <div className="glassy-text-secondary">
                         {convertTimestampToDate(
-                          selectedJob.interviewDetails.select_date
+                          selectedJob?.interviewDetails.select_date
                         )}
                       </div>
                     </div>
@@ -1120,7 +1218,7 @@ const Opportunitiess2 = () => {
                       <span className="font-medium">Interview Time:</span>
                       <div className="glassy-text-secondary">
                         {convertTimestampToDate(
-                          selectedJob.interviewDetails.select_time
+                          selectedJob?.interviewDetails.select_time
                         )}
                       </div>
                     </div>
@@ -1129,12 +1227,12 @@ const Opportunitiess2 = () => {
                       <span className="font-medium">Meeting Link:</span>
                       <div className="text-blue-600 truncate">
                         <a
-                          href={selectedJob.interviewDetails.meeting_url}
+                          href={selectedJob?.interviewDetails.meeting_url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="hover:underline"
                         >
-                          {selectedJob.interviewDetails.meeting_url}
+                          {selectedJob?.interviewDetails.meeting_url}
                         </a>
                       </div>
                     </div>
@@ -1144,7 +1242,7 @@ const Opportunitiess2 = () => {
 
               <div className="text-sm glassy-text-primary mt-4">
                 Posted on:{" "}
-                {new Date(selectedJob.createdAt).toLocaleDateString("en-US", {
+                {new Date(selectedJob?.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",

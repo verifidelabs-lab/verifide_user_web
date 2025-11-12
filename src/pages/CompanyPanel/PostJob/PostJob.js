@@ -253,7 +253,7 @@ const PostJob = () => {
       setFormData({
         ...jobData,
         address: addressData,
-        // company_id: res?.data?.company_id?._id,
+        company_id: res?.data?.company_id?._id,
         industry_id: res?.data?.industry_id?._id,
         start_date: res?.data?.start_date
           ? new Date(res.data.start_date).toISOString().split("T")[0]
