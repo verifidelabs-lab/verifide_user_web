@@ -18,7 +18,14 @@ const PersonCard = ({
     logo_url,
     profile_picture_url,
     userConnection,
+    user_path,
   } = person;
+  const subtitle =
+    user_path === "Companies"
+      ? person?.industry_details?.[0] || "Industry Not specified"
+      : user_path === "Institutions"
+      ? person?.institution_type_name || "Institution Type Not specified"
+      : headline || "Headline Not specified";
 
   const displayName = name || `${first_name || ""} ${last_name || ""}`;
   const displayImage =
@@ -54,7 +61,7 @@ const PersonCard = ({
             {displayName}
           </h3>
           <p className="lg:text-xs md:text-[10px] text-[11px] glassy-text-secondary w-44 break-words">
-            {headline || "Not specified"}
+            {subtitle || "Not specified"}
           </p>
         </div>
       </div>
@@ -65,7 +72,10 @@ const PersonCard = ({
         disabled={isLoading}
       >
         {isLoading ? (
-          <ImSpinner2 className="animate-spin text-[var(--text-primary)]" size={20} />
+          <ImSpinner2
+            className="animate-spin text-[var(--text-primary)]"
+            size={20}
+          />
         ) : connectionActive ? (
           <BsPersonFillCheck size={20} className="text-[var(--text-primary)]" />
         ) : (
@@ -73,7 +83,6 @@ const PersonCard = ({
         )}
       </button>
     </div>
-
   );
 };
 

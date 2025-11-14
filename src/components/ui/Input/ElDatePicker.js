@@ -12,14 +12,17 @@ const DatePickerComponent = ({
   selectsStart,
   selectsEnd,
   error,
+  required = false,
 }) => {
   return (
     <div className="flex flex-col gap-2 w-full">
       {label && (
-        <label className="text-sm font-medium glassy-text-primary">
+        <label className="text-sm font-medium glassy-text-primary flex items-center gap-1">
           {label}
+          {required && <span className="text-red-500">*</span>}
         </label>
       )}
+
       <DatePicker
         selected={selected}
         onChange={onChange}

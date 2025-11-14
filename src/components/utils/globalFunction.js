@@ -1126,8 +1126,8 @@ export const generateHtmlPreview = (mailData, profileData, institution) => {
             <div class="section-heading">Profile Details</div>
             <div class="detail-item">
                 <span class="detail-label">Name:</span> <span class="detail-value">${
-                  profileData.username
-                }</span>
+                  profileData.first_name
+                } ${profileData.last_name}</span>
             </div>
 
             <div class="detail-item">
