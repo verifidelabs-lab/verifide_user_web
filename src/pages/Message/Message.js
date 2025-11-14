@@ -24,8 +24,23 @@ import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
 import ContactItem from "./ContactList";
 import { getCookie } from "../../components/utils/cookieHandler";
+import { ROLES } from "../../utils/utils";
 
-export default function Message({ profileData, socket }) {
+export default function Message({
+  profileData,
+  instituteProfileData,
+  companiesProfileData,
+  socket,
+}) {
+  const userRole = Number(getCookie("ROLE"));
+
+  const profileDataId = [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(
+    userRole
+  )
+    ? companiesProfileData
+    : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
+    ? instituteProfileData
+    : profileData;
   const { id, isConnected } = useParams();
   const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
@@ -49,8 +64,7 @@ export default function Message({ profileData, socket }) {
   const messagesEndRef = useRef(null);
   const [isMenuShow, setIsMenuShow] = useState(false);
   const [replyingTo, setReplyingTo] = useState(null); // New state for reply
-  const currentUserId = profileData?.getProfileData?.data?.data?._id;
-  const userRole = Number(getCookie("ACCESS_MODE"));
+  const currentUserId = profileDataId?._id;
 
   const getFileTypeFromUrl = (url) => {
     if (!url) return null;
@@ -292,7 +306,7 @@ export default function Message({ profileData, socket }) {
   const handleContactClick = useCallback(
     async (contactData) => {
       setIsMenuShow(false);
-      console.log("This is the contact Data",contactData)
+      console.log("This is the contact Data", contactData);
       if (!contactData?.connectionUserId) {
         toast.error("Invalid contact data");
         return;
@@ -489,9 +503,9 @@ export default function Message({ profileData, socket }) {
 
     setSendingMessage(true);
     const messageText = messageInput.trim();
-    const accessMode = Number(getCookie("ACCESS_MODE"));
+    const accessMode = Number(getCookie("ROLE"));
     const senderModel = ROLE_NAMES[accessMode] || "Users"; // fallback to Users
- console.log("this is the selected contact",selectedContact)
+    console.log("this is the selected contact", selectedContact);
     try {
       const messagePayload = {
         id: `temp_${Date.now()}_${Math.random()}_${currentUserId}`,
@@ -573,7 +587,7 @@ export default function Message({ profileData, socket }) {
     if (!socket) return;
 
     const handleIncomingMessage = (msg) => {
-      // console.log("Incoming message-----:", msg);
+      console.log("Incoming message-----:", msg);
 
       if (!selectedContact) return;
 
@@ -632,7 +646,7 @@ export default function Message({ profileData, socket }) {
         });
 
         if (exists) {
-          // console.log("Message already exists, not adding duplicate");
+          console.log("Message already exists, not adding duplicate");
           return filtered;
         }
 

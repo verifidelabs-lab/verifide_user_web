@@ -423,7 +423,7 @@ function Layout() {
               />
               <Route
                 path="/message/:id?/:isConnected?"
-                element={<Message profileData={profileData} socket={socket} />}
+                element={<Message profileData={profileData?.getProfileData?.data?.data} socket={socket} />}
               />
               <Route path="/notification" element={<NotificationInterface />} />
               <Route path="/activity" element={<ActivityList />} />

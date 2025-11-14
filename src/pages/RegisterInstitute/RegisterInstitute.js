@@ -481,7 +481,7 @@ const RegisterInstitute = () => {
     const newErrors = {};
 
     // Required fields validation
-    if (!formData.username?.trim()) newErrors.username = "Username is required";
+    // if (!formData.username?.trim()) newErrors.username = "Username is required";
     if (!formData.name?.trim()) newErrors.name = "Institution name is required";
     if (!formData.display_name?.trim())
       newErrors.display_name = "Display name is required";
@@ -562,12 +562,13 @@ const RegisterInstitute = () => {
     ) {
       newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
     }
-
+ console.log("validatoin error",newErrors)
     return newErrors;
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);

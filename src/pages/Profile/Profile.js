@@ -393,7 +393,7 @@ const Profile = ({ profileData }) => {
       citiesList: arrayTransform(
         countriesSelector?.citiesData?.data?.data || []
       ),
-      allCompanies: arrayTransform2(
+      allCompanies: arrayTransform(
         workSelector?.getAllCompaniesData?.data?.data || []
       ),
       allIndustry: arrayTransform(

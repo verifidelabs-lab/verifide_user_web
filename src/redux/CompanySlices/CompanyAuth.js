@@ -72,6 +72,7 @@ const authSlice = createSlice({
   reducers: {
     // ✅ manually update companies profile data in store
     setCompaniesProfileData: (state, action) => {
+      console.log('action.payload', action.payload);
       state.companiesProfileData = {
         ...state.companiesProfileData,
         ...action.payload,

@@ -153,6 +153,14 @@ const FilterSelect = ({
       zIndex: 9999,
     }),
   };
+  // 🔥 Sort options in ascending order
+  const sortedOptions = Array.isArray(options)
+    ? [...options].sort((a, b) => {
+        const labelA = (a.label || "").toString().toLowerCase();
+        const labelB = (b.label || "").toString().toLowerCase();
+        return labelA.localeCompare(labelB);
+      })
+    : [];
 
   return (
     <div className={`w-full ${containerClassName}`}>
@@ -178,7 +186,7 @@ const FilterSelect = ({
       /> */}
       <Select
         isMulti={isMulti}
-        options={Array.isArray(options) ? options : []}
+        options={sortedOptions}
         value={selectedOption}
         onChange={onChange}
         className={selectClasses}
@@ -189,6 +197,11 @@ const FilterSelect = ({
         menuPortalTarget={document.body} // 👈 this line fixes invisible menus
         menuPosition="fixed"
         menuShouldScrollIntoView={false}
+        filterOption={(option, inputValue) => {
+          const text = (option.label || "").toString().toLowerCase().trim();
+          const keyword = inputValue.toLowerCase().trim();
+          return text.includes(keyword);
+        }}
       />
     </div>
   );

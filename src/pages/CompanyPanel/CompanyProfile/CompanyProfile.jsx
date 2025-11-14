@@ -275,7 +275,7 @@ const CompanyProfile = ({
   const handleProfileSubmit = async (overrideData = null) => {
     // Merge formData + overrideData (e.g., banner/logo updates)
     const dataToUse = { ...formData, ...(overrideData || {}) };
-
+    console.log("dataToUse", dataToUse);
     // Only validate on full form submit (not banner/logo updates)
     if (!overrideData && !validateProfileForm()) {
       toast.error("Please fix the validation errors");
@@ -352,13 +352,13 @@ const CompanyProfile = ({
       toast.success(res?.message || "Profile updated successfully");
 
       // Refresh UI after full profile update only
-      if (!overrideData) {
+     
         fetchData();
         setIsProfileModalOpen(false);
-      } else {
+     
         // For banner/logo updates, update local formData
         setFormData(dataToUse);
-      }
+      
     } catch (error) {
       toast.error(error?.message || "Failed to update profile");
     } finally {

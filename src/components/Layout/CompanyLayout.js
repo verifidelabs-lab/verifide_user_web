@@ -56,12 +56,18 @@ function CompanyLayout() {
   const isNotificationDisabledRef = useRef(false);
   const socket = socketConnection();
   const [refreshedConfigurations, setRefreshedConfigurations] = useState(false);
-  const companiesProfileData = useSelector(
-    (state) => state.companyAuth?.companiesProfileData?.data?.data || {}
-  );
-  const instituteProfileData = useSelector(
-    (state) => state.companyAuth?.instituteProfileData?.data?.data || {}
-  );
+ 
+
+const companiesProfileData = useSelector((state) => {
+  const data = state.companyAuth?.companiesProfileData;
+  return data?.data?.data ?? data ?? null;
+});
+
+const instituteProfileData = useSelector((state) => {
+  const data = state.companyAuth?.instituteProfileData;
+  return data?.data?.data ?? data ?? null;
+});
+
   console.log(
     "this is the companiespfsdkjlsdklskdfjlskdjf;aoierowieurowieuroweir",
     companiesProfileData,
@@ -260,7 +266,8 @@ function CompanyLayout() {
                     path="/message/:id?/:isConnected?"
                     element={
                       <Message
-                        profileData={companiesProfileData}
+                        companiesProfileData={companiesProfileData}
+                        instituteProfileData={instituteProfileData}
                         socket={socket}
                       />
                     }

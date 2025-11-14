@@ -168,7 +168,22 @@ const FilterSelect = React.forwardRef(
         zIndex: 9999,
       }),
     };
+    // ⭐ SORT OPTIONS IN ASCENDING ORDER (A → Z) ⭐
+    const sortedOptions = Array.isArray(options)
+      ? [...options].sort((a, b) => {
+          const la =
+            typeof a.label === "string"
+              ? a.label.toLowerCase()
+              : (a.label?.toString?.() || "").toLowerCase();
 
+          const lb =
+            typeof b.label === "string"
+              ? b.label.toLowerCase()
+              : (b.label?.toString?.() || "").toLowerCase();
+
+          return la.localeCompare(lb);
+        })
+      : [];
     const handleChange = async (selectedOption, actionMeta) => {
       setInternalLoading(true);
       try {
@@ -202,7 +217,7 @@ const FilterSelect = React.forwardRef(
         >
           <SelectComponent
             isMulti={isMulti}
-            options={Array.isArray(options) ? options : []}
+            options={sortedOptions}
             value={selectedOption}
             onChange={handleChange}
             onCreateOption={isCreatedByUser ? handleCreate : undefined}
