@@ -11,6 +11,7 @@ export const termsAndConditions = createApiThunkPrivate('termsAndConditions', '/
 export const viewUserProfile = createApiThunkPrivate('viewUserProfile', '/user/profiles/view-user-profile', 'GET')
 export const createUserConnection = createApiThunkPrivate('createUserConnection', '/user/profiles/create-user-connections', 'POST')
 export const messageChatUser = createApiThunkPrivate('messageChatUser', '/user/profiles/user-connections-list', 'GET')
+export const messageConnectionChatUser = createApiThunkPrivate('messageConnectionChatUser', '/user/profiles/user-connections-list-for-chat', 'GET')
 export const userChatList = createApiThunkPrivate('userChatList', '/user/profiles/user-connections-chat-list', 'GET')
 export const createPost = createApiThunkPrivate('createPost', '/user/post/create', 'POST')
 export const updatePost = createApiThunkPrivate('updatePost', '/user/post/update', 'POST')

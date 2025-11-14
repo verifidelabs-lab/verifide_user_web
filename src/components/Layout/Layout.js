@@ -348,7 +348,7 @@ function Layout() {
           }}
         />
       )}
-      {runTour && (
+      {runTour && !isMobile && (
         <div
           className="fixed inset-0 z-[9999]   cursor-not-allowed pointer-events-auto"
           onClick={(e) => {
