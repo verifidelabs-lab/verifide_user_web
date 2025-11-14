@@ -4,10 +4,18 @@ import CustomInput from "../../../components/ui/Input/CustomInput";
 import DatePickerComponent from "../../../components/ui/Input/ElDatePicker";
 import EnhancedFileInput from "../../../components/ui/Input/CustomFileAndImage";
 import CustomVideoUpload from "../../../components/ui/Input/CustomVideoUpload";
-import { momentValueFunc, uploadImageDirectly, uploadVideoDirectly } from "../../../components/utils/globalFunction";
+import {
+  momentValueFunc,
+  uploadImageDirectly,
+  uploadVideoDirectly,
+} from "../../../components/utils/globalFunction";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-import { createQuest, singleDocuments, updateQuest } from "../../../redux/Global Slice/cscSlice";
+import {
+  createQuest,
+  singleDocuments,
+  updateQuest,
+} from "../../../redux/Global Slice/cscSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import PollForm from "./PollForm";
 import { getCookie } from "../../../components/utils/cookieHandler";
@@ -18,7 +26,7 @@ const CreateQuest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const IsCompany = getCookie("ACTIVE_MODE")
+  const IsCompany = getCookie("ACTIVE_MODE");
 
   // Initial state for quest data
   const initialQuestData = {
@@ -31,7 +39,7 @@ const CreateQuest = () => {
     endDate: null,
     type: "",
     surveyPolls: [],
-    feedbackModules: [{ title: "" }]
+    feedbackModules: [{ title: "" }],
   };
 
   const [questData, setQuestData] = useState(initialQuestData);
@@ -40,24 +48,26 @@ const CreateQuest = () => {
   const [activeTab, setActiveTab] = useState("survey-polls");
   const [isLoading, setIsLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [mediaType, setMediaType] = useState('image');
+  const [mediaType, setMediaType] = useState("image");
 
   const questTypes = [
     { label: "Surveys & Polls", value: "survey-polls" },
     { label: "Feedbacks", value: "feedbacks" },
     { label: "Sign-up", value: "sign-up" },
     { label: "Webinar", value: "webinar" },
-    { label: "Events", value: "events" }
+    { label: "Events", value: "events" },
   ];
-
 
   // Convert Unix timestamp to Date object
   const unixToDate = (unixTimestamp) => {
     if (!unixTimestamp) return null;
 
-    const timestamp = typeof unixTimestamp === 'number'
-      ? (unixTimestamp < 10000000000 ? unixTimestamp * 1000 : unixTimestamp)
-      : null;
+    const timestamp =
+      typeof unixTimestamp === "number"
+        ? unixTimestamp < 10000000000
+          ? unixTimestamp * 1000
+          : unixTimestamp
+        : null;
 
     if (!timestamp) return null;
 
@@ -101,9 +111,10 @@ const CreateQuest = () => {
           endDate: endDate,
           isPublic: data.isPublic || false,
           surveyPolls: data.surveyPolls || [],
-          feedbackModules: data.feedbackModules && data.feedbackModules.length > 0
-            ? data.feedbackModules
-            : [{ title: "" }]
+          feedbackModules:
+            data.feedbackModules && data.feedbackModules.length > 0
+              ? data.feedbackModules
+              : [{ title: "" }],
         });
 
         setActiveTab(data.type || "survey-polls");
@@ -128,14 +139,14 @@ const CreateQuest = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
 
     // Clear error for this field
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -143,21 +154,25 @@ const CreateQuest = () => {
   const handleDateChange = (field, date) => {
     const validDate = date && !isNaN(date.getTime()) ? date : null;
 
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
-      [field]: validDate
+      [field]: validDate,
     }));
 
     // Clear error for this field
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
 
     // Reset end date if start date is after current end date
-    if (field === "startDate" && questData.endDate && validDate > questData.endDate) {
-      setQuestData(prev => ({ ...prev, endDate: null }));
+    if (
+      field === "startDate" &&
+      questData.endDate &&
+      validDate > questData.endDate
+    ) {
+      setQuestData((prev) => ({ ...prev, endDate: null }));
       if (errors.endDate) {
-        setErrors(prev => ({ ...prev, endDate: "" }));
+        setErrors((prev) => ({ ...prev, endDate: "" }));
       }
     }
   };
@@ -167,20 +182,20 @@ const CreateQuest = () => {
     const updated = [...questData.feedbackModules];
     updated[index].title = value;
 
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
       feedbackModules: updated,
     }));
 
     // Clear error for this field
     if (errors[`feedbackModule-${index}`]) {
-      setErrors(prev => ({ ...prev, [`feedbackModule-${index}`]: "" }));
+      setErrors((prev) => ({ ...prev, [`feedbackModule-${index}`]: "" }));
     }
   };
 
   // Add new feedback module
   const handleAddFeedbackModule = () => {
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
       feedbackModules: [...prev.feedbackModules, { title: "" }],
     }));
@@ -194,14 +209,14 @@ const CreateQuest = () => {
     }
 
     const updated = questData.feedbackModules.filter((_, i) => i !== index);
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
       feedbackModules: updated,
     }));
 
     // Clear any errors related to this module
     const newErrors = { ...errors };
-    Object.keys(newErrors).forEach(key => {
+    Object.keys(newErrors).forEach((key) => {
       if (key.startsWith(`feedbackModule-${index}`)) {
         delete newErrors[key];
       }
@@ -214,7 +229,8 @@ const CreateQuest = () => {
     const newErrors = {};
 
     if (!questData.title.trim()) newErrors.title = "Quest title is required";
-    if (!questData.description.trim()) newErrors.description = "Description is required";
+    if (!questData.description.trim())
+      newErrors.description = "Description is required";
     if (!activeTab) newErrors.type = "Please select a quest type";
 
     if (!questData.startDate) newErrors.startDate = "Start date is required";
@@ -227,12 +243,18 @@ const CreateQuest = () => {
       newErrors.startDate = "Start date cannot be in the past";
     }
 
-    if (questData.startDate && questData.endDate && questData.endDate < questData.startDate) {
+    if (
+      questData.startDate &&
+      questData.endDate &&
+      questData.endDate < questData.startDate
+    ) {
       newErrors.endDate = "End date cannot be before start date";
     }
 
-    if ((!questData.video || questData.video.trim() === "") &&
-      (!questData.images || questData.images.length === 0)) {
+    if (
+      (!questData.video || questData.video.trim() === "") &&
+      (!questData.images || questData.images.length === 0)
+    ) {
       newErrors.media = "Please upload either an image or a video";
     }
 
@@ -244,36 +266,47 @@ const CreateQuest = () => {
           if (!question.title.trim()) {
             newErrors[`surveyQuestion-${index}`] = "Question title is required";
           }
-           if (!question.title.trim().length>=100) {
-            newErrors[`surveyQuestion-${index}`] = "Question length can not be greater than 100 character Long";
+          if (!question.title.trim().length >= 100) {
+            newErrors[`surveyQuestion-${index}`] =
+              "Question length can not be greater than 100 character Long";
           }
 
-          if (question.type !== "short-answer" && (!question.options || question.options.length === 0)) {
-            newErrors[`surveyOptions-${index}`] = "Options are required for this question type";
+          if (
+            question.type !== "short-answer" &&
+            (!question.options || question.options.length === 0)
+          ) {
+            newErrors[`surveyOptions-${index}`] =
+              "Options are required for this question type";
           } else if (question.options) {
             if (
               (question.type === "multi-choice" || question.type === "poll") &&
               question.options.length < 2
             ) {
-              toast.error("At least 2 options are required for this question type")
+              toast.error(
+                "At least 2 options are required for this question type"
+              );
             }
 
             question.options.forEach((option, optIndex) => {
               if (!option.trim()) {
-                newErrors[`surveyOption-${index}-${optIndex}`] = "Option cannot be empty";
+                newErrors[`surveyOption-${index}-${optIndex}`] =
+                  "Option cannot be empty";
               }
             });
           }
         });
       }
-    }
-    else if (activeTab === "feedbacks") {
-      if (!questData.feedbackModules || questData.feedbackModules.length === 0) {
+    } else if (activeTab === "feedbacks") {
+      if (
+        !questData.feedbackModules ||
+        questData.feedbackModules.length === 0
+      ) {
         newErrors.feedbackModules = "At least one feedback module is required";
       } else {
         questData.feedbackModules.forEach((module, index) => {
           if (!module.title.trim()) {
-            newErrors[`feedbackModule-${index}`] = "Feedback module title is required";
+            newErrors[`feedbackModule-${index}`] =
+              "Feedback module title is required";
           }
         });
       }
@@ -283,8 +316,7 @@ const CreateQuest = () => {
       } else if (!isValidUrl(questData.link)) {
         newErrors.link = "Please enter a valid URL";
       }
-    }
-    else if (activeTab === "sign-up") {
+    } else if (activeTab === "sign-up") {
       if (!questData.link.trim()) {
         newErrors.link = "Quest link is required";
       } else if (!isValidUrl(questData.link)) {
@@ -305,96 +337,107 @@ const CreateQuest = () => {
       return false;
     }
   };
- console.log("thisiserror",errors)
+  console.log("thisiserror", errors);
   // Handle file uploads
-  const handleFileUpload = useCallback(async (file, fileType) => {
-    if (!file) {
-      toast.error('Please select a file');
-      return;
-    }
-
-    const maxSize = fileType === 'image' ? 5 * 1024 * 1024 : 20 * 1024 * 1024;
-    if (file.size > maxSize) {
-      toast.error(`File size must be less than ${fileType === 'image' ? '5MB' : '20MB'}`);
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      let result;
-      if (fileType === 'image') {
-        const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
-        if (!allowedImageTypes.includes(file.type)) {
-          toast.error("Only JPEG, JPG, or PNG files are allowed");
-          return;
-        }
-
-        result = await uploadImageDirectly(file, "QUEST_MEDIA");
-      } else if (fileType === 'video') {
-        const allowedVideoTypes = ["video/mp4"];
-        if (!allowedVideoTypes.includes(file.type)) {
-          toast.error("Only MP4 files are allowed");
-          return;
-        }
-
-        result = await uploadVideoDirectly(file, "QUEST_MEDIA");
+  const handleFileUpload = useCallback(
+    async (file, fileType) => {
+      if (!file) {
+        toast.error("Please select a file");
+        return;
       }
 
-      if (result?.data?.imageURL || result?.data?.videoURL) {
-        const mediaUrl = result.data.imageURL || result.data.videoURL;
+      const maxSize = fileType === "image" ? 5 * 1024 * 1024 : 20 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast.error(
+          `File size must be less than ${fileType === "image" ? "5MB" : "20MB"}`
+        );
+        return;
+      }
 
-        if (fileType === 'image') {
-          setQuestData(prev => ({
-            ...prev,
-            images: [...prev.images, mediaUrl],
-            video: "" // Clear video when adding image
-          }));
+      setIsLoading(true);
+
+      try {
+        let result;
+        if (fileType === "image") {
+          const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+          if (!allowedImageTypes.includes(file.type)) {
+            toast.error("Only JPEG, JPG, or PNG files are allowed");
+            return;
+          }
+
+          result = await uploadImageDirectly(file, "QUEST_MEDIA");
+        } else if (fileType === "video") {
+          const allowedVideoTypes = ["video/mp4"];
+          if (!allowedVideoTypes.includes(file.type)) {
+            toast.error("Only MP4 files are allowed");
+            return;
+          }
+
+          result = await uploadVideoDirectly(file, "QUEST_MEDIA");
+        }
+
+        if (result?.data?.imageURL || result?.data?.videoURL) {
+          const mediaUrl = result.data.imageURL || result.data.videoURL;
+
+          if (fileType === "image") {
+            setQuestData((prev) => ({
+              ...prev,
+              images: [...prev.images, mediaUrl],
+              video: "", // Clear video when adding image
+            }));
+          } else {
+            setQuestData((prev) => ({
+              ...prev,
+              video: mediaUrl,
+              images: [], // Clear images when adding video
+            }));
+          }
+
+          if (errors.media) {
+            setErrors((prev) => ({ ...prev, media: "" }));
+          }
+
+          toast.success(result?.message || "File uploaded successfully");
         } else {
-          setQuestData(prev => ({
-            ...prev,
-            video: mediaUrl,
-            images: [] // Clear images when adding video
-          }));
+          throw new Error("File upload failed");
         }
-
-        if (errors.media) {
-          setErrors(prev => ({ ...prev, media: "" }));
-        }
-
-        toast.success(result?.message || "File uploaded successfully");
-      } else {
-        throw new Error("File upload failed");
+      } catch (error) {
+        console.error("File upload error:", error);
+        toast.error(error?.message || "Failed to upload file");
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('File upload error:', error);
-      toast.error(error?.message || 'Failed to upload file');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [errors.media]);
+    },
+    [errors.media]
+  );
 
-  const handleImageUpload = useCallback((file) => {
-    handleFileUpload(file, 'image');
-  }, [handleFileUpload]);
+  const handleImageUpload = useCallback(
+    (file) => {
+      handleFileUpload(file, "image");
+    },
+    [handleFileUpload]
+  );
 
-  const handleVideoUpload = useCallback((file) => {
-    handleFileUpload(file, 'video');
-  }, [handleFileUpload]);
+  const handleVideoUpload = useCallback(
+    (file) => {
+      handleFileUpload(file, "video");
+    },
+    [handleFileUpload]
+  );
 
   // Remove image from quest data
   const removeImage = (index) => {
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, i) => i !== index)
+      images: prev.images.filter((_, i) => i !== index),
     }));
   };
 
   // Remove video from quest data
   const removeVideo = () => {
-    setQuestData(prev => ({
+    setQuestData((prev) => ({
       ...prev,
-      video: ""
+      video: "",
     }));
   };
 
@@ -419,15 +462,17 @@ const CreateQuest = () => {
 
       // Add survey polls if applicable
       if (activeTab === "survey-polls") {
-        apiPayload.surveyPolls = questData.surveyPolls.map(question => {
+        apiPayload.surveyPolls = questData.surveyPolls.map((question) => {
           const formattedQuestion = {
             title: question.title,
             type: question.type,
-            isRequired: question.isRequired || false
+            isRequired: question.isRequired || false,
           };
 
           if (question.type !== "short-answer" && question.options) {
-            formattedQuestion.options = question.options.map(option => option.trim());
+            formattedQuestion.options = question.options.map((option) =>
+              option.trim()
+            );
           }
 
           const { id, ...questionWithoutId } = formattedQuestion;
@@ -436,9 +481,9 @@ const CreateQuest = () => {
       }
 
       // Add feedback modules if applicable
-      if (activeTab === 'feedbacks') {
-        apiPayload.feedbackModules = questData.feedbackModules.filter(module =>
-          module.title && module.title.trim() !== ""
+      if (activeTab === "feedbacks") {
+        apiPayload.feedbackModules = questData.feedbackModules.filter(
+          (module) => module.title && module.title.trim() !== ""
         );
 
         // Validate at least one feedback module remains
@@ -456,14 +501,17 @@ const CreateQuest = () => {
       const result = await dispatch(action(apiPayload)).unwrap();
 
       if (result?.code === 1200) {
-        toast.success(isEditMode ? "Quest updated successfully!" : "Quest created successfully!");
+        toast.success(
+          isEditMode
+            ? "Quest updated successfully!"
+            : "Quest created successfully!"
+        );
         const isCompanyrole = getCookie("ROLE");
         if (IsCompany === "company" && isCompanyrole === "3") {
           navigate(`/company/quest`);
         } else {
           navigate(`/user/quest`);
         }
-
       } else {
         throw new Error(result?.message || "Operation failed");
       }
@@ -501,9 +549,10 @@ const CreateQuest = () => {
                   className={`
                     px-5 py-2.5 rounded-xl text-sm font-medium
                     transition-all duration-300 ease-in-out
-                    ${activeTab === value
-                      ? "glassy-button glassy-text-primary shadow-lg"
-                      : "glassy-text-secondary border "
+                    ${
+                      activeTab === value
+                        ? "glassy-button glassy-text-primary shadow-lg"
+                        : "glassy-text-secondary border "
                     }
                     ${id ? "cursor-not-allowed opacity-70" : ""}
                   `}
@@ -549,7 +598,7 @@ const CreateQuest = () => {
               enableEmoji={true}
             />
           </div>
-          {activeTab !== 'survey-polls' && (
+          {activeTab !== "survey-polls" && (
             <div>
               <CustomInput
                 label="Quest Link"
@@ -575,7 +624,7 @@ const CreateQuest = () => {
                 selectsStart
                 startDate={questData.startDate}
                 endDate={questData.endDate}
-                
+                required={true}
               />
             </div>
 
@@ -589,6 +638,7 @@ const CreateQuest = () => {
                 selectsEnd
                 startDate={questData.startDate}
                 endDate={questData.endDate}
+                required={true}
               />
             </div>
           </div>
@@ -620,7 +670,7 @@ const CreateQuest = () => {
 
           {/* Media Upload */}
           <div className="space-y-4">
-            {mediaType === 'image' && (
+            {mediaType === "image" && (
               <EnhancedFileInput
                 accept=".jpg,.jpeg,.png"
                 supportedFormats="Image"
@@ -633,7 +683,7 @@ const CreateQuest = () => {
               />
             )}
 
-            {mediaType === 'video' && (
+            {mediaType === "video" && (
               <CustomVideoUpload
                 onChange={handleVideoUpload}
                 onDelete={removeVideo}
@@ -647,15 +697,20 @@ const CreateQuest = () => {
           </div>
 
           {/* Feedback Modules (for feedbacks tab) */}
-          {activeTab === 'feedbacks' && (
+          {activeTab === "feedbacks" && (
             <div className="space-y-5">
               <div>
-                <h2 className="text-lg font-semibold glassy-text-primary">Feedback Modules</h2>
+                <h2 className="text-lg font-semibold glassy-text-primary">
+                  Feedback Modules
+                </h2>
                 <p className="text-sm text-muted-foreground glassy-text-secondary">
-                  Add titles for your feedback modules. You can add more or remove them anytime.
+                  Add titles for your feedback modules. You can add more or
+                  remove them anytime.
                 </p>
                 {errors.feedbackModules && (
-                  <p className="text-red-500 text-sm mt-1">{errors.feedbackModules}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.feedbackModules}
+                  </p>
                 )}
               </div>
 
@@ -669,7 +724,9 @@ const CreateQuest = () => {
                     <CustomInput
                       placeholder={`Title ${index + 1}`}
                       value={module.title}
-                      onChange={(e) => handleFeedbackModuleChange(index, e.target.value)}
+                      onChange={(e) =>
+                        handleFeedbackModuleChange(index, e.target.value)
+                      }
                       className="h-10 flex-1 glassy-text-secondary"
                       error={errors[`feedbackModule-${index}`]}
                     />
@@ -697,7 +754,6 @@ const CreateQuest = () => {
                   className="flex items-center gap-2 glassy-button hover:glassy-text-primary"
                   icon={<BiAddToQueue className="w-5 h-5" />}
                   disabled={questData.feedbackModules.length >= 5}
-
                 >
                   Add New Title
                 </Button>
@@ -707,19 +763,21 @@ const CreateQuest = () => {
 
           {/* Quest Link (for non-survey-polls tabs) */}
 
-          {
-            activeTab === "survey-polls" && (
-              <label className="text-whitemt-2 glassy-text-primary">Survey & Polls <span className="text-red-500">*</span></label>
-            )
-          }
+          {activeTab === "survey-polls" && (
+            <label className="text-whitemt-2 glassy-text-primary">
+              Survey & Polls <span className="text-red-500">*</span>
+            </label>
+          )}
 
           {activeTab === "survey-polls" && (
             <PollForm
               questions={questData.surveyPolls}
-              setQuestions={(newQuestions) => setQuestData(prev => ({
-                ...prev,
-                surveyPolls: newQuestions
-              }))}
+              setQuestions={(newQuestions) =>
+                setQuestData((prev) => ({
+                  ...prev,
+                  surveyPolls: newQuestions,
+                }))
+              }
               errors={errors}
             />
           )}
@@ -734,7 +792,11 @@ const CreateQuest = () => {
                 transition transform hover:scale-105 active:scale-95
                 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
-              {isLoading ? "Processing..." : (isEditMode ? "Update Quest" : "🚀 Create Quest")}
+              {isLoading
+                ? "Processing..."
+                : isEditMode
+                ? "Update Quest"
+                : "🚀 Create Quest"}
             </button>
           </div>
         </form>

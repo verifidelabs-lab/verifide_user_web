@@ -532,6 +532,14 @@ const Opportunities = () => {
     shortlisted: 2,
     rejected: 3,
   };
+  const tabTitles = {
+    open: "Open Opportunities",
+    shortlisted: "Shortlisted Candidates",
+    "schedule-interviews": "Scheduled Interviews",
+    closed: "Closed Opportunities",
+    rejected: "Rejected Candidates",
+    selected_in_interview: "Ready to Join Candidates",
+  };
 
   const sortedApplicants =
     Array.isArray(selectedJob) &&
@@ -787,7 +795,10 @@ const Opportunities = () => {
           ) : (
             <>
               <div className="min-h-[30vh] flex justify-center flex-col items-center border rounded-md">
-                <PiCodesandboxLogoLight size={26} className="glassy-text-primary" />
+                <PiCodesandboxLogoLight
+                  size={26}
+                  className="glassy-text-primary"
+                />
                 <strong className="glassy-text-secondary">
                   No Applicant available
                 </strong>
@@ -871,7 +882,7 @@ const Opportunities = () => {
     { id: "shortlisted", label: "Shortlisted", icon: <MdOutlineCheckCircle /> },
     {
       id: "schedule-interviews",
-      label: "Schedules Interviews",
+      label: "Scheduled Interviews",
       icon: <FaClock />,
     },
     { id: "closed", label: "Closed Jobs", icon: <MdOutlineLock /> },
@@ -1047,32 +1058,22 @@ const Opportunities = () => {
       </div>
 
       <div
-        className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${!selectedJob
-          ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
-          : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
-          } `}
+        className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${
+          !selectedJob
+            ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
+            : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
+        } `}
       >
         <div className="flex justify-between md:flex-row flex-col mb-6 space-y-4 lg:space-y-0">
-          <h1 className="text-2xl font-bold glassy-text-primary md:text-start text-center">
+          {/* <h1 className="text-2xl font-bold glassy-text-primary md:text-start text-center">
             Opportunity
+          </h1> */}
+          <h1 className="text-2xl font-bold glassy-text-primary md:text-start text-center">
+            {tabTitles[activeTab] || "Opportunity"}
           </h1>
+
           <div className="flex  items-center gap-3">
             <div className="relative" ref={filterDropdownRef}>
-
-              {/* <button
-                onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                className="flex items-center justify-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:glassy-card focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none w-full sm:w-auto"
-              >
-                <TbAdjustmentsHorizontal className="w-5 h-5 glassy-text-secondary" />
-                <span className="glassy-text-primary">Filter</span>
-                {getActiveFiltersCount() > 0 && (
-                  <span className="bg-blue-600 glassy-text-primary text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {getActiveFiltersCount()}
-                  </span>
-                )}
-              </button> */}
-
-
               {showFilterDropdown && (
                 <div className="!absolute md:right-0 left-4 mt-2 w-48 glassy-card rounded-lg shadow-lg border border-gray-200 z-50">
                   <div className="p-4">
@@ -1148,7 +1149,7 @@ const Opportunities = () => {
 
             <Button
               type="button"
-              className="w-full sm:w-auto whitespace-nowrap"
+              className="w-full sm:w-auto whitespace-nowrap glassy-button"
               onClick={handlePostJob}
             >
               Post a Job
@@ -1165,7 +1166,6 @@ const Opportunities = () => {
                 </span>
               )}
             </button>
-
           </div>
         </div>
 
@@ -1175,55 +1175,61 @@ const Opportunities = () => {
               <div className="inline-flex space-x-1 p-1 rounded-full glassy-card border border-gray-200 w-max">
                 <button
                   onClick={() => handleActiveTab("open")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "open"
-                    ? "glassy-card text-blue-600 shadow-sm"
-                    : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "open"
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "glassy-text-secondary hover:glassy-text-primary"
+                  }`}
                 >
                   Open Jobs
                 </button>
                 <button
                   onClick={() => handleActiveTab("shortlisted")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "shortlisted"
-                    ? "glassy-card text-blue-600 shadow-sm"
-                    : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "shortlisted"
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "glassy-text-secondary hover:glassy-text-primary"
+                  }`}
                 >
                   Shortlisted
                 </button>
                 <button
                   onClick={() => handleActiveTab("schedule-interviews")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "schedule-interviews"
-                    ? "glassy-card text-blue-600 shadow-sm"
-                    : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "schedule-interviews"
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "glassy-text-secondary hover:glassy-text-primary"
+                  }`}
                 >
-                  Schedules Interviews
+                  Scheduled Interviews
                 </button>
                 <button
                   onClick={() => handleActiveTab("closed")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "closed"
-                    ? "glassy-card text-blue-600 shadow-sm"
-                    : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "closed"
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "glassy-text-secondary hover:glassy-text-primary"
+                  }`}
                 >
                   Closed Jobs
                 </button>
                 <button
                   onClick={() => handleActiveTab("rejected")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "rejected"
-                    ? "glassy-card text-blue-600 shadow-sm"
-                    : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "rejected"
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "glassy-text-secondary hover:glassy-text-primary"
+                  }`}
                 >
                   Rejected Interviews
                 </button>
                 <button
                   onClick={() => handleActiveTab("selected_in_interview")}
-                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${activeTab === "selected_in_interview"
-                    ? "glassy-card text-blue-600 shadow-sm"
-                    : "glassy-text-secondary hover:glassy-text-primary"
-                    }`}
+                  className={`px-4 sm:px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ease-in-out ${
+                    activeTab === "selected_in_interview"
+                      ? "glassy-card text-blue-600 shadow-sm"
+                      : "glassy-text-secondary hover:glassy-text-primary"
+                  }`}
                 >
                   Ready to Join
                 </button>
@@ -1306,10 +1312,11 @@ const Opportunities = () => {
 
         <div className="h-full ">
           <div
-            className={`grid w-full ${!viewDetails
-              ? "2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1"
-              : "xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
-              } items-center gap-2`}
+            className={`grid w-full ${
+              !viewDetails
+                ? "2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1"
+                : "xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 grid-cols-1"
+            } items-center gap-2`}
           >
             {isLoading ? (
               Array.from({ length: 3 }).map((_, idx) => (

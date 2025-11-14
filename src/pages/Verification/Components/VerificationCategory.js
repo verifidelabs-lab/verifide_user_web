@@ -275,6 +275,8 @@ const VerificationCategory = ({ profileData }) => {
               attach_file: [formData.image_url],
               verification_type: "third-person",
               third_person_name: institutionForm.name,
+              first_name: profileData?.first_name || null,
+              last_name: profileData?.last_name || null,
               third_person_email: institutionForm.email,
             }
           : {
@@ -282,6 +284,9 @@ const VerificationCategory = ({ profileData }) => {
               verification_type: "assigned",
               type: DOCUMENT_MODELS[type],
               document_id: data?._id,
+              third_person_name: institutionForm.name,
+              first_name: profileData?.first_name || null,
+              last_name: profileData?.last_name || null,
               attach_file: [formData.image_url],
             };
 
@@ -367,13 +372,13 @@ const VerificationCategory = ({ profileData }) => {
           (opt) => opt.value === institutionForm.institute_id
         )}
         onChange={(select) => handleSelectChange("institute_id", select)}
-        label="Select Verified"
+        label="Select Verifier"
       />
 
       {institutionForm.institute_id === "" && (
         <>
-          <div className="text-center">
-            <strong>or</strong>
+          <div className="text-center glassy-text-primary">
+            <h2><strong>OR</strong></h2>
           </div>
           <CustomInput
             label="Verifier Name"

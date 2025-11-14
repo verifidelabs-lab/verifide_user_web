@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
-import PersonCard from '../cards/PersonCard';
-import { useDispatch } from 'react-redux';
-import { createUserConnection, followUnfollowUsers, suggestedUser, } from '../../../redux/Users/userSlice';
-import { useNavigate, } from 'react-router-dom';
-import { toast } from 'sonner';
-import { getCookie } from '../../utils/cookieHandler';
-
+import React, { useState } from "react";
+import PersonCard from "../cards/PersonCard";
+import { useDispatch } from "react-redux";
+import {
+  createUserConnection,
+  followUnfollowUsers,
+  suggestedUser,
+} from "../../../redux/Users/userSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { getCookie } from "../../utils/cookieHandler";
 
 const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [connectedIds, setConnectedIds] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const activeMode = getCookie("ACTIVE_MODE"); // 'company' | 'institution' | 'user'
+  console.log("PeopleToConnect DATA:", data);
 
   const [loadingIds, setLoadingIds] = useState([]);
   const handleConnect = async (data) => {
-
     // Determine the base path dynamically
     const basePath =
       activeMode === "company"
         ? "/company"
         : activeMode === "institution"
-          ? "/institution"
-          : "/user";
+        ? "/institution"
+        : "/user";
 
     // If data has no user_path → it's a direct user/institution/company profile
     if (!data?.user_path) {
@@ -36,60 +39,37 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
       data?.user_path === "Companies"
         ? "companies"
         : data?.user_path === "Institutions"
-          ? "institutions"
-          : "users";
+        ? "institutions"
+        : "users";
 
     // Navigate dynamically according to the active mode
     navigate(`${basePath}/view-details/${name}/${data?._id}`);
   };
-
-
-
-  // const handleConnectUser = async (data) => {
-  //   const userId = data._id;
-
-  //   if (data?.user_path === 'Companies' || data?.user_path === "Institutions") {
-  //     await dispatch(followUnfollowUsers({
-  //       target_id: data?._id,
-  //       target_model: data?.user_path
-  //     })).unwrap();
-  //   } else {
-  //     try {
-  //       setLoading(true);
-  //       setLoadingIds(prev => [...prev, userId]);
-  //       const res = await dispatch(createUserConnection({ connection_user_id: data?._id })).unwrap();
-  //       if (res) {
-  //         setConnectedIds(prev => [...prev, userId]);
-  //         dispatch(suggestedUser({ page: 1, size: 10 }));
-  //         toast.success(res?.message);
-  //       }
-  //     } catch (error) {
-  //       toast.error(error);
-  //     } finally {
-  //       setLoading(false);
-  //       setLoadingIds(prev => prev.filter(id => id !== userId));
-  //     }
-  //   }
-  // }
-
   const handleConnectUser = async (data) => {
     const userId = data._id;
 
     try {
       setLoading(true);
-      setLoadingIds(prev => [...prev, userId]);
+      setLoadingIds((prev) => [...prev, userId]);
 
       switch (data?.user_path) {
         case "Companies":
         case "Institutions": {
-          const res = await dispatch(followUnfollowUsers({
-            target_id: userId,
-            target_model: data?.user_path
-          })).unwrap();
+          const res = await dispatch(
+            followUnfollowUsers({
+              target_id: userId,
+              target_model: data?.user_path,
+            })
+          ).unwrap();
 
           if (res) {
-            dispatch(suggestedUser({ page: 1, size: 10, type: data?.user_path.toLowerCase() }));
-
+            dispatch(
+              suggestedUser({
+                page: 1,
+                size: 10,
+                type: data?.user_path.toLowerCase(),
+              })
+            );
 
             toast.success(res?.message || "Action completed successfully");
           }
@@ -97,12 +77,14 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
         }
 
         default: {
-          const res = await dispatch(createUserConnection({
-            connection_user_id: userId
-          })).unwrap();
+          const res = await dispatch(
+            createUserConnection({
+              connection_user_id: userId,
+            })
+          ).unwrap();
 
           if (res) {
-            setConnectedIds(prev => [...prev, userId]);
+            setConnectedIds((prev) => [...prev, userId]);
             dispatch(suggestedUser({ page: 1, size: 10 }));
             toast.success(res?.message);
           }
@@ -116,10 +98,9 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
       toast.error(error);
     } finally {
       setLoading(false);
-      setLoadingIds(prev => prev.filter(id => id !== userId));
+      setLoadingIds((prev) => prev.filter((id) => id !== userId));
     }
   };
-
 
   return (
     <div className="overflow-hidden glassy-card p-2">
@@ -134,10 +115,11 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300
-          ${activeTab === tab.key
-                ? "bg-[var(--bg-button)] text-[var(--text-primary)] shadow-md"
-                : "text-[var(--text-secondary)] hover:bg-[var(--bg-button-hover)] hover:text-[var(--text-primary)]"
-              }`}
+          ${
+            activeTab === tab.key
+              ? "bg-[var(--bg-button)] text-[var(--text-primary)] shadow-md"
+              : "text-[var(--text-secondary)] hover:bg-[var(--bg-button-hover)] hover:text-[var(--text-primary)]"
+          }`}
           >
             {tab.label}
           </button>
@@ -170,23 +152,20 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
         <button
           className="w-full glassy-button"
           onClick={() => {
-
             const basePath =
               activeMode === "company"
                 ? "/company"
                 : activeMode === "institution"
-                  ? "/institution"
-                  : "/user";
+                ? "/institution"
+                : "/user";
 
             navigate(`${basePath}/suggested-users?tab=${activeTab}`);
           }}
         >
           Explore
         </button>
-
       </div>
     </div>
-
   );
 };
 
