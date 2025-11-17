@@ -13,6 +13,7 @@ import { CiCalendar, CiLocationOn } from "react-icons/ci";
 import { BaseUrl } from "../../../components/hooks/axiosProvider";
 import { toast } from "sonner";
 import { MdClose, MdContentCopy } from "react-icons/md"; // add this at the top
+import { FiMapPin } from "react-icons/fi";
 
 const JobCard = ({
   job,
@@ -68,15 +69,10 @@ const JobCard = ({
     <div className="mb-3">
       <div className="relative z-20 border rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto">
         <div>
-          <div className="flex items-center justify-between relative">
-            <div className="flex items-center gap-3">
-              {job?.user_id?.profile_picture_url ? (
-                <img
-                  src={job?.user_id?.profile_picture_url}
-                  alt="profile"
-                  className="w-12 h-12 object-cover rounded-full"
-                />
-              ) : (
+          {!job?.user_id && (
+            <div className="flex items-center justify-between relative">
+              <div className="flex items-center gap-3">
+                {/* Company Logo */}
                 <div className="w-12 h-12 glassy-card glassy-text-primary flex items-center justify-center font-bold rounded-full overflow-hidden">
                   {job?.company_id?.logo_url ? (
                     <img
@@ -89,81 +85,136 @@ const JobCard = ({
                       }}
                     />
                   ) : (
-                    <span className="text-xl">
-                      <img
-                        src={"/36369.jpg"}
-                        alt="company logo"
-                        className="w-12 h-12 object-center border"
-                      />
-                    </span>
+                    <img
+                      src={"/36369.jpg"}
+                      alt="fallback"
+                      className="w-12 h-12 object-center border"
+                    />
                   )}
                 </div>
-              )}
-              <div>
-                {job?.user_id ? (
-                  <>
-                    <h2 className="text-lg font-semibold glassy-text-primary">
-                      {job?.user_id?.first_name} {job?.user_id?.last_name}
-                    </h2>
-                    <p className="text-xs glassy-text-secondary">
-                      {job?.user_id?.headline || "no headline"}
-                    </p>
-                    <p className="text-xs glassy-text-secondary">
-                      {" "}
-                      {job?.user_id?.address?.city?.name &&
-                      job?.user_id?.address?.state?.name &&
-                      job?.user_id?.address?.country?.short_name
-                        ? // If user_id exists → show user address
-                          `${job.user_id.address.city.name}, ${job.user_id.address.state.name} (${job.user_id.address.country.short_name})`
-                        : ""}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="text-sm font-medium glassy-text-primary">
-                      {job?.company_id?.name}
-                    </h2>
-                    <p className="text-xs glassy-text-secondary">
-                      {moment(job?.createdAt).format("DD-MM-YYYY")}
-                    </p>
-                  </>
-                )}
-              </div>
-            </div>
 
-            {job?.total_applicants ? (
-              <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
-                {job?.total_applicants || "0"} Applied
-              </p>
-            ) : null}
+                {/* Company Info Only */}
+                <div>
+                  <h2 className="text-sm font-medium glassy-text-primary">
+                    {job?.company_id?.name || "Company Name"}
+                  </h2>
 
-            {job?.status === "rejected" && (
-              <div className="px-3 py-1 text-xs font-medium rounded-full bg-red-50 text-red-700 border border-red-600">
-                Rejected
+                  <p className="text-xs glassy-text-secondary">
+                    Posted Date: {moment(job?.createdAt).format("DD-MM-YYYY")}
+                  </p>
+                </div>
               </div>
-            )}
-            {job?.status === "selected_in_interview" && (
-              <div className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
-                Selected
-              </div>
-            )}
-          </div>
 
-          <div className="flex flex-col space-y-2 mt-3">
-            {job?.user_id && (
-              <>
-                <p className="text-sm glassy-text-primary">
-                  <strong>Job Title:</strong> {job?.job_details?.job_title}
+              {/* Applicants Count */}
+              {job?.total_applicants ? (
+                <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
+                  {job?.total_applicants} Applied
                 </p>
+              ) : null}
+            </div>
+          )}
+          <div className="flex flex-col space-y-3 mt-3 w-full">
+            {/* Job Title & Posted Date */}
+            {job?.user_id && (
+              <div className="w-full">
+                <h1 className="text-lg md:text-xl font-semibold glassy-text-primary">
+                  Job Title: {job?.job_details?.job_title}
+                </h1>
 
                 {job?.createdAt && (
-                  <p className="text-xs glassy-text-primary mt-1">
-                    <strong>Job Posted On:</strong>{" "}
-                    {moment(job.createdAt).format("DD-MM-YYYY")}
-                  </p>
+                  <h2 className="text-sm md:text-base font-medium glassy-text-primary mt-1">
+                    Job Posted On: {moment(job.createdAt).format("DD-MM-YYYY")}
+                  </h2>
                 )}
-              </>
+              </div>
             )}
+
+            {/* User section */}
+            {job?.user_id && (
+              <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-3 relative">
+                {/* Left side (profile & details) */}
+                <div className="flex flex-row gap-3 w-full md:w-auto">
+                  {job?.user_id?.profile_picture_url ? (
+                    <img
+                      src={job?.user_id?.profile_picture_url}
+                      alt="profile"
+                      className="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full"
+                    />
+                  ) : null}
+
+                  <div className="flex flex-col">
+                    <h2 className="text-base md:text-lg font-semibold glassy-text-primary">
+                      {job?.user_id?.first_name} {job?.user_id?.last_name}
+                    </h2>
+
+                    <p className="text-xs md:text-sm glassy-text-secondary">
+                      {job?.user_id?.headline || "no headline"}
+                    </p>
+
+                    {/* Location */}
+                    <p className="text-xs md:text-sm glassy-text-secondary flex items-center gap-1">
+                      {job?.user_id?.address?.city?.name &&
+                      job?.user_id?.address?.state?.name &&
+                      job?.user_id?.address?.country?.short_name ? (
+                        <>
+                          <FiMapPin className="w-3 h-3" />
+                          {`${job.user_id.address.city.name}, ${job.user_id.address.state.name} (${job.user_id.address.country.short_name})`}
+                        </>
+                      ) : (
+                        "Location Not Found"
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Status Dates */}
+                <div className="flex flex-col gap-1 text-xs md:text-sm w-full md:w-auto">
+                  {/* Rejected */}
+                  {job?.status === "rejected" && (
+                    <div className="flex flex-col text-red-500">
+                      <div className="flex items-center gap-1">
+                        <CiCalendar className="w-3 h-3" />
+                        <strong>Rejected on:</strong>
+                      </div>
+                      <span>
+                        {moment(
+                          job.reviews?.find((r) => r.mode === "rejected")?.date
+                        ).format("DD MMM YYYY")}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Shortlisted */}
+                  {job?.status === "shortlisted" && (
+                    <div className="flex flex-col text-blue-400">
+                      <div className="flex items-center gap-1">
+                        <CiCalendar className="w-3 h-3" />
+                        <strong>Shortlisted on:</strong>
+                      </div>
+                      <span>{moment(job.createdAt).format("DD MMM YYYY")}</span>
+                    </div>
+                  )}
+
+                  {/* Selected */}
+                  {job?.status === "selected_in_interview" && (
+                    <div className="flex flex-col text-green-500">
+                      <div className="flex items-center gap-1">
+                        <CiCalendar className="w-3 h-3" />
+                        <strong>Selected on:</strong>
+                      </div>
+                      <span>
+                        {moment(
+                          job.reviews?.find((r) => r.mode === "selected")
+                            ?.date || job.createdAt
+                        ).format("DD MMM YYYY")}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Company Job Tags (Mobile/No user case) */}
             {!job?.user_id && (
               <div className="flex flex-wrap gap-2 text-xs glassy-text-primary">
                 <span className="px-3 py-1 glassy-card rounded-full capitalize">
@@ -178,95 +229,63 @@ const JobCard = ({
                 </span>
               </div>
             )}
-            <div
-              className={`flex flex-col gap-1 text-sm p-3 rounded-md ${
-                job?.status === "rejected"
-                  ? "bg-red-50 border border-red-200"
-                  : job?.createdAt
-                  ? "glassy-card border border-green-200"
-                  : dateInRange
-                  ? "glassy-card border border-green-200"
-                  : "bg-red-50 border border-red-200"
-              }`}
-            >
-              <div className="flex items-center">
-                <CiCalendar
-                  className={`mr-2 w-4 h-4 ${
-                    job?.status === "rejected"
-                      ? "text-red-600"
-                      : job?.createdAt
-                      ? "text-green-600"
-                      : dateInRange
-                      ? "text-green-600"
-                      : "text-red-600"
-                  }`}
-                />
-                <span
-                  className={`font-medium ${
-                    job?.status === "rejected"
-                      ? "text-red-700"
-                      : job?.createdAt
-                      ? "text-green-700"
-                      : dateInRange
-                      ? "text-green-700"
-                      : "text-red-700"
-                  }`}
-                >
-                  {job?.status === "rejected"
-                    ? "Rejected On:"
-                    : job?.start_date && job?.end_date
-                    ? "Application Period:"
-                    : "Shortlisted On:"}
-                </span>
-              </div>
 
+            {/* Application Period */}
+            {job?.start_date && job?.end_date && (
               <div
-                className={`flex justify-between text-xs ${
-                  job?.status === "rejected"
-                    ? "text-red-600"
-                    : job?.createdAt || dateInRange
-                    ? "text-green-600"
-                    : "text-red-600"
+                className={`flex flex-col gap-2 text-sm p-3 rounded-md w-full ${
+                  dateInRange
+                    ? "glassy-card border border-green-200"
+                    : "bg-red-50 border border-red-200"
                 }`}
               >
-                {job?.status === "rejected" && job?.reviews?.length > 0 ? (
-                  <span>
-                    {moment(
-                      job.reviews.find((review) => review.mode === "rejected")
-                        ?.date
-                    ).format("DD MMM YYYY")}
+                {/* Header */}
+                <div className="flex items-center gap-2">
+                  <CiCalendar
+                    className={`w-4 h-4 ${
+                      dateInRange ? "text-green-600" : "text-red-600"
+                    }`}
+                  />
+                  <span
+                    className={`font-medium ${
+                      dateInRange ? "text-green-700" : "text-red-700"
+                    }`}
+                  >
+                    Application Period:
                   </span>
-                ) : job?.start_date && job?.end_date ? (
-                  <>
-                    <span>
-                      From: {moment(job?.start_date).format("DD MMM YYYY")}
-                    </span>
-                    <span>
-                      To: {moment(job?.end_date).format("DD MMM YYYY")}
-                    </span>
-                  </>
-                ) : (
-                  <span>{moment(job?.createdAt).format("DD MMM YYYY")}</span>
-                )}
-              </div>
+                </div>
 
-              {!dateInRange &&
-                job?.start_date &&
-                job?.end_date &&
-                job?.status !== "rejected" && (
+                {/* Date Row */}
+                <div
+                  className={`flex justify-between text-xs md:text-sm ${
+                    dateInRange ? "text-green-600" : "text-red-600 font-medium"
+                  }`}
+                >
+                  <span>
+                    From: {moment(job.start_date).format("DD MMM YYYY")}
+                  </span>
+                  <span>To: {moment(job.end_date).format("DD MMM YYYY")}</span>
+                </div>
+
+                {/* Warning When Date Out of Range */}
+                {!dateInRange && (
                   <div className="text-xs text-red-600 font-medium mt-1">
                     ⚠️ Applications are currently closed for this position
                   </div>
                 )}
-            </div>
-            <h3 className="text-lg font-semibold glassy-text-primary capitalize">
+              </div>
+            )}
+
+            {/* Job Title (card header) */}
+            <h3 className="text-lg md:text-xl font-semibold glassy-text-primary capitalize">
               {job?.job_title?.name}
             </h3>
+
+            {/* Location */}
             {job?.work_location?.city?.name ||
             job?.work_location?.state?.name ? (
-              <p className="glassy-text-secondary text-sm font-normal mb-3 flex items-center gap-1">
+              <p className="glassy-text-secondary text-sm flex items-center gap-1">
                 <CiLocationOn className="w-4 h-4" />
-
                 {job?.work_location?.city?.name &&
                 job?.work_location?.state?.name
                   ? `${job.work_location.city.name}, ${job.work_location.state.name}`
@@ -277,36 +296,21 @@ const JobCard = ({
                   : ""}
               </p>
             ) : null}
-            {/* <p className="glassy-text-secondary text-sm font-normal mb-3 flex items-center gap-1">
-              <CiLocationOn className="w-4 h-4" />
 
-              {job?.user_id?.address?.city?.name &&
-              job?.user_id?.address?.state?.name &&
-              job?.user_id?.address?.country?.short_name
-                ? // If user_id exists → show user address
-                  `${job.user_id.address.city.name}, ${job.user_id.address.state.name} (${job.user_id.address.country.short_name})`
-                : job?.work_location?.city?.name &&
-                  job?.work_location?.state?.name
-                ? // Otherwise → fallback to job location
-                  `${job.work_location.city.name}, ${job.work_location.state.name}`
-                : "Location not specified"}
-            </p> */}
-            <div className="mb-4">
+            {/* Description */}
+            <div className="mb-4 w-full">
               {job?.job_description || job?.user_id?.summary ? (
                 <p
-                  className="glassy-text-primary glassy-card leading-relaxed break-words whitespace-pre-line 
-      p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] 
-      overflow-hidden text-ellipsis min-h-[200px] sm:min-h-[220px] 
-      md:min-h-[240px] lg:min-h-[260px]"
+                  className="glassy-text-primary glassy-card leading-relaxed whitespace-pre-line 
+        p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]
+        min-h-[180px] md:min-h-[240px] lg:min-h-[260px]"
                 >
-                  {/* Label inside P */}
                   <strong className="text-base font-semibold block mb-2">
                     {job?.job_description
                       ? "Job Description"
                       : "Candidate Summary"}
                   </strong>
 
-                  {/* Content with See More/See Less */}
                   {showAllSkills
                     ? job?.job_description || job?.user_id?.summary
                     : (job?.job_description || job?.user_id?.summary).slice(
@@ -328,35 +332,36 @@ const JobCard = ({
                   )}
                 </p>
               ) : (
-                // No Data Case
                 <p
                   className="glassy-text-primary text-sm glassy-card border border-[var(--border-color)] rounded-lg p-4
-  min-h-[200px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[260px]
-  flex items-center justify-center text-center"
+        min-h-[180px] md:min-h-[220px] lg:min-h-[260px] flex items-center justify-center text-center"
                 >
-                  {/* No data message */}
                   {job?.job_description
                     ? "No job description provided."
                     : "No candidate summary provided."}
                 </p>
               )}
             </div>
+
+            {/* Company Address */}
             {!job?.user_id && job?.company_id?.headquarters?.address_line_1 && (
-              <div className="flex text-sm glassy-text-secondary">
-                <MdLocationOn className="text-base mr-1" />
-                {job?.company_id?.headquarters?.address_line_1}
+              <div className="flex text-sm glassy-text-secondary items-center gap-1">
+                <MdLocationOn className="text-base" />
+                {job.company_id.headquarters.address_line_1}
               </div>
             )}
+
+            {/* Top Skills */}
             {job?.user_id?.topSkills?.length > 0 && (
               <div className="flex flex-col gap-1 mt-2">
-                <div className="flex items-center gap-2 text-xs glassy-text-primary">
+                <div className="flex items-center gap-2 text-xs md:text-sm glassy-text-primary">
                   <span className="font-medium">Top Skills:</span>
                   <div className="flex flex-wrap gap-2">
                     {(showAllSkills
                       ? job.user_id.topSkills
                       : job.user_id.topSkills.slice(0, 2)
                     )
-                      .filter((skill) => skill?.name) // Filter out skills with null/undefined names
+                      .filter((skill) => skill?.name)
                       .map((skill) => (
                         <span
                           key={skill._id}
@@ -369,9 +374,8 @@ const JobCard = ({
                     {job.user_id.topSkills.length > 5 && (
                       <button
                         onClick={() => setShowAllSkills(!showAllSkills)}
-                        className="glassy-button px-4 py-1 rounded-full text-xs text-[#202226] border border-[#E8E8E8] 
-             hover:glassy-card transition-colors duration-200 focus:outline-none focus:ring-2 
-             focus:ring-[#6390F1] focus:ring-opacity-50"
+                        className="glassy-button px-4 py-1 rounded-full text-xs 
+              border border-[#E8E8E8] hover:glassy-card transition-colors"
                       >
                         +{remainingCount}
                       </button>
@@ -380,13 +384,15 @@ const JobCard = ({
                 </div>
               </div>
             )}
+
+            {/* Required Skills */}
             {job?.required_skills?.length > 0 && (
-              <div className="flex flex-wrap gap-2 text-xs">
-                <div className="flex items-center gap-2 text-xs glassy-text-primary">
-                  <span className="font-medium">Required Skills:</span>
-                  <div className="flex flex-wrap gap-2">
-                    <SkillsCard2 skills={job.required_skills || []} limit={2} />
-                  </div>
+              <div className="flex flex-wrap gap-2 text-xs md:text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium glassy-text-primary">
+                    Required Skills:
+                  </span>
+                  <SkillsCard2 skills={job.required_skills || []} limit={2} />
                 </div>
               </div>
             )}
