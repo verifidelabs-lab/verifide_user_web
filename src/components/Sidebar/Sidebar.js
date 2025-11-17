@@ -119,10 +119,16 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
       )}
 
       {/* Sidebar */}
-      <div
+      {/* <div
         className={`fixed left-0 top-0 h-screen w-72 flex-col glassy-card shadow-xl z-50 transform transition-transform duration-300 ease-in-out
           ${navbarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
+      > */}
+      <div
+        className={`fixed left-0 top-0 h-screen w-72 flex-col glassy-card shadow-xl z-50 transform transition-transform duration-300 ease-in-out
+    ${navbarOpen ? "translate-x-0" : "-translate-x-full"}
+    overflow-y-auto
+  `}
       >
         {/* Optional Close Button */}
         {isMobile && (
@@ -193,7 +199,6 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
                                 : "glassy-text-primary hover:glassy-card hover:text-blue-600"
                             }`}
                           >
-                            
                             <span>{child.label}</span>
                           </div>
                         ))}

@@ -7,6 +7,8 @@ const initialState = {
 }
 
 export const login = createApiThunkPublic('login', '/user/auth/login', 'POST')
+export const termsAndConditions = createApiThunkPublic('termsAndConditions', 'user/auth/settings?type=terms-and-conditions', 'GET')
+
 export const adminProfile = createApiThunkPrivate('adminProfile', '/admin/authorization/profile', 'GET')
 export const adminChangePassword = createApiThunkPrivate('adminChangePassword', '/admin/authorization/change-password', 'POST')
 export const verifyEmail = createApiThunkPublic('verifyEmail', '/admin/authorization/forgot-password', 'POST')

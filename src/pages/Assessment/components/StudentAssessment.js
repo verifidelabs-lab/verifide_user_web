@@ -536,7 +536,7 @@ const StudentAssessment = () => {
                 </div>
               ))
             ) : (
-              <div className="col-span-full flex justify-center items-center h-40">
+              <div className="col-span-full flex justify-center items-center ">
                 <div className="w-1/3 text-center glassy-card p-6 rounded-xl shadow-md">
                   <NoDataFound />
                 </div>
