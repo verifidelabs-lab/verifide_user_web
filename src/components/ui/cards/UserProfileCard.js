@@ -60,7 +60,6 @@ const UserProfileCard = ({
 
           image:
             profile_picture_url ||
-            user?.profile_picture_url ||
             "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
           stats: {
             first: {
@@ -143,6 +142,7 @@ const UserProfileCard = ({
         <img
           src={displayData.image}
           alt={displayData.title}
+          key={displayData.image}
           // onError={(e) => (e.currentTarget.src = displayData.errorImage)}
           onError={(e) => {
             e.currentTarget.onerror = null;
@@ -163,7 +163,9 @@ const UserProfileCard = ({
         <h2 className="text-lg font-semibold glassy-text-primary truncate">
           {displayData.title}
         </h2>
-        <p className="text-sm glassy-text-secondary truncate">{displayData.subtitle}</p>
+        <p className="text-sm glassy-text-secondary truncate">
+          {displayData.subtitle}
+        </p>
         <p className="text-sm glassy-text-secondary mt-2 line-clamp-2">
           {displayData.description}
         </p>

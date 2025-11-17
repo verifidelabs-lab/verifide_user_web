@@ -212,6 +212,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               alt="Profile"
               onError={handleImageError}
               className="w-full h-full object-cover"
+              key={data?.personalInfo?.profile_picture_url}
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20">
               <BsPencil className="text-white text-lg" />

@@ -20,6 +20,7 @@ const PersonCard = ({
     userConnection,
     user_path,
   } = person;
+  // console.log("PersonCard person data:",profile_picture_url );
   const subtitle =
     user_path === "Companies"
       ? person?.industry_details?.[0] || "Industry Not specified"
@@ -30,9 +31,9 @@ const PersonCard = ({
   const displayName = name || `${first_name || ""} ${last_name || ""}`;
   const displayImage =
     (logo_url && logo_url.trim()) ||
-    (profile_picture_url && profile_picture_url.trim()) ||
+    (profile_picture_url) ||
     DEFAULT_AVATAR;
-
+console.log("PersonCard displayImage:",displayImage ,first_name, last_name);
   const connectionActive = userConnection || isConnected;
 
   const buttonClasses = connectionActive

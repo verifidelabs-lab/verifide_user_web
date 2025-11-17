@@ -179,6 +179,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   {isUserData.personalInfo?.profile_picture_url ? (
                     <img
                       src={isUserData.personalInfo?.profile_picture_url}
+                      key={isUserData.personalInfo?.profile_picture_url}
                       alt="user"
                       className="w-8 h-8 rounded-full border"
                     />

@@ -88,6 +88,7 @@ const CompanyDetails = () => {
           }
           alt="Company Banner"
           className="w-full h-full object-cover"
+          key={agencyData?.banner}
           onError={(e) => {
             e.currentTarget.src =
               "https://via.placeholder.com/1200x300?text=Company+Banner";

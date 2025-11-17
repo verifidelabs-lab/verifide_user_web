@@ -90,6 +90,7 @@ const PostDetailsPage = () => {
               src={postData.userData?.profile_picture_url || "/default-profile.png"}
               alt={postData.userData?.name || "User"}
               className="w-12 h-12 rounded-full object-cover"
+              key={postData.userData?.profile_picture_url}
             />
             <div className="flex-1">
               <h3 className="font-semibold">{postData.userData?.name || "Unknown"}</h3>
@@ -117,6 +118,7 @@ const PostDetailsPage = () => {
                       <img
                         src={url}
                         alt={`Post media ${index + 1}`}
+                        key={url}
                         className="w-full h-full object-contain"
                         onError={(e) => { e.target.src = "/placeholder-image.png"; }}
                       />

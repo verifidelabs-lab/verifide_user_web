@@ -203,6 +203,7 @@ const Header = ({ adminProfileData, companiesProfileData, instituteProfileData, 
               <img
                 src={profileData.logo_url}
                 alt="User Logo"
+                key={profileData.logo_url}
                 className="w-8 h-8 rounded-full object-cover"
                 onError={(e) => {
                   e.currentTarget.onerror = null; // prevent infinite loop

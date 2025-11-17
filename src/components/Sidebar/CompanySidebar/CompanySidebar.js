@@ -394,6 +394,7 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                 <div className="w-12 h-12 rounded-full glassy-card flex items-center justify-around text-lg overflow-hidden font-semibold text-zinc-600">
                   <img
                     src={profileData?.logo_url}
+                    key={profileData?.logo_url}
                     alt="profile logo"
                     onError={(e) => {
                       e.currentTarget.onerror = null;

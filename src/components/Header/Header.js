@@ -53,7 +53,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
   const navigate = useNavigate();
   const { profileImage } = useProfileImage();
   const imageToDisplay =
-    profileImage || profileData?.personalInfo?.profile_picture_url;
+      profileData?.personalInfo?.profile_picture_url;
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
   const [isInstitutionDropdownOpen, setIsInstitutionDropdownOpen] =
@@ -422,6 +422,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                     src={imageToDisplay}
                     alt="User"
                     className="w-8 h-8 rounded-full object-cover"
+                    key={imageToDisplay}
                   />
                 ) : (
                   <span className="w-8 h-8 rounded-full border flex justify-center items-center glassy-card text-zinc-600 overflow-hidden">
@@ -506,6 +507,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                 <img
                                   src={company.logo_url}
                                   alt={`${company.name} logo`}
+                                  key={company.logo_url}  
                                   className="w-6 h-6 rounded-full object-cover border border-[var(--border-color)]"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
@@ -583,6 +585,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                                 <img
                                   src={company.logo_url}
                                   alt={`${company.name} logo`}
+                                  key={company.logo_url}
                                   className="w-6 h-6 rounded-full object-cover border border-[var(--border-color)]"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;

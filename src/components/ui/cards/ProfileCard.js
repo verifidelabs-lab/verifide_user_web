@@ -31,6 +31,7 @@ const ProfileCard = ({ data = {} }) => {
         <div className="flex-shrink-0">
           <img
             src={imageToDisplay}
+            key={imageToDisplay}
             alt="profile"
             className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border border-[rgba(255,255,255,0.1)]"
             onError={(e) => {

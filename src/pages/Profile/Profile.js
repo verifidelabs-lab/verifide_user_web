@@ -210,7 +210,7 @@ const validationRules = {
       validate: (value) => value.length >= 10 && value.length <= 500,
       message: "Professional bio must be between 10-500 characters",
     },
-    username: { required: true, message: "username  is required" },
+    // username: { required: true, message: "username  is required" },
     "address.address_line_1": {
       required: true,
       validate: (value) => value.length <= 100,
@@ -1496,7 +1496,7 @@ const Profile = ({ profileData }) => {
                     title="Select Your Preview"
                     userData={{
                       userId: profileInfo._id,
-                      username: profileInfo.personalInfo.username,
+                      username: profileInfo?.personalInfo?.username,
                     }}
                   />
                 </div>
