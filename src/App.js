@@ -31,10 +31,9 @@ import CompanyInstituteView from "./pages/ProfileView/CompanyInstituteView";
 import { ThemeContext } from "./context/ThemeContext";
 import { ROLE_CODES } from "./context/GlobalKeysContext";
 import { TourProvider } from "./context/TourContext";
+import TermsAndConditions from "./pages/Terms & Conditions/TermsAndConditions";
 
 const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
-
-
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const location = useLocation();
@@ -77,8 +76,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-
-
 // CompanyPrivateRoute for company panel
 const CompanyPrivateRoute = ({ component: Component, ...rest }) => {
   const isUserAuthenticated = getCookie("VERIFIED_TOKEN");
@@ -117,7 +114,6 @@ const App = () => {
     <div className="glassy-app">
       <Router>
         <Routes>
-
           {/* Root redirect */}
           <Route
             path="/"
@@ -139,6 +135,15 @@ const App = () => {
               </PublicRoute>
             }
           />
+          <Route
+            path="/terms-and-conditions"
+            element={
+              <PublicRoute>
+                  <TermsAndConditions />
+              </PublicRoute>
+            }
+          />
+
           <Route
             path="/company/login"
             element={
@@ -192,7 +197,14 @@ const App = () => {
           />
 
           {/* Private User Routes */}
-          <Route path="/user/*" element={<TourProvider><PrivateRoute component={Layout} /></TourProvider>} />
+          <Route
+            path="/user/*"
+            element={
+              <TourProvider>
+                <PrivateRoute component={Layout} />
+              </TourProvider>
+            }
+          />
           <Route
             path="/education-details"
             element={<PrivateRoute component={EducationDetails} />}

@@ -50,6 +50,7 @@ const SignUp = () => {
     confirmPassword: "",
     first_name: "",
     last_name: "",
+    checkbox: false,
   });
 
   useEffect(() => {
@@ -88,7 +89,10 @@ const SignUp = () => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = "Please enter a valid email address";
     }
-
+    // ⭐ NEW → Terms & Conditions Validation
+    if (!formData.checkbox) {
+      newErrors.checkbox = "You must agree to the terms & conditions";
+    }
     // if (!formData.username?.trim()) {
     //     newErrors.username = 'Username is required'
     // } else if (formData.username.trim().length < 3) {
@@ -346,8 +350,8 @@ const SignUp = () => {
     } catch (error) {
       toast.error(
         error?.message ||
-        error ||
-        "Failed to resend verification code. Please try again."
+          error ||
+          "Failed to resend verification code. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -523,10 +527,7 @@ const SignUp = () => {
               alt="Login illustration"
               className="w-full h-full object-cover"
             />
-
           </div>
-
-
         </div>
 
         <div className="w-full md:w-1/2 flex items-center justify-center p-6">
@@ -617,10 +618,13 @@ const SignUp = () => {
                         onChange={(e) => handleOtpChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
                         disabled={isSubmitting}
-                        className={`w-10 h-10 sm:w-12 sm:h-12 text-center text-lg sm:text-xl glassy-card border-2 rounded-lg focus:ring-2 focus:ring-blue-300/30 outline-none transition-all duration-200 ${otpError
-                          ? "border-red-500 focus:border-red-500"
-                          : "border-blue-500 focus:border-purple-300"
-                          } ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                        className={`w-10 h-10 sm:w-12 sm:h-12 text-center text-lg sm:text-xl glassy-card border-2 rounded-lg focus:ring-2 focus:ring-blue-300/30 outline-none transition-all duration-200 ${
+                          otpError
+                            ? "border-red-500 focus:border-red-500"
+                            : "border-blue-500 focus:border-purple-300"
+                        } ${
+                          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                       />
                     ))}
                   </div>
@@ -631,7 +635,9 @@ const SignUp = () => {
                       variant="primary"
                       type="submit"
                       className="w-full mb-4 sm:w-auto px-6"
-                      disabled={isSubmitting || otp.some((digit) => digit === "")}
+                      disabled={
+                        isSubmitting || otp.some((digit) => digit === "")
+                      }
                     >
                       {isSubmitting ? "Verifying..." : "Verify Email"}
                     </Button>
@@ -645,10 +651,11 @@ const SignUp = () => {
                         type="button"
                         onClick={handleResend}
                         disabled={isResendDisabled || isSubmitting}
-                        className={`font-medium ${isResendDisabled || isSubmitting
-                          ? "glassy-text-secondary cursor-not-allowed"
-                          : "glassy-text-primary hover:text-purple-800"
-                          }`}
+                        className={`font-medium ${
+                          isResendDisabled || isSubmitting
+                            ? "glassy-text-secondary cursor-not-allowed"
+                            : "glassy-text-primary hover:text-purple-800"
+                        }`}
                       >
                         {isSubmitting ? "Sending..." : "Resend"}
                         {isResendDisabled &&
@@ -670,7 +677,6 @@ const SignUp = () => {
                     </button>
                   </div>
                 </form>
-
               </div>
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
@@ -749,6 +755,44 @@ const SignUp = () => {
                     disabled={isSubmitting}
                   />
                 </div>
+                <div className="flex flex-col mt-4 p-2">
+                  <div className="flex items-center gap-2">
+                    <CustomInput
+                      label=""
+                      name="checkbox"
+                      type="checkbox"
+                      checked={formData.checkbox}
+                      onChange={(e) =>
+                        handleChange("checkbox", e.target.checked)
+                      }
+                      className="w-4 h-4 cursor-pointer"
+                      disabled={isSubmitting}
+                    />
+
+                    <label
+                      htmlFor="checkbox"
+                      className="text-sm glassy-text-primary cursor-pointer"
+                      onClick={() =>
+                        handleChange("checkbox", !formData.checkbox)
+                      }
+                    >
+                      I agree to the{" "}
+                      <Link
+                        to="/terms-and-conditions"
+                        className="text-blue-500 underline hover:text-blue-600"
+                      >
+                        Terms & Conditions
+                      </Link>
+                    </label>
+                  </div>
+
+                  {errors.checkbox && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.checkbox}
+                    </p>
+                  )}
+                </div>
+
                 <div className="w-full flex justify-center item-center ">
                   <Button
                     type="submit"

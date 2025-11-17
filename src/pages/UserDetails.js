@@ -147,7 +147,9 @@ const UserDetails = () => {
   if (!userData)
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="glassy-text-secondary text-xl">No profile data found</div>
+        <div className="glassy-text-secondary text-xl">
+          No profile data found
+        </div>
       </div>
     );
 
@@ -259,7 +261,9 @@ const UserDetails = () => {
             {/* About Section */}
             {personalInfo.summary && (
               <div className=" rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold glassy-text-primary mb-4">About</h2>
+                <h2 className="text-xl font-bold glassy-text-primary mb-4">
+                  About
+                </h2>
                 <p className="glassy-text-primary">{personalInfo.summary}</p>
               </div>
             )}
@@ -303,7 +307,9 @@ const UserDetails = () => {
                         {exp.industryName}
                       </p>
                       {exp.description && (
-                        <p className="glassy-text-primary mt-2">{exp.description}</p>
+                        <p className="glassy-text-primary mt-2">
+                          {exp.description}
+                        </p>
                       )}
                       {exp.skills_acquired &&
                         exp.skills_acquired.length > 0 && (
@@ -363,9 +369,13 @@ const UserDetails = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold glassy-text-primary">
+                      {/* <h3 className="font-semibold glassy-text-primary">
+                        {edu.institution}
+                      </h3> */}
+                      <h3 className="font-semibold glassy-text-primary break-words whitespace-normal">
                         {edu.institution}
                       </h3>
+
                       <p className="glassy-text-primary">
                         {edu.degree} - {edu.field_of_studies}
                       </p>
@@ -374,7 +384,9 @@ const UserDetails = () => {
                         {formatDate(edu.end_date)}
                       </p>
                       {edu.description && (
-                        <p className="glassy-text-primary mt-2">{edu.description}</p>
+                        <p className="glassy-text-primary mt-2">
+                          {edu.description}
+                        </p>
                       )}
                       {edu.skills_acquired &&
                         edu.skills_acquired.length > 0 && (
@@ -397,7 +409,9 @@ const UserDetails = () => {
 
             {/* Projects Section */}
             <div className=" rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold glassy-text-primary mb-4">Projects</h2>
+              <h2 className="text-xl font-bold glassy-text-primary mb-4">
+                Projects
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {projects.map((project, index) => (
                   <div

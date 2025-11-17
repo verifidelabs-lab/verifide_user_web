@@ -95,7 +95,7 @@ const CommonSection = ({
                           <span className="bg-[var(--bg-button)] rounded-full md:w-8 md:h-8 w-6 h-6 flex items-center justify-center font-medium text-sm transition-colors duration-300">
                             <PiGraduationCapLight className="hover:scale-110 transition-transform duration-300" />
                           </span>
-                          <span className="hover:text-blue-600 transition-colors duration-300 md:text-base text-xs truncate break-words capitalize">
+                          <span className="hover:text-blue-600 transition-colors duration-300 md:text-base text-xs  break-words break-all capitalize">
                             {title === "EDUCATION" ? record.institution_id?.name : title === "EXPERIENCE" ? record?.company_id?.name : record?.name}
                           </span>
                           <span>

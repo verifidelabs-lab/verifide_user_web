@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { LuChevronRight } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
-import { termsAndConditions } from "../../redux/Users/userSlice";
 import { FaChevronRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { termsAndConditions } from "../../redux/slices/authSlice";
 
 // Static fallback data
 const staticTermsData = {
@@ -71,7 +71,16 @@ const staticTermsData = {
 const TermsAndConditions = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.user);
-  const apiTermsData = selector?.termsAndConditionsData?.data?.data;
+  const apiTermsData = selector?.termsAndConditionsData;
+  console.log("apiTermsData", apiTermsData);
+  // const selector = useSelector((state) => state.user);
+  // const apiTermsData = selector?.termsAndConditionsData?.data?.data;
+
+  // const termsData =
+  //   apiTermsData && apiTermsData.tableOfContents?.length > 0
+  //     ? apiTermsData
+  //     : staticTermsData;
+
   const [activeSection, setActiveSection] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -124,31 +133,6 @@ const TermsAndConditions = () => {
               const isPast = item?.display_order < activeSection;
 
               return (
-                // <li
-                //   key={index}
-                //   className={`
-                //                         text-sm font-medium capitalize rounded-lg px-3 py-2.5 cursor-pointer transition-all duration-200
-                //                         ${
-                //                           isActive
-                //                             ? "glassy-text-primary text-blue-600 border-l-2 border-blue-600"
-                //                             : ""
-                //                         }
-                //                         ${
-                //                           isPast
-                //                             ? "glassy-text-secondary"
-                //                             : "glassy-text-primary"
-                //                         }
-                //                         ${
-                //                           !isActive && !isPast
-                //                             ? "hover:glassy-card hover:text-blue-600"
-                //                             : ""
-                //                         }
-                //                     `}
-                //   onClick={() => handleSectionClick(item.display_order)}
-                // >
-                //   <span className="font-semibold">{item.display_order}.</span>{" "}
-                //   {item.title}
-                // </li>
                 <li
                   key={index}
                   onClick={() => handleSectionClick(item.display_order)}
@@ -174,44 +158,48 @@ const TermsAndConditions = () => {
 
         {/* Main Content */}
         <div className="flex-1 space-y-6">
-         
           {/* Breadcrumb */}
           <nav className="flex items-center justify-between space-x-2 text-sm">
-           <div className="flex items-center">
-             <span className="glassy-text-primary font-medium">Settings</span>
-            <LuChevronRight className="glassy-text-secondary" size={16} />
-            <span className="text-blue-600 font-semibold">
-              Terms And Conditions
-            </span>
-           </div>
-             <button
-            onClick={() => navigate("/user/feed")}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-3 text-sm font-medium rounded-lg glassy-button transition-colors"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
+            <div className="flex items-center">
+              <span className="glassy-text-primary font-medium">Settings</span>
+              <LuChevronRight className="glassy-text-secondary" size={16} />
+              <span className="text-blue-600 font-semibold">
+                Terms And Conditions
+              </span>
+            </div>
+            <button
+              onClick={() => navigate("/user/feed")}
+              className="inline-flex items-center gap-2 px-4 py-2 mb-3 text-sm font-medium rounded-lg glassy-button transition-colors"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Back to Feed
-          </button>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              Back to Feed
+            </button>
           </nav>
 
           {/* Header Card */}
           <div className="bg-gradient-to-br from-blue-600 to-blue-700 glassy-card glassy-text-primary p-10 rounded-2xl shadow-lg">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-3xl font-bold mb-4">{termsData?.title}</h1>
-              <p className="text-blue-50 text-base leading-relaxed break-words break-all ">
+              {/* <p className="text-blue-50 text-base leading-relaxed break-words break-all ">
                 {termsData?.description}
-              </p>
+              </p> */}
+              <div
+                className="text-blue-50 text-base leading-relaxed break-words break-all"
+                dangerouslySetInnerHTML={{ __html: termsData?.description }}
+              />
+
               <div className="mt-6 inline-flex items-center gap-2 glassy-card/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm">
                 <svg
                   className="w-4 h-4"
@@ -233,39 +221,8 @@ const TermsAndConditions = () => {
               </div>
             </div>
           </div>
-
-          {/* Content Sections */}
-          {/* <div className="glassy-card rounded-2xl shadow-sm border border-gray-200 p-8">
-            <div className="space-y-10 max-w-4xl">
-              {termsData?.tableOfContents?.map((item, index) => (
-                <div
-                  key={index}
-                  id={`section-${item.display_order}`}
-                  className="scroll-mt-24 transition-all duration-300"
-                >
-                  <div className="flex items-start gap-2 mb-4">
-                    <div className="flex-shrink-0 w-10 h-10 glassy-text-primary rounded-lg flex items-center justify-center font-bold">
-                      {item.display_order}.
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-xl font-bold glassy-text-primary mb-3">
-                        {item.title}
-                      </h2>
-                      <div
-                        className="prose prose-sm glassy-text-primary leading-relaxed break-words break-all  space-y-3"
-                        dangerouslySetInnerHTML={{ __html: item.content }}
-                      />
-                    </div>
-                  </div>
-                  {index < termsData?.tableOfContents?.length - 1 && (
-                    <hr className="mt-8 border-gray-200" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div> */}
           <div className="glassy-card rounded-2xl shadow-sm border border-gray-200 p-8">
-            <div className="space-y-10 max-w-4xl">
+            <div className="space-y-10 ">
               {termsData?.tableOfContents?.map((item, index) => (
                 <div
                   key={index}
@@ -286,7 +243,7 @@ const TermsAndConditions = () => {
                         {item.title}
                       </h2>
                       <div
-                        className="prose prose-sm glassy-text-secondary leading-relaxed break-words break-all  space-y-3"
+                        className="prose prose-sm glassy-text-secondary leading-relaxed break-words break-all space-y-3"
                         dangerouslySetInnerHTML={{ __html: item.content }}
                       />
                     </div>

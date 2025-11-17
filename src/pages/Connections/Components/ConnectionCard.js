@@ -20,7 +20,7 @@ const ConnectionsCard = ({
         <div className="flex-1 min-w-0">
           <h3
             onClick={() => handleUserClick(user)}
-            className="font-semibold text-base sm:text-lg glassy-text-primary cursor-pointer hover:text-[var(--accent-color)] transition-colors truncate"
+            className="font-semibold text-base sm:text-lg glassy-text-primary cursor-pointer transition-colors truncate hover:underline underline-offset-2"
           >
             {user?.name}
           </h3>
