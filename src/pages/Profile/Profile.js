@@ -96,11 +96,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
-import { BiChevronLeft, BiChevronRight, BiDownload } from 'react-icons/bi';
-import { Briefcase, Diamond, FileText, GraduationCap, Settings } from 'lucide-react';
-import OpenToWorkSelect from '../../components/ui/Button/ButtonWithIcon';
-import ResumeViewSelection from './components/ResumeViewSelection';
-
+import { BiChevronLeft, BiChevronRight, BiDownload } from "react-icons/bi";
+import {
+  Briefcase,
+  Diamond,
+  FileText,
+  GraduationCap,
+  Settings,
+} from "lucide-react";
+import OpenToWorkSelect from "../../components/ui/Button/ButtonWithIcon";
+import ResumeViewSelection from "./components/ResumeViewSelection";
+import { useNavigate } from "react-router-dom";
 
 const validationRules = {
   education: {
@@ -339,6 +345,7 @@ const Profile = ({ profileData }) => {
     }),
     []
   );
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { validateForm } = useValidation();
   const selector = useSelector((state) => state.educations);
@@ -1051,14 +1058,47 @@ const Profile = ({ profileData }) => {
     }
   };
 
+  // const handleSelection = async (selected) => {
+  //   try {
+  //     if (selected === "education") {
+  //       handleOpenModal("education");
+  //     }
+
+  //     else{
+  //     const res = await dispatch(
+  //       updateFrameStatus({ frame_status: selected })
+  //     ).unwrap();
+  //     toast.success(res?.message);
+  //     setFrameStatus(selected);
+  //     dispatch(getProfile());}
+  //   } catch (error) {
+  //     toast.error(error);
+  //   }
+  // };
   const handleSelection = async (selected) => {
     try {
+      // Open Education Modal
+      console.log("selected xdd"+selected);
+      
+      if (selected === "education") {
+        handleOpenModal("education");
+        return; // stop further execution
+      }
+
+      // Open Work Modal
+      if (selected === "experience") {
+        handleOpenModal("experience");
+        return; // stop further execution
+      }
+
+      else{// Otherwise update frame status normally
       const res = await dispatch(
         updateFrameStatus({ frame_status: selected })
       ).unwrap();
+
       toast.success(res?.message);
       setFrameStatus(selected);
-      dispatch(getProfile());
+      dispatch(getProfile());}
     } catch (error) {
       toast.error(error);
     }
@@ -1266,7 +1306,6 @@ const Profile = ({ profileData }) => {
   ];
   const [openResumeSelection, setOpenResumeSelection] = useState(false);
 
-
   return (
     <>
       {/* <VerifiedLoader/> */}
@@ -1291,7 +1330,13 @@ const Profile = ({ profileData }) => {
         <div className="flex flex-col md:flex-row w-full mx-auto gap-4">
           <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
             <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
-              <span className="glassy-text-secondary">Home</span>
+              <span
+                className="glassy-text-secondary cursor-pointer"
+                onClick={() => navigate(-1)}
+              >
+                Home
+              </span>
+
               <span className="glassy-text-secondary">›</span>
               <span className="font-medium text-blue-600">Profile</span>
             </nav>
@@ -1301,118 +1346,6 @@ const Profile = ({ profileData }) => {
               style={{ background: "/logo.png" }}
             >
               <div className="w-full mx-auto space-y-4 overflow-y-auto">
-                {/* <div className="overflow-hidden glassy-card border border-gray-200 rounded-lg" style={{
-                  backgroundImage: 'url("/Group.png")',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-                >
-                  <div className="p-4">
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between"  >
-                      <ProfileCardData data={profileInfo} setFrameStatus={setFrameStatus} frameStatus={frameStatus} handleSelection={handleSelection} />
-                      <div className="lg:text-right border   p-2 rounded-lg border-[rgba(255, 255, 255, 0.1)] relative group">
-                        <div className="flex items-center justify-between mb-3 ">
-                          <h3 className="xl:text-lg lg:text-base font-semibold glassy-text-primary">
-                            Badges Earned
-                          </h3>
-                          <button className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
-                          >
-                            How it works?
-                          </button>
-                        </div>
-                        <div className="flex flex-wrap justify-end gap-2">
-                          {badges.map((badge, index) => (
-                            <Badge key={index} src={badge.src} alt={badge.alt} />
-                          ))}
-                        </div>
-                        <div
-                          className=" glassy-card-header md:right-[20%] right-[6%] z-10 mt-2 w-96 rounded-md glassy-text-primary p-4 shadow-lg border border-[#D3D3D3] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"   >
-                          <h4 className="text-start text-[#FFFFFF] font-semibold mb-2">How it works?</h4>
-                          <ul className='text-[#FFFFFF] text-start font-normal text-sm'>
-                            <li>🚀 Complete Deliveries: Get 1 badge for every 10 on-time deliveries</li>
-                            <li>🧠 Training Sessions: Earn a badge for attending training events</li>
-                            <li>🥇 Top Performer: Get a gold badge for consistent high ratings</li>
-                            <li>🔄 Stay Active: Receive badges for weekly logins or daily check-ins</li>
-
-                          </ul>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="px-6 pb-6" >
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2">
-                      <div className="exp-edu-card " data-aos="fade-right" data-aos-duration="1500">
-                        <h2 className="md:mb-1 lg:mb-2 xl:text-base lg:text-[14px] md:text-[12px]  font-semibold glassy-text-primary">
-                          LATEST WORK EXPERIENCE
-                        </h2>
-                        <ExpEduCard
-                          logo={profileInfo?.latestCompany?.logo_url || "/Img/Profile/Frame (1).png"}
-                          title={
-                            profileInfo?.latestCompany?.profileName ||
-                            "Add your latest work experience"
-                          }
-                          company={
-                            profileInfo?.latestCompany?.companyName ||
-                            "Click the + button to add details about your job role and company"
-                          }
-                          duration={
-                            profileInfo?.latestCompany?.start_date && profileInfo?.latestCompany?.end_date
-                              ? formatDateRange(profileInfo.latestCompany.start_date, profileInfo.latestCompany.end_date)
-                              : "Start and end date not added"
-                          }
-                          location={profileInfo?.latestCompany?.headquarters?.address_line_1 || "Location not specified"}
-                        />
-                      </div>
-
-                      <div className="exp-edu-card " data-aos="fade-up" data-aos-duration="1500">
-                        <h2 className="md:mb-1 lg:mb-2 xl:text-base lg:text-[14px] md:text-[12px] font-semibold glassy-text-primary">
-                          LATEST EDUCATION
-                        </h2>
-                        <ExpEduCard
-                          logo={profileInfo?.latestEducation?.logo_url || "/Img/Profile/Frame.png"}
-                          title={
-                            profileInfo?.latestEducation?.institution ||
-                            "Add your latest education details"
-                          }
-                          company={
-                            profileInfo?.latestEducation?.field_of_studies ||
-                            "Click the + button to include your course and department"
-                          }
-                          duration={
-                            profileInfo?.latestEducation?.start_date && profileInfo?.latestEducation?.end_date
-                              ? formatDateRange(profileInfo.latestEducation.start_date, profileInfo.latestEducation.end_date)
-                              : "Start and end date not added"
-                          }
-                        // location="Grade not added"
-                        />
-                      </div>
-
-
-                      <div className="lg:col-span-1 md:col-span-2 mt-6 lg:mt-0" data-aos="fade-left" data-aos-duration="1500">
-                        <h2 className="md:mb-1 lg:mb-2 lg:text-lg md:text-[14px] font-semibold glassy-text-primary">
-                          Top Skills
-                        </h2>
-                        <div className="flex flex-wrap gap-2">
-                          {profileInfo?.topSkills?.data.length > 0 ? (
-                            <SkillTag
-                              // key={index}
-                              skills={profileInfo?.topSkills?.data}
-                              // variant={item.variant}
-                              limit={3}
-
-                            />
-                          ) : (<p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
-                            🚀 No skills added yet. Verify your education and update your skills to
-                            showcase your expertise!
-                          </p>)}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
                 <div className="glassy-card p-4 flex flex-col md:flex-row items-start justify-center gap-6 w-full overflow-x-hidden">
                   {/* Left Card */}
                   <div
@@ -1443,9 +1376,7 @@ const Profile = ({ profileData }) => {
                           }`}
                         </h1>
                         <p className="glassy-text-secondary text-sm md:text-base break-words">
-                          {profileInfo?.personalInfo?.headline ||
-                            "Management Executive at Zara"}{" "}
-                          |{" "}
+                          {profileInfo?.personalInfo?.headline || "N/A"} |{" "}
                           {profileInfo?.personalInfo?.address?.city?.name ||
                             "N/A"}
                           ,{" "}
@@ -1458,10 +1389,14 @@ const Profile = ({ profileData }) => {
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       {profileInfo?.topSkills?.data?.length > 0 ? (
-                        <SkillTag skills={profileInfo?.topSkills?.data} limit={3} />
+                        <SkillTag
+                          skills={profileInfo?.topSkills?.data}
+                          limit={3}
+                        />
                       ) : (
                         <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
-                          🚀 No skills added yet. Verify your education and update your skills to showcase your expertise!
+                          🚀 No skills added yet. Verify your education and
+                          update your skills to showcase your expertise!
                         </p>
                       )}
                     </div>

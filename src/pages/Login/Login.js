@@ -40,6 +40,7 @@ const Login = () => {
   const { formData, errors, setErrors, handleChange } = useFormHandler({
     userName: "",
     password: "",
+    checkbox: false,
   });
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -242,7 +243,9 @@ const Login = () => {
     } else if (formData.confirmPassword !== formData.password) {
       newErrors.confirmPassword = "Passwords do not match";
     }
-
+    if (!formData.checkbox) {
+      newErrors.checkbox = "You must agree to the Terms & Conditions";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData, setErrors]);
@@ -276,8 +279,8 @@ const Login = () => {
         // } else if (!response?.data?.user?.first_experience_added) {
         //   navigate("/experience-details");
         // } else {
-          // navigate(`/user/feed`);
-          navigate(redirectUrl, { replace: true });
+        // navigate(`/user/feed`);
+        navigate(redirectUrl, { replace: true });
         // }
       } else {
         toast.error(response?.message || "Please try again later.");
@@ -323,7 +326,6 @@ const Login = () => {
             alt="Login illustration"
             className="w-full h-full object-cover"
           />
-
         </div>
 
         <div
@@ -389,17 +391,17 @@ const Login = () => {
                   "disabled_user",
                   "server_error",
                 ].includes(googleLoginObject.event) && (
-                    <div className="flex items-center space-x-3 p-4 bg-yellow-50 rounded-lg shadow-sm mt-4">
-                      {/* Warning symbol icon */}
-                      <span role="img" aria-label="warning" className="text-2xl">
-                        ⚠️
-                      </span>
-                      {/* The message from the Google login object */}
-                      <p className="text-base glassy-text-primary font-medium">
-                        {googleLoginObject.message}
-                      </p>
-                    </div>
-                  )}
+                  <div className="flex items-center space-x-3 p-4 bg-yellow-50 rounded-lg shadow-sm mt-4">
+                    {/* Warning symbol icon */}
+                    <span role="img" aria-label="warning" className="text-2xl">
+                      ⚠️
+                    </span>
+                    {/* The message from the Google login object */}
+                    <p className="text-base glassy-text-primary font-medium">
+                      {googleLoginObject.message}
+                    </p>
+                  </div>
+                )}
 
                 <div data-aos="fade-up" data-aos-delay="200">
                   <CustomInput
@@ -514,11 +516,11 @@ const Login = () => {
                   data-aos="fade-up"
                   data-aos-delay="100"
                 >
-                  <h1 className="lg:text-4xl md:text-2xl text-xl font-semibold text-center pt-5 pb-2 instrument-sans">
+                  <h1 className="lg:text-4xl md:text-2xl text-xl glassy-text-primary font-semibold text-center pt-5 pb-2 instrument-sans">
                     Head Start Your CAREER
                   </h1>
 
-                  <p className="glassy-text-primary text-sm text-center pb-10 font-normal transition-colors duration-300 hover:text-[#444] flex items-center justify-center max-w-md">
+                  <p className="glassy-text-secondary text-sm text-center pb-10 font-normal transition-colors duration-300 hover:text-[#444] flex items-center justify-center max-w-md">
                     {googleLoginObject.message}
                   </p>
                 </div>
@@ -526,7 +528,7 @@ const Login = () => {
                 <div data-aos="fade-up" data-aos-delay="200">
                   <CustomInput
                     ref={userNameRef}
-                    label="User Id"
+                    label="User Name"
                     name="username"
                     placeholder="Enter your Username"
                     value={formData?.username}
@@ -571,6 +573,47 @@ const Login = () => {
                     onKeyPress={handleKeyPress}
                     required={true}
                   />
+                </div>
+                {/* Terms & Conditions Checkbox */}
+                <div
+                  className="flex flex-col mt-4 p-2"
+                  data-aos="fade-up"
+                  data-aos-delay="300"
+                >
+                  <div className="flex items-center gap-2">
+                    <CustomInput
+                      label=""
+                      name="checkbox"
+                      type="checkbox"
+                      checked={formData.checkbox}
+                      onChange={(e) =>
+                        handleChange("checkbox", e.target.checked)
+                      }
+                      className="w-4 h-4 cursor-pointer"
+                    />
+
+                    <label
+                      htmlFor="checkbox"
+                      className="text-sm glassy-text-primary cursor-pointer"
+                      onClick={() =>
+                        handleChange("checkbox", !formData.checkbox)
+                      }
+                    >
+                      I agree to the{" "}
+                      <Link
+                        to="/terms-and-conditions"
+                        className="text-blue-500 underline hover:text-blue-600"
+                      >
+                        Terms & Conditions
+                      </Link>
+                    </label>
+                  </div>
+
+                  {errors.checkbox && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.checkbox}
+                    </p>
+                  )}
                 </div>
 
                 <div

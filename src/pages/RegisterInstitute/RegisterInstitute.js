@@ -1139,7 +1139,7 @@ const RegisterInstitute = () => {
                       (s) => String(s || "").trim() === ""
                     )}
                   >
-                    Add Specialty
+                    Add Speciality
                   </Button>
                 </div>
 
@@ -1152,7 +1152,7 @@ const RegisterInstitute = () => {
                           onChange={(e) =>
                             handleSpecialtyChange(index, e.target.value)
                           }
-                          placeholder="Enter specialty"
+                          placeholder="Enter speciality"
                         />
                         {errors.specialties && errors.specialties[index] && (
                           <p className="mt-1 text-sm text-red-600">

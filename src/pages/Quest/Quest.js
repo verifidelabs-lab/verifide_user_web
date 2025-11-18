@@ -230,128 +230,6 @@ const ShortsClone = () => {
     }
   };
 
-  // const handleSubmit = async () => {
-  //   let newErrors = {};
-
-  //   if (!formData?.userId && !formData?.identifier) {
-  //     newErrors.userId = "Please fill the User ID or Identifier";
-  //   }
-  //   if (formData?.identifier) {
-  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //     if (
-  //       !emailRegex.test(formData.identifier) &&
-  //       formData.identifier.length < 4
-  //     ) {
-  //       newErrors.identifier =
-  //         "Identifier must be a valid email or at least 4 characters long";
-  //     }
-  //   }
-
-  //   if (!formData?.remarks) {
-  //     newErrors.remarks = "Please provide a remark";
-  //   } else if (formData.remarks.length < 5) {
-  //     newErrors.remarks = "Remark must be at least 5 characters long";
-  //   } else if (formData.remarks.length > 100) {
-  //     newErrors.remarks = "Remark cannot exceed 100 characters";
-  //   }
-
-  //   if (Object.keys(newErrors).length > 0) {
-  //     setErrors(newErrors);
-  //     return;
-  //   }
-
-  //   try {
-  //     const res = await dispatch(
-  //       userRegisterOnQuest({ ...formData, quest_id: questData?._id })
-  //     ).unwrap();
-
-  //     toast.success(res?.message);
-  //     resetForm();
-  //     setIsModalOpen(false);
-
-  //     if (res) {
-  //       dispatch(
-  //         updateQuestViewCount({
-  //           questId: questData._id,
-  //           engagementCount: questData.engagement_count + 1,
-  //           isEngaged: true,
-  //         })
-  //       );
-  //     }
-  //   } catch (error) {
-  //     toast.error(error);
-  //   }
-  // };
-  // ✅ Corrected handleSubmit Function
-  // const handleSubmit = async () => {
-  //   let newErrors = {};
-  //   console.log("hey budy", formData);
-  //   if (!formData?.email) {
-  //     newErrors.email = "Email is required";
-  //   } else {
-  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //     if (!emailRegex.test(formData.email)) {
-  //       newErrors.email = "Please enter a valid email address";
-  //     }
-  //   }
-  //   // ✅ Validate Email or Identifier
-  //   if (!formData?.email && !formData?.identifier) {
-  //     newErrors.identifier = "Please fill either Email or User Identifier";
-  //   }
-
-  //   // ✅ Email format validation
-  //   if (formData?.email) {
-  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //     if (!emailRegex.test(formData.email)) {
-  //       newErrors.email = "Please enter a valid email address";
-  //     }
-  //   }
-  //   // ✅ Identifier format validation (if not email)
-  //   if (formData?.identifier && formData.identifier.length < 4) {
-  //     newErrors.identifier = "Identifier must be at least 4 characters long";
-  //   }
-
-  //   // ✅ Remarks validation
-  //   if (!formData?.remarks) {
-  //     newErrors.remarks = "Please provide a remark";
-  //   } else if (formData.remarks.length < 5) {
-  //     newErrors.remarks = "Remark must be at least 5 characters long";
-  //   } else if (formData.remarks.length > 100) {
-  //     newErrors.remarks = "Remark cannot exceed 100 characters";
-  //   }
-
-  //   // ✅ Stop if errors exist
-  //   if (Object.keys(newErrors).length > 0) {
-  //     setErrors(newErrors);
-  //     return;
-  //   }
-
-  //   try {
-  //     const res = await dispatch(
-  //       userRegisterOnQuest({
-  //         ...formData,
-  //         quest_id: questData?._id,
-  //       })
-  //     ).unwrap();
-
-  //     toast.success(res?.message || "Registered successfully!");
-  //     resetForm();
-  //     setIsModalOpen(false);
-
-  //     // ✅ Update engagement count locally
-  //     if (res) {
-  //       dispatch(
-  //         updateQuestViewCount({
-  //           questId: questData._id,
-  //           engagementCount: (questData.engagement_count || 0) + 1,
-  //           isEngaged: true,
-  //         })
-  //       );
-  //     }
-  //   } catch (error) {
-  //     toast.error(error?.message || "Failed to join quest");
-  //   }
-  // };
   const handleSubmit = async () => {
     let newErrors = {};
     console.log("👉 Submitting formData:", formData);
@@ -530,7 +408,7 @@ const ShortsClone = () => {
         )}
       </div>
 
-      <div className="flex md:flex-row flex-col justify-between items-center">
+      {/* <div className="flex md:flex-row flex-col justify-between items-center">
         <div
           className="flex gap-2 mb-8 overflow-hidden overflow-x-auto pb-2 scrollbar-hide"
           data-aos="fade-up"
@@ -557,6 +435,40 @@ const ShortsClone = () => {
           tabActive={activeTab2}
           setTabActive={setActiveTab2}
         />
+      </div> */}
+      <div className="flex flex-col md:flex-row mb-5 md:justify-between md:items-center gap-4">
+        {/* Tabs */}
+        <div
+          className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide whitespace-nowrap"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          {tabs.map(({ label, value, icon }) => (
+            <button
+              key={value}
+              onClick={() => setActiveTab(value)}
+              className={`px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 
+          whitespace-nowrap flex items-center gap-2
+          ${
+            activeTab === value
+              ? "bg-gradient-to-r from-blue-500 to-blue-300 glassy-text-primary shadow-md"
+              : "glassy-card glassy-text-primary hover:bg-[var(--bg-button-hover)] border border-[var(--border-color)]"
+          }`}
+            >
+              {icon}
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Dropdown */}
+        <div className="w-full md:w-auto">
+          <FilterDropdown
+            tabs={questTypes}
+            tabActive={activeTab2}
+            setTabActive={setActiveTab2}
+          />
+        </div>
       </div>
 
       {loading && (

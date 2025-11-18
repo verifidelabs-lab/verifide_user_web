@@ -1,112 +1,149 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { FaGraduationCap, FaRegStar } from 'react-icons/fa'
-import { ProgressItem, TitleValue } from '../../components/ui/Title Value/TitleValue'
-import { BiCheckCircle, BiMailSend, BiPhone, BiStar, BiUser } from 'react-icons/bi'
+import React, { useEffect, useRef, useState } from "react";
+import { FaGraduationCap, FaRegStar } from "react-icons/fa";
+import {
+  ProgressItem,
+  TitleValue,
+} from "../../components/ui/Title Value/TitleValue";
+import {
+  BiCheckCircle,
+  BiMailSend,
+  BiPhone,
+  BiStar,
+  BiUser,
+} from "react-icons/bi";
 import { GiNetworkBars } from "react-icons/gi";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import {
   addIdentityDocument,
-  assessmentsForSkills, declareResult, startAssessment, submitAnswer, updateIdentityDocument, verificationByOtp, verificationCenterDocumentDetails,
-  verificationCount, verificationDashboardCount, verificationTabCount,
+  assessmentsForSkills,
+  declareResult,
+  startAssessment,
+  submitAnswer,
+  updateIdentityDocument,
+  verificationByOtp,
+  verificationCenterDocumentDetails,
+  verificationCount,
+  verificationDashboardCount,
+  verificationTabCount,
   verifyMobByOtp,
   verifyRequest,
-} from '../../redux/Verification/Verification';
-import { toast } from 'sonner';
-import CategoryCard from '../../components/ui/cards/VerificationCategoryCard';
-import SkeletonCard from '../../components/Loader/CardLoader';
-import Modal from '../../components/ui/Modal/Modal';
-import CustomInput from '../../components/ui/Input/CustomInput';
-import useFormHandler from '../../components/hooks/useFormHandler';
-import { useNavigate } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
-import FilterSelect from '../../components/ui/Input/FilterSelect';
-import FileUpload from '../../components/ui/Image/ImageUploadWithSelect';
-import { arrayTransform, uploadImageDirectly, uploadPdfDirectly } from '../../components/utils/globalFunction';
-import { countries } from '../../redux/Global Slice/cscSlice';
-import { getProfile } from '../../redux/slices/authSlice';
-import Button from '../../components/ui/Button/Button';
-import { SkillsCard2 } from '../../components/ui/cards/Card';
+} from "../../redux/Verification/Verification";
+import { toast } from "sonner";
+import CategoryCard from "../../components/ui/cards/VerificationCategoryCard";
+import SkeletonCard from "../../components/Loader/CardLoader";
+import Modal from "../../components/ui/Modal/Modal";
+import CustomInput from "../../components/ui/Input/CustomInput";
+import useFormHandler from "../../components/hooks/useFormHandler";
+import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import FilterSelect from "../../components/ui/Input/FilterSelect";
+import FileUpload from "../../components/ui/Image/ImageUploadWithSelect";
+import {
+  arrayTransform,
+  uploadImageDirectly,
+  uploadPdfDirectly,
+} from "../../components/utils/globalFunction";
+import { countries } from "../../redux/Global Slice/cscSlice";
+import { getProfile } from "../../redux/slices/authSlice";
+import Button from "../../components/ui/Button/Button";
+import { SkillsCard2 } from "../../components/ui/cards/Card";
 
 const Verification = ({ headline }) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const selector = useSelector(state => state.verification)
-  const countriesSelector = useSelector(state => state.global)
-  const { verificationTabCountData: { data } } = selector ? selector : {}
-  const [verificationData, setVerificationData] = useState([])
-  const [verificationDashboardData, setVerificationDashboardData] = useState([])
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const selector = useSelector((state) => state.verification);
+  const countriesSelector = useSelector((state) => state.global);
+  const {
+    verificationTabCountData: { data },
+  } = selector ? selector : {};
+  const [verificationData, setVerificationData] = useState([]);
+  const [verificationDashboardData, setVerificationDashboardData] = useState(
+    []
+  );
 
-  const [activeTab, setActiveTab] = useState('categories');
-  const [loading, setLoading] = useState(false)
-  const [loading2, setLoading2] = useState(false)
-  const [otp, setOtp] = useState(Array(6).fill(''))
+  const [activeTab, setActiveTab] = useState("categories");
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [otp, setOtp] = useState(Array(6).fill(""));
 
-  const [modalState, setModalState] = useState({ isOpen: false, data: {}, tab: "", type: "" })
-  const [selectOption, setSelectOption] = useState([])
-  const [assessmentData, setAssessmentData] = useState([])
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    data: {},
+    tab: "",
+    type: "",
+  });
+  const [selectOption, setSelectOption] = useState([]);
+  const [assessmentData, setAssessmentData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { formData, handleChange, errors, setErrors, resetForm, setFormData } = useFormHandler({
-    email: "", otp: "", phone: "", skills: [], id_number: "",
-    "country_code": {
-      "name": "",
-      "dial_code": "",
-      "short_name": "",
-      "emoji": ""
-    }, token: ""
-  })
-  const [showAssessment, setShowAssessment] = useState(false)
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [selectedOptions, setSelectedOptions] = useState([])
-  const [qa, setQa] = useState(null)
-  const [isResultModal, setIsResultModal] = useState(false)
+  const { formData, handleChange, errors, setErrors, resetForm, setFormData } =
+    useFormHandler({
+      email: "",
+      otp: "",
+      phone: "",
+      skills: [],
+      id_number: "",
+      country_code: {
+        name: "",
+        dial_code: "",
+        short_name: "",
+        emoji: "",
+      },
+      token: "",
+    });
+  const [showAssessment, setShowAssessment] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [qa, setQa] = useState(null);
+  const [isResultModal, setIsResultModal] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60); // 60 seconds = 1 minute
   const [timerActive, setTimerActive] = useState(false);
-  const [frontImage, setFrontImage] = useState('')
-  const [backImage, setBackImage] = useState('')
-  const [isRejected, setIsRejected] = useState({})
-  const countryList = arrayTransform(countriesSelector?.countriesData?.data?.data || [])
-  const [isOtp, setIsOtp] = useState(false)
+  const [frontImage, setFrontImage] = useState("");
+  const [backImage, setBackImage] = useState("");
+  const [isRejected, setIsRejected] = useState({});
+  const countryList = arrayTransform(
+    countriesSelector?.countriesData?.data?.data || []
+  );
+  const [isOtp, setIsOtp] = useState(false);
   const inputRefs = useRef([]);
-  const [isActionButtonForId, setIsActionButtonForId] = useState(true)
-  const [isOpen, setIsOpen] = useState(false)
-  const [isOpenData, setIsOpenData] = useState(null)
-
+  const [isActionButtonForId, setIsActionButtonForId] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenData, setIsOpenData] = useState(null);
 
   const fetchTabData = () => {
-    dispatch(verificationTabCount())
-  }
+    dispatch(verificationTabCount());
+  };
 
   const fetchVerificationCount = async () => {
-    setLoading(true)
+    setLoading(true);
     let tab = {
-      tab: activeTab
-    }
+      tab: activeTab,
+    };
     try {
-      const res = await dispatch(verificationCount(tab)).unwrap()
-      setVerificationData(res?.data?.verifications || [])
-      setLoading(false)
+      const res = await dispatch(verificationCount(tab)).unwrap();
+      setVerificationData(res?.data?.verifications || []);
+      setLoading(false);
     } catch (error) {
-      toast.error(error)
-      setLoading(false)
+      toast.error(error);
+      setLoading(false);
     }
-  }
+  };
 
   const fetchVerificationDashboardData = async () => {
     try {
-      const res = await dispatch(verificationDashboardCount()).unwrap()
-      setVerificationDashboardData(res?.data)
+      const res = await dispatch(verificationDashboardCount()).unwrap();
+      setVerificationDashboardData(res?.data);
     } catch (error) {
-      toast.error(error || ' Failed to fetch data !')
+      toast.error(error || " Failed to fetch data !");
     }
-  }
+  };
 
   useEffect(() => {
-    fetchTabData()
-    fetchVerificationCount()
-    dispatch(countries())
-    fetchVerificationDashboardData()
+    fetchTabData();
+    fetchVerificationCount();
+    dispatch(countries());
+    fetchVerificationDashboardData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab])
+  }, [activeTab]);
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
@@ -130,7 +167,7 @@ const Verification = ({ headline }) => {
 
     if (timerActive && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft(prevTime => {
+        setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
             // Time's up - automatically move to next question
             setTimerActive(false);
@@ -162,51 +199,53 @@ const Verification = ({ headline }) => {
   };
 
   const handleViewCertificate = (data) => {
-    navigate(`/certtificate-view/${data}`)
-  }
+    navigate(`/certtificate-view/${data}`);
+  };
 
   const getStatusInfo = (status) => {
     switch (status.toLowerCase()) {
-      case 'verified':
-        return { text: 'Verified', color: 'bg-green-100 text-green-600' };
-      case 'unverified':
-        return { text: 'Unverified', color: 'glassy-card glassy-text-secondary' };
-      case 'pending':
-        return { text: 'Pending', color: 'bg-orange-100 text-orange-600' };
-      case 'under review':
-        return { text: 'Under Review', color: 'bg-yellow-100 text-yellow-600' };
-      case 'partial verified':
-        return { text: 'Partial verified', color: 'glassy-card text-blue-600' };
-      case 'required':
-        return { text: 'Required', color: 'bg-red-100 text-red-600' };
+      case "verified":
+        return { text: "Verified", color: "bg-green-100 text-green-600" };
+      case "unverified":
+        return {
+          text: "Unverified",
+          color: "glassy-card glassy-text-secondary",
+        };
+      case "pending":
+        return { text: "Pending", color: "bg-orange-100 text-orange-600" };
+      case "under review":
+        return { text: "Under Review", color: "bg-yellow-100 text-yellow-600" };
+      case "partial verified":
+        return { text: "Partial verified", color: "glassy-card text-blue-600" };
+      case "required":
+        return { text: "Required", color: "bg-red-100 text-red-600" };
       default:
-        return { text: status, color: 'glassy-card glassy-text-secondary' };
+        return { text: status, color: "glassy-card glassy-text-secondary" };
     }
-  }
+  };
 
   const getIcon = (type) => {
     switch (type.toLowerCase()) {
-      case 'email':
+      case "email":
         return <BiMailSend className="w-6 h-6 text-blue-500" />;
-      case 'phone':
+      case "phone":
         return <BiPhone className="w-6 h-6 text-blue-500" />;
-      case 'education':
+      case "education":
         return <FaGraduationCap className="w-6 h-6 text-blue-500" />;
-      case 'skills':
+      case "skills":
         return <BiStar className="w-6 h-6 text-blue-500" />;
-      case 'identity':
+      case "identity":
         return <BiUser className="w-6 h-6 text-blue-500" />;
-      case 'certificate':
+      case "certificate":
         return <BiCheckCircle className="w-6 h-6 text-blue-500" />;
-      case 'experience':
+      case "experience":
         return <BiCheckCircle className="w-6 h-6 text-blue-500" />;
-      case 'project':
+      case "project":
         return <BiCheckCircle className="w-6 h-6 text-blue-500" />;
       default:
         return <BiCheckCircle className="w-6 h-6 text-blue-500" />;
     }
-  }
-
+  };
 
   const handleOtpChange = (index, value) => {
     if (value.length > 1) {
@@ -222,77 +261,100 @@ const Verification = ({ headline }) => {
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
-
-
   };
 
   const handleKeyDown = (index, e) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
-
-
   const tabs = [
     { name: "Categories", key: "categories" },
-    { name: "Needs Verification", count: data?.data?.unverified || 0, key: "needVerification" },
-    { name: "Pending Requests", count: data?.data?.pending || 0, key: "pendingRequest" },
-    { name: "Verified", count: data?.data?.verified || 0, key: "verified" }
+    {
+      name: "Needs Verification",
+      count: data?.data?.unverified || 0,
+      key: "needVerification",
+    },
+    {
+      name: "Pending Requests",
+      count: data?.data?.pending || 0,
+      key: "pendingRequest",
+    },
+    { name: "Verified", count: data?.data?.verified || 0, key: "verified" },
   ];
 
   const handleVerification = async (data) => {
     const tab = activeTab;
     const type = data?.type;
 
-    console.log(tab, type)
-    if (data?.type === 'education' || data?.type === 'experience' || data?.type === "certificate" || data?.type === "project") {
+    console.log(tab, type);
+    if (
+      data?.type === "education" ||
+      data?.type === "experience" ||
+      data?.type === "certificate" ||
+      data?.type === "project"
+    ) {
       navigate(`/user/verification-category?tab=${tab}&type=${type}`);
     } else {
-      const res = await dispatch(verificationCenterDocumentDetails({
-        "moduleType": type,
-        "tab": activeTab
-      })).unwrap()
+      const res = await dispatch(
+        verificationCenterDocumentDetails({
+          moduleType: type,
+          tab: activeTab,
+        })
+      ).unwrap();
 
-
-
-      if (type === 'identity' && res?.data?.identity?.[0]?.status === 'requested') {
-        toast.info("Your document already sent for verification")
-      } else if (type === "identity" && res?.data?.identity?.[0]?.status === 'approved') {
-        setFormData((prev) => ({ ...prev, id_number: res?.data?.identity[0]?.id_number }))
-        setFrontImage(res?.data?.identity[0]?.front_side_file)
-        setBackImage(res?.data?.identity[0]?.back_side_file)
+      if (
+        type === "identity" &&
+        res?.data?.identity?.[0]?.status === "requested"
+      ) {
+        toast.info("Your document already sent for verification");
+      } else if (
+        type === "identity" &&
+        res?.data?.identity?.[0]?.status === "approved"
+      ) {
+        setFormData((prev) => ({
+          ...prev,
+          id_number: res?.data?.identity[0]?.id_number,
+        }));
+        setFrontImage(res?.data?.identity[0]?.front_side_file);
+        setBackImage(res?.data?.identity[0]?.back_side_file);
         setModalState({ isOpen: true, tab: tab, data: data, type: type });
-        setIsActionButtonForId(Array.isArray(res?.data?.identity) && res?.data?.identity[0]?.id_number ? false : true)
-      } else if (tab === 'verified' && type === 'skills') {
-        setIsOpen(true)
-        setIsOpenData(res?.data?.skills)
+        setIsActionButtonForId(
+          Array.isArray(res?.data?.identity) &&
+            res?.data?.identity[0]?.id_number
+            ? false
+            : true
+        );
+      } else if (tab === "verified" && type === "skills") {
+        setIsOpen(true);
+        setIsOpenData(res?.data?.skills);
       } else {
-        const modifiedData = res?.data?.skills?.filter(item => !item?.is_verified).map((e) => ({
-          value: e?.skill_id,
-          label: e?.name
-        }))
-        setSelectOption(modifiedData)
+        const modifiedData = res?.data?.skills
+          ?.filter((item) => !item?.is_verified)
+          .map((e) => ({
+            value: e?.skill_id,
+            label: e?.name,
+          }));
+        setSelectOption(modifiedData);
         setModalState({ isOpen: true, tab: tab, data: data, type: type });
-        setIsRejected(res?.data)
+        setIsRejected(res?.data);
       }
-
-
     }
   };
   const resetOtpState = () => {
-    setOtp(Array(6).fill(''));
+    setOtp(Array(6).fill(""));
     setIsOtp(false);
   };
   const handleClose = () => {
-    setModalState({ isOpen: false, data: {}, type: "" })
-    resetForm()
-    setFrontImage("")
-    setBackImage("")
-    setErrors({})
-    setIsOtp(false)
-    resetOtpState()
-  }
+    setModalState({ isOpen: false, data: {}, type: "" });
+    resetForm();
+    setFrontImage("");
+    setBackImage("");
+    setErrors({});
+    setIsOtp(false);
+    resetOtpState();
+  };
 
   const handleOtpSubmit = async () => {
     const newErrors = {};
@@ -311,27 +373,26 @@ const Verification = ({ headline }) => {
       return;
     }
     let apiPayload = {
-      "phone_number": formData?.phone,
-      "country_code": formData?.country_code
-    }
+      phone_number: formData?.phone,
+      country_code: formData?.country_code,
+    };
     try {
-      const res = await dispatch(verificationByOtp(apiPayload)).unwrap()
+      const res = await dispatch(verificationByOtp(apiPayload)).unwrap();
       // console.log("res?.data", res?.data)
-      toast.success(res?.message)
+      toast.success(res?.message);
       if (res?.data?.token) {
-        setIsOtp(true)
-        setFormData((prev) => ({ ...prev, token: res?.data?.token }))
+        setIsOtp(true);
+        setFormData((prev) => ({ ...prev, token: res?.data?.token }));
       }
-
     } catch (error) {
-      toast.error(error)
+      toast.error(error);
     }
-  }
+  };
 
   const handleSubmit = async () => {
     let newErrors = {};
 
-    if (modalState.type === 'identity') {
+    if (modalState.type === "identity") {
       if (!formData?.id_number) {
         newErrors.id_number = "ID number is required";
       }
@@ -351,109 +412,102 @@ const Verification = ({ headline }) => {
 
       try {
         let apiPayload = {
-          "id_number": formData?.id_number,
-          "front_side_file": frontImage,
-          "back_side_file": backImage
+          id_number: formData?.id_number,
+          front_side_file: frontImage,
+          back_side_file: backImage,
+        };
+        if (isRejected?.identity[0]?.status === "rejected") {
+          apiPayload._id = isRejected?.identity[0]?._id;
         }
-        if (isRejected?.identity[0]?.status === 'rejected') {
-          apiPayload._id = isRejected?.identity[0]?._id
-        }
-        const action = isRejected?.identity[0]?.status === 'rejected' ? updateIdentityDocument : addIdentityDocument
-        const res = await dispatch(action(apiPayload)).unwrap()
+        const action =
+          isRejected?.identity[0]?.status === "rejected"
+            ? updateIdentityDocument
+            : addIdentityDocument;
+        const res = await dispatch(action(apiPayload)).unwrap();
         if (res?.data) {
           let updateApiPayload = {
             document_id: res?.data?._id,
-            "type": "identity-verifications",
-            attach_file: []
-          }
-          dispatch(verifyRequest(updateApiPayload))
-          toast.success(res?.message)
-          handleClose()
-          fetchTabData()
-          fetchVerificationCount()
+            type: "identity-verifications",
+            attach_file: [],
+          };
+          dispatch(verifyRequest(updateApiPayload));
+          toast.success(res?.message);
+          handleClose();
+          fetchTabData();
+          fetchVerificationCount();
         }
-
       } catch (error) {
-        toast.error(error || "An error accrued!")
+        toast.error(error || "An error accrued!");
       }
-
-    } else if (modalState?.type === 'phone') {
-
+    } else if (modalState?.type === "phone") {
       if (!isOtp) {
-        handleOtpSubmit()
+        handleOtpSubmit();
       } else if (isOtp) {
-        const otpValue = otp.join('');
+        const otpValue = otp.join("");
         if (otpValue.length !== 6) {
-          toast.error('Please enter a 6-digit OTP');
+          toast.error("Please enter a 6-digit OTP");
           return;
         }
 
         let apiPayload = {
-          "token": formData?.token,
-          "otp": otpValue
-        }
+          token: formData?.token,
+          otp: otpValue,
+        };
         try {
-          const res = await dispatch(verifyMobByOtp(apiPayload)).unwrap()
-          toast.success(res?.message)
+          const res = await dispatch(verifyMobByOtp(apiPayload)).unwrap();
+          toast.success(res?.message);
           // setModalState({isOpen:fals})
-          handleClose()
-          fetchVerificationCount()
-
+          handleClose();
+          fetchVerificationCount();
         } catch (error) {
-          toast.error(error)
+          toast.error(error);
         }
-
       }
-
     } else {
-
       let apiPayload = {
-        skills: formData?.skills
-      }
+        skills: formData?.skills,
+      };
       try {
-        const res = await dispatch(assessmentsForSkills(apiPayload)).unwrap()
-        setAssessmentData(res?.data || [])
+        const res = await dispatch(assessmentsForSkills(apiPayload)).unwrap();
+        setAssessmentData(res?.data || []);
         if (res?.data.length === 0) {
-          toast.info("No Assessment Available for this skills !")
+          toast.info("No Assessment Available for this skills !");
         }
       } catch (error) {
-        toast.error(error)
+        toast.error(error);
       }
     }
-
-
-  }
+  };
 
   const handleSelectChange = (selected) => {
     setFormData((prev) => ({
-      ...prev, skills: selected?.map(e => e?.value)
-    }))
-  }
+      ...prev,
+      skills: selected?.map((e) => e?.value),
+    }));
+  };
 
   const handleAssessmentSelect = async (item) => {
     try {
-      const res = await dispatch(startAssessment({
-        skills: formData?.skills,
-        assessment_id: item?._id
-      })).unwrap()
+      const res = await dispatch(
+        startAssessment({
+          skills: formData?.skills,
+          assessment_id: item?._id,
+        })
+      ).unwrap();
 
       if (res?.data) {
-        setShowAssessment(true)
-        setCurrentQuestionIndex(0)
-        setSelectedOptions([])
-        setModalState({ isOpen: false })
-        setQa(res?.data)
+        setShowAssessment(true);
+        setCurrentQuestionIndex(0);
+        setSelectedOptions([]);
+        setModalState({ isOpen: false });
+        setQa(res?.data);
       }
     } catch (error) {
-      toast.error(error || 'Failed to start assessment')
+      toast.error(error || "Failed to start assessment");
     }
-  }
-
-
+  };
 
   const handleNextQuestion = async () => {
-
-
     try {
       const currentQuestion = qa?.questions?.[currentQuestionIndex];
       const payload = {
@@ -487,19 +541,20 @@ const Verification = ({ headline }) => {
     };
 
     const response = await dispatch(submitAnswer(payload)).unwrap();
-    toast.info(response?.message)
+    toast.info(response?.message);
     if (response) {
-      const res = await dispatch(declareResult({ skillToken: qa?.skillToken })).unwrap()
-      toast.info(res?.message)
-      setModalState({ data: res?.data })
-      dispatch(getProfile())
-      setIsResultModal(true)
-      setShowAssessment(false)
-      setQa(null)
-      setTimeLeft(0)
+      const res = await dispatch(
+        declareResult({ skillToken: qa?.skillToken })
+      ).unwrap();
+      toast.info(res?.message);
+      setModalState({ data: res?.data });
+      dispatch(getProfile());
+      setIsResultModal(true);
+      setShowAssessment(false);
+      setQa(null);
+      setTimeLeft(0);
     }
-
-  }
+  };
 
   const handleFileUpload = async (documentType, file) => {
     if (!file) {
@@ -538,11 +593,10 @@ const Verification = ({ headline }) => {
 
       if (documentType === "FRONT") {
         setFrontImage(result?.data?.fileURL || result?.data?.imageURL);
-        setErrors({})
+        setErrors({});
       } else if (documentType === "BACK") {
         setBackImage(result?.data?.fileURL || result?.data?.imageURL);
-        setErrors({})
-
+        setErrors({});
       }
 
       toast.success(result?.message || "File uploaded successfully");
@@ -555,51 +609,63 @@ const Verification = ({ headline }) => {
     }
   };
 
-
   const handleCountrySelect = (data) => {
     setFormData((prev) => ({
-      ...prev, country_code: {
-        "name": data?.label,
-        "dial_code": data?.dial_code,
-        "short_name": data?.short_name || "IN",
-        "emoji": data?.emoji || "🇮🇳"
-      }
-    }))
-
-  }
-
+      ...prev,
+      country_code: {
+        name: data?.label,
+        dial_code: data?.dial_code,
+        short_name: data?.short_name || "IN",
+        emoji: data?.emoji || "🇮🇳",
+      },
+    }));
+  };
 
   return (
     <>
-      <div className='p-4   space-y-3'>
-       
+      <div className="p-4   space-y-3">
         <nav className="flex items-center gap-2 text-sm">
-          <span className="glassy-text-secondary">Home</span>
+          {/* <span className="glassy-text-secondary">Home</span> */}
+          <span
+            className="glassy-text-secondary cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            Home
+          </span>
+
           <span className="glassy-text-secondary">›</span>
           <span className="font-medium text-blue-600">All Category</span>
         </nav>
-        <div className='glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300'>
+        <div className="glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300">
           <TitleValue
             title={`Verification Center`}
-            desc={`Manage your Learning Activities for: ${headline ? headline : ""}`}
+            desc={`Manage your Learning Activities for: ${
+              headline ? headline : ""
+            }`}
           />
-          <div className='grid md:grid-cols-3 grid-cols-1 gap-3 mt-3'>
+          <div className="grid md:grid-cols-3 grid-cols-1 gap-3 mt-3">
             <ProgressItem
-              title={`${verificationDashboardData?.verification_percentage || "N/A"} %`}
+              title={`${
+                verificationDashboardData?.verification_percentage || "N/A"
+              } %`}
               desc="Overall Verification"
               icon={<BiCheckCircle className="glassy-text-primary" />}
               progress={45}
               bg={`bg-[#BCCFFA57]/30`}
             />
             <ProgressItem
-              title={`${verificationDashboardData?.verification_rating || "0"} Star`}
+              title={`${
+                verificationDashboardData?.verification_rating || "0"
+              } Star`}
               desc="Average Rating"
               icon={<FaRegStar className="glassy-text-primary" />}
               progress={45}
               bg={`bg-[#FEA6131A]/10`}
             />
             <ProgressItem
-              title={`${verificationDashboardData?.verification_strength || "N/A"}`}
+              title={`${
+                verificationDashboardData?.verification_strength || "N/A"
+              }`}
               desc="Verification Strength"
               icon={<GiNetworkBars className="glassy-text-primary" />}
               progress={45}
@@ -608,16 +674,17 @@ const Verification = ({ headline }) => {
           </div>
         </div>
 
-        <div className='md:hidden block'>
+        <div className="md:hidden block">
           <div className="flex justify-evenly gap-4 overflow-hidden overflow-x-scroll w-full">
             {tabs.map((tab) => (
               <button
                 key={tab.label}
                 onClick={() => handleTabChange(tab.key)}
-                className={`relative flex items-center gap-2 text-xs font-medium transition-colors ${activeTab === tab.key
-                  ? "glassy-text-primary border-b border-blue-600"
-                  : "glassy-text-secondary hover:glassy-text-primary"
-                  }`}
+                className={`relative flex items-center gap-2 text-xs font-medium transition-colors ${
+                  activeTab === tab.key
+                    ? "glassy-text-primary border-b border-blue-600"
+                    : "glassy-text-secondary hover:glassy-text-primary"
+                }`}
               >
                 {tab.name}
                 {tab.count !== undefined && (
@@ -633,23 +700,30 @@ const Verification = ({ headline }) => {
           </div>
         </div>
 
-        <div className='py-2 md:py-4 glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300'>
-          <div className='md:block hidden'>
-            <h2 className='glassy-text-primary text-[22px] font-bold'>Verification Categories</h2>
+        <div className="py-2 md:py-4 glassy-card border border-[var(--border-color)] p-4 rounded-md transition-all duration-300">
+          <div className="md:block hidden">
+            <h2 className="glassy-text-primary text-[22px] font-bold">
+              Verification Categories
+            </h2>
             <div className="flex justify-between md:w-fit bg-[var(--bg-card)] rounded-[10px] p-2 w-full flex-wrap">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
-                  className={`px-4 py-2 text-sm rounded-md transition-all ${activeTab === tab.key
-                    ? 'glassy-card text-[#2563EB] border-b-2 border-[#2563EB] font-semibold shadow-sm'
-                    : 'glassy-text-primary font-medium'
-                    }`}
+                  className={`px-4 py-2 text-sm rounded-md transition-all ${
+                    activeTab === tab.key
+                      ? "glassy-card text-[#2563EB] border-b-2 border-[#2563EB] font-semibold shadow-sm"
+                      : "glassy-text-primary font-medium"
+                  }`}
                   onClick={() => handleTabChange(tab.key)}
                 >
                   {tab.name}
                   {tab.count !== null && tab.count > 0 && (
                     <span
-                      className={`ml-1.5 ${activeTab === tab.key ? 'glassy-text-secondary' : 'glassy-text-secondary/60'}`}
+                      className={`ml-1.5 ${
+                        activeTab === tab.key
+                          ? "glassy-text-secondary"
+                          : "glassy-text-secondary/60"
+                      }`}
                     >
                       {tab.count}
                     </span>
@@ -661,7 +735,9 @@ const Verification = ({ headline }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
             {loading ? (
-              Array.from({ length: verificationData?.length || 6 }).map((_, index) => <SkeletonCard key={index} />)
+              Array.from({ length: verificationData?.length || 6 }).map(
+                (_, index) => <SkeletonCard key={index} />
+              )
             ) : verificationData && verificationData.length > 0 ? (
               verificationData.map((item, index) => (
                 <CategoryCard
@@ -673,154 +749,192 @@ const Verification = ({ headline }) => {
                 />
               ))
             ) : (
-              <div className="col-span-full text-center glassy-text-secondary">No Data Found</div>
+              <div className="col-span-full text-center glassy-text-secondary">
+                No Data Found
+              </div>
             )}
           </div>
         </div>
       </div>
 
-
       <Modal
         isOpen={modalState?.isOpen}
         title={modalState.type}
-        onClose={() => { setModalState({ isOpen: false }); resetForm(); setAssessmentData([]); setIsOtp(false) }}
+        onClose={() => {
+          setModalState({ isOpen: false });
+          resetForm();
+          setAssessmentData([]);
+          setIsOtp(false);
+        }}
         handleSubmit={handleSubmit}
-        isActionButton={(assessmentData.length === 0 && isActionButtonForId) ? true : false}
+        isActionButton={
+          assessmentData.length === 0 && isActionButtonForId ? true : false
+        }
       >
-        <div className=''>
+        <div className="">
           {modalState.type === "skills" ? (
-            <div className=' z-auto'>
+            <div className=" z-auto">
               <FilterSelect
                 options={selectOption}
                 className="w-full h-10"
                 onChange={handleSelectChange}
-                selectedOption={selectOption?.find(opt => opt.value === formData?.skills)}
+                selectedOption={selectOption?.find(
+                  (opt) => opt.value === formData?.skills
+                )}
                 isMulti
               />
             </div>
-          ) :
-            modalState?.type === 'identity' ?
-              <div className='space-y-2'>
-                {Array.isArray(isRejected?.identity) && isRejected?.identity[0]?.status === 'rejected' && (
-
+          ) : modalState?.type === "identity" ? (
+            <div className="space-y-2">
+              {Array.isArray(isRejected?.identity) &&
+                isRejected?.identity[0]?.status === "rejected" && (
                   <div>
-                    <p className='capitalize'><span className='font-semibold text-sm text-amber-900 pr-2'>Reject Reason:-</span>{
-                      Array.isArray(isRejected?.identity) && isRejected?.identity[0]?.rejection_reason}</p>
+                    <p className="capitalize">
+                      <span className="font-semibold text-sm text-amber-900 pr-2">
+                        Reject Reason:-
+                      </span>
+                      {Array.isArray(isRejected?.identity) &&
+                        isRejected?.identity[0]?.rejection_reason}
+                    </p>
                   </div>
                 )}
 
-                <CustomInput
-                  label="Identity No"
-                  placeholder="eg:  acceptable IDs (Aadhaar, Driving License, etc.) "
-                  value={formData?.id_number}
-                  onChange={(e) => handleChange("id_number", e.target.value)}
-                  name="id_number"
-                  error={errors?.id_number}
-                  className="h-10 w-full"
-                  required
+              <CustomInput
+                label="Identity No"
+                placeholder="eg:  acceptable IDs (Aadhaar, Driving License, etc.) "
+                value={formData?.id_number}
+                onChange={(e) => handleChange("id_number", e.target.value)}
+                name="id_number"
+                error={errors?.id_number}
+                className="h-10 w-full"
+                required
+              />
+              <div className="">
+                <label className="text-base text-[#282828] font-medium mb-2">
+                  Front Image
+                </label>
+                <FileUpload
+                  inputId="front-upload"
+                  onFileUpload={(file) => handleFileUpload("FRONT", file)}
+                  file={frontImage}
+                  setFile={setFrontImage}
+                  isUploading={loading}
                 />
-                <div className=''>
-                  <label className="text-base text-[#282828] font-medium mb-2">Front Image</label>
-                  <FileUpload
-                    inputId="front-upload"
-                    onFileUpload={(file) => handleFileUpload("FRONT", file)}
-                    file={frontImage}
-                    setFile={setFrontImage}
-                    isUploading={loading}
-                  />
-                  <p className='text-red-500 text-xs'>{errors?.frontImage}</p>
-                </div>
+                <p className="text-red-500 text-xs">{errors?.frontImage}</p>
+              </div>
 
-                <div className="mt-6">
-                  <label className="text-base text-[#282828] font-medium mb-2">Back Image</label>
-                  <FileUpload
-                    inputId="back-upload"
-                    onFileUpload={(file) => handleFileUpload("BACK", file)}
-                    file={backImage}
-                    setFile={setBackImage}
-                    isUploading={loading2}
-                  />
-                  <p className='text-red-500 text-xs'>{errors?.backImage}</p>
-
-                </div>
-
-              </div> :
-              modalState?.type === 'phone' ?
-                (
-                  <div>
-                    {isOtp ? (
-                      <>
-
-                        <labe className="text-base text-[#282828] font-medium  flex items-center gap-1 ">Enter 6 digit otp</labe>
-                        <div className='flex justify-center items-center gap-2 mx-auto'>
-                          {Array.from({ length: 6 }).map((_, index) => (
-                            <input
-                              key={index}
-                              ref={(el) => (inputRefs.current[index] = el)}
-                              type="text"
-                              inputMode="numeric"
-                              pattern="[0-9]*"
-                              maxLength={1}
-                              value={otp[index]}
-                              onChange={(e) => handleOtpChange(index, e.target.value)}
-                              onKeyDown={(e) => handleKeyDown(index, e)}
-                              className={`w-12 h-12 text-center text-xl border-2 rounded-lg focus:ring-2 focus:ring-blue-300 outline-none transition-all ${otp[index] ? 'border-blue-500' : 'border-gray-300'
-                                }`}
-                            />
-                          ))}
-                        </div>
-                        <div className='flex justify-center  items-center py-2 '>
-                          <span onClick={() => handleOtpSubmit()} className='text-blue-500 hover:underline pb-1 cursor-pointer font-semibold text-lg '>Resend Otp</span>
-                        </div>
-                      </>
-                    ) : (
-                      <div className='space-y-4'>
-                        <FilterSelect label='Select Country' options={countryList || []}
-                          value={countryList.find(opt => opt.label === formData?.country_code?.name)}
-                          onChange={(select) => handleCountrySelect(select)}
-                          error={errors?.country_code}
-                        />
-                        {formData?.country_code?.name && (
-                          <CustomInput type="number" value={formData?.phone}
-                            onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
-                            label={"Enter Phone Number"} className="w-full h-10" placeholder="Enter mobile no according to country"
-                            error={errors?.phone}
-                          />
-                        )}
-                      </div>
-                    )}
-
+              <div className="mt-6">
+                <label className="text-base text-[#282828] font-medium mb-2">
+                  Back Image
+                </label>
+                <FileUpload
+                  inputId="back-upload"
+                  onFileUpload={(file) => handleFileUpload("BACK", file)}
+                  file={backImage}
+                  setFile={setBackImage}
+                  isUploading={loading2}
+                />
+                <p className="text-red-500 text-xs">{errors?.backImage}</p>
+              </div>
+            </div>
+          ) : modalState?.type === "phone" ? (
+            <div>
+              {isOtp ? (
+                <>
+                  <labe className="text-base text-[#282828] font-medium  flex items-center gap-1 ">
+                    Enter 6 digit otp
+                  </labe>
+                  <div className="flex justify-center items-center gap-2 mx-auto">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <input
+                        key={index}
+                        ref={(el) => (inputRefs.current[index] = el)}
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={1}
+                        value={otp[index]}
+                        onChange={(e) => handleOtpChange(index, e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
+                        className={`w-12 h-12 text-center text-xl border-2 rounded-lg focus:ring-2 focus:ring-blue-300 outline-none transition-all ${
+                          otp[index] ? "border-blue-500" : "border-gray-300"
+                        }`}
+                      />
+                    ))}
                   </div>
-                ) : (
-                  <CustomInput
-                    label="Email Address"
-                    placeholder="Enter Email"
-                    className="w-full h-10"
-                    value={formData?.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
+                  <div className="flex justify-center  items-center py-2 ">
+                    <span
+                      onClick={() => handleOtpSubmit()}
+                      className="text-blue-500 hover:underline pb-1 cursor-pointer font-semibold text-lg "
+                    >
+                      Resend Otp
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-4">
+                  <FilterSelect
+                    label="Select Country"
+                    options={countryList || []}
+                    value={countryList.find(
+                      (opt) => opt.label === formData?.country_code?.name
+                    )}
+                    onChange={(select) => handleCountrySelect(select)}
+                    error={errors?.country_code}
                   />
-                )}
+                  {formData?.country_code?.name && (
+                    <CustomInput
+                      type="number"
+                      value={formData?.phone}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
+                      label={"Enter Phone Number"}
+                      className="w-full h-10"
+                      placeholder="Enter mobile no according to country"
+                      error={errors?.phone}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            <CustomInput
+              label="Email Address"
+              placeholder="Enter Email"
+              className="w-full h-10"
+              value={formData?.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+            />
+          )}
         </div>
 
-        <div className='my-2'>
-          {assessmentData.length > 0 ? assessmentData.map((ele) => (
-            <div
-              key={ele._id}
-              className='border rounded-lg p-2 my-2 cursor-pointer hover:glassy-card transition'
-
-            >
-              <p className='font-semibold'>{ele?.title}</p>
-              <p>{ele?.description}</p>
-              <p>Level: {ele?.level_id?.name}</p>
-              <p>Questions: {ele?.no_of_questions}</p>
-              <p>Time Limit: {ele?.time_limit} mins</p>
-              <p>Max Attempts: {ele?.max_attempts}</p>
-              <p className='text-blue-500 cursor-pointer' onClick={() => handleAssessmentSelect(ele)}>Click here to start assessment</p>
-            </div>
-          )) : (
-            <>
-              {/* No Assessment available for selected skill */}
-            </>
+        <div className="my-2">
+          {assessmentData.length > 0 ? (
+            assessmentData.map((ele) => (
+              <div
+                key={ele._id}
+                className="border rounded-lg p-2 my-2 cursor-pointer hover:glassy-card transition"
+              >
+                <p className="font-semibold">{ele?.title}</p>
+                <p>{ele?.description}</p>
+                <p>Level: {ele?.level_id?.name}</p>
+                <p>Questions: {ele?.no_of_questions}</p>
+                <p>Time Limit: {ele?.time_limit} mins</p>
+                <p>Max Attempts: {ele?.max_attempts}</p>
+                <p
+                  className="text-blue-500 cursor-pointer"
+                  onClick={() => handleAssessmentSelect(ele)}
+                >
+                  Click here to start assessment
+                </p>
+              </div>
+            ))
+          ) : (
+            <>{/* No Assessment available for selected skill */}</>
           )}
         </div>
       </Modal>
@@ -831,7 +945,9 @@ const Verification = ({ headline }) => {
           setShowAssessment(false);
           setAssessmentData([]);
         }}
-        title={`Assessment (Question ${currentQuestionIndex + 1} of ${totalQuestions})`}
+        title={`Assessment (Question ${
+          currentQuestionIndex + 1
+        } of ${totalQuestions})`}
         hideFooter
         handleSubmit={
           currentQuestionIndex === totalQuestions - 1
@@ -850,7 +966,10 @@ const Verification = ({ headline }) => {
           <div className="flex items-center justify-between gap-4">
             <div className="flex flex-col items-center gap-1">
               <div className="relative w-16 h-16">
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <svg
+                  className="w-full h-full transform -rotate-90"
+                  viewBox="0 0 36 36"
+                >
                   <path
                     className="glassy-text-secondary"
                     strokeWidth="4"
@@ -863,7 +982,9 @@ const Verification = ({ headline }) => {
                   <path
                     className="text-blue-500"
                     strokeWidth="4"
-                    strokeDasharray={`${((currentQuestionIndex + 1) / totalQuestions) * 100}, 100`}
+                    strokeDasharray={`${
+                      ((currentQuestionIndex + 1) / totalQuestions) * 100
+                    }, 100`}
                     fill="none"
                     strokeLinecap="round"
                     stroke="currentColor"
@@ -876,11 +997,16 @@ const Verification = ({ headline }) => {
                   {currentQuestionIndex + 1}/{totalQuestions}
                 </div>
               </div>
-              <span className="text-xs text-blue-700 font-medium">Progress</span>
+              <span className="text-xs text-blue-700 font-medium">
+                Progress
+              </span>
             </div>
             <div className="flex flex-col items-center gap-1">
               <div className="relative w-16 h-16">
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <svg
+                  className="w-full h-full transform -rotate-90"
+                  viewBox="0 0 36 36"
+                >
                   <path
                     className="glassy-text-secondary"
                     strokeWidth="4"
@@ -891,12 +1017,13 @@ const Verification = ({ headline }) => {
                  a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                   <path
-                    className={`${timeLeft <= 10
-                      ? 'text-red-500'
-                      : timeLeft <= 30
-                        ? 'text-orange-400'
-                        : 'text-green-500'
-                      }`}
+                    className={`${
+                      timeLeft <= 10
+                        ? "text-red-500"
+                        : timeLeft <= 30
+                        ? "text-orange-400"
+                        : "text-green-500"
+                    }`}
                     strokeWidth="4"
                     strokeDasharray={`${(timeLeft / 60) * 100}, 100`}
                     fill="none"
@@ -913,8 +1040,6 @@ const Verification = ({ headline }) => {
               </div>
               <span className="text-xs text-blue-700 font-medium">Timer</span>
             </div>
-
-
           </div>
 
           <div className="space-y-4">
@@ -922,9 +1047,9 @@ const Verification = ({ headline }) => {
               {currentQuestion?.question}
             </h3>
             <p className="text-sm glassy-text-secondary italic">
-              {currentQuestion?.question_type === 'multi_choice'
-                ? 'Select all that apply'
-                : 'Select one option'}
+              {currentQuestion?.question_type === "multi_choice"
+                ? "Select all that apply"
+                : "Select one option"}
             </p>
 
             <div className="space-y-3">
@@ -934,15 +1059,16 @@ const Verification = ({ headline }) => {
                   <div
                     key={index}
                     className={`p-4 border rounded-xl cursor-pointer transition duration-300 ease-in-out 
-                ${isSelected
-                        ? 'border-blue-500 glassy-card shadow-sm'
-                        : 'border-gray-200 hover:glassy-card'
-                      }`}
+                ${
+                  isSelected
+                    ? "border-blue-500 glassy-card shadow-sm"
+                    : "border-gray-200 hover:glassy-card"
+                }`}
                     onClick={() => {
-                      if (currentQuestion.question_type === 'multi_choice') {
-                        setSelectedOptions(prev =>
+                      if (currentQuestion.question_type === "multi_choice") {
+                        setSelectedOptions((prev) =>
                           prev.includes(option)
-                            ? prev.filter(item => item !== option)
+                            ? prev.filter((item) => item !== option)
                             : [...prev, option]
                         );
                       } else {
@@ -952,7 +1078,11 @@ const Verification = ({ headline }) => {
                   >
                     <div className="flex items-center">
                       <input
-                        type={currentQuestion.question_type === 'multi_choice' ? 'checkbox' : 'radio'}
+                        type={
+                          currentQuestion.question_type === "multi_choice"
+                            ? "checkbox"
+                            : "radio"
+                        }
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500"
                         checked={isSelected}
                         readOnly
@@ -974,26 +1104,40 @@ const Verification = ({ headline }) => {
         </div>
       </Modal>
 
-
-      <Modal isOpen={isResultModal} title={`Result`} onClose={() => { setIsResultModal(false); setAssessmentData([]) }}
-        isActionButton={false}>
-        <div className="space-y-4 max-h-[40vh] overflow-hidden overflow-y-auto" >
+      <Modal
+        isOpen={isResultModal}
+        title={`Result`}
+        onClose={() => {
+          setIsResultModal(false);
+          setAssessmentData([]);
+        }}
+        isActionButton={false}
+      >
+        <div className="space-y-4 max-h-[40vh] overflow-hidden overflow-y-auto">
           <div className="text-lg font-semibold">
             Total Questions: {modalState?.data?.total_questions}
           </div>
           <div className="text-lg font-semibold">
             Total Score: {modalState?.data?.total_score}
           </div>
-          <div className={`text-lg font-semibold ${modalState?.data?.passed ? 'text-green-600' : 'text-red-600'}`}>
-            {modalState?.data?.passed ? 'Status: Passed' : 'Status: Failed'}
+          <div
+            className={`text-lg font-semibold ${
+              modalState?.data?.passed ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {modalState?.data?.passed ? "Status: Passed" : "Status: Failed"}
           </div>
-          {
-            modalState?.data?.certificate_id && (
-              <div>
-                <Button onClick={() => handleViewCertificate(modalState?.data?.certificate_id)}>Certificate View</Button>
-              </div>
-            )
-          }
+          {modalState?.data?.certificate_id && (
+            <div>
+              <Button
+                onClick={() =>
+                  handleViewCertificate(modalState?.data?.certificate_id)
+                }
+              >
+                Certificate View
+              </Button>
+            </div>
+          )}
 
           {modalState?.data?.answers?.map((answer, index) => (
             <div key={index} className="border p-3 rounded-md shadow-sm">
@@ -1001,24 +1145,32 @@ const Verification = ({ headline }) => {
                 Q{index + 1}: {answer.question}
               </div>
               <div className="text-sm mb-1">
-                <span className="font-semibold">Type:</span> {answer.question_type}
+                <span className="font-semibold">Type:</span>{" "}
+                {answer.question_type}
               </div>
               <div className="text-sm mb-1">
                 <span className="font-semibold">Options:</span>
                 <ul className="list-disc ml-5">
                   {answer.options.map((opt, i) => (
-                    <li key={i} className={answer.selected_options.includes(opt) ? 'font-semibold text-blue-600' : ''}>
+                    <li
+                      key={i}
+                      className={
+                        answer.selected_options.includes(opt)
+                          ? "font-semibold text-blue-600"
+                          : ""
+                      }
+                    >
                       {opt}
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="text-sm mb-1">
-                <span className="font-semibold">Selected:</span>{' '}
-                {answer.selected_options.join(', ') || 'None'}
+                <span className="font-semibold">Selected:</span>{" "}
+                {answer.selected_options.join(", ") || "None"}
               </div>
               <div className="text-sm mb-1">
-                <span className="font-semibold">Correct:</span>{' '}
+                <span className="font-semibold">Correct:</span>{" "}
                 {answer.is_correct ? (
                   <span className="text-green-600 font-semibold">Yes</span>
                 ) : (
@@ -1033,15 +1185,21 @@ const Verification = ({ headline }) => {
         </div>
       </Modal>
 
-      <Modal isOpen={isOpen} title={`Verified Skills`} onClose={() => { setIsOpen(false); setIsOpenData(null) }}
-        isActionButton={false}>
-        <div className='space-y-2'>
+      <Modal
+        isOpen={isOpen}
+        title={`Verified Skills`}
+        onClose={() => {
+          setIsOpen(false);
+          setIsOpenData(null);
+        }}
+        isActionButton={false}
+      >
+        <div className="space-y-2">
           <SkillsCard2 skills={isOpenData || []} />
         </div>
       </Modal>
-
     </>
-  )
-}
+  );
+};
 
-export default Verification
+export default Verification;
