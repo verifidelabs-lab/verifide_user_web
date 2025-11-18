@@ -162,47 +162,37 @@ const CompanyInstituteView = () => {
   const isInstitute = data?.type === "institutions";
 
   return (
-    <div className="p-8">
+    // <div className="p-8">
+    <div className="p-4 md:p-8">
       <div>
-        <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
+        <nav className="flex flex-wrap items-center gap-1 sm:gap-2 mb-2 text-xs sm:text-sm">
           <span
-            className="glassy-text-secondary cursor-pointer"
+            className="glassy-text-secondary cursor-pointer hover:underline"
             onClick={() => navigate(`/user/feed`)}
           >
             Home
           </span>
+
           <span className="glassy-text-secondary">›</span>
+
           <span
-            className="glassy-text-secondary cursor-pointer"
+            className="glassy-text-secondary cursor-pointer hover:underline"
             onClick={() => navigate(`/user/suggested-users?tab=${data?.type}`)}
           >
             Suggested Profiles
           </span>
+
           <span className="glassy-text-secondary">›</span>
-          <span className="font-medium glassy-text-primary cursor-pointer">
+
+          <span className="font-medium glassy-text-primary truncate max-w-[150px] sm:max-w-none">
             {capitalizeWords(info?.name || data?.type)}
           </span>
         </nav>
       </div>
-      {/* Banner */}
-      {/* <div className="h-40 md:h-56 w-full rounded-2xl overflow-hidden  bg-gradient-to-r from-blue-50 to-indigo-50 flex items-center justify-center relative">
-        {info?.banner_image_url && !imageErrors.banner ? (
-          <img
-            src={info.banner_image_url}
-            alt="banner"
-            className="w-full h-full object-cover"
-            onError={() => handleImageError('banner')}
-          />
-        ) : (
-          <div className="flex flex-col items-center glassy-text-secondary">
-            <MdOutlineImageNotSupported className="w-12 h-12 md:w-16 md:h-16 mb-2" />
-            <p className="text-sm">No banner image</p>
-          </div>
-        )}
-      </div> */}
 
       {/* Main Content Card */}
-      <div className="glassy-card rounded-2xl mt-4 relative overflow-hidden h-screen">
+      {/* <div className="glassy-card rounded-2xl mt-4 relative overflow-hidden h-screen"> */}
+      <div className="glassy-card rounded-2xl mt-4 relative overflow-hidden">
         {/* Header */}
         <div className="p-6 pb-0 flex flex-col md:flex-row items-start gap-6">
           <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl glassy-card flex items-center justify-center shadow-lg border-4 border-white  overflow-hidden">
@@ -221,7 +211,8 @@ const CompanyInstituteView = () => {
           </div>
 
           <div className="flex-1">
-            <div className="flex items-center justify-between flex-wrap gap-2">
+            {/* <div className="flex items-center justify-between flex-wrap gap-2"> */}
+            <div className="flex items-start md:items-center justify-between flex-wrap gap-3 w-full">
               <div className="flex items-center gap-2">
                 <h1 className="text-2xl md:text-3xl font-bold glassy-text-primary">
                   {info?.display_name || info?.name || "Unnamed Organization"}
@@ -300,7 +291,8 @@ const CompanyInstituteView = () => {
           )}
 
           {/* Contact Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 w-full">
             {info?.website_url && (
               <div className="flex items-center gap-3 p-3 glassy-card hover:bg-black rounded-lg transition-colors">
                 <div className="p-2 glassy-card rounded-lg shadow-sm">
@@ -338,15 +330,17 @@ const CompanyInstituteView = () => {
             )}
 
             {info?.email && (
-              <div className="flex items-center gap-3 p-3 rounded-lg glassy-card hover:bg-black transition-colors">
-                <div className="p-2 glassy-card rounded-lg shadow-sm">
+              <div className="flex items-start sm:items-center gap-3 p-3 rounded-lg glassy-card hover:bg-black transition-colors w-full overflow-hidden">
+                <div className="p-2 glassy-card rounded-lg shadow-sm shrink-0">
                   <MdEmail className="w-5 h-5 glassy-text-primary" />
                 </div>
-                <div>
+
+                <div className="min-w-0 flex-1">
                   <p className="text-sm glassy-text-primary">Email</p>
+
                   <a
                     href={`mailto:${info.email}`}
-                    className="glassy-text-secondary hover:glassy-text-primary"
+                    className="glassy-text-secondary hover:glassy-text-primary break-all block"
                   >
                     {info.email}
                   </a>
@@ -375,7 +369,7 @@ const CompanyInstituteView = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 " >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 ">
             <div className="glassy-card p-5 rounded-xl border border-blue-100 transition-all hover:shadow-md">
               <div className="flex items-center gap-3 mb-2">
                 <div className="p-2 rounded-lg">

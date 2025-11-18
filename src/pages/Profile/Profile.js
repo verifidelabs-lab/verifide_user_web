@@ -345,6 +345,7 @@ const Profile = ({ profileData }) => {
     }),
     []
   );
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { validateForm } = useValidation();
   const selector = useSelector((state) => state.educations);
@@ -1057,14 +1058,47 @@ const Profile = ({ profileData }) => {
     }
   };
 
+  // const handleSelection = async (selected) => {
+  //   try {
+  //     if (selected === "education") {
+  //       handleOpenModal("education");
+  //     }
+
+  //     else{
+  //     const res = await dispatch(
+  //       updateFrameStatus({ frame_status: selected })
+  //     ).unwrap();
+  //     toast.success(res?.message);
+  //     setFrameStatus(selected);
+  //     dispatch(getProfile());}
+  //   } catch (error) {
+  //     toast.error(error);
+  //   }
+  // };
   const handleSelection = async (selected) => {
     try {
+      // Open Education Modal
+      console.log("selected xdd"+selected);
+      
+      if (selected === "education") {
+        handleOpenModal("education");
+        return; // stop further execution
+      }
+
+      // Open Work Modal
+      if (selected === "experience") {
+        handleOpenModal("experience");
+        return; // stop further execution
+      }
+
+      else{// Otherwise update frame status normally
       const res = await dispatch(
         updateFrameStatus({ frame_status: selected })
       ).unwrap();
+
       toast.success(res?.message);
       setFrameStatus(selected);
-      dispatch(getProfile());
+      dispatch(getProfile());}
     } catch (error) {
       toast.error(error);
     }
@@ -1272,7 +1306,6 @@ const Profile = ({ profileData }) => {
   ];
   const [openResumeSelection, setOpenResumeSelection] = useState(false);
 
-  const navigate = useNavigate();
   return (
     <>
       {/* <VerifiedLoader/> */}
@@ -1454,9 +1487,7 @@ const Profile = ({ profileData }) => {
                           }`}
                         </h1>
                         <p className="glassy-text-secondary text-sm md:text-base break-words">
-                          {profileInfo?.personalInfo?.headline ||
-                            "Management Executive at Zara"}{" "}
-                          |{" "}
+                          {profileInfo?.personalInfo?.headline || "N/A"} |{" "}
                           {profileInfo?.personalInfo?.address?.city?.name ||
                             "N/A"}
                           ,{" "}
