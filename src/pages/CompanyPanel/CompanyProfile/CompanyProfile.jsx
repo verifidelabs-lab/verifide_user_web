@@ -1080,7 +1080,7 @@ const CompanyProfile = ({
             <h2 className="text-2xl font-bold glassy-text-primary">
               Page posts
             </h2>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 glassy-text-primary rounded-lg hover:bg-blue-700 transition">
               <Link
                 to={
                   isCompany === "company"
@@ -1365,7 +1365,7 @@ const CompanyProfile = ({
     };
 
     return (
-      <div className="  text-white min-h-screen">
+      <div className="  glassy-text-primary min-h-screen">
         <div className="max-w-6xl mx-auto px-6 py-8 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Our Team</h2>

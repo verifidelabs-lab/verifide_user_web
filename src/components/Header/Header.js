@@ -23,8 +23,9 @@ import { getInstitutionsList } from "../../redux/slices/instituteSlice";
 import { useGlobalKeys } from "../../context/GlobalKeysContext";
 import { useTour } from "../../context/TourContext";
 import { dashboardTourSteps } from "../../data/tutorialSteps";
+import { GiHamburgerMenu } from "react-icons/gi";
 
-const Header = ({ profileData, setUserType, playAndShowNotification }) => {
+const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,setNavbarOpen }) => {
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -325,6 +326,15 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
 
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div className="flex items-center justify-between p-4   relative">
+            {/* Sidebar Toggle Button for Mobile */}
+      {!navbarOpen && window.innerWidth <= 1000 && (
+        <button
+          className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
+          onClick={() => setNavbarOpen(true)}
+        >
+          <GiHamburgerMenu className="text-xl glassy-text-primary" />
+        </button>
+      )}
           <div className="flex items-center gap-3 px-4 py-3">
             <img
               src="/Frame 1000004906.png"
@@ -468,7 +478,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification }) => {
                   </Link>
                   {/* <button
                     className={`text-xs px-3 py-1 rounded ${accessLabel === "Recruiter"
-                      ? "bg-blue-600 text-white"
+                      ? "bg-blue-600 glassy-text-primary"
                       : "glassy-card glassy-text-primary hover:glassy-card"
                       }`}
                     onClick={() => {

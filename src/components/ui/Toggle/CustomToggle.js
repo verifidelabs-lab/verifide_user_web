@@ -14,12 +14,12 @@
 //         <div
          
 //           className={`w-9 h-5 rounded-full  
-//             peer-checked:text-white transition-all duration-300 cursor-pointer`}
+//             peer-checked:glassy-text-primary transition-all duration-300 cursor-pointer`}
 //         ></div>
 //         <div
 //           className={`absolute top-[4px] left-[1px] w-4 h-4 rounded-full flex items-center justify-center 
 //             transition-all duration-300 transform ${
-//               isToggle ? "translate-x-full  bg-blue-600 border-blue-600 text-white" : "bg-blue-600 border-blue-600 glassy-card-header"
+//               isToggle ? "translate-x-full  bg-blue-600 border-blue-600 glassy-text-primary" : "bg-blue-600 border-blue-600 glassy-card-header"
 //             }`}
 //         >
 //           {isToggle && <IoIosCheckmark className="text-md" size={24} />}
@@ -57,7 +57,7 @@ const CustomToggle = ({ handleClick, isToggle }) => {
         <div
           className={`absolute top-[2px] left-[2px] w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300
             ${isToggle 
-              ? "translate-x-5 bg-blue-600 text-white shadow-md" 
+              ? "translate-x-5 bg-blue-600 glassy-text-primary shadow-md" 
               : "bg-white border border-blue-600"
             }
           `}

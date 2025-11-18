@@ -47,7 +47,7 @@ const ContactItem = React.memo(
                 }}
               />
             ) : (
-              <span className="text-white text-sm font-semibold">
+              <span className="glassy-text-primary text-sm font-semibold">
                 <img
                   src="/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
                   alt="default logo"
@@ -57,7 +57,7 @@ const ContactItem = React.memo(
           </div>
           {contact.unread > 0 && (
             <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center shadow-sm">
-              <span className="text-white text-xs font-medium">
+              <span className="glassy-text-primary text-xs font-medium">
                 {contact.unread}
               </span>
             </div>
@@ -67,7 +67,7 @@ const ContactItem = React.memo(
         {/* Content */}
         <div className="ml-3 flex-1 min-w-0">
           <div className="flex items-center justify-between relative" ref={menuRef}>
-            <h3 className="text-sm font-medium text-white truncate capitalize">
+            <h3 className="text-sm font-medium glassy-text-primary truncate capitalize">
               {contact.first_name} {contact?.last_name}
               {contact?.isBlocked && (
                 <span className="ml-2 text-xs text-red-500">(Blocked)</span>

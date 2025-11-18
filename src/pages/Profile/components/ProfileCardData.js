@@ -132,8 +132,8 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
       {/* Cropper Modal */}
       {showCropper && (
         <div className="!fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 sm:px-6">
-          <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl w-full max-w-md sm:max-w-lg md:max-w-xl h-[80vh] overflow-hidden flex flex-col">
-            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">Crop Profile Image</h2>
+          <div className=" dark:bg-gray-800 p-4 sm:p-6 rounded-xl w-full max-w-md sm:max-w-lg md:max-w-xl h-[80vh] overflow-hidden flex flex-col">
+            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:glassy-text-primary">Crop Profile Image</h2>
 
             {/* Cropper container */}
             <div className="flex-1 mb-4 overflow-hidden rounded-lg">
@@ -156,20 +156,20 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
             <div className="flex justify-end space-x-2 mt-auto">
               <button
                 onClick={() => setShowCropper(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 transition"
+                className="px-4 py-2 glassy-button  rounded-md transition"
                 disabled={isLoading}
               >
                 Cancel
               </button>
               <button
                 onClick={handleCrop}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md flex items-center justify-center transition disabled:opacity-50"
+                className="px-4 py-2 glassy-button rounded-md flex items-center justify-center transition disabled:opacity-50"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <>
                     <svg
-                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 glassy-text-primary"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -204,7 +204,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
         <div className="flex items-center gap-3">
           {/* Profile Image */}
           <div
-            className="relative w-14 h-14 rounded-full border-2 border-white/30 overflow-hidden cursor-pointer group"
+            className="relative w-14   rounded-full border-2 border-white/30 overflow-hidden cursor-pointer group"
             onClick={handleProfileClick}
           >
             <img
@@ -215,7 +215,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               key={data?.personalInfo?.profile_picture_url}
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20">
-              <BsPencil className="text-white text-lg" />
+              <BsPencil className="glassy-text-primary text-lg" />
             </div>
           </div>
 
@@ -224,7 +224,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
             <h2 className="font-semibold text-lg">
               {`${data?.personalInfo?.first_name || ''} ${data?.personalInfo?.last_name || ''}`}
             </h2>
-            <p className="text-sm text-white/80">{data?.personalInfo?.headline || 'NA'} | {data?.personalInfo?.address?.city?.name}, {data?.personalInfo?.address?.state?.name || 'N/A'}</p>
+            <p className="text-sm glassy-text-primary/80">{data?.personalInfo?.headline || 'NA'} | {data?.personalInfo?.address?.city?.name}, {data?.personalInfo?.address?.state?.name || 'N/A'}</p>
 
           </div>
         </div>
@@ -245,7 +245,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               data?.latestCompany?.profileName ||
               "Add your latest work experience"
             }</h3>
-            <p className="text-sm text-white/70">{
+            <p className="text-sm glassy-text-primary/70">{
               data?.latestCompany?.companyName ||
               "Click the + button to add details about your job role and company"
             }</p>
@@ -262,7 +262,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               data?.latestEducation?.institution ||
               "Add your latest education details"
             }</h3>
-            <p className="text-sm text-white/70">{
+            <p className="text-sm glassy-text-primary/70">{
               data?.latestEducation?.field_of_studies ||
               "Click the + button to include your course and department"
             }</p>
@@ -274,7 +274,7 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
       <div className="relative flex items-center justify-between mt-4">
         <div className="flex items-baseline gap-2">
           <span className="text-5xl font-bold">{data?.topSkills?.data?.length  || 0}</span>
-          <span className="text-lg text-white/70">Skills</span>
+          <span className="text-lg glassy-text-primary/70">Skills</span>
         </div>
 
       </div>

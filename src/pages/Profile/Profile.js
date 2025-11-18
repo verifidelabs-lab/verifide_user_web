@@ -96,11 +96,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
-import { BiChevronLeft, BiChevronRight, BiDownload } from 'react-icons/bi';
-import { Briefcase, Diamond, FileText, GraduationCap, Settings } from 'lucide-react';
-import OpenToWorkSelect from '../../components/ui/Button/ButtonWithIcon';
-import ResumeViewSelection from './components/ResumeViewSelection';
-
+import { BiChevronLeft, BiChevronRight, BiDownload } from "react-icons/bi";
+import {
+  Briefcase,
+  Diamond,
+  FileText,
+  GraduationCap,
+  Settings,
+} from "lucide-react";
+import OpenToWorkSelect from "../../components/ui/Button/ButtonWithIcon";
+import ResumeViewSelection from "./components/ResumeViewSelection";
+import { useNavigate } from "react-router-dom";
 
 const validationRules = {
   education: {
@@ -1266,7 +1272,7 @@ const Profile = ({ profileData }) => {
   ];
   const [openResumeSelection, setOpenResumeSelection] = useState(false);
 
-
+  const navigate = useNavigate();
   return (
     <>
       {/* <VerifiedLoader/> */}
@@ -1291,7 +1297,12 @@ const Profile = ({ profileData }) => {
         <div className="flex flex-col md:flex-row w-full mx-auto gap-4">
           <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
             <nav className="flex justify-start items-center gap-2 mb-2 text-sm">
-              <span className="glassy-text-secondary">Home</span>
+              <span
+                className="glassy-text-secondary"
+                onClick={() => navigate("/")}
+              >
+                Home
+              </span>
               <span className="glassy-text-secondary">›</span>
               <span className="font-medium text-blue-600">Profile</span>
             </nav>
@@ -1413,10 +1424,10 @@ const Profile = ({ profileData }) => {
                     </div>
                   </div>
                 </div> */}
-                <div className="glassy-card p-4 flex flex-col md:flex-row items-start justify-center gap-6 w-full overflow-x-hidden">
+                <div className=" p-4 flex flex-col md:flex-row items-start justify-center gap-6 w-full overflow-x-hidden">
                   {/* Left Card */}
                   <div
-                    className="relative rounded-3xl p-6 w-full md:w-96 text-white overflow-hidden flex-shrink-0"
+                    className="!relative rounded-3xl p-6 w-full md:w-96 glassy-text-primary overflow-hidden flex-shrink-0"
                     style={{
                       backgroundImage: 'url("/Group.png")',
                       backgroundSize: "cover",
@@ -1433,7 +1444,7 @@ const Profile = ({ profileData }) => {
                   </div>
 
                   {/* Right Card */}
-                  <div className="glassy-card rounded-3xl p-6 md:p-8 flex-1 text-white w-full min-w-0">
+                  <div className="glassy-card rounded-3xl p-6 flex-1 glassy-text-primary w-full min-w-0">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-2 sm:gap-0">
                       <div>
@@ -1458,10 +1469,14 @@ const Profile = ({ profileData }) => {
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       {profileInfo?.topSkills?.data?.length > 0 ? (
-                        <SkillTag skills={profileInfo?.topSkills?.data} limit={3} />
+                        <SkillTag
+                          skills={profileInfo?.topSkills?.data}
+                          limit={3}
+                        />
                       ) : (
                         <p className="w-full bg-yellow-50 text-yellow-800 text-sm p-2 rounded-md border border-yellow-200 shadow-sm">
-                          🚀 No skills added yet. Verify your education and update your skills to showcase your expertise!
+                          🚀 No skills added yet. Verify your education and
+                          update your skills to showcase your expertise!
                         </p>
                       )}
                     </div>

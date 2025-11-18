@@ -4,7 +4,7 @@ const SurveyButton = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="text-xs glassy-card text-blue-700 hover:bg-blue-200 px-2.5 py-1 rounded-full font-medium transition-colors"
+      className="text-xs glassy-card  glassy-button px-2.5 py-1 rounded-full font-medium transition-colors"
     >
       Take Survey
     </button>

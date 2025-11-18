@@ -106,7 +106,7 @@ export default function MediaCarousel({ post }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn">
           {/* Close Button */}
           <button
-            className="absolute top-4 right-4 text-white text-3xl z-50 p-2 hover:bg-white/20 rounded-full transition"
+            className="absolute top-4 right-4 glassy-text-primary text-3xl z-50 p-2 hover:bg-white/20 rounded-full transition"
             onClick={() => setZoomOpen(false)}
           >
             <BiX />

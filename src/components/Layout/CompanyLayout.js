@@ -56,17 +56,16 @@ function CompanyLayout() {
   const isNotificationDisabledRef = useRef(false);
   const socket = socketConnection();
   const [refreshedConfigurations, setRefreshedConfigurations] = useState(false);
- 
 
-const companiesProfileData = useSelector((state) => {
-  const data = state.companyAuth?.companiesProfileData;
-  return data?.data?.data ?? data ?? null;
-});
+  const companiesProfileData = useSelector((state) => {
+    const data = state.companyAuth?.companiesProfileData;
+    return data?.data?.data ?? data ?? null;
+  });
 
-const instituteProfileData = useSelector((state) => {
-  const data = state.companyAuth?.instituteProfileData;
-  return data?.data?.data ?? data ?? null;
-});
+  const instituteProfileData = useSelector((state) => {
+    const data = state.companyAuth?.instituteProfileData;
+    return data?.data?.data ?? data ?? null;
+  });
 
   console.log(
     "this is the companiespfsdkjlsdklskdfjlskdjf;aoierowieurowieuroweir",
@@ -156,7 +155,7 @@ const instituteProfileData = useSelector((state) => {
         playAndShowNotification(data);
       });
     });
-  }, [socket]);
+  }, [companiesProfileData, instituteProfile, socket]);
 
   useEffect(() => {
     if ("Notification" in window) {

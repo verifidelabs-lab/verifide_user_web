@@ -263,7 +263,10 @@ function Layout() {
   const { steps, stepIndex, runTour, handleJoyrideCallback, setStepIndex } =
     useTour();
   return (
-    <div className=" min-h-screen flex flex-col relative" id="layout-container">
+    <div
+      className="min-h-screen flex flex-col relative pt-[70px]"
+      id="layout-container"
+    >
       {!isMobile && (
         <Joyride
           steps={steps}
@@ -359,35 +362,30 @@ function Layout() {
         />
       )}
 
-      {/* Full-width Header */}
-      <Header
-        openLogout={openLogout}
-        sideBarJson={sideBarJson}
-        profileData={profileData?.getProfileData?.data?.data}
-        setUserType={setUserType}
-        playAndShowNotification={playAndShowNotification}
-      />
-      {/* Sidebar Toggle Button for Mobile */}
-      {!navbarOpen && window.innerWidth <= 1000 && (
-        <button
-          className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
-          onClick={() => setNavbarOpen(true)}
-        >
-          <GiHamburgerMenu className="text-xl glassy-text-primary" />
-        </button>
-      )}
+      <div className="fixed top-0 left-0 w-full z-[999]">
+        <Header
+          openLogout={openLogout}
+          sideBarJson={sideBarJson}
+          profileData={profileData?.getProfileData?.data?.data}
+          setUserType={setUserType}
+          playAndShowNotification={playAndShowNotification}
+          navbarOpen={navbarOpen}
+          setNavbarOpen={setNavbarOpen}
+        />
+      </div>
+
       {/* Sidebar + Content stacked below header */}
-      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-0 md:p-5">
+      <div className="flex flex-col md:flex-row flex-1   p-0 md:p-5">
         {/* Sidebar */}
         {(!isRestrictedPath || isMobile) && (
           <div
             className={`
-        fixed md:relative top-0 left-0 h-screen md:h-auto z-50
-        transition-transform duration-300 ease-in-out
-        ${
-          navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"
-        }
-      `}
+    fixed md:relative top-[70px] md:top-0 left-0 
+    h-[calc(100vh-70px)] md:h-auto 
+    z-50
+    transition-transform duration-300 ease-in-out
+    ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
+  `}
           >
             <Sidebar
               openLogout={openLogout}
@@ -400,7 +398,7 @@ function Layout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">
+        <main className="flex-1  custom-scrollbar   md:transition-all md:duration-300">
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />
@@ -423,7 +421,12 @@ function Layout() {
               />
               <Route
                 path="/message/:id?/:isConnected?"
-                element={<Message profileData={profileData?.getProfileData?.data?.data} socket={socket} />}
+                element={
+                  <Message
+                    profileData={profileData?.getProfileData?.data?.data}
+                    socket={socket}
+                  />
+                }
               />
               <Route path="/notification" element={<NotificationInterface />} />
               <Route path="/activity" element={<ActivityList />} />

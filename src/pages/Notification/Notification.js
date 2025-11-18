@@ -152,7 +152,7 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
     //   <div className="flex items-start space-x-3 w-full">
     //     {/* Icon */}
     //     <div className={`p-2 rounded-full ${color}`}>
-    //       <Icon className="w-4 h-4 text-white" />
+    //       <Icon className="w-4 h-4 glassy-text-primary" />
     //     </div>
 
     //     {/* Content */}

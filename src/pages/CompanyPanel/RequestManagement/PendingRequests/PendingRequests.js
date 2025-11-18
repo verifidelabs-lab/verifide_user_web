@@ -462,7 +462,7 @@ const PendingRequests = () => {
           type="button"
           onClick={handleUpdateStatus}
           disabled={isSubmitting}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 transition-all duration-200 shadow-md hover:shadow-lg"
+          className="flex-1 bg-blue-600 hover:bg-blue-700 glassy-text-primary py-3 transition-all duration-200 shadow-md hover:shadow-lg"
         >
           {isSubmitting ? (
             <>
@@ -697,7 +697,7 @@ const PendingRequests = () => {
               type="button"
               onClick={handleAssignRequest}
               disabled={isSubmitting || !assignedTo}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 glassy-text-primary py-3"
             >
               {isSubmitting ? (
                 <>

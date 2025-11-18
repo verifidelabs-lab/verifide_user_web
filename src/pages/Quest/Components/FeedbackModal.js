@@ -38,8 +38,8 @@ const FeedbackModal = ({
       const counts = {};
       const initialUploadedImages = {};
       const initialExistingFeedback = {};
-      console.log("this is sssssssssss",feedbackData);
-      
+      console.log("this is sssssssssss", feedbackData);
+
       feedbackData.feedbackReports.forEach((report) => {
         const moduleIndex = report.module_index;
         if (!initialExistingFeedback[moduleIndex]) {
@@ -316,7 +316,7 @@ const FeedbackModal = ({
               icon={<HiOutlineCloudUpload />}
               iconPosition="left"
               rounded="md"
-               className={`flex-1 glassy-button  "opacity-60 cursor-not-allowed"
+              className={`flex-1 glassy-button  "opacity-60 cursor-not-allowed"
               }`}
               // tooltip="Click to upload images"
             >
@@ -456,27 +456,28 @@ const FeedbackModal = ({
   };
 
   return (
-    <div className="fixed inset-0 glassy-card-header backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="glassy-card rounded-xl shadow-xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="flex justify-between items-center p-6 border-b ">
-          <div>
+    <div className="!fixed glassy-card inset-0 flex items-center justify-center z-[2000] p-4 bg-black bg-opacity-40 backdrop-blur-sm">
+      <div className="glassy-card w-full max-w-6xl h-full max-h-[90vh] md:max-h-[80vh] flex flex-col rounded-xl shadow-xl overflow-hidden">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 md:p-6 border-b">
+          <div className="flex-1">
             <h2 className="text-2xl font-bold glassy-text-primary">
               Provide Feedback
             </h2>
-            <div className="flex flex-wrap gap-4 mt-2">
-              <div className="text-sm">
+            <div className="flex flex-wrap gap-2 mt-2 text-sm">
+              <div>
                 <span className="glassy-text-primary">Quest: </span>
                 <span className="font-medium glassy-text-secondary">
                   {questData?.title}
                 </span>
               </div>
-              <div className="text-sm">
+              <div>
                 <span className="glassy-text-primary">Participant: </span>
                 <span className="font-medium glassy-text-secondary">
                   {questData?.user_id?.name}
                 </span>
               </div>
-              <div className="text-sm">
+              <div>
                 <span className="glassy-text-primary">Engagements: </span>
                 <span className="font-medium glassy-text-secondary">
                   {questData?.engagement_count}
@@ -484,7 +485,8 @@ const FeedbackModal = ({
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex items-center gap-2 mt-2 md:mt-0">
             <button
               onClick={() => setShowPreviousFeedback(!showPreviousFeedback)}
               className="flex items-center glassy-text-secondary glassy-card px-3 py-1.5 rounded-lg text-sm font-medium"
@@ -492,6 +494,7 @@ const FeedbackModal = ({
               <BiHistory className="mr-1" />
               {showPreviousFeedback ? "Hide" : "Show"} Previous Feedback
             </button>
+
             <button
               onClick={onClose}
               className="glassy-text-secondary hover:glassy-text-primary p-1 rounded-full hover:glassy-card transition-colors"
@@ -501,8 +504,10 @@ const FeedbackModal = ({
           </div>
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
-          <div className="w-64 border-r border-gray-200 glassy-card p-4 overflow-y-auto">
+        {/* Body */}
+        <div className="flex flex-1 flex-col md:flex-row overflow-hidden">
+          {/* Sidebar Modules */}
+          <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-gray-200 glassy-card p-4 overflow-y-auto max-h-[40vh] md:max-h-full">
             <h3 className="font-medium glassy-text-primary mb-3 px-2">
               Feedback Modules
             </h3>
@@ -530,12 +535,13 @@ const FeedbackModal = ({
             </div>
           </div>
 
+          {/* Main Feedback Area */}
           <div className="flex-1 overflow-y-auto p-4">
             {showPreviousFeedback ? (
               renderPreviousFeedback()
             ) : (
               <>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                   <div>
                     <h3 className="text-xl font-semibold glassy-text-primary">
                       {currentModule?.title || ""}
@@ -544,7 +550,8 @@ const FeedbackModal = ({
                       Provide your feedback for this module
                     </p>
                   </div>
-                  <div className="flex items-center space-x-2">
+
+                  <div className="flex mt-2 md:mt-0 space-x-2">
                     {activeModuleIndex > 0 && (
                       <button
                         title="Previous Module"
@@ -569,8 +576,8 @@ const FeedbackModal = ({
 
                 {renderFeedbackForm()}
 
-                {/* Action buttons */}
-                <div className="flex justify-between mt-6">
+                {/* Action Buttons */}
+                <div className="flex flex-col md:flex-row justify-between mt-6 space-y-2 md:space-y-0 md:space-x-3">
                   <button
                     onClick={onClose}
                     className="glassy-text-secondary hover:glassy-text-primary font-medium py-2.5 px-6 rounded-lg border border-gray-300 hover:glassy-card transition-colors"
