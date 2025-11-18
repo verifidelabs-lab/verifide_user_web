@@ -15,8 +15,10 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
 
   const formStructure = {
     title: quest?.title || "Customer Feedback Survey",
-    description: quest?.description || "Please take a few moments to provide your feedback. Your response is valuable to us.",
-    pages: []
+    description:
+      quest?.description ||
+      "Please take a few moments to provide your feedback. Your response is valuable to us.",
+    pages: [],
   };
   if (quest?.surveyPolls && quest.surveyPolls.length > 0) {
     const questionsPerPage = 5;
@@ -29,15 +31,15 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
           type: q.type,
           title: q.title,
           required: q.isRequired || false,
-          options: q.options || []
-        }))
+          options: q.options || [],
+        })),
       });
     }
   }
   const handleResponseChange = (questionId, value) => {
     setResponses({
       ...responses,
-      [questionId]: value
+      [questionId]: value,
     });
   };
 
@@ -45,8 +47,10 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
     e.preventDefault();
     const currentQuestions = formStructure.pages[currentPage].questions;
     const missingRequired = currentQuestions.filter(
-      q => q.required && (!responses[q.id] ||
-        (Array.isArray(responses[q.id]) && responses[q.id].length === 0))
+      (q) =>
+        q.required &&
+        (!responses[q.id] ||
+          (Array.isArray(responses[q.id]) && responses[q.id].length === 0))
     );
     if (missingRequired.length > 0) {
       toast.warning("Please answer all required questions.");
@@ -61,20 +65,28 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
   const submitResponses = async () => {
     try {
       setLoading(true);
-      const answers = Object.entries(responses).map(([questionId, selected_options]) => {
-        const questionIndex = parseInt(questionId);
-        const question = formStructure.pages.flatMap(page => page.questions)
-          .find(q => q.id === questionIndex);
-        return {
-          survey_index: question.survey_index,
-          selected_options: Array.isArray(selected_options) ? selected_options : [selected_options]
-        };
-      }).filter(answer => answer.selected_options.length > 0 &&
-        answer.selected_options[0] !== '');
+      const answers = Object.entries(responses)
+        .map(([questionId, selected_options]) => {
+          const questionIndex = parseInt(questionId);
+          const question = formStructure.pages
+            .flatMap((page) => page.questions)
+            .find((q) => q.id === questionIndex);
+          return {
+            survey_index: question?.survey_index,
+            selected_options: Array.isArray(selected_options)
+              ? selected_options
+              : [selected_options],
+          };
+        })
+        .filter(
+          (answer) =>
+            answer.selected_options.length > 0 &&
+            answer.selected_options[0] !== ""
+        );
 
       const payload = {
         quest_id: quest._id,
-        answers
+        answers,
       };
       await dispatch(submitSurveyPolls(payload));
       setSubmitted(true);
@@ -93,34 +105,37 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
   };
 
   const renderQuestion = (question) => {
-    switch (question.type) {
-      case 'short-answer':
+    switch (question?.type) {
+      case "short-answer":
         return (
           <input
             type="text"
-            value={responses[question.id] || ''}
-            onChange={(e) => handleResponseChange(question.id, e.target.value)}
-            className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+            value={responses[question?.id] || ""}
+            onChange={(e) => handleResponseChange(question?.id, e.target.value)}
+            className="w-full p-2 border-b border-gray-300 glassy-input focus:outline-none focus:border-blue-500"
             placeholder="Your answer"
           />
         );
 
-      case 'multi-choice':
-      case 'poll':
+      case "multi-choice":
+      case "poll":
         return (
           <div className="space-y-2 mt-2">
-            {question.options.map((option, index) => (
+            {question?.options.map((option, index) => (
               <div key={index} className="flex items-center">
                 <input
                   type="radio"
-                  id={`q${question.id}_opt${index}`}
-                  name={`question_${question.id}`}
+                  id={`q${question?.id}_opt${index}`}
+                  name={`question_${question?.id}`}
                   value={option}
-                  checked={responses[question.id] === option}
-                  onChange={() => handleResponseChange(question.id, option)}
+                  checked={responses[question?.id] === option}
+                  onChange={() => handleResponseChange(question?.id, option)}
                   className="mr-2"
                 />
-                <label htmlFor={`q${question.id}_opt${index}`} className="glassy-text-primary">
+                <label
+                  htmlFor={`q${question?.id}_opt${index}`}
+                  className="glassy-text-primary"
+                >
                   {option}
                 </label>
               </div>
@@ -128,29 +143,32 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
           </div>
         );
 
-      case 'checkbox':
-      case 'multi-choice':
+      case "checkbox":
+      case "multi-choice":
         return (
           <div className="space-y-2 mt-2">
-            {question.options.map((option, index) => {
-              const selectedOptions = responses[question.id] || [];
+            {question?.options.map((option, index) => {
+              const selectedOptions = responses[question?.id] || [];
               return (
                 <div key={index} className="flex items-center">
                   <input
                     type="checkbox"
-                    id={`q${question.id}_opt${index}`}
-                    name={`question_${question.id}`}
+                    id={`q${question?.id}_opt${index}`}
+                    name={`question_${question?.id}`}
                     value={option}
                     checked={selectedOptions.includes(option)}
                     onChange={(e) => {
                       const newValue = e.target.checked
                         ? [...selectedOptions, option]
-                        : selectedOptions.filter(opt => opt !== option);
-                      handleResponseChange(question.id, newValue);
+                        : selectedOptions.filter((opt) => opt !== option);
+                      handleResponseChange(question?.id, newValue);
                     }}
                     className="mr-2"
                   />
-                  <label htmlFor={`q${question.id}_opt${index}`} className="glassy-text-primary">
+                  <label
+                    htmlFor={`q${question?.id}_opt${index}`}
+                    className="glassy-text-primary"
+                  >
                     {option}
                   </label>
                 </div>
@@ -159,22 +177,28 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
           </div>
         );
 
-      case 'dropdown':
+      case "dropdown":
         return (
           <select
-            value={responses[question.id] || ''}
-            onChange={(e) => handleResponseChange(question.id, e.target.value)}
+            value={responses[question?.id] || ""}
+            onChange={(e) => handleResponseChange(question?.id, e.target.value)}
             className="w-full p-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
           >
             <option value="">Select an option</option>
-            {question.options.map((option, index) => (
-              <option key={index} value={option}>{option}</option>
+            {question?.options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
             ))}
           </select>
         );
 
       default:
-        return <p className="text-red-500">Unsupported question type: {question.type}</p>;;
+        return (
+          <p className="text-red-500">
+            Unsupported question type: {question?.type}
+          </p>
+        );
     }
   };
   if (!quest?.surveyPolls || quest.surveyPolls.length === 0) {
@@ -191,17 +215,39 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
             </button>
           </div>
           <div className="p-6 text-center">
-            <p className="glassy-text-secondary">No survey questions available.</p>
+            <p className="glassy-text-secondary">
+              No survey questions available.
+            </p>
           </div>
         </div>
       </div>
     );
   }
   return (
-    <div className="!fixed inset-0 glassy-card backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="flex justify-between items-center p-4 border-b border-gray-200">
-          <h2 className="text-xl font-medium glassy-text-primary capitalize">{formStructure.title}</h2>
+    // <div className="!fixed inset-0 glassy-card backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div
+      className="
+  !fixed inset-0 glassy-card backdrop-blur-sm 
+  flex items-center justify-center 
+  z-50 
+  p-2 sm:p-4
+"
+    >
+      {/* <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"> */}
+      <div
+        className="
+  glassy-card rounded-lg shadow-xl 
+  w-full 
+  max-w-[95vw] sm:max-w-xl md:max-w-2xl 
+  max-h-[92vh]
+  overflow-hidden flex flex-col
+"
+      >
+        <div className="flex justify-between items-center p-3 sm:p-4 border-b break-all border-gray-200">
+          {/* <h2 className="text-xl font-medium glassy-text-primary  capitalize"> */}
+          <h2 className="text-lg sm:text-xl font-medium glassy-text-primary capitalize">
+            {formStructure.title}
+          </h2>
           <button
             onClick={onClose}
             className="glassy-text-secondary hover:glassy-text-primary p-1 rounded-full hover:glassy-card"
@@ -210,19 +256,26 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
           </button>
         </div>
 
-        <div className="overflow-y-auto flex-1 p-6">
+        {/* <div className="overflow-y-auto flex-1 p-6"> */}
+        <div className="overflow-y-auto flex-1 p-4 sm:p-6">
           {submitted ? (
             <div className="text-center py-8">
               <div className="glassy-card text-blue-800 p-4 rounded-full inline-block mb-4">
                 <BiSend className="text-3xl" onClick={onClose} />
               </div>
-              <h3 className="text-xl font-medium glassy-text-primary mb-2">Response submitted successfully!</h3>
-              <p className="glassy-text-secondary">Thank you for completing the form.</p>
+              <h3 className="text-xl font-medium glassy-text-primary mb-2">
+                Response submitted successfully!
+              </h3>
+              <p className="glassy-text-secondary">
+                Thank you for completing the form.
+              </p>
             </div>
           ) : (
             <>
               <div className="mb-6">
-                <p className="glassy-text-secondary">{formStructure.description}</p>
+                <p className="glassy-text-secondary break-all">
+                  {formStructure.description}
+                </p>
                 {formStructure.pages.length > 1 && (
                   <div className="text-sm glassy-text-secondary mt-2">
                     Page {currentPage + 1} of {formStructure.pages.length}
@@ -231,39 +284,50 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
               </div>
 
               <form onSubmit={handleSubmit}>
-                {formStructure.pages[currentPage].questions.map((question, index) => (
-                  <div key={question.id} className="mb-8">
-                    <div className="flex items-start mb-2">
-                      <h3 className="text-lg font-medium glassy-text-primary flex-1 capitalize">
-                        {question.title}
-                        {question.required && <span className="text-red-500 ml-1">*</span>}
-                      </h3>
-                      {index === 0 && (
-                        <QuestTypeBadge type={quest.type} />
-                      )}
+                {formStructure.pages[currentPage].questions.map(
+                  (question, index) => (
+                    <div key={question?.id} className="mb-6 sm:mb-8">
+                      <div className="flex items-start mb-2">
+                        <h3 className="text-base sm:text-lg font-medium glassy-text-primary flex-1 capitalize">
+                          {question?.title}
+                          {question?.required && (
+                            <span className="text-red-500 ml-1">*</span>
+                          )}
+                        </h3>
+                        {index === 0 && <QuestTypeBadge type={quest.type} />}
+                      </div>
+                      {renderQuestion(question)}
                     </div>
-                    {renderQuestion(question)}
-                  </div>
-                ))}
+                  )
+                )}
 
-                <div className="flex justify-between pt-4">
-                  <button
-                    type="button"
-                    onClick={handlePrevious}
-                    disabled={currentPage === 0}
-                    className={`flex items-center px-4 py-2 rounded ${currentPage === 0 ? 'glassy-text-secondary' : 'text-blue-600 hover:glassy-card'}`}
-                  >
-                    <BiChevronLeft className="text-xl" /> Previous
-                  </button>
+                <div
+                  className={`flex pt-4 ${
+                    currentPage === 0 ? "justify-end" : "justify-between"
+                  }`}
+                >
+                  {currentPage !== 0 && (
+                    <button
+                      type="button"
+                      onClick={handlePrevious}
+                      className="flex items-center px-4 py-2 rounded text-blue-600 hover:glassy-card"
+                    >
+                      <BiChevronLeft className="text-xl" /> Previous
+                    </button>
+                  )}
 
                   <button
                     type="submit"
                     disabled={loading}
                     className="bg-blue-600 hover:bg-blue-700 glassy-text-primary font-medium py-2 px-6 rounded flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {loading ? 'Submitting...' :
-                      (currentPage < formStructure.pages.length - 1 ? 'Next' : 'Submit')}
-                    {currentPage < formStructure.pages.length - 1 && !loading && <BiChevronRight className="text-xl ml-1" />}
+                    {loading
+                      ? "Submitting..."
+                      : currentPage < formStructure.pages.length - 1
+                      ? "Next"
+                      : "Submit"}
+                    {currentPage < formStructure.pages.length - 1 &&
+                      !loading && <BiChevronRight className="text-xl ml-1" />}
                   </button>
                 </div>
               </form>
@@ -275,4 +339,4 @@ const PollFormUser = ({ isOpen, onClose, quest }) => {
   );
 };
 
-export default PollFormUser
+export default PollFormUser;

@@ -402,7 +402,7 @@ const UsersProfile = ({ currentUserId }) => {
                                 <h3 className="font-semibold glassy-text-primary text-base">
                                   {exp.companyName || ""}
                                 </h3>
-                                <p className="text-[#00000099]/60 text-sm">
+                                <p className="glassy-text-primary text-sm">
                                   {exp.profileName || ""}
                                 </p>
                                 {exp.start_date && (
