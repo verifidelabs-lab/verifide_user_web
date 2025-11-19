@@ -871,7 +871,7 @@ const PostJob = () => {
         formatScreeningQuestionsForSubmit(screeningQuestions),
       start_date: convertToTimestamp(formData?.start_date) || "",
       end_date: convertToTimestamp(formData?.end_date) || "",
-      isShareAsPost: formData?.isShareAsPost,
+      isShareAsPost: true,
       current_openings: formData?.current_openings,
     };
 

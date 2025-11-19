@@ -398,7 +398,8 @@ function Layout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1  custom-scrollbar   md:transition-all md:duration-300">
+        <main className="flex-1 overflow-y-auto custom-scrollbar md:transition-all md:duration-300">
+
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />

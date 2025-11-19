@@ -22,6 +22,10 @@ body {
     "Lucida Grande", Helvetica, Arial, sans-serif; */
   font-family: "DM Sans", sans-serif;
 }
+html, body {
+  height: 100%;
+  overflow: hidden; /* block body scroll */
+}
 
 
 .instrument-sans {
