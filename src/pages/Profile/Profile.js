@@ -25,6 +25,7 @@ import {
   arrayTransform,
   arrayTransform2,
   convertTimestampToDate,
+  convertTimestampToDateUI,
   convertToTimestamp,
   formatDateRange,
   getDuration,
@@ -107,6 +108,8 @@ import {
 import OpenToWorkSelect from "../../components/ui/Button/ButtonWithIcon";
 import ResumeViewSelection from "./components/ResumeViewSelection";
 import { useNavigate } from "react-router-dom";
+import { FiEdit } from "react-icons/fi";
+import { BsPencil } from "react-icons/bs";
 
 const validationRules = {
   education: {
@@ -1078,8 +1081,8 @@ const Profile = ({ profileData }) => {
   const handleSelection = async (selected) => {
     try {
       // Open Education Modal
-      console.log("selected xdd"+selected);
-      
+      console.log("selected xdd" + selected);
+
       if (selected === "education") {
         handleOpenModal("education");
         return; // stop further execution
@@ -1089,16 +1092,16 @@ const Profile = ({ profileData }) => {
       if (selected === "experience") {
         handleOpenModal("experience");
         return; // stop further execution
+      } else {
+        // Otherwise update frame status normally
+        const res = await dispatch(
+          updateFrameStatus({ frame_status: selected })
+        ).unwrap();
+
+        toast.success(res?.message);
+        setFrameStatus(selected);
+        dispatch(getProfile());
       }
-
-      else{// Otherwise update frame status normally
-      const res = await dispatch(
-        updateFrameStatus({ frame_status: selected })
-      ).unwrap();
-
-      toast.success(res?.message);
-      setFrameStatus(selected);
-      dispatch(getProfile());}
     } catch (error) {
       toast.error(error);
     }
@@ -1305,7 +1308,24 @@ const Profile = ({ profileData }) => {
     // 'none',
   ];
   const [openResumeSelection, setOpenResumeSelection] = useState(false);
+  const personalInfoRef = useRef(null);
 
+  const handleEditClick = () => {
+    setIsExtended(true);
+
+    // Scroll into view
+    if (personalInfoRef.current) {
+      personalInfoRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      // Optional: focus the first input inside PersonalInformation
+      const input = personalInfoRef.current.querySelector(
+        "input, textarea, select"
+      );
+      if (input) input.focus();
+    }
+  };
   return (
     <>
       {/* <VerifiedLoader/> */}
@@ -1480,20 +1500,28 @@ const Profile = ({ profileData }) => {
                   <div className="glassy-card rounded-3xl p-6 flex-1 glassy-text-primary w-full min-w-0">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-2 sm:gap-0">
-                      <div>
-                        <h1 className="text-2xl md:text-3xl font-semibold mb-1 break-words">
-                          {`${profileInfo?.personalInfo?.first_name || ""} ${
-                            profileInfo?.personalInfo?.last_name || ""
-                          }`}
-                        </h1>
-                        <p className="glassy-text-secondary text-sm md:text-base break-words">
-                          {profileInfo?.personalInfo?.headline || "N/A"} |{" "}
-                          {profileInfo?.personalInfo?.address?.city?.name ||
-                            "N/A"}
-                          ,{" "}
-                          {profileInfo?.personalInfo?.address?.state?.name ||
-                            "N/A"}
-                        </p>
+                      <div className="flex items-center gap-2">
+                        <div>
+                          <h1 className="text-2xl md:text-3xl font-semibold mb-1 break-words">
+                            {`${profileInfo?.personalInfo?.first_name || ""} ${
+                              profileInfo?.personalInfo?.last_name || ""
+                            }`}
+                          </h1>
+                          <div
+                            onClick={handleEditClick}
+                            className="flex items-center gap-2 cursor-pointer hover:text-blue-500 transition-colors"
+                          >
+                            <p className="glassy-text-secondary text-sm md:text-base break-words">
+                              {profileInfo?.personalInfo?.headline || "N/A"} |{" "}
+                              {profileInfo?.personalInfo?.address?.city?.name ||
+                                "N/A"}
+                              ,{" "}
+                              {profileInfo?.personalInfo?.address?.state
+                                ?.name || "N/A"}
+                            </p>
+                            <BsPencil className="text-blue-500 text-lg flex-shrink-0" />
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -1531,7 +1559,10 @@ const Profile = ({ profileData }) => {
 
                     {/* Last Updated */}
                     <p className="text-sm text-gray-500">
-                      Last updated on 12 June, 2024
+                      Last updated on{" "}
+                      {convertTimestampToDateUI(
+                        profileInfo?.personalInfo?.updatedAt
+                      )}
                     </p>
                   </div>
 
@@ -1547,7 +1578,7 @@ const Profile = ({ profileData }) => {
                   />
                 </div>
 
-                <div>
+                <div ref={personalInfoRef}>
                   <PersonalInformation
                     formData={formData}
                     handleChange={handleChange}

@@ -281,7 +281,31 @@ export const convertTimestampToDate = (timestamp) => {
   const day = `${date.getDate()}`.padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+export const convertTimestampToDateUI = (timestamp) => {
+  if (!timestamp) return "";
 
+  const date = new Date(timestamp);
+
+  const day = date.getDate(); // 1 - 31
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const month = monthNames[date.getMonth()]; // getMonth() returns 0-11
+  const year = date.getFullYear();
+
+  return `${day} ${month}, ${year}`;
+};
 export const convertTimestampToDate2 = (timestamp) => {
   if (!timestamp) return "";
   const date = new Date(timestamp);

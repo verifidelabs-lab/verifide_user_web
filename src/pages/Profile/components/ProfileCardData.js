@@ -20,10 +20,12 @@ import { BiDownload } from "react-icons/bi";
 import { viewUserProfile } from "../../../redux/Users/userSlice";
 import ResumeViewSelection from "./ResumeViewSelection";
 import { Briefcase, GraduationCap, Settings } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
   const { setProfileImage } = useProfileImage();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [showCropper, setShowCropper] = useState(false);
@@ -146,7 +148,9 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
       {showCropper && (
         <div className="!fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 sm:px-6">
           <div className=" dark:bg-gray-800 p-4 sm:p-6 rounded-xl w-full max-w-md sm:max-w-lg md:max-w-xl h-[80vh] overflow-hidden flex flex-col">
-            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:glassy-text-primary">Crop Profile Image</h2>
+            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:glassy-text-primary">
+              Crop Profile Image
+            </h2>
 
             {/* Cropper container */}
             <div className="flex-1 mb-4 overflow-hidden rounded-lg">
@@ -243,8 +247,11 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
                 data?.personalInfo?.last_name || ""
               }`}
             </h2>
-            <p className="text-sm glassy-text-primary/80">{data?.personalInfo?.headline || 'NA'} | {data?.personalInfo?.address?.city?.name}, {data?.personalInfo?.address?.state?.name || 'N/A'}</p>
-
+            <p className="text-sm glassy-text-primary/80">
+              {data?.personalInfo?.headline || "NA"} |{" "}
+              {data?.personalInfo?.address?.city?.name},{" "}
+              {data?.personalInfo?.address?.state?.name || "N/A"}
+            </p>
           </div>
         </div>
       </div>
@@ -343,11 +350,25 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
       </div>
 
       {/* Skills */}
-      <div className="relative flex items-center justify-between mt-4">
-        <div className="flex items-baseline gap-2">
-          <span className="text-5xl font-bold">{data?.topSkills?.data?.length  || 0}</span>
-          <span className="text-lg glassy-text-primary/70">Skills</span>
+      <div className="relative group">
+        <div
+          onClick={() => navigate("/user/verification?tab=verified")}
+          className="relative flex items-center justify-between mt-4 cursor-pointer transition-all duration-200   rounded-lg hover:bg-blue-500/10"
+        >
+          <div className="flex items-baseline gap-2">
+            <span className="text-5xl font-bold">
+              {data?.topSkills?.data?.length || 0}
+            </span>
+            <span className="text-lg glassy-text-primary/70">
+              Verified Skills
+            </span>
+          </div>
         </div>
+
+        {/* Tooltip */}
+        <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-sm bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          Click to view verified skills
+        </span>
       </div>
     </div>
   );

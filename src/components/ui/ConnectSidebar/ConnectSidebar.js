@@ -53,28 +53,28 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
       setLoadingIds((prev) => [...prev, userId]);
 
       switch (data?.user_path) {
-        case "Companies":
-        case "Institutions": {
-          const res = await dispatch(
-            followUnfollowUsers({
-              target_id: userId,
-              target_model: data?.user_path,
-            })
-          ).unwrap();
+        // case "Companies":
+        // case "Institutions": {
+        //   const res = await dispatch(
+        //     followUnfollowUsers({
+        //       target_id: userId,
+        //       target_model: data?.user_path,
+        //     })
+        //   ).unwrap();
 
-          if (res) {
-            dispatch(
-              suggestedUser({
-                page: 1,
-                size: 10,
-                type: data?.user_path.toLowerCase(),
-              })
-            );
+        //   if (res) {
+        //     dispatch(
+        //       suggestedUser({
+        //         page: 1,
+        //         size: 10,
+        //         type: data?.user_path.toLowerCase(),
+        //       })
+        //     );
 
-            toast.success(res?.message || "Action completed successfully");
-          }
-          break;
-        }
+        //     toast.success(res?.message || "Action completed successfully");
+        //   }
+        //   break;
+        // }
 
         default: {
           const res = await dispatch(

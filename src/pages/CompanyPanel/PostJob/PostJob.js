@@ -120,7 +120,10 @@ const PostJob = () => {
   });
   const [formData, setFormData] = useState({
     company_id: companiesProfileData._id || "",
-    industry_id: companiesProfileData?.industry && companiesProfileData?.industry[0]._id || "",
+    industry_id:
+      (companiesProfileData?.industry &&
+        companiesProfileData?.industry[0]._id) ||
+      "",
     job_type: "",
     job_location: "",
     pay_type: "",
@@ -155,7 +158,10 @@ const PostJob = () => {
     setFormData({
       ...formData,
       company_id: companiesProfileData?._id,
-      industry_id: companiesProfileData?.industry && companiesProfileData?.industry[0]._id || "",
+      industry_id:
+        (companiesProfileData?.industry &&
+          companiesProfileData?.industry[0]._id) ||
+        "",
     });
   }, [companiesProfileData?._id]);
   const [isCreatableIndustry, setIsCreatbleIndustry] = useState(false);
@@ -209,8 +215,6 @@ const PostJob = () => {
     //     created_by_users: companiesProfileData.industry && companiesProfileData.industry[0].created_by_users || false,
     //   })
     // );
-
-
   }, [dispatch, companiesProfileData?._id]);
   useEffect(() => {
     dispatch(masterSkills());
@@ -244,11 +248,11 @@ const PostJob = () => {
 
       const addressData = jobData.work_location ||
         jobData.address || {
-        country: { name: "", dial_code: "", short_name: "", emoji: "🇮" },
-        state: { name: "", code: "" },
-        city: { name: "" },
-        pin_code: "",
-      };
+          country: { name: "", dial_code: "", short_name: "", emoji: "🇮" },
+          state: { name: "", code: "" },
+          city: { name: "" },
+          pin_code: "",
+        };
 
       setFormData({
         ...jobData,
@@ -289,7 +293,6 @@ const PostJob = () => {
       //     })
       //   );
       // }
-
 
       if (
         jobData.screening_questions &&
@@ -477,7 +480,7 @@ const PostJob = () => {
       let type = "";
       let updateAction = null;
       let selectField = addModalState.field;
-      console.log("this is the thpe", addModalState)
+      console.log("this is the thpe", addModalState);
       switch (addModalState.type) {
         case "industries":
           type = "industries";
@@ -553,7 +556,6 @@ const PostJob = () => {
     }));
 
     console.log("field, selectedOption", field, selectedOption);
-
 
     switch (field) {
       case "institution_id":
@@ -844,7 +846,9 @@ const PostJob = () => {
       setTimeout(() => {
         const firstErrorKey = Object.keys(errors)[0];
         if (firstErrorKey) {
-          const element = document.querySelector(`[data-error="${firstErrorKey}"]`);
+          const element = document.querySelector(
+            `[data-error="${firstErrorKey}"]`
+          );
           if (element) {
             element.scrollIntoView({ behavior: "smooth", block: "center" });
           }
@@ -871,7 +875,7 @@ const PostJob = () => {
         formatScreeningQuestionsForSubmit(screeningQuestions),
       start_date: convertToTimestamp(formData?.start_date) || "",
       end_date: convertToTimestamp(formData?.end_date) || "",
-      isShareAsPost: true,
+      isShareAsPost: formData?.isShareAsPost,
       current_openings: formData?.current_openings,
     };
 
@@ -886,8 +890,8 @@ const PostJob = () => {
       const res = await dispatch(action(finalData)).unwrap();
       toast.success(
         res?.message ||
-        res?.success ||
-        (id ? "Job updated successfully!" : "Job posted successfully!")
+          res?.success ||
+          (id ? "Job updated successfully!" : "Job posted successfully!")
       );
 
       // Reset form and navigate
@@ -937,9 +941,9 @@ const PostJob = () => {
       console.error("Error submitting job:", error);
       toast.error(
         error?.message ||
-        (id
-          ? "Failed to update job. Please try again."
-          : "Failed to post job. Please try again.")
+          (id
+            ? "Failed to update job. Please try again."
+            : "Failed to post job. Please try again.")
       );
     } finally {
       setIsSubmitting(false);
@@ -1012,10 +1016,11 @@ const PostJob = () => {
           return (
             <div
               key={qIndex}
-              className={`mb-6 p-4 border rounded-lg ${questionError || optionsError || correctError
-                ? "border-red-300 glassy-card"
-                : "border-gray-200 glassy-card"
-                }`}
+              className={`mb-6 p-4 border rounded-lg ${
+                questionError || optionsError || correctError
+                  ? "border-red-300 glassy-card"
+                  : "border-gray-200 glassy-card"
+              }`}
             >
               <div className="flex justify-between items-center mb-3">
                 <h3 className="font-medium glassy-text-primary">
@@ -1198,7 +1203,7 @@ const PostJob = () => {
           <span className="text-lg mr-1">+</span> Add Another Question
         </button>
       </div>
-      {!id && (
+      {
         <CustomInput
           type={`checkbox`}
           label={`Share As a post`}
@@ -1210,7 +1215,7 @@ const PostJob = () => {
             }))
           }
         />
-      )}
+      }
     </div>
   );
 
@@ -1229,7 +1234,9 @@ const PostJob = () => {
               <h1 className="text-2xl font-semibold glassy-text-primary">
                 {id ? "Edit Job" : "Post a Job"}
               </h1>
-              <span className="text-sm glassy-text-secondary">{currentStep}/3</span>
+              <span className="text-sm glassy-text-secondary">
+                {currentStep}/3
+              </span>
             </div>
 
             <div className="mb-8">

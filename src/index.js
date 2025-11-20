@@ -25,10 +25,7 @@ root.render(
             <ProfileImageProvider>
               <ThemeProvider>
                 <GlobalKeysProvider>
-
                   <App />
-
-
                 </GlobalKeysProvider>
               </ThemeProvider>
             </ProfileImageProvider>

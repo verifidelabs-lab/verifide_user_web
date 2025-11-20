@@ -2,8 +2,11 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { BiSearch, BiUser, BiBuilding, BiBookOpen } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createUserConnection, followUnfollowUsers,
-  getFollowingList, messageChatUser, suggestedUser,
+  createUserConnection,
+  followUnfollowUsers,
+  getFollowingList,
+  messageChatUser,
+  suggestedUser,
 } from "../../redux/Users/userSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
@@ -12,13 +15,20 @@ import { IoClose } from "react-icons/io5";
 import ConnectionsCard from "./Components/ConnectionCard";
 import FollowingCard from "./Components/FollwoingCard";
 import UserCardSkeleton from "./Components/UserCardSkeleton";
+import { getCookie } from "../../components/utils/cookieHandler";
 
 const DEFAULT_AVATAR = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
 
 const Connections = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const activeMode = getCookie("ACTIVE_MODE");
+  const basePath =
+    activeMode === "company"
+      ? "/company"
+      : activeMode === "institution"
+      ? "/institution"
+      : "/user";
   // State
   const [searchTerm, setSearchTerm] = useState("");
   const [userData, setUserData] = useState([]);
@@ -32,28 +42,31 @@ const Connections = () => {
     (state) => state.user?.getFollowingListData?.data?.data?.list || []
   );
   const [searchParams, setSearchParams] = useSearchParams();
-  const fetchData = useCallback(async (isRefresh = false) => {
-    try {
-      if (isRefresh) setRefreshing(true);
-      else setLoading(true);
-      setError(null);
+  const fetchData = useCallback(
+    async (isRefresh = false) => {
+      try {
+        if (isRefresh) setRefreshing(true);
+        else setLoading(true);
+        setError(null);
 
-      const [_, __, connectionsRes] = await Promise.all([
-        dispatch(getFollowingList()).unwrap(),
-        dispatch(suggestedUser({ page: 1, size: 10 })).unwrap(),
-        dispatch(messageChatUser({ isBlocked: false })).unwrap(),
-      ]);
+        const [_, __, connectionsRes] = await Promise.all([
+          dispatch(getFollowingList()).unwrap(),
+          dispatch(suggestedUser({ page: 1, size: 10 })).unwrap(),
+          dispatch(messageChatUser({ isBlocked: false })).unwrap(),
+        ]);
 
-      setUserData(connectionsRes?.data || []);
-    } catch (err) {
-      console.error("Failed to fetch:", err);
-      setError("⚠️ Failed to load connections data.");
-      toast.error("Failed to load data");
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, [dispatch]);
+        setUserData(connectionsRes?.data || []);
+      } catch (err) {
+        console.error("Failed to fetch:", err);
+        setError("⚠️ Failed to load connections data.");
+        toast.error("Failed to load data");
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     fetchData();
@@ -69,8 +82,9 @@ const Connections = () => {
 
         let displayName = targetId.name || "Unknown";
         if (isUser) {
-          displayName = `${targetId.first_name || ""} ${targetId.last_name || ""
-            }`.trim();
+          displayName = `${targetId.first_name || ""} ${
+            targetId.last_name || ""
+          }`.trim();
         }
 
         return {
@@ -84,8 +98,8 @@ const Connections = () => {
           entityType: isCompany
             ? "company"
             : isInstitute
-              ? "institute"
-              : "user",
+            ? "institute"
+            : "user",
           headline: targetId.headline || "",
           followerCount: targetId.follower_count || 0,
         };
@@ -145,9 +159,7 @@ const Connections = () => {
       navigate(`/user/profile/${encodeURIComponent(user?.name)}/${user?.id}`);
     } else {
       let name =
-        user?.targetModel === "Companies"
-          ? "companies"
-          : "institutions";
+        user?.targetModel === "Companies" ? "companies" : "institutions";
 
       navigate(`/user/view-details/${name}/${user?.id}`);
     }
@@ -290,16 +302,20 @@ const Connections = () => {
                 setSearchParams({ tab: tab.key });
               }}
               className={`relative px-6 py-2.5 rounded-lg w-full flex items-center gap-2 text-sm font-medium transition-all duration-300
-            ${activeTab === tab.key
-                  ? "bg-gradient-to-r from-blue-500 to-blue-600 glassy-text-primary shadow-md"
-                  : "glassy-text-secondary hover:bg-[var(--bg-button-hover)]"}`}
+            ${
+              activeTab === tab.key
+                ? "bg-gradient-to-r from-blue-500 to-blue-600 glassy-text-primary shadow-md"
+                : "glassy-text-secondary hover:bg-[var(--bg-button-hover)]"
+            }`}
             >
               {tab.label}
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full transition-all duration-300
-              ${activeTab === tab.key
-                    ? "glassy-card text-blue-500 shadow-sm"
-                    : "bg-[var(--bg-button)] glassy-text-secondary"}`}
+              ${
+                activeTab === tab.key
+                  ? "glassy-card text-blue-500 shadow-sm"
+                  : "bg-[var(--bg-button)] glassy-text-secondary"
+              }`}
               >
                 {tab.count}
               </span>
@@ -346,8 +362,26 @@ const Connections = () => {
           </div>
         )}
       </div>
-    </div>
+      <div className="px-6 py-4 border-t border-[var(--border-color)] mt-5 flex justify-center">
+        <Button
+          variant="outline"
+          className="w-full glassy-button hover:glassy-text-primary transition-colors"
+          onClick={() => {
+            const basePath =
+              activeMode === "company"
+                ? "/company"
+                : activeMode === "institution"
+                ? "/institution"
+                : "/user";
 
+            navigate(`${basePath}/suggested-users?tab=${"user"}`);
+          }}
+        >
+          Explore
+        </Button>
+     
+      </div>
+    </div>
   );
 };
 
