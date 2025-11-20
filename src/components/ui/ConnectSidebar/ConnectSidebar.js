@@ -79,7 +79,8 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
         default: {
           const res = await dispatch(
             createUserConnection({
-              connection_user_id: userId,
+              target_id: userId,
+              target_model: "Users",
             })
           ).unwrap();
 

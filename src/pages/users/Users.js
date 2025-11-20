@@ -111,7 +111,10 @@ const Users = () => {
       case "user":
         try {
           const res = await dispatch(
-            createUserConnection({ connection_user_id: data?._id })
+            createUserConnection({
+              target_id: data?._id,
+              target_model: "Users",
+            })
           ).unwrap();
           toast.success(res?.message);
           dispatch(
@@ -208,7 +211,7 @@ const Users = () => {
 
       <div className="mb-8 flex md:flex-row flex-col justify-between items-center"></div>
 
-      {  isLoading ? (
+      {isLoading ? (
         <div className="flex justify-center py-8 glassy-card">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 "></div>
         </div>

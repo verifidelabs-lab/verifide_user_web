@@ -455,7 +455,10 @@ const Opportunities = () => {
     } else {
       try {
         const res = await dispatch(
-          createUserConnection({ connection_user_id: data?.user_id?._id })
+          createUserConnection({
+            target_id: data?.user_id?._id,
+            target_model: "Users",
+          })
         ).unwrap();
         toast.success(res?.message);
         navigate(`/user/message/${data?.user_id?._id}/true`);
