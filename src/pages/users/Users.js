@@ -111,7 +111,10 @@ const Users = () => {
       case "user":
         try {
           const res = await dispatch(
-            createUserConnection({ connection_user_id: data?._id })
+            createUserConnection({
+              target_id: data?._id,
+              target_model: "Users",
+            })
           ).unwrap();
           toast.success(res?.message);
           dispatch(
@@ -122,28 +125,28 @@ const Users = () => {
         } finally {
         }
         break;
-      // case "companies":
-      //   await dispatch(
-      //     followUnfollowUsers({
-      //       target_id: data?._id,
-      //       target_model: data?.user_path,
-      //     })
-      //   ).unwrap();
-      //   dispatch(
-      //     suggestedUser({ page: 1, size: usersPerPage, type: activeTab })
-      //   );
-      //   break;
-      // case "institutions":
-      //   await dispatch(
-      //     followUnfollowUsers({
-      //       target_id: data?._id,
-      //       target_model: data?.user_path,
-      //     })
-      //   ).unwrap();
-      //   dispatch(
-      //     suggestedUser({ page: 1, size: usersPerPage, type: activeTab })
-      //   );
-      //   break;
+      case "companies":
+        await dispatch(
+          followUnfollowUsers({
+            target_id: data?._id,
+            target_model: data?.user_path,
+          })
+        ).unwrap();
+        dispatch(
+          suggestedUser({ page: 1, size: usersPerPage, type: activeTab })
+        );
+        break;
+      case "institutions":
+        await dispatch(
+          followUnfollowUsers({
+            target_id: data?._id,
+            target_model: data?.user_path,
+          })
+        ).unwrap();
+        dispatch(
+          suggestedUser({ page: 1, size: usersPerPage, type: activeTab })
+        );
+        break;
       default: {
         try {
           const res = await dispatch(

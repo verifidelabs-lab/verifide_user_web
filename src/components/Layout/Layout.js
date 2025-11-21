@@ -264,7 +264,7 @@ function Layout() {
     useTour();
   return (
     <div
-      className="min-h-screen flex flex-col relative pt-[70px]"
+      className="h-screen flex flex-col overflow-hidden relative pt-[70px]"
       id="layout-container"
     >
       {!isMobile && (
@@ -292,7 +292,7 @@ function Layout() {
           }) => {
             return (
               <div
-                className="custom-tooltip    inset-0 z-40 transition-all duration-300 ease-in-out hide-scrollbar glassy-card bg-opacity-30 glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm  p-4 flex flex-col gap-4 w-80"
+                className="custom-tooltip inset-0 z-40 transition-all duration-300 ease-in-out hide-scrollbar glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm p-4 flex flex-col gap-4 w-80"
                 style={{
                   backgroundImage: 'url("/Group.png")',
                   backgroundSize: "cover",
@@ -327,17 +327,11 @@ function Layout() {
                 <div className="flex justify-between mt-2">
                   <button
                     {...skipProps}
-                    className="skip-button  glassy-text-primary  "
+                    className="skip-button glassy-text-primary"
                   >
                     Skip
                   </button>
-                  <div className="flex justify-between">
-                    {/* <button
-                  {...backProps}
-                  className="back-button glassy-button opacity-70 hover:opacity-100"
-                >
-                  Back
-                </button> */}
+                  <div className="flex">
                     <button
                       {...primaryProps}
                       className="next-button glassy-button"
@@ -351,17 +345,19 @@ function Layout() {
           }}
         />
       )}
+
       {runTour && !isMobile && (
         <div
-          className="fixed inset-0 z-[9999]   cursor-not-allowed pointer-events-auto"
+          className="fixed inset-0 z-[9999] cursor-not-allowed pointer-events-auto"
           onClick={(e) => {
-            e.stopPropagation(); // prevent event bubbling
+            e.stopPropagation();
             toast.error("⚠ Please complete the tour first!");
           }}
           onScroll={(e) => e.preventDefault()}
         />
       )}
 
+      {/* 🔥 Fixed Header */}
       <div className="fixed top-0 left-0 w-full z-[999]">
         <Header
           openLogout={openLogout}
@@ -374,18 +370,19 @@ function Layout() {
         />
       </div>
 
-      {/* Sidebar + Content stacked below header */}
-      <div className="flex flex-col md:flex-row flex-1   p-0 md:p-5">
+      {/* 🔥 Scrollable Area (Sidebar + Main) */}
+      <div className="flex flex-1 pt-[70px] overflow-y-auto md:p-5">
         {/* Sidebar */}
         {(!isRestrictedPath || isMobile) && (
           <div
             className={`
-    fixed md:relative top-[70px] md:top-0 left-0 
-    h-[calc(100vh-70px)] md:h-auto 
-    z-50
-    transition-transform duration-300 ease-in-out
-    ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
-  `}
+          transition-transform duration-300 ease-in-out
+          ${
+            navbarOpen
+              ? "translate-x-0 w-72"
+              : "translate-x-[-100%] w-72 md:w-20"
+          }
+        `}
           >
             <Sidebar
               openLogout={openLogout}
@@ -398,8 +395,7 @@ function Layout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto custom-scrollbar md:transition-all md:duration-300">
-
+        <main className="flex-1 md:transition-all md:duration-300">
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route index element={<Navigate to="feed" replace />} />
@@ -446,7 +442,6 @@ function Layout() {
                 path="/terms-and-conditions"
                 element={<TermsAndConditions />}
               />
-              {/* <Route path="/feed" element={<Home />} /> */}
               <Route path="/course/recommended" element={<Recommended />} />
               <Route
                 path="/course/course-details/:id"
@@ -457,7 +452,7 @@ function Layout() {
                 element={
                   accessMode === "6" ? <Opportunitiess /> : <Opportunitiess2 />
                 }
-              />{" "}
+              />
               <Route path="/suggested-users" element={<Users />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/assessment/:token?" element={<Index />} />
@@ -469,7 +464,7 @@ function Layout() {
                 path="/connections"
                 element={<Connections profileData={profileData} />}
               />
-              {/* For User details Page  */}
+
               <Route
                 path="/profile/:first_name/*"
                 element={
@@ -480,11 +475,12 @@ function Layout() {
                   />
                 }
               />
-              {/* For Company details Page  */}
+
               <Route
                 path="/view-details/:name/:id"
                 element={<CompanyInstituteView />}
               />
+
               <Route
                 path="/quest"
                 element={<Quest profileData={profileData} />}
@@ -498,17 +494,18 @@ function Layout() {
                 path="/forage-certificates"
                 element={<ForageCertificate />}
               />
-              {/* <Route path="/create-company" element={<CreateCompany />} /> */}
+
               <Route path="/create-company" element={<RegisterCompany />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/create-institute" element={<RegisterInstitute />} />
               <Route path="/institutions" element={<Institution />} />
-              {/* <Route path="/create-institute" element={<RegisterInstitute />} /> */}
+
               <Route
                 path="/resume/:username?"
                 element={<ResumeCertificate />}
               />
               <Route path="/create-post" element={<CreatePost />} />
+
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Suspense>

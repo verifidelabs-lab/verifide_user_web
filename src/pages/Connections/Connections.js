@@ -126,7 +126,8 @@ const Connections = () => {
         isVerified: item.is_verified || false,
         frameStatus: item.frame_status || "",
         followerCount: item.follower_count || 0,
-        connectionCount: item.connection_count || 0,
+        connectionCount: item.connection_count||item.employee_count || 0,
+        employee_count: item.connection_count ?"connection_count":"employee_count",
         profileViews: item.profile_views || 0,
       })),
     [userData]
@@ -166,11 +167,15 @@ const Connections = () => {
   };
 
   const handleDisconnectUser = async (user) => {
-    const key = `disconnect-${user.id}`;
+    console.log("Disconnecting user:", user);
+    const key = `disconnect-${user?._id}`;
     setActionLoading((p) => ({ ...p, [key]: true }));
     try {
       const res = await dispatch(
-        createUserConnection({ connection_user_id: user?.id })
+        createUserConnection({
+          target_id: user?._id,
+          target_model: "Users",
+        })
       ).unwrap();
       if (res) toast.success(res?.message || "User disconnected!");
       await fetchData(true);

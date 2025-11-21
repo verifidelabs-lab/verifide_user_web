@@ -1572,7 +1572,7 @@ const Profile = ({ profileData }) => {
                     onClose={() => setOpenResumeSelection(false)}
                     title="Select Your Preview"
                     userData={{
-                      userId: profileInfo._id,
+                      userId: profileInfo?._id,
                       username: profileInfo?.personalInfo?.username,
                     }}
                   />
@@ -1629,7 +1629,7 @@ const Profile = ({ profileData }) => {
                   handleOpenModal={() => handleOpenModal('projects')} type="projects" onEdit={handleEdit}
                   onDelete={handleDelete} data={projectData || []} loadingStates={loadingStates} /> */}
 
-                  <div>
+                  {/* <div>
                     <div className="glassy-card p-2">
                       <div className="flex items-center justify-between mb-6 ">
                         <h2 className="md:text-sm text-xs font-semibold tracking-wide glassy-text-primary uppercase">
@@ -1824,7 +1824,7 @@ const Profile = ({ profileData }) => {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

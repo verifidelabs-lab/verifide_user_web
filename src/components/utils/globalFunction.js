@@ -43,10 +43,10 @@ export const arrayTransform2 = (data) => {
               src={item.logo_url || "/36369.jpg"}
               alt="logo"
               className="w-5 h-5 rounded-full border object-cover"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = "/36369.jpg";
-              }}
+              // onError={(e) => {
+              //   e.currentTarget.onerror = null;
+              //   e.currentTarget.src = "/36369.jpg";
+              // }}
             />
           ) : (
             <img

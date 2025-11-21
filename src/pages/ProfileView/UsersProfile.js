@@ -143,7 +143,10 @@ const UsersProfile = ({ currentUserId }) => {
     setLoading(true);
     try {
       const res = await dispatch(
-        createUserConnection({ connection_user_id: userId })
+        createUserConnection({
+          target_id: userId,
+          target_model: "Users",
+        })
       ).unwrap();
       toast.success(res?.message);
       fetchData();

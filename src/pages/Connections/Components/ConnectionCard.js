@@ -52,7 +52,7 @@ const ConnectionsCard = ({
           <span className="font-semibold text-base glassy-text-primary block">
             {user?.connectionCount}
           </span>
-          <span className="text-xs glassy-text-secondary">Connections</span>
+          <span className="text-xs glassy-text-secondary"> {user?.employee_count === "employee_count" ? "Employees" : "Connections"}</span>
         </div>
         <div className="text-center">
           <span className="font-semibold text-base glassy-text-primary block">

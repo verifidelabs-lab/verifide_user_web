@@ -17,6 +17,7 @@
 
 body {
   font-family: "DM Sans", sans-serif;
+  overflow: hidden;
 }
 
 
@@ -435,11 +436,20 @@ textarea:focus {
 .glassy-app {
   position: relative;
   min-height: 100vh;
-  background: url('/public/theme background.svg') no-repeat center center;
+  
+  background-image: url('/public/theme background.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
-  background-attachment: fixed;
-  /* Make background fixed */
-  transition: all 0.4s ease;
+
+  /* 🔥 Remove fixed attachment — main reason for scroll issues */
+  background-attachment: scroll;
+
+  transition: background 0.4s ease;
+}
+
+html, body, #root, .mySwiper {
+  overflow-x: hidden;
 }
 
 
