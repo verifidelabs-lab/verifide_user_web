@@ -126,9 +126,12 @@ const Connections = () => {
         isVerified: item.is_verified || false,
         frameStatus: item.frame_status || "",
         followerCount: item.follower_count || 0,
-        connectionCount: item.connection_count||item.employee_count || 0,
-        employee_count: item.connection_count ?"connection_count":"employee_count",
+        connectionCount: item.connection_count || item.employee_count || 0,
+        employee_count: item.connection_count
+          ? "connection_count"
+          : "employee_count",
         profileViews: item.profile_views || 0,
+        userType: item?.userType || null,
       })),
     [userData]
   );
@@ -165,6 +168,18 @@ const Connections = () => {
       navigate(`/user/view-details/${name}/${user?.id}`);
     }
   };
+  const mapUserTypeToModel = (type) => {
+    switch (type) {
+      case "User":
+        return "Users";
+      case "Company":
+        return "Companies";
+      case "Institution":
+        return "Institutions";
+      default:
+        return null; // or "Users"
+    }
+  };
 
   const handleDisconnectUser = async (user) => {
     console.log("Disconnecting user:", user);
@@ -173,8 +188,8 @@ const Connections = () => {
     try {
       const res = await dispatch(
         createUserConnection({
-          target_id: user?._id,
-          target_model: "Users",
+          target_id: user?.id,
+          target_model: mapUserTypeToModel(user?.userType),
         })
       ).unwrap();
       if (res) toast.success(res?.message || "User disconnected!");
