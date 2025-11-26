@@ -8,7 +8,7 @@ const FollowingCard = ({ user, handleUnfollow, actionLoading, handleUserClick, g
           src={user.avatar || DEFAULT_AVATAR}
           alt={user.name}
           onError={(e) => (e.currentTarget.src = DEFAULT_AVATAR)}
-          className="w-16 h-16 rounded-full object-cover border border-[var(--border-color)] cursor-pointer hover:scale-105 transition-transform duration-300"
+          className="w-16 h-16 rounded-full object-cover border border-[var(--border-color)] cursor-pointer glassy-text-primary transition-transform duration-300"
           onClick={() => handleUserClick(user)}
         />
         <div className="flex-1 min-w-0">
@@ -16,7 +16,7 @@ const FollowingCard = ({ user, handleUnfollow, actionLoading, handleUserClick, g
             {getEntityIcon(user.entityType)}
             <h3
               onClick={() => handleUserClick(user)}
-              className="font-semibold text-base sm:text-lg glassy-text-primary cursor-pointer hover:text-[var(--accent-color)] transition-colors truncate"
+              className="font-semibold text-base sm:text-lg glassy-text-primary cursor-pointer  transition-colors truncate"
             >
               {user.name}
             </h3>

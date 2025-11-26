@@ -159,9 +159,15 @@ const Connections = () => {
 
   // Handlers
   const handleUserClick = (user) => {
-    if (user.isClickable || user?.targetModel === "Users") {
+    console.log("useruseruser", user);
+    if (user?.userType === "Institution" || user?.userType === "Company") {
+      let name = user?.userType === "Company" ? "companies" : "institutions";
+      navigate(`/user/view-details/${name}/${user?.id}`);
+    } else if (user.isClickable || user?.targetModel === "Users") {
       navigate(`/user/profile/${encodeURIComponent(user?.name)}/${user?.id}`);
-    } else {
+    }
+    // Case 2: userType = Institution OR Company → same as "else" logic
+    else {
       let name =
         user?.targetModel === "Companies" ? "companies" : "institutions";
 
@@ -399,7 +405,6 @@ const Connections = () => {
         >
           Explore
         </Button>
-     
       </div>
     </div>
   );
