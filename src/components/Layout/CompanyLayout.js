@@ -220,28 +220,31 @@ function CompanyLayout() {
   const isRestrictedPath = restrictedPaths.includes(location.pathname);
   return (
     <div
-      className="h-screen flex flex-col overflow-hidden relative      "
+      className="h-screen flex flex-col overflow-hidden relative     pt-[70px]"
       id="layout-container"
     >
       {/* Header */}
+      <div className="fixed top-0 left-0 w-full z-[999]">
+        {" "}
+        <Header
+          navbarOpen={navbarOpen}
+          setNavbarOpen={setNavbarOpen}
+          companiesProfileData={companiesProfileData}
+          instituteProfileData={instituteProfileData}
+        />
+      </div>
 
-      <Header
-        navbarOpen={navbarOpen}
-        setNavbarOpen={setNavbarOpen}
-        companiesProfileData={companiesProfileData}
-        instituteProfileData={instituteProfileData}
-      />
-
-      {/* Sidebar + Main Content */}
-      <div className="flex flex-col md:flex-row flex-1  p-5">
+      <div className="flex flex-col md:flex-row flex-1    overflow-y-auto md:p-5">
         {/* Sidebar */}
         {(!isRestrictedPath || isMobile) && (
           <div
             className={`
-      transition-all duration-300
-      ${navbarOpen ? "md:w-72 w-full" : "w-0 md:w-20"}
-      fixed md:relative top-0 left-0 h-screen md:h-auto z-50
-    `}
+    !fixed md:!relative top-[70px] md:top-0 left-0 
+    h-[calc(100vh-70px)] md:h-auto  overflow-y-auto glassy-card hide-scrollbar
+    z-50
+    transition-transform duration-300 ease-in-out
+    ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
+  `}
           >
             <CompanySidebar
               navbarOpen={navbarOpen}
@@ -253,7 +256,7 @@ function CompanyLayout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1     md:transition-all md:duration-300">
+        <main className="flex-1 md:transition-all md:duration-300 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
           {/* Your main content goes here */}
 
           <Suspense fallback={<Loader />}>

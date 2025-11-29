@@ -215,190 +215,346 @@ const PendingRequests = () => {
     ])) || [];
   }, [data?.data?.list, currentPage, handleView, handleEdit]);
 
-  const renderViewContent = () => {
-    const user = selectedRequest?.user_id;
-    const assignedTo = selectedRequest?.assigned_to;
-    const model = selectedRequest?.document_model;
-    const doc = selectedRequest?.document_id;
-    const formatDate = (timestamp) => timestamp ? new Date(timestamp).toLocaleDateString() : null;
-    const renderSkills = (skills) => (
-      Array.isArray(skills) && skills.length > 0 && (
-        <div>
-          <p><span className="font-semibold">Skills Acquired:</span></p>
-          <ul className="list-disc pl-5">
-            {skills.map((skill) => (
-              <li key={skill?._id}>{skill?.name}</li>
-            ))}
-          </ul>
-        </div>
-      )
-    );
+    // const renderViewContent = () => {
+    //   const user = selectedRequest?.user_id;
+    //   const assignedTo = selectedRequest?.assigned_to;
+    //   const model = selectedRequest?.document_model;
+    //   const doc = selectedRequest?.document_id;
+    //   const formatDate = (timestamp) => timestamp ? new Date(timestamp).toLocaleDateString() : null;
+    //   const renderSkills = (skills) => (
+    //     Array.isArray(skills) && skills.length > 0 && (
+    //       <div>
+    //         <p><span className="font-semibold">Skills Acquired:</span></p>
+    //         <ul className="list-disc pl-5">
+    //           {skills.map((skill) => (
+    //             <li key={skill?._id}>{skill?.name}</li>
+    //           ))}
+    //         </ul>
+    //       </div>
+    //     )
+    //   );
 
-    const renderImage = (url, label) =>
-      url && (
-        <div>
-          <p className="font-semibold">{label}:</p>
-          <img
-            src={url}
-            alt={label}
-            className="w-full max-w-xs rounded shadow border"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
-            }}
-          />
-        </div>
-      );
-    const isImage = (url) => {
-      const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg"];
-      return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
-    };
+    //   const renderImage = (url, label) =>
+    //     url && (
+    //       <div>
+    //         <p className="font-semibold">{label}:</p>
+    //         <img
+    //           src={url}
+    //           alt={label}
+    //           className="w-full max-w-xs rounded shadow border"
+    //           onError={(e) => {
+    //             e.target.onerror = null;
+    //             e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+    //           }}
+    //         />
+    //       </div>
+    //     );
+    //   const isImage = (url) => {
+    //     const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg"];
+    //     return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
+    //   };
 
-    return (
-      <div className="grid grid-cols-1 gap-6 glassy-card">
-        <div className="space-y-6">
-          <div className=" p-6 rounded-lg shadow-lg max-w-xl mx-auto">
-            <div className="flex flex-col items-center">
-              <img
-                src={user?.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
-                alt="Profile"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
-                }}
-                className="w-24 h-24 rounded-full border-4 border-gray-200 mb-4"
-              />
-              <h3 className="font-semibold text-xl glassy-text-primary">
-                {user?.first_name} {user?.last_name}
-              </h3>
-            </div>
+    //   return (
+    //     <div className="grid grid-cols-1 gap-6 glassy-card">
+    //       <div className="space-y-6">
+    //         <div className=" p-6 rounded-lg shadow-lg max-w-xl mx-auto">
+    //           <div className="flex flex-col items-center">
+    //             <img
+    //               src={user?.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
+    //               alt="Profile"
+    //               onError={(e) => {
+    //                 e.target.onerror = null;
+    //                 e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+    //               }}
+    //               className="w-24 h-24 rounded-full border-4 border-gray-200 mb-4"
+    //             />
+    //             <h3 className="font-semibold text-xl glassy-text-primary">
+    //               {user?.first_name} {user?.last_name}
+    //             </h3>
+    //           </div>
 
-            <div className="mt-6 space-y-3 glassy-text-primary text-sm">
-              {user?.email && <p><span className="font-semibold">Email:</span> {user.email}</p>}
-              {user?.phone_number && <p><span className="font-semibold">Phone:</span> {user.phone_number}</p>}
-              {selectedRequest?.verification_category && <p><span className="font-semibold">Verification Category:</span> {selectedRequest.verification_category}</p>}
-              {selectedRequest?.relation_path && <p><span className="font-semibold">Relation Path:</span> {selectedRequest.relation_path}</p>}
-              {selectedRequest?.status && <p><span className="font-semibold">Status:</span> {selectedRequest.status}</p>}
-              {selectedRequest?.assign_status && <p><span className="font-semibold">Assign Status:</span> {selectedRequest.assign_status}</p>}
-              {selectedRequest?.assigned_path && <p><span className="font-semibold">Assigned Path:</span> {selectedRequest.assigned_path}</p>}
-              {selectedRequest?.rejection_reason && <p><span className="font-semibold">Rejection Reason:</span> {selectedRequest.rejection_reason}</p>}
-            </div>
+    //           <div className="mt-6 space-y-3 glassy-text-primary text-sm">
+    //             {user?.email && <p><span className="font-semibold">Email:</span> {user.email}</p>}
+    //             {user?.phone_number && <p><span className="font-semibold">Phone:</span> {user.phone_number}</p>}
+    //             {selectedRequest?.verification_category && <p><span className="font-semibold">Verification Category:</span> {selectedRequest.verification_category}</p>}
+    //             {selectedRequest?.relation_path && <p><span className="font-semibold">Relation Path:</span> {selectedRequest.relation_path}</p>}
+    //             {selectedRequest?.status && <p><span className="font-semibold">Status:</span> {selectedRequest.status}</p>}
+    //             {selectedRequest?.assign_status && <p><span className="font-semibold">Assign Status:</span> {selectedRequest.assign_status}</p>}
+    //             {selectedRequest?.assigned_path && <p><span className="font-semibold">Assigned Path:</span> {selectedRequest.assigned_path}</p>}
+    //             {selectedRequest?.rejection_reason && <p><span className="font-semibold">Rejection Reason:</span> {selectedRequest.rejection_reason}</p>}
+    //           </div>
 
-            {assignedTo && (
-              <div className="mt-6 border-t pt-4">
-                <h4 className="font-semibold text-md glassy-text-primary mb-2">Assigned To</h4>
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={assignedTo.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
-                    alt="Verifier"
-                    className="w-12 h-12 rounded-full border-2 border-gray-300"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
-                    }}
-                  />
-                  <div>
-                    <p className="font-medium">{assignedTo.first_name} {assignedTo.last_name}</p>
-                    <p className="text-sm glassy-text-secondary">@{assignedTo.username}</p>
-                  </div>
+    //           {assignedTo && (
+    //             <div className="mt-6 border-t pt-4">
+    //               <h4 className="font-semibold text-md glassy-text-primary mb-2">Assigned To</h4>
+    //               <div className="flex items-center space-x-4">
+    //                 <img
+    //                   src={assignedTo.profile_picture_url || "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500"}
+    //                   alt="Verifier"
+    //                   className="w-12 h-12 rounded-full border-2 border-gray-300"
+    //                   onError={(e) => {
+    //                     e.target.onerror = null;
+    //                     e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500";
+    //                   }}
+    //                 />
+    //                 <div>
+    //                   <p className="font-medium">{assignedTo.first_name} {assignedTo.last_name}</p>
+    //                   <p className="text-sm glassy-text-secondary">@{assignedTo.username}</p>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           )}
+    //         </div>
+    //         <div className=" p-6 rounded-lg shadow-lg">
+    //           {model && (
+    //             <h3 className="font-semibold text-xl glassy-text-primary capitalize">
+    //               {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
+    //             </h3>
+    //           )}
+    //           <div className="space-y-4 mt-4 text-sm glassy-text-primary">
+    //             {model === "UserAdditionalCertifications" && (
+    //               <>
+    //                 {doc?.name && <p><span className="font-semibold">Document Name:</span> {doc.name}</p>}
+    //                 {doc?.issuing_organization && <p><span className="font-semibold">Issuing Organization:</span> {doc.issuing_organization}</p>}
+    //                 {doc?.credential_id && <p><span className="font-semibold">Credential ID:</span> {doc.credential_id}</p>}
+    //                 {doc?.issue_date && <p><span className="font-semibold">Issue Date:</span> {formatDate(doc.issue_date)}</p>}
+    //                 {renderSkills(doc?.skills_acquired)}
+    //                 {renderImage(doc?.media_url, "Attached File")}
+    //               </>
+    //             )}
+    //             {model === "UserIdentityVerifications" && (
+    //               <>
+    //                 {doc?.id_number && <p><span className="font-semibold">ID Number:</span> {doc.id_number}</p>}
+    //                 {renderImage(doc?.front_side_file, "Front Side")}
+    //                 {renderImage(doc?.back_side_file, "Back Side")}
+    //               </>
+    //             )}
+    //             {model === "UserProjects" && (
+    //               <>
+    //                 {doc?.name && <p><span className="font-semibold">Project Name:</span> {doc.name}</p>}
+    //                 {doc?.issuing_organization && <p><span className="font-semibold">Organization:</span> {doc.issuing_organization}</p>}
+    //                 {doc?.credential_id && <p><span className="font-semibold">Credential ID:</span> {doc.credential_id}</p>}
+    //                 {doc?.issue_date && <p><span className="font-semibold">Issue Date:</span> {formatDate(doc.issue_date)}</p>}
+    //                 {doc?.company_id?.display_name && <p><span className="font-semibold">Company:</span> {doc.company_id.display_name}</p>}
+    //                 {doc?.industries_id?.display_name && <p><span className="font-semibold">Industry:</span> {doc.industries_id.display_name}</p>}
+    //                 {renderImage(doc?.media_url, "Media")}
+    //               </>
+    //             )}
+    //             {model === "UserEducations" && (
+    //               <>
+    //                 {doc?.institution_id?.display_name && <p><span className="font-semibold">Institution:</span> {doc.institution_id.display_name}</p>}
+    //                 {doc?.degree_id?.name && <p><span className="font-semibold">Degree:</span> {doc.degree_id.name}</p>}
+    //                 {doc?.field_of_studies?.name && <p><span className="font-semibold">Field of Study:</span> {doc.field_of_studies.name}</p>}
+    //                 {doc?.start_date && <p><span className="font-semibold">Start Date:</span> {formatDate(doc.start_date)}</p>}
+    //                 {doc?.end_date && <p><span className="font-semibold">End Date:</span> {formatDate(doc.end_date)}</p>}
+    //                 {doc?.currently_available !== undefined && (
+    //                   <p><span className="font-semibold">Currently Studying:</span> {doc.currently_available ? "Yes" : "No"}</p>
+    //                 )}
+    //                 {doc?.duration && <p><span className="font-semibold">Duration:</span> {doc.duration}</p>}
+    //                 {renderSkills(doc?.skills_acquired)}
+    //                 {Array.isArray(doc?.media_urls) && doc.media_urls.map((url, idx) => renderImage(url, `Media ${idx + 1}`))}
+    //               </>
+    //             )}
+    //             {model === "UserWorkExperiences" && (
+    //               <>
+    //                 {doc?.company_id?.display_name && <p><span className="font-semibold">Company:</span> {doc.company_id.display_name}</p>}
+    //                 {doc?.industries_id?.name && <p><span className="font-semibold">Industry:</span> {doc.industries_id.name}</p>}
+    //                 {doc?.profile_role_id?.name && <p><span className="font-semibold">Role:</span> {doc.profile_role_id.name}</p>}
+    //                 {renderSkills(doc?.skills_acquired)}
+    //               </>
+    //             )}
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="space-y-6">
+    //         <div className=" p-6 rounded-lg shadow-lg">
+    //           <h3 className="font-semibold text-xl glassy-text-primary">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
+    //           {selectedRequest.attach_file && selectedRequest.attach_file.length >= 0 ? (
+    //             <div className="space-y-4 mt-4">
+    //               {selectedRequest.attach_file.map((imageUrl, index) => (
+    //                 <div key={index} className="flex items-center space-x-3">
+
+    //                   {isImage(imageUrl) ? (
+    //                     <img
+    //                       src={imageUrl}
+    //                       alt="preview"
+    //                       className="w-full md:max-w-full md:min-h-80 min-h-80 max-h-80 object-contain"
+    //                     />
+    //                   ) : (
+    //                     <iframe
+    //                       src={`https://docs.google.com/gview?url=${encodeURIComponent(imageUrl)}&embedded=true`}
+    //                       title="file-preview"
+    //                       className="w-full h-80 border rounded"
+    //                     />
+    //                   )}
+
+    //                 </div>
+    //               ))}
+    //             </div>
+    //           ) : (
+    //             <p className="text-sm glassy-text-secondary">No attached files available.</p>
+    //           )}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // };
+const renderViewContent = () => {
+  const user = selectedRequest?.user_id;
+  const assignedTo = selectedRequest?.assigned_to;
+  const model = selectedRequest?.document_model;
+  const doc = selectedRequest?.document_id;
+
+  const fallback = (v, alt = "N/A") => (v ?? "") !== "" ? v : alt;
+  const formatDate = (ts) => (ts ? new Date(ts).toLocaleDateString() : "N/A");
+
+  const renderSkills = (skills) => (
+    <div className="mt-2">
+      <p className="font-semibold mb-1 glassy-text-primary">Skills Acquired:</p>
+      {Array.isArray(skills) && skills.length > 0 ? (
+        <ul className="list-disc pl-5 glassy-text-primary">
+          {skills.map((s) => (
+            <li key={s?._id}>{fallback(s?.name)}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className="glassy-text-secondary">N/A</p>
+      )}
+    </div>
+  );
+
+  const renderImage = (url, label) => (
+    <div className="mt-4">
+      <p className="font-semibold mb-2 glassy-text-primary">{label}:</p>
+      {url ? (
+        <img
+          src={url}
+          alt={label}
+          className="w-full max-w-xs rounded shadow border object-contain"
+          onError={(e) => (e.target.src = "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?w=500")}
+        />
+      ) : (
+        <p className="glassy-text-secondary">N/A</p>
+      )}
+    </div>
+  );
+
+  const isImage = (url) => {
+    const exts = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg"];
+    return typeof url === "string" && exts.some((e) => url.toLowerCase().endsWith(e));
+  };
+
+  return (
+    <div className="grid grid-cols-1   gap-6">
+      {/* Left Column: User Info + Document */}
+      <div className="space-y-6">
+        {/* User Card */}
+        <div className="p-6 rounded-lg shadow-lg glassy-card">
+          <div className="flex flex-col items-center text-center">
+            <img
+              src={fallback(user?.profile_picture_url, "https://plus.unsplash.com/premium_photo-1683584405772-ae58712b4172?w=500")}
+              alt="Profile"
+              className="w-24 h-24 rounded-full border-4 border-gray-200 mb-4 object-cover"
+            />
+            <h3 className="font-semibold text-xl glassy-text-primary">
+              {fallback(user?.first_name)} {fallback(user?.last_name)}
+            </h3>
+          </div>
+
+          <div className="mt-6 space-y-3 glassy-text-primary text-sm">
+            {/* <p><span className="font-semibold">Email:</span> {fallback(user?.email)}</p>
+            <p><span className="font-semibold">Phone:</span> {fallback(user?.phone_number)}</p>
+            <p><span className="font-semibold">Verification Category:</span> {fallback(selectedRequest?.verification_category)}</p>
+            <p><span className="font-semibold">Relation Path:</span> {fallback(selectedRequest?.relation_path)}</p> */}
+            <p><span className="font-semibold">Status:</span> {fallback(selectedRequest?.status)}</p>
+            <p><span className="font-semibold">Assign Status:</span> {fallback(selectedRequest?.assign_status)}</p>
+            {/* <p><span className="font-semibold">Assigned Path:</span> {fallback(selectedRequest?.assigned_path)}</p>
+            <p><span className="font-semibold">Rejection Reason:</span> {fallback(selectedRequest?.rejection_reason)}</p> */}
+            <p><span className="font-semibold">Request No:</span> {fallback(selectedRequest?.request_no)}</p>
+          </div>
+
+          {assignedTo && (
+            <div className="mt-6 border-t pt-4">
+              <h4 className="font-semibold text-md glassy-text-primary mb-2">Assigned To</h4>
+              <div className="flex items-center space-x-4">
+                <img
+                  src={fallback(assignedTo?.profile_picture_url)}
+                  alt="Verifier"
+                  className="w-12 h-12 rounded-full border-2 border-gray-300"
+                />
+                <div>
+                  <p className="font-medium glassy-text-primary">{fallback(assignedTo?.first_name)} {fallback(assignedTo?.last_name)}</p>
+                  <p className="text-sm glassy-text-secondary">@{fallback(assignedTo?.username)}</p>
                 </div>
               </div>
-            )}
-          </div>
-          <div className=" p-6 rounded-lg shadow-lg">
-            {model && (
-              <h3 className="font-semibold text-xl glassy-text-primary capitalize">
-                {model.replace(/([a-z])([A-Z])/g, '$1 $2')} Information
-              </h3>
-            )}
-            <div className="space-y-4 mt-4 text-sm glassy-text-primary">
-              {model === "UserAdditionalCertifications" && (
-                <>
-                  {doc?.name && <p><span className="font-semibold">Document Name:</span> {doc.name}</p>}
-                  {doc?.issuing_organization && <p><span className="font-semibold">Issuing Organization:</span> {doc.issuing_organization}</p>}
-                  {doc?.credential_id && <p><span className="font-semibold">Credential ID:</span> {doc.credential_id}</p>}
-                  {doc?.issue_date && <p><span className="font-semibold">Issue Date:</span> {formatDate(doc.issue_date)}</p>}
-                  {renderSkills(doc?.skills_acquired)}
-                  {renderImage(doc?.media_url, "Attached File")}
-                </>
-              )}
-              {model === "UserIdentityVerifications" && (
-                <>
-                  {doc?.id_number && <p><span className="font-semibold">ID Number:</span> {doc.id_number}</p>}
-                  {renderImage(doc?.front_side_file, "Front Side")}
-                  {renderImage(doc?.back_side_file, "Back Side")}
-                </>
-              )}
-              {model === "UserProjects" && (
-                <>
-                  {doc?.name && <p><span className="font-semibold">Project Name:</span> {doc.name}</p>}
-                  {doc?.issuing_organization && <p><span className="font-semibold">Organization:</span> {doc.issuing_organization}</p>}
-                  {doc?.credential_id && <p><span className="font-semibold">Credential ID:</span> {doc.credential_id}</p>}
-                  {doc?.issue_date && <p><span className="font-semibold">Issue Date:</span> {formatDate(doc.issue_date)}</p>}
-                  {doc?.company_id?.display_name && <p><span className="font-semibold">Company:</span> {doc.company_id.display_name}</p>}
-                  {doc?.industries_id?.display_name && <p><span className="font-semibold">Industry:</span> {doc.industries_id.display_name}</p>}
-                  {renderImage(doc?.media_url, "Media")}
-                </>
-              )}
-              {model === "UserEducations" && (
-                <>
-                  {doc?.institution_id?.display_name && <p><span className="font-semibold">Institution:</span> {doc.institution_id.display_name}</p>}
-                  {doc?.degree_id?.name && <p><span className="font-semibold">Degree:</span> {doc.degree_id.name}</p>}
-                  {doc?.field_of_studies?.name && <p><span className="font-semibold">Field of Study:</span> {doc.field_of_studies.name}</p>}
-                  {doc?.start_date && <p><span className="font-semibold">Start Date:</span> {formatDate(doc.start_date)}</p>}
-                  {doc?.end_date && <p><span className="font-semibold">End Date:</span> {formatDate(doc.end_date)}</p>}
-                  {doc?.currently_available !== undefined && (
-                    <p><span className="font-semibold">Currently Studying:</span> {doc.currently_available ? "Yes" : "No"}</p>
-                  )}
-                  {doc?.duration && <p><span className="font-semibold">Duration:</span> {doc.duration}</p>}
-                  {renderSkills(doc?.skills_acquired)}
-                  {Array.isArray(doc?.media_urls) && doc.media_urls.map((url, idx) => renderImage(url, `Media ${idx + 1}`))}
-                </>
-              )}
-              {model === "UserWorkExperiences" && (
-                <>
-                  {doc?.company_id?.display_name && <p><span className="font-semibold">Company:</span> {doc.company_id.display_name}</p>}
-                  {doc?.industries_id?.name && <p><span className="font-semibold">Industry:</span> {doc.industries_id.name}</p>}
-                  {doc?.profile_role_id?.name && <p><span className="font-semibold">Role:</span> {doc.profile_role_id.name}</p>}
-                  {renderSkills(doc?.skills_acquired)}
-                </>
-              )}
             </div>
+          )}
+        </div>
+
+        {/* Document Details */}
+        <div className="p-6 rounded-lg shadow-lg glassy-card">
+          <h3 className="font-semibold text-xl glassy-text-primary capitalize">
+            {model ? model.replace(/([a-z])([A-Z])/g, "$1 $2") : "Document"} Information
+          </h3>
+
+          <div className="mt-4 space-y-4 text-sm glassy-text-primary">
+            {model === "UserWorkExperiences" && (
+              <>
+                <p><span className="font-semibold">Company:</span> {fallback(doc?.company_id?.display_name)}</p>
+                <p><span className="font-semibold">Industry:</span> {fallback(doc?.industries_id?.name)}</p>
+                <p><span className="font-semibold">Role:</span> {fallback(doc?.profile_role_id?.name)}</p>
+                {renderSkills(doc?.skills_acquired)}
+              </>
+            )}
+            {model === "UserEducations" && (
+              <>
+                <p><span className="font-semibold">Institution:</span> {fallback(doc?.institution_id?.display_name)}</p>
+                <p><span className="font-semibold">Degree:</span> {fallback(doc?.degree_id?.name)}</p>
+                <p><span className="font-semibold">Field of Study:</span> {fallback(doc?.field_of_studies?.name)}</p>
+                <p><span className="font-semibold">Start Date:</span> {formatDate(doc?.start_date)}</p>
+                <p><span className="font-semibold">End Date:</span> {formatDate(doc?.end_date)}</p>
+                <p><span className="font-semibold">Currently Studying:</span> {doc?.currently_available ? "Yes" : "No"}</p>
+                <p><span className="font-semibold">Duration:</span> {fallback(doc?.duration)}</p>
+                {renderSkills(doc?.skills_acquired)}
+                {Array.isArray(doc?.media_urls) && doc.media_urls.map((url, idx) => renderImage(url, `Media ${idx + 1}`))}
+              </>
+            )}
           </div>
         </div>
-        <div className="space-y-6">
-          <div className=" p-6 rounded-lg shadow-lg">
-            <h3 className="font-semibold text-xl glassy-text-primary">Attached File(s)</h3>{console.log("this isthe sdkjflsdf", selectedRequest.attach_file)}
-            {selectedRequest.attach_file && selectedRequest.attach_file.length >= 0 ? (
-              <div className="space-y-4 mt-4">
-                {selectedRequest.attach_file.map((imageUrl, index) => (
-                  <div key={index} className="flex items-center space-x-3">
+      </div>
 
-                    {isImage(imageUrl) ? (
-                      <img
-                        src={imageUrl}
-                        alt="preview"
-                        className="w-full md:max-w-full md:min-h-80 min-h-80 max-h-80 object-contain"
-                      />
-                    ) : (
-                      <iframe
-                        src={`https://docs.google.com/gview?url=${encodeURIComponent(imageUrl)}&embedded=true`}
-                        title="file-preview"
-                        className="w-full h-80 border rounded"
-                      />
-                    )}
-
-                  </div>
-                ))}
-              </div>
+      {/* Right Column: Attached Files */}
+      <div className="space-y-6">
+        <div className="p-6 rounded-lg shadow-lg glassy-card">
+          <h3 className="font-semibold text-xl glassy-text-primary">Attached File(s)</h3>
+          <div className="mt-4 space-y-4">
+            {Array.isArray(selectedRequest?.attach_file) && selectedRequest.attach_file.length > 0 ? (
+              selectedRequest.attach_file.map((url, idx) => (
+                <div key={idx} className="flex items-center space-x-3">
+                  {isImage(url) ? (
+                    <img
+                      src={url}
+                      alt={`Attachment ${idx + 1}`}
+                      className="w-full md:max-w-full md:min-h-80 min-h-80 max-h-80 object-contain rounded border shadow"
+                    />
+                  ) : (
+                    <iframe
+                      src={`https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`}
+                      title={`Attachment ${idx + 1}`}
+                      className="w-full h-80 border rounded"
+                    />
+                  )}
+                </div>
+              ))
             ) : (
               <p className="text-sm glassy-text-secondary">No attached files available.</p>
             )}
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
   const renderEditContent = () => (
     <div className="space-y-4">
@@ -424,7 +580,7 @@ const PendingRequests = () => {
         <FilterSelect
           label="Update Status"
           value={status}
-          selectedOption={status ? { value: status, label: status.charAt(0).toUpperCase() + status.slice(1) } : null}
+          // selectedOption={status ? { value: status, label: status.charAt(0).toUpperCase() + status.slice(1) } : null}
           onChange={handleStatusChange}
           options={[
             { value: 'approved', label: 'Approved' },

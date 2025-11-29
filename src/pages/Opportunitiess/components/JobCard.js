@@ -107,7 +107,7 @@ const JobCard = ({
 
               {/* Applicants Count */}
               {job?.total_applicants ? (
-                <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
+                <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-400 border border-green-600">
                   {job?.total_applicants} Applied
                 </p>
               ) : null}
@@ -474,7 +474,7 @@ const JobCard = ({
                   className="min-w-20 h-8"
                   loading={isThisJobLoading}
                 >
-                  Applicant
+                  Applicant {job?.total_applicants}
                 </Button>
                 <Button
                   onClick={() => onAction("edit", job)}

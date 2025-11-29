@@ -2,9 +2,12 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { BiSearch, BiUser, BiBuilding, BiBookOpen } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  connectionListByUserId,
+  connectoinListByUserId,
   createUserConnection,
   followUnfollowUsers,
   getFollowingList,
+  getFollowingListbyUserId,
   messageChatUser,
   suggestedUser,
 } from "../../redux/Users/userSlice";
@@ -17,6 +20,7 @@ import FollowingCard from "./Components/FollwoingCard";
 import UserCardSkeleton from "./Components/UserCardSkeleton";
 import { getCookie } from "../../components/utils/cookieHandler";
 import { navigateToProfile } from "../../utils/helperFunctions";
+import Modal from "../../components/ui/Modal/Modal";
 
 const DEFAULT_AVATAR = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
 
@@ -38,9 +42,16 @@ const Connections = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const [actionLoading, setActionLoading] = useState({});
-
+  const [modalOpen, setModalOpen] = useState(false); // ✅ NEW: modal state
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalData, setModalData] = useState([]);
+  const [modalType, setModalType] = useState(""); // "followers" or "connections"
+  const [connectionListByUser, setConnectionListByUser] = useState([]);
   const followingList = useSelector(
     (state) => state.user?.getFollowingListData?.data?.data?.list || []
+  );
+  const followingListByUserId = useSelector(
+    (state) => state.user?.getFollowingListByUserIdData?.data?.data?.list || []
   );
   const [searchParams, setSearchParams] = useSearchParams();
   const fetchData = useCallback(
@@ -233,6 +244,97 @@ const Connections = () => {
     }
   };
 
+  const handleFollowerClick = async (user) => {
+    try {
+      const res = await dispatch(
+        getFollowingListbyUserId({ userId: user.id })
+      ).unwrap();
+
+      const formatted = (res?.data?.list || []).map((item) => {
+        const targetId = item?.target_id || {};
+        const isCompany = item.target_model === "Companies";
+        const isInstitute = item.target_model === "Institutions";
+        const isUser = item.target_model === "Users";
+
+        let displayName = targetId.display_name || "Unknown";
+        if (isUser) {
+          displayName = `${targetId.first_name || ""} ${
+            targetId.last_name || ""
+          }`.trim();
+        }
+
+        return {
+          id: targetId._id,
+          name: displayName,
+          avatar:
+            isCompany || isInstitute
+              ? targetId.logo_url
+              : targetId.profile_picture_url,
+          targetModel: item.target_model || "Users",
+          entityType: isCompany
+            ? "company"
+            : isInstitute
+            ? "institute"
+            : "user",
+          headline: targetId.headline || "",
+          followerCount: targetId.follower_count || 0,
+        };
+      });
+
+      setModalTitle(`${user.name}'s Followers`);
+      setModalType("followers");
+      setModalData(formatted); // ✅ always fresh
+      setModalOpen(true);
+    } catch (err) {
+      toast.error("Failed to fetch followers");
+    }
+  };
+
+  const handleConnectionClick = async (user) => {
+    try {
+      const res = await dispatch(
+        connectionListByUserId({ userId: user.id, isBlocked: false })
+      ).unwrap();
+
+      const formatted = (res?.data || []).map((item) => ({
+        id: item.connectionUserId,
+        name:
+          item.first_name && item.last_name
+            ? `${item.first_name} ${item.last_name}`
+            : item?.first_name || "Unknown User",
+        title: item.headline || "",
+        summary: item.summary || "No summary available.",
+        avatar: item.profile_picture_url,
+        unreadCount: item.unreadCount || 0,
+        isBlocked: item.isBlocked || false,
+        isClickable: true,
+        entityType: "user",
+        isVerified: item.is_verified || false,
+        frameStatus: item.frame_status || "",
+        followerCount: item.follower_count || 0,
+        connectionCount: item.connection_count || item.employee_count || 0,
+        employee_count: item.connection_count
+          ? "connection_count"
+          : "employee_count",
+        profileViews: item.profile_views || 0,
+        userType: item?.userType || null,
+      }));
+
+      setModalTitle(`${user.name}'s Connections`);
+      setModalType("connections");
+      setModalData(formatted); // ✅ always fresh data
+      setModalOpen(true);
+    } catch (err) {
+      toast.error("Failed to fetch connections");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalData([]);
+    setModalType("");
+  };
+
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam) {
@@ -349,6 +451,8 @@ const Connections = () => {
                 actionLoading={actionLoading}
                 handleUserClick={handleUserClick}
                 DEFAULT_AVATAR={DEFAULT_AVATAR}
+                handleFollowerClick={handleFollowerClick} // ✅ UPDATED
+                handleConnectionClick={handleConnectionClick} // ✅ NEW
               />
             ))
           ) : (
@@ -393,6 +497,36 @@ const Connections = () => {
           Explore
         </Button>
       </div>
+      <Modal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        title={modalTitle}
+        isActionButton={false}
+      >
+        <div className="space-y-4">
+          {modalData.length > 0 ? (
+            modalData.map((u) => (
+              <ConnectionsCard
+                key={u.id}
+                user={u}
+                handleDisconnectUser={handleDisconnectUser}
+                actionLoading={actionLoading}
+                handleUserClick={(user) =>
+                  navigateToProfile(navigate, activeMode, user)
+                }
+                DEFAULT_AVATAR={DEFAULT_AVATAR}
+                ShowFollowerClick={false}
+              />
+            ))
+          ) : (
+            <p className="text-center text-gray-500">
+              {modalType === "followers"
+                ? "No followers found"
+                : "No connections found"}
+            </p>
+          )}
+        </div>
+      </Modal>
     </div>
   );
 };

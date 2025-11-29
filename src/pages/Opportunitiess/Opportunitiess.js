@@ -108,7 +108,7 @@ const Opportunities = () => {
       select_time: "",
       meeting_url: "",
     });
-  const size = 10;
+  const size = 1000;
   const [searchFelids, setSearchFelids] = useState({
     company_id: "",
     industry_id: "",
@@ -459,7 +459,7 @@ const Opportunities = () => {
       dispatch(
         jobsList({
           page: 1,
-          size: 10,
+          size: 1000,
           query: JSON.stringify({ type: activeTab }),
         })
       );
@@ -1053,7 +1053,7 @@ const Opportunities = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-3   h-[90vh] p-2 overflow-hidden ">
+    <div className="flex flex-col md:flex-row justify-between gap-3    p-2 overflow-hidden ">
       <div className="hidden md:block xl:w-[15%] lg:w-[20%] md:w-[25%]">
         <div className="glassy-card h-full rounded-lg shadow-sm p-4">
           <div className="sticky top-4">
@@ -1083,7 +1083,7 @@ const Opportunities = () => {
       </div>
 
       <div
-        className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${
+        className={`w-full p-4 sm:p-6  flex-1    h-screen custom-scrollbar overflow-hidden overflow-y-auto ${
           !selectedJob
             ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
             : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
@@ -1353,7 +1353,9 @@ const Opportunities = () => {
               data.data.list.map((job, index) => (
                 <div
                   key={`openJobs-${job._id}`}
-                  className="transform transition-all duration-300 ease-in-out hover:scale-[1.02] mb-4 animate-floatIn"
+                  className={`
+                  
+                    transform transition-all duration-300 ease-in-out hover:scale-[1.02] mb-4 animate-floatIn`}
                   style={{
                     animationDelay: `${index * 0.1}s`,
                   }}
