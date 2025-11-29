@@ -15,7 +15,7 @@ const FollowingCard = ({
           src={user.avatar || DEFAULT_AVATAR}
           alt={user.name}
           onError={(e) => (e.currentTarget.src = DEFAULT_AVATAR)}
-          className="w-16 h-16 rounded-full object-cover border border-[var(--border-color)] cursor-pointer hover:scale-105 transition-transform duration-300"
+          className="w-16 h-16 rounded-full object-cover border border-[var(--border-color)] cursor-pointer glassy-text-primary transition-transform duration-300"
           onClick={() => handleUserClick(user)}
         />
         <div className="flex-1 min-w-0">
