@@ -89,6 +89,8 @@ const Opportunities = () => {
     role: true,
     skill: true,
     timePeriod: true,
+    withApplicants: false, // NEW
+    withoutApplicants: false,
   });
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -108,7 +110,7 @@ const Opportunities = () => {
       select_time: "",
       meeting_url: "",
     });
-  const size = 1000;
+  const size = 10;
   const [searchFelids, setSearchFelids] = useState({
     company_id: "",
     industry_id: "",
@@ -175,25 +177,6 @@ const Opportunities = () => {
   };
 
   const navigate = useNavigate();
-  const handleConnect = (data) => {
-    const basePath =
-      activeMode === "company"
-        ? "/company"
-        : activeMode === "institution"
-        ? "/institution"
-        : "/user";
-
-    let url = "";
-
-    // If no user_path → direct profile
-    if (!data?.user_path) {
-      url = `${basePath}/profile/${data?.first_name}/${data?._id}`;
-    } else {
-      url = data.user_path;
-    }
-
-    window.open(url, "_blank"); // NEW TAB
-  };
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -211,6 +194,15 @@ const Opportunities = () => {
         if (searchFelids?.job_title) filters.job_title = searchFelids.job_title;
         if (searchFelids?.required_skills?.length > 0)
           filters.required_skills = searchFelids.required_skills;
+        // 🔹 Only include if checked
+        if (selectedFilters.withApplicants) {
+          filters.withApplicants = true;
+        }
+
+        // 🔹 Only include if checked
+        if (selectedFilters.withoutApplicants) {
+          filters.withoutApplicants = true;
+        }
 
         const apiPayload = {
           page: 1,
@@ -228,7 +220,14 @@ const Opportunities = () => {
     }, 500);
 
     return () => clearTimeout(delayDebounce);
-  }, [dispatch, activeTab, searchFelids, size]);
+  }, [
+    dispatch,
+    activeTab,
+    searchFelids,
+    size,
+    selectedFilters.withApplicants,
+    selectedFilters.withoutApplicants,
+  ]);
 
   useEffect(() => {
     dispatch(masterIndustry());
@@ -459,7 +458,7 @@ const Opportunities = () => {
       dispatch(
         jobsList({
           page: 1,
-          size: 1000,
+          size: 10,
           query: JSON.stringify({ type: activeTab }),
         })
       );
@@ -577,7 +576,7 @@ const Opportunities = () => {
         <div className="w-full">
           <div className="flex items-center space-x-3 mb-6">
             <BiLeftArrow
-              onClick={() => setIsDetails(false)}
+              onClick={() => handleBack()}
               className="cursor-pointer glassy-text-primary"
             />
             {isDetailsData?.user_id?.profile_picture_url ? (
@@ -716,13 +715,10 @@ const Opportunities = () => {
           {sortedApplicants && sortedApplicants.length > 0 ? (
             sortedApplicants.map((applicant) => (
               <div
-                key={applicant._id}
+                key={applicant.id}
                 className="flex items-center justify-between py-2 px-2 hover:glassy-card rounded-md"
               >
-                <div
-                  className="flex items-center space-x-3 cursor-pointer"
-                  onClick={() => handleConnect(applicant?.user_id)}
-                >
+                <div className="flex items-center space-x-3">
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
@@ -1053,7 +1049,7 @@ const Opportunities = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-3    p-2 overflow-hidden ">
+    <div className="flex flex-col md:flex-row justify-between gap-3   h-[90vh] p-2 overflow-hidden ">
       <div className="hidden md:block xl:w-[15%] lg:w-[20%] md:w-[25%]">
         <div className="glassy-card h-full rounded-lg shadow-sm p-4">
           <div className="sticky top-4">
@@ -1083,7 +1079,7 @@ const Opportunities = () => {
       </div>
 
       <div
-        className={`w-full p-4 sm:p-6  flex-1    h-screen custom-scrollbar overflow-hidden overflow-y-auto ${
+        className={`w-full p-4 sm:p-6  flex-1  mx-auto h-screen custom-scrollbar overflow-hidden overflow-y-auto ${
           !selectedJob
             ? "xl:w-[100%] lg:w-[100%] md:w-[100%]"
             : "xl:w-[75%] lg:w-[70%] md:w-[60%]"
@@ -1164,6 +1160,29 @@ const Opportunities = () => {
                         />
                         <span className="text-sm glassy-text-primary">
                           Time Period
+                        </span>
+                      </label>
+                      <label className="flex items-center space-x-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={selectedFilters.withApplicants}
+                          onChange={() => handleFilterChange("withApplicants")}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <span className="text-sm glassy-text-primary">
+                          Has Applicants
+                        </span>
+                      </label>
+
+                      <label className="flex items-center space-x-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={selectedFilters.withoutApplicants}
+                          onChange={() => handleFilterChange("withoutApplicants")}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <span className="text-sm glassy-text-primary">
+                          No Applicants
                         </span>
                       </label>
                     </div>
@@ -1353,9 +1372,7 @@ const Opportunities = () => {
               data.data.list.map((job, index) => (
                 <div
                   key={`openJobs-${job._id}`}
-                  className={`
-                  
-                    transform transition-all duration-300 ease-in-out hover:scale-[1.02] mb-4 animate-floatIn`}
+                  className="transform transition-all duration-300 ease-in-out hover:scale-[1.02] mb-4 animate-floatIn"
                   style={{
                     animationDelay: `${index * 0.1}s`,
                   }}
@@ -1371,6 +1388,7 @@ const Opportunities = () => {
                     setIsReviewOpen={setIsReviewOpen}
                     setReviewJobId={setReviewJobId}
                     activeTab={activeTab}
+                    isSelected={selectedJob?._id === job._id}
                     openModalForSelect={openModalForSelect}
                     setSelectInterviewId={setSelectInterviewId}
                     handleCloseJob={handleCloseJob}
@@ -1745,7 +1763,7 @@ const Opportunities = () => {
       <AlertModal
         isOpen={isCloseModal}
         title={
-          <div className="flex items-center gap-2 justify-center">
+          <div className="flex items-center gap-2">
             <img
               src="https://img.icons8.com/3d-fluency/94/delete-sign.png"
               alt=""

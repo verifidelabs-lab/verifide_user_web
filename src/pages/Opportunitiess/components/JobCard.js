@@ -27,13 +27,14 @@ const JobCard = ({
   setReviewJobId,
   activeTab,
   openModalForSelect,
-  setSelectInterviewId,
+  setSelectInterviewId,isSelected
 }) => {
   const limit = 3;
   const [showAllSkills, setShowAllSkills] = useState(false);
   const isThisJobLoading = isLoading === job._id;
   const remainingCount = Math.max(0, job?.user_id?.topSkills?.length - limit);
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
+console.log("isSelectedisSelectedisSelectedisSelected",isSelected);
 
   const handleCopyLink = useCallback((job) => {
     if (job && job?._id) {
@@ -67,7 +68,13 @@ const JobCard = ({
 
   return (
     <div className="mb-3">
-      <div className="relative z-20 border rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto">
+      <div
+        className={`relative z-20 border rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto ${isSelected
+        ? "border !border-blue-500 shadow-md"
+        : "border border-blue-700"
+        }
+      `}
+      >
         <div>
           {!job?.user_id && (
             <div className="flex items-center justify-between relative">
@@ -107,7 +114,7 @@ const JobCard = ({
 
               {/* Applicants Count */}
               {job?.total_applicants ? (
-                <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-400 border border-green-600">
+                <p className="px-3 py-1 text-xs font-medium rounded-full glassy-card text-green-700 border border-green-600">
                   {job?.total_applicants} Applied
                 </p>
               ) : null}
@@ -301,9 +308,9 @@ const JobCard = ({
             <div className="mb-4 w-full">
               {job?.job_description || job?.user_id?.summary ? (
                 <p
-                  className="glassy-text-primary   leading-relaxed whitespace-pre-line 
-        p-4 rounded-lg border border-[var(--border-color)]  
-         "
+                  className="glassy-text-primary glassy-card leading-relaxed whitespace-pre-line 
+        p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]
+        min-h-[180px] md:min-h-[240px] lg:min-h-[260px]"
                 >
                   <strong className="text-base font-semibold block mb-2">
                     {job?.job_description
@@ -315,26 +322,26 @@ const JobCard = ({
                     ? job?.job_description || job?.user_id?.summary
                     : (job?.job_description || job?.user_id?.summary).slice(
                         0,
-                        150
+                        250
                       )}
 
                   {(job?.job_description || job?.user_id?.summary).length >
-                    150 && (
+                    250 && (
                     <>
                       {!showAllSkills && "..."}
-                      {/* <button
+                      <button
                         onClick={() => setShowAllSkills(!showAllSkills)}
                         className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
                       >
                         {showAllSkills ? "See less" : "See more"}
-                      </button> */}
+                      </button>
                     </>
                   )}
                 </p>
               ) : (
                 <p
-                  className="glassy-text-primary text-sm   border border-[var(--border-color)] rounded-lg p-4
-         flex items-center justify-center text-center"
+                  className="glassy-text-primary text-sm glassy-card border border-[var(--border-color)] rounded-lg p-4
+        min-h-[180px] md:min-h-[220px] lg:min-h-[260px] flex items-center justify-center text-center"
                 >
                   {job?.job_description
                     ? "No job description provided."
@@ -389,7 +396,7 @@ const JobCard = ({
             {job?.required_skills?.length > 0 && (
               <div className="flex flex-wrap gap-2 text-xs md:text-sm">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium glassy-text-primary whitespace-nowrap">
+                  <span className="font-medium glassy-text-primary">
                     Required Skills:
                   </span>
                   <SkillsCard2 skills={job.required_skills || []} limit={2} />
@@ -468,24 +475,35 @@ const JobCard = ({
               </>
             ) : (
               <>
-                <Button
+                {/* <Button
                   onClick={() => onAction("view", job)}
                   size="sm"
+                  variant="outline"
                   className="min-w-20 h-8"
                   loading={isThisJobLoading}
                 >
-                  Applicant {job?.total_applicants}
+                  Applicant
+                </Button> */}
+                <Button
+                  onClick={() => onAction("view", job)}
+                  size="sm"
+                  variant="outline"
+                  className="min-w-20 h-8"
+                  loading={isThisJobLoading}
+                >
+                  Applicant{" "}
+                  {job?.total_applicants > 0 ? job.total_applicants : ""}
                 </Button>
+
                 <Button
                   onClick={() => onAction("edit", job)}
                   size="sm"
                   className="min-w-20 h-8"
-                  variant="outline"
                 >
                   Edit
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="primary"
                   onClick={() => onAction("view_details", job)}
                   size="sm"
                   className="min-w-20 h-8"
