@@ -89,12 +89,15 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
               setCroppedImage(result.data.imageURL);
               dispatch(updateProfileImageLocally(result.data.imageURL));
               setProfileImage(result.data.imageURL);
-              dispatch(
+              // Update profile on server
+              await dispatch(
                 updateProfileImage({
                   profile_picture_url: result.data.imageURL,
                 })
-              );
-              dispatch(getProfile());
+              ).unwrap();
+
+              // Only after update succeeds, fetch profile
+              await dispatch(getProfile()).unwrap();
               toast.success("Profile image updated successfully");
             } else {
               throw new Error("Upload failed");
@@ -218,12 +221,58 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
 
       {/* Header */}
       <div className="relative flex items-start justify-between mb-6">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-1 sm:gap-5 justify-center">
           {/* Profile Image */}
           <div
-            className="relative w-14   rounded-full border-2 border-white/30 overflow-hidden cursor-pointer group"
+            className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 cursor-pointer flex-shrink-0"
             onClick={handleProfileClick}
           >
+            {/* SVG Circle */}
+            <svg className="absolute w-full h-full">
+              <circle
+                className="text-gray-700"
+                strokeWidth="4"
+                stroke="currentColor"
+                fill="transparent"
+                r="36"
+                cx="50%"
+                cy="50%"
+              />
+              <circle
+                stroke="url(#progressGradient)"
+                strokeWidth="4"
+                strokeDasharray={2 * Math.PI * 36}
+                strokeDashoffset={
+                  2 *
+                  Math.PI *
+                  36 *
+                  (1 -
+                    (data?.personalInfo?.profile_completion_percentage || 0) /
+                      100)
+                }
+                strokeLinecap="round"
+                fill="transparent"
+                r="36"
+                cx="50%"
+                cy="50%"
+                className="transition-all duration-700"
+              />
+              <defs>
+                <linearGradient
+                  id="progressGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#0066FF" />
+                  <stop offset="50.96%" stopColor="#217AFF" />
+                  <stop offset="100%" stopColor="#A1BEFF" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            {/* Profile Image */}
             <img
               src={
                 croppedImage ||
@@ -231,25 +280,28 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
                 "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
               }
               alt="Profile"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                 w-14 h-14 sm:w-16 sm:h-16   
+                 object-cover rounded-full border-2 border-white/30"
               onError={handleImageError}
-              className="w-full h-full object-cover"
-              key={data?.personalInfo?.profile_picture_url}
             />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20">
-              <BsPencil className="glassy-text-primary text-lg" />
+
+            {/* Percentage Text */}
+            <div className="absolute inset-0 flex items-center justify-center text-xs sm:text-sm md:text-base font-semibold text-white">
+              {`${data?.personalInfo?.profile_completion_percentage || 0}%`}
             </div>
           </div>
 
           {/* Name & Headline */}
-          <div>
-            <h2 className="font-semibold text-lg">
+          <div className="text-center sm:text-left">
+            <h2 className="font-semibold text-base sm:text-lg md:text-xl md:mt-4">
               {`${data?.personalInfo?.first_name || ""} ${
                 data?.personalInfo?.last_name || ""
               }`}
             </h2>
-            <p className="text-sm glassy-text-primary/80">
+            <p className="text-xs sm:text-sm md:text-base glassy-text-primary/80">
               {data?.personalInfo?.headline || "NA"} |{" "}
-              {data?.personalInfo?.address?.city?.name},{" "}
+              {data?.personalInfo?.address?.city?.name || "N/A"},{" "}
               {data?.personalInfo?.address?.state?.name || "N/A"}
             </p>
           </div>

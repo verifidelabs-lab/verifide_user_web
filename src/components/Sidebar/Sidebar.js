@@ -125,7 +125,7 @@ const Sidebar = ({ navbarOpen, setNavbarOpen, unreadCounts }) => {
         `}
       > */}
       <div
-        className={`fixed left-0 top-0 h-screen w-72 flex-col glassy-card shadow-xl z-50 transform transition-transform duration-300 ease-in-out
+        className={`fixed left-0 top-0 h-screen w-72 flex-col   shadow-xl z-50 transform transition-transform duration-300 ease-in-out
     ${navbarOpen ? "translate-x-0" : "-translate-x-full"}
     
   `}

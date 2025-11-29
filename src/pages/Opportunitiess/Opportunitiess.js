@@ -175,6 +175,25 @@ const Opportunities = () => {
   };
 
   const navigate = useNavigate();
+  const handleConnect = (data) => {
+    const basePath =
+      activeMode === "company"
+        ? "/company"
+        : activeMode === "institution"
+        ? "/institution"
+        : "/user";
+
+    let url = "";
+
+    // If no user_path → direct profile
+    if (!data?.user_path) {
+      url = `${basePath}/profile/${data?.first_name}/${data?._id}`;
+    } else {
+      url = data.user_path;
+    }
+
+    window.open(url, "_blank"); // NEW TAB
+  };
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -558,7 +577,7 @@ const Opportunities = () => {
         <div className="w-full">
           <div className="flex items-center space-x-3 mb-6">
             <BiLeftArrow
-              onClick={() => handleBack()}
+              onClick={() => setIsDetails(false)}
               className="cursor-pointer glassy-text-primary"
             />
             {isDetailsData?.user_id?.profile_picture_url ? (
@@ -697,10 +716,13 @@ const Opportunities = () => {
           {sortedApplicants && sortedApplicants.length > 0 ? (
             sortedApplicants.map((applicant) => (
               <div
-                key={applicant.id}
+                key={applicant._id}
                 className="flex items-center justify-between py-2 px-2 hover:glassy-card rounded-md"
               >
-                <div className="flex items-center space-x-3">
+                <div
+                  className="flex items-center space-x-3 cursor-pointer"
+                  onClick={() => handleConnect(applicant?.user_id)}
+                >
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
@@ -1721,7 +1743,7 @@ const Opportunities = () => {
       <AlertModal
         isOpen={isCloseModal}
         title={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-center">
             <img
               src="https://img.icons8.com/3d-fluency/94/delete-sign.png"
               alt=""

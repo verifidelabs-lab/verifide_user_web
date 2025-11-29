@@ -1080,30 +1080,32 @@ const Profile = ({ profileData }) => {
   // };
   const handleSelection = async (selected) => {
     try {
-      // Open Education Modal
-      console.log("selected xdd" + selected);
+      console.log("selected:", selected);
 
+      // Open Education Modal
       if (selected === "education") {
         handleOpenModal("education");
-        return; // stop further execution
+        return;
       }
 
       // Open Work Modal
       if (selected === "experience") {
         handleOpenModal("experience");
-        return; // stop further execution
-      } else {
-        // Otherwise update frame status normally
-        const res = await dispatch(
-          updateFrameStatus({ frame_status: selected })
-        ).unwrap();
-
-        toast.success(res?.message);
-        setFrameStatus(selected);
-        dispatch(getProfile());
+        return;
       }
+
+      // Otherwise, update frame status
+      const res = await dispatch(
+        updateFrameStatus({ frame_status: selected })
+      ).unwrap();
+
+      // Only after successful update, fetch profile
+      await dispatch(getProfile()).unwrap();
+
+      toast.success(res?.message);
+      setFrameStatus(selected);
     } catch (error) {
-      toast.error(error);
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
@@ -1524,6 +1526,53 @@ const Profile = ({ profileData }) => {
                         </div>
                       </div>
                     </div>
+                    {/* Profile Completion */}
+                    <div className="mb-6 w-full relative group">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-sm font-medium glassy-text-primary">
+                          Profile Completion
+                        </h3>
+
+                        <span className="text-sm font-semibold text-blue-500">
+                          {profileInfo?.personalInfo
+                            ?.profile_completion_percentage || 0}
+                          %
+                        </span>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-md cursor-pointer">
+                        <div
+                          className="h-full rounded-full transition-all duration-700"
+                          style={{
+                            width: `${
+                              profileInfo?.personalInfo
+                                ?.profile_completion_percentage || 0
+                            }%`,
+                            background:
+                              "linear-gradient(90deg, #0066FF 0%, #217AFF 50.96%, #A1BEFF 100%)",
+                          }}
+                        ></div>
+                      </div>
+
+                      {/* Tooltip for missing fields */}
+                      {profileInfo?.personalInfo?.missingFields?.length > 0 && (
+                        <div className="absolute left-1/2 transform -translate-x-1/2 -top-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                          <div className="bg-red-500/10 border border-red-400/30 rounded-xl p-3 shadow-lg backdrop-blur-md text-sm text-red-500 min-w-[180px]">
+                            <p className="font-medium mb-1">Missing Details</p>
+                            <ul className="list-disc pl-5 space-y-1">
+                              {profileInfo.personalInfo.missingFields.map(
+                                (field, i) => (
+                                  <li key={i} className="capitalize">
+                                    {field.replace(/_/g, " ")}
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-6">
@@ -1623,11 +1672,19 @@ const Profile = ({ profileData }) => {
                     data={experienceData}
                     loadingStates={loadingStates}
                   />
-
-                  {/* <CommonSection title="PROJECTS" buttonText="Add Projects" emptyStateTitle="No Projects Added"
-                  emptyStateDescription="Add your Projects history to enhance your profile" logo="/Img/Profile/fi_1336494.png"
-                  handleOpenModal={() => handleOpenModal('projects')} type="projects" onEdit={handleEdit}
-                  onDelete={handleDelete} data={projectData || []} loadingStates={loadingStates} /> */}
+                  <CommonSection
+                    title="PROJECTS"
+                    buttonText="Add Projects"
+                    emptyStateTitle="No Projects Added"
+                    emptyStateDescription="Add your Projects history to enhance your profile"
+                    logo="/Img/Profile/fi_1336494.png"
+                    handleOpenModal={() => handleOpenModal("projects")}
+                    type="projects"
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    data={projectData || []}
+                    loadingStates={loadingStates}
+                  />
 
                   {/* <div>
                     <div className="glassy-card p-2">
@@ -1725,106 +1782,111 @@ const Profile = ({ profileData }) => {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div>
                     <div className="glassy-card p-2">
-                      <div className="flex items-center justify-between mb-6 ">
-                        <h2 className="md:text-sm text-xs font-semibold tracking-wide glassy-text-primary uppercase">
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xs md:text-sm font-semibold tracking-wide glassy-text-primary uppercase">
                           Certificate
                         </h2>
+
                         <Button
                           onClick={() => handleOpenModal("certifications")}
                           icon={<GoPlus />}
-                          className="glassy-button hover:scale-105 transition-transform duration-200"
+                          className="glassy-button hover:scale-105"
                         >
-                          {" "}
                           Add Certificate
                         </Button>
                       </div>
 
-                      <div>
-                        {certificationData?.length > 0 ? (
-                          <div className="relative">
-                            <Swiper
-                              modules={[Navigation]}
-                              // navigation
-                              onBeforeInit={(swiper) => {
-                                swiper.params.navigation.prevEl =
-                                  prevRef2.current;
-                                swiper.params.navigation.nextEl =
-                                  nextRef2.current;
-                              }}
-                              navigation={{
-                                prevEl: prevRef2.current,
-                                nextEl: nextRef2.current,
-                              }}
-                              pagination={{ clickable: true }}
-                              spaceBetween={20}
-                              slidesPerView={slidesPerView}
-                              className="mySwiper md:w-full  "
-                            >
-                              {certificationData?.map((ele, index) => (
-                                <SwiperSlide key={index}>
-                                  <CertificateCard
-                                    certificateName={ele?.name}
-                                    issueBy={ele?.issuing_organization}
-                                    description={ele?.description}
-                                    date={convertTimestampToDate(
-                                      ele?.issue_date
-                                    )}
-                                    certificateUrlOrNumber={ele?.credential_url}
-                                    imageUrl={
-                                      ele?.media_url
-                                        ? ele?.media_url
-                                        : "/Img/Profile/Frame (2).png"
-                                    }
-                                    record={ele}
-                                    isAction={true}
-                                    onEdit={handleEdit}
-                                    type="certifications"
-                                    isLoading={loading}
-                                    onDelete={handleDelete}
-                                    profileInfo={profileInfo}
-                                    sharePost={sharePost}
-                                  />
-                                </SwiperSlide>
-                              ))}
-                            </Swiper>
+                      {certificationData?.length > 0 ? (
+                        <div className="relative w-full">
+                          <Swiper
+                            modules={[Navigation]}
+                            onBeforeInit={(swiper) => {
+                              swiper.params.navigation.prevEl =
+                                prevRef2.current;
+                              swiper.params.navigation.nextEl =
+                                nextRef2.current;
+                            }}
+                            navigation={{
+                              prevEl: prevRef2.current,
+                              nextEl: nextRef2.current,
+                            }}
+                            spaceBetween={20}
+                            centeredSlides={false} // prevents partial cards
+                            breakpoints={{
+                              0: { slidesPerView: 1 }, // Mobile
+                              640: { slidesPerView: 1 }, // Small screen
+                              768: { slidesPerView: 1}, // Tablet
+                              1024: { slidesPerView: 2 }, // Desktop
+                              1280: { slidesPerView: 2 }, // XL screens
+                            }}
+                            className="mySwiper w-full"
+                          >
+                            {certificationData?.map((ele, index) => (
+                              <SwiperSlide
+                                key={index}
+                                className="flex justify-center"
+                              >
+                                <CertificateCard
+                                  certificateName={ele?.name}
+                                  issueBy={ele?.issuing_organization}
+                                  description={ele?.description}
+                                  date={convertTimestampToDate(ele?.issue_date)}
+                                  certificateUrlOrNumber={ele?.credential_url}
+                                  imageUrl={
+                                    ele?.media_url ||
+                                    "/Img/Profile/Frame (2).png"
+                                  }
+                                  record={ele}
+                                  isAction={true}
+                                  onEdit={handleEdit}
+                                  type="certifications"
+                                  isLoading={loading}
+                                  onDelete={handleDelete}
+                                  profileInfo={profileInfo}
+                                  sharePost={sharePost}
+                                />
+                              </SwiperSlide>
+                            ))}
+                          </Swiper>
 
-                            <button
-                              ref={prevRef2}
-                              className="custom-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow mt-2"
-                            >
-                              <BiChevronLeft className="w-6 h-6 glassy-text-secondary" />
-                            </button>
-                            <button
-                              ref={nextRef2}
-                              className="custom-next absolute right-0 top-1/2 -translate-y-1/2 z-10 glassy-card rounded-full p-2 shadow mt-2"
-                            >
-                              <BiChevronRight className="w-6 h-6 glassy-text-secondary" />
-                            </button>
+                          {/* Navigation Buttons */}
+                          <button
+                            ref={prevRef2}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 glassy-card p-2 rounded-full mt-5"
+                          >
+                            <BiChevronLeft className="w-6 h-6 glassy-text-secondary" />
+                          </button>
+
+                          <button
+                            ref={nextRef2}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 glassy-card p-2 rounded-full mt-5"
+                          >
+                            <BiChevronRight className="w-6 h-6 glassy-text-secondary" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="px-6 py-5 text-center border-2 border-dashed rounded-lg glassy-card">
+                          <div className="flex items-center justify-center mb-4">
+                            <img
+                              src={`/Img/Profile/Frame (2).png`}
+                              className="hover:scale-110 transition-transform"
+                            />
                           </div>
-                        ) : (
-                          <div className="px-6 py-5 text-center border-2 border-gray-300 border-dashed rounded-lg glassy-card hover:border-blue-300 transition-colors duration-300">
-                            <div className="flex items-center justify-center mx-auto mb-4">
-                              <img
-                                src={`/Img/Profile/Frame (2).png`}
-                                alt=""
-                                className="hover:scale-110 transition-transform duration-300"
-                              />
-                            </div>
-                            <h3 className="mb-2 text-[20px]  font-semibold glassy-text-primary">
-                              {`No Certifications added`}
-                            </h3>
-                            <p className="text-sm glassy-text-secondary">
-                              {`Add your certifications to build a comprehensive profile`}
-                            </p>
-                          </div>
-                        )}
-                      </div>
+
+                          <h3 className="text-lg font-semibold glassy-text-primary">
+                            No Certifications added
+                          </h3>
+                          <p className="text-sm glassy-text-secondary">
+                            Add your certifications to build a full profile
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

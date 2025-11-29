@@ -10,10 +10,10 @@ export const BaseUrl = "https://verifide.xyz/"
 // export const BaseUrl = "http://localhost:3000/";
 export const apiUrl = isLive
   ? `${BaseUrl}api/v1/`
-  : "http://192.168.1.5:5004/api/v1/";
+  : " http://192.168.1.9:5004/api/v1/";
 export const socketApiUrl = isLive
   ? `${BaseUrl}socket`
-  : "http://192.168.1.5:5004/socket";
+  : " http://192.168.1.9:5004/socket";
 
 const axiosPublic = axios.create({
   baseURL: apiUrl,

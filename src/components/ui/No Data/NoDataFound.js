@@ -18,7 +18,7 @@ const NoDataFound = ({ message }) => {
             </svg> */}
             <img src='/Img/no_data_found.png' alt='No Data Found' />
             <h2 className="text-lg font-semibold glassy-text-primary">{message}</h2>
-            <p className="mt-1 text-sm glassy-text-secondary">Try refreshing or check back later.</p>
+            <p className="mt-1 text-sm glassy-text-secondary text-nowrap">Try refreshing or check back later.</p>
         </div>
     );
 };

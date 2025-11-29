@@ -769,11 +769,26 @@ export default function Message({
       </>
     );
   };
-
+  const mapUserTypeToModel = (type) => {
+    switch (type) {
+      case "User":
+        return "Users";
+      case "Company":
+        return "Companies";
+      case "Institutions":
+        return "Institutions";
+      default:
+        return null; // or "Users"
+    }
+  };
   const onDelete = async (data) => {
+    console.log("this is the data to delete", data);
     try {
       const res = await dispatch(
-        createUserConnection({ connection_user_id: data?.connectionUserId })
+        createUserConnection({
+          target_id: data?._id,
+          target_model: data?.type,
+        })
       ).unwrap();
       if (res) toast.success(res?.message || "User disconnected!");
       fetchUserList();

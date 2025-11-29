@@ -385,7 +385,7 @@ const UsersProfile = ({ currentUserId }) => {
                   <h2 className="text-xl font-bold glassy-text-primary mb-6">
                     EXPERIENCE
                   </h2>
-                  {formData?.experiences.length > 0 ? (
+                  {formData?.experiences?.length > 0 ? (
                     <>
                       <div className="items-center  grid grid-cols-2">
                         {formData.experiences.map((exp, index) => (
@@ -655,10 +655,10 @@ const UsersProfile = ({ currentUserId }) => {
                   <h2 className="text-xl font-bold glassy-text-primary mb-6 ">
                     projects
                   </h2>
-                  {formData?.projects.length > 0 ? (
+                  {formData?.projects?.length > 0 ? (
                     <div
                       className={`${
-                        formData?.projects.length > 1
+                        formData?.projects?.length > 1
                           ? "grid md:grid-cols-2 grid-cols-1 gap-2 items-center"
                           : "certificate"
                       } `}
@@ -698,10 +698,10 @@ const UsersProfile = ({ currentUserId }) => {
                   <h2 className="capitalize text-base glassy-text-primary font-medium py-2">
                     Certifications
                   </h2>
-                  {formData?.certifications.length > 0 ? (
+                  {formData?.certifications?.length > 0 ? (
                     <div
                       className={`${
-                        formData?.certifications.length > 1
+                        formData?.certifications?.length > 1
                           ? "grid md:grid-cols-2 grid-cols-1 gap-2 items-center"
                           : "certificate"
                       }`}

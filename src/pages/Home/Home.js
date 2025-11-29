@@ -944,8 +944,8 @@ const Home = () => {
                       )}
                       <MediaCarousel
                         post={{
-                          image_urls: post.image_urls,
-                          video_url: post.video_url,
+                          image_urls: post?.image_urls,
+                          video_url: post?.video_url,
                         }}
                       />
                     </div>

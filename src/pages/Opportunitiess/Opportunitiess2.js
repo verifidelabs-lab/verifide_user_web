@@ -359,12 +359,12 @@ const Opportunitiess2 = () => {
           <h2 className="text-lg font-semibold glassy-text-primary tracking-wide">
             Filters
           </h2>
-          <button
+          <Button
             onClick={resetFilters}
-            className="text-sm glassy-button hover:opacity-80"
+            // className="text-sm glassy-button hover:opacity-80"
           >
             Reset
-          </button>
+          </Button>
         </div>
 
         {/* Filters */}

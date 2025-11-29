@@ -301,9 +301,9 @@ const JobCard = ({
             <div className="mb-4 w-full">
               {job?.job_description || job?.user_id?.summary ? (
                 <p
-                  className="glassy-text-primary glassy-card leading-relaxed whitespace-pre-line 
-        p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]
-        min-h-[180px] md:min-h-[240px] lg:min-h-[260px]"
+                  className="glassy-text-primary   leading-relaxed whitespace-pre-line 
+        p-4 rounded-lg border border-[var(--border-color)]  
+         "
                 >
                   <strong className="text-base font-semibold block mb-2">
                     {job?.job_description
@@ -315,26 +315,26 @@ const JobCard = ({
                     ? job?.job_description || job?.user_id?.summary
                     : (job?.job_description || job?.user_id?.summary).slice(
                         0,
-                        250
+                        150
                       )}
 
                   {(job?.job_description || job?.user_id?.summary).length >
-                    250 && (
+                    150 && (
                     <>
                       {!showAllSkills && "..."}
-                      <button
+                      {/* <button
                         onClick={() => setShowAllSkills(!showAllSkills)}
                         className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
                       >
                         {showAllSkills ? "See less" : "See more"}
-                      </button>
+                      </button> */}
                     </>
                   )}
                 </p>
               ) : (
                 <p
-                  className="glassy-text-primary text-sm glassy-card border border-[var(--border-color)] rounded-lg p-4
-        min-h-[180px] md:min-h-[220px] lg:min-h-[260px] flex items-center justify-center text-center"
+                  className="glassy-text-primary text-sm   border border-[var(--border-color)] rounded-lg p-4
+         flex items-center justify-center text-center"
                 >
                   {job?.job_description
                     ? "No job description provided."
@@ -389,7 +389,7 @@ const JobCard = ({
             {job?.required_skills?.length > 0 && (
               <div className="flex flex-wrap gap-2 text-xs md:text-sm">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium glassy-text-primary">
+                  <span className="font-medium glassy-text-primary whitespace-nowrap">
                     Required Skills:
                   </span>
                   <SkillsCard2 skills={job.required_skills || []} limit={2} />
@@ -471,7 +471,6 @@ const JobCard = ({
                 <Button
                   onClick={() => onAction("view", job)}
                   size="sm"
-                  variant="outline"
                   className="min-w-20 h-8"
                   loading={isThisJobLoading}
                 >
@@ -481,11 +480,12 @@ const JobCard = ({
                   onClick={() => onAction("edit", job)}
                   size="sm"
                   className="min-w-20 h-8"
+                  variant="outline"
                 >
                   Edit
                 </Button>
                 <Button
-                  variant="primary"
+                  variant="outline"
                   onClick={() => onAction("view_details", job)}
                   size="sm"
                   className="min-w-20 h-8"

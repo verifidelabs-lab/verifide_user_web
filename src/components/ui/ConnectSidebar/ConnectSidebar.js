@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { getCookie } from "../../utils/cookieHandler";
+import { navigateToProfile } from "../../../utils/helperFunctions";
 
 const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
   const navigate = useNavigate();
@@ -20,31 +21,9 @@ const PeopleToConnect = ({ data, activeTab, setActiveTab, fetchPosts }) => {
 
   const [loadingIds, setLoadingIds] = useState([]);
   const handleConnect = async (data) => {
-    // Determine the base path dynamically
-    const basePath =
-      activeMode === "company"
-        ? "/company"
-        : activeMode === "institution"
-        ? "/institution"
-        : "/user";
-
-    // If data has no user_path → it's a direct user/institution/company profile
-    if (!data?.user_path) {
-      navigate(`${basePath}/profile/${data?.first_name}/${data?._id}`);
-      return;
-    }
-
-    // Determine what type of entity we're viewing
-    const name =
-      data?.user_path === "Companies"
-        ? "companies"
-        : data?.user_path === "Institutions"
-        ? "institutions"
-        : "users";
-
-    // Navigate dynamically according to the active mode
-    navigate(`${basePath}/view-details/${name}/${data?._id}`);
+    navigateToProfile(navigate, activeMode, data);
   };
+
   const handleConnectUser = async (data) => {
     const userId = data._id;
 

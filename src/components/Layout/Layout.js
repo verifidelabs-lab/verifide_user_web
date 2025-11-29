@@ -264,7 +264,7 @@ function Layout() {
     useTour();
   return (
     <div
-      className="h-screen flex flex-col overflow-hidden relative pt-[70px]"
+      className="h-screen flex flex-col overflow-hidden relative     pt-[70px]"
       id="layout-container"
     >
       {!isMobile && (
@@ -371,18 +371,17 @@ function Layout() {
       </div>
 
       {/* 🔥 Scrollable Area (Sidebar + Main) */}
-      <div className="flex flex-1 pt-[70px] overflow-y-auto md:p-5">
+      <div className="flex flex-col md:flex-row flex-1    overflow-y-auto md:p-5">
         {/* Sidebar */}
         {(!isRestrictedPath || isMobile) && (
           <div
             className={`
-          transition-transform duration-300 ease-in-out
-          ${
-            navbarOpen
-              ? "translate-x-0 w-72"
-              : "translate-x-[-100%] w-72 md:w-20"
-          }
-        `}
+    !fixed md:!relative top-[70px] md:top-0 left-0 
+    h-[calc(100vh-70px)] md:h-auto  overflow-y-auto glassy-card hide-scrollbar
+    z-50
+    transition-transform duration-300 ease-in-out
+    ${navbarOpen ? "translate-x-0 w-72" : "translate-x-[-100%] w-72 md:w-20"}
+  `}
           >
             <Sidebar
               openLogout={openLogout}

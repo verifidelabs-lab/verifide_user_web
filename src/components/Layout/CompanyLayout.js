@@ -37,6 +37,8 @@ import CompanyInstituteView from "../../pages/ProfileView/CompanyInstituteView";
 import Index from "../../pages/Assessment";
 import Recommended from "../../pages/Course/Recommended/Recommended";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { unreadCount } from "../../redux/Users/userSlice";
+import { toast } from "sonner";
 
 const PageNotFound = lazy(() => import("../Not found/PageNotFound"));
 
@@ -66,7 +68,10 @@ function CompanyLayout() {
     const data = state.companyAuth?.instituteProfileData;
     return data?.data?.data ?? data ?? null;
   });
-
+  const [unreadCounts, setUnreadCounts] = useState({
+    notifications: 0,
+    messages: 0,
+  });
   console.log(
     "this is the companiespfsdkjlsdklskdfjlskdjf;aoierowieurowieuroweir",
     companiesProfileData,
@@ -138,8 +143,9 @@ function CompanyLayout() {
   }, [dispatch, userRole]);
 
   useEffect(() => {
+    console.log("Socket in company layout:", socket);
     socket?.on("connect", () => {
-      console.log("✅ Connected to socket:", socket.id);
+      console.log("✅ Connected to socket: Bhai", socket.id);
       socket.emit("notification_connected");
 
       socket.on("notification_connected", (data) => {
@@ -155,7 +161,7 @@ function CompanyLayout() {
         playAndShowNotification(data);
       });
     });
-  }, [companiesProfileData, instituteProfile, socket]);
+  }, [companiesProfileData._id, instituteProfile._id, socket]);
 
   useEffect(() => {
     if ("Notification" in window) {
@@ -189,6 +195,22 @@ function CompanyLayout() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await dispatch(unreadCount()).unwrap();
+        // console.log(res?.data)
+        setUnreadCounts({
+          notifications: res?.data?.notifications || 0,
+          messages: res?.data?.messages || 0,
+        });
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+
+    fetchUnreadCount();
+  }, [location.pathname, dispatch]);
   const restrictedPaths = [
     "/company/opportunities",
     "/institution/opportunities",
@@ -197,24 +219,21 @@ function CompanyLayout() {
 
   const isRestrictedPath = restrictedPaths.includes(location.pathname);
   return (
-    <div className="min-h-screen flex flex-col">
+    <div
+      className="h-screen flex flex-col overflow-hidden relative      "
+      id="layout-container"
+    >
       {/* Header */}
+
       <Header
         navbarOpen={navbarOpen}
         setNavbarOpen={setNavbarOpen}
         companiesProfileData={companiesProfileData}
         instituteProfileData={instituteProfileData}
       />
-      {/* {!navbarOpen && window.innerWidth <= 1000 && (
-        <button
-          className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
-          onClick={() => setNavbarOpen(true)}
-        >
-          <GiHamburgerMenu className="text-xl glassy-text-primary" />
-        </button>
-      )} */}
+
       {/* Sidebar + Main Content */}
-      <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-5">
+      <div className="flex flex-col md:flex-row flex-1  p-5">
         {/* Sidebar */}
         {(!isRestrictedPath || isMobile) && (
           <div
@@ -234,7 +253,7 @@ function CompanyLayout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto custom-scrollbar   md:transition-all md:duration-300">
+        <main className="flex-1     md:transition-all md:duration-300">
           {/* Your main content goes here */}
 
           <Suspense fallback={<Loader />}>

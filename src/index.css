@@ -448,8 +448,9 @@ textarea:focus {
   transition: background 0.4s ease;
 }
 
-html, body, #root, .mySwiper {
+html, body, #root {
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 
@@ -780,3 +781,11 @@ select.glassy-input:-webkit-autofill {
     transform: translateY(0);
   }
 }
+
+.swiper-container,
+.swiper-wrapper {
+  max-width: 62vw !important;
+   
+}
+ 
+

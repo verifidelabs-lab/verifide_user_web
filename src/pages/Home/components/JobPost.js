@@ -25,7 +25,7 @@ const JobPost = ({ job }) => {
   const shouldDisableApply = () => {
     if (job?.isApplied) return { disabled: true, reason: "Already Applied" };
     if (!isDateInRange())
-      return { disabled: true, reason: "Applications Closed" };
+      return { disabled: true, reason: "Closed" };
     return { disabled: false, reason: "Apply Now" };
   };
 

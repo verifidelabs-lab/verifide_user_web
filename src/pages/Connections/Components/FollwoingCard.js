@@ -1,6 +1,13 @@
 import Button from "../../../components/ui/Button/Button";
 
-const FollowingCard = ({ user, handleUnfollow, actionLoading, handleUserClick, getEntityIcon, DEFAULT_AVATAR }) => {
+const FollowingCard = ({
+  user,
+  handleUnfollow,
+  actionLoading,
+  handleUserClick,
+  getEntityIcon,
+  DEFAULT_AVATAR,
+}) => {
   return (
     <div className="glassy-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
       <div className="flex items-center gap-4 mb-4">
@@ -16,9 +23,9 @@ const FollowingCard = ({ user, handleUnfollow, actionLoading, handleUserClick, g
             {getEntityIcon(user.entityType)}
             <h3
               onClick={() => handleUserClick(user)}
-              className="font-semibold text-base sm:text-lg glassy-text-primary cursor-pointer hover:text-[var(--accent-color)] transition-colors truncate"
+              className="font-semibold text-base sm:text-lg glassy-text-primary cursor-pointer transition-colors truncate hover:underline underline-offset-2"
             >
-              {user.name}
+              {user?.name}
             </h3>
           </div>
           <p className="text-sm glassy-text-secondary truncate">
@@ -52,8 +59,7 @@ const FollowingCard = ({ user, handleUnfollow, actionLoading, handleUserClick, g
         Unfollow
       </Button>
     </div>
-
   );
 };
 
-export default FollowingCard
+export default FollowingCard;

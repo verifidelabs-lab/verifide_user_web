@@ -16,6 +16,7 @@ import ConnectionsCard from "./Components/ConnectionCard";
 import FollowingCard from "./Components/FollwoingCard";
 import UserCardSkeleton from "./Components/UserCardSkeleton";
 import { getCookie } from "../../components/utils/cookieHandler";
+import { navigateToProfile } from "../../utils/helperFunctions";
 
 const DEFAULT_AVATAR = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
 
@@ -80,7 +81,7 @@ const Connections = () => {
         const isInstitute = item.target_model === "Institutions";
         const isUser = item.target_model === "Users";
 
-        let displayName = targetId.name || "Unknown";
+        let displayName = targetId.display_name || "Unknown";
         if (isUser) {
           displayName = `${targetId.first_name || ""} ${
             targetId.last_name || ""
@@ -115,7 +116,7 @@ const Connections = () => {
         name:
           item.first_name && item.last_name
             ? `${item.first_name} ${item.last_name}`
-            : item?.username || "Unknown User",
+            : item?.first_name || "Unknown User",
         title: item.headline || "",
         summary: item.summary || "No summary available.",
         avatar: item.profile_picture_url,
@@ -157,16 +158,8 @@ const Connections = () => {
     [formattedFollowing, searchTerm]
   );
 
-  // Handlers
   const handleUserClick = (user) => {
-    if (user.isClickable || user?.targetModel === "Users") {
-      navigate(`/user/profile/${encodeURIComponent(user?.name)}/${user?.id}`);
-    } else {
-      let name =
-        user?.targetModel === "Companies" ? "companies" : "institutions";
-
-      navigate(`/user/view-details/${name}/${user?.id}`);
-    }
+    navigateToProfile(navigate, activeMode, user);
   };
   const mapUserTypeToModel = (type) => {
     switch (type) {
@@ -399,7 +392,6 @@ const Connections = () => {
         >
           Explore
         </Button>
-     
       </div>
     </div>
   );

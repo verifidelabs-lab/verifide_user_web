@@ -73,9 +73,9 @@ const ContactItem = React.memo(
                 <span className="ml-2 text-xs text-red-500">(Blocked)</span>
               )}
             </h3>
-            <span className="text-xs glassy-text-primary">
+            {/* <span className="text-xs glassy-text-primary">
               {convertTimestampToDate(contact.latestMessageTime)}
-            </span>
+            </span> */}
 
             {/* Dots menu toggle */}
             <button

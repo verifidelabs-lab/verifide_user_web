@@ -6,20 +6,21 @@ const SurveyButton = ({ onClick }) => {
       onClick={onClick}
       className="text-xs glassy-card  glassy-button px-2.5 py-1 rounded-full font-medium transition-colors"
     >
-      Take Survey
+      Start
     </button>
   );
 };
 
 const StatusBadge = ({ status }) => {
+  console.log("StatusBadge status:", status);
   const statusConfig = {
     Ongoing: { color: "glassy-card glassy-text-primary", icon: <BiRun className="text-xs" /> },
-    Upcoming: { color: "glassy-card0 glassy-text-primary", icon: <BiCalendar className="text-xs" /> },
-    Ended: { color: "glassy-card0 glassy-text-primary", icon: <BiMedal className="text-xs" /> },
+    Upcoming: { color: "glassy-card glassy-text-primary", icon: <BiCalendar className="text-xs" /> },
+    Ended: { color: "glassy-card glassy-text-primary", icon: <BiMedal className="text-xs" /> },
   };
 
-  const config = statusConfig[status] || statusConfig.Ongoing;
-
+  const config = statusConfig[status]  ;
+ console.log("StatusBadge config:", config);
   return (
     <div className={`!absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold ${config.color} flex items-center gap-1 shadow-md z-10`}>
       {config.icon}

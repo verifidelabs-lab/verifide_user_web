@@ -250,6 +250,7 @@ import { FaSignsPost } from "react-icons/fa6";
 import { getCookie } from "../../utils/cookieHandler";
 import { useGlobalKeys } from "../../../context/GlobalKeysContext";
 import { MdEmojiEvents, MdWork } from "react-icons/md";
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 const pulseAnimation = `
   @keyframes pulse2 {
@@ -327,6 +328,11 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
       label: isInstitution() ? "Institute Profile" : "Company Profile",
       path: `${basePath}/profile`,
     },
+     {
+          icon: IoIosNotificationsOutline,
+          label: "Notification",
+          path: `${basePath}/notification`,
+        },
     { icon: TbHttpConnect, label: "Connection", path: `${basePath}/connections` },
     { icon: FaUsers, label: "Admin Roles", path: `${basePath}/admin-role` },
   ];
