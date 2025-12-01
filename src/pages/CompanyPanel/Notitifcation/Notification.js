@@ -127,29 +127,113 @@ const NotificationItem = ({ notification, onMarkAsRead, navigate }) => {
     }
   };
 
+  const parseNotificationTitle = (title) => {
+    const typeMatch = title.match(/\[\[type:(.*?)\]\]/);
+    const eventMatch = title.match(/\[\[event:(.*?)\]\]/);
+    // const companyMatch = title.match(/\[\[company:(.*?)\]\]/);
+
+    return {
+      cleanTitle: title.replace(/\[\[.*?\]\]/g, "").trim(),
+      type: typeMatch ? typeMatch[1] : null,
+      event: eventMatch ? eventMatch[1] : null,
+      // company: companyMatch ? companyMatch[1] : null,
+    };
+  };
+  const { cleanTitle, type, event, company } = parseNotificationTitle(
+    notification.title
+  );
   return (
+    // <div
+    //   className={`flex items-start justify-between p-4  border-gray-100 ${
+    //     !notification.isRead ? "bg-card-unread" : ""
+    //   }`}
+    // >
+    //   <div className="flex items-start space-x-3">
+    //     <div className={`p-2 rounded-full ${color}`}>
+    //       <Icon className="w-4 h-4 glassy-text-primary" />
+    //     </div>
+    //     <div className="flex-1">
+    //       <h3 className="text-sm font-medium glassy-text-primary mb-1">
+    //         {notification.title}
+    //       </h3>
+    //       <p className="text-xs glassy-text-secondary mb-2">
+    //         {notification.message}
+    //       </p>
+    //       <div className="flex items-center text-xs glassy-text-secondary">
+    //         <CiLock className="w-3 h-3 mr-1" />
+    //         {formatDate(notification.createdAt)}
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <button
+    //     onClick={handleActionClick}
+    //     className={`px-3 py-1 glassy-button text-sm font-semibold rounded ${
+    //       notification.isRead ? "opacity-50 cursor-default" : ""
+    //     }`}
+    //     disabled={notification.isRead}
+    //   >
+    //     {notification.meta?.buttonText || "View"}
+    //   </button>
+    // </div>
     <div
       className={`flex items-start justify-between p-4  border-gray-100 ${
-        !notification.isRead ? "bg-card-unread" : ""
+        !notification.isRead ? "bg-card-unread" : " "
       }`}
     >
       <div className="flex items-start space-x-3">
-        <div className={`p-2 rounded-full ${color}`}>
+        {/* Icon */}
+        <div className={`p-2 rounded-full bg-card`}>
           <Icon className="w-4 h-4 glassy-text-primary" />
         </div>
+
+        {/* Content */}
         <div className="flex-1">
-          <h3 className="text-sm font-medium glassy-text-primary mb-1">
-            {notification.title}
-          </h3>
-          <p className="text-xs glassy-text-secondary mb-2">
+          {/* Title + Date */}
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold glassy-text-primary">
+              {cleanTitle}
+            </h3>
+            <span className="text-xs italic glassy-text-secondary">
+              {formatDate(notification.createdAt)}
+            </span>
+          </div>
+
+          {/* Job Info */}
+          <div className="mt-2 space-y-1 text-xs glassy-text-secondary">
+            {event && (
+              <p className="flex items-center gap-1">
+                <span className="glassy-text-primary font-medium">
+                  💼 Job Position:
+                </span>{" "}
+                {event}
+              </p>
+            )}
+            {type && (
+              <p className="flex items-center gap-1">
+                <span className="glassy-text-primary font-medium">
+                  🕒 Job Type:
+                </span>{" "}
+                {type}
+              </p>
+            )}
+            {company && (
+              <p className="flex items-center gap-1">
+                <span className="glassy-text-primary font-medium">
+                  🏢 Company:
+                </span>{" "}
+                {company}
+              </p>
+            )}
+          </div>
+
+          {/* Message */}
+          <p className="text-xs glassy-text-secondary mt-2 leading-relaxed break-words break-all ">
             {notification.message}
           </p>
-          <div className="flex items-center text-xs glassy-text-secondary">
-            <CiLock className="w-3 h-3 mr-1" />
-            {formatDate(notification.createdAt)}
-          </div>
         </div>
       </div>
+
+      {/* Button */}
       <button
         onClick={handleActionClick}
         className={`px-3 py-1 glassy-button text-sm font-semibold rounded ${

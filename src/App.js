@@ -111,7 +111,7 @@ const App = () => {
   }, [theme]);
 
   return (
-    <div className="glassy-app">
+    <div className="glassy-app min-h-screen">
       <Router>
         <Routes>
           {/* Root redirect */}

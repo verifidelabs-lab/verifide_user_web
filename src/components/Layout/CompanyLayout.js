@@ -213,11 +213,20 @@ function CompanyLayout() {
   }, [location.pathname, dispatch]);
   const restrictedPaths = [
     "/company/opportunities",
+    "/company/opportunities/:id?",
     "/institution/opportunities",
     "/institution/course/recommended",
   ];
 
-  const isRestrictedPath = restrictedPaths.includes(location.pathname);
+  // ✅ Use regex match instead of includes
+  const isRestrictedPath = restrictedPaths.some((path) => {
+    if (path.includes(":")) {
+      // Convert Express-style :param to regex
+      const regex = new RegExp("^" + path.replace(/:[^/]+/g, "[^/]+") + "$");
+      return regex.test(location.pathname);
+    }
+    return path === location.pathname;
+  });
   return (
     <div
       className="h-screen flex flex-col overflow-hidden relative     pt-[70px]"
@@ -293,7 +302,7 @@ function CompanyLayout() {
                       />
                     }
                   />
-                  <Route path="/opportunities" element={<Opportunities />} />
+                  <Route path="/opportunities/:id?" element={<Opportunities />} />
                   <Route path="/suggested-users" element={<Users />} />
                   <Route
                     path="/post-job/:id?"

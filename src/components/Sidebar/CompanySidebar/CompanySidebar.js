@@ -78,9 +78,6 @@
 
 //     { icon: FaUsers, label: "Admin Roles", path: "/company/admin-role" },
 
-
-
-
 //   ];
 
 //   const companiesProfileData = useSelector(
@@ -116,7 +113,6 @@
 //           : "-translate-x-full"
 //           }`}
 //       >
-
 
 //         {/* Sidebar Menu */}
 //         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2">
@@ -231,9 +227,9 @@
 // };
 
 // export default CompanySidebar;
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // Icons
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -242,7 +238,12 @@ import {
   BiMessageDetail,
   BiSolidDashboard,
 } from "react-icons/bi";
-import { FaRegBuilding, FaUsers, FaUsersCog, FaUniversity } from "react-icons/fa";
+import {
+  FaRegBuilding,
+  FaUsers,
+  FaUsersCog,
+  FaUniversity,
+} from "react-icons/fa";
 import { TbHttpConnect } from "react-icons/tb";
 import { PiSealCheckLight } from "react-icons/pi";
 import { BsChevronRight } from "react-icons/bs";
@@ -251,6 +252,7 @@ import { getCookie } from "../../utils/cookieHandler";
 import { useGlobalKeys } from "../../../context/GlobalKeysContext";
 import { MdEmojiEvents, MdWork } from "react-icons/md";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { verificationCenterList } from "../../../redux/CompanySlices/courseSlice";
 
 const pulseAnimation = `
   @keyframes pulse2 {
@@ -269,14 +271,24 @@ const pulseAnimation = `
   }
 `;
 
-const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProfileData,
+const CompanySidebar = ({
+  navbarOpen,
+  setNavbarOpen,
+  unreadCounts,
+  companiesProfileData,
   instituteProfileData,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [isMobile, setIsMobile] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
+  const selector = useSelector((state) => state.companyCourse);
+
+  const { getVerificationCenterList: { data } = {} } = selector || {};
+  const verificationCount = data?.data?.list?.length || 0;
+  console.log("this is the verification count", verificationCount,data);
+
   const [isClosing, setIsClosing] = useState(false);
   const {
     token,
@@ -307,20 +319,32 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
 
   // ✅ Fetch data conditionally
 
-  const profileData = [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(userRole)
+  const profileData = [ROLES.COMPANIES, ROLES.COMPANIES_ADMIN].includes(
+    userRole
+  )
     ? companiesProfileData
     : [ROLES.INSTITUTIONS, ROLES.INSTITUTIONS_ADMIN].includes(userRole)
-      ? instituteProfileData
-      : {};
+    ? instituteProfileData
+    : {};
 
-  const basePath = useMemo(() => (isInstitution() ? "/institution" : "/company"), [isInstitution()]);
-
+  const basePath = useMemo(
+    () => (isInstitution() ? "/institution" : "/company"),
+    [isInstitution()]
+  );
 
   const sidebarData = [
     { icon: BiSolidDashboard, label: "Dashboard", path: `${basePath}` },
-    { icon: FaSignsPost, label: "Page Posts", path: `${basePath}/posts-manage` },
+    {
+      icon: FaSignsPost,
+      label: "Page Posts",
+      path: `${basePath}/posts-manage`,
+    },
     { icon: BiMessageDetail, label: "Inbox", path: `${basePath}/message` },
-    { icon: PiSealCheckLight, label: "Verification", path: `${basePath}/verification` },
+    {
+      icon: PiSealCheckLight,
+      label: "Verification",
+      path: `${basePath}/verification`,
+    },
     { icon: MdWork, label: "Opportunities", path: `${basePath}/opportunities` },
     { icon: MdEmojiEvents, label: "Quest", path: `${basePath}/quest` },
     {
@@ -328,12 +352,16 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
       label: isInstitution() ? "Institute Profile" : "Company Profile",
       path: `${basePath}/profile`,
     },
-     {
-          icon: IoIosNotificationsOutline,
-          label: "Notification",
-          path: `${basePath}/notification`,
-        },
-    { icon: TbHttpConnect, label: "Connection", path: `${basePath}/connections` },
+    {
+      icon: IoIosNotificationsOutline,
+      label: "Notification",
+      path: `${basePath}/notification`,
+    },
+    {
+      icon: TbHttpConnect,
+      label: "Connection",
+      path: `${basePath}/connections`,
+    },
     { icon: FaUsers, label: "Admin Roles", path: `${basePath}/admin-role` },
   ];
 
@@ -361,7 +389,25 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
   const toggleSubmenu = (label) => {
     setOpenSubmenu(openSubmenu === label ? null : label);
   };
+  const fetchRequestList = useCallback(async (page = 1) => {
+    const payload = {
+      page,
+      size: 1000,
+      status: "PENDING",
+      document_model: "",
+    };
 
+    try {
+      await dispatch(verificationCenterList(payload)).unwrap();
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchRequestList(1);
+  }, [fetchRequestList]);
   return (
     <>
       <style>{pulseAnimation}</style>
@@ -373,7 +419,6 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
           onClick={handleCloseSidebar}
         />
       )}
-
 
       {/* Optional Close Button */}
       {isMobile && (
@@ -390,8 +435,6 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
           ${navbarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-
-
         <nav className="flex-1 overflow-y-auto mt-4 pb-6 p-2 ">
           {/* Profile Header */}
           <div className="w-full border-[#E8E8E8] border rounded-[10px] mx-auto glassy-card shadow-sm overflow-hidden mb-5">
@@ -430,35 +473,48 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
 
           {/* Sidebar Menu */}
           {sidebarData.map((item, idx) => {
-            const isMobileHiddenLabel = ["Courses", "Opportunities", "Assessment", "Quest"].includes(item.label);
+            const isMobileHiddenLabel = [
+              "Courses",
+              "Opportunities",
+              "Assessment",
+              "Quest",
+            ].includes(item.label);
             const hasUnread =
               item.label === "Notifications" && unreadCounts?.notifications > 0;
 
             return (
-              <div key={idx} className={`mb-1 ${
+              <div
+                key={idx}
+                className={`mb-1 ${
                   isMobileHiddenLabel ? "lg:hidden block" : ""
-                }`}>
+                }`}
+              >
                 {item.children ? (
                   <>
                     <div
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600  ${isMobileHiddenLabel ? "lg:hidden block" : ""} ${openSubmenu === item.label
-                        ? "glassy-card text-blue-600"
-                        : "glassy-text-primary"
-                        }`}
+                      className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 hover:glassy-card hover:text-blue-600  ${
+                        isMobileHiddenLabel ? "lg:hidden block" : ""
+                      } ${
+                        openSubmenu === item.label
+                          ? "glassy-card text-blue-600"
+                          : "glassy-text-primary"
+                      }`}
                       onClick={() => toggleSubmenu(item.label)}
                     >
                       <div className="flex items-center gap-3">
                         <item.icon
-                          className={`text-base transition-colors duration-300 ${openSubmenu === item.label
-                            ? "text-blue-600"
-                            : "glassy-text-primary"
-                            }`}
+                          className={`text-base transition-colors duration-300 ${
+                            openSubmenu === item.label
+                              ? "text-blue-600"
+                              : "glassy-text-primary"
+                          }`}
                         />
                         <span>{item.label}</span>
                       </div>
                       <BiChevronRight
-                        className={`text-lg transition-transform duration-300 ${openSubmenu === item.label ? "rotate-90" : ""
-                          }`}
+                        className={`text-lg transition-transform duration-300 ${
+                          openSubmenu === item.label ? "rotate-90" : ""
+                        }`}
                       />
                     </div>
 
@@ -467,10 +523,11 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                         {item.children.map((child, childIdx) => (
                           <div
                             key={childIdx}
-                            className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${location.pathname === child.path
-                              ? "text-blue-600 font-medium glassy-button"
-                              : "glassy-text-primary hover:glassy-card hover:text-blue-600"
-                              }`}
+                            className={`cursor-pointer text-sm py-2 px-3 rounded-md transition-all duration-300 ${
+                              location.pathname === child.path
+                                ? "text-blue-600 font-medium glassy-button"
+                                : "glassy-text-primary hover:glassy-card hover:text-blue-600"
+                            }`}
                             onClick={() => onClickMenu(child.path)}
                           >
                             {child.label}
@@ -481,19 +538,30 @@ const CompanySidebar = ({ navbarOpen, setNavbarOpen, unreadCounts, companiesProf
                   </>
                 ) : (
                   <div
-                    className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${location.pathname === item.path
-                      ? "text-blue-600 glassy-button !rounded"
-                      : "glassy-text-primary hover:glassy-card hover:text-blue-600"
-                      }`}
+                    className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition-all duration-300 rounded-lg mx-2 ${
+                      location.pathname === item.path
+                        ? "text-blue-600 glassy-button !rounded"
+                        : "glassy-text-primary hover:glassy-card hover:text-blue-600"
+                    }`}
                     onClick={() => onClickMenu(item.path)}
                   >
                     <item.icon
-                      className={`text-lg rounded-full transition-colors duration-300 ${location.pathname === item.path
-                        ? "glassy-text-primary"
-                        : "glassy-text-primary"
-                        } ${hasUnread ? "animate-[pulse2_2s_infinite]" : ""}`}
+                      className={`text-lg rounded-full transition-colors duration-300 ${
+                        location.pathname === item.path
+                          ? "glassy-text-primary"
+                          : "glassy-text-primary"
+                      } ${hasUnread ? "animate-[pulse2_2s_infinite]" : ""}`}
                     />
-                    <span className="text-sm">{item.label}</span>
+                    <span className="text-sm flex items-center gap-2">
+                      {item.label}
+
+                      {item.label === "Verification" &&
+                        verificationCount > 0 && (
+                          <span className="text-[10px] bg-red-600 items-center text-center text-white px-2   rounded-full animate-pulse">
+                            {verificationCount}
+                          </span>
+                        )}
+                    </span>
                   </div>
                 )}
               </div>

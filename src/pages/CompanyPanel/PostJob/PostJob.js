@@ -133,6 +133,7 @@ const PostJob = () => {
     start_date: "",
     end_date: "",
     current_openings: "",
+    experience: "",
     required_skills: [],
     address: {
       country: {
@@ -877,6 +878,7 @@ const PostJob = () => {
       end_date: convertToTimestamp(formData?.end_date) || "",
       isShareAsPost: formData?.isShareAsPost,
       current_openings: formData?.current_openings,
+      experience: formData?.experience || 0,
     };
 
     if (id) {

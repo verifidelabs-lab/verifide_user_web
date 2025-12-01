@@ -210,18 +210,18 @@ const StepFirst = ({
           {!(
             formData.job_type === "internship" || formData.pay_type === "unpaid"
           ) && (
-              <CustomInput
-                label="Salary Range (Monthly)"
-                placeholder="e.g. ₹30,000 - ₹50,000"
-                value={formData.salary_range}
-                onChange={(e) =>
-                  handleInputChange("salary_range", e.target.value)
-                }
-                required
-                error={errors?.salary_range}
-                className="h-10 w-full"
-              />
-            )}
+            <CustomInput
+              label="Salary Range (Monthly)"
+              placeholder="e.g. ₹30,000 - ₹50,000"
+              value={formData.salary_range}
+              onChange={(e) =>
+                handleInputChange("salary_range", e.target.value)
+              }
+              required
+              error={errors?.salary_range}
+              className="h-10 w-full"
+            />
+          )}
 
           <CustomDateInput
             label="Application Opens On"
@@ -240,6 +240,21 @@ const StepFirst = ({
             error={errors?.end_date}
             allowPastDate={false}
             minDateOverride={formData?.start_date}
+          />
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {" "}
+          <CustomInput
+            type="number"
+            value={formData?.experience}
+            label="Experience (in years)"
+            
+            onChange={(e) => handleInputChange("experience", e.target.value)}
+            name="experience"
+            className="w-full h-12 border rounded-lg px-4"
+            placeholder={`Enter required experience `}
+            required
+            // error={errors?.current_openings}
           />
         </div>
       </div>

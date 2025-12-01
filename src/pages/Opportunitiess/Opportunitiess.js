@@ -1049,7 +1049,7 @@ const Opportunities = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-3   h-[90vh] p-2 overflow-hidden ">
+    <div className="flex flex-col md:flex-row justify-between gap-3     p-2 overflow-hidden ">
       <div className="hidden md:block xl:w-[15%] lg:w-[20%] md:w-[25%]">
         <div className="glassy-card h-full rounded-lg shadow-sm p-4">
           <div className="sticky top-4">

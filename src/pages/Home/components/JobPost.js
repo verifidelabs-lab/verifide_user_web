@@ -24,8 +24,7 @@ const JobPost = ({ job }) => {
 
   const shouldDisableApply = () => {
     if (job?.isApplied) return { disabled: true, reason: "Already Applied" };
-    if (!isDateInRange())
-      return { disabled: true, reason: "Closed" };
+    if (!isDateInRange()) return { disabled: true, reason: "Closed" };
     return { disabled: false, reason: "Apply Now" };
   };
 
@@ -55,6 +54,14 @@ const JobPost = ({ job }) => {
                 {job.pay_type}
               </span>
             )}
+            <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-full">
+              Experience : {job?.experience}
+              {job?.experience === 0
+                ? "Fresher"
+                : job?.experience > 1
+                ? " Years"
+                : " Year"}
+            </span>
           </div>
         </div>
 
@@ -64,8 +71,9 @@ const JobPost = ({ job }) => {
             size="sm"
             disabled={applyStatus.disabled}
             onClick={() => !applyStatus.disabled && handleApply()}
-            className={`flex-1 glassy-button ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+            className={`flex-1 glassy-button ${
+              applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+            }`}
           >
             {applyStatus.reason}
           </Button>
@@ -112,7 +120,6 @@ const JobPost = ({ job }) => {
           )}
         </p>
       </div>
-
 
       {/* Required Skills */}
       {job.required_skills?.length > 0 && (

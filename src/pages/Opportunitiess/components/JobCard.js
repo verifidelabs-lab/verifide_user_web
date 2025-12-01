@@ -27,14 +27,15 @@ const JobCard = ({
   setReviewJobId,
   activeTab,
   openModalForSelect,
-  setSelectInterviewId,isSelected
+  setSelectInterviewId,
+  isSelected,
 }) => {
   const limit = 3;
   const [showAllSkills, setShowAllSkills] = useState(false);
   const isThisJobLoading = isLoading === job._id;
   const remainingCount = Math.max(0, job?.user_id?.topSkills?.length - limit);
   const [showOptionsDropdown, setShowOptionsDropdown] = useState(false);
-console.log("isSelectedisSelectedisSelectedisSelected",isSelected);
+  console.log("isSelectedisSelectedisSelectedisSelected", isSelected);
 
   const handleCopyLink = useCallback((job) => {
     if (job && job?._id) {
@@ -69,11 +70,9 @@ console.log("isSelectedisSelectedisSelectedisSelected",isSelected);
   return (
     <div className="mb-3">
       <div
-        className={`relative z-20 border rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto ${isSelected
-        ? "border !border-blue-500 shadow-md"
-        : "border border-blue-700"
-        }
-      `}
+        className={`relative z-20 rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto ${
+          isSelected ? "!border !border-blue-500 shadow-md" : ""
+        }`}
       >
         <div>
           {!job?.user_id && (
@@ -233,6 +232,14 @@ console.log("isSelectedisSelectedisSelectedisSelected",isSelected);
                 <span className="px-3 py-1 glassy-card rounded-full capitalize">
                   {job?.salary_range}{" "}
                   {job?.pay_type === "unpaid" ? "unpaid" : "Monthly"}
+                </span>
+                <span className="px-3 py-1 glassy-card rounded-full capitalize">
+                  Experience : {job?.experience}
+                  {job?.experience === 0
+                    ? "Fresher"
+                    : job?.experience > 1
+                    ? " Years"
+                    : " Year"}
                 </span>
               </div>
             )}
@@ -487,7 +494,6 @@ console.log("isSelectedisSelectedisSelectedisSelected",isSelected);
                 <Button
                   onClick={() => onAction("view", job)}
                   size="sm"
-                  variant="outline"
                   className="min-w-20 h-8"
                   loading={isThisJobLoading}
                 >
@@ -498,12 +504,13 @@ console.log("isSelectedisSelectedisSelectedisSelected",isSelected);
                 <Button
                   onClick={() => onAction("edit", job)}
                   size="sm"
+                  variant="outline"
                   className="min-w-20 h-8"
                 >
                   Edit
                 </Button>
                 <Button
-                  variant="primary"
+                  variant="outline"
                   onClick={() => onAction("view_details", job)}
                   size="sm"
                   className="min-w-20 h-8"
