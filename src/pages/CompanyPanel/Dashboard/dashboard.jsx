@@ -1,60 +1,66 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { TrendingUp, TrendingDown, Mail, MapPin, Shield } from 'lucide-react';
-import PeopleToConnect from '../../../components/ui/ConnectSidebar/ConnectSidebar';
-import { useDispatch, useSelector } from 'react-redux';
-import { suggestedUser } from '../../../redux/Users/userSlice';
-import { verificationCenterList } from '../../../redux/CompanySlices/courseSlice';
-import { Link } from 'react-router-dom';
-import NoDataFound from '../../../components/ui/No Data/NoDataFound';
-import { getCookie } from '../../../components/utils/cookieHandler';
-import { ROLE_CODES } from '../../../context/GlobalKeysContext';
+import React, { useCallback, useEffect, useState } from "react";
+import { TrendingUp, TrendingDown, Mail, MapPin, Shield } from "lucide-react";
+import PeopleToConnect from "../../../components/ui/ConnectSidebar/ConnectSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { suggestedUser } from "../../../redux/Users/userSlice";
+import { verificationCenterList } from "../../../redux/CompanySlices/courseSlice";
+import { Link } from "react-router-dom";
+import NoDataFound from "../../../components/ui/No Data/NoDataFound";
+import { getCookie } from "../../../components/utils/cookieHandler";
+import { ROLE_CODES } from "../../../context/GlobalKeysContext";
 
 const CompanyDashboard = ({
   companiesProfileData,
   instituteProfileData,
   searchAppearancesChange = 32.6,
   newFollowersChange = -32.6,
-  role
+  role,
 }) => {
-
-
   // ✅ Determine profile data dynamically based on current userRole
   const profileData =
     role == ROLE_CODES.company
       ? companiesProfileData
       : role == ROLE_CODES.institution
-        ? instituteProfileData
-        : null;
-  console.log("this is the companiesprofielsdjfsdf", companiesProfileData, role)
+      ? instituteProfileData
+      : null;
+  console.log(
+    "this is the companiesprofielsdjfsdf",
+    companiesProfileData,
+    role
+  );
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.companyCourse);
   const { getVerificationCenterList: { data } = {} } = selector || {};
   const actionsToShow = data?.data?.list?.length > 0 && data?.data?.list;
+  console.log("actionsToShow", actionsToShow);
 
   const userSelector = useSelector((state) => state.user);
-  const { suggestedUserData: { data: suggestedUsers } = {} } = userSelector || {};
+  const { suggestedUserData: { data: suggestedUsers } = {} } =
+    userSelector || {};
 
-  const [activeTab, setActiveTab] = useState('user');
+  const [activeTab, setActiveTab] = useState("user");
   const activeMode = getCookie("ACTIVE_MODE"); // 'company' | 'institution' | 'user'
-
 
   useEffect(() => {
     dispatch(suggestedUser({ page: 1, size: 10, type: activeTab }));
   }, [dispatch, activeTab]);
 
-  const fetchRequestList = useCallback(async (page = 1) => {
-    const payload = {
-      page: 1,
-      size: 5,
-      status: "PENDING",
-      document_model: ""
-    };
-    try {
-      await dispatch(verificationCenterList(payload)).unwrap();
-    } catch (error) {
-      console.log("error", error);
-    }
-  }, [dispatch]);
+  const fetchRequestList = useCallback(
+    async (page = 1) => {
+      const payload = {
+        page: 1,
+        size: 5,
+        status: "PENDING",
+        document_model: "",
+      };
+      try {
+        await dispatch(verificationCenterList(payload)).unwrap();
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     fetchRequestList(1);
@@ -63,7 +69,9 @@ const CompanyDashboard = ({
   const MetricCard = ({ value, label }) => (
     <div className="glassy-card rounded-2xl p-6 shadow-md border border-var(--border-color) hover:shadow-lg transition-all duration-200">
       <div>
-        <div className="text-3xl font-bold glassy-text-primary mb-1">{value}</div>
+        <div className="text-3xl font-bold glassy-text-primary mb-1">
+          {value}
+        </div>
         <div className="text-sm glassy-text-secondary font-medium">{label}</div>
       </div>
     </div>
@@ -75,9 +83,15 @@ const CompanyDashboard = ({
         <div className="flex items-start space-x-4 flex-1">
           <div className="flex-shrink-0">
             <img
-              src={'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'}
+              src={action?.user_id?.profile_picture_url}
               alt="User avatar"
               className="w-12 h-12 rounded-full object-cover"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src =
+                  "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face";
+              }}
             />
           </div>
           <div className="flex-1">
@@ -91,16 +105,16 @@ const CompanyDashboard = ({
         </div>
         <button className={`glassy-button ml-4 flex-shrink-0`}>
           <Link
-            to={`${activeMode === "company"
-              ? "/company"
-              : activeMode === "institution"
+            to={`${
+              activeMode === "company"
+                ? "/company"
+                : activeMode === "institution"
                 ? "/institution"
                 : "/user"
-              }/verification`}
+            }/verification`}
           >
             Verify Now
           </Link>
-
         </button>
       </div>
     </div>
@@ -113,25 +127,37 @@ const CompanyDashboard = ({
         <div className="xl:w-[75%] lg:w-[70%] md:w-[60%] w-full space-y-6">
           {/* Header */}
           <div className="glassy-card p-6 rounded-2xl shadow-md border border-var(--border-color)">
-            <h1 className="text-2xl font-bold glassy-text-primary mb-2">Track Performance</h1>
+            <h1 className="text-2xl font-bold glassy-text-primary mb-2">
+              Track Performance
+            </h1>
             <p className="glassy-text-secondary">
               Grow your Page 3x faster by leveraging insights and analytics
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
-              <MetricCard value={profileData?.employee_count} label="Employers" />
-              <MetricCard value={profileData?.follower_count} label="Followers" />
+              <MetricCard
+                value={profileData?.employee_count}
+                label="Employers"
+              />
+              <MetricCard
+                value={profileData?.follower_count}
+                label="Followers"
+              />
             </div>
           </div>
 
           {/* Actions Section */}
           <div className="glassy-card p-6 rounded-2xl shadow-md border border-var(--border-color)">
-            <h2 className="text-xl font-bold glassy-text-primary mb-2">Today's actions</h2>
+            <h2 className="text-xl font-bold glassy-text-primary mb-2">
+              Today's actions
+            </h2>
             <p className="glassy-text-secondary mb-6">
               Pages that complete these actions regularly grow 4x faster
             </p>
             <div className="space-y-4">
               {actionsToShow && actionsToShow.length > 0 ? (
-                actionsToShow.map((action) => <ActionCard key={action.id} action={action} />)
+                actionsToShow.map((action) => (
+                  <ActionCard key={action.id} action={action} />
+                ))
               ) : (
                 <NoDataFound />
               )}

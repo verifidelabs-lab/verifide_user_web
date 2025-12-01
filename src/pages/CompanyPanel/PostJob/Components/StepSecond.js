@@ -113,7 +113,7 @@ const StepSecond = ({ handleSelectChange, allProfileRoles, allSkills, formData, 
                         {selectedSkills.map((skill, index) => (
                             <span
                                 key={index}
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm glassy-card text-blue-800"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm glassy-card glassy-text-primary"
                             >
                                 {skill.label}
                                 <button

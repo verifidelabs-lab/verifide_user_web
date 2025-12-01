@@ -11,15 +11,26 @@ import UserProfileCard from "../../components/ui/cards/UserProfileCard";
 import { toast } from "sonner";
 import { BiSearch } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
+import { getCookie } from "../../components/utils/cookieHandler";
 
 const Users = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.user);
+  const activeMode = getCookie("ACTIVE_MODE");
+
+  const basePath =
+    activeMode === "company"
+      ? "/company"
+      : activeMode === "institution"
+      ? "/institution"
+      : "/user";
+
   const {
     suggestedUserData: { data },
     loading,
     error,
   } = selector || {};
+
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 8;
   const navigate = useNavigate();
@@ -70,13 +81,13 @@ const Users = () => {
     switch (activeTab) {
       case "user":
         navigate(
-          `/user/profile/${data?.first_name || data?.username}/${data?._id}`
+          `${basePath}/profile/${data?.first_name || data?.username}/${data?._id}`
         );
         break;
 
       case "companies":
         if (data?._id) {
-          navigate(`/user/view-details/companies/${data._id}`);
+          navigate(`${basePath}/view-details/companies/${data._id}`);
         } else {
           console.warn("Missing ID in data:", data);
           toast.error("Cannot view this company");
@@ -85,7 +96,7 @@ const Users = () => {
 
       case "institutions":
         if (data?._id) {
-          navigate(`/user/view-details/institutions/${data._id}`);
+          navigate(`${basePath}/view-details/institutions/${data._id}`);
         } else {
           console.warn("Missing ID in data:", data);
           toast.error("Cannot view this institution");

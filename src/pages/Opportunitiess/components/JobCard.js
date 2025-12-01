@@ -250,7 +250,7 @@ const JobCard = ({
                 className={`flex flex-col gap-2 text-sm p-3 rounded-md w-full ${
                   dateInRange
                     ? "glassy-card border border-green-200"
-                    : "bg-red-50 border border-red-200"
+                    : "glassy-card border border-red-200"
                 }`}
               >
                 {/* Header */}
@@ -317,7 +317,7 @@ const JobCard = ({
                 <p
                   className="glassy-text-primary glassy-card leading-relaxed whitespace-pre-line 
         p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)]
-        min-h-[180px] md:min-h-[240px] lg:min-h-[260px]"
+        min-h-[180px] md:min-h-[240px] lg:min-h-[260px] break-all" 
                 >
                   <strong className="text-base font-semibold block mb-2">
                     {job?.job_description
