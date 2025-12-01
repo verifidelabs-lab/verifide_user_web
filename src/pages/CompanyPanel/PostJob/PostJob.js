@@ -388,42 +388,42 @@ const PostJob = () => {
       }
     }
 
-    if (step === 3) {
-      if (screeningQuestions.length === 0) {
-        newErrors.screening_questions =
-          "At least one screening question is required";
-      } else {
-        screeningQuestions.forEach((q, qIndex) => {
-          if (!q.question || q.question.trim() === "") {
-            newErrors[`screening_question_${qIndex}`] = "Question is required";
-          } else if (q.question.trim().length < 10) {
-            newErrors[`screening_question_${qIndex}`] =
-              "Question must be at least 10 characters long";
-          }
-          // For theoretical questions, no additional validation needed beyond the question text
-          if (q.question_type === "theoretical") {
-            return;
-          }
+    // if (step === 3) {
+    //   if (screeningQuestions.length === 0) {
+    //     newErrors.screening_questions =
+    //       "At least one screening question is required";
+    //   } else {
+    //     screeningQuestions.forEach((q, qIndex) => {
+    //       if (!q.question || q.question.trim() === "") {
+    //         newErrors[`screening_question_${qIndex}`] = "Question is required";
+    //       } else if (q.question.trim().length < 10) {
+    //         newErrors[`screening_question_${qIndex}`] =
+    //           "Question must be at least 10 characters long";
+    //       }
+    //       // For theoretical questions, no additional validation needed beyond the question text
+    //       if (q.question_type === "theoretical") {
+    //         return;
+    //       }
 
-          if (q.options.length < 2) {
-            newErrors[`screening_options_${qIndex}`] =
-              "At least two options are required";
-          }
+    //       if (q.options.length < 2) {
+    //         newErrors[`screening_options_${qIndex}`] =
+    //           "At least two options are required";
+    //       }
 
-          q.options.forEach((option, oIndex) => {
-            if (!option || option.trim() === "") {
-              newErrors[`screening_option_${qIndex}_${oIndex}`] =
-                "Option cannot be empty";
-            }
-          });
+    //       q.options.forEach((option, oIndex) => {
+    //         if (!option || option.trim() === "") {
+    //           newErrors[`screening_option_${qIndex}_${oIndex}`] =
+    //             "Option cannot be empty";
+    //         }
+    //       });
 
-          if (q.correct_options.length === 0) {
-            newErrors[`screening_correct_${qIndex}`] =
-              "At least one correct option is required";
-          }
-        });
-      }
-    }
+    //       if (q.correct_options.length === 0) {
+    //         newErrors[`screening_correct_${qIndex}`] =
+    //           "At least one correct option is required";
+    //       }
+    //     });
+    //   }
+    // }
     console.log("this s the new error s", newErrors);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
