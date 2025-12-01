@@ -25,7 +25,13 @@ import { useTour } from "../../context/TourContext";
 import { dashboardTourSteps } from "../../data/tutorialSteps";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,setNavbarOpen }) => {
+const Header = ({
+  profileData,
+  setUserType,
+  playAndShowNotification,
+  navbarOpen,
+  setNavbarOpen,
+}) => {
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -53,8 +59,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
   } = useGlobalKeys();
   const navigate = useNavigate();
   const { profileImage } = useProfileImage();
-  const imageToDisplay =
-      profileData?.personalInfo?.profile_picture_url;
+  const imageToDisplay = profileData?.personalInfo?.profile_picture_url;
   const [isLoading, setIsLoading] = useState(false);
   const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
   const [isInstitutionDropdownOpen, setIsInstitutionDropdownOpen] =
@@ -86,10 +91,12 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
     setIsLoading(true);
     setUserType(selectedMode);
     try {
-      const res = await dispatch(switchAccount({ accessMode: selectedMode })).unwrap();
+      const res = await dispatch(
+        switchAccount({ accessMode: selectedMode })
+      ).unwrap();
       if (res) {
-        setCookie('VERIFIED_TOKEN', res?.data?.token);
-        setCookie('ACCESS_MODE', res?.data?.user?.accessMode);
+        setCookie("VERIFIED_TOKEN", res?.data?.token);
+        setCookie("ACCESS_MODE", res?.data?.user?.accessMode);
         setAccessLabel(selectedMode === "6" ? "Recruiter" : "User");
         // Close dropdowns after selection
         setModeDropdown(false);
@@ -253,7 +260,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
   );
   useEffect(() => {
     fetchCompaniesList();
-    fetchInstitutionsList()
+    fetchInstitutionsList();
   }, [dispatch, fetchCompaniesList, fetchInstitutionsList]);
   const { stepIndex, steps, setAlertMessage } = useTour();
 
@@ -263,8 +270,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
     const target = steps[stepIndex].target;
 
     const openProfileDropdown = target.includes("profile-dropdown");
-    const openCompanies = target.includes("companies-dropdown") || target.includes("company-list");
-    const openInstitutions = target.includes("institutions-dropdown") || target.includes("institution-list");
+    const openCompanies =
+      target.includes("companies-dropdown") || target.includes("company-list");
+    const openInstitutions =
+      target.includes("institutions-dropdown") ||
+      target.includes("institution-list");
 
     // Open parent profile dropdown
     if (openProfileDropdown || openCompanies || openInstitutions) {
@@ -285,7 +295,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
       setTimeout(() => {
         const el = document.querySelector("[data-tour='companies-dropdown']");
         if (!el) {
-          setAlertMessage("⚠ Companies dropdown not found! Make sure your company list is loaded.");
+          setAlertMessage(
+            "⚠ Companies dropdown not found! Make sure your company list is loaded."
+          );
           clearInterval(interval);
         }
       }, 3000);
@@ -294,7 +306,9 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
     // Auto-open institutions dropdown
     if (openInstitutions) {
       const interval = setInterval(() => {
-        const el = document.querySelector("[data-tour='institutions-dropdown']");
+        const el = document.querySelector(
+          "[data-tour='institutions-dropdown']"
+        );
         if (el) {
           setIsInstitutionDropdownOpen(true);
           clearInterval(interval);
@@ -302,9 +316,13 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
       }, 100);
 
       setTimeout(() => {
-        const el = document.querySelector("[data-tour='institutions-dropdown']");
+        const el = document.querySelector(
+          "[data-tour='institutions-dropdown']"
+        );
         if (!el) {
-          setAlertMessage("⚠ Institutions dropdown not found! Make sure your institution list is loaded.");
+          setAlertMessage(
+            "⚠ Institutions dropdown not found! Make sure your institution list is loaded."
+          );
           clearInterval(interval);
         }
       }, 3000);
@@ -314,27 +332,24 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
     steps,
     isDropdownOpen,
     isCompanyDropdownOpen,
-    isInstitutionDropdownOpen
+    isInstitutionDropdownOpen,
   ]);
 
   return (
-    <header
-      className=""
-      ref={topRef}
-    >
+    <header className="" ref={topRef}>
       {/* Alert UI for missing step target */}
 
       <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div className="flex items-center justify-between p-4   relative">
-            {/* Sidebar Toggle Button for Mobile */}
-      {!navbarOpen && window.innerWidth <= 1000 && (
-        <button
-          className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
-          onClick={() => setNavbarOpen(true)}
-        >
-          <GiHamburgerMenu className="text-xl glassy-text-primary" />
-        </button>
-      )}
+          {/* Sidebar Toggle Button for Mobile */}
+          {!navbarOpen && window.innerWidth <= 1000 && (
+            <button
+              className="fixed top-4 left-4 p-2 z-60 flex items-center justify-center rounded-md hover:glassy-card transition-all duration-300 hover:scale-110"
+              onClick={() => setNavbarOpen(true)}
+            >
+              <GiHamburgerMenu className="text-xl glassy-text-primary" />
+            </button>
+          )}
           <div className="flex items-center gap-3 px-4 py-3">
             <img
               src="/Frame 1000004906.png"
@@ -343,7 +358,6 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
               onClick={() => navigate(`/user/feed`)}
             />
           </div>
-
         </div>
         <div className="flex items-center gap-4">
           {/* <button
@@ -374,10 +388,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                   // onClick={() => {
                   //   if (isHome) scrollToTop();
                   // }}
-                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${isActive
-                    ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                    : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                    } pb-1`}
+                  className={`lg:text-[16px] md:text-[14px] transition duration-200 ${
+                    isActive
+                      ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                      : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                  } pb-1`}
                 >
                   {item?.name}
                 </Link>
@@ -433,6 +448,10 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                     alt="User"
                     className="w-8 h-8 rounded-full object-cover"
                     key={imageToDisplay}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"; // fallback
+                    }}
                   />
                 ) : (
                   <span className="w-8 h-8 rounded-full border flex justify-center items-center glassy-card text-zinc-600 overflow-hidden">
@@ -451,14 +470,14 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                   </p>
                 </div>
                 <FiChevronDown
-                  className={`glassy-text-secondary transition-transform ${isDropdownOpen ? "rotate-180" : ""
-                    }`}
+                  className={`glassy-text-secondary transition-transform ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
                 />
               </button>
 
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-52 min-w-[200px] glassy-card-header rounded-2xl border-[var(--border-color)] shadow-xl z-50 overflow-hidden transition-all duration-200 ease-out">
-
                   {/* Profile Link */}
                   <Link
                     to="/user/profile"
@@ -499,25 +518,31 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                     >
                       Companies
                       <FiChevronDown
-                        className={`ml-2 glassy-text-primary transition-transform ${isCompanyDropdownOpen ? "rotate-180" : ""
-                          }`}
+                        className={`ml-2 glassy-text-primary transition-transform ${
+                          isCompanyDropdownOpen ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
                     {isCompanyDropdownOpen && (
-                      <div className="pl-4 space-y-1 max-h-60 overflow-y-auto" data-tour="company-list">
+                      <div
+                        className="pl-4 space-y-1 max-h-60 overflow-y-auto"
+                        data-tour="company-list"
+                      >
                         {companiesData?.data?.list?.length > 0 ? (
                           companiesData.data.list.map((company) => (
                             <Link
                               key={company._id}
                               className="flex items-center gap-2 py-2 text-sm glassy-text-primary rounded-lg hover:bg-[var(--bg-card)] transition-colors"
-                              onClick={() => switchAccountFunction(company._id, "company")}
+                              onClick={() =>
+                                switchAccountFunction(company._id, "company")
+                              }
                             >
                               {company.logo_url ? (
                                 <img
                                   src={company.logo_url}
                                   alt={`${company.name} logo`}
-                                  key={company.logo_url}  
+                                  key={company.logo_url}
                                   className="w-6 h-6 rounded-full object-cover border border-[var(--border-color)]"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
@@ -526,14 +551,17 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                                 />
                               ) : (
                                 <div className="w-6 h-6 flex items-center justify-center rounded-full glassy-card glassy-text-secondary text-xs font-semibold">
-                                  {company.name?.charAt(0)?.toUpperCase() || "C"}
+                                  {company.name?.charAt(0)?.toUpperCase() ||
+                                    "C"}
                                 </div>
                               )}
                               <span className="truncate">{company.name}</span>
                             </Link>
                           ))
                         ) : (
-                          <p className="py-2 text-sm glassy-text-secondary">No companies found</p>
+                          <p className="py-2 text-sm glassy-text-secondary">
+                            No companies found
+                          </p>
                         )}
 
                         {companiesData?.data?.list?.length < 5 && (
@@ -569,14 +597,18 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                     >
                       Institution
                       <FiChevronDown
-                        className={`ml-2 glassy-text-primary transition-transform ${isInstitutionDropdownOpen ? "rotate-180" : ""
-                          }`}
+                        className={`ml-2 glassy-text-primary transition-transform ${
+                          isInstitutionDropdownOpen ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
                     {/* Expand inline */}
                     {isInstitutionDropdownOpen && (
-                      <div className="pl-4 space-y-1" data-tour="institution-list">
+                      <div
+                        className="pl-4 space-y-1"
+                        data-tour="institution-list"
+                      >
                         {institutionsList?.data?.list?.length > 0 ? (
                           institutionsList.data.list.map((company) => (
                             <Link
@@ -585,9 +617,11 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                               //   company.email
                               // )}`}
                               className="flex items-center gap-2 py-2 text-sm glassy-text-primary rounded-lg hover:bg-[var(--bg-card)] transition-colors"
-
                               onClick={() => {
-                                switchAccountFunction(company._id, "institution");
+                                switchAccountFunction(
+                                  company._id,
+                                  "institution"
+                                );
                               }}
                             >
                               {/* ✅ Company logo with fallback */}
@@ -603,9 +637,7 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                                   }}
                                 />
                               ) : (
-
                                 <div className="w-6 h-6 flex items-center justify-center rounded-full glassy-card glassy-text-secondary text-xs font-semibold">
-
                                   {company.name?.charAt(0)?.toUpperCase() ||
                                     "C"}
                                 </div>
@@ -648,17 +680,17 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
               )}
               {isMobileMenuOpen && (
                 <div className="absolute right-0 mt-2 w-52 min-w-[200px] glassy-card-header rounded-2xl border-[var(--border-color)] shadow-xl z-50 overflow-hidden transition-all duration-200 ease-out">
-
                   {HeaderJson?.headerItems?.map((item, index) => {
                     const isActive = location.pathname === item?.path;
                     return (
                       <Link
                         key={index}
                         to={item?.path}
-                        className={`block px-3 py-2 text-base transition duration-200 ${isActive
-                          ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
-                          : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
-                          }`}
+                        className={`block px-3 py-2 text-base transition duration-200 ${
+                          isActive
+                            ? "font-semibold glassy-text-primary border-b-2 border-blue-600"
+                            : "font-medium glassy-text-primary hover:text-blue-600 hover:border-b-2 hover:border-blue-600"
+                        }`}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {item?.name}
@@ -667,7 +699,6 @@ const Header = ({ profileData, setUserType, playAndShowNotification,navbarOpen,s
                   })}
                 </div>
               )}
-
             </div>
           </div>
         </div>

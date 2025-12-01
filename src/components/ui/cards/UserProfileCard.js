@@ -149,7 +149,7 @@ const UserProfileCard = ({
             e.target.src =
               "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png";
           }}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain  rounded-t-2xl"
         />
 
         {user?.is_verified && (
