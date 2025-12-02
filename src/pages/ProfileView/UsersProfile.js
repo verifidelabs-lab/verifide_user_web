@@ -1,5 +1,5 @@
 import Aos from "aos";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { FiCalendar, FiMapPin, FiUsers } from 'react-icons/fi';
 import { useDispatch } from "react-redux";
 import {
@@ -109,6 +109,8 @@ const UsersProfile = ({ currentUserId }) => {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const fetchRef = useRef(false);
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -121,8 +123,24 @@ const UsersProfile = ({ currentUserId }) => {
       setLoading(false);
     }
   };
+  // useEffect(() => {
+  //   // Initialize AOS with more configuration options
+  //   Aos.init({
+  //     duration: 800,
+  //     easing: "ease-in-out",
+  //     once: true,
+  //     mirror: false,
+  //     offset: 100,
+  //   });
+
+  //   if (userId) {
+  //     fetchData();
+  //   } else {
+  //     setLoading(false);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [dispatch, userId]);
   useEffect(() => {
-    // Initialize AOS with more configuration options
     Aos.init({
       duration: 800,
       easing: "ease-in-out",
@@ -131,12 +149,12 @@ const UsersProfile = ({ currentUserId }) => {
       offset: 100,
     });
 
-    if (userId) {
+    if (userId && !fetchRef.current) {
+      fetchRef.current = true;
       fetchData();
     } else {
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, userId]);
 
   const handleConnect = async () => {

@@ -121,6 +121,9 @@ const CandidateCard = ({ candidate }) => {
 
 const AssessmentCard = ({ assessment, handleStartAssessment }) => {
   const [expandedSkills] = useState({});
+  const [isExpandedDes, setIsExpanded] = useState(false);
+
+  const handleSeeMore = () => setIsExpanded(!isExpandedDes);
 
   // const toggleSkills = (id) => {
   //   setExpandedSkills(prev => ({
@@ -142,20 +145,22 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
       <div className="flex justify-between pt-3 mt-auto gap-6">
         <Button
           variant="primary"
-          className={`w-44  rounded-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-44  rounded-0 ${
+            isDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           disabled={isDisabled}
           onClick={() => handleStartAssessment(assessment)}
         >
           {buttonText}
         </Button>
 
-        {assessment.assessment_id?.material_url && isDisabled && (
+        {assessment?.assessment_id?.material_url && isDisabled && (
           <button
             className={`flex-1 gap-2 flex items-center justify-center px-4 py-2.5 rounded-md border border-[var(--border-color)] glassy-card glassy-text-primary hover:glassy-text-secondary transition-all duration-200 ${
               isDisabled ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={() =>
-              window.open(assessment.assessment_id?.material_url, "_blank")
+              window.open(assessment?.assessment_id?.material_url, "_blank")
             }
             disabled={isDisabled}
           >
@@ -166,8 +171,8 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
     );
   };
 
-  const assessmentId = assessment.assessment_id?._id;
-  const skill_ids = assessment.assessment_id?.skill_ids || [];
+  const assessmentId = assessment?.assessment_id?._id;
+  const skill_ids = assessment?.assessment_id?.skill_ids || [];
   const isExpanded = expandedSkills[assessmentId];
   const visibleSkills = isExpanded
     ? skill_ids
@@ -176,40 +181,15 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
 
   return (
     <div
-      key={assessment._id}
+      key={assessment?._id}
       className="glassy-card rounded-xl p-6 flex flex-col h-full space-y-3 border border-[var(--border-color)] shadow-sm hover:shadow-md transition-all duration-300"
     >
       {/* Top Section */}
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-3">
-          {/* {assessment.assessment_id?.action_by?.profile_picture_url ||
-            assessment.assessment_id?.action_by?.logo_url ? (
-            <img
-              src={
-                assessment.assessment_id?.action_by?.profile_picture_url ||
-                assessment.assessment_id?.action_by?.logo_url
-              }
-              alt={
-                assessment.assessment_id?.action_by?.first_name ||
-                assessment.assessment_id?.action_by?.name
-              }
-              className="w-14 h-14 object-cover rounded-full border border-[var(--border-color)]"
-              onError={(e) => {
-                e.target.src =
-                  'https://i.pinimg.com/736x/bb/29/40/bb294045fe0db26c02bf0f63926e923b.jpg';
-              }}
-            />
-          ) : (
-            <img
-              src="https://i.pinimg.com/736x/bb/29/40/bb294045fe0db26c02bf0f63926e923b.jpg"
-              alt="Default"
-              className="w-14 h-14 object-cover rounded-full border border-[var(--border-color)]"
-            />
-          )} */}
-
           <div>
             <h3 className="font-semibold text-[16px] glassy-text-primary">
-              {assessment.assessment_id.title}
+              {assessment?.assessment_id.title}
             </h3>
 
             <p className="text-sm glassy-text-secondary flex items-center gap-1">
@@ -218,44 +198,14 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
                 size={16}
               />
               {formatDateByMomentTimeZone(
-                assessment.assessment_id.updatedAt,
+                assessment?.assessment_id.updatedAt,
                 "D MMM YYYY"
               )}
             </p>
           </div>
         </div>
 
-        {/* Status Section */}
-        {/* {assessment.passed ? (
-          <div className="flex items-center justify-center">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
-              <img src="/Img/assVerified.png" alt="Passed" className="h-7 w-7" />
-              <span className="font-medium text-[15px] glassy-text-primary">
-                Passed
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div className="relative w-14 h-14 flex items-center justify-center min-w-[56px] min-h-[56px]">
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: `conic-gradient(var(--accent-color) ${(assessment.total_score /
-                  assessment.assessment_id.no_of_questions) *
-                  360
-                  }deg, var(--border-color) ${(assessment.total_score /
-                    assessment.assessment_id.no_of_questions) *
-                  360
-                  }deg)`,
-              }}
-            ></div>
-            <div className="absolute w-11 h-11 glassy-card rounded-full z-10 border border-[var(--border-color)]"></div>
-            <div className="absolute inset-0 flex items-center justify-center text-[11px] font-medium glassy-text-primary z-20 rounded-full">
-              {assessment.total_score} of {assessment.assessment_id.no_of_questions}
-            </div>
-          </div> 
-        )}*/}
-        {assessment.passed ? (
+        {assessment?.passed ? (
           // ✅ Case 1: Passed
           <div className="flex items-center justify-center">
             <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
@@ -269,15 +219,15 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
               </span>
             </div>
           </div>
-        ) : assessment.attempt_number <
-          assessment.assessment_id.max_attempts ? (
+        ) : assessment?.attempt_number <
+          assessment?.assessment_id.max_attempts ? (
           // ⚙️ Case 2: Show Attempt ratio (1 / 2, etc.)
           <div className="flex items-center justify-center">
             <div className="flex items-center gap-2 px-4 py-2 rounded-full glassy-card border border-[var(--border-color)]">
               <FaSyncAlt className="text-amber-500 text-lg animate-spin-slow" />
               <span className="font-medium text-[14px] glassy-text-primary">
-                Attempt {assessment.attempt_number} /{" "}
-                {assessment.assessment_id.max_attempts}
+                Attempt {assessment?.attempt_number} /{" "}
+                {assessment?.assessment_id.max_attempts}
               </span>
             </div>
           </div>
@@ -301,7 +251,7 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
         </h4> */}
 
         <p className="glassy-text-secondary font-medium text-[14px]">
-          {assessment.assessment_id.passing_score}% Passing Score
+          {assessment?.assessment_id.passing_score}% Passing Score
         </p>
       </div>
       {/* Info Pills */}
@@ -309,28 +259,48 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
         <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1">
           <GoClock className="w-4 h-4 glassy-text-primary" />
           <span className="glassy-text-primary">
-            {assessment.assessment_id.time_limit} Min
+            {assessment?.assessment_id.time_limit} Min
           </span>
         </div>
 
         <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1">
           <HiOutlineClipboardList className="w-4 h-4 glassy-text-primary" />
           <span className="glassy-text-primary">
-            {assessment.assessment_id.no_of_questions} Quiz’s
+            {assessment?.assessment_id.no_of_questions} Quiz’s
           </span>
         </div>
 
         <div className="flex items-center text-xs gap-1 bg-indigo-500 border border-[var(--border-color)] rounded-full px-2.5 py-1 capitalize">
           <BsBarChartLine className="w-4 h-4 glassy-text-primary" />
           <span className="glassy-text-primary">
-            {assessment.assessment_id?.level_id?.name}
+            {assessment?.assessment_id?.level_id?.name}
           </span>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300 break-words break-all">
-        {assessment.assessment_id.description}
+      {/* <p className="text-sm glassy-text-secondary hover:glassy-text-primary transition-colors duration-300 break-words break-all">
+        {assessment?.assessment_id.description}
+      </p> */}
+      <p
+        className="
+        glassy-text-primary leading-relaxed break-words whitespace-pre-line
+        p-4 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] break-all
+        overflow-hidden text-ellipsis
+      "
+      >
+        {isExpandedDes ? assessment?.assessment_id.description : assessment?.assessment_id.description.slice(0, 200)}
+        {assessment?.assessment_id.description.length > 200 && (
+          <>
+            {!isExpandedDes && "..."}
+            <button
+              onClick={handleSeeMore}
+              className="ml-2 md:text-sm text-xs text-blue-500 hover:underline"
+            >
+              {isExpandedDes ? "See less" : "See more"}
+            </button>
+          </>
+        )}
       </p>
 
       {/* Skills */}
@@ -339,14 +309,14 @@ const AssessmentCard = ({ assessment, handleStartAssessment }) => {
       </div>
       <p className="text-sm glassy-text-primary font-bold flex items-center gap-1">
         CreatedBy:{" "}
-        {assessment.assessment_id?.action_by?.name ||
-          `${assessment.assessment_id?.action_by?.first_name} ${assessment.assessment_id?.action_by?.last_name}`}
+        {assessment?.assessment_id?.action_by?.name ||
+          `${assessment?.assessment_id?.action_by?.first_name} ${assessment?.assessment_id?.action_by?.last_name}`}
       </p>
       {/* CTA Button */}
       {renderStatusButton(
-        assessment.passed,
-        assessment.attempt_number,
-        assessment.assessment_id.max_attempts
+        assessment?.passed,
+        assessment?.attempt_number,
+        assessment?.assessment_id.max_attempts
       )}
     </div>
   );
