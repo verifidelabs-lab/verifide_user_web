@@ -73,7 +73,6 @@ const Opportunities = () => {
     return "text-red-600";
   };
 
-  console.log("this is the jsss", data);
   const [activeTab, setActiveTab] = useState("open");
   const [selectedJob, setSelectedJob] = useState(null);
   const [viewDetails, setViewDetails] = useState(false);
@@ -177,7 +176,12 @@ const Opportunities = () => {
   };
 
   const navigate = useNavigate();
-
+  const basePath =
+    activeMode === "company"
+      ? "/company"
+      : activeMode === "institution"
+      ? "/institution"
+      : "/user";
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       const fetchJobs = async () => {
@@ -581,16 +585,20 @@ const Opportunities = () => {
             />
             {isDetailsData?.user_id?.profile_picture_url ? (
               <img
-                src={
-                  isDetailsData?.user_id?.profile_picture_url ||
-                  "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"
-                }
+                src={isDetailsData?.user_id?.profile_picture_url}
                 alt="profile"
-                className="w-10 h-10 rounded-full border"
+                className="w-10 h-10 rounded-full border cursor-pointer"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png";
                 }}
+                onClick={() =>
+                  navigate(
+                    `${basePath}/profile/${encodeURIComponent(
+                      isDetailsData?.user_id.first_name
+                    )}/${isDetailsData?.user_id._id}`
+                  )
+                }
               />
             ) : (
               <img
@@ -604,34 +612,29 @@ const Opportunities = () => {
               />
             )}
             <div>
-              <h1 className="text-lg font-semibold glassy-text-primary capitalize">
+              <h1
+                className="text-lg font-semibold glassy-text-primary capitalize cursor-pointer"
+                onClick={() =>
+                  navigate(
+                    `${basePath}/profile/${encodeURIComponent(
+                      isDetailsData?.user_id.first_name
+                    )}/${isDetailsData?.user_id._id}`
+                  )
+                }
+              >
                 {isDetailsData?.user_id?.first_name}{" "}
                 {isDetailsData?.user_id?.last_name}
               </h1>
               <p className="text-xs glassy-text-secondary">
                 {isDetailsData?.status
                   ? `${
-                      isDetailsData.status.charAt(0).toUpperCase() +
-                      isDetailsData.status.slice(1)
+                      isDetailsData?.status.charAt(0).toUpperCase() +
+                      isDetailsData?.status.slice(1)
                     }`
                   : "Status not available"}
               </p>
             </div>
           </div>
-          {/* <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div className="glassy-card p-3 rounded-lg">
-              <p className="text-sm glassy-text-secondary">Skill Match Percentage</p>
-              <p className="text-lg font-semibold glassy-text-primary">
-                {isDetailsData?.skillsMatchPercentage?.toFixed(2) ?? "0.00"}%
-              </p>
-            </div>
-            <div className="glassy-card p-3 rounded-lg">
-              <p className="text-sm glassy-text-secondary">Answer Match Percentage</p>
-              <p className="text-lg font-semibold glassy-text-primary">
-                {isDetailsData?.answersMatchPercentage?.toFixed(2) ?? "0.00"}%
-              </p>
-            </div>
-          </div> */}
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="glassy-card p-3 rounded-lg">
               <p className="text-sm glassy-text-secondary">Skill Match %</p>
@@ -657,8 +660,8 @@ const Opportunities = () => {
           </div>
 
           {Array.isArray(isDetailsData?.answers) &&
-          isDetailsData.answers.length > 0 ? (
-            isDetailsData.answers.map((answer, index) => (
+          isDetailsData?.answers.length > 0 ? (
+            isDetailsData?.answers.map((answer, index) => (
               <AnswerCard
                 key={answer._id || index}
                 question={answer.question}
@@ -718,7 +721,16 @@ const Opportunities = () => {
                 key={applicant.id}
                 className="flex items-center justify-between py-2 px-2 hover:glassy-card rounded-md"
               >
-                <div className="flex items-center space-x-3">
+                <div
+                  className="flex items-center space-x-3 cursor-pointer"
+                  onClick={() =>
+                    navigate(
+                      `${basePath}/profile/${encodeURIComponent(
+                        applicant.user_id?.first_name
+                      )}/${applicant.user_id?._id}`
+                    )
+                  }
+                >
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
@@ -1178,7 +1190,9 @@ const Opportunities = () => {
                         <input
                           type="checkbox"
                           checked={selectedFilters.withoutApplicants}
-                          onChange={() => handleFilterChange("withoutApplicants")}
+                          onChange={() =>
+                            handleFilterChange("withoutApplicants")
+                          }
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
                         <span className="text-sm glassy-text-primary">
