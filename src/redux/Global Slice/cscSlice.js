@@ -59,23 +59,7 @@ const cscSlice = createSlice({
     name: 'csc',
     initialState,
     reducers: {
-        updateMasterSkillData: (state, action) => {
-            if (state.masterSkillsData?.data?.data) {
-
-                if (Array.isArray(state.masterSkillsData.data.data)) {
-                    state.masterSkillsData.data.data = [
-                        action.payload,
-                        ...state.masterSkillsData.data.data
-                    ];
-                }
-                else if (Array.isArray(state.masterSkillsData.data.data.list)) {
-                    state.masterSkillsData.data.data.list = [
-                        action.payload,
-                        ...state.masterSkillsData.data.data.list
-                    ];
-                }
-            }
-        },
+         
         updateMasterIndustryData: (state, action) => {
             if (state.masterIndustryData.data?.data.list) {
                 state.masterIndustryData.data.data.list = [

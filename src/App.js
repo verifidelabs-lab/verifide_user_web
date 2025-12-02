@@ -1,6 +1,12 @@
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
-import { Toaster } from 'sonner';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
+import { Toaster } from "sonner";
 
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Sign Up/SignUp";
@@ -17,12 +23,14 @@ import UserCertificate from "./pages/UserCertificate";
 import Userpost2 from "./pages/Userpost2";
 import CompanyLayout from "./components/Layout/CompanyLayout";
 
-const PostDetailsPage = lazy(() => import("./PostDetailsPage"));
-
 // PrivateRoute component
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = getCookie("VERIFIED_TOKEN");
-  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? (
+    <Component {...rest} />
+  ) : (
+    <Navigate to="/login" replace />
+  );
 };
 
 // PublicRoute component
@@ -36,12 +44,14 @@ const App = () => {
     <>
       <Router>
         <Routes>
-
           {/* Redirect root to login or dashboard based on auth */}
           <Route
             path="/"
             element={
-              <Navigate to={isAuthenticated ? "/user/feed" : "/login"} replace />
+              <Navigate
+                to={isAuthenticated ? "/user/feed" : "/login"}
+                replace
+              />
             }
           />
 
@@ -63,31 +73,17 @@ const App = () => {
             }
           /> */}
 
+          <Route path="/postView/:id" element={<Userpost />} />
 
-          <Route
-            path="/postView/:id"
-            element={<Userpost />}
-          />
-
-          <Route
-            path="/postView2"
-            element={<Userpost2 />}
-          />
-          <Route
-            path="/certtificate-view/:id"
-            element={<UserCertificate />}
-          />
-
+          <Route path="/postView2" element={<Userpost2 />} />
+          <Route path="/certtificate-view/:id" element={<UserCertificate />} />
 
           <Route
             path="/user-details/:username/:id?"
             element={<UserDetails />}
           />
 
-          <Route
-            path="/post-view/:id"
-            element={<PostDetailsPage />}
-          />
+          <Route path="/post-view/:id" element={<PostDetailsPage />} />
 
           <Route
             path="/create-account"
@@ -118,20 +114,25 @@ const App = () => {
 
           {/* Private Routes */}
           <Route path="/user/*" element={<PrivateRoute component={Layout} />} />
-          <Route path="/company/*" element={<PrivateRoute component={CompanyLayout} />} />
-
-          <Route path="/education-details" element={<PrivateRoute component={EducationDetails} />} />
-
-          <Route path="/work-experience" element={<PrivateRoute component={WorkExperience} />} />
+          <Route
+            path="/company/*"
+            element={<PrivateRoute component={CompanyLayout} />}
+          />
 
           <Route
-            path="/user/post/view/:id"
-            element={<Userpost />}
+            path="/education-details"
+            element={<PrivateRoute component={EducationDetails} />}
           />
+
+          <Route
+            path="/work-experience"
+            element={<PrivateRoute component={WorkExperience} />}
+          />
+
+          <Route path="/user/post/view/:id" element={<Userpost />} />
 
           {/* 404 Route */}
           <Route path="*" element={<PageNotFound />} />
-
         </Routes>
       </Router>
 
