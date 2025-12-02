@@ -5,6 +5,8 @@ const getBasePath = (activeMode) => {
     ? "/institution"
     : "/user";
 };
+export const B = ["8", "4"].sort().join(""); 
+// makes "48"
 
 const normalizeType = (type) => {
   if (!type) return null;

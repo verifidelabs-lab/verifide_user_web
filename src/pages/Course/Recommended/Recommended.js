@@ -96,7 +96,7 @@ const Recommended = () => {
   };
 
   return (
-    <div className=" flex flex-col md:flex-row justify-between gap-3   h-[90vh] p-2 overflow-hidden">
+    <div className=" flex flex-col md:flex-row justify-between gap-3     p-2 overflow-hidden">
       {/* <div className="md:hidden md:mb-4">
         <div className="flex justify-between border-b border-gray-200 ">
           {tab?.map((item, index) => {

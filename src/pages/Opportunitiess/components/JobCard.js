@@ -70,7 +70,7 @@ const JobCard = ({
   return (
     <div className="mb-3">
       <div
-        className={`relative z-20 rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between h-auto ${
+        className={`relative z-20 rounded-lg shadow-md p-4 glassy-card flex flex-col justify-between ${
           isSelected ? "!border !border-blue-500 shadow-md" : ""
         }`}
       >

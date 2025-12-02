@@ -18,18 +18,18 @@ const Modal = ({
     <>
       {/* Overlay */}
       <div
-        className={`!absolute inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm" : "bg-transparent pointer-events-none"
+        className={`!absolute  inset-0 z-50 transition-all -top-4 duration-300 ease-in-out ${isOpen ? "glassy-card bg-opacity-30 backdrop-blur backdrop-blur-sm" : "bg-transparent pointer-events-none"
           }`}
         onClick={onClose}
       />
 
       {/* Modal Container */}
       <div
-        className={`fixed z-50   backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+        className={`fixed z-50    backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 transition-all duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
           }`}
         style={{ top: '50%', left: '50%' }}
       >
-        <div className="w-[100vw] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+        <div className="w-[100vw] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl max-h-[90vh] flex flex-col overflow-hidden glassy-modal">
 
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">

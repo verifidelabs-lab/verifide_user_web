@@ -1,6 +1,6 @@
 // src/context/ThemeContext.js
 import { createContext, useState, useEffect } from "react";
-
+// import "../utils/useSystemConfig"
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {

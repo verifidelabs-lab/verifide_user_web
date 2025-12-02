@@ -229,7 +229,7 @@ function CompanyLayout() {
   });
   return (
     <div
-      className="h-screen flex flex-col overflow-hidden relative     pt-[70px]"
+      className="h-screen flex flex-col overflow-hidden  relative  hide-scrollbar    pt-[70px]"
       id="layout-container"
     >
       {/* Header */}

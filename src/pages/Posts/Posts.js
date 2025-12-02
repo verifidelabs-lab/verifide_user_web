@@ -461,7 +461,7 @@ const Posts = ({ profileData }) => {
 
         {viewModalOpen && currentPost && (
           <div className="fixed inset-0 glassy-card/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto relative">
+            <div className="glassy-card rounded-lg shadow-xl w-full max-w-2xl   overflow-y-auto relative">
               <button
                 onClick={() => setViewModalOpen(false)}
                 className="absolute top-4 right-4 glassy-text-secondary hover:glassy-text-primary text-2xl z-10 glassy-card rounded-full p-1"

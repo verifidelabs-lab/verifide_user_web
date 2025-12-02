@@ -76,6 +76,7 @@ const Opportunities = () => {
   console.log("this is the jsss", data);
   const [activeTab, setActiveTab] = useState("open");
   const [selectedJob, setSelectedJob] = useState(null);
+  console.log("selectedJob", selectedJob);
   const [viewDetails, setViewDetails] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
@@ -260,6 +261,7 @@ const Opportunities = () => {
         const res = await dispatch(
           jobsApplicationList({ job_id: job?._id })
         ).unwrap();
+        console.log("res data", res.data);
         setSelectedJob(res?.data?.list);
         setLoadingJobId(null);
         setViewDetails(true);
@@ -1388,7 +1390,7 @@ const Opportunities = () => {
                     setIsReviewOpen={setIsReviewOpen}
                     setReviewJobId={setReviewJobId}
                     activeTab={activeTab}
-                    isSelected={selectedJob?._id === job._id}
+                    isSelected={viewDetails&&modalState?.data?._id === job._id}
                     openModalForSelect={openModalForSelect}
                     setSelectInterviewId={setSelectInterviewId}
                     handleCloseJob={handleCloseJob}
