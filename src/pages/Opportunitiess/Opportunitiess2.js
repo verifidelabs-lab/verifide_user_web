@@ -23,6 +23,7 @@ import { CiLocationOn } from "react-icons/ci";
 import Button from "../../components/ui/Button/Button";
 import { getCookie } from "../../components/utils/cookieHandler";
 import { FiFilter } from "react-icons/fi";
+import ProfileUpdateAlert from "../../components/ui/InputAdmin/Modal/ProfileUpdateAlert";
 
 const Opportunitiess2 = () => {
   const param = useParams();
@@ -37,10 +38,11 @@ const Opportunitiess2 = () => {
   useEffect(() => {
     console.log("Received ID from URL:", param?.id);
   }, [param?.id]);
-
+  const profileData = useSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState("all");
   const [selectedJob, setSelectedJob] = useState(null);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+  const [updateAlertOpen, setUpdateAlertOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
     status: false,
     industry: false,
@@ -235,7 +237,21 @@ const Opportunitiess2 = () => {
     console.log("data:---->>>", data);
   };
   function applyForJob(data) {
+    const completion =
+      profileData?.getProfileData?.data?.data?.personalInfo
+        ?.profile_completion_percentage;
+    // If profile < 60 → show modal
+    if (completion < 60) {
+      setUpdateAlertOpen(true);
+      return;
+    }
+    // Else → navigate to career goal page
     navigate(`/user/career-goal/${data?._id}`);
+  }
+
+  function handleUpdateProfile() {
+    setUpdateAlertOpen(false);
+    navigate(`/user/profile`);
   }
 
   const handleSelectChange = (fields, value) => {
@@ -500,19 +516,6 @@ const Opportunitiess2 = () => {
 
         <div className="flex-1   mb-4">
           {/* Your job listing content here */}
-
-          {/* <input
-            type="text"
-            placeholder="Search jobs..."
-            value={searchFelids.job_title || ""}
-            onChange={(e) =>
-              setSearchFelids((prev) => ({
-                ...prev,
-                job_title: e.target.value,
-              }))
-            }
-            className="glassy-input"
-          /> */}
         </div>
         <div className="flex flex-wrap items-center justify-between mb-6 gap-3 lg:gap-0">
           {/* Tabs Section */}
@@ -550,33 +553,6 @@ const Opportunitiess2 = () => {
             </button>
           )}
         </div>
-
-        {/* <div className="h-full">
-          <div className="flex flex-col gap-4">
-            {isLoading ? (
-              Array.from({ length: 3 }).map((_, idx) => (
-                <div key={`skeleton-${idx}`} className="w-full">
-                  <SkeletonJobCard />
-                </div>
-              ))
-            ) : data?.data?.list && data?.data?.list.length > 0 ? (
-              data.data.list.map((ele) => (
-                <div key={ele._id} className="w-full">
-                  <StudentJobCard
-                    job={ele}
-                    handleAction={handleAction}
-                    isSelected={selectedJob?._id === ele._id}
-                    applyForJob={applyForJob}
-                  />
-                </div>
-              ))
-            ) : (
-              <div className="w-full mx-auto flex justify-center items-center">
-                <NoDataFound />
-              </div>
-            )}
-          </div>
-        </div> */}
         {/* ✅ Scrollable Job List */}
         <div className="h-[calc(100vh-160px)] overflow-y-auto hide-scrollbar pr-2">
           <div className="flex flex-col gap-4">
@@ -755,24 +731,6 @@ const Opportunitiess2 = () => {
 
           {/* Application Status */}
           {selectedJob?.isApplied && (
-            // <div className="mb-4">
-            //   <strong className="glassy-text-primary">Application Status:</strong>
-            //   <span
-            //     className={`ml-2 ${
-            //       selectedJob?.jobApplication?.status === "applied"
-            //         ? "text-blue-600"
-            //         : selectedJob?.jobApplication?.passed
-            //         ? "text-green-600"
-            //         : "text-yellow-600"
-            //     }`}
-            //   >
-            //     {selectedJob?.jobApplication?.status === "applied"
-            //       ? "Applied"
-            //       : selectedJob?.jobApplication?.passed
-            //       ? "Accepted"
-            //       : "Under Review"}
-            //   </span>
-            // </div>
             <div className="mb-4">
               <strong className="glassy-text-primary">
                 Application Status:
@@ -1104,167 +1062,11 @@ const Opportunitiess2 = () => {
         </div>
       )}
 
-      {/* {selectedJob && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center md:hidden">
-          <div className="bg-white w-[90%] max-h-[90vh] overflow-y-auto rounded-2xl p-4 relative">
-            <button
-              onClick={() => setSelectedJob(false)}
-              className="absolute top-3 right-3 glassy-text-primary hover:glassy-text-primary"
-            >
-              <IoClose size={24} />
-            </button>
-
-            <div className="pt-6">
-              <div className="flex items-center space-x-3 mb-4">
-                <img
-                  src={selectedJob?.company_id?.logo_url || "/36369.jpg"}
-                  alt={selectedJob?.company_id?.name}
-                  className="w-12 h-12 rounded-lg object-cover"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "/36369.jpg";
-                  }}
-                />
-                <div>
-                  <h3 className="font-semibold glassy-text-primary">
-                    {selectedJob?.company_id?.name}
-                  </h3>
-                  <p className="glassy-text-secondary text-sm">
-                    {selectedJob?.industry_id?.name}
-                  </p>
-                </div>
-              </div>
-
-              <h2 className="text-xl font-bold glassy-text-primary mb-2">
-                {selectedJob?.job_title?.name || "Job Title"}
-              </h2>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="glassy-card text-blue-800 text-xs px-2.5 py-0.5 rounded">
-                  {selectedJob?.job_type?.replace("-", " ") || "Full-time"}
-                </span>
-                <span className="bg-green-100 text-green-800 text-xs px-2.5 py-0.5 rounded">
-                  {selectedJob?.job_location === "on-site"
-                    ? "On-site"
-                    : "Remote"}
-                </span>
-              </div>
-
-              <div className="text-sm glassy-text-primary">
-                <p className="font-medium mb-1">Job Description:</p>
-                <p className="glassy-card p-2 rounded-lg border border-gray-100 whitespace-pre-line">
-                  {selectedJob?.job_description || "No description provided."}
-                </p>
-              </div>
-
-              {selectedJob?.required_skills?.length > 0 && (
-                <div className="mt-4">
-                  <strong className="glassy-text-primary block mb-2">
-                    Required Skills:
-                  </strong>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedJob?.required_skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className="glassy-card glassy-text-primary text-xs px-2.5 py-0.5 rounded"
-                      >
-                        {skill.name || skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {selectedJob?.isApplied && (
-                <div className="mt-4">
-                  <strong className="glassy-text-primary">
-                    Application Status:
-                  </strong>
-                  <span
-                    className={`ml-2 ${
-                      selectedJob?.jobApplication?.status === "applied"
-                        ? "text-blue-600"
-                        : selectedJob?.jobApplication?.passed
-                        ? "text-green-600"
-                        : "text-yellow-600"
-                    }`}
-                  >
-                    {selectedJob?.jobApplication?.status === "applied"
-                      ? "Applied"
-                      : selectedJob?.jobApplication?.passed
-                      ? "Accepted"
-                      : "Under Review"}
-                  </span>
-                </div>
-              )}
-
-              {selectedJob?.isSchedule && selectedJob?.interviewDetails && (
-                <div className="mt-4 p-4 glassy-card rounded-lg border border-gray-200 shadow-sm">
-                  <h3 className="text-lg font-semibold glassy-text-primary capitalize mb-3">
-                    📅 Interview Details
-                  </h3>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm glassy-text-primary">
-                    <div>
-                      <span className="font-medium">Interview Date:</span>
-                      <div className="glassy-text-secondary">
-                        {convertTimestampToDate(
-                          selectedJob?.interviewDetails.select_date
-                        )}
-                      </div>
-                    </div>
-
-                    <div>
-                      <span className="font-medium">Interview Time:</span>
-                      <div className="glassy-text-secondary">
-                        {convertTimestampToDate(
-                          selectedJob?.interviewDetails.select_time
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <span className="font-medium">Meeting Link:</span>
-                      <div className="text-blue-600 truncate">
-                        <a
-                          href={selectedJob?.interviewDetails.meeting_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:underline"
-                        >
-                          {selectedJob?.interviewDetails.meeting_url}
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="text-sm glassy-text-primary mt-4">
-                Posted on:{" "}
-                {new Date(selectedJob?.createdAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </div>
-            </div>
-          </div>
-          <div className="mt-6">
-            <Button
-              size="sm"
-              disabled={applyStatus.disabled}
-              onClick={() => !applyStatus.disabled && applyForJob(selectedJob)}
-              className={`w-full ${
-                applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-              }`}
-              variant="primary"
-            >
-              {applyStatus.reason}
-            </Button>
-          </div>
-        </div>
-      )} */}
+      <ProfileUpdateAlert
+        isOpen={updateAlertOpen}
+        onClose={() => setUpdateAlertOpen(false)}
+        onUpdate={handleUpdateProfile}
+      />
     </div>
   );
 };

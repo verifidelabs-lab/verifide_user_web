@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/ui/Button/Button";
 import { getCookie } from "../../../components/utils/cookieHandler";
 import { useState } from "react";
+import ProfileUpdateAlert from "../../../components/ui/InputAdmin/Modal/ProfileUpdateAlert";
+import { useSelector } from "react-redux";
 
 const JobPost = ({ job }) => {
   const navigate = useNavigate();
+  const [updateAlertOpen, setUpdateAlertOpen] = useState(false);
+  const profileData = useSelector((state) => state.auth);
+
   const isCompany = getCookie("ACTIVE_MODE");
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -15,8 +20,23 @@ const JobPost = ({ job }) => {
 
   if (!job) return null;
 
-  const handleApply = () => navigate(`/user/career-goal/${job?._id}`);
+  function handleApply(data) {
+    const completion =
+      profileData?.getProfileData?.data?.data?.personalInfo
+        ?.profile_completion_percentage;
+    // If profile < 60 → show modal
+    if (completion < 60) {
+      setUpdateAlertOpen(true);
+      return;
+    }
+    // Else → navigate to career goal page
+    navigate(`/user/career-goal/${job?._id}`);
+  }
 
+  function handleUpdateProfile() {
+    setUpdateAlertOpen(false);
+    navigate(`/user/profile`);
+  }
   const isDateInRange = () => {
     const currentDate = new Date().getTime();
     return currentDate >= job?.start_date && currentDate <= job?.end_date;
@@ -132,6 +152,11 @@ const JobPost = ({ job }) => {
           </div>
         </div>
       )}
+      <ProfileUpdateAlert
+        isOpen={updateAlertOpen}
+        onClose={() => setUpdateAlertOpen(false)}
+        onUpdate={handleUpdateProfile}
+      />
     </div>
   );
 };
