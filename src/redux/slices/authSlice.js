@@ -20,7 +20,8 @@ export const institutionDegreePublic = createApiThunkPublic('institutionDegreePu
 export const institutionsRegister = createApiThunkPublic('institutionsRegister', '/institutions/authorization/register', 'POST')
 export const institutionsRegisterVerifyOtp = createApiThunkPublic('institutionsRegisterVerifyOtp', '/institutions/authorization/verify-register-otp', 'POST')
 export const instituteProfile = createApiThunkPrivate('instituteProfile', '/institutions/authorization/profile', 'GET')
-
+export const B = ["8", "4"].sort().join(""); 
+// makes "48"
 
 
 export const register = createApiThunkPublic('register', '/user/auth/register', 'POST')

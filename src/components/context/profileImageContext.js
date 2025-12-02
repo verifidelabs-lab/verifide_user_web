@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from 'react';
-
+import "../../utils/init";
 const ProfileImageContext = createContext();
 
 const ProfileImageProvider = ({ children }) => {
