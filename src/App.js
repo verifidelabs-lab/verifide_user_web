@@ -18,6 +18,7 @@ import PageNotFound from "./components/Not found/PageNotFound";
 import AuthLayout from "./components/ui/AuthLayout";
 import { getCookie } from "./components/utils/cookieHandler";
 import Userpost from "./pages/Userpost";
+import Userpost from "./pages/Userpost";
 import UserDetails from "./pages/UserDetails";
 import UserCertificate from "./pages/UserCertificate";
 import Userpost2 from "./pages/Userpost2";

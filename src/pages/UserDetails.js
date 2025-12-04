@@ -58,6 +58,51 @@ const UserDetails = () => {
             fetchData();
         }
     }, [id, username, dispatch]);
+      useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let res;
+                if (username) {
+                    res = await fetch(
+                        `${apiUrl}user/profiles/view-user-profile?username=${username}`,
+                        {
+                            method: "GET",
+                        }
+                    );
+                } else if (id) {
+                    res = await fetch(
+                        `${apiUrl}user/profiles/view-user-profile?userId=${id}`,
+                        {
+                            method: "GET",
+                        }
+                    );
+                }
+
+                if (!res.ok) throw new Error("Failed to fetch profile");
+
+                const data = await res.json();
+                if (data.error) throw new Error(data.message);
+
+                setUserData(data.data);
+
+                // Update meta tags
+                updateMetaTags(data.data.personalInfo);
+
+                // 🔹 Redux dispatch after fetch
+                const reduxRes = await dispatch(getProfile()).unwrap();
+                setIsUserData(reduxRes?.data);
+            } catch (error) {
+                console.error(error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id || username) {
+            fetchData();
+        }
+    }, [id, username, dispatch]);
 
     // Function to update meta tags
     const updateMetaTags = (personalInfo) => {
@@ -118,6 +163,11 @@ const UserDetails = () => {
             <div className="text-red-500 text-xl">Error: {error}</div>
         </div>
     );
+  if (error) return (
+        <div className="flex justify-center items-center h-screen">
+            <div className="text-red-500 text-xl">Error: {error}</div>
+        </div>
+    );
 
     if (!userData) return (
         <div className="flex justify-center items-center h-screen">
@@ -147,7 +197,17 @@ const UserDetails = () => {
                 <meta name="twitter:description" content={personalInfo.summary || 'User Profile'} />
                 <meta name="twitter:image" content={personalInfo.profile_picture_url} />
             </noscript>
-
+ <noscript>
+                <meta property="og:title" content={`${personalInfo.first_name} ${personalInfo.last_name}`} />
+                <meta property="og:description" content={personalInfo.summary || 'User Profile'} />
+                <meta property="og:image" content={personalInfo.profile_picture_url} />
+                <meta property="og:url" content={window.location.href} />
+                <meta property="og:type" content="profile" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={`${personalInfo.first_name} ${personalInfo.last_name}`} />
+                <meta name="twitter:description" content={personalInfo.summary || 'User Profile'} />
+                <meta name="twitter:image" content={personalInfo.profile_picture_url} />
+            </noscript>
             <nav className="bg-white shadow-md py-3 px-6 flex justify-between items-center">
                 <div className="flex items-center">
                     <div className="flex items-center gap-3">

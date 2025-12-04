@@ -14,6 +14,14 @@ const Index = () => {
 
     return () => clearTimeout(timer);
   }, []);
+   useEffect(() => {
+    const timer = setTimeout(() => {
+      const mode = getCookie("ACCESS_MODE");
+      setAccessMode(mode);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div>
       {accessMode === "6" ? <RecruiterAssessment /> : <StudentAssessment />}
