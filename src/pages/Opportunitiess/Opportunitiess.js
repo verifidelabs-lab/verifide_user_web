@@ -723,16 +723,7 @@ const Opportunities = () => {
                 key={applicant.id}
                 className="flex items-center justify-between py-2 px-2 hover:glassy-card rounded-md"
               >
-                <div
-                  className="flex items-center space-x-3 cursor-pointer"
-                  onClick={() =>
-                    navigate(
-                      `${basePath}/profile/${encodeURIComponent(
-                        applicant.user_id?.first_name
-                      )}/${applicant.user_id?._id}`
-                    )
-                  }
-                >
+                <div className="flex items-center space-x-3 ">
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
@@ -748,7 +739,14 @@ const Opportunities = () => {
                       <img
                         src={applicant.user_id?.profile_picture_url}
                         alt={applicant.name}
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                        onClick={() =>
+                          navigate(
+                            `${basePath}/profile/${encodeURIComponent(
+                              applicant.user_id?.first_name
+                            )}/${applicant.user_id?._id}`
+                          )
+                        }
                       />
                     </>
                   ) : (
@@ -756,7 +754,14 @@ const Opportunities = () => {
                       <img
                         src={"/0684456b-aa2b-4631-86f7-93ceaf33303c.png"}
                         alt={applicant.name}
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                        onClick={() =>
+                          navigate(
+                            `${basePath}/profile/${encodeURIComponent(
+                              applicant.user_id?.first_name
+                            )}/${applicant.user_id?._id}`
+                          )
+                        }
                       />
                     </>
                   )}
@@ -1404,7 +1409,9 @@ const Opportunities = () => {
                     setIsReviewOpen={setIsReviewOpen}
                     setReviewJobId={setReviewJobId}
                     activeTab={activeTab}
-                    isSelected={viewDetails&&modalState?.data?._id === job._id}
+                    isSelected={
+                      viewDetails && modalState?.data?._id === job._id
+                    }
                     openModalForSelect={openModalForSelect}
                     setSelectInterviewId={setSelectInterviewId}
                     handleCloseJob={handleCloseJob}

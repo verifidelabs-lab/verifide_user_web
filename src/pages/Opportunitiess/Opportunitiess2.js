@@ -236,19 +236,86 @@ const Opportunitiess2 = () => {
     setSelectedJob(data);
     console.log("data:---->>>", data);
   };
+  // function applyForJob(data) {
+  //   console.log("datadatadata",data);
+
+  //   const completion =
+  //     profileData?.getProfileData?.data?.data?.personalInfo
+  //       ?.profile_completion_percentage;
+  //   // If profile < 60 → show modal
+  //   if (completion < 60) {
+  //     setUpdateAlertOpen(true);
+  //     return;
+  //   }
+  //   // Else → navigate to career goal page
+  //   navigate(`/user/career-goal/${data?._id}`);
+  // }
   function applyForJob(data) {
     const completion =
       profileData?.getProfileData?.data?.data?.personalInfo
         ?.profile_completion_percentage;
-    // If profile < 60 → show modal
-    if (completion < 60) {
+
+    const jobType = data?.job_type;
+    const payType = data?.pay_type;
+
+    // Low-profile friendly lists
+    const lowProfileJobTypes = [
+      "internship",
+      "part-time",
+      "contract",
+      "freelance",
+      "temporary",
+      "volunteer",
+      "training",
+      "walk-in",
+      "shift-based",
+      "night-shift",
+      "weekend",
+      "remote",
+      "work-from-home",
+    ];
+
+    const lowProfilePayTypes = [
+      "unpaid",
+      "volunteer",
+      "stipend",
+      "hourly",
+      "daily",
+      "negotiable",
+      "commission-based",
+      "project-based",
+    ];
+
+    console.log("job details:", data);
+
+    // 1️⃣ If profile < 50 → Always show alert (cannot apply)
+    if (completion < 50) {
       setUpdateAlertOpen(true);
       return;
     }
-    // Else → navigate to career goal page
-    navigate(`/user/career-goal/${data?._id}`);
-  }
 
+    // 2️⃣ If profile >= 50 and < 60 → only allow low-profile jobs
+    if (completion >= 50 && completion < 60) {
+      const isLowProfileAllowed =
+        lowProfileJobTypes.includes(jobType) ||
+        lowProfilePayTypes.includes(payType);
+
+      if (!isLowProfileAllowed) {
+        setUpdateAlertOpen(true); // Show modal
+        return;
+      }
+
+      // Allowed
+      navigate(`/user/career-goal/${data?._id}`);
+      return;
+    }
+
+    // 3️⃣ If profile >= 60 → follow your original logic (allow all)
+    if (completion >= 60) {
+      navigate(`/user/career-goal/${data?._id}`);
+      return;
+    }
+  }
   function handleUpdateProfile() {
     setUpdateAlertOpen(false);
     navigate(`/user/profile`);
