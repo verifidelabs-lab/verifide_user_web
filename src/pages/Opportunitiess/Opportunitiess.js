@@ -427,11 +427,12 @@ const Opportunities = () => {
         errorsObj.select_time = "Selected date and time cannot be in the past";
       }
     }
-    const urlPattern =
-      /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+    const urlPattern = /^(https:\/\/)([a-zA-Z0-9.-]+)(\/[\w\-._~:/?#[\]@!$&'()*+,;=]+)?$/;
+
     if (formData?.meeting_url && !urlPattern.test(formData.meeting_url)) {
-      errorsObj.meeting_url = "Please enter a valid URL";
-    }
+  errorsObj.meeting_url = "Please enter a valid meeting URL";
+}
+
 
     if (Object.keys(errorsObj).length > 0) {
       setErrors(errorsObj);
@@ -723,16 +724,7 @@ const Opportunities = () => {
                 key={applicant.id}
                 className="flex items-center justify-between py-2 px-2 hover:glassy-card rounded-md"
               >
-                <div
-                  className="flex items-center space-x-3 cursor-pointer"
-                  onClick={() =>
-                    navigate(
-                      `${basePath}/profile/${encodeURIComponent(
-                        applicant.user_id?.first_name
-                      )}/${applicant.user_id?._id}`
-                    )
-                  }
-                >
+                <div className="flex items-center space-x-3 cursor-pointer">
                   <CustomInput
                     type="checkbox"
                     checked={selectedId === applicant._id}
@@ -761,7 +753,15 @@ const Opportunities = () => {
                     </>
                   )}
 
-                  <div>
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `${basePath}/profile/${encodeURIComponent(
+                          applicant.user_id?.first_name
+                        )}/${applicant.user_id?._id}`
+                      )
+                    }
+                  >
                     <div className="flex justify-start items-start gap-2">
                       <p className="font-medium glassy-text-primary text-xs">
                         {applicant?.user_id?.first_name}
@@ -1404,7 +1404,9 @@ const Opportunities = () => {
                     setIsReviewOpen={setIsReviewOpen}
                     setReviewJobId={setReviewJobId}
                     activeTab={activeTab}
-                    isSelected={viewDetails&&modalState?.data?._id === job._id}
+                    isSelected={
+                      viewDetails && modalState?.data?._id === job._id
+                    }
                     openModalForSelect={openModalForSelect}
                     setSelectInterviewId={setSelectInterviewId}
                     handleCloseJob={handleCloseJob}
