@@ -308,7 +308,16 @@ const RegisterInstitute = () => {
   useEffect(() => {
     dispatch(countries());
     getInstitutionTypes();
-    getInstitutionsList();
+    // getInstitutionsList();
+    dispatch(
+      getInstitutionsList({
+        page: 1,
+        size: 5,
+        keyWord: "",
+        query: JSON.stringify({ created_by_users: false }),
+      })
+    );
+
     getDegrees();
   }, []);
 
@@ -562,10 +571,10 @@ const RegisterInstitute = () => {
     ) {
       newErrors.linkedin_page_url = "Please enter a valid LinkedIn URL";
     }
- console.log("validatoin error",newErrors)
+    console.log("validatoin error", newErrors);
     return newErrors;
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -631,8 +640,17 @@ const RegisterInstitute = () => {
           }),
         };
 
-        dispatch(getInstitutionsList());
-        toast.success(res?.message || "Institution created successfully");
+        // dispatch(getInstitutionsList());
+        dispatch(
+          getInstitutionsList({
+            page: 1,
+            size: 5,
+            keyWord: "",
+            query: JSON.stringify({ created_by_users: false }),
+          })
+        );
+
+        toast.success("Institution created successfully");
         setFormData(initialFormData);
       }
     } catch (error) {

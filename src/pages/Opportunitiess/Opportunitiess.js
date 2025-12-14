@@ -740,7 +740,14 @@ const Opportunities = () => {
                       <img
                         src={applicant.user_id?.profile_picture_url}
                         alt={applicant.name}
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                        onClick={() =>
+                          navigate(
+                            `${basePath}/profile/${encodeURIComponent(
+                              applicant.user_id?.first_name
+                            )}/${applicant.user_id?._id}`
+                          )
+                        }
                       />
                     </>
                   ) : (
@@ -748,7 +755,14 @@ const Opportunities = () => {
                       <img
                         src={"/0684456b-aa2b-4631-86f7-93ceaf33303c.png"}
                         alt={applicant.name}
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                        onClick={() =>
+                          navigate(
+                            `${basePath}/profile/${encodeURIComponent(
+                              applicant.user_id?.first_name
+                            )}/${applicant.user_id?._id}`
+                          )
+                        }
                       />
                     </>
                   )}

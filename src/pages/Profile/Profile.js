@@ -1557,7 +1557,7 @@ const Profile = ({ profileData }) => {
 
                       {/* Tooltip for missing fields */}
                       {profileInfo?.personalInfo?.missingFields?.length > 0 && (
-                        <div className="absolute left-1/2 transform -translate-x-1/2 -top-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div className="absolute left-1/2 transform -translate-x-1/2 z-[13999] -top-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                           <div className="bg-red-500/10 border border-red-400/30 rounded-xl p-3 shadow-lg backdrop-blur-md text-sm text-red-500 min-w-[180px]">
                             <p className="font-medium mb-1">Missing Details</p>
                             <ul className="list-disc pl-5 space-y-1">

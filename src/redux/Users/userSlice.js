@@ -132,6 +132,7 @@ export const applyJobApplication = createApiThunkPrivate(
   "/user/jobs/apply-job-application",
   "POST"
 );
+export const addBookmarked = createApiThunkPrivate('addBookmarked', '/user/jobs/add-on-bookmarked', 'POST')
 export const notificationsList = createApiThunkPrivate(
   "notificationsList",
   "/global-module/notifications/list",

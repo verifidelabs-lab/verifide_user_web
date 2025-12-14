@@ -535,6 +535,25 @@ export default function Message({
 
       const normalizedMessage = normalizeMessage(messagePayload);
       setMessages((prev) => [...prev, normalizedMessage]);
+      setContacts((prev) => {
+        const updated = [...prev];
+        const index = updated.findIndex(
+          (c) => c.connectionUserId === selectedContact.connectionUserId
+        );
+
+        if (index !== -1) {
+          updated[index] = {
+            ...updated[index],
+            latestMessage: messageInput || mediaPreview.file_type || "Sent",
+            latestMessageTime: Date.now(),
+          };
+
+          const contact = updated.splice(index, 1)[0];
+          updated.unshift(contact);
+        }
+
+        return updated;
+      });
 
       setMessageInput("");
       setMediaPreview({ file_url: null, file_type: null });
@@ -613,7 +632,31 @@ export default function Message({
           }
           return true;
         });
+        setContacts((prev) => {
+          const updated = [...prev];
+          const index = updated.findIndex(
+            (c) =>
+              c.connectionUserId === msg.sender_id ||
+              c.connectionUserId === msg.receiver_id
+          );
 
+          if (index !== -1) {
+            updated[index] = {
+              ...updated[index],
+              latestMessage: msg.message || msg.file_type || "New message",
+              latestMessageTime: msg.timestamp || Date.now(),
+              unread:
+                updated[index].unread +
+                (msg.sender_id !== currentUserId ? 1 : 0),
+            };
+
+            // Move updated contact to top
+            const contact = updated.splice(index, 1)[0];
+            updated.unshift(contact);
+          }
+
+          return updated;
+        });
         const exists = filtered.some((m) => {
           if (
             m._id === normalizedMessage._id &&

@@ -149,8 +149,8 @@ const ProfileCardData = ({ data, frameStatus, handleSelection }) => {
 
       {/* Cropper Modal */}
       {showCropper && (
-        <div className="!fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 sm:px-6">
-          <div className=" dark:bg-gray-800 p-4 sm:p-6 rounded-xl w-full max-w-md sm:max-w-lg md:max-w-xl h-[80vh] overflow-hidden flex flex-col">
+        <div className="!fixed inset-0 z-50 flex items-center justify-center   px-4 sm:px-6">
+          <div className="   p-4 sm:p-6 rounded-xl w-full max-w-md sm:max-w-lg md:max-w-xl h-[80vh] overflow-hidden flex flex-col">
             <h2 className="text-xl font-bold mb-4 text-gray-900 dark:glassy-text-primary">
               Crop Profile Image
             </h2>

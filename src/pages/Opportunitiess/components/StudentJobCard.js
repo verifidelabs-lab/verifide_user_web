@@ -4,11 +4,18 @@ import { CiCalendar, CiLocationOn } from "react-icons/ci";
 import { SkillsCard2 } from "../../../components/ui/cards/Card";
 import Button from "../../../components/ui/Button/Button";
 import moment from "moment-timezone";
-import { BiDotsVertical } from "react-icons/bi";
+import { BiBookmark, BiDotsVertical } from "react-icons/bi";
 import { toast } from "sonner";
 import { BaseUrl } from "../../../components/hooks/axiosProvider";
+import { FcBookmark } from "react-icons/fc";
 
-const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
+const JobCard = ({
+  job,
+  handleAction,
+  isSelected,
+  applyForJob,
+  onBookmarkToggle,
+}) => {
   const {
     _id,
     company_id,
@@ -32,6 +39,7 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
     jobApplication,
     interviewDetails,
     current_openings,
+    isBookmarked,
   } = job;
   console.log("This is the setsdfsdfsdf", job);
   const [imageError, setImageError] = useState(false);
@@ -149,11 +157,12 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
   console.log("this is the set", imageError, company_id?.logo_url);
   return (
     <div
-      className={`glassy-card !relative z-10 ${isSelected
-        ? "border !border-blue-500 shadow-md"
-        : "border border-blue-700"
-        } rounded-2xl p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-lg`}
-         data-tour="opportunity-card"
+      className={`glassy-card !relative z-10 ${
+        isSelected
+          ? "border !border-blue-500 shadow-md"
+          : "border border-blue-700"
+      } rounded-2xl p-6 flex flex-col space-y-4 w-full h-full transition-all hover:shadow-lg`}
+      data-tour="opportunity-card"
     >
       {/* Header Section */}
       <div className="flex items-center space-x-4 min-h-[3rem]">
@@ -215,31 +224,46 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
               {recommendationBadge.text}
             </span>
           )}
+          <div className="flex items-center justify-between mb-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onBookmarkToggle?.(job?._id);
+              }}
+              className="glassy-text-primary hover:text-blue-600 transition-colors text-xl"
+            >
+              {isBookmarked ? <FcBookmark /> : <BiBookmark />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Application Period */}
       <div
-        className={`flex flex-col gap-1 text-sm p-3 rounded-md ${dateInRange
-          ? "glassy-card border border-green-200"
-          : " glassy-card border border-red-200"
-          }`}
+        className={`flex flex-col gap-1 text-sm p-3 rounded-md ${
+          dateInRange
+            ? "glassy-card border border-green-200"
+            : " glassy-card border border-red-200"
+        }`}
       >
         <div className="flex items-center">
           <CiCalendar
-            className={`mr-2 w-4 h-4 ${dateInRange ? "text-green-600" : "text-red-600"
-              }`}
+            className={`mr-2 w-4 h-4 ${
+              dateInRange ? "text-green-600" : "text-red-600"
+            }`}
           />
           <span
-            className={`font-medium ${dateInRange ? "text-green-700" : "text-red-700"
-              }`}
+            className={`font-medium ${
+              dateInRange ? "text-green-700" : "text-red-700"
+            }`}
           >
             Application Period:
           </span>
         </div>
         <div
-          className={`flex justify-between text-xs ${dateInRange ? "text-green-600" : "text-red-600"
-            }`}
+          className={`flex justify-between text-xs ${
+            dateInRange ? "text-green-600" : "text-red-600"
+          }`}
         >
           <span>From: {moment(start_date).format("DD MMM YYYY")}</span>
           <span>To: {moment(end_date).format("DD MMM YYYY")}</span>
@@ -309,14 +333,15 @@ const JobCard = ({ job, handleAction, isSelected, applyForJob }) => {
           )}
         </div>
 
-        <div className="flex justify-between items-center gap-3" >
-          <div data-tour='apply-button'>
+        <div className="flex justify-between items-center gap-3">
+          <div data-tour="apply-button">
             <Button
               size="sm"
               disabled={applyStatus.disabled}
               onClick={() => !applyStatus.disabled && applyForJob(job)}
-              className={`flex-1 ${applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
-                }`}
+              className={`flex-1 ${
+                applyStatus.disabled ? "opacity-60 cursor-not-allowed" : ""
+              }`}
               variant="primary"
             >
               {applyStatus.reason}

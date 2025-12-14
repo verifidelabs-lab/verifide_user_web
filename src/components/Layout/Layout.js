@@ -47,6 +47,7 @@ import {
   opportunitiesTourSteps,
 } from "../../data/tutorialSteps";
 import { useTour } from "../../context/TourContext";
+import ProfileUpdateAlert from "../ui/InputAdmin/Modal/ProfileUpdateAlert";
 
 const Sidebar = lazy(() => import("./../Sidebar/Sidebar"));
 const Header = lazy(() => import("../Header/Header"));
@@ -95,6 +96,9 @@ function Layout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [navbarOpen, setNavbarOpen] = useState(true);
+  const [updateAlertOpen, setUpdateAlertOpen] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(true);
+
   const [setIsOpen] = useState(false);
   const profileData = useSelector((state) => state.auth);
   const socket = socketConnection();
@@ -105,7 +109,20 @@ function Layout() {
     notifications: 0,
     messages: 0,
   });
+  const completion =
+    Number(
+      profileData?.getProfileData?.data?.data?.personalInfo
+        ?.profile_completion_percentage
+    ) || 0;
 
+  console.log("completioninlayout", completion);
+  const isEducationAdded =
+    profileData?.getProfileData?.data?.data?.first_education_added;
+
+  function handleUpdateProfile() {
+    setUpdateAlertOpen(false);
+    navigate(`/user/profile`);
+  }
   const playAndShowNotification = ({ title, message, body, redirectUrl }) => {
     // 1. Check for cooldown to prevent spamming notifications
     if (isNotificationDisabledRef.current) {
@@ -198,10 +215,12 @@ function Layout() {
       });
     });
   }, [profileData?.getProfileData?.data?.data?._id, socket]);
-
   useEffect(() => {
-    dispatch(getProfile());
+    dispatch(getProfile())
+      .unwrap()
+      .finally(() => setProfileLoading(false));
   }, [dispatch]);
+
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => {
@@ -260,8 +279,16 @@ function Layout() {
       }
     }
   }, []);
+  useEffect(() => {
+    if (!profileLoading && completion < 30 && location.pathname === "/") {
+      navigate("/profile", { replace: true });
+    }
+  }, [completion, profileLoading, location.pathname, navigate]);
+
   const { steps, stepIndex, runTour, handleJoyrideCallback, setStepIndex } =
     useTour();
+  if (profileLoading) return <Loader />;
+
   return (
     <div
       className="h-screen flex flex-col overflow-hidden relative     pt-[70px]"
@@ -394,10 +421,22 @@ function Layout() {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 md:transition-all md:duration-300 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar" >
+        <main className="flex-1 md:transition-all md:duration-300 overflow-hidden h-screen  overflow-y-auto   hide-scrollbar">
           <Suspense fallback={<Loader />}>
             <Routes>
-              <Route index element={<Navigate to="feed" replace />} />
+              <Route
+                index
+                element={
+                  profileLoading ? (
+                    <Loader />
+                  ) : completion < 30 ? (
+                    <Navigate to="/profile" replace />
+                  ) : (
+                    <Navigate to="/feed" replace />
+                  )
+                }
+              />
+
               <Route path="feed/:postId?" element={<Home />} />
               <Route
                 path="/profile"
@@ -509,6 +548,11 @@ function Layout() {
             </Routes>
           </Suspense>
         </main>
+        <ProfileUpdateAlert
+          isOpen={updateAlertOpen}
+          onClose={() => setUpdateAlertOpen(false)}
+          onUpdate={handleUpdateProfile}
+        />
       </div>
     </div>
   );

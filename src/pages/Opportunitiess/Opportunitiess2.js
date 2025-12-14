@@ -24,6 +24,8 @@ import Button from "../../components/ui/Button/Button";
 import { getCookie } from "../../components/utils/cookieHandler";
 import { FiFilter } from "react-icons/fi";
 import ProfileUpdateAlert from "../../components/ui/InputAdmin/Modal/ProfileUpdateAlert";
+import { toast } from "sonner";
+import { addBookmarked } from "../../redux/Users/userSlice";
 
 const Opportunitiess2 = () => {
   const param = useParams();
@@ -50,6 +52,73 @@ const Opportunitiess2 = () => {
     skill: false,
     timePeriod: false,
   });
+   const [searchFelids, setSearchFelids] = useState({
+    company_id: "",
+    industry_id: "",
+    job_title: "",
+    required_skills: [],
+    formDate: "",
+    toDate: "",
+    timePeriod: "",
+    job_type: [], // <-- added for backend filtering
+  });
+  const resetFilters = () => {
+    setSearchFelids({
+      company_id: "",
+      industry_id: "",
+      job_title: "",
+      required_skills: [],
+      formDate: "",
+      toDate: "",
+      timePeriod: "",
+      job_type: [],
+    });
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const fetchJobs = async () => {
+    setIsLoading(true);
+
+    const filters = {
+      type: activeTab, // open, closed, etc.
+    };
+
+    // Add other filters if they exist
+    if (searchFelids?.company_id) filters.company_id = searchFelids.company_id;
+    if (searchFelids?.industry_id)
+      filters.industry_id = searchFelids.industry_id;
+    if (searchFelids?.job_title) filters.job_title = searchFelids.job_title;
+    if (searchFelids?.required_skills?.length > 0)
+      filters.required_skills = searchFelids.required_skills;
+    if (searchFelids?.job_type?.length > 0)
+      filters.job_type = searchFelids.job_type; // <-- new
+    // ✅ Add job_id only if param?.id exists
+
+    const apiPayload = {
+      page: pageNo,
+      size: size,
+      query: JSON.stringify(filters),
+      fromDate: searchFelids?.formDate || "",
+      toDate: searchFelids?.toDate || "",
+      searchFields: searchFelids?.job_title || "",
+    };
+    if (param?.id) {
+      apiPayload.job_id = param.id;
+    }
+    await dispatch(userJobs(apiPayload));
+    setIsLoading(false);
+  };
+  const handleBookmark = async (courseId) => {
+    try {
+      const res = await dispatch(addBookmarked({ job_id: courseId })).unwrap();
+      await fetchJobs();
+      toast.success(res?.message);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
   // useEffect(() => {
   //   if (param?.id) {
   //     const foundJob = data?.data?.list?.find(
@@ -107,32 +176,7 @@ const Opportunitiess2 = () => {
 
   const [pageNo, setPageNo] = useState(1);
   const size = 8;
-  const [searchFelids, setSearchFelids] = useState({
-    company_id: "",
-    industry_id: "",
-    job_title: "",
-    required_skills: [],
-    formDate: "",
-    toDate: "",
-    timePeriod: "",
-    job_type: [], // <-- added for backend filtering
-  });
-  const resetFilters = () => {
-    setSearchFelids({
-      company_id: "",
-      industry_id: "",
-      job_title: "",
-      required_skills: [],
-      formDate: "",
-      toDate: "",
-      timePeriod: "",
-      job_type: [],
-    });
-  };
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
+ 
   const allCompaniesList = [
     ...arrayTransform(selector2?.work?.getAllCompaniesData?.data?.data || []),
   ];
@@ -145,42 +189,9 @@ const Opportunitiess2 = () => {
   const allSkillsList = [
     ...arrayTransform(selector?.masterSkillsData?.data?.data?.list),
   ];
+
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
-      const fetchJobs = async () => {
-        setIsLoading(true);
-
-        const filters = {
-          type: activeTab, // open, closed, etc.
-        };
-
-        // Add other filters if they exist
-        if (searchFelids?.company_id)
-          filters.company_id = searchFelids.company_id;
-        if (searchFelids?.industry_id)
-          filters.industry_id = searchFelids.industry_id;
-        if (searchFelids?.job_title) filters.job_title = searchFelids.job_title;
-        if (searchFelids?.required_skills?.length > 0)
-          filters.required_skills = searchFelids.required_skills;
-        if (searchFelids?.job_type?.length > 0)
-          filters.job_type = searchFelids.job_type; // <-- new
-        // ✅ Add job_id only if param?.id exists
-
-        const apiPayload = {
-          page: pageNo,
-          size: size,
-          query: JSON.stringify(filters),
-          fromDate: searchFelids?.formDate || "",
-          toDate: searchFelids?.toDate || "",
-          searchFields: searchFelids?.job_title || "",
-        };
-        if (param?.id) {
-          apiPayload.job_id = param.id;
-        }
-        await dispatch(userJobs(apiPayload));
-        setIsLoading(false);
-      };
-
       fetchJobs();
     }, 500);
 
@@ -236,19 +247,88 @@ const Opportunitiess2 = () => {
     setSelectedJob(data);
     console.log("data:---->>>", data);
   };
+  // function applyForJob(data) {
+  //   console.log("datadatadata",data);
+
+  //   const completion =
+  //     profileData?.getProfileData?.data?.data?.personalInfo
+  //       ?.profile_completion_percentage;
+  //   // If profile < 60 → show modal
+  //   if (completion < 60) {
+  //     setUpdateAlertOpen(true);
+  //     return;
+  //   }
+  //   // Else → navigate to career goal page
+  //   navigate(`/user/career-goal/${data?._id}`);
+  // }
   function applyForJob(data) {
     const completion =
       profileData?.getProfileData?.data?.data?.personalInfo
         ?.profile_completion_percentage;
-    // If profile < 60 → show modal
-    if (completion < 60) {
+    const isEducationAdded =
+      profileData?.getProfileData?.data?.data?.first_education_added;
+
+    const jobType = data?.job_type;
+    const payType = data?.pay_type;
+
+    // Low-profile friendly lists
+    const lowProfileJobTypes = [
+      "internship",
+      "part-time",
+      "contract",
+      "freelance",
+      "temporary",
+      "volunteer",
+      "training",
+      "walk-in",
+      "shift-based",
+      "night-shift",
+      "weekend",
+      "remote",
+      "work-from-home",
+    ];
+
+    const lowProfilePayTypes = [
+      "unpaid",
+      "volunteer",
+      "stipend",
+      "hourly",
+      "daily",
+      "negotiable",
+      "commission-based",
+      "project-based",
+    ];
+
+    console.log("job details:", data);
+
+    // 1️⃣ If profile < 50 → Always show alert (cannot apply)
+    if (completion < 50 && !isEducationAdded) {
       setUpdateAlertOpen(true);
       return;
     }
-    // Else → navigate to career goal page
-    navigate(`/user/career-goal/${data?._id}`);
-  }
 
+    // 2️⃣ If profile >= 50 and < 60 → only allow low-profile jobs
+    if (completion >= 50 && !isEducationAdded && completion < 60) {
+      const isLowProfileAllowed =
+        lowProfileJobTypes.includes(jobType) ||
+        lowProfilePayTypes.includes(payType);
+
+      if (!isLowProfileAllowed) {
+        setUpdateAlertOpen(true); // Show modal
+        return;
+      }
+
+      // Allowed
+      navigate(`/user/career-goal/${data?._id}`);
+      return;
+    }
+
+    // 3️⃣ If profile >= 60 → follow your original logic (allow all)
+    if (completion >= 60) {
+      navigate(`/user/career-goal/${data?._id}`);
+      return;
+    }
+  }
   function handleUpdateProfile() {
     setUpdateAlertOpen(false);
     navigate(`/user/profile`);
@@ -521,7 +601,7 @@ const Opportunitiess2 = () => {
           {/* Tabs Section */}
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex space-x-1 p-1 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] w-full sm:w-auto">
-              {["all", "applied", "closed"].map((tab) => (
+              {["all", "applied", "closed", "bookmarked"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => {
@@ -570,6 +650,7 @@ const Opportunitiess2 = () => {
                     handleAction={handleAction}
                     isSelected={selectedJob?._id === ele._id}
                     applyForJob={applyForJob}
+                    onBookmarkToggle={handleBookmark}
                   />
                 </div>
               ))
