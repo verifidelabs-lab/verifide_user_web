@@ -53,8 +53,8 @@ const ProfileUpdateAlert = ({ isOpen, onClose, onUpdate }) => {
         </h2>
 
         <p className="text-gray-300 text-sm md:text-base text-center max-w-md mx-auto leading-relaxed mb-6">
-          Your profile must be <b>60% Updated</b> to Apply for this OPPORTUNITY,
-          e.g. Personal Information, Skills, Education.
+          Your profile must be <b>60% Updated</b> to Perform this Action, e.g.
+          Personal Information, Skills, Education.
         </p>
 
         <div className="flex justify-center gap-4 mt-2 flex-wrap">

@@ -18,7 +18,7 @@ import Loader from "../../pages/Loader/Loader";
 import { getProfile } from "../../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { socketConnection } from "../utils/shocket";
-import { getCookie } from "../utils/cookieHandler";
+import { getCookie, setCookie } from "../utils/cookieHandler";
 import Quest from "../../pages/Quest/Quest";
 import Certificates from "../../pages/Certificates/Certificates";
 import ForageCertificate from "../../pages/Certificates/ForageCertificate";
@@ -216,6 +216,7 @@ function Layout() {
     });
   }, [profileData?.getProfileData?.data?.data?._id, socket]);
   useEffect(() => {
+    // 🔹 Fetch profile and update loading state
     dispatch(getProfile())
       .unwrap()
       .finally(() => setProfileLoading(false));
@@ -279,16 +280,19 @@ function Layout() {
       }
     }
   }, []);
+  const hasRedirected = getCookie("profile_redirect_done");
+
   useEffect(() => {
-    if (!profileLoading && completion < 30 && location.pathname === "/") {
-      navigate("/profile", { replace: true });
+    if (!profileLoading && completion <= 30 && !hasRedirected) {
+      setCookie("profile_redirect_done", "true");
+      navigate("/user/profile", { replace: true });
     }
-  }, [completion, profileLoading, location.pathname, navigate]);
+  }, [completion, profileLoading]);
 
   const { steps, stepIndex, runTour, handleJoyrideCallback, setStepIndex } =
     useTour();
+  // 🔹 Show Loader while profile API is pending
   if (profileLoading) return <Loader />;
-
   return (
     <div
       className="h-screen flex flex-col overflow-hidden relative     pt-[70px]"
@@ -427,9 +431,7 @@ function Layout() {
               <Route
                 index
                 element={
-                  profileLoading ? (
-                    <Loader />
-                  ) : completion < 30 ? (
+                  completion <= 30 ? (
                     <Navigate to="/profile" replace />
                   ) : (
                     <Navigate to="/feed" replace />

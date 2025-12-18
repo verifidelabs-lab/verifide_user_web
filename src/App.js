@@ -115,7 +115,7 @@ const App = () => {
       <Router>
         <Routes>
           {/* Root redirect */}
-          <Route
+          {/* <Route
             path="/"
             element={
               getCookie("VERIFIED_TOKEN") ? (
@@ -124,7 +124,7 @@ const App = () => {
                 <Navigate to="/login" replace />
               )
             }
-          />
+          /> */}
 
           {/* Public Routes */}
           <Route
