@@ -24,6 +24,8 @@ import { useGlobalKeys } from "../../context/GlobalKeysContext";
 import { useTour } from "../../context/TourContext";
 import { dashboardTourSteps } from "../../data/tutorialSteps";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaCoins } from "react-icons/fa";
+import { Tooltip } from "antd";
 
 const Header = ({
   profileData,
@@ -43,6 +45,12 @@ const Header = ({
   const [accessLabel, setAccessLabel] = useState(
     showName === "6" ? "Recruiter" : "STUDENT"
   );
+  console.log("profileData in header:", profileData);
+  const totalPoints =
+    profileData?.personalInfo?.points?.total ??
+    profileData?.personalInfo?.points?.total ??
+    0;
+
   const {
     token,
     role,
@@ -402,6 +410,23 @@ const Header = ({
         </div>
 
         <div className="flex gap-3 items-center relative">
+          {/*  Points Display */}
+          <Tooltip title="Your Points">
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full glassy-card cursor-pointer
+               hover:scale-105 transition-all duration-200"
+              // onClick={() => navigate("/user/points")}
+            >
+              {/* <FaCoins className="text-yellow-400 text-lg" /> */}
+              <span className="text-sm font-semibold glassy-text-primary flex items-center gap-1">
+                🪙 {" "}
+                {Number.isFinite(totalPoints)
+                  ? totalPoints.toLocaleString()
+                  : "0"}
+              </span>
+            </div>
+          </Tooltip>
+
           <div className="flex items-center gap-4">
             {/* <BiBell onClick={() => playAndShowNotification({
               title: "New User Registration",
@@ -450,7 +475,8 @@ const Header = ({
                     key={imageToDisplay}
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"; // fallback
+                      e.currentTarget.src =
+                        "/0684456b-aa2b-4631-86f7-93ceaf33303c.png"; // fallback
                     }}
                   />
                 ) : (

@@ -100,14 +100,14 @@ export const forceLogout = (
   message = "Session expired! Please login again."
 ) => {
   try {
-    clearAllData();
+    // clearAllData();
     toast.error(message);
 
     setTimeout(() => {
-      window.location.replace("/login"); // hard redirect
+      // window.location.replace("/login"); // hard redirect
     }, 800);
   } catch (err) {
     console.error("Force logout failed:", err);
-    window.location.replace("/login");
+    // window.location.replace("/login");
   }
 };

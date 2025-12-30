@@ -110,6 +110,7 @@ import ResumeViewSelection from "./components/ResumeViewSelection";
 import { useNavigate } from "react-router-dom";
 import { FiEdit } from "react-icons/fi";
 import { BsPencil } from "react-icons/bs";
+import { Tooltip } from "antd";
 
 const validationRules = {
   education: {
@@ -421,6 +422,10 @@ const Profile = ({ profileData }) => {
   );
 
   const profileInfo = profileData?.getProfileData?.data?.data;
+  const totalPoints =
+    profileInfo?.personalInfo?.points?.total ??
+    profileInfo?.personalInfo?.points?.total ??
+    0;
   const educationData = selector?.getAllEducationListData?.data?.data;
   const experienceData = selector?.getAllExperienceListData?.data?.data;
   const projectData = selector?.getAllProjectListData?.data?.data;
@@ -1502,7 +1507,7 @@ const Profile = ({ profileData }) => {
                   <div className="glassy-card rounded-3xl p-6 flex-1 glassy-text-primary w-full min-w-0">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-2 sm:gap-0">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-between gap-2">
                         <div>
                           <h1 className="text-2xl md:text-3xl font-semibold mb-1 break-words">
                             {`${profileInfo?.personalInfo?.first_name || ""} ${
@@ -1524,6 +1529,21 @@ const Profile = ({ profileData }) => {
                             <BsPencil className="text-blue-500 text-lg flex-shrink-0" />
                           </div>
                         </div>
+                        <Tooltip title="Your Points">
+                          <div
+                            className="flex items-center gap-2 px-3 py-1.5 rounded-full glassy-card cursor-pointer
+                                         hover:scale-105 transition-all duration-200"
+                            // onClick={() => navigate("/user/points")}
+                          >
+                            {/* <FaCoins className="text-yellow-400 text-lg" /> */}
+                            <span className="text-sm font-semibold glassy-text-primary flex items-center gap-1">
+                              🪙{" "}
+                              {Number.isFinite(totalPoints)
+                                ? totalPoints.toLocaleString()
+                                : "0"}
+                            </span>
+                          </div>
+                        </Tooltip>
                       </div>
                     </div>
                     {/* Profile Completion */}
@@ -1819,7 +1839,7 @@ const Profile = ({ profileData }) => {
                             breakpoints={{
                               0: { slidesPerView: 1 }, // Mobile
                               640: { slidesPerView: 1 }, // Small screen
-                              768: { slidesPerView: 1}, // Tablet
+                              768: { slidesPerView: 1 }, // Tablet
                               1024: { slidesPerView: 2 }, // Desktop
                               1280: { slidesPerView: 2 }, // XL screens
                             }}

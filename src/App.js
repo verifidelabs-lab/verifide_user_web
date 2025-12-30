@@ -125,7 +125,14 @@ const App = () => {
               )
             }
           /> */}
-
+ <Route
+            path="/"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
           {/* Public Routes */}
           <Route
             path="/login"
